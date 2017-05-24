@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="status_ok">#66BB6A</color>
+    <color name="status_warning">#BDBDBD</color>
+</resources>

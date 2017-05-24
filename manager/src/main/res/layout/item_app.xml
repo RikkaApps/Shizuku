@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="64dp"
+              android:background="?android:attr/selectableItemBackground"
+              android:paddingStart="@dimen/list_padding"
+              android:paddingEnd="@dimen/list_padding"
+              android:paddingTop="12dp"
+              android:paddingBottom="12dp"
+              android:gravity="center_vertical"
+              tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        tools:src="@mipmap/ic_launcher"
+        android:contentDescription="@null"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            tools:text="Shizuku Manager"/>
+
+        <TextView
+            android:id="@android:id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            tools:text="moe.shizuku.manager"/>
+
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/switch_widget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:clickable="false"
+        android:focusable="false"/>
+
+</LinearLayout>

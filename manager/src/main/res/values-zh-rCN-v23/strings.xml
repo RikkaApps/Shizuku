@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_server_summary_adb"><![CDATA[<b>以下步骤需要在每次重新启动后进行。</b><p>在终端中输入以下内容<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
+
+</resources>

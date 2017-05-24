@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b><p>Type following content into terminal and hit Enter<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>The server running status will refresh if this operation succeed]]></string>
+</resources>

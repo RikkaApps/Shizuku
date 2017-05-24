@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_permission_label">申请使用特权接口</string>
+    <string name="request_permission_description">允许该应用申请使用特权服务接口。</string>
+
+    <string name="receive_task_stack_changed_label">接收任务栈变化</string>
+    <string name="receive_task_stack_changed_description">允许该应用在任务栈发生变化时收到广播。</string>
+
+    <string name="server_running" formatted="false">版本 %2$d 运行中（%1$s）</string>
+    <string name="server_running_update" formatted="false">版本 %2$d 运行中（%1$s）\n可升级至版本 %3$d</string>
+    <string name="server_not_running">点击检查服务是否运行</string>
+    <string name="server_require_restart">需要重新启动服务</string>
+    <string name="server_no_token">运行中，但未正确接收令牌\n点击请求令牌</string>
+
+    <string name="server_start">启动</string>
+    <string name="server_restart">重新启动</string>
+    <string name="server_update">重新启动以升级服务</string>
+
+    <string name="start_server_title_root"><![CDATA[通过 ROOT 权限启动服务]]></string>
+    <string name="start_server_summary_root"><![CDATA[当其他应用尝试使用时，服务将被自动启动。]]></string>
+    <string name="start_server_title_adb"><![CDATA[通过 ADB 启动或升级服务]]></string>
+    <string name="start_server_summary_adb"><![CDATA[您正在使用 Lollipop 版本的系统，根据收到的部分用户报告，在该版本系统上，adb shell 可能没有权限调用部分 API（如 AppOps 相关）。<p>以下步骤需要在每次重新启动后进行。<p>在终端中输入以下内容<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
+
+    <string name="copy_command">复制</string>
+    <string name="send_command">发送</string>
+
+    <string name="auth_allow">总是允许</string>
+    <string name="auth_deny">拒绝</string>
+    <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 权限调用 API 吗？]]></string>
+
+    <string name="auth_manager_no_token">Shizuku manager 未正确接收令牌，请尝试重新启动服务，或是使用主界面的获取令牌。</string>
+    <string name="auth_server_dead">可能由于非正常重启等原因，服务需要重新启动。</string>
+    <string name="auth_cannot_connect">无法连接服务，请确认服务正在运行。</string>
+
+    <string name="authorized_apps_manage">自动授权的应用</string>
+    <plurals name="authorized_apps_count">
+        <item quantity="other"><![CDATA[已授权 %d 个无需确认获取令牌的应用]]></item>
+    </plurals>
+    <string name="view_authorized_apps"><![CDATA[令牌只会在服务重启后失效<br>点击管理授权的应用]]></string>
+
+    <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
+
+    <string name="open_manager">打开 Shizuku manager</string>
+
+</resources>

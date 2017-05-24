@@ -1,0 +1,47 @@
+<manifest package="moe.shizuku.privileged.api"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION"/>
+
+    <!--
+        receive task stack changed (only installed in main user)
+
+        permission: moe.shizuku.privileged.api.permission.RECEIVE_TASK_STACK_CHANGED
+        action:     moe.shizuku.privileged.api.intent.action.TASK_STACK_CHANGED
+        -->
+
+    <!--
+        receive server started (only installed in main user)
+
+        permission: moe.shizuku.privileged.api.permission.RECEIVE_SERVER_STARTED
+        action:     moe.shizuku.privileged.api.intent.action.SERVER_STARTED
+        -->
+
+    <!--
+        receive authorization result
+
+        permission: moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION
+        action:     moe.shizuku.privileged.api.intent.action.AUTHORIZATION_RESULT
+        -->
+
+    <!--
+        <receiver android:name=".receiver.ClearTokenReceiver"
+                  android:exported="true"
+                  android:permission="moe.shizuku.privileged.api.permission.RECEIVE_SERVER_STARTED">
+            <intent-filter>
+                <action android:name="moe.shizuku.privileged.api.intent.action.SERVER_STARTED"/>
+            </intent-filter>
+        </receiver>
+    -->
+
+    <!--
+        <receiver android:name=".receiver.AuthorizationResultReceiver"
+                  android:exported="true"
+                  android:permission="moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION">
+            <intent-filter>
+                <action android:name="moe.shizuku.privileged.api.intent.action.AUTHORIZATION_RESULT"/>
+            </intent-filter>
+        </receiver>
+    -->
+</manifest>

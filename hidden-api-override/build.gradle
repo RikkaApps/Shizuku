@@ -1,0 +1,6 @@
+apply plugin: 'java'
+
+sourceSets.main.java.srcDirs = ['../hidden-api-public/src/main/java', 'src/main/java']
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

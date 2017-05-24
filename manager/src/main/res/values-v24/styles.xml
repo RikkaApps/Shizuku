@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="GrantPermissions"
+           parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
+        <item name="*android:windowFixedHeightMajor">100%</item>
+        <item name="*android:windowFixedHeightMinor">100%</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorAccent">#4285F4</item>
+    </style>
+
+</resources>

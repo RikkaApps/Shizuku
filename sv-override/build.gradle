@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+dependencies {
+    compileOnly project(':hidden-api-override')
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/api" />
+            <option value="$PROJECT_DIR$/generator" />
+            <option value="$PROJECT_DIR$/hidden-api" />
+            <option value="$PROJECT_DIR$/hidden-api-override" />
+            <option value="$PROJECT_DIR$/hidden-api-override-m" />
+            <option value="$PROJECT_DIR$/hidden-api-override-o" />
+            <option value="$PROJECT_DIR$/hidden-api-public" />
+            <option value="$PROJECT_DIR$/manager" />
+            <option value="$PROJECT_DIR$/server" />
+            <option value="$PROJECT_DIR$/sv-override" />
+            <option value="$PROJECT_DIR$/sv-override-m" />
+            <option value="$PROJECT_DIR$/sv-override-o" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

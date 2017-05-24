@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name" translatable="false">Shizuku Manager</string>
+
+    <string name="request_permission_label">use privileged APIs</string>
+    <string name="request_permission_description">Allow this app to use API which requires app is system app or have system signature (require root permission or start server with adb first).</string>
+
+    <string name="receive_task_stack_changed_label">receive task stack changed</string>
+    <string name="receive_task_stack_changed_description">Allow this app to receive a broadcast when task stack changed.</string>
+
+    <string name="server_running" formatted="false">running version %2$d (%1$s)</string>
+    <string name="server_running_update" formatted="false">running version %2$d (%1$s)\nversion %3$d available</string>
+    <string name="server_not_running">Tap to check if server is running</string>
+    <string name="server_require_restart">Require restart server</string>
+    <string name="server_no_token">running, but no correct token received\ntap to request token</string>
+
+    <string name="server_start">Start</string>
+    <string name="server_restart">Restart</string>
+    <string name="server_update">Restart to update server</string>
+
+    <string name="start_server_title_root"><![CDATA[Start server with ROOT permission]]></string>
+    <string name="start_server_summary_root"><![CDATA[Server will be started automatically when other apps try to use it.]]></string>
+    <string name="start_server_title_adb"><![CDATA[Start / update server with ADB]]></string>
+    <string name="start_server_summary_adb"><![CDATA[Your device is running Android Lollipop. According to some users’ feedback, the ADB shell may not have the permission to call certain APIs like some AppOps related APIs.<p><b>You will have to re-execute following steps every time you reboot your device.</b><p>Type following content into terminal and hit Enter<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>The server running status will refresh if this operation succeed]]></string>
+    <string name="copy_command">Copy</string>
+    <string name="send_command">Send</string>
+
+    <string name="auth_allow">Always allow</string>
+    <string name="auth_deny">Deny</string>
+    <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with <b>%2$s</b> permission?]]></string>
+
+    <string name="auth_manager_no_token">Shizuku manager haven\'t received token correctly, please try restart server or use \"get token\" in the manager.</string>
+    <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart server is required.</string>
+    <string name="auth_cannot_connect">Can\'t connect to server, please check if the server is running.</string>
+
+    <string name="authorized_apps_manage">Authorized apps</string>
+    <plurals name="authorized_apps_count">
+        <item quantity="one"><![CDATA[Authorized %s application to get token without confirmation]]></item>
+        <item quantity="other"><![CDATA[Authorized %s applications to get token without confirmation]]></item>
+    </plurals>
+    <string name="view_authorized_apps"><![CDATA[Token will be invalided after server restart<br>Tap to manage authorized apps]]></string>
+
+    <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
+
+    <string name="open_manager">Open Shizuku manager</string>
+
+</resources>
