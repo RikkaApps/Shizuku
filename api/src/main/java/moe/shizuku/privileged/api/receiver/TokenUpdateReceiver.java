@@ -12,9 +12,9 @@ import moe.shizuku.privileged.api.BuildConfig;
  * Created by Rikka on 2017/5/19.
  */
 
-public abstract class AbstractAuthorizationResultReceiver extends BroadcastReceiver {
+public abstract class TokenUpdateReceiver extends BroadcastReceiver {
 
-    private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT";
+    private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -25,14 +25,10 @@ public abstract class AbstractAuthorizationResultReceiver extends BroadcastRecei
         long mostSig = intent.getLongExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_MOST_SIG", 0);
         long leastSig = intent.getLongExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_LEAST_SIG", 0);
 
-        if (mostSig == 0 && leastSig == 0) {
-            onDenied(context);
-        } else {
-            onAuthorized(context, new UUID(mostSig, leastSig));
+        if (mostSig != 0 && leastSig != 0) {
+            onTokenUpdate(context, new UUID(mostSig, leastSig));
         }
     }
 
-    public abstract void onAuthorized(Context context, UUID token);
-
-    public abstract void onDenied(Context context);
+    public abstract void onTokenUpdate(Context context, UUID token);
 }

@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,7 +18,6 @@ import android.os.Process;
 import android.os.StrictMode;
 import android.os.UserHandle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +25,7 @@ import java.util.UUID;
 
 import hidden.android.app.AppOpsManager;
 import hidden.android.content.pm.UserInfo;
+import moe.shizuku.privileged.api.receiver.TokenUpdateReceiver;
 import moe.shizuku.server.Protocol;
 
 /**
@@ -60,6 +61,28 @@ public final class PrivilegedAPIs extends AbstractPrivilegedAPIs {
                 .permitNetwork()
                 .build();
         StrictMode.setThreadPolicy(permitNetworkPolicy);
+    }
+
+    private TokenUpdateReceiver mTokenUpdateReceiver;
+
+    /**
+     * Register receiver to receive token update broadcast, old receiver will be unregistered.
+     */
+    public void registerTokenUpdateReceiver(Context context, TokenUpdateReceiver receiver) {
+        unregisterTokenUpdateReceiver(context);
+
+        mTokenUpdateReceiver = receiver;
+        context.registerReceiver(mTokenUpdateReceiver,
+                new IntentFilter(PACKAGE_NAME + ".intent.action.UPDATE_TOKEN"),
+                PACKAGE_NAME + ".permission.RECEIVE_SERVER_STARTED",
+                null);
+    }
+
+    public void unregisterTokenUpdateReceiver(Context context) {
+        if (mTokenUpdateReceiver != null) {
+            context.unregisterReceiver(mTokenUpdateReceiver);
+        }
+        mTokenUpdateReceiver = null;
     }
 
     public PrivilegedAPIs(UUID token) {

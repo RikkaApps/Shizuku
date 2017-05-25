@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import moe.shizuku.privileged.api.BuildConfig;
+import moe.shizuku.privileged.api.Permissions;
 import moe.shizuku.privileged.api.ServerLauncher;
 
 /**
@@ -19,5 +21,15 @@ public class ServerStartedReceiver extends BroadcastReceiver {
 
         LocalBroadcastManager.getInstance(context)
                 .sendBroadcast(intent);
+
+        intent = new Intent(intent);
+        intent.setComponent(null);
+        intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
+        intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
+
+        Permissions.init(context);
+        for (String packageName : Permissions.getGranted()) {
+            context.sendBroadcast(intent.setPackage(packageName), BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION");
+        }
     }
 }

@@ -68,14 +68,6 @@ public class Server extends Handler {
                     user.id);
         }
 
-        /*intent = new Intent(PACKAGE_NAME + ".intent.action.CLEAR_TOKEN");
-
-        for (UserInfo user : users) {
-            APIs.broadcastIntent(intent,
-                    PACKAGE_NAME + ".permission.RECEIVE_CLEAR_TOKEN",
-                    user.id);
-        }*/
-
         server.registerTaskStackListener();
 
         Looper.loop();

@@ -66,7 +66,6 @@ public class ServerLauncher {
             is.readException();
             return is.readParcelable(Protocol.CREATOR);
         } catch (Exception ignored) {
-            ignored.printStackTrace();
         }
         return Protocol.createUnknown();
     }

@@ -12,35 +12,12 @@
         -->
 
     <!--
-        receive server started (only installed in main user)
-
-        permission: moe.shizuku.privileged.api.permission.RECEIVE_SERVER_STARTED
-        action:     moe.shizuku.privileged.api.intent.action.SERVER_STARTED
-        -->
-
-    <!--
-        receive authorization result
-
-        permission: moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION
-        action:     moe.shizuku.privileged.api.intent.action.AUTHORIZATION_RESULT
-        -->
-
-    <!--
-        <receiver android:name=".receiver.ClearTokenReceiver"
+        <receiver android:name=".receiver.AbstractTokenUpdateReceiver"
+                  android:enabled="true"
                   android:exported="true"
                   android:permission="moe.shizuku.privileged.api.permission.RECEIVE_SERVER_STARTED">
             <intent-filter>
-                <action android:name="moe.shizuku.privileged.api.intent.action.SERVER_STARTED"/>
-            </intent-filter>
-        </receiver>
-    -->
-
-    <!--
-        <receiver android:name=".receiver.AuthorizationResultReceiver"
-                  android:exported="true"
-                  android:permission="moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION">
-            <intent-filter>
-                <action android:name="moe.shizuku.privileged.api.intent.action.AUTHORIZATION_RESULT"/>
+                <action android:name="moe.shizuku.privileged.api.intent.action.UPDATE_TOKEN"/>
             </intent-filter>
         </receiver>
     -->

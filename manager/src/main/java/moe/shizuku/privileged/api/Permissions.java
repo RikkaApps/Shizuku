@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -116,5 +118,13 @@ public class Permissions {
             to.add(p.first + "|" + p.second);
         }
         return to;
+    }
+
+    public static List<String> getGranted() {
+        List<String> list = new ArrayList<>();
+        for (Pair<String, Long> p: sPermissions.packages) {
+            list.add(p.first);
+        }
+        return list;
     }
 }
