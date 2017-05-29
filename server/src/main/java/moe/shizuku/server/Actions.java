@@ -2,7 +2,6 @@ package moe.shizuku.server;
 public class Actions {
 public static final int version = 0;
 public static final int authorize = 1;
-public static final int sendTokenToManger = 2;
 public static final int getTasks = 100;
 public static final int broadcastIntent = 101;
 public static final int forceStopPackage = 102;

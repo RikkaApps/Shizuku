@@ -10,11 +10,18 @@ public class Intents {
 
     public static final String PACKAGE_NAME = "moe.shizuku.privileged.api";
 
-    public static String action(String action) {
+    public static final String ACTION_SERVER_STARTED = action("SERVER_STARTED");
+    public static final String ACTION_TASK_STACK_CHANGED = action("TASK_STACK_CHANGED");
+
+    public static final String EXTRA_PID = extra("PID");
+    public static final String EXTRA_TOKEN_MOST_SIG = extra("TOKEN_MOST_SIG");
+    public static final String EXTRA_TOKEN_LEAST_SIG = extra("TOKEN_LEAST_SIG");
+
+    private static String action(String action) {
         return PACKAGE_NAME + ".intent.action." + action;
     }
 
-    public static String extra(String extra) {
+    private static String extra(String extra) {
         return PACKAGE_NAME + ".intent.extra." + extra;
     }
 

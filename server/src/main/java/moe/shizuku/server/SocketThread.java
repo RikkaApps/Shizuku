@@ -16,6 +16,7 @@ import android.net.wifi.WifiConfiguration;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IUserManager;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
@@ -36,6 +37,8 @@ import hidden.android.app.AppOpsManager;
 import hidden.android.content.pm.UserInfo;
 import hidden.android.net.wifi.WrappedWifiConfiguration;
 import moe.shizuku.server.content.IntentReceiver;
+import moe.shizuku.server.io.ParcelInputStream;
+import moe.shizuku.server.io.ParcelOutputStream;
 import moe.shizuku.server.util.Intents;
 import moe.shizuku.server.util.ServerLog;
 
@@ -67,8 +70,12 @@ class SocketThread implements Runnable, RequestHandler.Impl {
         for (; ; ) {
             try {
                 Socket socket = mServerSocket.accept();
-                mRequestHandler.handle(socket, mToken);
+                boolean quit = !mRequestHandler.handle(socket, mToken);
                 socket.close();
+
+                if (quit) {
+                    break;
+                }
             } catch (IOException e) {
                 if (SocketException.class.equals(e.getClass()) && "Socket closed".equals(e.getMessage())) {
                     ServerLog.i("server socket is closed");
@@ -81,7 +88,53 @@ class SocketThread implements Runnable, RequestHandler.Impl {
                 ServerLog.w("error", e);
             }
         }
+        try {
+            mServerSocket.close();
+        } catch (IOException ignored) {
+        }
         mCountDownLatch.countDown();
+    }
+
+    @Override
+    public boolean requireAuthorization(int action) {
+        return action != Actions.authorize
+                && action != Actions.version
+                && action >= 0;
+    }
+
+    @Override
+    public boolean handleUnknownAction(int action, ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {
+        switch (action) {
+            case -1:
+                sendTokenToManger(is, os);
+                break;
+            case -2:
+                quit(os);
+                return false;
+        }
+        return true;
+    }
+
+    private void sendTokenToManger(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {
+        int uid = is.readInt();
+        int userId = uid / 100000;
+
+        Intent intent = new Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .setComponent(Intents.componentName(".MainActivity"))
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .putExtra(Intents.EXTRA_TOKEN_MOST_SIG, mToken.getMostSignificantBits())
+                .putExtra(Intents.EXTRA_TOKEN_LEAST_SIG, mToken.getLeastSignificantBits());
+
+        startActivity(intent, userId);
+
+        os.writeNoException();
+    }
+
+    private void quit(ParcelOutputStream os) throws IOException {
+        os.writeNoException();
+
+        mHandler.sendEmptyMessage(Server.MESSAGE_EXIT);
     }
 
     @Override
@@ -108,20 +161,6 @@ class SocketThread implements Runnable, RequestHandler.Impl {
         }
 
         return new Protocol(Protocol.RESULT_UNAUTHORIZED);
-    }
-
-    @Override
-    public void sendTokenToManger(int uid) throws RemoteException {
-        int userId = uid / 100000;
-
-        Intent intent = new Intent(Intent.ACTION_MAIN)
-                .addCategory(Intent.CATEGORY_LAUNCHER)
-                .setComponent(Intents.componentName(".MainActivity"))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .putExtra(Intents.extra("TOKEN_MOST_SIG"), mToken.getMostSignificantBits())
-                .putExtra(Intents.extra("TOKEN_LEAST_SIG"), mToken.getLeastSignificantBits());
-
-        startActivity(intent, userId);
     }
 
     @Override

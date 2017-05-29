@@ -18,7 +18,6 @@ interface IServerInterface {
     // Server
     Protocol version();
     Protocol authorize(long most, long least);
-    void sendTokenToManger(int uid);
 
     // ActivityManager
     List<ActivityManager.RunningTaskInfo> getTasks(int maxNum, int flags);

@@ -13,6 +13,7 @@ import android.util.Log;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.Socket;
@@ -94,7 +95,7 @@ public class ServerLauncher {
             client.setSoTimeout(SERVER_TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeInt(Actions.sendTokenToManger);
+            os.writeInt(-1);
             os.writeInt(Process.myUid());
             is.readException();
         } catch (Exception ignored) {
@@ -119,6 +120,21 @@ public class ServerLauncher {
         }
     }
 
+    private static void sendQuit() {
+        try {
+            Socket socket = new Socket(Protocol.HOST, Protocol.PORT);
+            socket.setSoTimeout(100);
+            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
+            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
+            os.writeInt(-2);
+            is.readException();
+
+            Log.i("RServer", "send quit to old server");
+
+            Thread.sleep(100);
+        } catch (IOException | InterruptedException ignored) {
+        }
+    }
 
     public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
 
@@ -137,9 +153,7 @@ public class ServerLauncher {
             os.write("#!/system/bin/sh\n");
             os.write("\n");
             os.write("# start new server\n");
-            os.write("echo \"Starting Server......\"\n");
-            //os.write("path=/data/local/tmp\n");
-            os.write("killall rikka_server\n");
+            //os.write("echo \"Starting Server......\"\n");
             os.write("export CLASSPATH=" + path + "\n");
             //os.write("\n");
             //os.write("# for security reason, create a temporary ELF\n");
@@ -166,8 +180,9 @@ public class ServerLauncher {
     @WorkerThread
     public static void startRoot(String path) {
         if (Shell.SU.available()) {
+            sendQuit();
+
             Shell.SU.run(new String[]{
-                    "killall rikka_server",
                     "export CLASSPATH=" + path,
                     "exec app_process /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
             }, SERVER_TIMEOUT);
@@ -178,12 +193,8 @@ public class ServerLauncher {
     public static Protocol startRoot() {
         if (Shell.SU.available()) {
             long time = System.currentTimeMillis();
-            /*Shell.SU.run(new String[]{
-                    "killall rikka_server",
-                    "export CLASSPATH=" + path,
-                    "exec app_process /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
-            }, SERVER_TIMEOUT);*/
 
+            sendQuit();
             Shell.SU.run("sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh", SERVER_TIMEOUT);
 
             while (System.currentTimeMillis() - time < SERVER_TIMEOUT) {

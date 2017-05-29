@@ -24,9 +24,10 @@ RequestHandler(Impl impl) {
 this.impl = impl;
 }
 interface Impl {
+boolean requireAuthorization(int action);
+boolean handleUnknownAction(int action, ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException;
 Protocol version() throws RemoteException;
 Protocol authorize(long most, long least) throws RemoteException;
-void sendTokenToManger(int uid) throws RemoteException;
 List<ActivityManager.RunningTaskInfo> getTasks(int maxNum, int flags) throws RemoteException;
 int broadcastIntent(Intent intent, String requiredPermissions, int userId) throws RemoteException;
 void forceStopPackage(String packageName, int userId) throws RemoteException;
@@ -50,13 +51,11 @@ AppOpsManager.PackageOps setMode2(int[] code, int userId, String packageName, in
 AppOpsManager.PackageOps resetAllModes2(int reqUserId, String reqPackageName) throws RemoteException;
 List<WrappedWifiConfiguration> getPrivilegedConfiguredNetworks() throws RemoteException;
 }
-void handle(Socket socket, UUID token) throws IOException, RemoteException {
+boolean handle(Socket socket, UUID token) throws IOException, RemoteException {
 ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
 ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
 int action = is.readInt();
-if (action != Actions.authorize
-&& action != Actions.version
-&& action != Actions.sendTokenToManger) {
+if (impl.requireAuthorization(action)) {
 long most = is.readLong();
 long least = is.readLong();
 if (most != token.getMostSignificantBits()
@@ -65,7 +64,7 @@ os.writeException(new SecurityException("unauthorized"));
 is.close();
 os.flush();
 os.close();
-return;
+return true;
 }
 }
 switch (action) {
@@ -74,9 +73,6 @@ version(is, os);
 break;
 case Actions.authorize:
 authorize(is, os);
-break;
-case Actions.sendTokenToManger:
-sendTokenToManger(is, os);
 break;
 case Actions.getTasks:
 getTasks(is, os);
@@ -144,10 +140,13 @@ break;
 case Actions.getPrivilegedConfiguredNetworks:
 getPrivilegedConfiguredNetworks(is, os);
 break;
+default:
+return impl.handleUnknownAction(action, is, os);
 }
 is.close();
 os.flush();
 os.close();
+return true;
 }
 private void version(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {
 try {
@@ -172,18 +171,6 @@ os.writeParcelable(result);
 if (!(e instanceof IOException)) {
 os.writeException(e);
 ServerLog.eStack("error when call authorize(" + most + ", "+ least + ")", e);
-}
-}
-}
-private void sendTokenToManger(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {
-int uid = is.readInt();
-try {
-impl.sendTokenToManger(uid);
-os.writeNoException();
-} catch (Exception e) {
-if (!(e instanceof IOException)) {
-os.writeException(e);
-ServerLog.eStack("error when call sendTokenToManger(" + uid + ")", e);
 }
 }
 }

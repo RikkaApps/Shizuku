@@ -1,5 +1,6 @@
 package moe.shizuku.server.util;
 
+import android.os.Process;
 import android.util.Log;
 
 /**
@@ -8,7 +9,7 @@ import android.util.Log;
 
 public class ServerLog {
 
-    private static final String TAG = "RServer";
+    private static String TAG = "RServer " + Process.myPid();
 
     public static void v(String msg) {
         Log.v(TAG, msg);

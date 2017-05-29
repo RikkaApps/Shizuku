@@ -18,6 +18,10 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+        if (!"android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+            return;
+        }
+
         if (Settings.getInt("mode", -1) == 0) {
             Log.i("RServer", "start on boot");
 

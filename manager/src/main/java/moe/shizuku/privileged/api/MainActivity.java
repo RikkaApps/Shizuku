@@ -43,7 +43,6 @@ public class MainActivity extends Activity {
     private AsyncTask mStartTask;
 
     private BroadcastReceiver mServerStartedReceiver;
-    private boolean mReceiverUnregistered;
 
     private boolean mCheckToRequest;
 
@@ -130,6 +129,8 @@ public class MainActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             check();
+
+            Log.d("RServer", "receiver");
         }
     }
 
@@ -142,18 +143,14 @@ public class MainActivity extends Activity {
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mServerStartedReceiver, new IntentFilter(getPackageName() + ".intent.action.SERVER_STARTED"));
-        mReceiverUnregistered = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        if (!mReceiverUnregistered) {
-            LocalBroadcastManager.getInstance(this)
-                    .unregisterReceiver(mServerStartedReceiver);
-            mReceiverUnregistered = true;
-        }
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mServerStartedReceiver);
     }
 
     private void check() {
@@ -206,11 +203,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Protocol doInBackground(Context... params) {
-            if (!mReceiverUnregistered) {
-                LocalBroadcastManager.getInstance(params[0])
-                        .unregisterReceiver(mServerStartedReceiver);
-                mReceiverUnregistered = true;
-            }
+            ServerLauncher.writeSH(params[0]);
             return ServerLauncher.startRoot();
         }
 
@@ -237,7 +230,7 @@ public class MainActivity extends Activity {
     }
 
     private void updateUI(Protocol protocol) {
-        Log.d("RServer", "update ui: " + protocol.toString());
+        //Log.d("RServer", "update ui: " + protocol.toString());
 
         mCheckToRequest = false;
 
@@ -331,5 +324,9 @@ public class MainActivity extends Activity {
 
         mRefreshTask = null;
         mStartTask = null;
+    }
+
+    private void registerReceiver() {
+
     }
 }

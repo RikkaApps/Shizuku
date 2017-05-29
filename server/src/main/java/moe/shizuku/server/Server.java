@@ -10,74 +10,151 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import hidden.android.content.pm.UserInfo;
+import moe.shizuku.server.io.ParcelInputStream;
+import moe.shizuku.server.io.ParcelOutputStream;
 import moe.shizuku.server.util.Intents;
 import moe.shizuku.server.util.ServerLog;
 
 public class Server extends Handler {
 
-    private RequestHandler.Impl mAPIImpl;
-
-    public static void main(String[] args) throws IOException, RemoteException {
+    public static void main(String[] args) throws IOException, RemoteException, InterruptedException {
         Looper.prepare();
-        final Server server = new Server();
 
-        UUID token = UUID.randomUUID();
-
-        ServerLog.i("start version: " + Protocol.VERSION + " token: " + token);
+        Server server = new Server();
 
         CountDownLatch socketLatch = new CountDownLatch(0x1);
-        ServerSocket serverSocket = new ServerSocket(Protocol.PORT, 0, Protocol.HOST);
+        if (!server.start(socketLatch)) {
+            System.exit(1);
+            return;
+        }
+
+        System.out.println(String.format(Locale.ENGLISH, "Shizuku server started (version %d, %s, pid %d)",
+                Protocol.VERSION,
+                (HideApiOverride.isRoot(Process.myUid()) ? "root" : "shell"),
+                Process.myPid()));
+
+        Looper.loop();
+
+        try {
+            socketLatch.await();
+        } catch (InterruptedException ignored) {
+        }
+
+        System.out.println(String.format(Locale.ENGLISH, "Shizuku server (pid %d) exited", Process.myPid()));
+        ServerLog.i("server exit");
+        System.exit(0);
+    }
+
+    public static final int MESSAGE_EXIT = 1;
+
+    private UUID mToken;
+    private RequestHandler.Impl mAPIImpl;
+
+    private Server() {
+        super();
+
+        mToken = UUID.randomUUID();
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case MESSAGE_EXIT:
+                //noinspection ConstantConditions
+                Looper.myLooper().quit();
+            break;
+        }
+    }
+
+    private boolean sendQuit() {
+        try {
+            Socket socket = new Socket(Protocol.HOST, Protocol.PORT);
+            socket.setSoTimeout(100);
+            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
+            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
+            os.writeInt(-2);
+            is.readException();
+
+            ServerLog.i("send quit to old server");
+            return true;
+        } catch (Exception e) {
+            ServerLog.i("cannot connect to old server");
+            return false;
+        }
+    }
+
+    public boolean start(CountDownLatch socketLatch) throws IOException, RemoteException, InterruptedException {
+        if (sendQuit()) {
+            Thread.sleep(100);
+        }
+
+        ServerSocket serverSocket;
+        try {
+            serverSocket = new ServerSocket(Protocol.PORT, 0, Protocol.HOST);
+        } catch (IOException e) {
+            ServerLog.e("cannot start server", e);
+            System.out.println(String.format(Locale.ENGLISH, "Cannot start shizuku server, %s.", e.getMessage()));
+            return false;
+        }
         serverSocket.setReuseAddress(true);
 
-        SocketThread socket = new SocketThread(server, serverSocket, socketLatch, token);
-        server.mAPIImpl = socket;
+        SocketThread socket = new SocketThread(this, serverSocket, socketLatch, mToken);
+        mAPIImpl = socket;
 
         Thread socketThread = new Thread(socket);
         socketThread.start();
 
-        System.out.println("Shizuku server started (version "
-                + Protocol.VERSION + ", "
-                + (HideApiOverride.isRoot(Process.myUid()) ? "root" : "shell")
-                + ")");
+        ServerLog.i("start version: " + Protocol.VERSION + " token: " + mToken);
 
-        server.checkPermission(new String[]{
-                "android.permission.UPDATE_APP_OPS_STATS",
-                "android.permission.GET_APP_OPS_STATS"
-        }, Process.myUid());
+        checkPermissions();
+        broadcastServerStart();
+        registerTaskStackListener();
 
-        Intent intent = new Intent(Intents.action("SERVER_STARTED"))
+        return true;
+    }
+
+    private void broadcastServerStart() throws RemoteException {
+        Intent intent = new Intent(Intents.ACTION_SERVER_STARTED)
                 .setPackage(Intents.PACKAGE_NAME)
-                .putExtra(Intents.extra("TOKEN_MOST_SIG"), token.getMostSignificantBits())
-                .putExtra(Intents.extra("TOKEN_LEAST_SIG"), token.getLeastSignificantBits());
+                .putExtra(Intents.EXTRA_PID, Process.myUid())
+                .putExtra(Intents.EXTRA_TOKEN_MOST_SIG, mToken.getMostSignificantBits())
+                .putExtra(Intents.EXTRA_TOKEN_LEAST_SIG, mToken.getLeastSignificantBits());
 
-        List<UserInfo> users = server.mAPIImpl.getUsers(true);
+        List<UserInfo> users = mAPIImpl.getUsers(true);
         for (UserInfo user : users) {
-            server.mAPIImpl.broadcastIntent(intent,
+            mAPIImpl.broadcastIntent(intent,
                     Intents.permission("RECEIVE_SERVER_STARTED"),
                     user.id);
         }
-
-        server.registerTaskStackListener();
-
-        Looper.loop();
     }
 
-    private void checkPermission(String[] permNames, int uid) throws RemoteException {
+    private void checkPermissions() throws RemoteException {
+        int uid = Process.myUid();
         if (HideApiOverride.isRoot(uid)) {
             return;
         }
 
+        checkPermission(new String[]{
+                "android.permission.UPDATE_APP_OPS_STATS",
+                "android.permission.GET_APP_OPS_STATS"
+        }, uid);
+    }
+
+    private void checkPermission(String[] permNames, int uid) throws RemoteException {
         List<String> denied = new ArrayList<>();
         for (String permName : permNames) {
             if (mAPIImpl.checkUidPermission(permName, uid) != PackageManager.PERMISSION_GRANTED) {
@@ -112,7 +189,7 @@ public class Server extends Handler {
                                 List<UserInfo> users = mAPIImpl.getUsers(true);
                                 for (UserInfo user : users) {
                                     mAPIImpl.broadcastIntent(new Intent(
-                                                    Intents.action("TASK_STACK_CHANGED"),
+                                                    Intents.ACTION_TASK_STACK_CHANGED,
                                                     Uri.parse("component://" + component.getPackageName() + "/" + component.getClassName())
                                             ),
                                             Intents.permission("RECEIVE_TASK_STACK_CHANGED"), user.id);

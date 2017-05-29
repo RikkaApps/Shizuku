@@ -60,6 +60,8 @@ public class RequestHandlerWriter extends Writer {
 
     private RequestHandlerWriter writeInterface() throws IOException {
         writeLine("interface Impl {");
+        writeLine("boolean requireAuthorization(int action);");
+        writeLine("boolean handleUnknownAction(int action, ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException;");
         for (AidlMethod method : parser.methods) {
             writeLine(method.toString() + " throws RemoteException;");
         }
@@ -68,11 +70,11 @@ public class RequestHandlerWriter extends Writer {
     }
 
     private RequestHandlerWriter writerHandleMethod() throws IOException {
-        writeLine("void handle(Socket socket, UUID token) throws IOException, RemoteException {\n" +
+        writeLine("boolean handle(Socket socket, UUID token) throws IOException, RemoteException {\n" +
                 "ParcelInputStream is = new ParcelInputStream(socket.getInputStream());\n" +
                 "ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());\n" +
                 "int action = is.readInt();\n" +
-                "if (action != Actions.authorize\n&& action != Actions.version\n&& action != Actions.sendTokenToManger) {\n" +
+                "if (impl.requireAuthorization(action)) {\n" +
                 "long most = is.readLong();\n" +
                 "long least = is.readLong();\n" +
                 "if (most != token.getMostSignificantBits()\n" +
@@ -81,7 +83,7 @@ public class RequestHandlerWriter extends Writer {
                 "is.close();\n" +
                 "os.flush();\n" +
                 "os.close();\n" +
-                "return;\n" +
+                "return true;\n" +
                 "}\n" +
                 "}");
 
@@ -92,10 +94,12 @@ public class RequestHandlerWriter extends Writer {
             writeLine(method.name + "(is, os);");
             writeLine("break;");
         }
+        writeLine("default:\nreturn impl.handleUnknownAction(action, is, os);");
         writeLine("}\n" +
                 "is.close();\n" +
                 "os.flush();\n" +
                 "os.close();\n" +
+                "return true;\n" +
                 "}");
         return this;
     }

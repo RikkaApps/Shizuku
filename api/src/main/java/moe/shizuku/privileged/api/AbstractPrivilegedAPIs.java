@@ -54,21 +54,6 @@ return _result;
 return null;
 }
 @CallSuper
-public void sendTokenToManger(int uid) {
-try {
-Socket client = new Socket(Protocol.HOST, Protocol.PORT);
-client.setSoTimeout(TIMEOUT);
-ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
-ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-os.writeInt(Actions.sendTokenToManger);
-os.writeLong(token.getMostSignificantBits());
-os.writeLong(token.getLeastSignificantBits());
-os.writeInt(uid);
-is.readException();
-} catch (IOException ignored) {
-}
-}
-@CallSuper
 public List<ActivityManager.RunningTaskInfo> getTasks(int maxNum, int flags) {
 try {
 Socket client = new Socket(Protocol.HOST, Protocol.PORT);
