@@ -153,7 +153,7 @@ public class RequestHandlerWriter extends Writer {
 
         write("ServerLog.eStack(\"error when call " + method.name + "(\" ");
         for (Arg arg: method.args) {
-            write("+ ");
+            write(" + ");
             if (arg.type.isArray()) {
                 write("Arrays.toString(" + arg.name + ")");
             } else {
@@ -164,7 +164,7 @@ public class RequestHandlerWriter extends Writer {
                 write(" + \", \"");
             }
         }
-        writeLine(" + \")\", e);");
+        writeLine(" + \")\\n\" + e.getMessage(), e);");
         writeLine("}\n"+
                 "}" );
 
