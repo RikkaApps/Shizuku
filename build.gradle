@@ -29,7 +29,7 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 25
     buildToolsVersion = "25.0.3"
-    versionCode = 23
+    versionCode = 24
     versionName = "0.2.2"
     serverVersionCode = 21
 }
