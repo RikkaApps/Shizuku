@@ -1,3 +1,4 @@
 /build
 *.apk
 /signing.properties
+/release
