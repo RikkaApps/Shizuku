@@ -129,8 +129,6 @@ public class MainActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             check();
-
-            Log.d("RServer", "receiver");
         }
     }
 
@@ -308,15 +306,13 @@ public class MainActivity extends Activity {
                     && !parent.getChildAt(2).equals(mRootCard)) {
                 parent.removeView(mAdbCard);
                 parent.addView(mAdbCard);
-
-                Settings.putInt("mode", 0);
             } else if (!protocol.isRoot()
                     && !parent.getChildAt(2).equals(mAdbCard)) {
                 parent.removeView(mRootCard);
                 parent.addView(mRootCard);
-
-                Settings.putInt("mode", 1);
             }
+
+            Settings.putInt("mode", protocol.isRoot() ? 0 : 1);
         }
 
         mStartButton.setEnabled(true);
@@ -324,9 +320,5 @@ public class MainActivity extends Activity {
 
         mRefreshTask = null;
         mStartTask = null;
-    }
-
-    private void registerReceiver() {
-
     }
 }
