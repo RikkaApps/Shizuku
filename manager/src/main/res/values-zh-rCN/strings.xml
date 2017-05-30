@@ -26,9 +26,9 @@
 
     <string name="auth_allow">总是允许</string>
     <string name="auth_deny">拒绝</string>
-    <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 权限调用 API 吗？]]></string>
+    <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 身份调用 API 吗？]]></string>
 
-    <string name="auth_manager_no_token">Shizuku manager 未正确接收令牌，请尝试重新启动服务，或是使用主界面的获取令牌。</string>
+    <string name="auth_manager_no_token">Shizuku Manager 未正确接收令牌，请尝试重新启动服务，或是使用主界面的获取令牌。</string>
     <string name="auth_server_dead">可能由于非正常重启等原因，服务需要重新启动。</string>
     <string name="auth_cannot_connect">无法连接服务，请确认服务正在运行。</string>
 
@@ -40,6 +40,6 @@
 
     <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
 
-    <string name="open_manager">打开 Shizuku manager</string>
+    <string name="open_manager">打开 Shizuku Manager</string>
 
 </resources>

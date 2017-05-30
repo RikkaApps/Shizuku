@@ -103,7 +103,7 @@ public class RequestActivity extends Activity {
 
         CharSequence name = pi.applicationInfo.loadLabel(getPackageManager());
 
-        String mode = protocol.isRoot() ? "ROOT" : "ADB";
+        String mode = protocol.isRoot() ? "root" : "adb";
         CharSequence message = Html.fromHtml(getString(R.string.auth_message, name, mode));
 
         Dialog dialog = new AlertDialog.Builder(this)

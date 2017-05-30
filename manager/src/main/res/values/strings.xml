@@ -26,9 +26,9 @@
 
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
-    <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with <b>%2$s</b> permission?]]></string>
+    <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
 
-    <string name="auth_manager_no_token">Shizuku manager haven\'t received token correctly, please try restart server or use \"get token\" in the manager.</string>
+    <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart server or use \"get token\" in the manager.</string>
     <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart server is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to server, please check if the server is running.</string>
 
@@ -41,6 +41,6 @@
 
     <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
 
-    <string name="open_manager">Open Shizuku manager</string>
+    <string name="open_manager">Open Shizuku Manager</string>
 
 </resources>

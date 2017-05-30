@@ -269,9 +269,9 @@ public class MainActivity extends Activity {
         } else {
             if (ok) {
                 if (protocol.versionUnmatched()) {
-                    mStatusText.setText(getString(R.string.server_running_update, protocol.isRoot() ? "ROOT" : "ADB shell", protocol.getVersion(), Protocol.VERSION));
+                    mStatusText.setText(getString(R.string.server_running_update, protocol.isRoot() ? "root" : "adb", protocol.getVersion(), Protocol.VERSION));
                 } else {
-                    mStatusText.setText(getString(R.string.server_running, protocol.isRoot() ? "ROOT" : "ADB shell", protocol.getVersion()));
+                    mStatusText.setText(getString(R.string.server_running, protocol.isRoot() ? "root" : "adb", protocol.getVersion()));
                 }
 
                 if (protocol.isRoot()) {
