@@ -23,3 +23,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class !android.support.** { *; }
+
+-keep class android.support.v7.widget.LinearLayoutManager {
+  <init>(...);
+}
+-keepnames class android.support.v7.widget.LinearLayoutManager
+
+-dontwarn moe.shizuku.server.HideApiOverride*

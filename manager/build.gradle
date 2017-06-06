@@ -20,7 +20,8 @@ android {
         }
         release {
             signingConfig signingConfigs.sign
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -46,7 +47,7 @@ dependencies {
 }
 
 def ksFile = file('signing.properties')
-def props = new Properties();
+def props = new Properties()
 if (ksFile.canRead()) {
     props.load(new FileInputStream(ksFile))
 
