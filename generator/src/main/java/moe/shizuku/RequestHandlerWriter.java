@@ -119,7 +119,7 @@ public class RequestHandlerWriter extends Writer {
                 } else {
                     writeLine(String.format(Locale.ENGLISH, "int %sLength = is.readInt();", arg.name));
                     writeLine(String.format(Locale.ENGLISH, "%s = null;", arg.toString()));
-                    writeLine(String.format(Locale.ENGLISH, "if (%sLength > 0) {", arg.name));
+                    writeLine(String.format(Locale.ENGLISH, "if (%sLength >= 0) {", arg.name));
                     writeLine(String.format(Locale.ENGLISH, "%s = new %s[%sLength];", arg.name, arg.type.toStringWithoutArray(), arg.name));
                     writeLine(String.format(Locale.ENGLISH, "for (int i = 0; i < %s.length; i++) {", arg.name));
                     writeLine(String.format(Locale.ENGLISH, "%s[i] = is.read%s();\n}\n}", arg.name, arg.type.getDataSteamType()));
