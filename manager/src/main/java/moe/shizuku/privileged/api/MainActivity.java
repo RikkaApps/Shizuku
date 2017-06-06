@@ -1,6 +1,8 @@
 package moe.shizuku.privileged.api;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -12,6 +14,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -320,5 +324,26 @@ public class MainActivity extends Activity {
 
         mRefreshTask = null;
         mStartTask = null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                Dialog dialog = new AlertDialog.Builder(this)
+                        .setView(R.layout.dialog_about)
+                        .show();
+
+                ((TextView) dialog.findViewById(R.id.version)).setText(BuildConfig.VERSION_NAME);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -43,4 +43,6 @@
 
     <string name="open_manager">Open Shizuku Manager</string>
 
+    <string name="action_about">About</string>
+
 </resources>

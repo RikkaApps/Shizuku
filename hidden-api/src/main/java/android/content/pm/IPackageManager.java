@@ -14,7 +14,7 @@ public interface IPackageManager {
     ApplicationInfo getApplicationInfo(String packageName, int flags ,int userId);
 
     /**
-     * @deprecated since API 24
+     * deprecated since API 24
      */
     int getPackageUid(String packageName, int userId) throws RemoteException;
 

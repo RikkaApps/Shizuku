@@ -42,4 +42,6 @@
 
     <string name="open_manager">打开 Shizuku Manager</string>
 
+    <string name="action_about">关于</string>
+
 </resources>
