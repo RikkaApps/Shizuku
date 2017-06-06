@@ -330,34 +330,16 @@ class SocketThread implements Runnable, RequestHandler.Impl {
     }
 
     @Override
-    public void resetAllModes(int reqUserId, String reqPackageName) throws RemoteException {
-        IAppOpsService appOpsService = IAppOpsService.Stub.asInterface(ServiceManager.getService(Context.APP_OPS_SERVICE));
-        appOpsService.resetAllModes(reqUserId, reqPackageName);
-    }
-
-    @Override
-    public AppOpsManager.PackageOps getOpsForPackage2(int userId, String packageName, int[] ops) throws RemoteException {
-        int uid = getPackageUid(packageName, 0, userId);
-        List<AppOpsManager.PackageOps> list = getOpsForPackage(uid, packageName, ops);
-        if (list != null && !list.isEmpty()) {
-            return list.get(0);
-        }
-        return null;
-    }
-
-    @Override
-    public AppOpsManager.PackageOps setMode2(int[] code, int userId, String packageName, int[] mode) throws RemoteException {
-        int uid = getPackageUid(packageName, 0, userId);
+    public void setMode(int[] code, int uid, String packageName, int[] mode) throws RemoteException {
         for (int i = 0; i < code.length; i++) {
             setMode(code[i], uid, packageName, mode[i]);
         }
-        return getOpsForPackage2(userId, packageName, null);
     }
 
     @Override
-    public AppOpsManager.PackageOps resetAllModes2(int reqUserId, String reqPackageName) throws RemoteException {
-        resetAllModes(reqUserId, reqPackageName);
-        return getOpsForPackage2(reqUserId, reqPackageName, null);
+    public void resetAllModes(int reqUserId, String reqPackageName) throws RemoteException {
+        IAppOpsService appOpsService = IAppOpsService.Stub.asInterface(ServiceManager.getService(Context.APP_OPS_SERVICE));
+        appOpsService.resetAllModes(reqUserId, reqPackageName);
     }
 
     @Override

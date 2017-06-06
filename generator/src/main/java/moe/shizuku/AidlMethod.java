@@ -10,14 +10,28 @@ import java.util.List;
 public class AidlMethod {
     public Type returnType;
     public String name;
+    public String displayName;
     public List<Arg> args;
     public String extra;
 
-    public AidlMethod(String returnType, String name, String args, String extra) {
+    public AidlMethod(String returnType, String name, String args, String extra, List<AidlMethod> methods) {
         this.returnType = new Type(returnType);
         this.name = name;
         this.args = new ArrayList<>();
         this.extra = extra;
+
+        int count = 0;
+        for (AidlMethod m : methods) {
+            if (m.name.equals(name)) {
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            displayName = name + "_" + count;
+        } else {
+            displayName = name;
+        }
 
         if (args.trim().length() > 0) {
             for (String arg : args.split(",")) {

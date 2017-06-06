@@ -90,8 +90,8 @@ public class RequestHandlerWriter extends Writer {
         writeLine("switch (action) {");
 
         for (AidlMethod method : parser.methods) {
-            writeLine("case Actions." + method.name + ":");
-            writeLine(method.name + "(is, os);");
+            writeLine("case Actions." + method.displayName + ":");
+            writeLine(method.displayName + "(is, os);");
             writeLine("break;");
         }
         writeLine("default:\nreturn impl.handleUnknownAction(action, is, os);");
@@ -106,7 +106,7 @@ public class RequestHandlerWriter extends Writer {
 
     @Override
     public Writer writeMethod(AidlMethod method) throws IOException {
-        writeLine("private void " + method.name + "(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {");
+        writeLine("private void " + method.displayName + "(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {");
 
         if (!method.args.isEmpty()) {
             for (Arg arg : method.args) {

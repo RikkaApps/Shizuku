@@ -45,6 +45,6 @@ public class ActionWriter extends Writer {
 
     @Override
     public Writer writeMethod(AidlMethod method) throws IOException {
-        return writeLine(String.format(Locale.ENGLISH, "public static final int %s = %d;", method.name, index++));
+        return writeLine(String.format(Locale.ENGLISH, "public static final int %s = %d;", method.displayName, index++));
     }
 }

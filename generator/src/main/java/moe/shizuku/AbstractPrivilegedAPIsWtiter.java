@@ -71,7 +71,7 @@ public class AbstractPrivilegedAPIsWtiter extends Writer {
                 "client.setSoTimeout(TIMEOUT);\n" +
                 "ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());\n" +
                 "ParcelInputStream is = new ParcelInputStream(client.getInputStream());");
-        writeLine("os.writeInt(Actions." + method.name + ");");
+        writeLine("os.writeInt(Actions." + method.displayName + ");");
 
         if (!"version".equals(method.name)
                 && !"authorize".equals(method.name)) {

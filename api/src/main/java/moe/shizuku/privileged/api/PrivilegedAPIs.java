@@ -46,6 +46,7 @@ public final class PrivilegedAPIs extends AbstractPrivilegedAPIs {
     private static final UUID TOKEN_EMPTY = new UUID(0, 0);
 
     private static boolean isRoot = false;
+    private static int serverVersion = -1;
 
     public static boolean installed(Context context) {
         try {
@@ -230,12 +231,20 @@ public final class PrivilegedAPIs extends AbstractPrivilegedAPIs {
         return isRoot;
     }
 
+    /**
+     * @return server version
+     */
+    public static int getServerVersion() {
+        return serverVersion;
+    }
+
     @Override
     public Protocol authorize(long most, long least) {
         Protocol protocol = super.authorize(most, least);
         if (protocol != null
                 && protocol.getCode() == Protocol.RESULT_OK) {
             isRoot = protocol.isRoot();
+            serverVersion = protocol.getVersion();
         }
         return protocol;
     }

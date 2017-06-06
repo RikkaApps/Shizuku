@@ -22,6 +22,7 @@ task generateCodes(type: Exec) {
 }
 
 project.afterEvaluate {
+    preBuild.dependsOn ':generator:build'
     preBuild.dependsOn generateCodes
 }
 

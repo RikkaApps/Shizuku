@@ -43,11 +43,8 @@ interface IServerInterface {
     // AppOpsManager
     List<AppOpsManager.PackageOps> getOpsForPackage(int uid, String packageName, in int[] ops);
     void setMode(int code, int uid, String packageName, int mode);
+    void setMode(in int[] code, int uid, String packageName, in int[] mode);
     void resetAllModes(int reqUserId, String reqPackageName);
-
-    AppOpsManager.PackageOps getOpsForPackage2(int userId, String packageName, in int[] ops);
-    AppOpsManager.PackageOps setMode2(in int[] code, int userId, String packageName, in int[] mode);
-    AppOpsManager.PackageOps resetAllModes2(int reqUserId, String reqPackageName);
 
     // WifiManager
     List<WrappedWifiConfiguration> getPrivilegedConfiguredNetworks();

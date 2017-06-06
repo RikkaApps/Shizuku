@@ -56,7 +56,7 @@ public class AidlParser {
                 String comment = line.contains("//") ? line.substring(line.indexOf("//") + 3).trim() : null;
 
                 types.add(currentType);
-                methods.add(new AidlMethod(returnType, name, args, comment));
+                methods.add(new AidlMethod(returnType, name, args, comment, methods));
             }
         }
     }
