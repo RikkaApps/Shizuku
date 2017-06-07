@@ -153,15 +153,7 @@ public class ServerLauncher {
             os.write("#!/system/bin/sh\n");
             os.write("\n");
             os.write("# start new server\n");
-            //os.write("echo \"Starting Server......\"\n");
-            os.write("export CLASSPATH=" + path + "\n");
-            //os.write("\n");
-            //os.write("# for security reason, create a temporary ELF\n");
-            //os.write("rm -rf $path/app_process\n");
-            //os.write("ln -s /system/bin/app_process $path/app_process\n");
-            //os.write("\n");
-            //os.write("exec $path/app_process /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
-            os.write("exec app_process /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
+            os.write("exec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
             os.flush();
             os.close();
         } catch (Exception ignored) {
@@ -182,10 +174,7 @@ public class ServerLauncher {
         if (Shell.SU.available()) {
             sendQuit();
 
-            Shell.SU.run(new String[]{
-                    "export CLASSPATH=" + path,
-                    "exec app_process /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
-            }, SERVER_TIMEOUT);
+            Shell.SU.run("app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &", SERVER_TIMEOUT);
         }
     }
 

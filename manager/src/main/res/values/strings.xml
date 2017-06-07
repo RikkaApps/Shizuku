@@ -20,7 +20,8 @@
     <string name="start_server_title_root"><![CDATA[Start server with ROOT permission]]></string>
     <string name="start_server_summary_root"><![CDATA[Server will be started automatically when other apps try to use it.]]></string>
     <string name="start_server_title_adb"><![CDATA[Start / update server with ADB]]></string>
-    <string name="start_server_summary_adb"><![CDATA[Your device is running Android Lollipop. According to some users’ feedback, the ADB shell may not have the permission to call certain APIs like some AppOps related APIs.<p><b>You will have to re-execute following steps every time you reboot your device.</b><p>Type following content into terminal and hit Enter<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>The server running status will refresh if this operation succeed]]></string>
+    <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b><p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.<br>Type following content into computer\'s terminal and hit Enter<p><font face="monospace">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</font><p>The server running status will refresh if this operation succeed]]></string>
+
     <string name="copy_command">Copy</string>
     <string name="send_command">Send</string>
 
