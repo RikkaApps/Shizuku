@@ -173,8 +173,7 @@ public class Server extends Handler {
     private void registerTaskStackListener() {
         try {
             IActivityManager am = ActivityManagerNative.getDefault();
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1
-                    && Build.VERSION.PREVIEW_SDK_INT > 0) {
+            if (BuildUtils.isO()) {
                 //HideApiOverride.registerTaskStackListener(am);
                 System.out.println("WARNING: skip registerTaskStackListener because API changed on Android O, TASK_STACK_CHANGED broadcast will not send.");
             } else {
