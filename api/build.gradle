@@ -80,7 +80,7 @@ uploadArchives {
             name 'privileged-api'
             groupId "moe.shizuku.support"
             artifactId 'privileged-api'
-            version rootProject.ext.versionName
+            version rootProject.ext.serverVersionCode
             packaging 'aar'
         }
     }

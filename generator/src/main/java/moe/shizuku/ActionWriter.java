@@ -35,7 +35,7 @@ public class ActionWriter extends Writer {
             AidlMethod method = parser.methods.get(i);
             if (!parser.types.get(i).equals(currentType)) {
                 currentType = parser.types.get(i);
-                index = (index / 100 + 1) * 100;
+                index = (index / 1000 + 1) * 1000;
             }
             writeMethod(method);
         }
