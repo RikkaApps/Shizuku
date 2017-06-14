@@ -181,6 +181,7 @@
                     app:textHtml="@string/start_server_title_adb"/>
 
                 <moe.shizuku.privileged.api.widget.HtmlTextView
+                    android:id="@+id/adb_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"

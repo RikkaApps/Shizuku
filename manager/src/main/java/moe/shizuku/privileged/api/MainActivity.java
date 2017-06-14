@@ -232,7 +232,7 @@ public class MainActivity extends Activity {
     }
 
     private void updateUI(Protocol protocol) {
-        //Log.d("RServer", "update ui: " + protocol.toString());
+        ((HtmlTextView) findViewById(R.id.adb_text)).setHtmlText(getString(R.string.start_server_summary_adb, COMMAND_ADB));
 
         mCheckToRequest = false;
 

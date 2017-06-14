@@ -1,11 +1,11 @@
 package moe.shizuku.privileged.api;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Process;
-import android.os.RemoteException;
 import android.support.annotation.IntDef;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
@@ -136,7 +136,7 @@ public class ServerLauncher {
         }
     }
 
-    public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
+    public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
 
     public static void writeSH(Context context) {
         // adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh
@@ -147,13 +147,24 @@ public class ServerLauncher {
                 file.createNewFile();
             }
 
-            String path = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).applicationInfo.publicSourceDir;
+            @SuppressLint("SdCardPath")
+            File sdcardFile = new File("/sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh");
+            // not user 0 or no /sdcard
+            if (Process.myUserHandle().hashCode() != 0
+                    || !sdcardFile.exists()) {
+                COMMAND_ADB = "adb shell sh " + file.getAbsolutePath();
+            }
+
+            String path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
 
             BufferedWriter os = new BufferedWriter(new FileWriter(file));
             os.write("#!/system/bin/sh\n");
-            os.write("\n");
-            os.write("# start new server\n");
-            os.write("exec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
+            os.write("if [ -f " + path + " ]\n");
+            os.write("then\n");
+            os.write("\texec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
+            os.write("else\n");
+            os.write("\techo \"Apk file not exist, please open Shizuku Manager and try again.\"\n");
+            os.write("fi\n");
             os.flush();
             os.close();
         } catch (Exception ignored) {
