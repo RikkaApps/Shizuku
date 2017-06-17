@@ -39,6 +39,7 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         pkg = (TextView) itemView.findViewById(android.R.id.summary);
         switch_widget = (Switch) itemView.findViewById(R.id.switch_widget);
 
+        itemView.setFilterTouchesWhenObscured(true);
         itemView.setOnClickListener(this);
     }
 
