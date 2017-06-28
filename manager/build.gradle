@@ -34,6 +34,7 @@ android {
     }
     sourceSets {
         main {
+            // executable files output directory defined in src/main/jni/CMakeList.txt
             jniLibs.srcDirs 'build/starter'
         }
     }

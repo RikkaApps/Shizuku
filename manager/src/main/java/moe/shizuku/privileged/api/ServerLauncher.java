@@ -157,11 +157,24 @@ public class ServerLauncher {
 
             String path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
 
+            File dir = new File(path);
+            File starter = new File(dir.getParentFile(), "lib/*/libshizuku.so");
+            String starterPath = starter.getAbsolutePath();
+
             BufferedWriter os = new BufferedWriter(new FileWriter(file));
             os.write("#!/system/bin/sh\n");
-            os.write("if [ -f " + path + " ]\n");
+            os.write("if [ -f " + starterPath + " ]\n");
             os.write("then\n");
-            os.write("\texec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &");
+            //os.write("\texec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &\n");
+
+            final String starterName = "shizuku_starter";
+            final String tmpPath = "/data/local/tmp";
+            os.write(String.format("\trm %s/%s\n", tmpPath, starterName));
+            os.write(String.format("\tcp %s %s/%s\n", starterPath, tmpPath, starterName));
+            os.write(String.format("\tchmod +x %s/%s\n", tmpPath, starterName));
+            os.write(String.format("\texport PATH=%s:/system/bin:$PATH\n", tmpPath));
+            os.write(String.format("\t%s\n", starterName));
+
             os.write("else\n");
             os.write("\techo \"Apk file not exist, please open Shizuku Manager and try again.\"\n");
             os.write("fi\n");
