@@ -44,4 +44,6 @@
 
     <string name="action_about">关于</string>
 
+    <string name="about_icon_credits"><![CDATA[感谢 <a href="https://twitter.com/xiaoya_er">小雅</a> 制作应用图标]]></string>
+
 </resources>

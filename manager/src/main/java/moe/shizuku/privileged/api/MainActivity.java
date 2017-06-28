@@ -13,6 +13,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -339,7 +341,8 @@ public class MainActivity extends Activity {
                         .setView(R.layout.dialog_about)
                         .show();
 
-                ((TextView) dialog.findViewById(R.id.version)).setText(BuildConfig.VERSION_NAME);
+                ((TextView) dialog.findViewById(R.id.icon_credits)).setMovementMethod(LinkMovementMethod.getInstance());
+                ((TextView) dialog.findViewById(R.id.icon_credits)).setText(Html.fromHtml(getString(R.string.about_icon_credits)));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
