@@ -7,8 +7,8 @@
     <string name="receive_task_stack_changed_label">receive task stack changed</string>
     <string name="receive_task_stack_changed_description">Allow this app to receive a broadcast when task stack changed.</string>
 
-    <string name="server_running" formatted="false">running version %2$d (%1$s)</string>
-    <string name="server_running_update" formatted="false">running version %2$d (%1$s)\nrestart server to update to %3$d</string>
+    <string name="server_running">running version %2$d (%1$s)</string>
+    <string name="server_running_update">running version %2$d (%1$s)\nrestart server to update to %3$d</string>
     <string name="server_not_running">Tap to check if server is running</string>
     <string name="server_require_restart">Require restart server</string>
     <string name="server_no_token">running, but no correct token received\ntap to request token</string>
@@ -20,7 +20,7 @@
     <string name="start_server_title_root"><![CDATA[Start server with ROOT permission]]></string>
     <string name="start_server_summary_root"><![CDATA[Server will be started automatically when other apps try to use it.]]></string>
     <string name="start_server_title_adb"><![CDATA[Start / update server with ADB]]></string>
-    <string name="start_server_summary_adb" formatted="false"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b><p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.<br>Type following content into computer\'s terminal and hit Enter<p><font face="monospace">%s</font><p>The server running status will refresh if this operation succeed]]></string>
+    <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b><p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.<br>Type following content into computer\'s terminal and hit Enter<p><font face="monospace">%s</font><p>The server running status will refresh if this operation succeed]]></string>
 
     <string name="copy_command">Copy</string>
     <string name="send_command">Send</string>

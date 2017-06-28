@@ -6,8 +6,8 @@
     <string name="receive_task_stack_changed_label">接收任務堆疊變化</string>
     <string name="receive_task_stack_changed_description">允許該程式在任務堆疊發生變化時收到廣播。</string>
 
-    <string name="server_running" formatted="false">版本 %2$d 運行中（%1$s）</string>
-    <string name="server_running_update" formatted="false">版本 %2$d 運行中（%1$s）\n重啟服務以升級至版本 %3$d</string>
+    <string name="server_running">版本 %2$d 運行中（%1$s）</string>
+    <string name="server_running_update">版本 %2$d 運行中（%1$s）\n重啟服務以升級至版本 %3$d</string>
     <string name="server_not_running">按此檢查服務是否運行</string>
     <string name="server_require_restart">需要重新啟動服務</string>
     <string name="server_no_token">運行中，但未正確接收令牌\n點擊請求令牌</string>
@@ -19,7 +19,7 @@
     <string name="start_server_title_root"><![CDATA[透過 ROOT 權限啟動服務]]></string>
     <string name="start_server_summary_root"><![CDATA[當其他程式嘗試使用時，服務將被自動啟動。]]></string>
     <string name="start_server_title_adb"><![CDATA[透過 ADB 啟動或升級服務]]></string>
-    <string name="start_server_summary_adb" formatted="false"><![CDATA[<b>以下步驟需要在每次重新啟動後進行。</b><p>在“開發者選項”中開啟“USB 調試”，將設備連接至電腦。<br>在電腦的命令提示字元中輸入以下內容<p><font face="monospace">%s</font><p>按下確認鍵，如果成功將看到主界面運行狀態更新。]]></string>
+    <string name="start_server_summary_adb"><![CDATA[<b>以下步驟需要在每次重新啟動後進行。</b><p>在“開發者選項”中開啟“USB 調試”，將設備連接至電腦。<br>在電腦的命令提示字元中輸入以下內容<p><font face="monospace">%s</font><p>按下確認鍵，如果成功將看到主界面運行狀態更新。]]></string>
 
     <string name="copy_command">複製</string>
     <string name="send_command">發送</string>
