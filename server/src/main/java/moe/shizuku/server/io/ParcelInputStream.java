@@ -74,7 +74,7 @@ public class ParcelInputStream extends DataInputStream {
             /*case EX_SERVICE_SPECIFIC:
                 throw new ServiceSpecificException(readInt(), msg);*/
         }
-        throw new RuntimeException(msg);
+        throw new PrivilegedServerException(msg);
     }
 
     public final byte[] readBytes() throws IOException {

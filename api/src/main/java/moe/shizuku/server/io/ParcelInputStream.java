@@ -8,9 +8,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class ParcelInputStream extends DataInputStream {
         }
     }
 
-    private final void readException(int code, String msg) {
+    private final void readException(int code, String msg) throws IOException {
         switch (code) {
             case EX_SECURITY:
                 throw new SecurityException(msg);
@@ -71,10 +73,8 @@ public class ParcelInputStream extends DataInputStream {
                 throw new NetworkOnMainThreadException();
             case EX_UNSUPPORTED_OPERATION:
                 throw new UnsupportedOperationException(msg);
-            /*case EX_SERVICE_SPECIFIC:
-                throw new ServiceSpecificException(readInt(), msg);*/
         }
-        throw new RuntimeException(msg);
+        throw new PrivilegedServerException(msg);
     }
 
     public final byte[] readBytes() throws IOException {
