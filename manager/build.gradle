@@ -10,6 +10,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        resValue "string", "versionName", rootProject.ext.versionName
     }
     signingConfigs {
         sign

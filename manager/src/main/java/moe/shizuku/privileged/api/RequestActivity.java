@@ -128,7 +128,15 @@ public class RequestActivity extends Activity {
                     }
                 })
                 .setCancelable(false)
-                .show();
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+	        @Override
+	        public void onShow(DialogInterface dialogInterface) {
+		        AlertDialog dialog = (AlertDialog) dialogInterface;
+		        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+	        }
+        });
+        dialog.show();
 
         TextView textView = (TextView) dialog.findViewById(android.R.id.message);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.request_dialog_text_size));

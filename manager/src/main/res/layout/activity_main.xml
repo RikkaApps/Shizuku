@@ -71,6 +71,8 @@
             android:stateListAnimator="@animator/raise"
             android:foreground="?android:attr/selectableItemBackground"
             android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true"
             tools:visibility="visible"
             style="@style/Card">
 
