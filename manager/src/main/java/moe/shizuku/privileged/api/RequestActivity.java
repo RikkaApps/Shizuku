@@ -36,12 +36,15 @@ public class RequestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(tp);
+        StrictMode.ThreadPolicy permitNetworkPolicy = new StrictMode.ThreadPolicy.Builder(StrictMode.getThreadPolicy())
+                .permitNetwork()
+                .build();
+        StrictMode.setThreadPolicy(permitNetworkPolicy);
 
         final String packageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
         int uid = getIntent().getIntExtra(EXTRA_UID, 0);
         if (packageName == null) {
+            setResult(AUTH_RESULT_ERROR);
             finish();
             return;
         }
