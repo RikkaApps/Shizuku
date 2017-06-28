@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-import java.util.concurrent.CountDownLatch;
 
 import hidden.android.content.pm.UserInfo;
 import moe.shizuku.server.io.ParcelInputStream;
@@ -36,8 +34,7 @@ public class Server extends Handler {
 
         Server server = new Server();
 
-        CountDownLatch socketLatch = new CountDownLatch(0x1);
-        if (!server.start(socketLatch)) {
+        if (!server.start()) {
             System.exit(1);
             return;
         }
@@ -48,11 +45,6 @@ public class Server extends Handler {
                 Process.myPid()));
 
         Looper.loop();
-
-        try {
-            socketLatch.await();
-        } catch (InterruptedException ignored) {
-        }
 
         System.out.println(String.format(Locale.ENGLISH, "Shizuku server (pid %d) exited", Process.myPid()));
         ServerLog.i("server exit");
@@ -97,7 +89,7 @@ public class Server extends Handler {
         }
     }
 
-    public boolean start(CountDownLatch socketLatch) throws IOException, RemoteException, InterruptedException {
+    public boolean start() throws IOException, RemoteException, InterruptedException {
         if (sendQuit()) {
             Thread.sleep(100);
         }
@@ -112,7 +104,7 @@ public class Server extends Handler {
         }
         serverSocket.setReuseAddress(true);
 
-        SocketThread socket = new SocketThread(this, serverSocket, socketLatch, mToken);
+        SocketThread socket = new SocketThread(this, serverSocket, mToken);
         mAPIImpl = socket;
 
         Thread socketThread = new Thread(socket);

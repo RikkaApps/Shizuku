@@ -50,16 +50,14 @@ class SocketThread implements Runnable, RequestHandler.Impl {
 
     private final Handler mHandler;
     private final ServerSocket mServerSocket;
-    private final CountDownLatch mCountDownLatch;
 
     private final UUID mToken;
 
     private final RequestHandler mRequestHandler;
 
-    SocketThread(Handler handler, ServerSocket serverSocket, CountDownLatch socketLatch, UUID token) {
+    SocketThread(Handler handler, ServerSocket serverSocket, UUID token) {
         mHandler = handler;
         mServerSocket = serverSocket;
-        mCountDownLatch = socketLatch;
         mToken = token;
         mRequestHandler = new RequestHandler(this);
     }
@@ -88,11 +86,11 @@ class SocketThread implements Runnable, RequestHandler.Impl {
                 ServerLog.w("error", e);
             }
         }
+        mHandler.sendEmptyMessage(Server.MESSAGE_EXIT);
         try {
             mServerSocket.close();
         } catch (IOException ignored) {
         }
-        mCountDownLatch.countDown();
     }
 
     @Override
