@@ -172,15 +172,6 @@ public class ServerLauncher {
     }
 
     @WorkerThread
-    public static void startRoot(Context context) {
-        try {
-            String path = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).applicationInfo.publicSourceDir;
-            startRoot(path);
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-    }
-
-    @WorkerThread
     public static void startRoot(String path) {
         if (Shell.SU.available()) {
             sendQuit();
@@ -190,12 +181,20 @@ public class ServerLauncher {
     }
 
     @WorkerThread
-    public static Protocol startRoot() {
+    public static Protocol startRoot(Context context) {
         if (Shell.SU.available()) {
-            long time = System.currentTimeMillis();
-
             sendQuit();
-            Shell.SU.run("sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh", SERVER_TIMEOUT);
+
+            String path = null;
+            try {
+                path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
+            } catch (PackageManager.NameNotFoundException ignored) {
+            }
+
+            long time = System.currentTimeMillis();
+            Shell.SU.run(new String[]{
+                  "app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
+            }, SERVER_TIMEOUT);
 
             while (System.currentTimeMillis() - time < SERVER_TIMEOUT) {
                 try {
@@ -216,6 +215,7 @@ public class ServerLauncher {
         }
         return Protocol.createUnknown();
     }
+
 
     public static UUID getToken(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);

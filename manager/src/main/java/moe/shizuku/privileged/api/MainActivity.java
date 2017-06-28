@@ -205,8 +205,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Protocol doInBackground(Context... params) {
-            ServerLauncher.writeSH(params[0]);
-            return ServerLauncher.startRoot();
+            return ServerLauncher.startRoot(params[0]);
         }
 
         @Override
@@ -224,7 +223,7 @@ public class MainActivity extends Activity {
             if (protocol.getCode() == Protocol.RESULT_OK) {
                 Toast.makeText(MainActivity.this, "Succeed.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivity.this, "Failed, not rooted?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Failed.", Toast.LENGTH_SHORT).show();
             }
 
             updateUI(protocol);
