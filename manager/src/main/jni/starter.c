@@ -23,6 +23,8 @@
 #define EXIT_WARN_SERVER_STOP 8
 #define ExIT_FATAL_KILL_OLD_SERVER 9
 
+#define perrorf(...) fprintf(stderr, __VA_ARGS__)
+
 char *trimCRLF(char *str) {
     char *p;
     p = strchr(str, '\r');
@@ -41,15 +43,13 @@ char *getApkPath(char *buffer) {
     if (file != NULL) {
         fgets(buffer, (PATH_MAX + 11) * sizeof(char), file);
     } else {
-        perror("fatal: can't invoke `pm path'\n");
-        fflush(stderr);
+        perrorf("fatal: can't invoke `pm path'\n");
         exit(EXIT_FATAL_PM_PATH);
     }
     trimCRLF(buffer);
     buffer = strchr(buffer, ':');
     if (buffer == NULL) {
-        perror("fatal: can't get apk path, have you installed Shizuku Manager? Get it from https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api\n");
-        fflush(stderr);
+        perrorf("fatal: can't get apk path, have you installed Shizuku Manager? Get it from https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api\n");
         exit(EXIT_FATAL_PM_PATH_MALFORMED);
     }
     buffer++;
@@ -60,8 +60,7 @@ char *getApkPath(char *buffer) {
 
 void setClasspathEnv(char *path) {
     if (setenv("CLASSPATH", path, TRUE)) {
-        perror("fatal: can't set CLASSPATH\n");
-        fflush(stderr);
+        perrorf("fatal: can't set CLASSPATH\n");
         exit(EXIT_FATAL_SET_CLASSPATH);
     }
     printf("info: CLASSPATH=%s\n", path);
@@ -92,8 +91,7 @@ pid_t getRikkaServerPid() {
         }
         return 0;
     } else {
-        perror("\nwarn: can't open /proc, please check by yourself.\n");
-        fflush(stderr);
+        perrorf("\nwarn: can't open /proc, please check by yourself.\n");
         exit(EXIT_WARN_OPEN_PROC);
     }
 }
@@ -104,15 +102,9 @@ void killOldServer() {
         printf("info: old rikka_server found, killing\n");
         fflush(stdout);
         if (kill(pid, SIGINT) != 0) {
-            perror("fatal: can't kill old server, if you started it by root, please invoke this command:\n\n\t\t");
-            fflush(stderr);
-            char killByRootCommand[100];
-            sprintf(killByRootCommand, "adb shell su -c \"kill %d\"", pid);
-            killByRootCommand[99] = '\0';
-            perror(killByRootCommand);
-            fflush(stderr);
-            perror("\n\n");
-            fflush(stderr);
+            perrorf("fatal: can't kill old server, if you started it by root, please stop it by:\n\n\t");
+            perrorf("adb shell su -c \"kill %d\"", pid);
+            perrorf("\n\nand retry.\n");
             exit(ExIT_FATAL_KILL_OLD_SERVER);
         }
     } else {
@@ -139,15 +131,11 @@ int main(int argc, char **argv) {
         };
         if (execvp(appProcessArgs[0], appProcessArgs)) {
             char err[100];
-            sprintf(err, "fatal: can't invoke app_process, errno=%d\n", errno);
-            err[99] = '\0';
-            perror(err);
-            fflush(stderr);
+            perrorf("fatal: can't invoke app_process, errno=%d\n", errno);
             exit(EXIT_FATAL_APP_PROCESS);
         }
     } else if (pid == -1) {
-        perror("fatal: can't fork\n");
-        fflush(stderr);
+        perrorf("fatal: can't fork\n");
         exit(EXIT_FATAL_FORK);
     } else {
         printf("info: child process forked, pid=%d\n", pid);
@@ -162,8 +150,7 @@ int main(int argc, char **argv) {
             sleep(1);
             count++;
             if (count > 10) {
-                perror("\nwarn: timeout but can't get pid of rikka_server.\n");
-                fflush(stderr);
+                perrorf("\nwarn: timeout but can't get pid of rikka_server.\n");
                 exit(EXIT_WARN_START_TIMEOUT);
             }
         }
@@ -181,8 +168,7 @@ int main(int argc, char **argv) {
                 exit(EXIT_SUCCESS);
             }
         }
-        perror("\nwarn: rikka_server stopped after started.\n");
-        fflush(stderr);
+        perrorf("\nwarn: rikka_server stopped after started.\n");
         exit(EXIT_WARN_SERVER_STOP);
     }
 }
