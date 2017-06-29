@@ -7,12 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <signal.h>
-#include <stdint.h>
-#include <limits.h>
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -26,7 +20,6 @@
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
 #define ExIT_FATAL_KILL_OLD_SERVER 9
-#define EXIT_FATAL_SET_SID 10
 
 #define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
 

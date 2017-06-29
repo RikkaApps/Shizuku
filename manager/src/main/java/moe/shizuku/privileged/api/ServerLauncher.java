@@ -10,10 +10,12 @@ import android.support.annotation.IntDef;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.Socket;
@@ -157,27 +159,17 @@ public class ServerLauncher {
 
             String path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
 
-            File dir = new File(path);
-            File starter = new File(dir.getParentFile(), "lib/*/libshizuku.so");
+            File sourceDir = new File(path);
+            File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
+            File starter = new File(libDir, "libshizuku.so");
             String starterPath = starter.getAbsolutePath();
 
-            BufferedWriter os = new BufferedWriter(new FileWriter(file));
-            os.write("#!/system/bin/sh\n");
-            os.write("if [ -f " + starterPath + " ]\n");
-            os.write("then\n");
-            //os.write("\texec app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &\n");
-
-            final String starterName = "shizuku_starter";
-            final String tmpPath = "/data/local/tmp";
-            os.write(String.format("\trm %s/%s\n", tmpPath, starterName));
-            os.write(String.format("\tcp %s %s/%s\n", starterPath, tmpPath, starterName));
-            os.write(String.format("\tchmod +x %s/%s\n", tmpPath, starterName));
-            os.write(String.format("\texport PATH=%s:/system/bin:$PATH\n", tmpPath));
-            os.write(String.format("\t%s\n", starterName));
-
-            os.write("else\n");
-            os.write("\techo \"Apk file not exist, please open Shizuku Manager and try again.\"\n");
-            os.write("fi\n");
+            BufferedReader is = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.start)));
+            PrintWriter os = new PrintWriter(new FileWriter(file));
+            String line;
+            while ((line = is.readLine()) != null) {
+                os.println(line.replace("%%%STARTER_PATH%%%", starterPath));
+            }
             os.flush();
             os.close();
         } catch (Exception ignored) {
