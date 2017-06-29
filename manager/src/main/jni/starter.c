@@ -9,6 +9,10 @@
 #include <dirent.h>
 #include <signal.h>
 #include <stdint.h>
+#include <limits.h>
+#include <sys/param.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -22,6 +26,9 @@
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
 #define ExIT_FATAL_KILL_OLD_SERVER 9
+#define EXIT_FATAL_SET_SID 10
+
+#define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
@@ -113,6 +120,20 @@ void killOldServer() {
     }
 }
 
+void showLogs() {
+    perrorf("info: please report bug with these log: \n");
+    FILE *logFile;
+    if ((logFile = fopen(LOG_FILE_PATH, "r")) != NULL) {
+        int ch;
+        while ((ch = fgetc(logFile)) != EOF) {
+            fputc(ch, stderr);
+        }
+        fclose(logFile);
+    } else {
+        perrorf("info: log file is not exist.");
+    }
+}
+
 int main(int argc, char **argv) {
     printf("info: starter begin\n");
     fflush(stdout);
@@ -121,26 +142,35 @@ int main(int argc, char **argv) {
     char *path = getApkPath(buffer);
     pid_t pid = fork();
     if (pid == 0) {
-        setClasspathEnv(path);
-        char *appProcessArgs[] = {
-                "/system/bin/app_process",
-                "/system/bin",
-                "--nice-name=rikka_server",
-                "moe.shizuku.server.Server",
-                NULL
-        };
-        if (execvp(appProcessArgs[0], appProcessArgs)) {
-            char err[100];
-            perrorf("fatal: can't invoke app_process, errno=%d\n", errno);
-            exit(EXIT_FATAL_APP_PROCESS);
+        pid = daemon(FALSE, FALSE);
+        if (pid == -1) {
+            printf("fatal: can't fork");
+            exit(EXIT_FATAL_FORK);
+        } else {
+            freopen(LOG_FILE_PATH, "w", stdout);
+            freopen(LOG_FILE_PATH, "w", stderr);
+            setClasspathEnv(path);
+            char *appProcessArgs[] = {
+                    "/system/bin/app_process",
+                    "/system/bin",
+                    "--nice-name=rikka_server",
+                    "moe.shizuku.server.Server",
+                    NULL
+            };
+            if (execvp(appProcessArgs[0], appProcessArgs)) {
+                char err[100];
+                exit(EXIT_FATAL_APP_PROCESS);
+            }
         }
     } else if (pid == -1) {
         perrorf("fatal: can't fork\n");
         exit(EXIT_FATAL_FORK);
     } else {
-        printf("info: child process forked, pid=%d\n", pid);
+        signal(SIGCHLD, SIG_IGN);
+        signal(SIGHUP, SIG_IGN);
+        printf("info: process forked, pid=%d\n", pid);
         fflush(stdout);
-        printf("info: check rikka_server start\n");
+        printf("info: check rikka_server start");
         fflush(stdout);
         int rikkaServerPid;
         int count = 0;
@@ -151,10 +181,11 @@ int main(int argc, char **argv) {
             count++;
             if (count > 10) {
                 perrorf("\nwarn: timeout but can't get pid of rikka_server.\n");
+                showLogs();
                 exit(EXIT_WARN_START_TIMEOUT);
             }
         }
-        printf("\ninfo: check rikka_server stable\n");
+        printf("\ninfo: check rikka_server stable");
         fflush(stdout);
         count = 0;
         while ((rikkaServerPid = getRikkaServerPid()) != 0) {
@@ -163,12 +194,13 @@ int main(int argc, char **argv) {
             sleep(1);
             count++;
             if (count > 5) {
-                printf("\ninfo: rikka_server started.");
+                printf("\ninfo: rikka_server started.\n");
                 fflush(stdout);
                 exit(EXIT_SUCCESS);
             }
         }
         perrorf("\nwarn: rikka_server stopped after started.\n");
+        showLogs();
         exit(EXIT_WARN_SERVER_STOP);
     }
 }
