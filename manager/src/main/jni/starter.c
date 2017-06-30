@@ -19,7 +19,7 @@
 #define EXIT_WARN_OPEN_PROC 6
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
-#define ExIT_FATAL_KILL_OLD_SERVER 9
+#define EXIT_FATAL_KILL_OLD_SERVER 9
 
 #define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
 
@@ -105,7 +105,7 @@ void killOldServer() {
             perrorf("fatal: can't kill old server, if you started it by root, please stop it by:\n\n\t");
             perrorf("adb shell su -c \"kill %d\"", pid);
             perrorf("\n\nand retry.\n");
-            exit(ExIT_FATAL_KILL_OLD_SERVER);
+            exit(EXIT_FATAL_KILL_OLD_SERVER);
         }
     } else {
         printf("info: no old rikka_server found.\n");
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FATAL_FORK);
         } else {
             freopen(LOG_FILE_PATH, "w", stdout);
-            freopen(LOG_FILE_PATH, "w", stderr);
+            dup2(fileno(stdout), fileno(stderr));
             setClasspathEnv(path);
             char *appProcessArgs[] = {
                     "/system/bin/app_process",

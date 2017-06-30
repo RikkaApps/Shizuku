@@ -10,8 +10,9 @@ if [ -f "$STARTER_PATH" ]; then
     chmod +x /data/local/tmp/shizuku_starter
     export PATH=/data/local/tmp:/system/bin:$PATH
     shizuku_starter
-    if [ $? -ne 0 ]; then
-        echo "shizuku_starter exit with non-zero value $?"
+    result=$?
+    if [ $result -ne 0 ]; then
+        echo "shizuku_starter exit with non-zero value $result"
     fi
 else
     echo "Starter file not exist, please open Shizuku Manager and try again."
