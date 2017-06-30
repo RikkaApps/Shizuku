@@ -5,7 +5,6 @@ import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,15 +14,10 @@ import android.os.RemoteException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import hidden.android.content.pm.UserInfo;
-import moe.shizuku.server.io.ParcelInputStream;
-import moe.shizuku.server.io.ParcelOutputStream;
 import moe.shizuku.server.util.Intents;
 import moe.shizuku.server.util.ServerLog;
 
@@ -39,14 +33,8 @@ public class Server extends Handler {
             return;
         }
 
-        System.out.println(String.format(Locale.ENGLISH, "Shizuku server started (version %d, %s, pid %d)",
-                Protocol.VERSION,
-                (HideApiOverride.isRoot(Process.myUid()) ? "root" : "shell"),
-                Process.myPid()));
-
         Looper.loop();
 
-        System.out.println(String.format(Locale.ENGLISH, "Shizuku server (pid %d) exited", Process.myPid()));
         ServerLog.i("server exit");
         System.exit(0);
     }
@@ -72,34 +60,12 @@ public class Server extends Handler {
         }
     }
 
-    private boolean sendQuit() {
-        try {
-            Socket socket = new Socket(Protocol.HOST, Protocol.PORT);
-            socket.setSoTimeout(100);
-            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
-            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
-            os.writeInt(-2);
-            is.readException();
-
-            ServerLog.i("send quit to old server");
-            return true;
-        } catch (Exception e) {
-            ServerLog.i("cannot connect to old server");
-            return false;
-        }
-    }
-
     public boolean start() throws IOException, RemoteException, InterruptedException {
-        if (sendQuit()) {
-            Thread.sleep(100);
-        }
-
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(Protocol.PORT, 0, Protocol.HOST);
         } catch (IOException e) {
             ServerLog.e("cannot start server", e);
-            System.out.println(String.format(Locale.ENGLISH, "Cannot start shizuku server, %s.", e.getMessage()));
             return false;
         }
         serverSocket.setReuseAddress(true);
@@ -112,7 +78,6 @@ public class Server extends Handler {
 
         ServerLog.i("start version: " + Protocol.VERSION + " token: " + mToken);
 
-        checkPermissions();
         broadcastServerStart();
         registerTaskStackListener();
 
@@ -134,62 +99,35 @@ public class Server extends Handler {
         }
     }
 
-    private void checkPermissions() throws RemoteException {
-        int uid = Process.myUid();
-        if (HideApiOverride.isRoot(uid)) {
-            return;
-        }
-
-        checkPermission(new String[]{
-                "android.permission.UPDATE_APP_OPS_STATS",
-                "android.permission.GET_APP_OPS_STATS"
-        }, uid);
-    }
-
-    private void checkPermission(String[] permNames, int uid) throws RemoteException {
-        List<String> denied = new ArrayList<>();
-        for (String permName : permNames) {
-            if (mAPIImpl.checkUidPermission(permName, uid) != PackageManager.PERMISSION_GRANTED) {
-                denied.add(permName);
-            }
-        }
-        if (!denied.isEmpty()) {
-            System.out.print("WARNING: uid " + uid + " do not have permission");
-            for (String permName : denied) {
-                System.out.print(" " + permName);
-            }
-            System.out.println(", some APIs will not work.");
-        }
-    }
-
     private void registerTaskStackListener() {
         try {
             IActivityManager am = ActivityManagerNative.getDefault();
-            if (BuildUtils.isO()) {
-                //HideApiOverride.registerTaskStackListener(am);
-                System.out.println("WARNING: skip registerTaskStackListener because API changed on Android O, TASK_STACK_CHANGED broadcast will not send.");
-            } else {
-                am.registerTaskStackListener(HideApiOverrideO.createTaskStackListener(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            List<ActivityManager.RunningTaskInfo> list = ActivityManagerNative.getDefault().getTasks(1, 0);
-                            if (list != null && !list.isEmpty()) {
-                                ComponentName component = list.get(0).topActivity;
 
-                                List<UserInfo> users = mAPIImpl.getUsers(true);
-                                for (UserInfo user : users) {
-                                    mAPIImpl.broadcastIntent(new Intent(
-                                                    Intents.ACTION_TASK_STACK_CHANGED,
-                                                    Uri.parse("component://" + component.getPackageName() + "/" + component.getClassName())
-                                            ),
-                                            Intents.permission("RECEIVE_TASK_STACK_CHANGED"), user.id);
-                                }
+            Runnable broadcastRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<ActivityManager.RunningTaskInfo> list = ActivityManagerNative.getDefault().getTasks(1, 0);
+                        if (list != null && !list.isEmpty()) {
+                            ComponentName component = list.get(0).topActivity;
+
+                            List<UserInfo> users = mAPIImpl.getUsers(true);
+                            for (UserInfo user : users) {
+                                mAPIImpl.broadcastIntent(new Intent(
+                                                Intents.ACTION_TASK_STACK_CHANGED,
+                                                Uri.parse("component://" + component.getPackageName() + "/" + component.getClassName())
+                                        ),
+                                        Intents.permission("RECEIVE_TASK_STACK_CHANGED"), user.id);
                             }
-                        } catch (RemoteException ignored) {
                         }
+                    } catch (RemoteException ignored) {
                     }
-                }));
+                }
+            };
+            if (BuildUtils.isO()) {
+                //am.registerTaskStackListener(HideApiOverride.createTaskStackListener(broadcastRunnable));
+            } else {
+                am.registerTaskStackListener(HideApiOverrideO.createTaskStackListener(broadcastRunnable));
             }
         } catch (Exception e) {
             ServerLog.e(e.getMessage(), e);
