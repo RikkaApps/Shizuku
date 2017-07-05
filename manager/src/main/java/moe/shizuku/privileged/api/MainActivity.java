@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import moe.shizuku.privileged.api.service.WorkService;
 import moe.shizuku.privileged.api.widget.HtmlTextView;
 import moe.shizuku.server.Protocol;
 import moe.shizuku.support.utils.Settings;
@@ -45,10 +46,8 @@ public class MainActivity extends Activity {
 
     private HtmlTextView mAuthorizedAppsCount;
 
-    private AsyncTask mRefreshTask;
-    private AsyncTask mStartTask;
-
     private BroadcastReceiver mServerStartedReceiver;
+    private BroadcastReceiver mStartFailedReceiver;
 
     private boolean mCheckToRequest;
 
@@ -126,15 +125,26 @@ public class MainActivity extends Activity {
             }
         });
 
-        check();
-
         mServerStartedReceiver = new ServerStartedReceiver();
+        mStartFailedReceiver = new StartFailedReceiver();
     }
 
     private class ServerStartedReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            check();
+            updateUI(intent.<Protocol>getParcelableExtra(getPackageName() + "intent.extra.RESULT"));
+        }
+    }
+
+    private class StartFailedReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int code = intent.getIntExtra(getPackageName() + "intent.extra.CODE", 0);
+            if (code != 99) {
+                Toast.makeText(context, "can\'t start server, exit code " + code + ", please contact developer.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, "error start server because not root permission.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -146,7 +156,12 @@ public class MainActivity extends Activity {
                 getResources().getQuantityString(R.plurals.authorized_apps_count, Permissions.grantedCount(), Permissions.grantedCount()));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mServerStartedReceiver, new IntentFilter(getPackageName() + ".intent.action.SERVER_STARTED"));
+                .registerReceiver(mServerStartedReceiver, new IntentFilter(getPackageName() + ".intent.action.AUTH_RESULT"));
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mStartFailedReceiver, new IntentFilter(getPackageName() + ".intent.action.START_FAILED"));
+
+        check();
     }
 
     @Override
@@ -155,81 +170,35 @@ public class MainActivity extends Activity {
 
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(mServerStartedReceiver);
+
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mStartFailedReceiver);
     }
 
     private void check() {
-        if (mRefreshTask == null) {
-            if (mCheckToRequest) {
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        ServerLauncher.requestToken();
-                    }
-                });
-                ServerLauncher.requestToken();
-            } else {
-                mRefreshTask = new RefreshTask().execute(this);
-            }
+        mStartButton.setEnabled(false);
+        mRestartButton.setEnabled(false);
+
+        ServerLauncher.writeSH(this);
+
+        if (mCheckToRequest) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ServerLauncher.requestToken();
+                }
+            });
+            ServerLauncher.requestToken();
+        } else {
+            WorkService.startAuth(this);
         }
     }
 
     private void start() {
-        if (mStartTask == null) {
-            mStartTask = new StartTask().execute(this);
-        }
-    }
+        mStartButton.setEnabled(false);
+        mRestartButton.setEnabled(false);
 
-    private class RefreshTask extends AsyncTask<Context, Void, Protocol> {
-        @Override
-        protected Protocol doInBackground(Context... params) {
-            ServerLauncher.writeSH(params[0]);
-
-            return ServerLauncher.authorize(params[0]);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mStartButton.setEnabled(false);
-            mRestartButton.setEnabled(false);
-        }
-
-        @Override
-        protected void onPostExecute(Protocol protocol) {
-            if (isFinishing()) {
-                return;
-            }
-
-            updateUI(protocol);
-        }
-    }
-
-    private class StartTask extends AsyncTask<Context, Void, Protocol> {
-
-        @Override
-        protected Protocol doInBackground(Context... params) {
-            return ServerLauncher.startRoot(params[0]);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mStartButton.setEnabled(false);
-            mRestartButton.setEnabled(false);
-        }
-
-        @Override
-        protected void onPostExecute(Protocol protocol) {
-            if (isFinishing()) {
-                return;
-            }
-
-            if (protocol.getCode() == Protocol.RESULT_OK) {
-                Toast.makeText(MainActivity.this, "Succeed.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Failed.", Toast.LENGTH_SHORT).show();
-            }
-
-            updateUI(protocol);
-        }
+        WorkService.startServer(this);
     }
 
     private void updateUI(Protocol protocol) {
@@ -322,9 +291,6 @@ public class MainActivity extends Activity {
 
         mStartButton.setEnabled(true);
         mRestartButton.setEnabled(true);
-
-        mRefreshTask = null;
-        mStartTask = null;
     }
 
     @Override

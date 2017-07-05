@@ -13,7 +13,6 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -34,7 +33,6 @@ import moe.shizuku.server.io.ParcelOutputStream;
 public class ServerLauncher {
 
     private static final int SERVER_TIMEOUT = 5000;
-    private static final int SERVER_CHECK_INTERVAL = 50;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({SERVER_RUNNING, SERVER_STOPPED, SERVER_VERSION_NOT_MATCHED})
@@ -104,40 +102,6 @@ public class ServerLauncher {
         }
     }
 
-    public static void forceStopPackage(Context context, String packageName) {
-        try {
-            UUID token = getToken(context);
-
-            Socket client = new Socket(Protocol.HOST, Protocol.PORT);
-            client.setSoTimeout(SERVER_TIMEOUT);
-            ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
-            ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeInt(Actions.forceStopPackage);
-            os.writeLong(token.getMostSignificantBits());
-            os.writeLong(token.getLeastSignificantBits());
-            os.writeString(packageName);
-            os.writeInt(Process.myUid() / 100000);
-            is.readException();
-        } catch (Exception ignored) {
-        }
-    }
-
-    private static void sendQuit() {
-        try {
-            Socket socket = new Socket(Protocol.HOST, Protocol.PORT);
-            socket.setSoTimeout(100);
-            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
-            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
-            os.writeInt(-2);
-            is.readException();
-
-            Log.i("RServer", "send quit to old server");
-
-            Thread.sleep(100);
-        } catch (IOException | InterruptedException ignored) {
-        }
-    }
-
     public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
 
     public static void writeSH(Context context) {
@@ -157,12 +121,7 @@ public class ServerLauncher {
                 COMMAND_ADB = "adb shell sh " + file.getAbsolutePath();
             }
 
-            String path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
-
-            File sourceDir = new File(path);
-            File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
-            File starter = new File(libDir, "libshizuku.so");
-            String starterPath = starter.getAbsolutePath();
+            String starterPath = starter(context);
 
             BufferedReader is = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.start)));
             PrintWriter os = new PrintWriter(new FileWriter(file));
@@ -176,51 +135,31 @@ public class ServerLauncher {
         }
     }
 
-    @WorkerThread
-    public static void startRoot(String path) {
-        if (Shell.SU.available()) {
-            sendQuit();
-
-            Shell.SU.run("app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &", SERVER_TIMEOUT);
+    private static String starter(Context context) {
+        String path;
+        try {
+            path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
+        } catch (PackageManager.NameNotFoundException ignored) {
+            throw new RuntimeException();
         }
+
+        File sourceDir = new File(path);
+        File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
+        File starter = new File(libDir, "libshizuku.so");
+        return starter.getAbsolutePath();
     }
 
     @WorkerThread
-    public static Protocol startRoot(Context context) {
+    public static int startRoot(Context context) {
         if (Shell.SU.available()) {
-            sendQuit();
-
-            String path = null;
-            try {
-                path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
-            } catch (PackageManager.NameNotFoundException ignored) {
-            }
-
             long time = System.currentTimeMillis();
-            Shell.SU.run(new String[]{
-                  "app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
-            }, SERVER_TIMEOUT);
-
-            while (System.currentTimeMillis() - time < SERVER_TIMEOUT) {
-                try {
-                    Thread.sleep(SERVER_CHECK_INTERVAL);
-                    Protocol protocol = getVersion();
-                    if (protocol.getCode() == Protocol.RESULT_OK) {
-                        Log.d("RServer", "server started in " + (System.currentTimeMillis() - time) + "ms");
-                        return protocol;
-                    }
-                } catch (Exception ignored) {
-                }
-            }
-
-            Log.i("RServer", "server not started in " + (System.currentTimeMillis() - time) + "ms");
-            return Protocol.createUnknown();
+            int result = Shell.SU.run(starter(context) + " --skip-check"/* + " --token=" + UUID.randomUUID()*/).getExitCode();
+            Log.d("RServer", "start root result " + result + " in " + (System.currentTimeMillis() - time) + "ms");
+            return result;
         } else {
-            Log.i("RServer", "cant start server because no root permission");
+            return 99;
         }
-        return Protocol.createUnknown();
     }
-
 
     public static UUID getToken(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);

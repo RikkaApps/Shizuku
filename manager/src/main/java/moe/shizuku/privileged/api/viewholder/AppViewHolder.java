@@ -50,32 +50,6 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
 
         Permissions.toggle(pi.packageName, pi.firstInstallTime);
         getAdapter().notifyItemChanged(getAdapterPosition(), new Object());
-
-        /*boolean granted = Permissions.granted(ai.packageName);
-
-        if (!granted) {
-            Permissions.toggle(ai.packageName);
-
-            getAdapter().notifyItemChanged(getAdapterPosition(), new Object());
-        } else {
-            new AlertDialog.Builder(context)
-                    .setTitle("是否要撤销该应用的授权？")
-                    .setMessage("如果确认，该应用将会被强行停止。")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
-                            StrictMode.setThreadPolicy(tp);
-
-                            ServerLauncher.forceStopPackage(context, ai.packageName);
-
-                            Permissions.revoke(ai.packageName);
-                            getAdapter().notifyItemChanged(getAdapterPosition(), new Object());
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show();
-        }*/
     }
 
     @Override
