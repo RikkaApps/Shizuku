@@ -26,7 +26,17 @@ public class Server extends Handler {
     public static void main(String[] args) throws IOException, RemoteException, InterruptedException {
         Looper.prepare();
 
-        Server server = new Server();
+        UUID token = null;
+        if (args.length > 0) {
+            try {
+                token = UUID.fromString(args[0]);
+
+                ServerLog.i("using token from arg");
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        Server server = new Server(token);
 
         if (!server.start()) {
             System.exit(1);
@@ -44,10 +54,14 @@ public class Server extends Handler {
     private UUID mToken;
     private RequestHandler.Impl mAPIImpl;
 
-    private Server() {
+    private Server(UUID token) {
         super();
 
-        mToken = UUID.randomUUID();
+        if (token == null) {
+            mToken = UUID.randomUUID();
+        } else {
+            mToken = token;
+        }
     }
 
     @Override
@@ -90,6 +104,8 @@ public class Server extends Handler {
                 .putExtra(Intents.EXTRA_PID, Process.myUid())
                 .putExtra(Intents.EXTRA_TOKEN_MOST_SIG, mToken.getMostSignificantBits())
                 .putExtra(Intents.EXTRA_TOKEN_LEAST_SIG, mToken.getLeastSignificantBits());
+
+        ServerLog.i("broadcastServerStart");
 
         List<UserInfo> users = mAPIImpl.getUsers(true);
         for (UserInfo user : users) {

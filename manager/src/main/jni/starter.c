@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -128,6 +129,15 @@ void showLogs() {
 }
 
 int main(int argc, char **argv) {
+    bool skip_check;
+    char *token = NULL;
+    for (int i = 0; i < argc; ++i) {
+        if (strcmp("--skip-check", argv[i]) == 0) {
+            skip_check = true;
+        } else if (strncmp(argv[i], "--token=", 8) == 0) {
+            token = strdup(argv[i] + 8);
+        }
+    }
     printf("info: starter begin\n");
     fflush(stdout);
     killOldServer();
@@ -148,6 +158,7 @@ int main(int argc, char **argv) {
                     "/system/bin",
                     "--nice-name=rikka_server",
                     "moe.shizuku.server.Server",
+                    token,
                     NULL
             };
             if (execvp(appProcessArgs[0], appProcessArgs)) {
@@ -170,30 +181,36 @@ int main(int argc, char **argv) {
         while ((rikkaServerPid = getRikkaServerPid()) == 0) {
             printf(".");
             fflush(stdout);
-            sleep(1);
+            usleep(200 * 1000);
             count++;
-            if (count > 10) {
+            if (count >= 50) {
                 perrorf("\nwarn: timeout but can't get pid of rikka_server.\n");
                 showLogs();
                 exit(EXIT_WARN_START_TIMEOUT);
             }
         }
-        printf("\ninfo: check rikka_server stable");
-        fflush(stdout);
-        count = 0;
-        while ((rikkaServerPid = getRikkaServerPid()) != 0) {
-            printf(".");
+        if (!skip_check) {
+            printf("\ninfo: check rikka_server stable");
             fflush(stdout);
-            sleep(1);
-            count++;
-            if (count > 5) {
-                printf("\ninfo: rikka_server started.\n");
+            count = 0;
+            while ((rikkaServerPid = getRikkaServerPid()) != 0) {
+                printf(".");
                 fflush(stdout);
-                exit(EXIT_SUCCESS);
+                usleep(1000 * 1000);
+                count++;
+                if (count >= 5) {
+                    printf("\ninfo: rikka_server started.\n");
+                    fflush(stdout);
+                    exit(EXIT_SUCCESS);
+                }
             }
+            perrorf("\nwarn: rikka_server stopped after started.\n");
+            showLogs();
+            exit(EXIT_WARN_SERVER_STOP);
+        } else {
+            printf("\ninfo: rikka_server started.\n");
+            fflush(stdout);
+            exit(EXIT_SUCCESS);
         }
-        perrorf("\nwarn: rikka_server stopped after started.\n");
-        showLogs();
-        exit(EXIT_WARN_SERVER_STOP);
     }
 }
