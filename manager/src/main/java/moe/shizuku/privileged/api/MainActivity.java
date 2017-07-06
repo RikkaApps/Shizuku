@@ -7,15 +7,17 @@ import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -141,9 +143,38 @@ public class MainActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             int code = intent.getIntExtra(getPackageName() + "intent.extra.CODE", 0);
             if (code != 99) {
-                Toast.makeText(context, "can\'t start server, exit code " + code + ", please contact developer.", Toast.LENGTH_LONG).show();
+                final StringBuilder sb = new StringBuilder();
+                sb.append("OUT:\n");
+                if (intent.hasExtra(getPackageName() + "intent.extra.OUTPUT")) {
+                    for (String s : intent.getStringArrayListExtra(getPackageName() + "intent.extra.OUTPUT")) {
+                        sb.append(s).append('\n');
+                    }
+                }
+                sb.append("\nERR:\n");
+                if (intent.hasExtra(getPackageName() + "intent.extra.ERROR")) {
+                    sb.append(intent.getStringExtra(getPackageName() + "intent.extra.ERROR"));
+                }
+                sb.append("\n\nPlease contact developer.");
+
+                Dialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Something went wrong")
+                        .setMessage(sb.toString().trim())
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setNeutralButton(R.string.send_command, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ShareCompat.IntentBuilder.from(MainActivity.this)
+                                        .setText(sb.toString())
+                                        .setType("text/plain")
+                                        .setChooserTitle(R.string.send_command)
+                                        .startChooser();
+                            }
+                        })
+                        .show();
+
+                ((TextView) dialog.findViewById(android.R.id.message)).setTypeface(Typeface.create("monospace", Typeface.NORMAL));
             } else {
-                Toast.makeText(context, "error start server because not root permission.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Can\'t start server because not root permission.", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import moe.shizuku.libsuperuser.Shell;
@@ -150,14 +151,14 @@ public class ServerLauncher {
     }
 
     @WorkerThread
-    public static int startRoot(Context context) {
+    public static Shell.Result startRoot(Context context) {
         if (Shell.SU.available()) {
             long time = System.currentTimeMillis();
-            int result = Shell.SU.run(starter(context) + " --skip-check"/* + " --token=" + UUID.randomUUID()*/).getExitCode();
-            Log.d("RServer", "start root result " + result + " in " + (System.currentTimeMillis() - time) + "ms");
+            Shell.Result result = Shell.SU.run(starter(context) + " --skip-check"/* + " --token=" + UUID.randomUUID()*/);
+            Log.d("RServer", "start root result " + result.getExitCode() + " in " + (System.currentTimeMillis() - time) + "ms");
             return result;
         } else {
-            return 99;
+            return new Shell.Result(99, new ArrayList<String>());
         }
     }
 

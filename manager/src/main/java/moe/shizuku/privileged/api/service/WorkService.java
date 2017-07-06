@@ -4,7 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 
+import java.util.ArrayList;
+
+import moe.shizuku.libsuperuser.Shell;
 import moe.shizuku.privileged.api.ServerLauncher;
 
 public class WorkService extends IntentService {
@@ -41,11 +45,16 @@ public class WorkService extends IntentService {
     }
 
     private void handleStartServer() {
-        int result = ServerLauncher.startRoot(this);
-        if (result != 0) {
+        Shell.Result result = ServerLauncher.startRoot(this);
+        if (result.getExitCode() != 0) {
+            Intent intent = new Intent(getPackageName() + ".intent.action.START_FAILED")
+                    .putExtra(getPackageName() + "intent.extra.CODE", result.getExitCode())
+                    .putStringArrayListExtra(getPackageName() + "intent.extra.OUTPUT", new ArrayList<>(result.getOutput()));
+            if (!TextUtils.isEmpty(result.getErrorMessage())) {
+                intent.putExtra(getPackageName() + "intent.extra.ERROR", result.getErrorMessage());
+            }
             LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(new Intent(getPackageName() + ".intent.action.START_FAILED")
-                            .putExtra(getPackageName() + "intent.extra.CODE", result));
+                    .sendBroadcast(intent);
         }/* else {
             handleAuth();
         }*/
