@@ -6,6 +6,7 @@ import android.app.IActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -142,7 +143,7 @@ public class Server extends Handler {
             };
             if (BuildUtils.isO()) {
                 //am.registerTaskStackListener(HideApiOverride.createTaskStackListener(broadcastRunnable));
-            } else {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 am.registerTaskStackListener(HideApiOverrideO.createTaskStackListener(broadcastRunnable));
             }
         } catch (Exception e) {
