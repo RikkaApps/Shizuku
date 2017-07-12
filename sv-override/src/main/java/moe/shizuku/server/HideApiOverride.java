@@ -5,6 +5,7 @@ import android.app.AppOpsManager;
 import android.app.ITaskStackListener;
 import android.content.ComponentName;
 import android.content.pm.UserInfo;
+import android.os.Parcel;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -96,12 +97,21 @@ public class HideApiOverride {
         return userHandle.getIdentifier();
     }
 
-    public static ITaskStackListener.Stub createTaskStackListener(Runnable r) throws RemoteException {
+    public static ITaskStackListener.Stub createTaskStackListener(final Runnable r) throws RemoteException {
         return new ITaskStackListener.Stub() {
 
             @Override
-            public void onTaskStackChanged() throws RemoteException {
+            protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+                try {
+                    return super.onTransact(code, data, reply, flags);
+                } catch (AbstractMethodError ignored) {
+                    return true;
+                }
+            }
 
+            @Override
+            public void onTaskStackChanged() throws RemoteException {
+                r.run();
             }
 
             @Override

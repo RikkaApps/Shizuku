@@ -142,7 +142,7 @@ public class Server extends Handler {
                 }
             };
             if (BuildUtils.isO()) {
-                //am.registerTaskStackListener(HideApiOverride.createTaskStackListener(broadcastRunnable));
+                am.registerTaskStackListener(HideApiOverride.createTaskStackListener(broadcastRunnable));
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 am.registerTaskStackListener(HideApiOverrideO.createTaskStackListener(broadcastRunnable));
             }

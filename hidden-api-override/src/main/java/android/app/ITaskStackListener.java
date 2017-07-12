@@ -1,7 +1,10 @@
 package android.app;
 
 import android.content.ComponentName;
+import android.os.Binder;
+import android.os.Parcel;
 import android.os.RemoteException;
+import android.util.Log;
 
 /**
  * Created by Rikka on 2017/5/7.
@@ -51,7 +54,6 @@ public interface ITaskStackListener {
 
     void onActivityRequestedOrientationChanged(int a, int b) throws RemoteException;
 
-    abstract class Stub implements ITaskStackListener {
-
+    abstract class Stub extends Binder implements ITaskStackListener {
     }
 }

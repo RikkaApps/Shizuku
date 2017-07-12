@@ -1,5 +1,6 @@
 package android.app;
 
+import android.os.Binder;
 import android.os.RemoteException;
 
 /**
@@ -36,7 +37,7 @@ public interface ITaskStackListener {
      */
     void onActivityDismissingDockedStack() throws RemoteException;
 
-    abstract class Stub implements ITaskStackListener {
+    abstract class Stub extends Binder implements ITaskStackListener {
 
     }
 }
