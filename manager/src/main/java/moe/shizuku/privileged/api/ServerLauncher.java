@@ -33,7 +33,7 @@ import moe.shizuku.server.io.ParcelOutputStream;
 
 public class ServerLauncher {
 
-    private static final int SERVER_TIMEOUT = 5000;
+    private static final int SERVER_TIMEOUT = 10000;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({SERVER_RUNNING, SERVER_STOPPED, SERVER_VERSION_NOT_MATCHED})
@@ -128,7 +128,10 @@ public class ServerLauncher {
             PrintWriter os = new PrintWriter(new FileWriter(file));
             String line;
             while ((line = is.readLine()) != null) {
-                os.println(line.replace("%%%STARTER_PATH%%%", starterPath));
+                os.println(line
+                        .replace("%%%STARTER_PATH%%%", starterPath)
+                        .replace("%%%STARTER_PARAM%%%", starterParam(context, false))
+                );
             }
             os.flush();
             os.close();
@@ -137,12 +140,7 @@ public class ServerLauncher {
     }
 
     private static String starter(Context context) {
-        String path;
-        try {
-            path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
-        } catch (PackageManager.NameNotFoundException ignored) {
-            throw new RuntimeException();
-        }
+        String path = publicSourceDir(context);
 
         File sourceDir = new File(path);
         File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
@@ -150,15 +148,53 @@ public class ServerLauncher {
         return starter.getAbsolutePath();
     }
 
+    private static String starterParam(Context context, boolean skipCheck) {
+        String path = publicSourceDir(context);
+
+        return "--fallback-path=" + path
+                + (skipCheck ? " --skip-check" : "")
+                /*+ " --token=" + UUID.randomUUID()*/;
+    }
+
+    private static String publicSourceDir(Context context) {
+        try {
+            return context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
+        } catch (PackageManager.NameNotFoundException ignored) {
+            throw new RuntimeException();
+        }
+    }
+
     @WorkerThread
     public static Shell.Result startRoot(Context context) {
         if (Shell.SU.available()) {
             long time = System.currentTimeMillis();
-            Shell.Result result = Shell.SU.run(starter(context) + " --skip-check"/* + " --token=" + UUID.randomUUID()*/);
+            String path = starter(context);
+
+            Shell.Result result = Shell.SU.run(new String[]{
+                    "chmod 755 " + path,
+                    path + " " + starterParam(context, true)
+            }, SERVER_TIMEOUT);
             Log.d("RServer", "start root result " + result.getExitCode() + " in " + (System.currentTimeMillis() - time) + "ms");
             return result;
         } else {
             return new Shell.Result(99, new ArrayList<String>());
+        }
+    }
+
+    @WorkerThread
+    public static void startRootOld(Context context) {
+        if (Shell.SU.available()) {
+            String path;
+            try {
+                path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
+            } catch (PackageManager.NameNotFoundException ignored) {
+                throw new RuntimeException();
+            }
+
+            Shell.SU.run(new String[]{
+                    "pkill -f rikka_server",
+                    "app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
+            }, SERVER_TIMEOUT);
         }
     }
 

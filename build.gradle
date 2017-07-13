@@ -16,6 +16,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
         mavenLocal()
     }
 }
@@ -25,11 +26,11 @@ task clean(type: Delete) {
 }
 
 ext {
-    supportLibraryVersion = '25.3.1'
+    supportLibraryVersion = '25.4.0'
     minSdkVersion = 21
     targetSdkVersion = 25
     buildToolsVersion = "25.0.3"
-    versionCode = 33
-    versionName = "0.2.8"
+    versionCode = 37
+    versionName = "0.2.11"
     serverVersionCode = 23
 }

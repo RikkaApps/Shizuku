@@ -21,6 +21,7 @@
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
 #define EXIT_FATAL_KILL_OLD_SERVER 9
+#define EXIT_FATAL_FILE_NOT_FOUND 10
 
 #define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
 
@@ -44,14 +45,14 @@ char *getApkPath(char *buffer) {
     if (file != NULL) {
         fgets(buffer, (PATH_MAX + 11) * sizeof(char), file);
     } else {
-        perrorf("fatal: can't invoke `pm path'\n");
-        exit(EXIT_FATAL_PM_PATH);
+        perrorf("warn: can't invoke `pm path'\n");
+        return NULL;
     }
     trimCRLF(buffer);
     buffer = strchr(buffer, ':');
     if (buffer == NULL) {
-        perrorf("fatal: can't get apk path, have you installed Shizuku Manager? Get it from https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api\n");
-        exit(EXIT_FATAL_PM_PATH_MALFORMED);
+        perrorf("warn: can't get apk path\n");
+        return NULL;
     }
     buffer++;
     printf("info: apk installed path: %s\n", buffer);
@@ -76,11 +77,12 @@ pid_t getRikkaServerPid() {
             uint32_t pid = (uint32_t) atoi(pidDirent->d_name);
             if (pid != 0) {  // skip non number directory or files
                 char cmdlinePath[PATH_MAX];
+                memset(cmdlinePath, 0, PATH_MAX);
                 sprintf(cmdlinePath, "/proc/%d/cmdline", pid);
-                cmdlinePath[PATH_MAX - 1] = '\0';
                 FILE *cmdlineFile;
                 if ((cmdlineFile = fopen(cmdlinePath, "r")) != NULL) {
                     char cmdline[50];
+                    memset(cmdline, 0, 50);
                     fread(cmdline, 1, 50, cmdlineFile);
                     cmdline[49] = '\0';
                     fclose(cmdlineFile);
@@ -131,18 +133,37 @@ void showLogs() {
 int main(int argc, char **argv) {
     bool skip_check;
     char *token = NULL;
+    char *fallback_path = NULL;
     for (int i = 0; i < argc; ++i) {
         if (strcmp("--skip-check", argv[i]) == 0) {
             skip_check = true;
         } else if (strncmp(argv[i], "--token=", 8) == 0) {
             token = strdup(argv[i] + 8);
+        } else if (strncmp(argv[i], "--fallback-path=", 16) == 0) {
+            fallback_path = strdup(argv[i] + 16);
         }
     }
     printf("info: starter begin\n");
     fflush(stdout);
     killOldServer();
     char buffer[PATH_MAX + 11];
+    memset(buffer, 0, PATH_MAX + 11);
     char *path = getApkPath(buffer);
+    if (path == NULL) {
+        if (fallback_path != NULL) {
+            if (access(fallback_path, F_OK)) {
+                perrorf("\nwarn: can't get apk path using pm, use fallback path.\n");
+                path = fallback_path;
+            } else {
+                perrorf("\nfatal: fallback path set but file not found, please open Shizuku Manager and try again.\n");
+                exit(EXIT_FATAL_FILE_NOT_FOUND);
+            }
+        } else {
+            perrorf("\nfatal: can't get apk path using pm and no fallback path set.\n");
+            exit(EXIT_FATAL_PM_PATH);
+        }
+    }
+
     pid_t pid = fork();
     if (pid == 0) {
         pid = daemon(FALSE, FALSE);
