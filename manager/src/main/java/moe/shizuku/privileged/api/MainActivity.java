@@ -1,7 +1,5 @@
 package moe.shizuku.privileged.api;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -11,11 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -33,7 +32,7 @@ import moe.shizuku.support.utils.Settings;
 
 import static moe.shizuku.privileged.api.ServerLauncher.COMMAND_ADB;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private View mStatus;
     private TextView mStatusText;
@@ -141,26 +140,40 @@ public class MainActivity extends Activity {
     private class StartFailedReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            mStartButton.setEnabled(true);
+            mRestartButton.setEnabled(true);
+
             int code = intent.getIntExtra(getPackageName() + "intent.extra.CODE", 0);
+            if (code == 0) {
+                return;
+            }
+
             if (code != 99) {
                 final StringBuilder sb = new StringBuilder();
-                sb.append("OUT:\n");
+                sb.append("code:").append(code).append("\n\n");
+                //sb.append("OUT:\n");
                 if (intent.hasExtra(getPackageName() + "intent.extra.OUTPUT")) {
                     for (String s : intent.getStringArrayListExtra(getPackageName() + "intent.extra.OUTPUT")) {
                         sb.append(s).append('\n');
                     }
                 }
-                sb.append("\nERR:\n");
+                /*sb.append("\nERR:\n");
                 if (intent.hasExtra(getPackageName() + "intent.extra.ERROR")) {
                     sb.append(intent.getStringExtra(getPackageName() + "intent.extra.ERROR"));
-                }
-                sb.append("\n\nPlease contact developer.");
+                }*/
+                sb.append("\n\nSend this to developer may help solve the problem.\n\nYou can temporarily use the old method as an alternative.");
 
                 Dialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Something went wrong")
                         .setMessage(sb.toString().trim())
-                        .setPositiveButton(android.R.string.ok, null)
-                        .setNeutralButton(R.string.send_command, new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Try old method", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Settings.getBoolean("root_use_old", true);
+                                WorkService.startServerOld(MainActivity.this);
+                            }
+                        })
+                        .setPositiveButton(R.string.send_command, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ShareCompat.IntentBuilder.from(MainActivity.this)
@@ -172,6 +185,7 @@ public class MainActivity extends Activity {
                         })
                         .show();
 
+                ((TextView) dialog.findViewById(android.R.id.message)).setTextIsSelectable(true);
                 ((TextView) dialog.findViewById(android.R.id.message)).setTypeface(Typeface.create("monospace", Typeface.NORMAL));
             } else {
                 Toast.makeText(context, "Can\'t start server because not root permission.", Toast.LENGTH_SHORT).show();
@@ -183,6 +197,13 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        check();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         mAuthorizedAppsCount.setHtmlText(
                 getResources().getQuantityString(R.plurals.authorized_apps_count, Permissions.grantedCount(), Permissions.grantedCount()));
 
@@ -190,14 +211,12 @@ public class MainActivity extends Activity {
                 .registerReceiver(mServerStartedReceiver, new IntentFilter(getPackageName() + ".intent.action.AUTH_RESULT"));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mStartFailedReceiver, new IntentFilter(getPackageName() + ".intent.action.START_FAILED"));
-
-        check();
+                .registerReceiver(mStartFailedReceiver, new IntentFilter(getPackageName() + ".intent.action.START"));
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
 
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(mServerStartedReceiver);
@@ -210,16 +229,8 @@ public class MainActivity extends Activity {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        ServerLauncher.writeSH(this);
-
         if (mCheckToRequest) {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    ServerLauncher.requestToken();
-                }
-            });
-            ServerLauncher.requestToken();
+            WorkService.startRequestToken(this);
         } else {
             WorkService.startAuth(this);
         }
@@ -229,7 +240,11 @@ public class MainActivity extends Activity {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        WorkService.startServer(this);
+        if (!Settings.getBoolean("root_use_old", false)) {
+            WorkService.startServer(this);
+        } else {
+            WorkService.startServerOld(this);
+        }
     }
 
     private void updateUI(Protocol protocol) {
@@ -340,6 +355,9 @@ public class MainActivity extends Activity {
 
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setMovementMethod(LinkMovementMethod.getInstance());
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setText(Html.fromHtml(getString(R.string.about_icon_credits)));
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

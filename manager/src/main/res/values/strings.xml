@@ -47,4 +47,6 @@
     <string name="action_about">About</string>
     <string name="about_icon_credits"><![CDATA[Thanks <a href="https://twitter.com/xiaoya_er">小雅</a> for illustrating app icon]]></string>
 
+    <string name="action_settings">Settings</string>
+
 </resources>

@@ -55,7 +55,11 @@
         <activity
             android:name=".AppsActivity"
             android:label="@string/authorized_apps_manage"
-            android:theme="@style/AppTheme.Apps"/>
+            android:theme="@style/AppTheme.Apps" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings" />
+
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -84,7 +88,8 @@
 
         <service
             android:name=".service.WorkService"
-            android:exported="false"/>
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="root_use_old"
+        android:title="Alternative method (root)"
+        android:summary="Use old method to start the server, should work on most devices"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>
