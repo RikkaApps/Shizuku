@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Apps">
+        <item name="android:windowBackground">@color/cardview_dark_background</item>
+    </style>
+</resources>

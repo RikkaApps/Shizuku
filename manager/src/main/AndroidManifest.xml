@@ -58,7 +58,8 @@
             android:theme="@style/AppTheme.Apps" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings"
+            android:theme="@style/AppTheme.Apps" />
 
 
         <receiver

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
-        <item name="android:colorAccent">#4285F4</item>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+        <item name="colorAccent">#4285F4</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="AppTheme.Apps">
