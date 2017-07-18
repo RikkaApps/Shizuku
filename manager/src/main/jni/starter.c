@@ -24,6 +24,7 @@
 #define EXIT_FATAL_FILE_NOT_FOUND 10
 
 #define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
+#define SERVER_LOG_FILE_PATH "/data/local/tmp/rikka_server.log"
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
@@ -105,10 +106,12 @@ void killOldServer() {
         printf("info: old rikka_server found, killing\n");
         fflush(stdout);
         if (kill(pid, SIGINT) != 0) {
-            perrorf("fatal: can't kill old server, if you started it by root, please stop it by:\n\n\t");
-            perrorf("adb shell su -c \"kill %d\"", pid);
-            perrorf("\n\nand retry.\n");
-            exit(EXIT_FATAL_KILL_OLD_SERVER);
+            printf("info: can't kill old server.\n");
+            fflush(stdout);
+            //perrorf("fatal: can't kill old server, if you started it by root, please stop it by:\n\n\t");
+            //perrorf("adb shell su -c \"kill %d\"", pid);
+            //perrorf("\n\nand retry.\n");
+            //exit(EXIT_FATAL_KILL_OLD_SERVER);
         }
     } else {
         printf("info: no old rikka_server found.\n");
@@ -116,8 +119,23 @@ void killOldServer() {
     }
 }
 
+void showServerLogs() {
+    printf("\ninfo: rikka_server log: \n");
+    FILE *logFile;
+    if ((logFile = fopen(SERVER_LOG_FILE_PATH, "r")) != NULL) {
+        int ch;
+        while ((ch = fgetc(logFile)) != EOF) {
+            fputc(ch, stderr);
+        }
+        fclose(logFile);
+    } else {
+        printf("info: log file is not exist.");
+    }
+    fflush(stdout);
+}
+
 void showLogs() {
-    perrorf("info: please report bug with these log: \n");
+    perrorf("\ninfo: please report bug with these log: \n");
     FILE *logFile;
     if ((logFile = fopen(LOG_FILE_PATH, "r")) != NULL) {
         int ch;
@@ -151,15 +169,15 @@ int main(int argc, char **argv) {
     char *path = getApkPath(buffer);
     if (path == NULL) {
         if (fallback_path != NULL) {
-            if (access(fallback_path, F_OK)) {
-                perrorf("\nwarn: can't get apk path using pm, use fallback path.\n");
+            if (access(fallback_path, F_OK) == 0) {
+                perrorf("warn: can't get apk path using pm, use fallback path %s.\n", fallback_path);
                 path = fallback_path;
             } else {
-                perrorf("\nfatal: fallback path set but file not found, please open Shizuku Manager and try again.\n");
+                perrorf("fatal: fallback path set but file not found, please open Shizuku Manager and try again.\n");
                 exit(EXIT_FATAL_FILE_NOT_FOUND);
             }
         } else {
-            perrorf("\nfatal: can't get apk path using pm and no fallback path set.\n");
+            perrorf("fatal: can't get apk path using pm and no fallback path set.\n");
             exit(EXIT_FATAL_PM_PATH);
         }
     }
@@ -222,15 +240,18 @@ int main(int argc, char **argv) {
                 if (count >= 5) {
                     printf("\ninfo: rikka_server started.\n");
                     fflush(stdout);
+                    showServerLogs();
                     exit(EXIT_SUCCESS);
                 }
             }
             perrorf("\nwarn: rikka_server stopped after started.\n");
             showLogs();
+            showServerLogs();
             exit(EXIT_WARN_SERVER_STOP);
         } else {
             printf("\ninfo: rikka_server started.\n");
             fflush(stdout);
+            showServerLogs();
             exit(EXIT_SUCCESS);
         }
     }
