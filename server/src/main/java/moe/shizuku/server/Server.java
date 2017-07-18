@@ -13,18 +13,25 @@ import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 import java.util.UUID;
 
 import hidden.android.content.pm.UserInfo;
+import moe.shizuku.server.io.ParcelInputStream;
+import moe.shizuku.server.io.ParcelOutputStream;
 import moe.shizuku.server.util.Intents;
 import moe.shizuku.server.util.ServerLog;
 
 public class Server extends Handler {
 
     public static void main(String[] args) throws IOException, RemoteException, InterruptedException {
+        setOut();
+
         Looper.prepare();
 
         UUID token = null;
@@ -48,6 +55,20 @@ public class Server extends Handler {
 
         ServerLog.i("server exit");
         System.exit(0);
+    }
+
+    private static void setOut() throws IOException {
+        File file = new File("/data/local/tmp/rikka_server.log");
+        if (!file.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            file.createNewFile();
+        }
+        PrintStream os = new PrintStream(file);
+
+        System.setOut(os);
+        System.setErr(os);
+
+        ServerLog.v("set output to /data/local/tmp/rikka_server.log");
     }
 
     public static final int MESSAGE_EXIT = 1;
@@ -75,7 +96,28 @@ public class Server extends Handler {
         }
     }
 
+    private boolean sendQuit() {
+        try {
+            Socket socket = new Socket(Protocol.HOST, Protocol.PORT);
+            socket.setSoTimeout(100);
+            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
+            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
+            os.writeInt(-2);
+            is.readException();
+
+            ServerLog.i("send quit to old server");
+            return true;
+        } catch (Exception e) {
+            ServerLog.i("cannot connect to old server, maybe it not exists");
+            return false;
+        }
+    }
+
     public boolean start() throws IOException, RemoteException, InterruptedException {
+        if (sendQuit()) {
+            Thread.sleep(500);
+        }
+
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(Protocol.PORT, 0, Protocol.HOST);

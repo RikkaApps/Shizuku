@@ -106,9 +106,9 @@ class SocketThread implements Runnable, RequestHandler.Impl {
             case -1:
                 sendTokenToManger(is, os);
                 break;
-            /*case -2:
+            case -2:
                 quit(os);
-                return false;*/
+                return false;
         }
         return true;
     }
