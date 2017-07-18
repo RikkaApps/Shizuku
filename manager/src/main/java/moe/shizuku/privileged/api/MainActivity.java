@@ -20,15 +20,18 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import moe.shizuku.privileged.api.PASettings.RootLaunchMethod;
+import moe.shizuku.privileged.api.PASettings.LaunchMethod;
 import moe.shizuku.privileged.api.service.WorkService;
 import moe.shizuku.privileged.api.widget.HtmlTextView;
 import moe.shizuku.server.Protocol;
-import moe.shizuku.support.utils.Settings;
 
 import static moe.shizuku.privileged.api.ServerLauncher.COMMAND_ADB;
 
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mServerStartedReceiver = new ServerStartedReceiver();
-        mStartFailedReceiver = new StartFailedReceiver();
+        mStartFailedReceiver = new StartResultReceiver();
     }
 
     private class ServerStartedReceiver extends BroadcastReceiver {
@@ -137,39 +140,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class StartFailedReceiver extends BroadcastReceiver {
+    private class StartResultReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             mStartButton.setEnabled(true);
             mRestartButton.setEnabled(true);
 
-            int code = intent.getIntExtra(getPackageName() + "intent.extra.CODE", 0);
+            int code = intent.getIntExtra(getPackageName() + ".intent.extra.CODE", 0);
             if (code == 0) {
                 return;
             }
 
             if (code != 99) {
+                if (intent.getBooleanExtra(getPackageName() + ".intent.extra.IS_OLD", false)) {
+                    return;
+                }
+
                 final StringBuilder sb = new StringBuilder();
                 sb.append("code:").append(code).append("\n\n");
-                //sb.append("OUT:\n");
-                if (intent.hasExtra(getPackageName() + "intent.extra.OUTPUT")) {
-                    for (String s : intent.getStringArrayListExtra(getPackageName() + "intent.extra.OUTPUT")) {
+                if (intent.hasExtra(getPackageName() + ".intent.extra.OUTPUT")) {
+                    for (String s : intent.getStringArrayListExtra(getPackageName() + ".intent.extra.OUTPUT")) {
                         sb.append(s).append('\n');
                     }
                 }
-                /*sb.append("\nERR:\n");
-                if (intent.hasExtra(getPackageName() + "intent.extra.ERROR")) {
-                    sb.append(intent.getStringExtra(getPackageName() + "intent.extra.ERROR"));
-                }*/
                 sb.append("\n\nSend this to developer may help solve the problem.\n\nYou can temporarily use the old method as an alternative.");
 
                 Dialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Something went wrong")
                         .setMessage(sb.toString().trim())
-                        .setNeutralButton("Try old method", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Use alternative method", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Settings.getBoolean("root_use_old", true);
+                                PASettings.setRootLaunchMethod(RootLaunchMethod.ALTERNATIVE);
                                 WorkService.startServerOld(MainActivity.this);
                             }
                         })
@@ -188,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) dialog.findViewById(android.R.id.message)).setTextIsSelectable(true);
                 ((TextView) dialog.findViewById(android.R.id.message)).setTypeface(Typeface.create("monospace", Typeface.NORMAL));
             } else {
-                Toast.makeText(context, "Can\'t start server because not root permission.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.cant_start_no_root, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -236,14 +238,64 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void start() {
+    private void startChoose() {
+        final Dialog dialog = new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.start_root_choose_launch_method)
+                .setView(R.layout.dialog_start_root)
+                .show();
+
+        final CheckBox remember = (CheckBox) dialog.findViewById(android.R.id.checkbox);
+
+        dialog.findViewById(android.R.id.button1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNew();
+
+                if (remember.isChecked()) {
+                    PASettings.setRootLaunchMethod(RootLaunchMethod.USUAL);
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(android.R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startOld();
+
+                if (remember.isChecked()) {
+                    PASettings.setRootLaunchMethod(RootLaunchMethod.ALTERNATIVE);
+                }
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void startNew() {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        if (!Settings.getBoolean("root_use_old", false)) {
-            WorkService.startServer(this);
-        } else {
-            WorkService.startServerOld(this);
+        WorkService.startServer(this);
+    }
+
+    private void startOld() {
+        mStartButton.setEnabled(false);
+        mRestartButton.setEnabled(false);
+
+        WorkService.startServerOld(this);
+    }
+
+    private void start() {
+        switch (PASettings.getRootLaunchMethod()) {
+            case RootLaunchMethod.ASK:
+                startChoose();
+                break;
+            case RootLaunchMethod.USUAL:
+                startNew();
+                break;
+            case RootLaunchMethod.ALTERNATIVE:
+                startOld();
+                break;
         }
     }
 
@@ -267,10 +319,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        boolean oldOK = mStatusText.getCurrentTextColor() == ContextCompat.getColor(this, R.color.status_ok);
         if (ok) {
             mStatusIcon.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.status_ok));
             mStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_server_ok_48dp));
             mStatusText.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.status_ok));
+
+            if (!oldOK) {
+                View view = (View) mStatusIcon.getParent();
+                int centerX = mStatusIcon.getWidth() / 2;
+                int centerY = mStatusIcon.getHeight() / 2;
+                float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
+                ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
+            }
         } else {
             mStatusIcon.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.status_warning));
             mStatusIcon.setImageDrawable(getDrawable(R.drawable.ic_server_error_48dp));
@@ -332,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                 parent.addView(mRootCard);
             }
 
-            Settings.putInt("mode", protocol.isRoot() ? 0 : 1);
+            PASettings.setLastLaunchMode(protocol.isRoot() ? LaunchMethod.ROOT : LaunchMethod.ADB);
         }
 
         mStartButton.setEnabled(true);

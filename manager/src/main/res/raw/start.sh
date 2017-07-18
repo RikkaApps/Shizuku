@@ -13,7 +13,7 @@ if [ -f "$STARTER_PATH" ]; then
     #    chown shell:shell /data/local/tmp/shizuku_starter
     #fi
     export PATH=/data/local/tmp:/system/bin:$PATH
-    shizuku_starter $STARTER_PARAM
+    shizuku_starter $STARTER_PARAM $1
     result=$?
     if [ $result -ne 0 ]; then
         echo "shizuku_starter exit with non-zero value $result"

@@ -1,5 +1,6 @@
 package moe.shizuku.privileged.api;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            addPreferencesFromResource(R.xml.settings);
+            getPreferenceManager().setSharedPreferencesName("settings");
+            getPreferenceManager().setSharedPreferencesMode(Context.MODE_PRIVATE);
+
+            setPreferencesFromResource(R.xml.settings, null);
         }
 
         @Nullable

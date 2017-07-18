@@ -16,9 +16,9 @@
     <string name="server_restart">重新啟動</string>
     <string name="server_update">重新啟動以升級服務</string>
 
-    <string name="start_server_title_root"><![CDATA[透過 ROOT 權限啟動服務]]></string>
+    <string name="start_server_title_root"><![CDATA[透過 root 權限啟動服務]]></string>
     <string name="start_server_summary_root"><![CDATA[當其他程式嘗試使用時，服務將被自動啟動。]]></string>
-    <string name="start_server_title_adb"><![CDATA[透過 ADB 啟動或升級服務]]></string>
+    <string name="start_server_title_adb"><![CDATA[透過 adb 啟動或升級服務]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>以下步驟需要在每次重新啟動後進行。</b><p>在“開發者選項”中開啟“USB 調試”，將設備連接至電腦。<br>在電腦的命令提示字元中輸入以下內容<p><font face="monospace">%s</font><p>按下確認鍵，如果成功將看到主界面運行狀態更新。]]></string>
 
     <string name="copy_command">複製</string>
@@ -47,5 +47,18 @@
     <string name="about_icon_credits"><![CDATA[感谢 <a href="https://twitter.com/xiaoya_er">小雅</a> 制作应用图标]]></string>
 
     <string name="action_settings">設定</string>
+
+    <string name="start_root_choose_launch_method">選擇啟動方式</string>
+    <string name="start_root_method_usual">通常方式</string>
+    <string name="start_root_method_usual_summary">應該在大部分設備上工作</string>
+    <string name="start_root_method_alternative">替代方式</string>
+    <string name="start_root_method_alternative_summary">如果遇到問題試試這個</string>
+
+    <string name="remember_choice">記住我的選擇</string>
+
+    <string name="settings_root_launch_method">啟動方式（root）</string>
+    <string name="settings_root_launch_ask_every_time">每次詢問</string>
+
+    <string name="cant_start_no_root">未授予 root 權限或是該設備沒有 root，因此無法啟動服務。。</string>
 
 </resources>

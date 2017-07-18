@@ -65,17 +65,23 @@ public class WorkService extends IntentService {
     private void handleStartServer() {
         Shell.Result result = ServerLauncher.startRoot(this);
         Intent intent = new Intent(getPackageName() + ".intent.action.START")
-                .putExtra(getPackageName() + "intent.extra.CODE", result.getExitCode())
-                .putStringArrayListExtra(getPackageName() + "intent.extra.OUTPUT", new ArrayList<>(result.getOutput()));
+                .putExtra(getPackageName() + ".intent.extra.CODE", result.getExitCode())
+                .putStringArrayListExtra(getPackageName() + ".intent.extra.OUTPUT", new ArrayList<>(result.getOutput()));
         if (!TextUtils.isEmpty(result.getErrorMessage())) {
-            intent.putExtra(getPackageName() + "intent.extra.ERROR", result.getErrorMessage());
+            intent.putExtra(getPackageName() + ".intent.extra.ERROR", result.getErrorMessage());
         }
         LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(intent);
     }
 
     private void handleStartServerOld() {
-        ServerLauncher.startRootOld(this);
+        Shell.Result result = ServerLauncher.startRootOld(this);
+        Intent intent = new Intent(getPackageName() + ".intent.action.START")
+                .putExtra(getPackageName() + ".intent.extra.IS_OLD", true)
+                .putExtra(getPackageName() + ".intent.extra.CODE", result.getExitCode());
+
+        LocalBroadcastManager.getInstance(this)
+                .sendBroadcast(intent);
     }
 
     private void handleAuth() {

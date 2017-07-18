@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import moe.shizuku.privileged.api.PASettings;
+import moe.shizuku.privileged.api.PASettings.LaunchMethod;
+import moe.shizuku.privileged.api.PASettings.RootLaunchMethod;
 import moe.shizuku.privileged.api.service.WorkService;
-import moe.shizuku.support.utils.Settings;
 
 /**
  * Created by Rikka on 2017/5/24.
@@ -20,10 +22,14 @@ public class BootReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (Settings.getInt("mode", -1) == 0) {
+        if (PASettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i("RServer", "start on boot");
 
-            WorkService.startServer(context);
+            if (PASettings.getRootLaunchMethod() == RootLaunchMethod.ALTERNATIVE) {
+                WorkService.startServerOld(context);
+            } else {
+                WorkService.startServer(context);
+            }
         }
     }
 }

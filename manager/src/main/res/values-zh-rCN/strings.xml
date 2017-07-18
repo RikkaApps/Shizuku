@@ -16,9 +16,9 @@
     <string name="server_restart">重新启动</string>
     <string name="server_update">重新启动以升级服务</string>
 
-    <string name="start_server_title_root"><![CDATA[通过 ROOT 权限启动服务]]></string>
+    <string name="start_server_title_root"><![CDATA[通过 root 权限启动服务]]></string>
     <string name="start_server_summary_root"><![CDATA[当其他应用尝试使用时，服务将被自动启动。]]></string>
-    <string name="start_server_title_adb"><![CDATA[通过 ADB 启动或升级服务]]></string>
+    <string name="start_server_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>以下步骤需要在每次重新启动后进行。</b><p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。<br>在电脑的终端中输入以下内容<p><font face="monospace">%s</font><p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
 
     <string name="copy_command">复制</string>
@@ -47,5 +47,18 @@
     <string name="about_icon_credits"><![CDATA[感谢 <a href="http://weibo.com/528556720">小雅</a> 制作应用图标]]></string>
 
     <string name="action_settings">设置</string>
+
+    <string name="start_root_choose_launch_method">选择启动方式</string>
+    <string name="start_root_method_usual">通常方式</string>
+    <string name="start_root_method_usual_summary">应该在大部分设备上工作</string>
+    <string name="start_root_method_alternative">替代方式</string>
+    <string name="start_root_method_alternative_summary">如果遇到问题试试这个</string>
+
+    <string name="remember_choice">记住我的选择</string>
+
+    <string name="settings_root_launch_method">启动方式（root）</string>
+    <string name="settings_root_launch_ask_every_time">每次询问</string>
+
+    <string name="cant_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
 
 </resources>

@@ -103,6 +103,7 @@ public class ServerLauncher {
         }
     }
 
+    public static String COMMAND_ROOT = "sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh --skip-check";
     public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
 
     public static void writeSH(Context context) {
@@ -119,7 +120,8 @@ public class ServerLauncher {
             // not user 0 or no /sdcard
             if (Process.myUserHandle().hashCode() != 0
                     || !sdcardFile.exists()) {
-                COMMAND_ADB = "adb shell sh " + file.getAbsolutePath();
+                COMMAND_ROOT = "sh " + file.getAbsolutePath() + " --skip-check";
+                COMMAND_ADB = "adb shell sh" + file.getAbsolutePath();
             }
 
             String starterPath = starter(context);
@@ -130,7 +132,7 @@ public class ServerLauncher {
             while ((line = is.readLine()) != null) {
                 os.println(line
                         .replace("%%%STARTER_PATH%%%", starterPath)
-                        .replace("%%%STARTER_PARAM%%%", starterParam(context, false))
+                        .replace("%%%STARTER_PARAM%%%", starterParam(context))
                 );
             }
             os.flush();
@@ -148,11 +150,10 @@ public class ServerLauncher {
         return starter.getAbsolutePath();
     }
 
-    private static String starterParam(Context context, boolean skipCheck) {
+    private static String starterParam(Context context) {
         String path = publicSourceDir(context);
 
         return "--fallback-path=" + path
-                + (skipCheck ? " --skip-check" : "")
                 /*+ " --token=" + UUID.randomUUID()*/;
     }
 
@@ -168,12 +169,8 @@ public class ServerLauncher {
     public static Shell.Result startRoot(Context context) {
         if (Shell.SU.available()) {
             long time = System.currentTimeMillis();
-            String path = starter(context);
 
-            Shell.Result result = Shell.SU.run(new String[]{
-                    "chmod 755 " + path,
-                    path + " " + starterParam(context, true)
-            }, SERVER_TIMEOUT);
+            Shell.Result result = Shell.SU.run(COMMAND_ROOT, SERVER_TIMEOUT);
             Log.d("RServer", "start root result " + result.getExitCode() + " in " + (System.currentTimeMillis() - time) + "ms");
             return result;
         } else {
@@ -182,7 +179,7 @@ public class ServerLauncher {
     }
 
     @WorkerThread
-    public static void startRootOld(Context context) {
+    public static Shell.Result startRootOld(Context context) {
         if (Shell.SU.available()) {
             String path;
             try {
@@ -191,10 +188,9 @@ public class ServerLauncher {
                 throw new RuntimeException();
             }
 
-            Shell.SU.run(new String[]{
-                    "pkill -f rikka_server",
-                    "app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &"
-            }, SERVER_TIMEOUT);
+            return Shell.SU.run("app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &", SERVER_TIMEOUT);
+        } else {
+            return new Shell.Result(99, new ArrayList<String>());
         }
     }
 

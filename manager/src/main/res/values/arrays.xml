@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="root_launch_method">
+        <item>@string/settings_root_launch_ask_every_time</item>
+        <item>@string/start_root_method_usual</item>
+        <item>@string/start_root_method_alternative</item>
+    </string-array>
+
+    <string-array name="root_launch_method_value" translatable="false">
+        <item>ask</item>
+        <item>usual</item>
+        <item>alternative</item>
+    </string-array>
+
+</resources>
