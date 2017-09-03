@@ -28,6 +28,9 @@
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
+#define PACKAGE_ID "moe.shizuku.privileged.api"
+#define SERVER_CLASS_PATH "moe.shizuku.server.Server"
+
 char *trimCRLF(char *str) {
     char *p;
     p = strchr(str, '\r');
@@ -42,9 +45,10 @@ char *trimCRLF(char *str) {
 }
 
 char *getApkPath(char *buffer) {
-    FILE *file = popen("pm path moe.shizuku.privileged.api", "r");
+    FILE *file = popen("pm path " PACKAGE_ID, "r");
     if (file != NULL) {
         fgets(buffer, (PATH_MAX + 11) * sizeof(char), file);
+        pclose(file);
     } else {
         perrorf("warn: can't invoke `pm path'\n");
         return NULL;
@@ -72,6 +76,7 @@ void setClasspathEnv(char *path) {
 
 pid_t getRikkaServerPid() {
     DIR *procDir = opendir("/proc");
+    pid_t res = 0;
     if (procDir != NULL) {
         struct dirent *pidDirent;
         while ((pidDirent = readdir(procDir)) != NULL) {
@@ -80,24 +85,25 @@ pid_t getRikkaServerPid() {
                 char cmdlinePath[PATH_MAX];
                 memset(cmdlinePath, 0, PATH_MAX);
                 sprintf(cmdlinePath, "/proc/%d/cmdline", pid);
-                FILE *cmdlineFile;
-                if ((cmdlineFile = fopen(cmdlinePath, "r")) != NULL) {
+                FILE *cmdlineFile = fopen(cmdlinePath, "r");
+                if (cmdlineFile != NULL) {
                     char cmdline[50];
                     memset(cmdline, 0, 50);
                     fread(cmdline, 1, 50, cmdlineFile);
                     cmdline[49] = '\0';
                     fclose(cmdlineFile);
                     if (strstr(cmdline, "rikka_server") != NULL) {
-                        return (pid_t) pid;
+                        res = (pid_t) pid;
+                        break;
                     }
                 }
             }
         }
-        return 0;
+        closedir(procDir);
     } else {
         perrorf("\nwarn: can't open /proc, please check by yourself.\n");
-        exit(EXIT_WARN_OPEN_PROC);
     }
+    return res;
 }
 
 void killOldServer() {
@@ -108,10 +114,6 @@ void killOldServer() {
         if (kill(pid, SIGINT) != 0) {
             printf("info: can't kill old server.\n");
             fflush(stdout);
-            //perrorf("fatal: can't kill old server, if you started it by root, please stop it by:\n\n\t");
-            //perrorf("adb shell su -c \"kill %d\"", pid);
-            //perrorf("\n\nand retry.\n");
-            //exit(EXIT_FATAL_KILL_OLD_SERVER);
         }
     } else {
         printf("info: no old rikka_server found.\n");
@@ -152,7 +154,8 @@ int main(int argc, char **argv) {
     bool skip_check;
     char *token = NULL;
     char *fallback_path = NULL;
-    for (int i = 0; i < argc; ++i) {
+    int i;
+    for (i = 0; i < argc; ++i) {
         if (strcmp("--skip-check", argv[i]) == 0) {
             skip_check = true;
         } else if (strncmp(argv[i], "--token=", 8) == 0) {
@@ -174,11 +177,11 @@ int main(int argc, char **argv) {
                 path = fallback_path;
             } else {
                 perrorf("fatal: fallback path set but file not found, please open Shizuku Manager and try again.\n");
-                exit(EXIT_FATAL_FILE_NOT_FOUND);
+                return EXIT_FATAL_FILE_NOT_FOUND;
             }
         } else {
             perrorf("fatal: can't get apk path using pm and no fallback path set.\n");
-            exit(EXIT_FATAL_PM_PATH);
+            return EXIT_FATAL_PM_PATH;
         }
     }
 
@@ -187,7 +190,7 @@ int main(int argc, char **argv) {
         pid = daemon(FALSE, FALSE);
         if (pid == -1) {
             printf("fatal: can't fork");
-            exit(EXIT_FATAL_FORK);
+            return EXIT_FATAL_FORK;
         } else {
             freopen(LOG_FILE_PATH, "w", stdout);
             dup2(fileno(stdout), fileno(stderr));
@@ -196,18 +199,17 @@ int main(int argc, char **argv) {
                     "/system/bin/app_process",
                     "/system/bin",
                     "--nice-name=rikka_server",
-                    "moe.shizuku.server.Server",
+                    SERVER_CLASS_PATH,
                     token,
                     NULL
             };
             if (execvp(appProcessArgs[0], appProcessArgs)) {
-                char err[100];
-                exit(EXIT_FATAL_APP_PROCESS);
+                return EXIT_FATAL_APP_PROCESS;
             }
         }
     } else if (pid == -1) {
         perrorf("fatal: can't fork\n");
-        exit(EXIT_FATAL_FORK);
+        return EXIT_FATAL_FORK;
     } else {
         signal(SIGCHLD, SIG_IGN);
         signal(SIGHUP, SIG_IGN);
@@ -225,7 +227,7 @@ int main(int argc, char **argv) {
             if (count >= 50) {
                 perrorf("\nwarn: timeout but can't get pid of rikka_server.\n");
                 showLogs();
-                exit(EXIT_WARN_START_TIMEOUT);
+                return EXIT_WARN_START_TIMEOUT;
             }
         }
         if (!skip_check) {
@@ -241,18 +243,19 @@ int main(int argc, char **argv) {
                     printf("\ninfo: rikka_server started.\n");
                     fflush(stdout);
                     showServerLogs();
-                    exit(EXIT_SUCCESS);
+                    return EXIT_SUCCESS;
                 }
             }
             perrorf("\nwarn: rikka_server stopped after started.\n");
             showLogs();
             showServerLogs();
-            exit(EXIT_WARN_SERVER_STOP);
+            return EXIT_WARN_SERVER_STOP;
         } else {
             printf("\ninfo: rikka_server started.\n");
             fflush(stdout);
             showServerLogs();
-            exit(EXIT_SUCCESS);
+            return EXIT_SUCCESS;
         }
     }
+    return EXIT_SUCCESS;
 }
