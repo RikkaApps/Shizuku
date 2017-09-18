@@ -8,7 +8,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,6 +27,13 @@ import moe.shizuku.utils.recyclerview.BaseViewHolder;
  */
 
 public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.OnClickListener {
+
+    public static final Creator<PackageInfo> CREATOR = new Creator<PackageInfo>() {
+        @Override
+        public BaseViewHolder<PackageInfo> createViewHolder(LayoutInflater inflater, ViewGroup parent) {
+            return new AppViewHolder(inflater.inflate(R.layout.item_app, parent, false));
+        }
+    };
 
     private ImageView icon;
     private TextView name;

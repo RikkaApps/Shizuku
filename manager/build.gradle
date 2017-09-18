@@ -40,10 +40,6 @@ android {
     }
 }
 
-configurations {
-    compile.exclude group: 'com.android.support', module: 'recyclerview-v7'
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -54,11 +50,13 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:support-fragment:$supportLibraryVersion"
     compile "com.android.support:cardview-v7:$supportLibraryVersion"
-    compile "moe.shizuku.support:recyclerview-v7:25.3.1"
-    compile 'moe.shizuku.support:preference:1.1'
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    compile "moe.shizuku.preference:preference:$preferenceLibraryVersion"
+    compile "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
+    compile "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
     compile 'moe.shizuku.utils:libsuperuser:1.1'
-    compile 'moe.shizuku.utils:support-utils:1.1'
-    compile 'moe.shizuku.utils:recyclerview-utils:1.1'
+    compile 'moe.shizuku.support:support-utils:2.0'
+    compile 'moe.shizuku.support:recyclerview-utils:2.0'
 }
 
 def ksFile = file('signing.properties')

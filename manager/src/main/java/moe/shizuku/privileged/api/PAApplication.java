@@ -1,8 +1,15 @@
 package moe.shizuku.privileged.api;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.StrictMode;
+import android.util.Log;
 
+import dalvik.system.DexClassLoader;
+import dalvik.system.PathClassLoader;
 import moe.shizuku.support.utils.Settings;
 
 /**

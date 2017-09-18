@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import moe.shizuku.privileged.api.adapter.AppAdapter;
+import moe.shizuku.utils.recyclerview.helper.RecyclerViewHelper;
 
 public class AppsActivity extends AppCompatActivity {
 
@@ -30,13 +31,14 @@ public class AppsActivity extends AppCompatActivity {
 
             for (String perm : pi.requestedPermissions) {
                 if ("moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION".equals(perm)) {
-                    adapter.addItem(R.layout.item_app, pi);
+                    adapter.getItems().add(pi);
                     break;
                 }
             }
         }
 
         ((RecyclerView) findViewById(android.R.id.list)).setAdapter(adapter);
+        RecyclerViewHelper.fixOverScroll((RecyclerView) findViewById(android.R.id.list));
     }
 
     @Override
