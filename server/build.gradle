@@ -18,7 +18,7 @@ android {
 }
 
 task generateCodes(type: Exec) {
-    commandLine 'java', '-classpath', '../generator/build/classes/main/', 'moe.shizuku.AidlParser', 'server'
+    commandLine 'java', '-classpath', '../generator/build/classes/java/main/', 'moe.shizuku.AidlParser', 'server'
 }
 
 project.afterEvaluate {
