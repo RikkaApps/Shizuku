@@ -9,3 +9,4 @@
 /captures
 .externalNativeBuild
 /.idea
+/manager/signing.properties
