@@ -1,5 +1,5 @@
-include ':hidden-api'/*, ':hidden-api-public'*/, ':generator'
-include ':server'
+include /*':hidden-api'/*, ':hidden-api-public'*//*, */':generator'
+//include ':server'
 //include ':sv-override-m', ':hidden-api-override-m', ':sv-override-o', ':hidden-api-override-o', ':hidden-api-override', ':sv-override'
-include ':manager', ':api'
+//include ':manager', ':api'
 

@@ -30,5 +30,5 @@ clean.dependsOn generateCodes
 clean.mustRunAfter generateCodes*/
 
 dependencies {
-    compile project(':hidden-api')
+    implementation project(':hidden-api')
 }

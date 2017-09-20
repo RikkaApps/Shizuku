@@ -18,6 +18,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:25.3.1'
+    implementation 'com.android.support:support-annotations:26.0.2'
     //compile project(':hidden-api-public')
 }

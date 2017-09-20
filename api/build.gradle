@@ -24,13 +24,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     //compile project(':hidden-api-public')
-    compile 'com.android.support:support-annotations:25.3.1'
+    implementation 'com.android.support:support-annotations:26.0.2'
 }
 
 /*task generateCodes(type: Exec) {
