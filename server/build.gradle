@@ -17,7 +17,7 @@ android {
     }
 }
 
-task generateCodes(type: Exec) {
+/*task generateCodes(type: Exec) {
     commandLine 'java', '-classpath', '../generator/build/classes/java/main/', 'moe.shizuku.AidlParser', 'server'
 }
 
@@ -27,11 +27,8 @@ project.afterEvaluate {
 }
 
 clean.dependsOn generateCodes
-clean.mustRunAfter generateCodes
+clean.mustRunAfter generateCodes*/
 
 dependencies {
     compile project(':hidden-api')
-    compile project(':sv-override')
-    compile project(':sv-override-m')
-    compile project(':sv-override-o')
 }

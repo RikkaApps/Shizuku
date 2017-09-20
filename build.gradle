@@ -3,7 +3,7 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com" }
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-beta6'
@@ -17,7 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com" }
+        google()
         mavenLocal()
     }
 }
@@ -35,5 +35,5 @@ ext {
     buildToolsVersion = "26.0.1"
     versionCode = 39
     versionName = "2.0.0 dev"
-    serverVersionCode = 23
+    serverVersionCode = 24
 }

@@ -92,7 +92,7 @@ pid_t getRikkaServerPid() {
                     fread(cmdline, 1, 50, cmdlineFile);
                     cmdline[49] = '\0';
                     fclose(cmdlineFile);
-                    if (strstr(cmdline, "rikka_server") != NULL) {
+                    if (strstr(cmdline, "rikka_server2") != NULL) {
                         res = (pid_t) pid;
                         break;
                     }

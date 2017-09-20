@@ -188,7 +188,7 @@ public class ServerLauncher {
                 throw new RuntimeException();
             }
 
-            return Shell.SU.run("app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server moe.shizuku.server.Server &", SERVER_TIMEOUT);
+            return Shell.SU.run("app_process -Djava.class.path=" + path + " /system/bin --nice-name=rikka_server2 moe.shizuku.server.Server &", SERVER_TIMEOUT);
         } else {
             return new Shell.Result(99, new ArrayList<String>());
         }

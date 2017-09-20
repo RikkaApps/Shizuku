@@ -1,4 +1,10 @@
 apply plugin: 'java'
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.squareup:javapoet:1.9.0'
+    compile 'com.github.javaparser:javaparser-core:3.4.0'
+}

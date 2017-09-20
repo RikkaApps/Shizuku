@@ -1,9 +1,14 @@
 package moe.shizuku;
 
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,15 +67,32 @@ public class AidlParser {
     }
 
     public static void main(String[] args) throws IOException {
-        AidlParser parser = new AidlParser();
+        FileInputStream in = new FileInputStream("../IPackageManager.aidl");
+        String code = toString(in)
+                .replace("interface ", "public class ")
+                .replace("(inout ", "(")
+                .replace("(in ", "(")
+                .replace("(out ", "(");
 
-        parser.parse(new File("../apis.aidl"));
-        if (args[0].equals("api")) {
-            new ActionWriter().write("../api", "moe.shizuku.server.Actions", parser);
-            new AbstractPrivilegedAPIsWtiter().write("../api", "moe.shizuku.privileged.api.AbstractPrivilegedAPIs", parser);
-        } else if (args[0].equals("server")) {
-            new ActionWriter().write("../server", "moe.shizuku.server.Actions", parser);
-            new RequestHandlerWriter().write("../server", "moe.shizuku.server.RequestHandler", parser);
+        // parse the file
+        CompilationUnit cu = JavaParser.parse(code);
+
+        // prints the resulting compilation unit to default system output
+        System.out.println(cu.toString());
+
+        /*AidlParser parser = new AidlParser();
+
+        parser.parse(new File("../apis.aidl"));*/
+    }
+
+    public static String toString(FileInputStream fis) throws IOException {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+            return sb.toString();
         }
     }
 }

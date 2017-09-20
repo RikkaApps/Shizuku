@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class Protocol implements Parcelable  {
 
-    public static final int PORT = 55608;
+    public static final int PORT = 55609;
     public static final InetAddress HOST = InetAddress.getLoopbackAddress();
 
     public static final int VERSION = BuildConfig.VERSION_CODE;
