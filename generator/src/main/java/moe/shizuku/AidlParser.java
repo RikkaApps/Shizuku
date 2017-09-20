@@ -70,9 +70,10 @@ public class AidlParser {
         FileInputStream in = new FileInputStream("../IPackageManager.aidl");
         String code = toString(in)
                 .replace("interface ", "public class ")
-                .replace("(inout ", "(")
-                .replace("(in ", "(")
-                .replace("(out ", "(");
+                .replace("inout ", " ")
+                .replace("in ", " ")
+                .replace("out ", " ")
+                .replace("oneway ", " ");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(code);
