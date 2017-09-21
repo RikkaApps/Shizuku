@@ -8,6 +8,7 @@ import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
+import java.util.Comparator;
 import java.util.EnumSet;
 
 import moe.shizuku.generator.utils.MethodDeclarationUtils;

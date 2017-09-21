@@ -33,6 +33,8 @@ public class SourceRootHelper {
 
                     createStubClassIfNotExists(sr, pkg, cls);
                 });
+
+        sr.add(cu.getPackageDeclaration().get().getNameAsString(), cu.getTypes().get(0).getNameAsString() + ".java", cu);
     }
 
     private static void createStubClassIfNotExists(SourceRoot sr, String pkg, String cls) {
