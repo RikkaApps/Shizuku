@@ -73,15 +73,18 @@ artifacts {
     //archives androidJavadocsJar
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: repository_url)
-        pom.project {
-            name 'privileged-api'
-            groupId "moe.shizuku.support"
-            artifactId 'privileged-api'
-            version rootProject.ext.serverVersionCode
-            packaging 'aar'
+if (binding.hasVariable('repository_url')) {
+    uploadArchives {
+        repositories.mavenDeployer {
+            repository(url: repository_url)
+            pom.project {
+                name 'privileged-api'
+                groupId "moe.shizuku.support"
+                artifactId 'privileged-api'
+                version rootProject.ext.serverVersionCode
+                packaging 'aar'
+            }
         }
     }
 }
+
