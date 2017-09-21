@@ -1,11 +1,8 @@
 apply plugin: 'java'
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 jar {
     manifest {
-        attributes 'Main-Class': 'moe.shizuku.AidlParser'
+        attributes 'Main-Class': 'moe.shizuku.generator.AidlParser'
     }
     from {
         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
@@ -22,7 +19,6 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.squareup:javapoet:1.9.0'
     compile 'com.github.javaparser:javaparser-core:3.4.0'
 }
 
