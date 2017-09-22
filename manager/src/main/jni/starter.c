@@ -26,6 +26,8 @@
 #define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
 #define SERVER_LOG_FILE_PATH "/data/local/tmp/rikka_server.log"
 
+#define SERVER_NAME "shizuku_server"
+
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
 #define PACKAGE_ID "moe.shizuku.privileged.api"
@@ -92,7 +94,7 @@ pid_t getRikkaServerPid() {
                     fread(cmdline, 1, 50, cmdlineFile);
                     cmdline[49] = '\0';
                     fclose(cmdlineFile);
-                    if (strstr(cmdline, "rikka_server2") != NULL) {
+                    if (strstr(cmdline, SERVER_NAME) != NULL) {
                         res = (pid_t) pid;
                         break;
                     }
@@ -109,20 +111,20 @@ pid_t getRikkaServerPid() {
 void killOldServer() {
     pid_t pid = getRikkaServerPid();
     if (pid != 0) {
-        printf("info: old rikka_server found, killing\n");
+        printf("info: old " SERVER_NAME " found, killing\n");
         fflush(stdout);
         if (kill(pid, SIGINT) != 0) {
             printf("info: can't kill old server.\n");
             fflush(stdout);
         }
     } else {
-        printf("info: no old rikka_server found.\n");
+        printf("info: no old " SERVER_NAME " found.\n");
         fflush(stdout);
     }
 }
 
 void showServerLogs() {
-    printf("\ninfo: rikka_server log: \n");
+    printf("\ninfo: " SERVER_NAME " log: \n");
     FILE *logFile;
     if ((logFile = fopen(SERVER_LOG_FILE_PATH, "r")) != NULL) {
         int ch;
@@ -198,7 +200,7 @@ int main(int argc, char **argv) {
             char *appProcessArgs[] = {
                     "/system/bin/app_process",
                     "/system/bin",
-                    "--nice-name=rikka_server",
+                    "--nice-name=" SERVER_NAME,
                     SERVER_CLASS_PATH,
                     token,
                     NULL
@@ -215,7 +217,7 @@ int main(int argc, char **argv) {
         signal(SIGHUP, SIG_IGN);
         printf("info: process forked, pid=%d\n", pid);
         fflush(stdout);
-        printf("info: check rikka_server start");
+        printf("info: check "SERVER_NAME "start");
         fflush(stdout);
         int rikkaServerPid;
         int count = 0;
@@ -225,13 +227,13 @@ int main(int argc, char **argv) {
             usleep(200 * 1000);
             count++;
             if (count >= 50) {
-                perrorf("\nwarn: timeout but can't get pid of rikka_server.\n");
+                perrorf("\nwarn: timeout but can't get pid of " SERVER_NAME ".\n");
                 showLogs();
                 return EXIT_WARN_START_TIMEOUT;
             }
         }
         if (!skip_check) {
-            printf("\ninfo: check rikka_server stable");
+            printf("\ninfo: check " SERVER_NAME " stable");
             fflush(stdout);
             count = 0;
             while ((rikkaServerPid = getRikkaServerPid()) != 0) {
@@ -240,18 +242,18 @@ int main(int argc, char **argv) {
                 usleep(1000 * 1000);
                 count++;
                 if (count >= 5) {
-                    printf("\ninfo: rikka_server started.\n");
+                    printf("\ninfo: " SERVER_NAME "started.\n");
                     fflush(stdout);
                     showServerLogs();
                     return EXIT_SUCCESS;
                 }
             }
-            perrorf("\nwarn: rikka_server stopped after started.\n");
+            perrorf("\nwarn: " SERVER_NAME "stopped after started.\n");
             showLogs();
             showServerLogs();
             return EXIT_WARN_SERVER_STOP;
         } else {
-            printf("\ninfo: rikka_server started.\n");
+            printf("\ninfo: " SERVER_NAME "started.\n");
             fflush(stdout);
             showServerLogs();
             return EXIT_SUCCESS;

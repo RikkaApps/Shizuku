@@ -1,4 +1,4 @@
-include ':generator'
-include ':android'
-include ':android-26'
-
+include ':generator', ':api-26', ':public'
+include ':server'
+include ':server-26'
+include ':manager'

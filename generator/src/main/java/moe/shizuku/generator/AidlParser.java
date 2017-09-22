@@ -37,7 +37,7 @@ public class AidlParser {
 
     public static void main(String[] args) throws IOException {
         Path source = Paths.get("source-26");
-        Path target = Paths.get("android-26/src/main/java");
+        Path target = Paths.get("server-26/src/main/java");
 
         SourceRootHelper.setTargetPath(target);
 
@@ -91,9 +91,8 @@ public class AidlParser {
         cu.addImport("android.os.IBinder");
         cu.addImport("java.util.List");
         cu.getImports().sort(Comparator.comparing(i -> i.getName().asString()));
-        SourceRootHelper.addStubClassesFromImportIfNotExists(sr, cu);
 
-        SourceRootHelper.addCompilationUnitAndCreateStubClassIfNotExits(sr, DelegateClassHelper.create(cu));
+        SourceRootHelper.add(sr, DelegateClassHelper.create(cu));
 
         toCompiledAidl(cu);
     }
@@ -117,7 +116,7 @@ public class AidlParser {
                 parameters
         );
 
-        asInterfaceMethod.setBody(new BlockStmt().addStatement("throw new UnsupportedOperationException();"));
+        asInterfaceMethod.setBody(new BlockStmt().addStatement("throw new RuntimeException(\"Stub!\");"));
 
         stubClass.addMember(asInterfaceMethod);
         aidlClass.addMember(stubClass);

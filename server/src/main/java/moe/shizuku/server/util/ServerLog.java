@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class ServerLog {
 
-    private static String TAG = "RServer " + Process.myPid();
+    private static String TAG = "Shizuku " + Process.myPid();
 
     public static void v(String msg) {
         Log.v(TAG, msg);

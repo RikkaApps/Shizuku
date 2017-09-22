@@ -1,7 +1,5 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
-    compile project(':server-26')
-    compile project(':public')
 }

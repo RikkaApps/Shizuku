@@ -23,7 +23,7 @@ public class DelegateClassHelper {
         ClassOrInterfaceDeclaration iBinder = (ClassOrInterfaceDeclaration) cu.getTypes().stream().findFirst().get();
         String pkg = "moe.shizuku.server.delegate";
         String binderName = iBinder.getNameAsString();
-        String clsName = binderName.substring(1);
+        String clsName = binderName.substring(1) + "Delegate";
 
         ClassOrInterfaceDeclaration delegateClass = new ClassOrInterfaceDeclaration(
                 EnumSet.of(Modifier.PUBLIC),
