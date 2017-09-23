@@ -8,7 +8,8 @@ import android.content.ComponentName;
 
 public class ShizukuIntent {
 
-    public static final String MANAGER_PACKAGE = "moe.shizuku.privileged.api";
+    public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";
+    public static final String MANAGER_PACKAGE = "moe.shizuku.manager";
 
     public static final String ACTION_SERVER_STARTED = MANAGER_PACKAGE + ".intent.action.SERVER_STARTED";
     public static final String ACTION_TASK_STACK_CHANGED =  MANAGER_PACKAGE + ".intent.action.TASK_STACK_CHANGED";
@@ -22,7 +23,7 @@ public class ShizukuIntent {
     }
 
     public static ComponentName componentName(String cls) {
-        return new ComponentName(MANAGER_PACKAGE,
+        return new ComponentName(MANAGER_APPLICATION_ID,
                 MANAGER_PACKAGE + cls);
     }
 }

@@ -32,6 +32,8 @@ public class DelegateClassHelper {
         String binderName = iBinder.getNameAsString();
         String clsName = binderName.substring(1) + "Delegate";
 
+        assert sNameMap.get(binderName) != null;
+
         ClassOrInterfaceDeclaration delegateClass = new ClassOrInterfaceDeclaration(
                 EnumSet.of(Modifier.PUBLIC),
                 false,
@@ -47,7 +49,7 @@ public class DelegateClassHelper {
 
         addSingletonFiled(delegate, delegateClass, binderName);
 
-        cu.getTypes().stream().findFirst().get().getMembers().stream()
+        iBinder.getMembers().stream()
                 .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
                 .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
                 .forEach(method -> DelegateClassHelper.addMethod(delegateClass, iBinder, method.clone()));
@@ -61,10 +63,17 @@ public class DelegateClassHelper {
                 JavaParser.parseClassOrInterfaceType(binderName),
                 "create");
         methodDeclaration.addAndGetAnnotation(Override.class);
-        methodDeclaration.setBody(new BlockStmt().addStatement(
-                String.format("return %s.Stub.asInterface(ServiceManager.getService(\"%s\"));"
-                        , binderName, sNameMap.get(binderName))
-        ));
+
+        // TODO
+        if ("IActivityManager".equals(binderName)) {
+            delegate.addImport("android.app.ActivityManagerNative");
+
+            methodDeclaration.setBody(new BlockStmt().addStatement("return ActivityManagerNative.getDefault();"));
+        } else {
+            methodDeclaration.setBody(new BlockStmt().addStatement(
+                    String.format("return %s.Stub.asInterface(ServiceManager.getService(\"%s\"));"
+                            , binderName, sNameMap.get(binderName))));
+        }
 
         NodeList<BodyDeclaration<?>> anonymousClassBody = new NodeList<>();
         anonymousClassBody.add(methodDeclaration);

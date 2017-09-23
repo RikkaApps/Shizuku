@@ -23,13 +23,13 @@ public class SocketThread implements Runnable {
 
     private final UUID mToken;
 
-    //private final RequestHandler mRequestHandler;
+    private final RequestHandler mRequestHandler;
 
     SocketThread(Handler handler, ServerSocket serverSocket, UUID token) {
         mHandler = handler;
         mServerSocket = serverSocket;
         mToken = token;
-        //mRequestHandler = new RequestHandler(this);
+        mRequestHandler = new RequestHandler(mHandler);
     }
 
     @Override
@@ -38,21 +38,16 @@ public class SocketThread implements Runnable {
         for (; ; ) {
             try {
                 Socket socket = mServerSocket.accept();
-                //boolean stop = !mRequestHandler.handle(socket, sToken);
-                RequestHandler.handle(socket, mToken);
+                mRequestHandler.handle(socket, mToken);
                 socket.close();
-
-                /*if (stop) {
-                    break;
-                }*/
             } catch (IOException e) {
                 if (SocketException.class.equals(e.getClass()) && "Socket closed".equals(e.getMessage())) {
                     ServerLog.i("server socket is closed");
                     break;
                 }
                 ServerLog.w("cannot accept", e);
-            /*} catch (RemoteException e) {
-                ServerLog.w("remote error", e);*/
+            } catch (RemoteException e) {
+                ServerLog.w("remote error", e);
             } catch (Exception e) {
                 ServerLog.w("error", e);
             }

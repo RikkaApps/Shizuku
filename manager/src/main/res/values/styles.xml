@@ -38,4 +38,9 @@
         <item name="android:colorAccent">#4285F4</item>
     </style>
 
+    <style name="Translucent" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>

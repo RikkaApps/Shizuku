@@ -90,7 +90,6 @@ public class AidlParser {
         // add imports
         cu.addImport("android.os.IBinder");
         cu.addImport("java.util.List");
-        cu.getImports().sort(Comparator.comparing(i -> i.getName().asString()));
 
         SourceRootHelper.add(sr, DelegateClassHelper.create(cu));
 

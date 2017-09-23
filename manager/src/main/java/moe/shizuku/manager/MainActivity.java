@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +69,14 @@ public class MainActivity extends AppCompatActivity {
         mStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check();
+                mStartButton.setEnabled(false);
+                mRestartButton.setEnabled(false);
+
+                if (mCheckToRequest) {
+                    WorkService.startRequestToken(v.getContext());
+                } else {
+                    WorkService.startAuth(v.getContext());
+                }
             }
         });
 
@@ -133,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     private class ServerStartedReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateUI(intent.<ShizukuState>getParcelableExtra(getPackageName() + "intent.extra.RESULT"));
+            updateUI(intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
         }
     }
 
@@ -143,20 +151,20 @@ public class MainActivity extends AppCompatActivity {
             mStartButton.setEnabled(true);
             mRestartButton.setEnabled(true);
 
-            int code = intent.getIntExtra(getPackageName() + ".intent.extra.CODE", 0);
+            int code = intent.getIntExtra(Intents.EXTRA_CODE, 0);
             if (code == 0) {
                 return;
             }
 
             if (code != 99) {
-                if (intent.getBooleanExtra(getPackageName() + ".intent.extra.IS_OLD", false)) {
+                if (intent.getBooleanExtra(Intents.EXTRA_IS_OLD, false)) {
                     return;
                 }
 
                 final StringBuilder sb = new StringBuilder();
                 sb.append("code:").append(code).append("\n\n");
-                if (intent.hasExtra(getPackageName() + ".intent.extra.OUTPUT")) {
-                    for (String s : intent.getStringArrayListExtra(getPackageName() + ".intent.extra.OUTPUT")) {
+                if (intent.hasExtra(Intents.EXTRA_OUTPUT)) {
+                    for (String s : intent.getStringArrayListExtra(Intents.EXTRA_OUTPUT)) {
                         sb.append(s).append('\n');
                     }
                 }
@@ -207,10 +215,10 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getQuantityString(R.plurals.authorized_apps_count, Permissions.grantedCount(), Permissions.grantedCount()));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mServerStartedReceiver, new IntentFilter(getPackageName() + ".intent.action.AUTH_RESULT"));
+                .registerReceiver(mServerStartedReceiver, new IntentFilter(Intents.ACTION_AUTH_RESULT));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mStartFailedReceiver, new IntentFilter(getPackageName() + ".intent.action.START"));
+                .registerReceiver(mStartFailedReceiver, new IntentFilter(Intents.ACTION_START));
     }
 
     @Override
@@ -228,11 +236,7 @@ public class MainActivity extends AppCompatActivity {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        if (mCheckToRequest) {
-            WorkService.startRequestToken(this);
-        } else {
-            WorkService.startAuth(this);
-        }
+        WorkService.startAuth(this);
     }
 
     private void startChoose() {

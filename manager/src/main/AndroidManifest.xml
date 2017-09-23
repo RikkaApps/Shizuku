@@ -61,6 +61,17 @@
             android:label="@string/action_settings"
             android:theme="@style/AppTheme.Apps" />
 
+        <activity
+            android:name=".TokenServerStartActivity"
+            android:theme="@style/Translucent"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
+
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -68,15 +79,6 @@
             android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".receiver.ServerStartedReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
-            <intent-filter>
-                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
             </intent-filter>
         </receiver>
 
