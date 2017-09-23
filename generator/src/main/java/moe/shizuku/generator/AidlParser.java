@@ -98,7 +98,7 @@ public class AidlParser {
     }
 
     private static void toCompiledAidl(CompilationUnit cu) {
-        ClassOrInterfaceDeclaration aidlClass = cu.getInterfaceByName("IPackageManager").get();
+        ClassOrInterfaceDeclaration aidlClass = (ClassOrInterfaceDeclaration) cu.getTypes().stream().findFirst().get();
         aidlClass.addModifier(Modifier.PUBLIC);
 
         ClassOrInterfaceDeclaration stubClass = new ClassOrInterfaceDeclaration(
@@ -112,7 +112,7 @@ public class AidlParser {
         MethodDeclaration asInterfaceMethod = new MethodDeclaration(
                 EnumSet.of(Modifier.PUBLIC, Modifier.STATIC),
                 "asInterface",
-                new ClassOrInterfaceType(null, "IPackageManager"),
+                new ClassOrInterfaceType(null, aidlClass.getNameAsString()),
                 parameters
         );
 
