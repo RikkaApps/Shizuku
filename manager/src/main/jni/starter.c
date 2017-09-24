@@ -31,7 +31,7 @@
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
 #define PACKAGE_ID "moe.shizuku.privileged.api"
-#define SERVER_CLASS_PATH "moe.shizuku.server.Server"
+#define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuServer"
 
 char *trimCRLF(char *str) {
     char *p;

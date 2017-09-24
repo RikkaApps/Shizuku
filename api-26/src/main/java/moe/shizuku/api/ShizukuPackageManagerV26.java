@@ -13,15 +13,15 @@ import moe.shizuku.io.ParcelOutputStream;
  * Created by rikka on 2017/9/23.
  */
 
-public class ShizukuPackageManagerV26 {
+class ShizukuPackageManagerV26 {
 
-    public static PackageInfo getPackageInfo(String packageName, int flags, int userId) {
+    protected static PackageInfo getPackageInfo(String packageName, int flags, int userId) {
         try {
             Socket client = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
             client.setSoTimeout(ShizukuConfiguration.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeInt(0/*ActionsV26.getTasks*/);
+            os.writeInt(ActionsV26.PackageManager_getPackageInfo);
             os.writeLong(ShizukuClient.getToken().getMostSignificantBits());
             os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());
             os.writeString(packageName);

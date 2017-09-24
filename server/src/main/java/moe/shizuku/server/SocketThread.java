@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.UUID;
 
+import moe.shizuku.server.api.ShizukuRequestHandler;
 import moe.shizuku.server.util.ServerLog;
 
 /**
@@ -23,13 +24,13 @@ public class SocketThread implements Runnable {
 
     private final UUID mToken;
 
-    private final RequestHandler mRequestHandler;
+    private final ShizukuRequestHandler mRequestHandler;
 
     SocketThread(Handler handler, ServerSocket serverSocket, UUID token) {
         mHandler = handler;
         mServerSocket = serverSocket;
         mToken = token;
-        mRequestHandler = new RequestHandler(mHandler);
+        mRequestHandler = new ShizukuRequestHandler(mHandler);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class SocketThread implements Runnable {
                 ServerLog.w("error", e);
             }
         }
-        mHandler.sendEmptyMessage(Server.MESSAGE_EXIT);
+        mHandler.sendEmptyMessage(ShizukuServer.MESSAGE_EXIT);
         try {
             mServerSocket.close();
         } catch (IOException ignored) {

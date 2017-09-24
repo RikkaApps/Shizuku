@@ -1,0 +1,151 @@
+package moe.shizuku.generator.helper;
+
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Modifier;
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.expr.FieldAccessExpr;
+import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.BreakStmt;
+import com.github.javaparser.ast.stmt.SwitchEntryStmt;
+import com.github.javaparser.ast.stmt.SwitchStmt;
+import com.github.javaparser.ast.type.TypeParameter;
+import com.github.javaparser.ast.type.VoidType;
+
+import java.io.IOException;
+import java.util.EnumSet;
+
+import moe.shizuku.generator.utils.CompilationUnitUtils;
+import moe.shizuku.generator.utils.MethodDeclarationUtils;
+
+/**
+ * Created by rikka on 2017/9/24.
+ */
+
+public class RequestHandlerClassHelper {
+
+    private static CompilationUnit cu;
+    private static SwitchStmt swichStmt;
+
+    public static void clear() {
+        cu = null;
+    }
+
+    public static CompilationUnit get() {
+        return cu;
+    }
+
+    public static CompilationUnit createOrAdd(CompilationUnit binderCu) {
+        ClassOrInterfaceDeclaration binderClass = (ClassOrInterfaceDeclaration) binderCu.getTypes().stream().findFirst().get();
+        String pkg = "moe.shizuku.server.api";
+        String binderName = binderClass.getNameAsString();
+        String clsName = "RequestHandler";
+
+        ClassOrInterfaceDeclaration cls;
+
+        if (cu == null) {
+            BlockStmt handleStmt = new BlockStmt().addStatement(
+                    "switch (action) {\n" +
+                            "    default:\n" +
+                            "        os.writeException(new SecurityException(\"unknown action: \" + action));\n" +
+                            "        break;\n" +
+                            "}"
+            );
+
+            cls = new ClassOrInterfaceDeclaration(
+                    EnumSet.of(Modifier.PUBLIC),
+                    false,
+                    clsName);
+
+            cls.addMethod("handle", Modifier.PUBLIC)
+                    .addParameter(int.class, "action")
+                    .addParameter("ParcelInputStream", "is")
+                    .addParameter("ParcelOutputStream", "os")
+                    .addThrownException(new TypeParameter("IOException"))
+                    .addThrownException(new TypeParameter("RemoteException"))
+                    .setBody(handleStmt);
+
+            swichStmt = (SwitchStmt) handleStmt.getStatement(0);
+
+            cu = new CompilationUnit(pkg);
+            cu.addType(cls)
+                    .addImport(IOException.class)
+                    .addImport("android.os.RemoteException")
+                    .addImport("moe.shizuku.io.ParcelInputStream")
+                    .addImport("moe.shizuku.io.ParcelOutputStream");
+        } else {
+            cls = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
+        }
+
+        CompilationUnitUtils.addImport(cu, DelegateClassHelper.PACKAGE + "." + binderName.substring(1) + DelegateClassHelper.SUFFIX);
+        CompilationUnitUtils.addImports(cu, binderCu.getImports());
+
+        binderClass.getMembers().stream()
+                .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
+                .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
+                .filter(RequestHandlerClassHelper::filterMethod)
+                .forEach(method -> RequestHandlerClassHelper.addMethod(cls, binderName, method.clone()));
+
+        return cu;
+    }
+
+    private static boolean filterMethod(MethodDeclaration method) {
+        /*if (IOBlockHelper.isTypeBinderOrInterface(method.getType())) {
+            return false;
+        }
+
+        for (Parameter parameter: method.getParameters()) {
+            if (IOBlockHelper.isTypeBinderOrInterface(parameter.getType())) {
+                return false;
+            }
+        }*/
+        return true;
+    }
+
+    private static void addMethod(ClassOrInterfaceDeclaration cls, String binderName, MethodDeclaration source) {
+        MethodDeclaration method = cls.addMethod(getMethodName(binderName, source), Modifier.PRIVATE, Modifier.STATIC)
+                .addThrownException(new TypeParameter("IOException"))
+                .addThrownException(new TypeParameter("RemoteException"))
+                .addParameter("ParcelInputStream", "is")
+                .addParameter("ParcelOutputStream", "os")
+                .setBody(getBlock(binderName, source));
+
+        swichStmt.addEntry(new SwitchEntryStmt(
+                JavaParser.parseExpression("Actions." + ActionClassHelper.getActionName(binderName, source)),
+                NodeList.nodeList(
+                        JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method) + ";"),
+                        JavaParser.parseStatement("break;"))
+        ));
+    }
+
+    private static String getMethodName(String binderName, MethodDeclaration method) {
+        return binderName.substring(1) + "_" + method.getNameAsString();
+    }
+
+    private static BlockStmt getBlock(String binderName, MethodDeclaration method) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        method.getParameters().forEach(parameter -> sb.append(IOBlockHelper.getReadStatement(parameter.getNameAsString(), parameter.getType())));
+        sb.append("try{");
+        if (!(method.getType() instanceof VoidType)) {
+            sb.append(method.getType().asString()).append(' ').append("result").append('=')
+                    .append(DelegateClassHelper.getMethodCallingStatement(binderName, method));
+            sb.append("os.writeNoException();");
+            sb.append(IOBlockHelper.getWriteStatement(method.getType()));
+        } else {
+            sb.append(DelegateClassHelper.getMethodCallingStatement(binderName, method));
+            sb.append("os.writeNoException();");
+
+        }
+        sb.append("}catch(Throwable tr){\n" +
+                "if (!(tr instanceof IOException)) {\n" +
+                "    os.writeException(tr);\n" +
+                "}}")
+                .append('}');
+        //System.out.println(sb.toString());
+        return JavaParser.parseBlock(sb.toString());
+    }
+}

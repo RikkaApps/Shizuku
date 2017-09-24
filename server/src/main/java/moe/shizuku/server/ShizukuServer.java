@@ -2,6 +2,7 @@ package moe.shizuku.server;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.UserInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,16 +17,17 @@ import moe.shizuku.ShizukuConfiguration;
 import moe.shizuku.ShizukuIntent;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.server.delegate.ActivityManagerDelegate;
+import moe.shizuku.server.delegate.UserManagerDelegate;
 import moe.shizuku.server.util.ServerLog;
 import moe.shizuku.server.util.Utils;
 
-public class Server extends Handler {
+public class ShizukuServer extends Handler {
 
     public static final int MESSAGE_EXIT = 1;
 
     private UUID mToken;
 
-    private Server(UUID token) {
+    private ShizukuServer(UUID token) {
         super();
 
         if (token == null) {
@@ -71,9 +73,19 @@ public class Server extends Handler {
         ServerLog.i("start version: " + ShizukuConfiguration.VERSION + " token: " + mToken);
 
         // send token to manager app
-        sendTokenToManger(mToken, 0);
+        sendTokenToManger(mToken);
 
         return true;
+    }
+
+    public static void sendTokenToManger(UUID token) {
+        try {
+            for (UserInfo userInfo : UserManagerDelegate.getUsers(true)) {
+                sendTokenToManger(token, userInfo.id);
+            }
+        } catch (RemoteException e) {
+            ServerLog.e("failed send token to manager app (filed to get users)", e);
+        }
     }
 
     public static void sendTokenToManger(UUID token, int userId) {
@@ -103,7 +115,7 @@ public class Server extends Handler {
 
         Looper.prepare();
 
-        Server server = new Server(getToken(args));
+        ShizukuServer server = new ShizukuServer(getToken(args));
 
         if (!server.start()) {
             System.exit(1);

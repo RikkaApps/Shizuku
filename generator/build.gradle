@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 jar {
     manifest {
-        attributes 'Main-Class': 'moe.shizuku.generator.AidlParser'
+        attributes 'Main-Class': 'moe.shizuku.generator.Generator'
     }
     from {
         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }

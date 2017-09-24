@@ -8,6 +8,11 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 
 public class MethodDeclarationUtils {
 
+    /**
+     *
+     * @param method
+     * @return
+     */
     public static String toCallingStatementString(MethodDeclaration method) {
         StringBuilder sb = new StringBuilder();
         sb.append(method.getNameAsString()).append('(');

@@ -2,8 +2,4 @@ apply plugin: 'java'
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
-    compile project(':share')
-    compile project(':server-share')
-
-    compile project(':server-26')
 }

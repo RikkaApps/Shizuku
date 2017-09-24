@@ -26,6 +26,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':public')
-    //implementation 'com.android.support:support-annotation:26.0.2'
+    implementation project(':share')
 }

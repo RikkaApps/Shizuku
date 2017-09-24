@@ -1,4 +1,4 @@
-package moe.shizuku.server;
+package moe.shizuku.server.api;
 
 import android.app.ActivityManagerNative;
 import android.os.Handler;
@@ -12,21 +12,21 @@ import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
-import moe.shizuku.server.util.ServerLog;
+import moe.shizuku.server.ShizukuServer;
 
 /**
  * Created by rikka on 2017/9/23.
  */
 
-public class RequestHandler {
+public class ShizukuRequestHandler extends RequestHandler {
 
     private Handler mHandler;
 
-    public RequestHandler(Handler handler) {
+    public ShizukuRequestHandler(Handler handler) {
         mHandler = handler;
     }
 
-    public boolean handle(Socket socket, UUID token) throws IOException, RemoteException {
+    public void handle(Socket socket, UUID token) throws IOException, RemoteException {
         ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
         ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
         int action = is.readInt();
@@ -36,32 +36,30 @@ public class RequestHandler {
             if (most != token.getMostSignificantBits()
                     && least != token.getLeastSignificantBits()) {
                 os.writeException(new SecurityException("unauthorized"));
-                is.close();
-                os.flush();
-                os.close();
-                return true;
+            }
+        } else {
+            switch (action) {
+                case ShizukuClient.ACTION_GET_VERSION:
+                    version(os);
+                    break;
+                case ShizukuClient.ACTION_REQUEST_STOP:
+                    stop(os, mHandler);
+                    break;
+                case ShizukuClient.ACTION_AUTHORIZE:
+                    authorize(is, os, token);
+                    break;
+                case ShizukuClient.ACTION_SEND_TOKEN:
+                    sendTokenToManger(is, os, token);
+                    break;
+                default:
+                    handle(action, is, os);
+                    break;
             }
         }
-        switch (action) {
-            case ShizukuClient.ACTION_GET_VERSION:
-                version(os);
-                break;
-            case ShizukuClient.ACTION_REQUEST_STOP:
-                stop(os, mHandler);
-                break;
-            case ShizukuClient.ACTION_AUTHORIZE:
-                authorize(is, os, token);
-                break;
-            case ShizukuClient.ACTION_SEND_TOKEN:
-                sendTokenToManger(is, os, token);
-                break;
-            /*case :
-                default:*/
-        }
+
         is.close();
         os.flush();
         os.close();
-        return true;
     }
 
     private static boolean isActionRequireAuthorization(int action) {
@@ -82,9 +80,9 @@ public class RequestHandler {
     public static void version(ParcelOutputStream os) throws RemoteException, IOException {
         os.writeNoException();
         if (isServerDead()) {
-            os.writeParcelable(ShizukuState.createServerDead());
+            os.write(ShizukuState.createServerDead());
         } else {
-            os.writeParcelable(ShizukuState.createOk());
+            os.write(ShizukuState.createOk());
         }
     }
 
@@ -94,12 +92,12 @@ public class RequestHandler {
 
         os.writeNoException();
         if (isServerDead()) {
-            os.writeParcelable(ShizukuState.createServerDead());
+            os.write(ShizukuState.createServerDead());
         } else if (most != token.getMostSignificantBits()
                 && least != token.getLeastSignificantBits()) {
-            os.writeParcelable(ShizukuState.createUnauthorized());
+            os.write(ShizukuState.createUnauthorized());
         } else {
-            os.writeParcelable(ShizukuState.createOk());
+            os.write(ShizukuState.createOk());
         }
 
         is.close();
@@ -110,33 +108,15 @@ public class RequestHandler {
     private static void stop(ParcelOutputStream os, Handler handler) throws IOException {
         os.writeNoException();
 
-        handler.sendEmptyMessage(Server.MESSAGE_EXIT);
+        handler.sendEmptyMessage(ShizukuServer.MESSAGE_EXIT);
     }
 
     private static void sendTokenToManger(ParcelInputStream is, ParcelOutputStream os, UUID token) throws IOException, RemoteException {
         int uid = is.readInt();
         int userId = uid / 100000;
 
-        Server.sendTokenToManger(token, userId);
+        ShizukuServer.sendTokenToManger(token, userId);
 
         os.writeNoException();
     }
-
-
-    /*public static void getPackageInfo(ParcelInputStream is, ParcelOutputStream os) throws IOException, RemoteException {
-        String packageName = is.readString();
-        int flags = is.readInt();
-        int userId = is.readInt();
-
-        try {
-            PackageInfo result = PackageManagerDelegate.getPackageInfo(packageName, flags, userId);
-            os.writeNoException();
-            os.writeParcelable(result);
-        } catch (Throwable tr) {
-            if (!(tr instanceof IOException)) {
-                os.writeException(tr);
-                ServerLog.eStack("error when call getPackageInfo(" + packageName + ", " + flags + ")\n" + tr.getMessage(), tr);
-            }
-        }
-    }*/
 }

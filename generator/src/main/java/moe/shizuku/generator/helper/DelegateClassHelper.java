@@ -15,8 +15,6 @@ import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 
 import moe.shizuku.generator.utils.MethodDeclarationUtils;
 
@@ -26,13 +24,14 @@ import moe.shizuku.generator.utils.MethodDeclarationUtils;
 
 public class DelegateClassHelper {
 
+    public static final String PACKAGE = "moe.shizuku.server.delegate";
+    public static final String SUFFIX = "Delegate";
+
     public static CompilationUnit create(CompilationUnit cu) {
         ClassOrInterfaceDeclaration iBinder = (ClassOrInterfaceDeclaration) cu.getTypes().stream().findFirst().get();
-        String pkg = "moe.shizuku.server.delegate";
+        String pkg = PACKAGE;
         String binderName = iBinder.getNameAsString();
-        String clsName = binderName.substring(1) + "Delegate";
-
-        assert sNameMap.get(binderName) != null;
+        String clsName = binderName.substring(1) + SUFFIX;
 
         ClassOrInterfaceDeclaration delegateClass = new ClassOrInterfaceDeclaration(
                 EnumSet.of(Modifier.PUBLIC),
@@ -72,7 +71,7 @@ public class DelegateClassHelper {
         } else {
             methodDeclaration.setBody(new BlockStmt().addStatement(
                     String.format("return %s.Stub.asInterface(ServiceManager.getService(\"%s\"));"
-                            , binderName, sNameMap.get(binderName))));
+                            , binderName, BinderHelper.getServiceName(binderName))));
         }
 
         NodeList<BodyDeclaration<?>> anonymousClassBody = new NodeList<>();
@@ -102,6 +101,12 @@ public class DelegateClassHelper {
                 .setBody(new BlockStmt().addStatement(getMethodReturningStatement(binder.getNameAsString(), method))));
     }
 
+    /** return IAppOpsServiceSingleton.get().checkOperation(code, uid, packageName);
+     *
+     * @param binderName
+     * @param method
+     * @return
+     */
     private static String getMethodReturningStatement(String binderName, MethodDeclaration method) {
         String format = "%sSingleton.get().%s;";
         if (!(method.getType() instanceof VoidType)) {
@@ -111,11 +116,15 @@ public class DelegateClassHelper {
         return String.format(format, binderName, MethodDeclarationUtils.toCallingStatementString(method));
     }
 
-    private static final Map<String, String> sNameMap = new HashMap<>();
+    /** return IAppOpsServiceSingleton.get().checkOperation(code, uid, packageName);
+     *
+     * @param binderName
+     * @param method
+     * @return
+     */
+    public static String getMethodCallingStatement(String binderName, MethodDeclaration method) {
+        String format = "%sDelegate.%s;";
 
-    static {
-        sNameMap.put("IPackageManager", "package");
-        sNameMap.put("IActivityManager", "activity");
-        sNameMap.put("IAppOpsService", "appops");
+        return String.format(format, binderName.substring(1), MethodDeclarationUtils.toCallingStatementString(method));
     }
 }
