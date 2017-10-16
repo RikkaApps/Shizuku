@@ -23,8 +23,8 @@
 #define EXIT_FATAL_KILL_OLD_SERVER 9
 #define EXIT_FATAL_FILE_NOT_FOUND 10
 
-#define LOG_FILE_PATH "/data/local/tmp/rikka_server_starter.log"
-#define SERVER_LOG_FILE_PATH "/data/local/tmp/rikka_server.log"
+#define LOG_FILE_PATH "/sdcard/Android/moe.shizuku.privileged.api/files/shizuku_starter.log"
+#define SERVER_LOG_FILE_PATH "/sdcard/Android/moe.shizuku.privileged.api/files/shizuku_server.log"
 
 #define SERVER_NAME "shizuku_server"
 

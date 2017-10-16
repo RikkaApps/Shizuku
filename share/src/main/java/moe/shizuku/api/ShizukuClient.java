@@ -21,7 +21,7 @@ public class ShizukuClient {
     public static final int ACTION_AUTHORIZE = 3;
     public static final int ACTION_SEND_TOKEN = 4;
 
-    private static UUID sToken;
+    private static UUID sToken = new UUID(0, 0);
 
     public static UUID getToken() {
         return sToken;
