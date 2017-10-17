@@ -31,7 +31,7 @@ public class ShizukuClient {
         sToken = token;
     }
 
-    public static ShizukuState getVersion() {
+    public static ShizukuState getState() {
         try {
             Socket client = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
             client.setSoTimeout(ShizukuConfiguration.TIMEOUT);
@@ -70,10 +70,8 @@ public class ShizukuClient {
             os.writeInt(ACTION_REQUEST_STOP);
             is.readException();
 
-            //ServerLog.i("send stop to old server");
             return true;
         } catch (Exception e) {
-            //ServerLog.i("cannot connect to old server, maybe it not exists");
             return false;
         }
     }

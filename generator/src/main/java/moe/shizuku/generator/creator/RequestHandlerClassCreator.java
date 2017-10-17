@@ -1,4 +1,4 @@
-package moe.shizuku.generator.helper;
+package moe.shizuku.generator.creator;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -6,10 +6,7 @@ import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.BreakStmt;
 import com.github.javaparser.ast.stmt.SwitchEntryStmt;
 import com.github.javaparser.ast.stmt.SwitchStmt;
 import com.github.javaparser.ast.type.TypeParameter;
@@ -18,6 +15,7 @@ import com.github.javaparser.ast.type.VoidType;
 import java.io.IOException;
 import java.util.EnumSet;
 
+import moe.shizuku.generator.helper.IOBlockHelper;
 import moe.shizuku.generator.utils.CompilationUnitUtils;
 import moe.shizuku.generator.utils.MethodDeclarationUtils;
 
@@ -25,7 +23,7 @@ import moe.shizuku.generator.utils.MethodDeclarationUtils;
  * Created by rikka on 2017/9/24.
  */
 
-public class RequestHandlerClassHelper {
+public class RequestHandlerClassCreator {
 
     private static CompilationUnit cu;
     private static SwitchStmt swichStmt;
@@ -80,14 +78,14 @@ public class RequestHandlerClassHelper {
             cls = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
         }
 
-        CompilationUnitUtils.addImport(cu, DelegateClassHelper.PACKAGE + "." + binderName.substring(1) + DelegateClassHelper.SUFFIX);
+        CompilationUnitUtils.addImport(cu, DelegateClassCreator.PACKAGE + "." + binderName.substring(1) + DelegateClassCreator.SUFFIX);
         CompilationUnitUtils.addImports(cu, binderCu.getImports());
 
         binderClass.getMembers().stream()
                 .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
                 .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
-                .filter(RequestHandlerClassHelper::filterMethod)
-                .forEach(method -> RequestHandlerClassHelper.addMethod(cls, binderName, method.clone()));
+                .filter(RequestHandlerClassCreator::filterMethod)
+                .forEach(method -> RequestHandlerClassCreator.addMethod(cls, binderName, method.clone()));
 
         return cu;
     }
@@ -114,7 +112,7 @@ public class RequestHandlerClassHelper {
                 .setBody(getBlock(binderName, source));
 
         swichStmt.addEntry(new SwitchEntryStmt(
-                JavaParser.parseExpression("Actions." + ActionClassHelper.getActionName(binderName, source)),
+                JavaParser.parseExpression("Actions." + ActionClassCreator.getActionName(binderName, source)),
                 NodeList.nodeList(
                         JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method) + ";"),
                         JavaParser.parseStatement("break;"))
@@ -132,11 +130,11 @@ public class RequestHandlerClassHelper {
         sb.append("try{");
         if (!(method.getType() instanceof VoidType)) {
             sb.append(method.getType().asString()).append(' ').append("result").append('=')
-                    .append(DelegateClassHelper.getMethodCallingStatement(binderName, method));
+                    .append(DelegateClassCreator.getMethodCallingStatement(binderName, method));
             sb.append("os.writeNoException();");
             sb.append(IOBlockHelper.getWriteStatement(method.getType()));
         } else {
-            sb.append(DelegateClassHelper.getMethodCallingStatement(binderName, method));
+            sb.append(DelegateClassCreator.getMethodCallingStatement(binderName, method));
             sb.append("os.writeNoException();");
 
         }

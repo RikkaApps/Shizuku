@@ -1,4 +1,4 @@
-package moe.shizuku.generator.helper;
+package moe.shizuku.generator.creator;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -16,16 +16,17 @@ import com.github.javaparser.ast.type.VoidType;
 
 import java.util.EnumSet;
 
+import moe.shizuku.generator.helper.BinderHelper;
 import moe.shizuku.generator.utils.MethodDeclarationUtils;
 
 /**
  * Created by rikka on 2017/9/21.
  */
 
-public class DelegateClassHelper {
+public class DelegateClassCreator {
 
-    public static final String PACKAGE = "moe.shizuku.server.delegate";
-    public static final String SUFFIX = "Delegate";
+    static final String PACKAGE = "moe.shizuku.server.delegate";
+    static final String SUFFIX = "Delegate";
 
     public static CompilationUnit create(CompilationUnit cu) {
         ClassOrInterfaceDeclaration iBinder = (ClassOrInterfaceDeclaration) cu.getTypes().stream().findFirst().get();
@@ -51,7 +52,7 @@ public class DelegateClassHelper {
         iBinder.getMembers().stream()
                 .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
                 .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
-                .forEach(method -> DelegateClassHelper.addMethod(delegateClass, iBinder, method.clone()));
+                .forEach(method -> addMethod(delegateClass, iBinder, method.clone()));
 
         return delegate;
     }
@@ -63,7 +64,6 @@ public class DelegateClassHelper {
                 "create");
         methodDeclaration.addAndGetAnnotation(Override.class);
 
-        // TODO
         if ("IActivityManager".equals(binderName)) {
             delegate.addImport("android.app.ActivityManagerNative");
 

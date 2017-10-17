@@ -105,6 +105,12 @@ public class IOBlockHelper {
         return sb.toString();
     }
 
+    public static String getWriteStatement(String name, Type type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("os.write").append(getStreamTypeName(type)).append("(").append(name).append(");");
+        return sb.toString();
+    }
+
     public static Type isTypeList(Type type) {
         if (type instanceof ClassOrInterfaceType) {
             ClassOrInterfaceType cls = (ClassOrInterfaceType) type;

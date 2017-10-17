@@ -1,6 +1,7 @@
-apply plugin: 'com.android.library'
+//apply plugin: 'com.android.library'
+apply plugin: 'java-library'
 
-android {
+/*android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
@@ -22,9 +23,19 @@ android {
         }
     }
 
+}*/
+
+jar {
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':share')
+    compileOnly files(rootProject.rootDir.absolutePath + "/android-26/android.jar")
+    compile project(':share')
 }

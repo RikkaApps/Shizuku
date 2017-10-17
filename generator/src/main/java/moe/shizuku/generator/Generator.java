@@ -9,14 +9,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import moe.shizuku.generator.helper.ActionClassHelper;
+import moe.shizuku.generator.creator.ActionClassCreator;
 import moe.shizuku.generator.helper.AidlHelper;
-import moe.shizuku.generator.helper.ApiClassHelper;
-import moe.shizuku.generator.helper.DelegateClassHelper;
-import moe.shizuku.generator.helper.RequestHandlerClassHelper;
+import moe.shizuku.generator.creator.ApiClassHelper;
+import moe.shizuku.generator.creator.DelegateClassCreator;
+import moe.shizuku.generator.creator.RequestHandlerClassCreator;
 import moe.shizuku.generator.utils.SourceRootUtils;
 
 /**
+ * java -jar generator/build/libs/generator.jar
+ *
  * Created by Rikka on 2017/5/10.
  */
 
@@ -42,7 +44,7 @@ public class Generator {
     private void generate() throws IOException {
         ApiClassHelper.setApiVersion(apiVersion);
         AidlHelper.parseAidlInPath(sourcePath);
-        RequestHandlerClassHelper.clear();
+        RequestHandlerClassCreator.clear();
 
         SourceRoot sr = new SourceRoot(sourcePath);
         sr.tryToParse().stream()
@@ -54,8 +56,11 @@ public class Generator {
                     generateApi(sr, compilationUnit);
                 });
 
-        SourceRootUtils.save(RequestHandlerClassHelper.get(), sr, serverPath);
-        SourceRootUtils.save(ActionClassHelper.get(), sr, serverPath);
+        SourceRootUtils.save(RequestHandlerClassCreator.get(), sr, serverPath);
+        SourceRootUtils.save(ActionClassCreator.get(), sr, serverPath);
+
+        ActionClassCreator.toApi(apiVersion);
+        SourceRootUtils.save(ActionClassCreator.get(), sr, apiPath);
     }
 
     private void generateServer(SourceRoot sr, CompilationUnit cu) {
@@ -63,13 +68,13 @@ public class Generator {
         cu.addImport("android.os.IBinder");
         cu.addImport("java.util.List");
 
-        SourceRootUtils.save(DelegateClassHelper.create(cu), sr, serverPath);
+        SourceRootUtils.save(DelegateClassCreator.create(cu), sr, serverPath);
         SourceRootUtils.save(AidlHelper.create(cu), sr, serverPath);
-        RequestHandlerClassHelper.createOrAdd(cu);
-        ActionClassHelper.createOrAdd(cu);
+        RequestHandlerClassCreator.createOrAdd(cu);
+        ActionClassCreator.createOrAdd(cu);
     }
 
     private void generateApi(SourceRoot sr, CompilationUnit cu) {
-
+        SourceRootUtils.save(ApiClassHelper.create(cu), sr, apiPath);
     }
 }

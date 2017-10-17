@@ -1,6 +1,7 @@
 package moe.shizuku.server.util;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManagerNative;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,15 @@ public class Utils {
             ServerLog.v("set output to " + LOG_FILE);
         } catch (IOException e) {
             ServerLog.w("failed to set output", e);
+        }
+    }
+
+    public static boolean isServerDead() {
+        try {
+            //noinspection deprecation
+            return !ActivityManagerNative.isSystemReady();
+        } catch (Exception e) {
+            return true;
         }
     }
 }

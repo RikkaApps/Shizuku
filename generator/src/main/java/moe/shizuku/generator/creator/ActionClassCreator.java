@@ -1,4 +1,4 @@
-package moe.shizuku.generator.helper;
+package moe.shizuku.generator.creator;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier;
@@ -10,11 +10,13 @@ import com.github.javaparser.ast.type.PrimitiveType;
 
 import java.util.EnumSet;
 
+import moe.shizuku.generator.helper.BinderHelper;
+
 /**
  * Created by rikka on 2017/9/24.
  */
 
-public class ActionClassHelper {
+public class ActionClassCreator {
 
     private static CompilationUnit cu;
     private static int count;
@@ -26,6 +28,14 @@ public class ActionClassHelper {
 
     public static CompilationUnit get() {
         return cu;
+    }
+
+    public static void toApi(int apiVersion) {
+        ActionClassCreator.get().setPackageDeclaration("moe.shizuku.api");
+
+        ClassOrInterfaceDeclaration cls = (ClassOrInterfaceDeclaration) ActionClassCreator.get().getTypes().get(0);
+        cls.setName("ActionsV" + apiVersion);
+        cls.setModifiers(EnumSet.noneOf(Modifier.class));
     }
 
     public static CompilationUnit createOrAdd(CompilationUnit binderCu) {
@@ -53,7 +63,7 @@ public class ActionClassHelper {
         binderClass.getMembers().stream()
                 .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
                 .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
-                .forEach(method -> ActionClassHelper.addFiled(cls, binderName, method.clone()));
+                .forEach(method -> ActionClassCreator.addFiled(cls, binderName, method.clone()));
 
         return cu;
     }

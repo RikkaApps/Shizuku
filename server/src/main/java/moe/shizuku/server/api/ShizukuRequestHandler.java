@@ -1,6 +1,5 @@
 package moe.shizuku.server.api;
 
-import android.app.ActivityManagerNative;
 import android.os.Handler;
 import android.os.RemoteException;
 
@@ -13,6 +12,7 @@ import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.ShizukuServer;
+import moe.shizuku.server.util.Utils;
 
 /**
  * Created by rikka on 2017/9/23.
@@ -69,20 +69,12 @@ public class ShizukuRequestHandler extends RequestHandler {
                 && action != ShizukuClient.ACTION_SEND_TOKEN;
     }
 
-    private static boolean isServerDead() {
-        try {
-            //noinspection deprecation
-            return !ActivityManagerNative.isSystemReady();
-        } catch (Exception e) {
-            return true;
-        }
-    }
     public static void version(ParcelOutputStream os) throws RemoteException, IOException {
         os.writeNoException();
-        if (isServerDead()) {
-            os.write(ShizukuState.createServerDead());
+        if (Utils.isServerDead()) {
+            os.writeParcelable(ShizukuState.createServerDead());
         } else {
-            os.write(ShizukuState.createOk());
+            os.writeParcelable(ShizukuState.createOk());
         }
     }
 
@@ -91,13 +83,13 @@ public class ShizukuRequestHandler extends RequestHandler {
         long least = is.readLong();
 
         os.writeNoException();
-        if (isServerDead()) {
-            os.write(ShizukuState.createServerDead());
+        if (Utils.isServerDead()) {
+            os.writeParcelable(ShizukuState.createServerDead());
         } else if (most != token.getMostSignificantBits()
                 && least != token.getLeastSignificantBits()) {
-            os.write(ShizukuState.createUnauthorized());
+            os.writeParcelable(ShizukuState.createUnauthorized());
         } else {
-            os.write(ShizukuState.createOk());
+            os.writeParcelable(ShizukuState.createOk());
         }
 
         is.close();
