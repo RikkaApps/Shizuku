@@ -1,5 +1,21 @@
 apply plugin: 'java'
 
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'moe.shizuku.server.ShizukuServer'
+    }
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
     compile project(':share')

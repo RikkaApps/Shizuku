@@ -37,24 +37,24 @@ public class ShizukuRequestHandler extends RequestHandler {
                     && least != token.getLeastSignificantBits()) {
                 os.writeException(new SecurityException("unauthorized"));
             }
-        } else {
-            switch (action) {
-                case ShizukuClient.ACTION_GET_VERSION:
-                    version(os);
-                    break;
-                case ShizukuClient.ACTION_REQUEST_STOP:
-                    stop(os, mHandler);
-                    break;
-                case ShizukuClient.ACTION_AUTHORIZE:
-                    authorize(is, os, token);
-                    break;
-                case ShizukuClient.ACTION_SEND_TOKEN:
-                    sendTokenToManger(is, os, token);
-                    break;
-                default:
-                    handle(action, is, os);
-                    break;
-            }
+        }
+
+        switch (action) {
+            case ShizukuClient.ACTION_GET_VERSION:
+                version(os);
+                break;
+            case ShizukuClient.ACTION_REQUEST_STOP:
+                stop(os, mHandler);
+                break;
+            case ShizukuClient.ACTION_AUTHORIZE:
+                authorize(is, os, token);
+                break;
+            case ShizukuClient.ACTION_SEND_TOKEN:
+                sendTokenToManger(is, os, token);
+                break;
+            default:
+                handle(action, is, os);
+                break;
         }
 
         is.close();
@@ -91,10 +91,6 @@ public class ShizukuRequestHandler extends RequestHandler {
         } else {
             os.writeParcelable(ShizukuState.createOk());
         }
-
-        is.close();
-        os.flush();
-        os.close();
     }
 
     private static void stop(ParcelOutputStream os, Handler handler) throws IOException {
