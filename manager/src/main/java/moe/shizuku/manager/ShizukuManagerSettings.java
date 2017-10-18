@@ -10,6 +10,7 @@ import java.lang.annotation.Retention;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
+import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.support.utils.Settings;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -105,6 +106,9 @@ public class ShizukuManagerSettings {
                 .putLong("token_least", leastSig)
                 .apply();
 
-        Log.i("RServer", "token update: " + new UUID(mostSig, leastSig));
+        UUID token = new UUID(mostSig, leastSig);
+        ShizukuClient.setToken(token);
+
+        Log.i("RServer", "token update: " + token);
     }
 }

@@ -12,7 +12,7 @@ import moe.shizuku.manager.service.WorkService;
  * Created by rikka on 2017/9/23.
  */
 
-public class TokenServerStartActivity extends Activity {
+public class TokenReceiveActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

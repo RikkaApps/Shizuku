@@ -62,7 +62,7 @@
             android:theme="@style/AppTheme.Apps" />
 
         <activity
-            android:name=".TokenServerStartActivity"
+            android:name=".TokenReceiveActivity"
             android:theme="@style/Translucent"
             android:enabled="true"
             android:exported="true"

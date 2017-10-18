@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import moe.shizuku.preference.PreferenceFragment;
-import moe.shizuku.utils.recyclerview.helper.RecyclerViewHelper;
+import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 

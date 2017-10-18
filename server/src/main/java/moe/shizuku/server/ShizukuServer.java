@@ -90,7 +90,7 @@ public class ShizukuServer extends Handler {
     public static void sendTokenToManger(UUID token, int userId) {
         Intent intent = new Intent(ShizukuConstants.ACTION_SERVER_STARTED)
                 .addCategory(Intent.CATEGORY_DEFAULT)
-                .setComponent(new ComponentName(ShizukuConstants.MANAGER_APPLICATION_ID, ShizukuConstants.MANAGER_PACKAGE + ".TokenServerStartActivity"))
+                .setComponent(new ComponentName(ShizukuConstants.MANAGER_APPLICATION_ID, ShizukuConstants.MANAGER_PACKAGE + ".TokenReceiveActivity"))
                 .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
                 .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
 

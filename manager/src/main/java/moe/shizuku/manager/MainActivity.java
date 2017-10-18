@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ShizukuManagerSettings.getToken(getIntent()) != null) {
-            ShizukuManagerSettings.putToken(this, getIntent());
-        }
-
         mStatus = findViewById(R.id.status);
         mStatusText = findViewById(R.id.status_text);
         mStatusIcon = findViewById(R.id.status_icon);

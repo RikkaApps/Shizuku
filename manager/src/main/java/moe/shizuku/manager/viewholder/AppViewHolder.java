@@ -16,7 +16,7 @@ import java.util.List;
 
 import moe.shizuku.manager.Permissions;
 import moe.shizuku.manager.R;
-import moe.shizuku.utils.recyclerview.BaseViewHolder;
+import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 /**
  * Created by Rikka on 2017/5/20.
