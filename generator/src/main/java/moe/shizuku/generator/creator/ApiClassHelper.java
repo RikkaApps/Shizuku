@@ -42,7 +42,7 @@ public class ApiClassHelper {
         delegate.addType(delegateClass)
                 .addImport("java.io.IOException")
                 .addImport("java.net.Socket")
-                .addImport("moe.shizuku.ShizukuConfiguration")
+                .addImport("moe.shizuku.ShizukuConstants")
                 .addImport("moe.shizuku.io.ParcelInputStream")
                 .addImport("moe.shizuku.io.ParcelOutputStream")
                 .addImport("moe.shizuku.lang.ShizukuRemoteException");
@@ -68,8 +68,8 @@ public class ApiClassHelper {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
         sb.append("try{")
-                .append("Socket client = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);")
-                .append("client.setSoTimeout(ShizukuConfiguration.TIMEOUT);")
+                .append("Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);")
+                .append("client.setSoTimeout(ShizukuConstants.TIMEOUT);")
                 .append("ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());")
                 .append("ParcelInputStream is = new ParcelInputStream(client.getInputStream());");
 

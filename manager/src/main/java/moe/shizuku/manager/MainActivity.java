@@ -17,7 +17,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import moe.shizuku.ShizukuConfiguration;
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.manager.widget.HtmlTextView;
@@ -349,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (ok) {
                 if (shizukuState.versionUnmatched()) {
-                    mStatusText.setText(getString(R.string.server_running_update, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion(), ShizukuConfiguration.VERSION));
+                    mStatusText.setText(getString(R.string.server_running_update, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion(), ShizukuConstants.VERSION));
                 } else {
                     mStatusText.setText(getString(R.string.server_running, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion()));
                 }

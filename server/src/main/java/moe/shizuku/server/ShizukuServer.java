@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.UUID;
 
-import moe.shizuku.ShizukuConfiguration;
-import moe.shizuku.ShizukuIntent;
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.server.delegate.ActivityManagerDelegate;
 import moe.shizuku.server.delegate.UserManagerDelegate;
@@ -57,7 +56,7 @@ public class ShizukuServer extends Handler {
 
         ServerSocket serverSocket;
         try {
-            serverSocket = new ServerSocket(ShizukuConfiguration.PORT, 0, ShizukuConfiguration.HOST);
+            serverSocket = new ServerSocket(ShizukuConstants.PORT, 0, ShizukuConstants.HOST);
         } catch (IOException e) {
             ServerLog.e("cannot start server", e);
             return false;
@@ -70,7 +69,7 @@ public class ShizukuServer extends Handler {
         socketThread.start();
         ServerLog.i("Build.VERSION.SDK_INT: " + Build.VERSION.SDK_INT);
         ServerLog.i("Build.DEVICE: " + Build.DEVICE);
-        ServerLog.i("start version: " + ShizukuConfiguration.VERSION + " token: " + mToken);
+        ServerLog.i("start version: " + ShizukuConstants.VERSION + " token: " + mToken);
 
         // send token to manager app
         sendTokenToManger(mToken);
@@ -89,11 +88,11 @@ public class ShizukuServer extends Handler {
     }
 
     public static void sendTokenToManger(UUID token, int userId) {
-        Intent intent = new Intent(ShizukuIntent.ACTION_SERVER_STARTED)
+        Intent intent = new Intent(ShizukuConstants.ACTION_SERVER_STARTED)
                 .addCategory(Intent.CATEGORY_DEFAULT)
-                .setComponent(new ComponentName(ShizukuIntent.MANAGER_APPLICATION_ID, ShizukuIntent.MANAGER_PACKAGE + ".TokenServerStartActivity"))
-                .putExtra(ShizukuIntent.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
-                .putExtra(ShizukuIntent.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
+                .setComponent(new ComponentName(ShizukuConstants.MANAGER_APPLICATION_ID, ShizukuConstants.MANAGER_PACKAGE + ".TokenServerStartActivity"))
+                .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
+                .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
 
         try {
             String mimeType = intent.getType();

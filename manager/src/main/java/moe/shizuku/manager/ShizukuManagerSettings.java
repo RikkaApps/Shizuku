@@ -9,7 +9,7 @@ import android.util.Log;
 import java.lang.annotation.Retention;
 import java.util.UUID;
 
-import moe.shizuku.ShizukuIntent;
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.support.utils.Settings;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -86,8 +86,8 @@ public class ShizukuManagerSettings {
     }
 
     public static UUID getToken(Intent intent) {
-        long mostSig = intent.getLongExtra(ShizukuIntent.EXTRA_TOKEN_MOST_SIG, 0);
-        long leastSig = intent.getLongExtra(ShizukuIntent.EXTRA_TOKEN_LEAST_SIG, 0);
+        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
         if (mostSig != 0 && leastSig != 0) {
             return new UUID(mostSig, leastSig);
         } else {
@@ -96,8 +96,8 @@ public class ShizukuManagerSettings {
     }
 
     public static void putToken(Context context, Intent intent) {
-        long mostSig = intent.getLongExtra(ShizukuIntent.EXTRA_TOKEN_MOST_SIG, 0);
-        long leastSig = intent.getLongExtra(ShizukuIntent.EXTRA_TOKEN_LEAST_SIG, 0);
+        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
 
         SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         preferences.edit()

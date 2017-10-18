@@ -5,7 +5,7 @@ import android.os.Process;
 import java.net.Socket;
 import java.util.UUID;
 
-import moe.shizuku.ShizukuConfiguration;
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
@@ -33,8 +33,8 @@ public class ShizukuClient {
 
     public static ShizukuState getState() {
         try {
-            Socket client = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
-            client.setSoTimeout(ShizukuConfiguration.TIMEOUT);
+            Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
+            client.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
             os.writeInt(ACTION_GET_VERSION);
@@ -47,8 +47,8 @@ public class ShizukuClient {
 
     public static ShizukuState authorize(UUID token) {
         try {
-            Socket client = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
-            client.setSoTimeout(ShizukuConfiguration.TIMEOUT);
+            Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
+            client.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
             os.writeInt(ACTION_AUTHORIZE);
@@ -63,8 +63,8 @@ public class ShizukuClient {
 
     public static boolean stopServer() {
         try {
-            Socket socket = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
-            socket.setSoTimeout(ShizukuConfiguration.TIMEOUT);
+            Socket socket = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
+            socket.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
             os.writeInt(ACTION_REQUEST_STOP);
@@ -78,8 +78,8 @@ public class ShizukuClient {
 
     public static void sendTokenToManager() {
         try {
-            Socket socket = new Socket(ShizukuConfiguration.HOST, ShizukuConfiguration.PORT);
-            socket.setSoTimeout(ShizukuConfiguration.TIMEOUT);
+            Socket socket = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
+            socket.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
             os.writeInt(ACTION_SEND_TOKEN);
