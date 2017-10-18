@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import moe.shizuku.generator.creator.ActionClassCreator;
 import moe.shizuku.generator.helper.AidlHelper;
-import moe.shizuku.generator.creator.ApiClassHelper;
+import moe.shizuku.generator.creator.ApiClassCreator;
 import moe.shizuku.generator.creator.DelegateClassCreator;
 import moe.shizuku.generator.creator.RequestHandlerClassCreator;
 import moe.shizuku.generator.utils.SourceRootUtils;
@@ -42,7 +42,7 @@ public class Generator {
     }
 
     private void generate() throws IOException {
-        ApiClassHelper.setApiVersion(apiVersion);
+        ApiClassCreator.setApiVersion(apiVersion);
         AidlHelper.parseAidlInPath(sourcePath);
         RequestHandlerClassCreator.clear();
 
@@ -75,6 +75,6 @@ public class Generator {
     }
 
     private void generateApi(SourceRoot sr, CompilationUnit cu) {
-        SourceRootUtils.save(ApiClassHelper.create(cu), sr, apiPath);
+        SourceRootUtils.save(ApiClassCreator.create(cu), sr, apiPath);
     }
 }

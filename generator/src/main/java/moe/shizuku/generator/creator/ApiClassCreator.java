@@ -17,14 +17,14 @@ import moe.shizuku.generator.helper.IOBlockHelper;
  * Created by rikka on 2017/9/24.
  */
 
-public class ApiClassHelper {
+public class ApiClassCreator {
 
     private static final String PACKAGE = "moe.shizuku.api";
     private static final String PREFIX = "Shizuku";
     private static String SUFFIX;
 
     public static void setApiVersion(int apiVersion) {
-        ApiClassHelper.SUFFIX = "V" + apiVersion;
+        ApiClassCreator.SUFFIX = "V" + apiVersion;
     }
 
     public static CompilationUnit create(CompilationUnit cu) {
@@ -71,7 +71,10 @@ public class ApiClassHelper {
                 .append("Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);")
                 .append("client.setSoTimeout(ShizukuConstants.TIMEOUT);")
                 .append("ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());")
-                .append("ParcelInputStream is = new ParcelInputStream(client.getInputStream());");
+                .append("ParcelInputStream is = new ParcelInputStream(client.getInputStream());")
+                .append("os.writeInt(Actions").append(SUFFIX).append('.').append(ActionClassCreator.getActionName(binderName, method)).append(");")
+                .append("os.writeLong(ShizukuClient.getToken().getMostSignificantBits());")
+                .append("os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());");
 
         method.getParameters().forEach(parameter ->
                 sb.append(IOBlockHelper.getWriteStatement(parameter.getNameAsString(), parameter.getType())));
