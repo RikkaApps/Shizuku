@@ -6,4 +6,4 @@ include ':api-26'
 include ':server', ':server-share'
 include ':server-26'
 
-include ':manager'
+include ':manager', ':sample'
