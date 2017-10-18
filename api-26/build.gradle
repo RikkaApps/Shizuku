@@ -15,5 +15,5 @@ jar {
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + "/android-26/android.jar")
-    compile project(':share')
+    implementation project(':share')
 }

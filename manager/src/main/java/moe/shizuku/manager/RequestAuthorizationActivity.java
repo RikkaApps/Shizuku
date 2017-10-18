@@ -15,21 +15,13 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 
-public class RequestActivity extends Activity {
+public class RequestAuthorizationActivity extends Activity {
 
     private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT";
-    private static final String PERMISSION_RECEIVE_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION";
-
-    private static final String EXTRA_VERSION = BuildConfig.APPLICATION_ID + ".intent.extra.VERSION";
-    private static final String EXTRA_PACKAGE_NAME = BuildConfig.APPLICATION_ID + ".intent.extra.PACKAGE_NAME";
-    private static final String EXTRA_UID = BuildConfig.APPLICATION_ID + ".intent.extra.UID";
-
-    public static final int AUTH_RESULT_OK = 0;
-    public static final int AUTH_RESULT_USER_DENIED = -1;
-    public static final int AUTH_RESULT_ERROR = -2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +32,10 @@ public class RequestActivity extends Activity {
                 .build();
         StrictMode.setThreadPolicy(permitNetworkPolicy);
 
-        final String packageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
-        int uid = getIntent().getIntExtra(EXTRA_UID, 0);
+        final String packageName = getIntent().getStringExtra(ShizukuConstants.EXTRA_PACKAGE_NAME);
+        int uid = getIntent().getIntExtra(ShizukuConstants.EXTRA_UID, 0);
         if (packageName == null) {
-            setResult(AUTH_RESULT_ERROR);
+            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
             finish();
             return;
         }
@@ -71,16 +63,16 @@ public class RequestActivity extends Activity {
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
-                            setResult(AUTH_RESULT_ERROR);
+                            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
                             finish();
                         }
                     })
                     .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(RequestActivity.this, MainActivity.class)
+                            startActivity(new Intent(RequestAuthorizationActivity.this, MainActivity.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                            setResult(AUTH_RESULT_ERROR);
+                            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
                             finish();
                         }
                     })
@@ -92,7 +84,7 @@ public class RequestActivity extends Activity {
         try {
             pi = getPackageManager().getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException ignored) {
-            setResult(AUTH_RESULT_ERROR);
+            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
             finish();
             return;
         }
@@ -137,28 +129,21 @@ public class RequestActivity extends Activity {
         });
         dialog.show();
 
-        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        TextView textView = dialog.findViewById(android.R.id.message);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.request_dialog_text_size));
     }
 
     private void setResult(boolean granted, String packageName) {
         if (granted) {
-            UUID token = ShizukuManagerSettings.getToken(RequestActivity.this);
+            UUID token = ShizukuManagerSettings.getToken(this);
             Intent intent = new Intent(ACTION_AUTHORIZATION)
                     .setPackage(packageName)
-                    .putExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_MOST_SIG", token.getMostSignificantBits())
-                    .putExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_LEAST_SIG", token.getLeastSignificantBits());
+                    .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
+                    .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
 
-            //sendBroadcast(intent, PERMISSION_RECEIVE_AUTHORIZATION);
-
-            setResult(AUTH_RESULT_OK, intent);
+            setResult(ShizukuConstants.AUTH_RESULT_OK, intent);
         } else {
-            /*Intent intent = new Intent(ACTION_AUTHORIZATION)
-                    .setPackage(packageName);
-
-            sendBroadcast(intent, PERMISSION_RECEIVE_AUTHORIZATION);*/
-
-            setResult(AUTH_RESULT_USER_DENIED);
+            setResult(ShizukuConstants.AUTH_RESULT_USER_DENIED);
         }
 
         finish();

@@ -7,10 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.adapter.AppAdapter;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
-public class AppsActivity extends AppCompatActivity {
+public class ManageAppsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class AppsActivity extends AppCompatActivity {
             }
 
             for (String perm : pi.requestedPermissions) {
-                if ("moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION".equals(perm)) {
+                if (ShizukuConstants.PERMISSION_REQUEST_AUTHORIZATION.equals(perm)) {
                     adapter.getItems().add(pi);
                     break;
                 }

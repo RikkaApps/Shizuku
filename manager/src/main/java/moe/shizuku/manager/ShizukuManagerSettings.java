@@ -86,16 +86,6 @@ public class ShizukuManagerSettings {
         return new UUID(mostSig, leastSig);
     }
 
-    public static UUID getToken(Intent intent) {
-        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
-        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
-        if (mostSig != 0 && leastSig != 0) {
-            return new UUID(mostSig, leastSig);
-        } else {
-            return null;
-        }
-    }
-
     public static void putToken(Context context, Intent intent) {
         long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);

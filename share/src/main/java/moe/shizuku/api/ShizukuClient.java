@@ -1,5 +1,7 @@
 package moe.shizuku.api;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Process;
 import android.util.Log;
 
@@ -24,6 +26,8 @@ public class ShizukuClient {
     public static final int ACTION_AUTHORIZE = 3;
     public static final int ACTION_SEND_TOKEN = 4;
 
+    public static final int AUTHORIZATION_REQUEST_CODE = 55608;
+
     private static UUID sToken = new UUID(0, 0);
 
     public static UUID getToken() {
@@ -32,6 +36,24 @@ public class ShizukuClient {
 
     public static void setToken(UUID token) {
         sToken = token;
+    }
+
+    public static void setToken(Intent intent) {
+        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
+        if (mostSig != 0 && leastSig != 0) {
+            setToken(new UUID(mostSig, leastSig));
+        }
+    }
+
+    public static void requestAuthorization(Activity activity) {
+        Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
+                .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID)
+                .putExtra(ShizukuConstants.EXTRA_PACKAGE_NAME, activity.getPackageName())
+                .putExtra(ShizukuConstants.EXTRA_UID, Process.myUid());
+        if (intent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivityForResult(intent, AUTHORIZATION_REQUEST_CODE);
+        }
     }
 
     public static ShizukuState getState() {

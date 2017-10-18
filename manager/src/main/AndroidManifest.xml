@@ -34,13 +34,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".RequestActivity"
+            android:name=".RequestAuthorizationActivity"
             android:enabled="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:theme="@style/GrantPermissions">
+            android:theme="@style/GrantPermissions"
+            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION">
             <intent-filter>
-                <action android:name="${applicationId}.intent.action.AUTHORIZATION" />
+                <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -53,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AppsActivity"
+            android:name=".ManageAppsActivity"
             android:label="@string/authorized_apps_manage"
             android:theme="@style/AppTheme.Apps" />
         <activity
@@ -70,6 +71,8 @@
 
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
