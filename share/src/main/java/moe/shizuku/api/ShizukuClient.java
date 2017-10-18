@@ -1,6 +1,7 @@
 package moe.shizuku.api;
 
 import android.os.Process;
+import android.util.Log;
 
 import java.net.Socket;
 import java.util.UUID;
@@ -15,6 +16,8 @@ import moe.shizuku.io.ParcelOutputStream;
  */
 
 public class ShizukuClient {
+
+    private static final String TAG = "ShizukuClient";
 
     public static final int ACTION_GET_VERSION = 1;
     public static final int ACTION_REQUEST_STOP = 2;
@@ -40,9 +43,14 @@ public class ShizukuClient {
             os.writeInt(ACTION_GET_VERSION);
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Log.w(TAG, "can't connect to server", e);
         }
         return ShizukuState.createUnknown();
+    }
+
+    public static ShizukuState authorize() {
+        return authorize(getToken());
     }
 
     public static ShizukuState authorize(UUID token) {
@@ -56,7 +64,8 @@ public class ShizukuClient {
             os.writeLong(token.getLeastSignificantBits());
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Log.w(TAG, "can't connect to server", e);
         }
         return ShizukuState.createUnknown();
     }
@@ -72,6 +81,7 @@ public class ShizukuClient {
 
             return true;
         } catch (Exception e) {
+            Log.w(TAG, "can't connect to server", e);
             return false;
         }
     }
@@ -85,7 +95,8 @@ public class ShizukuClient {
             os.writeInt(ACTION_SEND_TOKEN);
             os.writeInt(Process.myUid());
             is.readException();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Log.w(TAG, "can't connect to server", e);
         }
     }
 }
