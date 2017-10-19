@@ -1,6 +1,7 @@
 package moe.shizuku.manager;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.StrictMode;
 
 import moe.shizuku.support.utils.Settings;
@@ -11,16 +12,27 @@ import moe.shizuku.support.utils.Settings;
 
 public class ShizukuManagerApplication extends Application {
 
-    static {
+    private static boolean sInitialized = false;
+
+    public static void init(Context context) {
+        if (sInitialized) {
+            return;
+        }
+
         StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
         StrictMode.setThreadPolicy(tp);
+
+        Settings.init(context);
+        Permissions.init(context);
+        ServerLauncher.init(context);
+
+        sInitialized = true;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Settings.init(this);
-        Permissions.init(this);
+        init(this);
     }
 }

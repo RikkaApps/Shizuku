@@ -103,7 +103,6 @@ public class ShizukuClient {
 
             return true;
         } catch (Exception e) {
-            Log.w(TAG, "can't connect to server", e);
             return false;
         }
     }

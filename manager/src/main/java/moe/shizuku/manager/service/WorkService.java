@@ -61,7 +61,7 @@ public class WorkService extends IntentService {
     }
 
     private void handleStartServer() {
-        Shell.Result result = ServerLauncher.startRoot(this);
+        Shell.Result result = ServerLauncher.startRoot();
         Intent intent = new Intent(Intents.ACTION_START)
                 .putExtra(Intents.EXTRA_CODE, result.getExitCode())
                 .putStringArrayListExtra(Intents.EXTRA_OUTPUT, new ArrayList<>(result.getOutput()));
@@ -73,7 +73,7 @@ public class WorkService extends IntentService {
     }
 
     private void handleStartServerOld() {
-        Shell.Result result = ServerLauncher.startRootOld(this);
+        Shell.Result result = ServerLauncher.startRootOld();
         Intent intent = new Intent(Intents.ACTION_START)
                 .putExtra(Intents.EXTRA_IS_OLD, true)
                 .putExtra(Intents.EXTRA_CODE, result.getExitCode());
@@ -83,8 +83,6 @@ public class WorkService extends IntentService {
     }
 
     private void handleAuth() {
-        ServerLauncher.writeSH(this);
-
         LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(new Intent(Intents.ACTION_AUTH_RESULT)
                         .putExtra(Intents.EXTRA_RESULT, ShizukuClient.authorize(ShizukuManagerSettings.getToken(this))));

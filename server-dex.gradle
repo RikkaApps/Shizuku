@@ -1,0 +1,38 @@
+import org.gradle.internal.os.OperatingSystem
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def sdkDir = properties.getProperty('sdk.dir')
+
+def dx
+if (OperatingSystem.current().isWindows()) {
+    dx = sdkDir + "\\build-tools\\" + rootProject.ext.buildToolsVersion + '\\dx.bat'
+} else {
+    dx = sdkDir + "/build-tools/" + rootProject.ext.buildToolsVersion + '/dx'
+}
+
+task dex(type: Exec) {
+    dependsOn jar
+
+    commandLine dx,
+            '--dex',
+            '--output=' + file(rootProject.rootDir.path + "/manager/src/main/assets/" + project.name + ".dex").path,
+            file(project.buildDir.path + "/libs/" + project.name + ".jar").path
+}
+
+def apiVersion = project.name.substring(project.name.indexOf('-') + 1)
+
+jar {
+    dependsOn ":generator:generateApi" + apiVersion
+
+    manifest {
+        attributes 'Main-Class': 'moe.shizuku.server.ShizukuServer'
+    }
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}

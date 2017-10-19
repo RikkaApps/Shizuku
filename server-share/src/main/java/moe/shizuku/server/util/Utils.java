@@ -21,7 +21,10 @@ public class Utils {
             File file = new File(LOG_FILE);
             if (!file.exists()) {
                 //noinspection ResultOfMethodCallIgnored
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    ServerLog.w("failed to create log file");
+                    return;
+                }
             }
             PrintStream os = new PrintStream(file);
 
@@ -30,7 +33,7 @@ public class Utils {
 
             ServerLog.v("set output to " + LOG_FILE);
         } catch (IOException e) {
-            ServerLog.w("failed to set output", e);
+            ServerLog.w("failed to set output: " + e.getMessage());
         }
     }
 

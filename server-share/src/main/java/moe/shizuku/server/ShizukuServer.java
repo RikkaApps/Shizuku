@@ -1,6 +1,5 @@
 package moe.shizuku.server;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.UserInfo;
 import android.os.Build;
@@ -15,8 +14,7 @@ import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
-import moe.shizuku.server.delegate.ActivityManagerDelegate;
-import moe.shizuku.server.delegate.UserManagerDelegate;
+import moe.shizuku.server.api.Compat;
 import moe.shizuku.server.util.ServerLog;
 import moe.shizuku.server.util.Utils;
 
@@ -49,6 +47,11 @@ public class ShizukuServer extends Handler {
     }
 
     public boolean start() throws IOException, RemoteException, InterruptedException {
+        if (Compat.VERSION != Build.VERSION.SDK_INT) {
+            ServerLog.e("api version not matching, please open Shizuku Manager and try again.");
+            return false;
+        }
+
         if (ShizukuClient.stopServer()) {
             ServerLog.i("old server found, send stop...");
             Thread.sleep(500);
@@ -79,7 +82,7 @@ public class ShizukuServer extends Handler {
 
     public static void sendTokenToManger(UUID token) {
         try {
-            for (UserInfo userInfo : UserManagerDelegate.getUsers(true)) {
+            for (UserInfo userInfo : Compat.getUsers()) {
                 sendTokenToManger(token, userInfo.id);
             }
         } catch (RemoteException e) {
@@ -98,10 +101,9 @@ public class ShizukuServer extends Handler {
             String mimeType = intent.getType();
             if (mimeType == null && intent.getData() != null
                     && "content".equals(intent.getData().getScheme())) {
-                mimeType = ActivityManagerDelegate.getProviderMimeType(intent.getData(), userId);
+                mimeType = Compat.getProviderMimeType(intent.getData(), userId);
             }
-            ActivityManagerDelegate.startActivityAsUser(null, null, intent, mimeType,
-                    null, null, 0, 0, null, null, userId);
+            Compat.startActivityAsUser(intent, mimeType, userId);
 
             ServerLog.i("send token to manager app in user " + userId);
         } catch (RemoteException e) {

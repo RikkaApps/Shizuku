@@ -25,7 +25,11 @@ import moe.shizuku.generator.utils.SourceRootUtils;
 public class Generator {
 
     public static void main(String[] args) throws IOException {
-        Generator generator = new Generator(26);
+        int apiVersion = 26;
+        if (args.length == 1) {
+            apiVersion = Integer.parseInt(args[0]);
+        }
+        Generator generator = new Generator(apiVersion);
         generator.generate();
     }
 
@@ -39,6 +43,10 @@ public class Generator {
         this.sourcePath = Paths.get("source-" + apiVersion);
         this.serverPath = Paths.get("server-" + apiVersion + "/src/main/java");
         this.apiPath = Paths.get("api-" + apiVersion + "/src/main/java");
+
+        if (!sourcePath.toFile().exists()) {
+            throw new RuntimeException("source-" + apiVersion + " not exists.");
+        }
     }
 
     private void generate() throws IOException {

@@ -12,8 +12,8 @@
 #define TRUE 1
 #define FALSE 0
 
-#define EXIT_FATAL_PM_PATH 1
-#define EXIT_FATAL_PM_PATH_MALFORMED 2
+#define EXIT_FATAL_CANNOT_ACCESS_PATH 1
+#define EXIT_FATAL_PATH_NOT_SET 2
 #define EXIT_FATAL_SET_CLASSPATH 3
 #define EXIT_FATAL_FORK 4
 #define EXIT_FATAL_APP_PROCESS 5
@@ -30,7 +30,6 @@
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
-#define PACKAGE_ID "moe.shizuku.privileged.api"
 #define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuServer"
 
 char *trimCRLF(char *str) {
@@ -44,27 +43,6 @@ char *trimCRLF(char *str) {
         *p = '\0';
     }
     return str;
-}
-
-char *getApkPath(char *buffer) {
-    FILE *file = popen("pm path " PACKAGE_ID, "r");
-    if (file != NULL) {
-        fgets(buffer, (PATH_MAX + 11) * sizeof(char), file);
-        pclose(file);
-    } else {
-        perrorf("warn: can't invoke `pm path'\n");
-        return NULL;
-    }
-    trimCRLF(buffer);
-    buffer = strchr(buffer, ':');
-    if (buffer == NULL) {
-        perrorf("warn: can't get apk path\n");
-        return NULL;
-    }
-    buffer++;
-    printf("info: apk installed path: %s\n", buffer);
-    fflush(stdout);
-    return buffer;
 }
 
 void setClasspathEnv(char *path) {
@@ -155,15 +133,15 @@ void showLogs() {
 int main(int argc, char **argv) {
     bool skip_check;
     char *token = NULL;
-    char *fallback_path = NULL;
+    char *path = NULL;
     int i;
     for (i = 0; i < argc; ++i) {
         if (strcmp("--skip-check", argv[i]) == 0) {
             skip_check = true;
         } else if (strncmp(argv[i], "--token=", 8) == 0) {
             token = strdup(argv[i] + 8);
-        } else if (strncmp(argv[i], "--fallback-path=", 16) == 0) {
-            fallback_path = strdup(argv[i] + 16);
+        } else if (strncmp(argv[i], "--path=", 7) == 0) {
+            path = strdup(argv[i] + 7);
         }
     }
     printf("info: starter begin\n");
@@ -171,20 +149,16 @@ int main(int argc, char **argv) {
     killOldServer();
     char buffer[PATH_MAX + 11];
     memset(buffer, 0, PATH_MAX + 11);
-    char *path = getApkPath(buffer);
-    if (path == NULL) {
-        if (fallback_path != NULL) {
-            if (access(fallback_path, F_OK) == 0) {
-                perrorf("warn: can't get apk path using pm, use fallback path %s.\n", fallback_path);
-                path = fallback_path;
-            } else {
-                perrorf("fatal: fallback path set but file not found, please open Shizuku Manager and try again.\n");
-                return EXIT_FATAL_FILE_NOT_FOUND;
-            }
+    if (path != NULL) {
+        if (access(path, F_OK) != 0) {
+            perrorf("fatal: can't access %s, please open Shizuku Manager and try again.\n", path);
+            return EXIT_FATAL_CANNOT_ACCESS_PATH;
         } else {
-            perrorf("fatal: can't get apk path using pm and no fallback path set.\n");
-            return EXIT_FATAL_PM_PATH;
+            printf("info: dex path is %s\n", path);
         }
+    } else {
+        perrorf("fatal: path is not set.\n");
+        return EXIT_FATAL_PATH_NOT_SET;
     }
 
     pid_t pid = fork();
@@ -217,7 +191,7 @@ int main(int argc, char **argv) {
         signal(SIGHUP, SIG_IGN);
         printf("info: process forked, pid=%d\n", pid);
         fflush(stdout);
-        printf("info: check "SERVER_NAME "start");
+        printf("info: check " SERVER_NAME " start");
         fflush(stdout);
         int rikkaServerPid;
         int count = 0;
@@ -242,7 +216,7 @@ int main(int argc, char **argv) {
                 usleep(1000 * 1000);
                 count++;
                 if (count >= 5) {
-                    printf("\ninfo: " SERVER_NAME "started.\n");
+                    printf("\ninfo: " SERVER_NAME " started.\n");
                     fflush(stdout);
                     showServerLogs();
                     return EXIT_SUCCESS;
