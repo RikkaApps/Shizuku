@@ -5,11 +5,36 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.Type;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by rikka on 2017/9/24.
  */
 
 public class IOBlockHelper {
+
+    private static List<String> noCreatorParcelables = new ArrayList<>();
+
+    public static void readNoCreatorParcelables(File file) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+
+            String line = br.readLine();
+            while (line != null) {
+                noCreatorParcelables.add(line.trim());
+
+                line = br.readLine();
+            }
+        } catch (IOException ignored) {
+        }
+    }
 
     private static String getStreamTypeName(Type type) {
         if (type instanceof PrimitiveType) {
@@ -65,7 +90,11 @@ public class IOBlockHelper {
         } else if (type instanceof ArrayType) {
             Type componentType = ((ArrayType) type).getComponentType();
             if (isTypeParcelable(componentType)) {
-                return componentType.asString() + ".CREATOR";
+                if (noCreatorParcelables.contains(componentType.asString())) {
+                    return componentType.asString() + ".class";
+                } else {
+                    return componentType.asString() + ".CREATOR";
+                }
             } else {
                 return "";
             }
@@ -79,7 +108,11 @@ public class IOBlockHelper {
                 if (isTypeBinderOrInterface(type)) {
                     return "";
                 } else {
-                    return type.asString() + ".CREATOR";
+                    if (noCreatorParcelables.contains(type.asString())) {
+                        return type.asString() + ".class";
+                    } else {
+                        return type.asString() + ".CREATOR";
+                    }
                 }
         }
     }

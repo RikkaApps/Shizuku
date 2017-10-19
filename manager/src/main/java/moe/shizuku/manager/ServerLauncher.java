@@ -32,7 +32,7 @@ public class ServerLauncher {
     private static final int TIMEOUT = 10000;
 
     public static String COMMAND_ROOT;
-    public static String COMMAND_ADB;
+    public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
     public static String DEX_PATH;
 
     public static void init(Context context) {
@@ -87,12 +87,13 @@ public class ServerLauncher {
                 file.createNewFile();
             }
 
+            COMMAND_ROOT = "sh " + file.getAbsolutePath() + " --skip-check";
+
             @SuppressLint("SdCardPath")
             File sdcardFile = new File("/sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh");
             // not user 0 or no /sdcard
             if (Process.myUserHandle().hashCode() != 0
                     || !sdcardFile.exists()) {
-                COMMAND_ROOT = "sh " + file.getAbsolutePath() + " --skip-check";
                 COMMAND_ADB = "adb shell sh" + file.getAbsolutePath();
             }
 

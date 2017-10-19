@@ -10,4 +10,9 @@
 .externalNativeBuild
 /.idea
 /manager/signing.properties
+/android-21
+/android-22
+/android-23
+/android-24
+/android-25
 /android-26

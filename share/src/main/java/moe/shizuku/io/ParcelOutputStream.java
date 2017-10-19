@@ -14,6 +14,8 @@ import java.io.DataOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -224,6 +226,24 @@ public class ParcelOutputStream extends DataOutputStream {
         write(bytes);
     }
 
+    public final void writeParcelable(Object parcelable) throws IOException {
+        if (parcelable == null) {
+            writeInt(-1);
+            return;
+        }
+
+        Parcel parcel = Parcel.obtain();
+        try {
+            Method method = parcelable.getClass().getDeclaredMethod("writeToParcel", Parcel.class, Integer.TYPE);
+            method.invoke(parcelable, parcel, 0);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ignored) {
+        }
+        byte[] bytes = parcel.marshall();
+        parcel.recycle();
+
+        writeBytes(bytes);
+    }
+
     public final void writeParcelable(Parcelable parcelable) throws IOException {
         if (parcelable == null) {
             writeInt(-1);
@@ -287,11 +307,11 @@ public class ParcelOutputStream extends DataOutputStream {
         writeByte(0);
     }
 
-    public final void writeBinderList(List<IBinder> binders) throws IOException {
+    public final void writeBinderList(List<? extends IBinder> binders) throws IOException {
         writeByte(0);
     }
 
-    public final void writeInterfaceList(List<IInterface> interfaces) throws IOException {
+    public final void writeInterfaceList(List<? extends IInterface> interfaces) throws IOException {
         writeByte(0);
     }
 

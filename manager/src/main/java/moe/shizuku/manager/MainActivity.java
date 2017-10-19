@@ -32,6 +32,9 @@ import moe.shizuku.ShizukuState;
 import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.manager.widget.HtmlTextView;
 
+/**
+ * TODO notify user when not running in main user
+ */
 public class MainActivity extends AppCompatActivity {
 
     private View mStatus;

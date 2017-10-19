@@ -4,6 +4,8 @@ import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.utils.SourceRoot;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +16,7 @@ import moe.shizuku.generator.helper.AidlHelper;
 import moe.shizuku.generator.creator.ApiClassCreator;
 import moe.shizuku.generator.creator.DelegateClassCreator;
 import moe.shizuku.generator.creator.RequestHandlerClassCreator;
+import moe.shizuku.generator.helper.IOBlockHelper;
 import moe.shizuku.generator.utils.SourceRootUtils;
 
 /**
@@ -46,6 +49,11 @@ public class Generator {
 
         if (!sourcePath.toFile().exists()) {
             throw new RuntimeException("source-" + apiVersion + " not exists.");
+        }
+
+        File file = new File(sourcePath.toFile(), "parcelable.txt");
+        if (file.exists()) {
+            IOBlockHelper.readNoCreatorParcelables(file);
         }
     }
 

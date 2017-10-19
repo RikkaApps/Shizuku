@@ -14,6 +14,8 @@ import android.os.ServiceSpecificException;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -230,6 +232,26 @@ public class ParcelInputStream extends DataInputStream {
         return bytes;
     }
 
+    public final <T> T readParcelable(Class<?> cls) throws IOException {
+        byte[] bytes = readBytes();
+
+        if (bytes == null) {
+            return null;
+        }
+
+        Parcel parcel = Parcel.obtain();
+        parcel.unmarshall(bytes, 0, bytes.length);
+        parcel.setDataPosition(0);
+        try {
+            Constructor constructor = cls.getConstructor(Parcel.class);
+            T result = (T) constructor.newInstance(parcel);
+            parcel.recycle();
+            return result;
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            return null;
+        }
+    }
+
     public final <T> T readParcelable(Parcelable.Creator<T> creator) throws IOException {
         byte[] bytes = readBytes();
 
@@ -245,7 +267,6 @@ public class ParcelInputStream extends DataInputStream {
 
         return result;
     }
-
 
     public <T> T[] readParcelableArray(Parcelable.Creator<T> creator) throws IOException {
         int size = readInt();
@@ -305,7 +326,7 @@ public class ParcelInputStream extends DataInputStream {
         return null;
     }
 
-    public final List<IInterface> readInterfaceList() throws IOException {
+    public final List<? extends IInterface> readInterfaceList() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         readByte();
         return null;

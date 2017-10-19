@@ -66,7 +66,7 @@ public class ShizukuClient {
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
         } catch (Exception e) {
-            Log.w(TAG, "can't connect to server", e);
+            Log.w(TAG, "can't connect to server: " + e.getMessage());
         }
         return ShizukuState.createUnknown();
     }
@@ -87,7 +87,7 @@ public class ShizukuClient {
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
         } catch (Exception e) {
-            Log.w(TAG, "can't connect to server", e);
+            Log.w(TAG, "can't connect to server: " + e.getMessage());
         }
         return ShizukuState.createUnknown();
     }
@@ -117,7 +117,7 @@ public class ShizukuClient {
             os.writeInt(Process.myUid());
             is.readException();
         } catch (Exception e) {
-            Log.w(TAG, "can't connect to server", e);
+            Log.w(TAG, "can't connect to server: " + e.getMessage());
         }
     }
 }
