@@ -35,6 +35,7 @@ import android.app.IInstrumentationWatcher;
 import android.app.IProcessObserver;
 import android.app.IServiceConnection;
 import android.app.IStopUserCallback;
+import android.app.ITaskStackListener;
 import android.app.IUiAutomationConnection;
 import android.app.IUserSwitchObserver;
 import android.app.Notification;
@@ -60,8 +61,8 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.IBinder;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.os.ParcelFileDescriptor;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.StrictMode;
@@ -154,6 +155,7 @@ interface IActivityManager {
     StackInfo getStackInfo(int stackId);
     boolean isInHomeStack(int taskId);
     void setFocusedStack(int stackId);
+    void registerTaskStackListener(ITaskStackListener listener);
     int getTaskForActivity(IBinder token, boolean onlyRoot);
     ContentProviderHolder getContentProvider(IApplicationThread caller,
                                              String name, int userId, boolean stable);
@@ -235,8 +237,11 @@ interface IActivityManager {
     int checkPermission(String permission, int pid, int uid)
             ;
 
-    int checkUriPermission(Uri uri, int pid, int uid, int mode, int userId)
-            ;
+    int checkPermissionWithToken(String permission, int pid, int uid, IBinder callerToken);
+
+    int checkUriPermission(Uri uri, int pid, int uid, int mode, int userId,
+            IBinder callerToken);
+
     void grantUriPermission(IApplicationThread caller, String targetPkg, Uri uri,
                             int mode, int userId);
     void revokeUriPermission(IApplicationThread caller, Uri uri, int mode, int userId)
@@ -387,7 +392,7 @@ interface IActivityManager {
     boolean isUserRunning(int userid, boolean orStopping);
     int[] getRunningUserIds();
 
-    boolean removeTask(int taskId, int flags);
+    boolean removeTask(int taskId);
 
     void registerProcessObserver(IProcessObserver observer);
     void unregisterProcessObserver(IProcessObserver observer);
@@ -445,7 +450,7 @@ interface IActivityManager {
 
     void deleteActivityContainer(IActivityContainer container);
 
-    IActivityContainer getEnclosingActivityContainer(IBinder activityToken);
+    int getActivityDisplayId(IBinder activityToken);
 
     IBinder getHomeActivityToken();
 
@@ -465,12 +470,15 @@ interface IActivityManager {
 
     Bitmap getTaskDescriptionIcon(String filename);
 
+    void startInPlaceAnimationOnFrontMostApplication(ActivityOptions opts);
+
     boolean requestVisibleBehind(IBinder token, boolean visible);
     boolean isBackgroundVisibleBehind(IBinder token);
     void backgroundResourcesReleased(IBinder token);
 
     void notifyLaunchTaskBehindComplete(IBinder token);
     void notifyEnterAnimationComplete(IBinder token);
+    void systemBackupRestored();
 
     public static class WaitResult implements Parcelable {
             protected WaitResult(Parcel in) {

@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+apply from: rootProject.file('server-dex.gradle')
+
+dependencies {
+    compileOnly files(rootProject.rootDir.absolutePath + '/android-22/android.jar')
+    compile project(':server-share')
+}

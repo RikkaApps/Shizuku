@@ -29,6 +29,10 @@ public class Generator {
 
     public static void main(String[] args) throws IOException {
         new Generator(21).generate();
+        new Generator(22).generate();
+        new Generator(23).generate();
+        new Generator(24).generate();
+        new Generator(25).generate();
         new Generator(26).generate();
     }
 

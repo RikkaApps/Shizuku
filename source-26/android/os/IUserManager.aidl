@@ -19,6 +19,7 @@ package android.os;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.UserManager;
 import android.content.pm.UserInfo;
 import android.content.IntentSender;
 import android.content.RestrictionEntry;
@@ -36,10 +37,13 @@ interface IUserManager {
     int getCredentialOwnerProfile(int userHandle);
 
     UserInfo createUser(in String name, int flags);
-    UserInfo createProfileForUser(in String name, int flags, int userHandle);
+    UserInfo createProfileForUser(in String name, int flags, int userHandle,
+            in String[] disallowedPackages);
     UserInfo createRestrictedProfile(String name, int parentUserHandle);
     void setUserEnabled(int userHandle);
+    void evictCredentialEncryptionKey(int userHandle);
     boolean removeUser(int userHandle);
+    boolean removeUserEvenWhenDisallowed(int userHandle);
     void setUserName(int userHandle, String name);
     void setUserIcon(int userHandle, in Bitmap icon);
     ParcelFileDescriptor getUserIcon(int userHandle);
@@ -59,6 +63,7 @@ interface IUserManager {
     int getUserSerialNumber(int userHandle);
     int getUserHandle(int userSerialNumber);
     int getUserRestrictionSource(String restrictionKey, int userHandle);
+    List<UserManager.EnforcingUser> getUserRestrictionSources(String restrictionKey, int userHandle);
     Bundle getUserRestrictions(int userHandle);
     boolean hasBaseUserRestriction(String restrictionKey, int userHandle);
     boolean hasUserRestriction(in String restrictionKey, int userHandle);
@@ -81,4 +86,12 @@ interface IUserManager {
     void clearSeedAccountData();
     boolean someUserHasSeedAccount(in String accountName, in String accountType);
     boolean isManagedProfile(int userId);
+    boolean isDemoUser(int userId);
+    UserInfo createProfileForUserEvenWhenDisallowed(in String name, int flags, int userHandle,
+            in String[] disallowedPackages);
+    boolean isUserUnlockingOrUnlocked(int userId);
+    int getManagedProfileBadge(int userId);
+    boolean isUserUnlocked(int userId);
+    boolean isUserRunning(int userId);
+    boolean isUserNameSet(int userHandle);
 }
