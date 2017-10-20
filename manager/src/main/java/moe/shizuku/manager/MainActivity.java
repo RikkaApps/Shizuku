@@ -35,7 +35,7 @@ import moe.shizuku.manager.widget.HtmlTextView;
 /**
  * TODO notify user when not running in main user
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private View mStatus;
     private TextView mStatusText;

@@ -11,7 +11,7 @@ import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.adapter.AppAdapter;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
-public class ManageAppsActivity extends AppCompatActivity {
+public class ManageAppsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,7 +35,6 @@
     <style name="GrantPermissions"
            parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorAccent">#4285F4</item>
     </style>
 
     <style name="Translucent" parent="android:Theme.Translucent.NoTitleBar">
