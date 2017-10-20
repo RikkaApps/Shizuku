@@ -5,6 +5,7 @@ import android.os.RemoteException;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuState;
@@ -29,7 +30,7 @@ public class ShizukuRequestHandler extends RequestHandler {
     public void handle(Socket socket, UUID token) throws IOException, RemoteException {
         ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
         ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
-        int action = is.readInt();
+        String action = is.readString();
         if (isActionRequireAuthorization(action)) {
             long most = is.readLong();
             long least = is.readLong();
@@ -62,11 +63,11 @@ public class ShizukuRequestHandler extends RequestHandler {
         os.close();
     }
 
-    private static boolean isActionRequireAuthorization(int action) {
-        return action != ShizukuClient.ACTION_GET_VERSION
-                && action != ShizukuClient.ACTION_AUTHORIZE
-                && action != ShizukuClient.ACTION_REQUEST_STOP
-                && action != ShizukuClient.ACTION_SEND_TOKEN;
+    private static boolean isActionRequireAuthorization(String action) {
+        return !Objects.equals(action, ShizukuClient.ACTION_GET_VERSION)
+                && !Objects.equals(action, ShizukuClient.ACTION_AUTHORIZE)
+                && !Objects.equals(action, ShizukuClient.ACTION_REQUEST_STOP)
+                && !Objects.equals(action, ShizukuClient.ACTION_SEND_TOKEN);
     }
 
     public static void version(ParcelOutputStream os) throws RemoteException, IOException {

@@ -102,7 +102,7 @@ public class ApiClassCreator {
                 .append("client.setSoTimeout(ShizukuConstants.TIMEOUT);")
                 .append("ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());")
                 .append("ParcelInputStream is = new ParcelInputStream(client.getInputStream());")
-                .append("os.writeInt(Actions").append(SUFFIX).append('.').append(ActionClassCreator.getActionName(binderName, method)).append(");")
+                .append("os.writeString(Actions").append(SUFFIX).append('.').append(ActionClassCreator.getActionName(binderName, method)).append(");")
                 .append("os.writeLong(ShizukuClient.getToken().getMostSignificantBits());")
                 .append("os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());");
 

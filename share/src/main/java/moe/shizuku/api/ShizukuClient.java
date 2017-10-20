@@ -21,10 +21,10 @@ public class ShizukuClient {
 
     private static final String TAG = "ShizukuClient";
 
-    public static final int ACTION_GET_VERSION = 1;
-    public static final int ACTION_REQUEST_STOP = 2;
-    public static final int ACTION_AUTHORIZE = 3;
-    public static final int ACTION_SEND_TOKEN = 4;
+    public static final String ACTION_GET_VERSION = "Shizuku_getVersion";
+    public static final String ACTION_REQUEST_STOP = "Shizuku_requestStop";
+    public static final String ACTION_AUTHORIZE = "Shizuku_authorize";
+    public static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
 
     public static final int AUTHORIZATION_REQUEST_CODE = 55608;
 
@@ -62,7 +62,7 @@ public class ShizukuClient {
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeInt(ACTION_GET_VERSION);
+            os.writeString(ACTION_GET_VERSION);
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class ShizukuClient {
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeInt(ACTION_AUTHORIZE);
+            os.writeString(ACTION_AUTHORIZE);
             os.writeLong(token.getMostSignificantBits());
             os.writeLong(token.getLeastSignificantBits());
             is.readException();
@@ -98,7 +98,7 @@ public class ShizukuClient {
             socket.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
-            os.writeInt(ACTION_REQUEST_STOP);
+            os.writeString(ACTION_REQUEST_STOP);
             is.readException();
 
             return true;
@@ -113,7 +113,7 @@ public class ShizukuClient {
             socket.setSoTimeout(ShizukuConstants.TIMEOUT);
             ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
             ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
-            os.writeInt(ACTION_SEND_TOKEN);
+            os.writeString(ACTION_SEND_TOKEN);
             os.writeInt(Process.myUid());
             is.readException();
         } catch (Exception e) {

@@ -1,16 +1,14 @@
 package moe.shizuku.generator.creator;
 
+import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.IntegerLiteralExpr;
-import com.github.javaparser.ast.type.PrimitiveType;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 
 import java.util.EnumSet;
-
-import moe.shizuku.generator.helper.BinderHelper;
 
 /**
  * Created by rikka on 2017/9/24.
@@ -19,11 +17,9 @@ import moe.shizuku.generator.helper.BinderHelper;
 public class ActionClassCreator {
 
     private static CompilationUnit cu;
-    private static int count;
 
     public static void clear() {
         cu = null;
-        count = 0;
     }
 
     public static CompilationUnit get() {
@@ -58,8 +54,6 @@ public class ActionClassCreator {
             cls = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
         }
 
-        count = 0;
-
         binderClass.getMembers().stream()
                 .filter(bodyDeclaration -> bodyDeclaration instanceof MethodDeclaration)
                 .map(bodyDeclaration -> (MethodDeclaration) bodyDeclaration)
@@ -70,10 +64,8 @@ public class ActionClassCreator {
 
     private static void addFiled(ClassOrInterfaceDeclaration cls, String binderName, MethodDeclaration method) {
         String name = getActionName(binderName, method);
-        //int index = (BinderHelper.getIndex(binderName) + 1) * 10000 + count++;
-        int index = name.hashCode();
-        cls.addField(long.class, name, Modifier.STATIC, Modifier.FINAL, Modifier.PROTECTED)
-                .setVariable(0, new VariableDeclarator(PrimitiveType.intType(), name, new IntegerLiteralExpr(index)));
+        cls.addField(String.class, name, Modifier.STATIC, Modifier.FINAL, Modifier.PROTECTED)
+                .setVariable(0, new VariableDeclarator(JavaParser.parseClassOrInterfaceType("String"), name, new StringLiteralExpr(name)));
     }
 
     public static String getActionName(String binderName, MethodDeclaration method) {

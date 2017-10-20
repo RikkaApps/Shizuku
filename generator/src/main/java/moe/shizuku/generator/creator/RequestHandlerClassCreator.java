@@ -59,7 +59,7 @@ public class RequestHandlerClassCreator {
                     clsName);
 
             cls.addMethod("handle", Modifier.PUBLIC)
-                    .addParameter(int.class, "action")
+                    .addParameter(String.class, "action")
                     .addParameter("ParcelInputStream", "is")
                     .addParameter("ParcelOutputStream", "os")
                     .addThrownException(new TypeParameter("IOException"))
