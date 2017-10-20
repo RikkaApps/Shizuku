@@ -15,46 +15,11 @@ jar {
 
 def jarPath = file(project.buildDir.path + "/libs/" + project.name + ".jar").path
 
-task generateApi21(type: Exec) {
+task generate(type: Exec) {
     dependsOn jar
 
     workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 21
-}
-
-task generateApi22(type: Exec) {
-    dependsOn jar
-
-    workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 22
-}
-
-task generateApi23(type: Exec) {
-    dependsOn jar
-
-    workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 23
-}
-
-task generateApi24(type: Exec) {
-    dependsOn jar
-
-    workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 24
-}
-
-task generateApi25(type: Exec) {
-    dependsOn jar
-
-    workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 25
-}
-
-task generateApi26(type: Exec) {
-    dependsOn jar
-
-    workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, 26
+    commandLine 'java', '-jar', jarPath
 }
 
 repositories {

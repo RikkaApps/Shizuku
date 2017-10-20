@@ -45,6 +45,7 @@ android {
 }
 
 gradle.projectsEvaluated {
+    preBuild.dependsOn(':generator:generate')
     preBuild.dependsOn(':server-21:dex')
     preBuild.dependsOn(':server-26:dex')
 }

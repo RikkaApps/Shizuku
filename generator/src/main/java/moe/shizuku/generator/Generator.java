@@ -28,12 +28,8 @@ import moe.shizuku.generator.utils.SourceRootUtils;
 public class Generator {
 
     public static void main(String[] args) throws IOException {
-        int apiVersion = 26;
-        if (args.length == 1) {
-            apiVersion = Integer.parseInt(args[0]);
-        }
-        Generator generator = new Generator(apiVersion);
-        generator.generate();
+        new Generator(21).generate();
+        new Generator(26).generate();
     }
 
     private int  apiVersion;
@@ -50,17 +46,21 @@ public class Generator {
         if (!sourcePath.toFile().exists()) {
             throw new RuntimeException("source-" + apiVersion + " not exists.");
         }
+    }
+
+    private void generate() throws IOException {
+        ActionClassCreator.clear();
+        RequestHandlerClassCreator.clear();
+        IOBlockHelper.clear();
 
         File file = new File(sourcePath.toFile(), "parcelable.txt");
         if (file.exists()) {
             IOBlockHelper.readNoCreatorParcelables(file);
         }
-    }
 
-    private void generate() throws IOException {
         ApiClassCreator.setApiVersion(apiVersion);
+
         AidlHelper.parseAidlInPath(sourcePath);
-        RequestHandlerClassCreator.clear();
 
         SourceRoot sr = new SourceRoot(sourcePath);
         sr.tryToParse().stream()

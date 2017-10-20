@@ -22,6 +22,10 @@ public class IOBlockHelper {
 
     private static List<String> noCreatorParcelables = new ArrayList<>();
 
+    public static void clear() {
+        noCreatorParcelables.clear();
+    }
+
     public static void readNoCreatorParcelables(File file) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));

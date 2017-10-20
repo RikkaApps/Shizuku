@@ -70,8 +70,9 @@ public class ActionClassCreator {
 
     private static void addFiled(ClassOrInterfaceDeclaration cls, String binderName, MethodDeclaration method) {
         String name = getActionName(binderName, method);
-        int index = (BinderHelper.getIndex(binderName) + 1) * 10000 + count++;
-        cls.addField(int.class, name, Modifier.STATIC, Modifier.FINAL, Modifier.PROTECTED)
+        //int index = (BinderHelper.getIndex(binderName) + 1) * 10000 + count++;
+        int index = name.hashCode();
+        cls.addField(long.class, name, Modifier.STATIC, Modifier.FINAL, Modifier.PROTECTED)
                 .setVariable(0, new VariableDeclarator(PrimitiveType.intType(), name, new IntegerLiteralExpr(index)));
     }
 

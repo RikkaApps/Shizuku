@@ -20,11 +20,7 @@ task dex(type: Exec) {
             file(project.buildDir.path + "/libs/" + project.name + ".jar").path
 }
 
-def apiVersion = project.name.substring(project.name.indexOf('-') + 1)
-
 jar {
-    dependsOn ":generator:generateApi" + apiVersion
-
     manifest {
         attributes 'Main-Class': 'moe.shizuku.server.ShizukuServer'
     }
