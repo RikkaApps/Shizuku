@@ -1,19 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        consumerProguardFiles 'proguard-rules.pro'
     }
     buildTypes {
         release {
@@ -21,70 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets.main.aidl.srcDirs = ['../app/src/main/aidl', '../hidden-api-public/src/main/aidl']
-    sourceSets.main.java.srcDirs = ['../hidden-api-public/src/main/java', 'src/main/java']
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-    //compile project(':hidden-api-public')
-    compile 'com.android.support:support-annotations:25.3.1'
+    api project(':api-21')
+    api project(':api-22')
+    api project(':api-23')
+    api project(':api-24')
+    api project(':api-25')
+    api project(':api-26')
 }
-
-task generateCodes(type: Exec) {
-    commandLine 'java', '-classpath', '../generator/build/classes/java/main/', 'moe.shizuku.AidlParser', 'api'
-}
-
-project.afterEvaluate {
-    preBuild.dependsOn ':generator:build'
-    preBuild.dependsOn generateCodes
-}
-
-clean.dependsOn generateCodes
-clean.mustRunAfter generateCodes
-
-task copyLibs(type: Copy) {
-    from configurations.compile
-    into 'libs'
-}
-
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
-}
-
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = "javadoc"
-    from androidJavadocs.destinationDir
-}
-
-task androidSourcesJar(type: Jar) {
-    classifier = "sources"
-    from android.sourceSets.main.java.srcDirs
-}
-
-artifacts {
-    archives androidSourcesJar
-    //archives androidJavadocsJar
-}
-
-if (binding.hasVariable('repository_url')) {
-    uploadArchives {
-        repositories.mavenDeployer {
-            repository(url: repository_url)
-            pom.project {
-                name 'privileged-api'
-                groupId "moe.shizuku.support"
-                artifactId 'privileged-api'
-                version rootProject.ext.serverVersionCode
-                packaging 'aar'
-            }
-        }
-    }
-}
-

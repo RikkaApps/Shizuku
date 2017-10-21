@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+jar {
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
+dependencies {
+    compileOnly files(rootProject.rootDir.absolutePath + "/android-22/android.jar")
+    implementation project(':share')
+}

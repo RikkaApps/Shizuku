@@ -8,6 +8,6 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    tools:context="moe.shizuku.privileged.api.AppsActivity">
+    tools:context="moe.shizuku.privileged.api.moe.shizuku.manager.AppsActivity">
 
 </android.support.v7.widget.RecyclerView>
