@@ -44,14 +44,17 @@ android {
     }
 }
 
-gradle.projectsEvaluated {
-    preBuild.dependsOn(':generator:generate')
-    preBuild.dependsOn(':server-21:dex')
-    preBuild.dependsOn(':server-22:dex')
-    preBuild.dependsOn(':server-23:dex')
-    preBuild.dependsOn(':server-24:dex')
-    preBuild.dependsOn(':server-25:dex')
-    preBuild.dependsOn(':server-26:dex')
+task generate(type: GradleBuild) {
+    tasks = [
+            ':server-share:build',
+            ':generator:generate',
+            ':server-21:dex',
+            ':server-22:dex',
+            ':server-23:dex',
+            ':server-24:dex',
+            ':server-25:dex',
+            ':server-26:dex',
+    ]
 }
 
 dependencies {

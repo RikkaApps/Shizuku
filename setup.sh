@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# download system service aidl files
+
 branches=(lollipop-release lollipop-mr1-release marshmallow-release nougat-release nougat-mr1-release oreo-release)
 apis=(21 22 23 24 25 26)
 
@@ -25,6 +27,8 @@ function download() {
     fi
 }
 
+# download android.jar with hidden api
+
 echo download aidl from aosp-mirror/platform_frameworks_base
 
 for ((i = 0; i < ${#files[@]}; i++));
@@ -47,3 +51,10 @@ echo
 echo download android.jar from Trumeet/android-hidden-api
 
 download "https://raw.githubusercontent.com/Trumeet/android-hidden-api/master/android-26/android.jar" "android-26/android.jar"
+
+# generate codes and shizuku server dex
+
+echo
+echo generate codes and shizuku server dex
+
+./gradlew :manager:generate
