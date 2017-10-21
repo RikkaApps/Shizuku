@@ -7,9 +7,8 @@ import android.support.annotation.WorkerThread;
 
 import java.util.List;
 
-import moe.shizuku.api.ShizukuActivityManagerV21;
+import moe.shizuku.api.ShizukuActivityManagerV22;
 import moe.shizuku.api.ShizukuActivityManagerV26;
-import moe.shizuku.api.ShizukuAppOpsServiceV21;
 import moe.shizuku.api.ShizukuAppOpsServiceV26;
 import moe.shizuku.lang.ShizukuRemoteException;
 
@@ -21,8 +20,8 @@ import moe.shizuku.lang.ShizukuRemoteException;
 public class ShizukuCompat {
 
     public static void broadcastIntent(Intent intent) {
-        if (Build.VERSION.SDK_INT == 21) {
-            ShizukuActivityManagerV21.broadcastIntent(
+        if (Build.VERSION.SDK_INT < 23) {
+            ShizukuActivityManagerV22.broadcastIntent(
                     null, intent, null, null, 0, null, null, null,-1, true, false, Process.myUserHandle().hashCode());
         } else {
             ShizukuActivityManagerV26.broadcastIntent(
@@ -31,10 +30,6 @@ public class ShizukuCompat {
     }
 
     public static List getOpsForPackage(int uid, String packageName, int[] ops) throws ShizukuRemoteException {
-        if (Build.VERSION.SDK_INT == 21) {
-            return ShizukuAppOpsServiceV21.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null);
-        } else {
-            return ShizukuAppOpsServiceV26.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null);
-        }
+        return ShizukuAppOpsServiceV26.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null);
     }
 }

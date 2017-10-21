@@ -20,5 +20,9 @@ android {
 
 dependencies {
     api project(':api-21')
+    api project(':api-22')
+    api project(':api-23')
+    api project(':api-24')
+    api project(':api-25')
     api project(':api-26')
 }
