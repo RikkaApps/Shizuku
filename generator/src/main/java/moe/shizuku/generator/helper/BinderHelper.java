@@ -18,10 +18,26 @@ public class BinderHelper {
     }
 
     static {
-        addName("IPackageManager", "package");
-        addName("IActivityManager", "activity");
-        addName("IAppOpsService", "appops");
-        addName("IUserManager", "user");
+        addName("IPackageManager",              "package");
+        addName("IActivityManager",             "activity");
+        addName("IAppOpsService",               "appops");
+        addName("IUserManager",                 "user");
+        addName("INfcAdapter",                  "nfc");
+        addName("IImsService",                  "ims");
+        addName("ICarrierConfigLoader",         "carrier_config");
+        addName("ITelephony",                   "phone");
+        addName("ISms",                         "isms");
+        addName("IPhoneSubInfo",                "iphonesubinfo");
+        addName("IIccPhoneBook",                "simphonebook");
+
+        addName("ILauncherApps",                "launcherapps");
+        addName("IJobScheduler",                "jobscheduler");
+        addName("IBackupManager",               "backup");
+        addName("IHardwarePropertiesManager",   "hardware_properties");
+        addName("ISearchManager",               "search");
+        addName("INotificationManager",         "notification");
+        addName("IStatusBarService",            "statusbar");
+
     }
 
     public static String getServiceName(String binderName) {
