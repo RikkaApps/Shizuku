@@ -26,7 +26,4 @@ public final class ShizukuConstants {
 
     public static final String PERMISSION_REQUEST_AUTHORIZATION = MANAGER_APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION";
 
-    public static final int AUTH_RESULT_OK = 0;
-    public static final int AUTH_RESULT_USER_DENIED = -1;
-    public static final int AUTH_RESULT_ERROR = -2;
 }

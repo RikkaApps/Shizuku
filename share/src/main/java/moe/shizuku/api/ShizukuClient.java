@@ -26,6 +26,10 @@ public class ShizukuClient {
     public static final String ACTION_AUTHORIZE = "Shizuku_authorize";
     public static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
 
+    public static final int AUTH_RESULT_OK = Activity.RESULT_OK;
+    public static final int AUTH_RESULT_USER_DENIED = Activity.RESULT_CANCELED;
+    public static final int AUTH_RESULT_ERROR = 1;
+
     public static final int AUTHORIZATION_REQUEST_CODE = 55608;
 
     private static UUID sToken = new UUID(0, 0);

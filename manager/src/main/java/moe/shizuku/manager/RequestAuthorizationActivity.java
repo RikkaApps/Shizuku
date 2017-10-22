@@ -35,7 +35,7 @@ public class RequestAuthorizationActivity extends Activity {
         final String packageName = getIntent().getStringExtra(ShizukuConstants.EXTRA_PACKAGE_NAME);
         int uid = getIntent().getIntExtra(ShizukuConstants.EXTRA_UID, 0);
         if (packageName == null) {
-            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
+            setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
         }
@@ -63,7 +63,7 @@ public class RequestAuthorizationActivity extends Activity {
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
-                            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
+                            setResult(ShizukuClient.AUTH_RESULT_ERROR);
                             finish();
                         }
                     })
@@ -72,7 +72,7 @@ public class RequestAuthorizationActivity extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             startActivity(new Intent(RequestAuthorizationActivity.this, MainActivity.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
+                            setResult(ShizukuClient.AUTH_RESULT_ERROR);
                             finish();
                         }
                     })
@@ -84,7 +84,7 @@ public class RequestAuthorizationActivity extends Activity {
         try {
             pi = getPackageManager().getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException ignored) {
-            setResult(ShizukuConstants.AUTH_RESULT_ERROR);
+            setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
         }
@@ -141,9 +141,9 @@ public class RequestAuthorizationActivity extends Activity {
                     .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
                     .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
 
-            setResult(ShizukuConstants.AUTH_RESULT_OK, intent);
+            setResult(ShizukuClient.AUTH_RESULT_OK, intent);
         } else {
-            setResult(ShizukuConstants.AUTH_RESULT_USER_DENIED);
+            setResult(ShizukuClient.AUTH_RESULT_USER_DENIED);
         }
 
         finish();

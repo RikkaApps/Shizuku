@@ -11,7 +11,6 @@ import android.os.Process;
 import android.os.StrictMode;
 import android.widget.Toast;
 
-import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 
 public class MainActivity extends Activity {
@@ -49,7 +48,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ShizukuClient.AUTHORIZATION_REQUEST_CODE) {
-            if (resultCode == ShizukuConstants.AUTH_RESULT_OK) {
+            if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
                 ShizukuClient.setToken(data);
 
                 Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
