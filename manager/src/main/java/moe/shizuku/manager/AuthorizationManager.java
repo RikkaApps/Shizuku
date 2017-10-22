@@ -14,7 +14,7 @@ import java.util.Set;
  * Created by Rikka on 2017/5/17.
  */
 
-public class Permissions {
+public class AuthorizationManager {
 
     private static final String NAME = "settings";
     private static final String KEY = "granted_packages";
@@ -22,13 +22,15 @@ public class Permissions {
     private SharedPreferences sharedPreferences;
     private Set<Pair<String, Long>> packages;
 
-    private static Permissions sPermissions;
+    private static AuthorizationManager sAuthorizationManager;
 
     public static void init(Context context) {
-        sPermissions = new Permissions(context);
+        if (sAuthorizationManager == null) {
+            sAuthorizationManager = new AuthorizationManager(context);
+        }
     }
 
-    private Permissions(Context context) {
+    private AuthorizationManager(Context context) {
         this.sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         this.packages = new HashSet<>();
         this.packages = fromPreference(context, sharedPreferences.getStringSet(KEY, new HashSet<String>()));
@@ -38,7 +40,7 @@ public class Permissions {
         if (packageName == null) {
             return false;
         }
-        for (Pair<String, Long> p : sPermissions.packages) {
+        for (Pair<String, Long> p : sAuthorizationManager.packages) {
             if (p.first.equals(packageName)) {
                 return true;
             }
@@ -47,7 +49,7 @@ public class Permissions {
     }
 
     public static int grantedCount() {
-        return sPermissions.packages.size();
+        return sAuthorizationManager.packages.size();
     }
 
     public static void set(String packageName, long firstInstallTime, boolean grant) {
@@ -67,9 +69,9 @@ public class Permissions {
     }
 
     private static void remove(String packageName) {
-        for (Pair<String, Long> p : new HashSet<>(sPermissions.packages)) {
+        for (Pair<String, Long> p : new HashSet<>(sAuthorizationManager.packages)) {
             if (p.first.equals(packageName)) {
-                sPermissions.packages.remove(p);
+                sAuthorizationManager.packages.remove(p);
             }
         }
     }
@@ -77,17 +79,17 @@ public class Permissions {
     public static void grant(String packageName, long firstInstallTime) {
         remove(packageName);
 
-        sPermissions.packages.add(new Pair<>(packageName, firstInstallTime));
-        sPermissions.sharedPreferences.edit()
-                .putStringSet(KEY, toPreference(sPermissions.packages))
+        sAuthorizationManager.packages.add(new Pair<>(packageName, firstInstallTime));
+        sAuthorizationManager.sharedPreferences.edit()
+                .putStringSet(KEY, toPreference(sAuthorizationManager.packages))
                 .apply();
     }
 
     public static void revoke(String packageName) {
         remove(packageName);
 
-        sPermissions.sharedPreferences.edit()
-                .putStringSet(KEY, toPreference(sPermissions.packages))
+        sAuthorizationManager.sharedPreferences.edit()
+                .putStringSet(KEY, toPreference(sAuthorizationManager.packages))
                 .apply();
     }
 
@@ -122,7 +124,7 @@ public class Permissions {
 
     public static List<String> getGranted() {
         List<String> list = new ArrayList<>();
-        for (Pair<String, Long> p: sPermissions.packages) {
+        for (Pair<String, Long> p: sAuthorizationManager.packages) {
             list.add(p.first);
         }
         return list;

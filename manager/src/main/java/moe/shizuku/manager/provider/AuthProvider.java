@@ -10,9 +10,8 @@ import android.support.annotation.Nullable;
 
 import java.util.UUID;
 
-import moe.shizuku.manager.Permissions;
+import moe.shizuku.manager.AuthorizationManager;
 import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.TokenCursor;
 
 /**
  * Created by Rikka on 2017/5/21.
@@ -22,6 +21,7 @@ public class AuthProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        AuthorizationManager.init(getContext());
         return true;
     }
 
@@ -33,10 +33,9 @@ public class AuthProvider extends ContentProvider {
         }
 
         UUID token = ShizukuManagerSettings.getToken(getContext());
-        Permissions.init(getContext());
 
         String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
-        if (Permissions.granted(packageName)) {
+        if (AuthorizationManager.granted(packageName)) {
             return new TokenCursor(token);
         } else {
             return new TokenCursor(new UUID(0, 0));

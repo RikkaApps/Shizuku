@@ -22,8 +22,8 @@ public class ShizukuManagerApplication extends Application {
         StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
         StrictMode.setThreadPolicy(tp);
 
-        Settings.init(context);
-        Permissions.init(context);
+        ShizukuManagerSettings.init(context);
+        AuthorizationManager.init(context);
         ServerLauncher.init(context);
 
         sInitialized = true;

@@ -19,9 +19,6 @@ public class Intents {
     public static final String ACTION_AUTH_RESULT = PACKAGE + ".intent.action.AUTH_RESULT";
 
     // extras
-    public static final String EXTRA_CODE = PACKAGE + ".intent.action.CODE";
-    public static final String EXTRA_OUTPUT = PACKAGE + ".intent.action.OUTPUT";
-    public static final String EXTRA_ERROR = PACKAGE + ".intent.action.ERROR";
     public static final String EXTRA_IS_OLD = PACKAGE + ".intent.action.IS_OLD";
     public static final String EXTRA_RESULT = PACKAGE + ".intent.action.RESULT";
 }

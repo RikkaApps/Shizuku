@@ -33,8 +33,8 @@ public class TokenReceiveActivity extends Activity {
             intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
             intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
 
-            Permissions.init(context);
-            for (String packageName : Permissions.getGranted()) {
+            AuthorizationManager.init(context);
+            for (String packageName : AuthorizationManager.getGranted()) {
                 context.sendBroadcast(intent.setPackage(packageName), BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION");
             }*/
         }

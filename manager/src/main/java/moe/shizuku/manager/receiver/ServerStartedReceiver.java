@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import moe.shizuku.manager.BuildConfig;
-import moe.shizuku.manager.Permissions;
+import moe.shizuku.manager.AuthorizationManager;
+import moe.shizuku.manager.Constants;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.service.WorkService;
 
@@ -18,7 +19,7 @@ public class ServerStartedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("RServer", "ServerStartedReceiver");
+        Log.d(Constants.TAG, "ServerStartedReceiver");
 
         ShizukuManagerSettings.putToken(context, intent);
 
@@ -29,8 +30,8 @@ public class ServerStartedReceiver extends BroadcastReceiver {
         intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
         intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
 
-        Permissions.init(context);
-        for (String packageName : Permissions.getGranted()) {
+        AuthorizationManager.init(context);
+        for (String packageName : AuthorizationManager.getGranted()) {
             context.sendBroadcast(intent.setPackage(packageName), BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION");
         }
     }

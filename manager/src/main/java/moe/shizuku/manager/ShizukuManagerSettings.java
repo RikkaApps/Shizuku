@@ -21,6 +21,10 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class ShizukuManagerSettings {
 
+    public static void init(Context context) {
+        Settings.init(context);
+    }
+
     @IntDef({
             RootLaunchMethod.ASK,
             RootLaunchMethod.USUAL,
@@ -99,6 +103,6 @@ public class ShizukuManagerSettings {
         UUID token = new UUID(mostSig, leastSig);
         ShizukuClient.setToken(token);
 
-        Log.i("RServer", "token update: " + token);
+        Log.i(Constants.TAG, "token update: " + token);
     }
 }

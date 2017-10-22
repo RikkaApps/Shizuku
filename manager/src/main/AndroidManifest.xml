@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.manager">
 
+    <uses-sdk android:maxSdkVersion="26" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
@@ -34,12 +36,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".RequestAuthorizationActivity"
+            android:name=".AuthorizationActivity"
             android:enabled="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:theme="@style/GrantPermissions"
-            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION">
+            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION"
+            android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
 
@@ -61,14 +63,12 @@
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
             android:theme="@style/AppTheme.Apps" />
-
         <activity
             android:name=".TokenReceiveActivity"
-            android:theme="@style/Translucent"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
-
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
 
@@ -77,7 +77,7 @@
         </activity>
 
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name=".receiver.BootCompleteReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="999">
@@ -95,7 +95,10 @@
         <service
             android:name=".service.WorkService"
             android:exported="false" />
-
+        <service
+            android:name=".service.ShellService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

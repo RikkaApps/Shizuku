@@ -1,4 +1,4 @@
-package moe.shizuku.manager;
+package moe.shizuku.manager.provider;
 
 import android.database.AbstractCursor;
 import android.database.CursorWindow;

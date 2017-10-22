@@ -60,6 +60,7 @@
     <string name="settings_root_launch_method">Start method (root)</string>
     <string name="settings_root_launch_ask_every_time">Ask every time</string>
 
-    <string name="cant_start_no_root">Can\'t start server because root permission is not granted or this device is not rooted.</string>
+    <string name="cannot_start_no_root">Can\'t start server because root permission is not granted or this device is not rooted.</string>
+    <string name="cannot_start_shell_failed">There\'s something wrong when running shell command.</string>
 
 </resources>

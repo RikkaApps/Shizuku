@@ -19,7 +19,7 @@ import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 
-public class RequestAuthorizationActivity extends Activity {
+public class AuthorizationActivity extends Activity {
 
     private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT";
 
@@ -70,7 +70,7 @@ public class RequestAuthorizationActivity extends Activity {
                     .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(RequestAuthorizationActivity.this, MainActivity.class)
+                            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                             setResult(ShizukuClient.AUTH_RESULT_ERROR);
                             finish();
@@ -90,7 +90,7 @@ public class RequestAuthorizationActivity extends Activity {
         }
 
         final long firstInstallTime = pi.firstInstallTime;
-        if (Permissions.granted(packageName)) {
+        if (AuthorizationManager.granted(packageName)) {
             setResult(true, packageName);
             return;
         }
@@ -105,7 +105,7 @@ public class RequestAuthorizationActivity extends Activity {
                 .setPositiveButton(R.string.auth_allow, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Permissions.grant(packageName, firstInstallTime);
+                        AuthorizationManager.grant(packageName, firstInstallTime);
 
                         setResult(true, packageName);
                     }
@@ -113,7 +113,7 @@ public class RequestAuthorizationActivity extends Activity {
                 .setNegativeButton(R.string.auth_deny, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Permissions.revoke(packageName);
+                        AuthorizationManager.revoke(packageName);
 
                         setResult(false, packageName);
                     }

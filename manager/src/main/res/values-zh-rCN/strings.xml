@@ -59,6 +59,7 @@
     <string name="settings_root_launch_method">启动方式（root）</string>
     <string name="settings_root_launch_ask_every_time">每次询问</string>
 
-    <string name="cant_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="cannot_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="cannot_start_shell_failed">运行 shell 命令时出错。</string>
 
 </resources>

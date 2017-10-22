@@ -2,19 +2,15 @@ package moe.shizuku.manager;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -25,12 +21,15 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
+import moe.shizuku.manager.adapter.MainAdapter;
+import moe.shizuku.manager.service.ShellService;
 import moe.shizuku.manager.service.WorkService;
+import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.widget.HtmlTextView;
+import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 /**
  * TODO notify user when not running in main user
@@ -51,16 +50,25 @@ public class MainActivity extends BaseActivity {
     private HtmlTextView mAuthorizedAppsCount;
 
     private BroadcastReceiver mServerStartedReceiver;
-    private BroadcastReceiver mStartFailedReceiver;
+    //private BroadcastReceiver mStartFailedReceiver;
 
     private boolean mCheckToRequest;
+
+    private BindServiceHelper mBindServiceHelper = new BindServiceHelper(this, ShellService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStatus = findViewById(R.id.status);
+        MainAdapter adapter = new MainAdapter();
+
+        RecyclerView recyclerView = findViewById(android.R.id.list);
+        recyclerView.setAdapter(adapter);
+
+        RecyclerViewHelper.fixOverScroll(recyclerView);
+
+        /*mStatus = findViewById(R.id.status);
         mStatusText = findViewById(R.id.status_text);
         mStatusIcon = findViewById(R.id.status_icon);
 
@@ -110,13 +118,8 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.copy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = android.content.ClipData.newPlainText("label", ServerLauncher.COMMAND_ADB);
-                    clipboard.setPrimaryClip(clip);
-
+                if (ClipboardUtils.put(v.getContext(), ServerLauncher.COMMAND_ADB)) {
                     Toast.makeText(v.getContext(), getString(R.string.copied_to_clipboard, ServerLauncher.COMMAND_ADB), Toast.LENGTH_SHORT).show();
-                } catch (Exception ignored) {
                 }
             }
         });
@@ -132,69 +135,16 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+
+        mBindServiceHelper.bind(null);*/
+
         mServerStartedReceiver = new ServerStartedReceiver();
-        mStartFailedReceiver = new StartResultReceiver();
     }
 
     private class ServerStartedReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateUI(intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
-        }
-    }
-
-    private class StartResultReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mStartButton.setEnabled(true);
-            mRestartButton.setEnabled(true);
-
-            int code = intent.getIntExtra(Intents.EXTRA_CODE, 0);
-            if (code == 0) {
-                return;
-            }
-
-            if (code != 99) {
-                if (intent.getBooleanExtra(Intents.EXTRA_IS_OLD, false)) {
-                    return;
-                }
-
-                final StringBuilder sb = new StringBuilder();
-                sb.append("code:").append(code).append("\n\n");
-                if (intent.hasExtra(Intents.EXTRA_OUTPUT)) {
-                    for (String s : intent.getStringArrayListExtra(Intents.EXTRA_OUTPUT)) {
-                        sb.append(s).append('\n');
-                    }
-                }
-                sb.append("\n\nSend this to developer may help solve the problem.\n\nYou can temporarily use the old method as an alternative.");
-
-                Dialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Something went wrong")
-                        .setMessage(sb.toString().trim())
-                        .setNeutralButton("Use alternative method", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ShizukuManagerSettings.setRootLaunchMethod(ShizukuManagerSettings.RootLaunchMethod.ALTERNATIVE);
-                                WorkService.startServerOld(MainActivity.this);
-                            }
-                        })
-                        .setPositiveButton(R.string.send_command, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ShareCompat.IntentBuilder.from(MainActivity.this)
-                                        .setText(sb.toString())
-                                        .setType("text/plain")
-                                        .setChooserTitle(R.string.send_command)
-                                        .startChooser();
-                            }
-                        })
-                        .show();
-
-                ((TextView) dialog.findViewById(android.R.id.message)).setTextIsSelectable(true);
-                ((TextView) dialog.findViewById(android.R.id.message)).setTypeface(Typeface.create("monospace", Typeface.NORMAL));
-            } else {
-                Toast.makeText(context, R.string.cant_start_no_root, Toast.LENGTH_SHORT).show();
-            }
+            //updateUI(intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
         }
     }
 
@@ -209,30 +159,30 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        mAuthorizedAppsCount.setHtmlText(
-                getResources().getQuantityString(R.plurals.authorized_apps_count, Permissions.grantedCount(), Permissions.grantedCount()));
+        /*mAuthorizedAppsCount.setHtmlText(
+                getResources().getQuantityString(R.plurals.authorized_apps_count, AuthorizationManager.grantedCount(), AuthorizationManager.grantedCount()));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mServerStartedReceiver, new IntentFilter(Intents.ACTION_AUTH_RESULT));
+                .registerReceiver(mServerStartedReceiver, new IntentFilter(Intents.ACTION_AUTH_RESULT));*/
 
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mStartFailedReceiver, new IntentFilter(Intents.ACTION_START));
+        /*LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mStartFailedReceiver, new IntentFilter(Intents.ACTION_START));*/
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        LocalBroadcastManager.getInstance(this)
-                .unregisterReceiver(mServerStartedReceiver);
+        /*LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mServerStartedReceiver);*/
 
-        LocalBroadcastManager.getInstance(this)
-                .unregisterReceiver(mStartFailedReceiver);
+        /*LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mStartFailedReceiver);*/
     }
 
     private void check() {
-        mStartButton.setEnabled(false);
-        mRestartButton.setEnabled(false);
+        //mStartButton.setEnabled(false);
+        //mRestartButton.setEnabled(false);
 
         WorkService.startAuth(this);
     }
@@ -270,18 +220,107 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mBindServiceHelper.unbind();
+    }
+
+    private void startShell(final String command) {
+        final StringBuilder sb = new StringBuilder();
+
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(R.layout.dialog_shell)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, null)
+                .setNeutralButton(R.string.send_command, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ShareCompat.IntentBuilder.from(MainActivity.this)
+                                .setText(sb.toString())
+                                .setType("text/plain")
+                                .setChooserTitle(R.string.send_command)
+                                .startChooser();
+                    }
+                })
+                .show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+
+        final TextView textView = dialog.findViewById(android.R.id.text1);
+
+        mBindServiceHelper.bind(new BindServiceHelper.OnServiceConnectedListener() {
+
+            @Override
+            public void onServiceConnected(IBinder binder) {
+                ShellService.ShellServiceBinder service = (ShellService.ShellServiceBinder) binder;
+
+                service.run(command, 0, new ShellService.Listener() {
+                    @Override
+                    public void onFailed() {
+                        if (isFinishing()) {
+                            return;
+                        }
+
+                        mStartButton.setEnabled(true);
+                        mRestartButton.setEnabled(true);
+
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+
+                        textView.setText(R.string.cannot_start_no_root);
+                    }
+
+                    @Override
+                    public void onCommandResult(int commandCode, int exitCode) {
+                        if (isFinishing()) {
+                            return;
+                        }
+
+                        mStartButton.setEnabled(true);
+                        mRestartButton.setEnabled(true);
+
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+
+                        if (exitCode != 0) {
+                            sb.append('\n').append("Send this to developer may help solve the problem.");
+                            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onLine(String line) {
+                        if (isFinishing()) {
+                            return;
+                        }
+
+                        if (sb.length() > 0) {
+                            sb.append('\n');
+                        }
+
+                        sb.append(line);
+
+                        textView.setText(sb.toString());
+                    }
+                });
+            }
+        });
+    }
+
     private void startNew() {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        WorkService.startServer(this);
+        startShell(ServerLauncher.COMMAND_ROOT);
     }
 
     private void startOld() {
         mStartButton.setEnabled(false);
         mRestartButton.setEnabled(false);
 
-        WorkService.startServerOld(this);
+        startShell(ServerLauncher.COMMAND_ROOT_OLD);
     }
 
     private void start() {
