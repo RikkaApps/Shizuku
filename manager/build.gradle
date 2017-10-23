@@ -11,7 +11,7 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        resValue "string", "versionName", rootProject.ext.versionName
+        resValue "string", "versionName", "${rootProject.ext.versionName} (${rootProject.ext.versionCode})"
     }
     signingConfigs {
         sign
@@ -68,12 +68,12 @@ dependencies {
     implementation "com.android.support:support-fragment:$supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation 'moe.shizuku.utils:libsuperuser:1.1'
     implementation 'moe.shizuku.support:support-utils:2.0.1'
-    implementation 'moe.shizuku.support:recyclerview-utils:2.0.2'
+    implementation 'moe.shizuku.support:recyclerview-utils:2.0.3'
     implementation 'moe.shizuku.fontprovider:api:7'
 }
 

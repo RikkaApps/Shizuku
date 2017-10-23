@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/status"
+    style="@style/Card.ServerStatus">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_server_error_48dp"
+            android:background="@color/status_warning"
+            android:tint="?android:attr/textColorPrimaryInverse"
+            android:scaleType="center"/>
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:padding="8dp"
+            android:textColor="@color/status_warning"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            android:lineSpacingExtra="2dp"
+            tools:text="Running (version 10)"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

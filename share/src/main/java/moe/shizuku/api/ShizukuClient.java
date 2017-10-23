@@ -1,7 +1,11 @@
 package moe.shizuku.api;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
@@ -26,9 +30,19 @@ public class ShizukuClient {
     public static final String ACTION_AUTHORIZE = "Shizuku_authorize";
     public static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
 
-    public static final int AUTHORIZATION_REQUEST_CODE = 55608;
+    public static final int AUTH_RESULT_OK = Activity.RESULT_OK;
+    public static final int AUTH_RESULT_USER_DENIED = Activity.RESULT_CANCELED;
+    public static final int AUTH_RESULT_ERROR = 1;
+
+    public static final int REQUEST_CODE_AUTHORIZATION = 55608;
+    public static final int REQUEST_CODE_PERMISSION = 55609;
+
+    public static final String PERMISSION = "moe.shizuku.manager.permission.API";
+    public static final String PERMISSION_V23 = "moe.shizuku.manager.permission.API_V23";
 
     private static UUID sToken = new UUID(0, 0);
+
+    private static TokenUpdateReceiver sTokenUpdateReceiver;
 
     public static UUID getToken() {
         return sToken;
@@ -46,14 +60,54 @@ public class ShizukuClient {
         }
     }
 
+    public static boolean checkSelfPermission(Context context) {
+        if (Build.VERSION.SDK_INT > 23) {
+            return context.checkSelfPermission(PERMISSION_V23) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Request token from manager app.
+     *
+     * @param activity Activity
+     */
     public static void requestAuthorization(Activity activity) {
+        if (!checkSelfPermission(activity)) {
+            return;
+        }
+
         Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID)
                 .putExtra(ShizukuConstants.EXTRA_PACKAGE_NAME, activity.getPackageName())
                 .putExtra(ShizukuConstants.EXTRA_UID, Process.myUid());
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivityForResult(intent, AUTHORIZATION_REQUEST_CODE);
+            activity.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
         }
+    }
+
+    /**
+     * Register receiver to receive token update broadcast, old receiver will be unregistered.
+     *
+     * @param context Context
+     * @param receiver Receiver
+     */
+    public static void registerTokenUpdateReceiver(Context context, TokenUpdateReceiver receiver) {
+        unregisterTokenUpdateReceiver(context);
+
+        sTokenUpdateReceiver = receiver;
+        context.registerReceiver(sTokenUpdateReceiver,
+                new IntentFilter(ShizukuConstants.MANAGER_APPLICATION_ID + ".intent.action.UPDATE_TOKEN"),
+                ShizukuConstants.MANAGER_APPLICATION_ID + ".permission.RECEIVE_SERVER_STARTED",
+                null);
+    }
+
+    public static void unregisterTokenUpdateReceiver(Context context) {
+        if (sTokenUpdateReceiver != null) {
+            context.unregisterReceiver(sTokenUpdateReceiver);
+        }
+        sTokenUpdateReceiver = null;
     }
 
     public static ShizukuState getState() {

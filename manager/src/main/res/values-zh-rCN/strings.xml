@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="request_permission_label">申请使用特权接口</string>
-    <string name="request_permission_description">允许该应用申请使用特权服务接口。</string>
-
-    <string name="receive_task_stack_changed_label">接收任务栈变化</string>
-    <string name="receive_task_stack_changed_description">允许该应用在任务栈发生变化时收到广播。</string>
+    <string name="permission_label">使用 Shizuku API</string>
+    <string name="permission_description">使用由 Shizuku 提供的 API</string>
 
     <string name="server_running">版本 %2$d 运行中（%1$s）</string>
     <string name="server_running_update">版本 %2$d 运行中（%1$s）\n重启服务以升级至版本 %3$d</string>
@@ -17,7 +14,6 @@
     <string name="server_update">重新启动以升级服务</string>
 
     <string name="start_server_title_root"><![CDATA[通过 root 权限启动服务]]></string>
-    <string name="start_server_summary_root"><![CDATA[当其他应用尝试使用时，服务将被自动启动。]]></string>
     <string name="start_server_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>以下步骤需要在每次重新启动后进行。</b><p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。<br>在电脑的终端中输入以下内容<p><font face="monospace">%s</font><p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
 
@@ -59,6 +55,7 @@
     <string name="settings_root_launch_method">启动方式（root）</string>
     <string name="settings_root_launch_ask_every_time">每次询问</string>
 
-    <string name="cant_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="cannot_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="cannot_start_shell_failed">运行 shell 命令时出错。</string>
 
 </resources>
