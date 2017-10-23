@@ -40,6 +40,7 @@ public class BindServiceHelper implements ServiceConnection {
 
     public void unbind() {
         if (mService != null) {
+            mService = null;
             mContext.unbindService(this);
         }
     }
