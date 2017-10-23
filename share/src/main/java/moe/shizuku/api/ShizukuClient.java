@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
@@ -32,7 +34,11 @@ public class ShizukuClient {
     public static final int AUTH_RESULT_USER_DENIED = Activity.RESULT_CANCELED;
     public static final int AUTH_RESULT_ERROR = 1;
 
-    public static final int AUTHORIZATION_REQUEST_CODE = 55608;
+    public static final int REQUEST_CODE_AUTHORIZATION = 55608;
+    public static final int REQUEST_CODE_PERMISSION = 55609;
+
+    public static final String PERMISSION = "moe.shizuku.manager.permission.API";
+    public static final String PERMISSION_V23 = "moe.shizuku.manager.permission.API_V23";
 
     private static UUID sToken = new UUID(0, 0);
 
@@ -54,13 +60,30 @@ public class ShizukuClient {
         }
     }
 
+    public static boolean checkSelfPermission(Context context) {
+        if (Build.VERSION.SDK_INT > 23) {
+            return context.checkSelfPermission(PERMISSION_V23) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Request token from manager app.
+     *
+     * @param activity Activity
+     */
     public static void requestAuthorization(Activity activity) {
+        if (!checkSelfPermission(activity)) {
+            return;
+        }
+
         Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID)
                 .putExtra(ShizukuConstants.EXTRA_PACKAGE_NAME, activity.getPackageName())
                 .putExtra(ShizukuConstants.EXTRA_UID, Process.myUid());
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivityForResult(intent, AUTHORIZATION_REQUEST_CODE);
+            activity.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
         }
     }
 

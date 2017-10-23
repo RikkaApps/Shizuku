@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import moe.shizuku.ShizukuConstants;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.service.WorkService;
 
 /**
@@ -33,8 +33,7 @@ public class TokenReceiveActivity extends Activity {
             intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
             intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
 
-            AuthorizationManager.init(context);
-            for (String packageName : AuthorizationManager.getGranted()) {
+            for (String packageName : AuthorizationManager.getGrantedPackages(context)) {
                 context.sendBroadcast(intent.setPackage(packageName), Manifest.permission.API);
             }
         }

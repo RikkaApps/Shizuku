@@ -1,11 +1,12 @@
 package moe.shizuku.manager.adapter;
 
+import android.content.Context;
 import android.os.Process;
 
 import java.util.ArrayList;
 
 import moe.shizuku.ShizukuState;
-import moe.shizuku.manager.AuthorizationManager;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
 import moe.shizuku.manager.viewholder.ManageAppsViewHolder;
@@ -32,7 +33,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    public MainAdapter() {
+    public MainAdapter(Context context) {
         super(new ArrayList<>(), new MainCreatorPool());
 
         getCreatorPool()
@@ -41,7 +42,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
                 .putRule(Boolean.class, StartRootViewHolder.CREATOR)
                 .putRule(Object.class, StartAdbViewHolder.CREATOR);
 
-        updateData(ShizukuState.createUnknown());
+        updateData(context, ShizukuState.createUnknown());
 
         setHasStableIds(true);
     }
@@ -51,7 +52,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
         return getCreatorPool().getCreatorIndex(this, position);
     }
 
-    public void updateData(ShizukuState state) {
+    public void updateData(Context context, ShizukuState state) {
         getItems().clear();
 
         getItems().add(state);
@@ -61,7 +62,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
             boolean rootRestart = state.isRoot();
 
             if (state.getCode() == ShizukuState.RESULT_OK) {
-                getItems().add(AuthorizationManager.grantedCount());
+                getItems().add(AuthorizationManager.getGrantedPackages(context).size());
             }
 
             if (adb) {

@@ -13,7 +13,12 @@
         android:name="moe.shizuku.manager.permission.API"
         android:description="@string/permission_description"
         android:label="@string/permission_label"
-        android:protectionLevel="normal" />
+        android:protectionLevel="normal"/>
+    <permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        android:description="@string/permission_description"
+        android:label="@string/permission_label"
+        android:protectionLevel="dangerous"/>
     <permission
         android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
         android:protectionLevel="signature" />
@@ -29,10 +34,23 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".AuthorizationActivity"
-            android:enabled="true"
+            android:enabled="@bool/auth_activity_enabled"
             android:excludeFromRecents="true"
             android:exported="true"
             android:permission="moe.shizuku.manager.permission.API"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AuthorizationActivityV23"
+            android:enabled="@bool/auth_activity_v23_enabled"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:permission="moe.shizuku.manager.permission.API_V23"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />

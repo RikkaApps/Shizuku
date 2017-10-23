@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_label">申请使用特权接口</string>
-    <string name="permission_description">允许该应用申请使用特权服务接口。</string>
+    <string name="permission_label">使用 Shizuku API</string>
+    <string name="permission_description">使用由 Shizuku 提供的 API</string>
 
     <string name="server_running">版本 %2$d 运行中（%1$s）</string>
     <string name="server_running_update">版本 %2$d 运行中（%1$s）\n重启服务以升级至版本 %3$d</string>

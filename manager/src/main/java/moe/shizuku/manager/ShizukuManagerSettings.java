@@ -23,6 +23,7 @@ public class ShizukuManagerSettings {
 
     public static void init(Context context) {
         Settings.init(context);
+        ShizukuClient.setToken(ShizukuManagerSettings.getToken(context));
     }
 
     @IntDef({

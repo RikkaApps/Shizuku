@@ -3,12 +3,10 @@ package moe.shizuku.manager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.v4.app.ShareCompat;
+import android.os.StrictMode;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -16,26 +14,20 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import moe.shizuku.ShizukuState;
 import moe.shizuku.manager.adapter.MainAdapter;
-import moe.shizuku.manager.service.ShellService;
 import moe.shizuku.manager.service.WorkService;
-import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
-/**
- * TODO notify user when not running in main user
- */
+
 public class MainActivity extends BaseActivity {
 
     private class ServerStartedReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mAdapter.updateData(intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
+            mAdapter.updateData(context, intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
         }
     }
 
@@ -45,10 +37,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAdapter = new MainAdapter();
+        mAdapter = new MainAdapter(this);
 
         RecyclerView recyclerView = findViewById(android.R.id.list);
         recyclerView.setAdapter(mAdapter);

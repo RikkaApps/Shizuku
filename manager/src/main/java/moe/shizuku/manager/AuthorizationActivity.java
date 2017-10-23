@@ -1,6 +1,5 @@
 package moe.shizuku.manager;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,29 +7,24 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.Html;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import java.util.UUID;
-
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
-public class AuthorizationActivity extends Activity {
+/**
+ * Created by rikka on 2017/10/23.
+ */
 
-    private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT";
+public class AuthorizationActivity extends AbstractAuthorizationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        StrictMode.ThreadPolicy permitNetworkPolicy = new StrictMode.ThreadPolicy.Builder(StrictMode.getThreadPolicy())
-                .permitNetwork()
-                .build();
-        StrictMode.setThreadPolicy(permitNetworkPolicy);
 
         final String packageName = getIntent().getStringExtra(ShizukuConstants.EXTRA_PACKAGE_NAME);
         int uid = getIntent().getIntExtra(ShizukuConstants.EXTRA_UID, 0);
@@ -89,9 +83,9 @@ public class AuthorizationActivity extends Activity {
             return;
         }
 
-        final long firstInstallTime = pi.firstInstallTime;
-        if (AuthorizationManager.granted(packageName)) {
+        if (AuthorizationManager.granted(this, packageName)) {
             setResult(true, packageName);
+            finish();
             return;
         }
 
@@ -105,7 +99,7 @@ public class AuthorizationActivity extends Activity {
                 .setPositiveButton(R.string.auth_allow, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AuthorizationManager.grant(packageName, firstInstallTime);
+                        AuthorizationManager.grant(AuthorizationActivity.this, packageName);
 
                         setResult(true, packageName);
                     }
@@ -113,39 +107,29 @@ public class AuthorizationActivity extends Activity {
                 .setNegativeButton(R.string.auth_deny, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AuthorizationManager.revoke(packageName);
+                        AuthorizationManager.revoke(AuthorizationActivity.this, packageName);
 
                         setResult(false, packageName);
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        finish();
                     }
                 })
                 .setCancelable(false)
                 .create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-	        @Override
-	        public void onShow(DialogInterface dialogInterface) {
-		        AlertDialog dialog = (AlertDialog) dialogInterface;
-		        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
-	        }
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                AlertDialog dialog = (AlertDialog) dialogInterface;
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+            }
         });
         dialog.show();
 
         TextView textView = dialog.findViewById(android.R.id.message);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.request_dialog_text_size));
-    }
-
-    private void setResult(boolean granted, String packageName) {
-        if (granted) {
-            UUID token = ShizukuManagerSettings.getToken(this);
-            Intent intent = new Intent(ACTION_AUTHORIZATION)
-                    .setPackage(packageName)
-                    .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
-                    .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
-
-            setResult(ShizukuClient.AUTH_RESULT_OK, intent);
-        } else {
-            setResult(ShizukuClient.AUTH_RESULT_USER_DENIED);
-        }
-
-        finish();
     }
 }
