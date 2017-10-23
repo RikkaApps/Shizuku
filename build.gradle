@@ -3,10 +3,10 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com" }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
+        classpath 'com.android.tools.build:gradle:3.0.0-rc1'
         //classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,7 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com" }
+        google()
         mavenLocal()
     }
 }
@@ -28,12 +28,11 @@ task clean(type: Delete) {
 
 ext {
     supportLibraryVersion = '26.0.2'
-    preferenceLibraryVersion = '2.0.5'
+    preferenceLibraryVersion = '2.0.7'
 
     minSdkVersion = 21
     targetSdkVersion = 26
-    buildToolsVersion = "26.0.1"
+    buildToolsVersion = "26.0.2"
     versionCode = 39
     versionName = "2.0.0 dev"
-    serverVersionCode = 23
 }

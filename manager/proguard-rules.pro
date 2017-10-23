@@ -31,4 +31,8 @@
 }
 -keepnames class android.support.v7.widget.LinearLayoutManager
 
--dontwarn moe.shizuku.server.HideApiOverride*
+-keep class android.** { *; }
+-dontwarn android.**
+-keep class com.android.internal.** { *; }
+-dontwarn com.android.internal.**
+

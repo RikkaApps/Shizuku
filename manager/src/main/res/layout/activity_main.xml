@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="moe.shizuku.privileged.api.MainActivity">
+    tools:context="moe.shizuku.manager.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <moe.shizuku.privileged.api.widget.HtmlTextView
+                <moe.shizuku.manager.widget.HtmlTextView
                     android:id="@+id/authorized_apps_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     app:textHtml="@string/app_name"/>
 
-                <moe.shizuku.privileged.api.widget.HtmlTextView
+                <moe.shizuku.manager.widget.HtmlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <moe.shizuku.privileged.api.widget.HtmlTextView
+                <moe.shizuku.manager.widget.HtmlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
@@ -128,7 +128,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     app:textHtml="@string/start_server_title_root"/>
 
-                <!--<moe.shizuku.privileged.api.widget.HtmlTextView
+                <!--<moe.shizuku.manager.widget.HtmlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <moe.shizuku.privileged.api.widget.HtmlTextView
+                <moe.shizuku.manager.widget.HtmlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
@@ -182,7 +182,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     app:textHtml="@string/start_server_title_adb"/>
 
-                <moe.shizuku.privileged.api.widget.HtmlTextView
+                <moe.shizuku.manager.widget.HtmlTextView
                     android:id="@+id/adb_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

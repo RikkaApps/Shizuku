@@ -1,0 +1,2 @@
+ApplicationErrorReport.CrashInfo
+StrictMode.ViolationInfo

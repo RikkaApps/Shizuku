@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="moe.shizuku.privileged.api">
+    package="moe.shizuku.manager">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,7 +25,7 @@
         android:protectionLevel="normal" />
 
     <application
-        android:name=".PAApplication"
+        android:name=".ShizukuManagerApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,13 +34,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".RequestActivity"
+            android:name=".RequestAuthorizationActivity"
             android:enabled="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:theme="@style/GrantPermissions">
+            android:theme="@style/GrantPermissions"
+            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION">
             <intent-filter>
-                <action android:name="${applicationId}.intent.action.AUTHORIZATION" />
+                <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -53,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AppsActivity"
+            android:name=".ManageAppsActivity"
             android:label="@string/authorized_apps_manage"
             android:theme="@style/AppTheme.Apps" />
         <activity
@@ -61,6 +62,19 @@
             android:label="@string/action_settings"
             android:theme="@style/AppTheme.Apps" />
 
+        <activity
+            android:name=".TokenReceiveActivity"
+            android:theme="@style/Translucent"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
+
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -68,15 +82,6 @@
             android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".receiver.ServerStartedReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
-            <intent-filter>
-                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
             </intent-filter>
         </receiver>
 

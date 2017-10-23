@@ -44,23 +44,37 @@ android {
     }
 }
 
+task generate(type: GradleBuild) {
+    tasks = [
+            ':server-share:build',
+            ':generator:generate',
+            ':server-21:dex',
+            ':server-22:dex',
+            ':server-23:dex',
+            ':server-24:dex',
+            ':server-25:dex',
+            ':server-26:dex',
+    ]
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    compile project(':server')
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.android.support:support-fragment:$supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
-    compile "moe.shizuku.preference:preference:$preferenceLibraryVersion"
-    compile "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
-    compile "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    compile 'moe.shizuku.utils:libsuperuser:1.1'
-    compile 'moe.shizuku.support:support-utils:2.0'
-    compile 'moe.shizuku.support:recyclerview-utils:2.0'
+    testImplementation 'junit:junit:4.12'
+    implementation project(':share')
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:support-fragment:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
+    implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
+    implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
+    implementation 'moe.shizuku.utils:libsuperuser:1.1'
+    implementation 'moe.shizuku.support:support-utils:2.0.1'
+    implementation 'moe.shizuku.support:recyclerview-utils:2.0.2'
+    implementation 'moe.shizuku.fontprovider:api:7'
 }
 
 def ksFile = file('signing.properties')

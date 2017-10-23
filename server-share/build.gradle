@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+dependencies {
+    compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
+    compileOnly project(':server-stub')
+    compile project(':share')
+}
