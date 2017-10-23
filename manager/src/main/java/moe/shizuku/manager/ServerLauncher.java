@@ -17,10 +17,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Locale;
 
-import moe.shizuku.libsuperuser.Shell;
+import moe.shizuku.manager.utils.Shell;
 import moe.shizuku.support.utils.IOUtils;
 
 /**
@@ -29,9 +28,8 @@ import moe.shizuku.support.utils.IOUtils;
 
 public class ServerLauncher {
 
-    private static final int TIMEOUT = 10000;
-
     public static String COMMAND_ROOT;
+    public static String COMMAND_ROOT_OLD;
     public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
     public static String DEX_PATH;
 
@@ -40,33 +38,12 @@ public class ServerLauncher {
         writeSH(context);
     }
 
-    @WorkerThread
-    public static Shell.Result startRoot() {
-        if (Shell.SU.available()) {
-            long time = System.currentTimeMillis();
-
-            Shell.Result result = Shell.SU.run(COMMAND_ROOT, TIMEOUT);
-            Log.d("RServer", "start root result " + result.getExitCode() + " in " + (System.currentTimeMillis() - time) + "ms");
-            return result;
-        } else {
-            return new Shell.Result(99, new ArrayList<String>());
-        }
-    }
-
-    @WorkerThread
-    public static Shell.Result startRootOld() {
-        if (Shell.SU.available()) {
-            return Shell.SU.run("app_process -Djava.class.path=" + DEX_PATH + " /system/bin --nice-name=shizuku_server moe.shizuku.server.ShizukuServer &", TIMEOUT);
-        } else {
-            return new Shell.Result(99, new ArrayList<String>());
-        }
-    }
-
     private static void copyDex(Context context) {
         String dex = String.format(Locale.ENGLISH, "server-%d.dex", Build.VERSION.SDK_INT);
         File file = new File(context.getExternalFilesDir(null), dex);
 
         DEX_PATH = file.getAbsolutePath();
+        COMMAND_ROOT_OLD = "app_process -Djava.class.path=" + DEX_PATH + " /system/bin --nice-name=shizuku_server moe.shizuku.server.ShizukuServer &";
 
         try {
             InputStream is = context.getAssets().open(dex);

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Process;
 import android.os.RemoteException;
 
 import java.io.IOException;
@@ -70,9 +71,10 @@ public class ShizukuServer extends Handler {
 
         Thread socketThread = new Thread(socket);
         socketThread.start();
-        ServerLog.i("Build.VERSION.SDK_INT: " + Build.VERSION.SDK_INT);
-        ServerLog.i("Build.DEVICE: " + Build.DEVICE);
-        ServerLog.i("start version: " + ShizukuConstants.VERSION + " token: " + mToken);
+        ServerLog.i("uid: " + Process.myUid());
+        ServerLog.i("api version: " + Build.VERSION.SDK_INT);
+        ServerLog.i("device: " + Build.DEVICE);
+        ServerLog.i("start version: " + ShizukuConstants.SERVER_VERSION + " token: " + mToken);
 
         // send token to manager app
         sendTokenToManger(mToken);
@@ -92,6 +94,7 @@ public class ShizukuServer extends Handler {
 
     public static void sendTokenToManger(UUID token, int userId) {
         Intent intent = new Intent(ShizukuConstants.ACTION_SERVER_STARTED)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addCategory(Intent.CATEGORY_DEFAULT)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID)
                 .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
