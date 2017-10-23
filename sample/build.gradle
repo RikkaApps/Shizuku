@@ -28,7 +28,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation "com.android.support:support-annotations:$supportLibraryVersion"
-    implementation "com.android.support:support-compat:$supportLibraryVersion"
 
     implementation project(':share')
     implementation project(':api')

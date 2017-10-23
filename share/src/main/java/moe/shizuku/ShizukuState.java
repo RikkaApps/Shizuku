@@ -35,14 +35,14 @@ public final class ShizukuState implements Parcelable {
         return new ShizukuState(RESULT_UNAUTHORIZED);
     }
 
-    private ShizukuState(int code) {
-        mVersion = ShizukuConstants.SERVER_VERSION;
+    public ShizukuState(int code) {
+        mVersion = ShizukuConstants.VERSION;
         mIsRoot = Process.myUid() == Process.ROOT_UID;
         mCode = code;
     }
 
     public boolean versionUnmatched() {
-        return mVersion != ShizukuConstants.SERVER_VERSION;
+        return mVersion != ShizukuConstants.VERSION;
     }
 
     public int getVersion() {

@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.sample">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="moe.shizuku.privileged.api.permission.REQUEST_AUTHORIZATION"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"

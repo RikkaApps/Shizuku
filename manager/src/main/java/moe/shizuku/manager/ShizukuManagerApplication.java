@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
-import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.support.utils.Settings;
 
 /**
  * Created by Rikka on 2017/5/12.
@@ -22,7 +22,8 @@ public class ShizukuManagerApplication extends Application {
         StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
         StrictMode.setThreadPolicy(tp);
 
-        ShizukuManagerSettings.init(context);
+        Settings.init(context);
+        Permissions.init(context);
         ServerLauncher.init(context);
 
         sInitialized = true;

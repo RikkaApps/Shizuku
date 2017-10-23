@@ -23,8 +23,8 @@
 #define EXIT_FATAL_KILL_OLD_SERVER 9
 #define EXIT_FATAL_FILE_NOT_FOUND 10
 
-#define LOG_FILE_PATH "/sdcard/Android/data/moe.shizuku.privileged.api/files/shizuku_starter.log"
-#define SERVER_LOG_FILE_PATH "/sdcard/Android/data/moe.shizuku.privileged.api/files/shizuku_server.log"
+#define LOG_FILE_PATH "/sdcard/Android/moe.shizuku.privileged.api/files/shizuku_starter.log"
+#define SERVER_LOG_FILE_PATH "/sdcard/Android/moe.shizuku.privileged.api/files/shizuku_server.log"
 
 #define SERVER_NAME "shizuku_server"
 
@@ -218,18 +218,18 @@ int main(int argc, char **argv) {
                 if (count >= 5) {
                     printf("\ninfo: " SERVER_NAME " started.\n");
                     fflush(stdout);
-                    //showServerLogs();
+                    showServerLogs();
                     return EXIT_SUCCESS;
                 }
             }
             perrorf("\nwarn: " SERVER_NAME "stopped after started.\n");
             showLogs();
-            //showServerLogs();
+            showServerLogs();
             return EXIT_WARN_SERVER_STOP;
         } else {
             printf("\ninfo: " SERVER_NAME "started.\n");
             fflush(stdout);
-            //showServerLogs();
+            showServerLogs();
             return EXIT_SUCCESS;
         }
     }

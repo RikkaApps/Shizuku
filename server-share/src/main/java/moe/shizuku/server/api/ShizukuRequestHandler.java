@@ -21,23 +21,21 @@ import moe.shizuku.server.util.Utils;
 
 public class ShizukuRequestHandler extends RequestHandler {
 
-    private final Handler mHandler;
-    private final UUID mToken;
+    private Handler mHandler;
 
-    public ShizukuRequestHandler(Handler handler, UUID token) {
+    public ShizukuRequestHandler(Handler handler) {
         mHandler = handler;
-        mToken = token;
     }
 
-    public void handle(Socket socket) throws IOException, RemoteException {
+    public void handle(Socket socket, UUID token) throws IOException, RemoteException {
         ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
         ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
         String action = is.readString();
         if (isActionRequireAuthorization(action)) {
             long most = is.readLong();
             long least = is.readLong();
-            if (most != mToken.getMostSignificantBits()
-                    && least != mToken.getLeastSignificantBits()) {
+            if (most != token.getMostSignificantBits()
+                    && least != token.getLeastSignificantBits()) {
                 os.writeException(new SecurityException("unauthorized"));
             }
         }
@@ -50,10 +48,10 @@ public class ShizukuRequestHandler extends RequestHandler {
                 stop(os, mHandler);
                 break;
             case ShizukuClient.ACTION_AUTHORIZE:
-                authorize(is, os, mToken);
+                authorize(is, os, token);
                 break;
             case ShizukuClient.ACTION_SEND_TOKEN:
-                sendTokenToManger(is, os, mToken);
+                sendTokenToManger(is, os, token);
                 break;
             default:
                 handle(action, is, os);

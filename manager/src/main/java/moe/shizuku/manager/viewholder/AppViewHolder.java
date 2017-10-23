@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import moe.shizuku.manager.Permissions;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 /**
@@ -53,32 +53,25 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         final Context context = v.getContext();
         final PackageInfo pi = getData();
 
-        if (AuthorizationManager.granted(context, pi.packageName)) {
-            AuthorizationManager.revoke(context, pi.packageName);
-        } else {
-            AuthorizationManager.grant(context, pi.packageName);
-        }
-
+        Permissions.toggle(pi.packageName, pi.firstInstallTime);
         getAdapter().notifyItemChanged(getAdapterPosition(), new Object());
     }
 
     @Override
     public void onBind() {
-        Context context = itemView.getContext();
         PackageManager pm = itemView.getContext().getPackageManager();
         ApplicationInfo ai = getData().applicationInfo;
 
         icon.setImageDrawable(ai.loadIcon(pm));
         name.setText(ai.loadLabel(pm));
         pkg.setText(ai.packageName);
-        switch_widget.setChecked(AuthorizationManager.granted(context, ai.packageName));
+        switch_widget.setChecked(Permissions.granted(ai.packageName));
     }
 
     @Override
     public void onBind(@NonNull List<Object> payloads) {
-        Context context = itemView.getContext();
         ApplicationInfo ai = getData().applicationInfo;
 
-        switch_widget.setChecked(AuthorizationManager.granted(context, ai.packageName));
+        switch_widget.setChecked(Permissions.granted(ai.packageName));
     }
 }

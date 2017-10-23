@@ -1,22 +1,20 @@
 package moe.shizuku.manager;
 
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.adapter.AppAdapter;
-import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 public class ManageAppsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apps);
 
@@ -24,17 +22,20 @@ public class ManageAppsActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        // TODO sort by name
         AppAdapter adapter = new AppAdapter();
-        for (String packageName : AuthorizationManager.getPackages(this)) {
-            if (BuildConfig.APPLICATION_ID.equals(packageName)) {
+        for (PackageInfo pi : getPackageManager().getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
+            if (BuildConfig.APPLICATION_ID.equals(pi.packageName)
+                    || pi.requestedPermissions == null) {
                 continue;
             }
 
-            try {
-                adapter.getItems().add(getPackageManager().getPackageInfo(packageName, 0));
-            } catch (PackageManager.NameNotFoundException ignored) {
+            for (String perm : pi.requestedPermissions) {
+                if (ShizukuConstants.PERMISSION_REQUEST_AUTHORIZATION.equals(perm)) {
+                    adapter.getItems().add(pi);
+                    break;
+                }
             }
-            break;
         }
 
         ((RecyclerView) findViewById(android.R.id.list)).setAdapter(adapter);

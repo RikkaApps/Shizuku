@@ -9,8 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import moe.shizuku.server.api.ShizukuRequestHandler;
 import moe.shizuku.server.util.ServerLog;
@@ -21,45 +19,18 @@ import moe.shizuku.server.util.ServerLog;
 
 public class SocketThread implements Runnable {
 
-    private final ExecutorService mThreadPool = Executors.newFixedThreadPool(3);
-
     private final Handler mHandler;
     private final ServerSocket mServerSocket;
+
+    private final UUID mToken;
 
     private final ShizukuRequestHandler mRequestHandler;
 
     SocketThread(Handler handler, ServerSocket serverSocket, UUID token) {
         mHandler = handler;
         mServerSocket = serverSocket;
-        mRequestHandler = new ShizukuRequestHandler(mHandler, token);
-    }
-
-    private static class HandlerRunnable implements Runnable {
-
-        private final Socket mSocket;
-        private final ShizukuRequestHandler mRequestHandler;
-
-        public HandlerRunnable(Socket socket, ShizukuRequestHandler requestHandler) {
-            mSocket = socket;
-            mRequestHandler = requestHandler;
-        }
-
-        @Override
-        public void run() {
-            try {
-                mRequestHandler.handle(mSocket);
-            } catch (RemoteException e) {
-                ServerLog.w("remote error", e);
-            } catch (Exception e) {
-                ServerLog.w("error", e);
-            } finally {
-                try {
-                    mSocket.close();
-                } catch (IOException e) {
-                    ServerLog.w("cannot close", e);
-                }
-            }
-        }
+        mToken = token;
+        mRequestHandler = new ShizukuRequestHandler(mHandler);
     }
 
     @Override
@@ -68,13 +39,18 @@ public class SocketThread implements Runnable {
         for (; ; ) {
             try {
                 Socket socket = mServerSocket.accept();
-                mThreadPool.execute(new HandlerRunnable(socket, mRequestHandler));
+                mRequestHandler.handle(socket, mToken);
+                socket.close();
             } catch (IOException e) {
                 if (SocketException.class.equals(e.getClass()) && "Socket closed".equals(e.getMessage())) {
                     ServerLog.i("server socket is closed");
                     break;
                 }
                 ServerLog.w("cannot accept", e);
+            } catch (RemoteException e) {
+                ServerLog.w("remote error", e);
+            } catch (Exception e) {
+                ServerLog.w("error", e);
             }
         }
         mHandler.sendEmptyMessage(ShizukuServer.MESSAGE_EXIT);

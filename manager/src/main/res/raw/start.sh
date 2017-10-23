@@ -9,20 +9,14 @@ if [ -f "$STARTER_PATH" ]; then
     rm /data/local/tmp/shizuku_starter 2> /dev/null
     cp "$STARTER_PATH" /data/local/tmp/shizuku_starter
     chmod 755 /data/local/tmp/shizuku_starter
-
-    UID=$(id -u)
-    if [ $UID -eq 0 ]; then
-        echo "info: set shizuku_starter owner to shell"
+    if [ $USER -eq 0 ]; then
         chown shell:shell /data/local/tmp/shizuku_starter
     fi
-
     export PATH=/data/local/tmp:/system/bin:$PATH
     shizuku_starter $STARTER_PARAM $1
     result=$?
     if [ $result -ne 0 ]; then
-        echo "info: shizuku_starter exit with non-zero value $result"
-    else
-        echo "info: shizuku_starter exit with 0"
+        echo "shizuku_starter exit with non-zero value $result"
     fi
 else
     echo "Starter file not exist, please open Shizuku Manager and try again."

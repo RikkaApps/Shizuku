@@ -6,16 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.os.StrictMode;
-import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
-
-import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
 
 public class MainActivity extends Activity {
 
@@ -37,11 +34,7 @@ public class MainActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if (ShizukuClient.checkSelfPermission(this)) {
-            ShizukuClient.requestAuthorization(this);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
-        }
+        ShizukuClient.requestAuthorization(this);
 
         registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION));
     }
@@ -55,35 +48,16 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ShizukuClient.REQUEST_CODE_AUTHORIZATION:
-                if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
-                    ShizukuClient.setToken(data);
+        if (requestCode == ShizukuClient.AUTHORIZATION_REQUEST_CODE) {
+            if (resultCode == ShizukuConstants.AUTH_RESULT_OK) {
+                ShizukuClient.setToken(data);
 
-                    Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
 
-                    ShizukuCompat.broadcastIntent(new Intent(ACTION));
-                } else {
-                    // user denied or error
-                }
-                return;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_PERMISSION:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClient.requestAuthorization(this);
-                } else {
-                    // denied
-                }
-                break;
+                ShizukuCompat.broadcastIntent(new Intent(ACTION));
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
