@@ -14,7 +14,7 @@ import java.io.PrintStream;
 public class Utils {
 
     @SuppressLint("SdCardPath")
-    private static final String LOG_FILE = "/sdcard/Android/moe.shizuku.privileged.api/files/shizuku_server.log";
+    private static final String LOG_FILE = "/sdcard/Android/data/moe.shizuku.privileged.api/files/shizuku_server.log";
 
     public static void setOut() {
         try {
