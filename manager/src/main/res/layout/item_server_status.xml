@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/status_icon"
+            android:id="@android:id/icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
@@ -22,7 +22,7 @@
             android:scaleType="center"/>
 
         <TextView
-            android:id="@+id/status_text"
+            android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"

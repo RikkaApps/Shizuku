@@ -25,7 +25,7 @@ public class ServerStartedReceiver extends BroadcastReceiver {
 
         WorkService.startAuth(context);
 
-        intent = new Intent(intent);
+        /*intent = new Intent(intent);
         intent.setComponent(null);
         intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
         intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
@@ -33,6 +33,6 @@ public class ServerStartedReceiver extends BroadcastReceiver {
         AuthorizationManager.init(context);
         for (String packageName : AuthorizationManager.getGranted()) {
             context.sendBroadcast(intent.setPackage(packageName), BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION");
-        }
+        }*/
     }
 }

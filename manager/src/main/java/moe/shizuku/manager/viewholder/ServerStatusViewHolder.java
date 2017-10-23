@@ -1,12 +1,7 @@
 package moe.shizuku.manager.viewholder;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -14,13 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
-import moe.shizuku.manager.Intents;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
@@ -36,15 +27,6 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
         }
     };
 
-    private class ServerStartedReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            setData(intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT), new Object());
-        }
-    }
-
-    private BroadcastReceiver mServerStartedReceiver = new ServerStartedReceiver();
-
     private TextView mStatusText;
     private ImageView mStatusIcon;
 
@@ -53,8 +35,8 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
     public ServerStatusViewHolder(View itemView) {
         super(itemView);
 
-        mStatusText = itemView.findViewById(R.id.status_text);
-        mStatusIcon = itemView.findViewById(R.id.status_icon);
+        mStatusText = itemView.findViewById(android.R.id.text1);
+        mStatusIcon = itemView.findViewById(android.R.id.icon);
 
         itemView.setOnClickListener(this);
     }
@@ -71,9 +53,6 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
     @Override
     public void onBind() {
         Context context = itemView.getContext();
-
-        LocalBroadcastManager.getInstance(itemView.getContext())
-                .registerReceiver(mServerStartedReceiver, new IntentFilter(Intents.ACTION_AUTH_RESULT));
 
         ShizukuState shizukuState = getData();
 
@@ -130,21 +109,6 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
                     mStatusText.setText(R.string.server_require_restart);
                 }
             }
-
-            ShizukuManagerSettings.setLastLaunchMode(shizukuState.isRoot() ? ShizukuManagerSettings.LaunchMethod.ROOT : ShizukuManagerSettings.LaunchMethod.ADB);
         }
-    }
-
-    @Override
-    public void onBind(@NonNull List<Object> payloads) {
-        onBind();
-    }
-
-    @Override
-    public void onRecycle() {
-        super.onRecycle();
-
-        LocalBroadcastManager.getInstance(itemView.getContext())
-                .unregisterReceiver(mServerStartedReceiver);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.Intents;
 import moe.shizuku.manager.ShizukuManagerSettings;
@@ -39,9 +40,16 @@ public class WorkService extends IntentService {
         }
     }
     private void handleAuth() {
+        ShizukuState state = ShizukuClient.authorize(ShizukuManagerSettings.getToken(this));
+
         LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(new Intent(Intents.ACTION_AUTH_RESULT)
-                        .putExtra(Intents.EXTRA_RESULT, ShizukuClient.authorize(ShizukuManagerSettings.getToken(this))));
+                        .putExtra(Intents.EXTRA_RESULT, state));
+
+        if (state.getCode() == ShizukuState.RESULT_OK) {
+            ShizukuManagerSettings.setLastLaunchMode(state.isRoot()
+                    ? ShizukuManagerSettings.LaunchMethod.ROOT : ShizukuManagerSettings.LaunchMethod.ADB);
+        }
     }
 
     private void handleRequestToken() {
