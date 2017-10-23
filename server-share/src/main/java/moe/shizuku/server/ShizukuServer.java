@@ -74,7 +74,7 @@ public class ShizukuServer extends Handler {
         ServerLog.i("uid: " + Process.myUid());
         ServerLog.i("api version: " + Build.VERSION.SDK_INT);
         ServerLog.i("device: " + Build.DEVICE);
-        ServerLog.i("start version: " + ShizukuConstants.VERSION + " token: " + mToken);
+        ServerLog.i("start version: " + ShizukuConstants.SERVER_VERSION + " token: " + mToken);
 
         // send token to manager app
         sendTokenToManger(mToken);

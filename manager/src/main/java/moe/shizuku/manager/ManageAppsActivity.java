@@ -30,7 +30,7 @@ public class ManageAppsActivity extends BaseActivity {
             }
 
             for (String perm : pi.requestedPermissions) {
-                if (ShizukuConstants.PERMISSION_REQUEST_AUTHORIZATION.equals(perm)) {
+                if (Manifest.permission.API.equals(perm)) {
                     adapter.getItems().add(pi);
                     break;
                 }

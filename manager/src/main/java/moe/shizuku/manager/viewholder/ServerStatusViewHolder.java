@@ -80,11 +80,17 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
             mStatusText.setTextColor(ContextCompat.getColor(context, R.color.status_ok));
 
             if (!oldOK) {
-                View view = (View) mStatusIcon.getParent();
-                int centerX = mStatusIcon.getWidth() / 2;
-                int centerY = mStatusIcon.getHeight() / 2;
-                float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
-                ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
+                final View view = (View) mStatusIcon.getParent();
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int centerX = mStatusIcon.getWidth() / 2;
+                        int centerY = mStatusIcon.getHeight() / 2;
+                        float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
+
+                        ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
+                    }
+                });
             }
         } else {
             mStatusIcon.setBackgroundColor(ContextCompat.getColor(context, R.color.status_warning));
@@ -97,7 +103,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
         } else {
             if (ok) {
                 if (shizukuState.versionUnmatched()) {
-                    mStatusText.setText(context.getString(R.string.server_running_update, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion(), ShizukuConstants.VERSION));
+                    mStatusText.setText(context.getString(R.string.server_running_update, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion(), ShizukuConstants.SERVER_VERSION));
                 } else {
                     mStatusText.setText(context.getString(R.string.server_running, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion()));
                 }

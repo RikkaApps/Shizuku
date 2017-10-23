@@ -10,21 +10,13 @@
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
 
     <permission
-        android:name="${applicationId}.permission.REQUEST_AUTHORIZATION"
-        android:description="@string/request_permission_description"
-        android:label="@string/request_permission_label"
-        android:protectionLevel="normal" />
-    <permission
-        android:name="${applicationId}.permission.RECEIVE_TASK_STACK_CHANGED"
-        android:description="@string/receive_task_stack_changed_description"
-        android:label="@string/receive_task_stack_changed_label"
+        android:name="moe.shizuku.manager.permission.API"
+        android:description="@string/permission_description"
+        android:label="@string/permission_label"
         android:protectionLevel="normal" />
     <permission
         android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
         android:protectionLevel="signature" />
-    <permission
-        android:name="${applicationId}.permission.RECEIVE_CLEAR_TOKEN"
-        android:protectionLevel="normal" />
 
     <application
         android:name=".ShizukuManagerApplication"
@@ -40,7 +32,7 @@
             android:enabled="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION"
+            android:permission="moe.shizuku.manager.permission.API"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
@@ -85,23 +77,14 @@
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name=".provider.AuthProvider"
-            android:authorities="${applicationId}.auth"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="${applicationId}.permission.REQUEST_AUTHORIZATION" />
-
         <service
             android:name=".service.WorkService"
             android:exported="false" />
         <service
             android:name=".service.ShellService"
-            android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
         <service
             android:name=".service.BootCompleteService"
-            android:enabled="true"
             android:exported="false" />
     </application>
 

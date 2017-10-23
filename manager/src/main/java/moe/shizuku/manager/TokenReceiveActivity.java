@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.service.WorkService;
 
 /**
@@ -26,8 +27,7 @@ public class TokenReceiveActivity extends Activity {
 
             WorkService.startAuth(context);
 
-            /*
-            // broadcast new token to other apps
+            //broadcast new token to other apps
             intent = new Intent(intent);
             intent.setComponent(null);
             intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
@@ -35,8 +35,8 @@ public class TokenReceiveActivity extends Activity {
 
             AuthorizationManager.init(context);
             for (String packageName : AuthorizationManager.getGranted()) {
-                context.sendBroadcast(intent.setPackage(packageName), BuildConfig.APPLICATION_ID + ".permission.REQUEST_AUTHORIZATION");
-            }*/
+                context.sendBroadcast(intent.setPackage(packageName), Manifest.permission.API);
+            }
         }
 
         finish();

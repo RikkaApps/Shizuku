@@ -2,6 +2,7 @@ package moe.shizuku.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.util.Pair;
 
@@ -104,7 +105,20 @@ public class AuthorizationManager {
                 long firstInstallTime = Long.parseLong(temp[1]);
 
                 try {
-                    if (pm.getPackageInfo(packageName, 0).firstInstallTime == firstInstallTime) {
+                    PackageInfo pi = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+
+                    boolean permission = false;
+                    if (pi.requestedPermissions != null) {
+                        for (String perm : pi.requestedPermissions) {
+                            if (Manifest.permission.API.equals(perm)) {
+                                permission = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (pi.firstInstallTime == firstInstallTime
+                            && permission) {
                         to.add(new Pair<>(packageName, firstInstallTime));
                     }
                 } catch (PackageManager.NameNotFoundException ignored) {

@@ -1,7 +1,9 @@
 package moe.shizuku.api;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Process;
 import android.util.Log;
 
@@ -34,6 +36,8 @@ public class ShizukuClient {
 
     private static UUID sToken = new UUID(0, 0);
 
+    private static TokenUpdateReceiver sTokenUpdateReceiver;
+
     public static UUID getToken() {
         return sToken;
     }
@@ -58,6 +62,29 @@ public class ShizukuClient {
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
             activity.startActivityForResult(intent, AUTHORIZATION_REQUEST_CODE);
         }
+    }
+
+    /**
+     * Register receiver to receive token update broadcast, old receiver will be unregistered.
+     *
+     * @param context Context
+     * @param receiver Receiver
+     */
+    public static void registerTokenUpdateReceiver(Context context, TokenUpdateReceiver receiver) {
+        unregisterTokenUpdateReceiver(context);
+
+        sTokenUpdateReceiver = receiver;
+        context.registerReceiver(sTokenUpdateReceiver,
+                new IntentFilter(ShizukuConstants.MANAGER_APPLICATION_ID + ".intent.action.UPDATE_TOKEN"),
+                ShizukuConstants.MANAGER_APPLICATION_ID + ".permission.RECEIVE_SERVER_STARTED",
+                null);
+    }
+
+    public static void unregisterTokenUpdateReceiver(Context context) {
+        if (sTokenUpdateReceiver != null) {
+            context.unregisterReceiver(sTokenUpdateReceiver);
+        }
+        sTokenUpdateReceiver = null;
     }
 
     public static ShizukuState getState() {
