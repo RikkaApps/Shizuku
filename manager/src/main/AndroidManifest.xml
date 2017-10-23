@@ -99,6 +99,10 @@
             android:name=".service.ShellService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".service.BootCompleteService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
