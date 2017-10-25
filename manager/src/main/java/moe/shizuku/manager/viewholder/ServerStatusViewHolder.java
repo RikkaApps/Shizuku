@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
+import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
@@ -31,12 +34,15 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
     private ImageView mStatusIcon;
 
     private boolean mCheckToRequest;
+    private UUID mToken;
 
     public ServerStatusViewHolder(View itemView) {
         super(itemView);
 
         mStatusText = itemView.findViewById(android.R.id.text1);
         mStatusIcon = itemView.findViewById(android.R.id.icon);
+
+        mToken = ShizukuClient.getToken();
 
         itemView.setOnClickListener(this);
     }
@@ -73,13 +79,14 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
                 break;
         }
 
-        boolean oldOK = mStatusText.getCurrentTextColor() == ContextCompat.getColor(context, R.color.status_ok);
         if (ok) {
             mStatusIcon.setBackgroundColor(ContextCompat.getColor(context, R.color.status_ok));
             mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_48dp));
             mStatusText.setTextColor(ContextCompat.getColor(context, R.color.status_ok));
 
-            if (!oldOK) {
+            if (!ShizukuClient.getToken().equals(mToken)) {
+                mToken = ShizukuClient.getToken();
+
                 final View view = (View) mStatusIcon.getParent();
                 view.post(new Runnable() {
                     @Override
