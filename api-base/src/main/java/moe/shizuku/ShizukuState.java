@@ -10,29 +10,53 @@ import android.os.Process;
 
 public final class ShizukuState implements Parcelable {
 
-    public static final int RESULT_OK = 0;
-    public static final int RESULT_UNAUTHORIZED = 1;
-    public static final int RESULT_SERVER_DEAD = 2;
-    public static final int RESULT_UNKNOWN = 3;
+    /**
+     * Server is running.
+     */
+    public static final int STATUS_OK = 0;
 
-    protected int mVersion;
-    protected boolean mIsRoot;
-    protected int mCode;
+    /**
+     * Server is running and client is authorized.
+     */
+    public static final int STATUS_AUTHORIZED = 1;
+
+    /**
+     * Server is running but client is not authorized.
+     */
+    public static final int STATUS_UNAUTHORIZED = 2;
+
+    /**
+     * The server process is running but Android system is not ready.
+     */
+    public static final int STATUS_UNAVAILABLE = 3;
+
+    /**
+     * Server is not running or cannot communicate with server.
+     */
+    public static final int STATUS_UNKNOWN = 4;
+
+    private int mVersion;
+    private boolean mIsRoot;
+    private int mCode;
 
     public static ShizukuState createOk() {
-        return new ShizukuState(RESULT_OK);
+        return new ShizukuState(STATUS_OK);
+    }
+
+    public static ShizukuState createAuthorized() {
+        return new ShizukuState(STATUS_AUTHORIZED);
     }
 
     public static ShizukuState createUnknown() {
-        return new ShizukuState(RESULT_UNKNOWN);
+        return new ShizukuState(STATUS_UNKNOWN);
     }
 
-    public static ShizukuState createServerDead() {
-        return new ShizukuState(RESULT_SERVER_DEAD);
+    public static ShizukuState createUnavailable() {
+        return new ShizukuState(STATUS_UNAVAILABLE);
     }
 
     public static ShizukuState createUnauthorized() {
-        return new ShizukuState(RESULT_UNAUTHORIZED);
+        return new ShizukuState(STATUS_UNAUTHORIZED);
     }
 
     private ShizukuState(int code) {
@@ -41,18 +65,61 @@ public final class ShizukuState implements Parcelable {
         mCode = code;
     }
 
+    /**
+     * Returns whether the version number at compile time is not the same as the server version number.
+     *
+     * @return version unmatched
+     */
     public boolean versionUnmatched() {
         return mVersion != ShizukuConstants.SERVER_VERSION;
     }
 
+    /**
+     * Return current running server version.
+     *
+     * @return server version
+     */
     public int getVersion() {
         return mVersion;
     }
 
+    /**
+     * Return current running server is in root user.
+     *
+     * @return server is root
+     */
     public boolean isRoot() {
         return mIsRoot;
     }
 
+    /**
+     * Return if the server is running and available.
+     *
+     * @return is server running and available
+     */
+    public boolean isServerAvailable() {
+        return mCode == STATUS_OK || mCode == STATUS_UNAUTHORIZED || mCode == STATUS_AUTHORIZED;
+    }
+
+    /**
+     * Return if the server is available and client is authorized.
+     *
+     * @return client is authorized and server available
+     */
+    public boolean isAuthorized() {
+        return mCode == STATUS_AUTHORIZED;
+    }
+
+    /**
+     * Return status code.
+     *
+     * @see ShizukuState#STATUS_OK
+     * @see ShizukuState#STATUS_UNAUTHORIZED
+     * @see ShizukuState#STATUS_UNAVAILABLE
+     * @see ShizukuState#STATUS_UNKNOWN
+     *
+     * @return status code
+     */
     public int getCode() {
         return mCode;
     }

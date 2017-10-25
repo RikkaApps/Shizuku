@@ -2,16 +2,17 @@ package moe.shizuku.manager;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.authorization.AuthorizationManager;
@@ -26,27 +27,28 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final String packageName = getIntent().getStringExtra(ShizukuConstants.EXTRA_PACKAGE_NAME);
-        int uid = getIntent().getIntExtra(ShizukuConstants.EXTRA_UID, 0);
-        if (packageName == null) {
+        ComponentName component = getCallingActivity();
+        if (component == null) {
             setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
         }
 
-        ShizukuState shizukuState = ShizukuClient.authorize(ShizukuManagerSettings.getToken(this));
+        final String packageName = component.getPackageName();
+
+        ShizukuState shizukuState = ShizukuClient.authorize();
         int msg = 0;
         switch (shizukuState.getCode()) {
-            case ShizukuState.RESULT_UNAUTHORIZED:
+            case ShizukuState.STATUS_UNAUTHORIZED:
                 msg = R.string.auth_manager_no_token;
                 break;
-            case ShizukuState.RESULT_SERVER_DEAD:
+            case ShizukuState.STATUS_UNAVAILABLE:
                 msg = R.string.auth_server_dead;
                 break;
-            case ShizukuState.RESULT_UNKNOWN:
+            case ShizukuState.STATUS_UNKNOWN:
                 msg = R.string.auth_cannot_connect;
                 break;
-            case ShizukuState.RESULT_OK:
+            case ShizukuState.STATUS_AUTHORIZED:
                 break;
         }
 
@@ -54,6 +56,13 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
             new AlertDialog.Builder(this)
                     .setMessage(msg)
                     .setPositiveButton(android.R.string.ok, null)
+                    .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        }
+                    })
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
@@ -61,15 +70,7 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
                             finish();
                         }
                     })
-                    .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                            setResult(ShizukuClient.AUTH_RESULT_ERROR);
-                            finish();
-                        }
-                    })
+                    .setCancelable(false)
                     .show();
             return;
         }
@@ -78,6 +79,8 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
         try {
             pi = getPackageManager().getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException ignored) {
+            Log.wtf(Constants.TAG, "auth | package not found: " + packageName);
+
             setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
@@ -120,6 +123,7 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
                 })
                 .setCancelable(false)
                 .create();
+
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {

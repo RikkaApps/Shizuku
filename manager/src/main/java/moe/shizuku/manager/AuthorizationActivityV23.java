@@ -20,6 +20,7 @@ public class AuthorizationActivityV23 extends AbstractAuthorizationActivity {
         if (component == null) {
             setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
+            return;
         }
 
         String packageName = component.getPackageName();
