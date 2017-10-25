@@ -30,6 +30,6 @@ dependencies {
     implementation "com.android.support:support-annotations:$supportLibraryVersion"
     implementation "com.android.support:support-compat:$supportLibraryVersion"
 
-    implementation project(':share')
+    implementation project(':api-base')
     implementation project(':api')
 }

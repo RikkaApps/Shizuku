@@ -1,0 +1,18 @@
+apply plugin: 'java-library'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+dependencies {
+    compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
+}
+
+ext {
+    libraryName = 'Shizuku Privilege API'
+    libraryDescription = 'Shizuku Privilege APIs.'
+    libraryVersion = project.rootProject.ext.apiBaseLibraryVersion
+    artifact = project.name
+    bintrayName = project.name
+}
+
+apply from: project.rootProject.file('bintray.gradle')
