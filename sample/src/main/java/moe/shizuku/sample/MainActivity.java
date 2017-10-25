@@ -37,6 +37,8 @@ public class MainActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        ShizukuClient.loadToken(getSharedPreferences("token", MODE_PRIVATE));
+
         if (ShizukuClient.checkSelfPermission(this)) {
             ShizukuClient.requestAuthorization(this);
         } else {
@@ -59,6 +61,7 @@ public class MainActivity extends Activity {
             case ShizukuClient.REQUEST_CODE_AUTHORIZATION:
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
                     ShizukuClient.setToken(data);
+                    ShizukuClient.saveToken(getSharedPreferences("token", MODE_PRIVATE));
 
                     Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
 
