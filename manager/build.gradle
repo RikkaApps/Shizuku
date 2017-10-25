@@ -46,7 +46,7 @@ android {
 
 task generate(type: GradleBuild) {
     tasks = [
-            ':server-share:build',
+            ':server-base:build',
             ':generator:generate',
             ':server-21:dex',
             ':server-22:dex',
@@ -60,7 +60,7 @@ task generate(type: GradleBuild) {
 // for test
 task generateApi26(type: GradleBuild) {
     tasks = [
-            ':server-share:build',
+            ':server-base:build',
             ':generator:generateApi26',
             ':server-26:dex',
     ]
