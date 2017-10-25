@@ -50,6 +50,10 @@ public class ServerLauncher {
             OutputStream os = new FileOutputStream(file);
 
             IOUtils.copy(is, os);
+
+            os.flush();
+            os.close();
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

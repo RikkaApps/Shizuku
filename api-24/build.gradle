@@ -15,5 +15,15 @@ jar {
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + "/android-24/android.jar")
-    implementation project(':share')
+    implementation project(':api-base')
 }
+
+ext {
+    libraryName = 'Shizuku Privilege API'
+    libraryDescription = 'Shizuku Privilege APIs.'
+    libraryVersion = project.rootProject.ext.apiLibraryVersion
+    artifact = project.name
+    bintrayName = project.name
+}
+
+apply from: project.rootProject.file('bintray.gradle')

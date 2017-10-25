@@ -28,12 +28,17 @@ import moe.shizuku.generator.utils.SourceRootUtils;
 public class Generator {
 
     public static void main(String[] args) throws IOException {
-        new Generator(21).generate();
-        new Generator(22).generate();
-        new Generator(23).generate();
-        new Generator(24).generate();
-        new Generator(25).generate();
-        new Generator(26).generate();
+        if (args.length > 0) {
+            int api = Integer.parseInt(args[0]);
+            new Generator(api).generate();
+        } else {
+            new Generator(21).generate();
+            new Generator(22).generate();
+            new Generator(23).generate();
+            new Generator(24).generate();
+            new Generator(25).generate();
+            new Generator(26).generate();
+        }
     }
 
     private int  apiVersion;

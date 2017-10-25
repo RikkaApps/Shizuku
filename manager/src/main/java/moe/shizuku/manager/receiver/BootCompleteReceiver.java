@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Process;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import moe.shizuku.manager.Constants;
@@ -30,7 +31,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         if (ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(Constants.TAG, "start on boot");
 
-            context.startService(new Intent(context, BootCompleteService.class));
+            ContextCompat.startForegroundService(context, new Intent(context, BootCompleteService.class));
         }
     }
 }

@@ -1,6 +1,8 @@
 package moe.shizuku.server.api;
 
+import android.content.IIntentReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.UserInfo;
 import android.net.Uri;
 import android.os.RemoteException;
@@ -29,5 +31,9 @@ public class Compat {
     public static void startActivityAsUser(Intent intent, String mimeType, int userId) throws RemoteException {
         ActivityManagerDelegate.startActivityAsUser(null, null, intent, mimeType,
                 null, null, 0, 0, null, null, userId);
+    }
+
+    public static Intent registerReceiver(IIntentReceiver.Stub receiver, IntentFilter intentFilter, int userId) throws RemoteException {
+       return ActivityManagerDelegate.registerReceiver(null, null, receiver, intentFilter, null, userId);
     }
 }

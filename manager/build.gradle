@@ -46,7 +46,7 @@ android {
 
 task generate(type: GradleBuild) {
     tasks = [
-            ':server-share:build',
+            ':server-base:build',
             ':generator:generate',
             ':server-21:dex',
             ':server-22:dex',
@@ -57,13 +57,22 @@ task generate(type: GradleBuild) {
     ]
 }
 
+// for test
+task generateApi26(type: GradleBuild) {
+    tasks = [
+            ':server-base:build',
+            ':generator:generateApi26',
+            ':server-26:dex',
+    ]
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    implementation project(':share')
+    implementation project(':api-base')
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:support-fragment:$supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$supportLibraryVersion"

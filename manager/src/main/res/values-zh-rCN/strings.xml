@@ -58,4 +58,9 @@
     <string name="cannot_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
     <string name="cannot_start_shell_failed">运行 shell 命令时出错。</string>
 
+    <string name="channel_service_status">服务启动状态</string>
+    <string name="notification_service_starting">Shizuku 服务正在启动…</string>
+    <string name="notification_service_start_failed">启动 Shizuku 服务失败。</string>
+    <string name="notification_service_start_no_root">请求 root 权限失败。</string>
+
 </resources>

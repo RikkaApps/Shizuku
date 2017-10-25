@@ -7,7 +7,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-rc2'
-        //classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
+
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,13 +28,41 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+task install(type: GradleBuild) {
+    tasks = [
+            ':api-base:install',
+            ':api-21:install',
+            ':api-22:install',
+            ':api-23:install',
+            ':api-24:install',
+            ':api-25:install',
+            ':api-26:install',
+    ]
+}
+
+task upload(type: GradleBuild) {
+    tasks = [
+            ':api-base:bintrayUpload',
+            ':api-21:bintrayUpload',
+            ':api-22:bintrayUpload',
+            ':api-23:bintrayUpload',
+            ':api-24:bintrayUpload',
+            ':api-25:bintrayUpload',
+            ':api-26:bintrayUpload',
+    ]
+}
+
+def gitCommitCount = Integer.parseInt('git rev-list --count master'.execute([], project.rootDir).text.trim())
+
 ext {
     supportLibraryVersion = '26.1.0'
-    preferenceLibraryVersion = '2.0.7'
+    preferenceLibraryVersion = '2.0.8'
 
     minSdkVersion = 21
     targetSdkVersion = 26
     buildToolsVersion = "26.0.2"
-    versionCode = 39
+    versionCode = gitCommitCount
     versionName = "2.0.0 dev"
+    apiBaseLibraryVersion = '1'
+    apiLibraryVersion = '1'
 }

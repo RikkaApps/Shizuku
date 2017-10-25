@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 
 import moe.shizuku.manager.authorization.AuthorizationManager;
@@ -32,6 +33,9 @@ public class TokenReceiveActivity extends Activity {
             intent.setComponent(null);
             intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
             intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
+
+            StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
+            StrictMode.setThreadPolicy(tp);
 
             for (String packageName : AuthorizationManager.getGrantedPackages(context)) {
                 context.sendBroadcast(intent.setPackage(packageName), Manifest.permission.API);

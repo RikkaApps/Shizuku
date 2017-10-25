@@ -22,6 +22,13 @@ task generate(type: Exec) {
     commandLine 'java', '-jar', jarPath
 }
 
+task generateApi26(type: Exec) {
+    dependsOn jar
+
+    workingDir rootProject.rootDir
+    commandLine 'java', '-jar', jarPath, '26'
+}
+
 repositories {
     mavenCentral()
 }

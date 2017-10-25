@@ -7,5 +7,5 @@ apply from: rootProject.file('server-dex.gradle')
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-21/android.jar')
-    compile project(':server-share')
+    compile project(':server-base')
 }
