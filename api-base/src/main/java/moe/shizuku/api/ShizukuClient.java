@@ -44,6 +44,29 @@ public class ShizukuClient {
 
     private static TokenUpdateReceiver sTokenUpdateReceiver;
 
+    /**
+     * Return if the manager app is installed.
+     * @param context Context.
+     * @return is the manager app installed
+     */
+    public static boolean isManagerInstalled(Context context) {
+        return getManagerVersion(context) != -1;
+    }
+
+    /**
+     * Return manager app version code.
+     *
+     * @param context Context
+     * @return version code or -1 if not installed
+     */
+    public static int getManagerVersion(Context context) {
+        try {
+            return context.getPackageManager().getApplicationInfo(ShizukuConstants.MANAGER_APPLICATION_ID, 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            return -1;
+        }
+    }
+
     public static UUID getToken() {
         return sToken;
     }
