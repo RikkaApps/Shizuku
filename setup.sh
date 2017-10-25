@@ -1,5 +1,35 @@
 #!/bin/bash
 
+# check local.properties
+
+function prompt() {
+    echo -n "$1"
+    read $2
+}
+
+echo "checking local.properties..."
+
+if [ -f local.properties ]; then
+    grep -q 'sdk\.dir=' local.properties
+    isSdkDirSet=$?
+    grep -q 'ndk\.dir=' local.properties
+    isNdkDirSet=$?
+else
+    isSdkDirSet=1
+    isNdkDirSet=1
+fi
+
+if [ $isSdkDirSet -ne 0 ]; then
+    prompt 'Android SDK Path (C:\\Android\\sdk): ' sdkDir
+    echo "sdk.dir=${sdkDir//\\/\\\\}" >> local.properties
+fi
+
+if [ $isNdkDirSet -ne 0 ]; then
+    prompt 'Android NDK Path (C:\\Android\\sdk\\ndk-bundle): ' ndkDir
+    echo "ndk.dir=${ndkDir//\\/\\\\}" >> local.properties
+fi
+
+
 # download system service aidl files
 
 branches=(lollipop-release lollipop-mr1-release marshmallow-release nougat-release nougat-mr1-release oreo-release)
