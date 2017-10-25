@@ -57,6 +57,15 @@ task generate(type: GradleBuild) {
     ]
 }
 
+// for test
+task generateApi26(type: GradleBuild) {
+    tasks = [
+            ':server-share:build',
+            ':generator:generateApi26',
+            ':server-26:dex',
+    ]
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

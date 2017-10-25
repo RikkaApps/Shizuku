@@ -140,6 +140,11 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
         mAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
 
         final TextView textView = mAlertDialog.findViewById(android.R.id.text1);
+        if (textView == null) {
+            return;
+        }
+
+        textView.setText(R.string.starting_shell);
 
         mBindServiceHelper.bind(new BindServiceHelper.OnServiceConnectedListener() {
 
@@ -155,6 +160,9 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
                         if (mAlertDialog == null) {
                             return;
                         }
+
+                        start.setEnabled(true);
+                        restart.setEnabled(true);
 
                         mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 
@@ -174,6 +182,9 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
                         if (exitCode != 0) {
                             sb.append('\n').append("Send this to developer may help solve the problem.");
                             mAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.VISIBLE);
+
+                            start.setEnabled(true);
+                            restart.setEnabled(true);
                         }
                     }
 

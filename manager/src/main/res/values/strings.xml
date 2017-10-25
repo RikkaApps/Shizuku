@@ -56,7 +56,13 @@
     <string name="settings_root_launch_method">Start method (root)</string>
     <string name="settings_root_launch_ask_every_time">Ask every time</string>
 
-    <string name="cannot_start_no_root">Can\'t start server because root permission is not granted or this device is not rooted.</string>
+    <string name="starting_shell" translatable="false">Starting root shell…</string>
+    <string name="cannot_start_no_root">Can\'t start service because root permission is not granted or this device is not rooted.</string>
     <string name="cannot_start_shell_failed">There\'s something wrong when running shell command.</string>
+
+    <string name="channel_service_status">Service start status</string>
+    <string name="notification_service_starting">Shizuku service is starting…</string>
+    <string name="notification_service_start_failed">Start Shizuku service failed.</string>
+    <string name="notification_service_start_no_root">Failed to request root permission.</string>
 
 </resources>

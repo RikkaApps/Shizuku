@@ -57,13 +57,13 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
 
         getItems().add(state);
 
+        if (state.getCode() == ShizukuState.RESULT_OK) {
+            getItems().add(AuthorizationManager.getGrantedPackages(context).size());
+        }
+
         if (Process.myUid() / 100000 == 0) {
             boolean adb = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ADB;
             boolean rootRestart = state.isRoot();
-
-            if (state.getCode() == ShizukuState.RESULT_OK) {
-                getItems().add(AuthorizationManager.getGrantedPackages(context).size());
-            }
 
             if (adb) {
                 getItems().add(null);
@@ -72,8 +72,6 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
                 getItems().add(rootRestart);
                 getItems().add(null);
             }
-        } else {
-
         }
 
         notifyDataSetChanged();

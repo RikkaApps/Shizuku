@@ -37,8 +37,10 @@ public class ManageAppsActivity extends BaseActivity {
             break;
         }
 
-        ((RecyclerView) findViewById(android.R.id.list)).setAdapter(adapter);
-        RecyclerViewHelper.fixOverScroll((RecyclerView) findViewById(android.R.id.list));
+        RecyclerView recyclerView = findViewById(android.R.id.list);
+        recyclerView.setAdapter(adapter);
+
+        RecyclerViewHelper.fixOverScroll(recyclerView);
     }
 
     @Override

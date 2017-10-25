@@ -2,4 +2,5 @@
 <resources>
     <color name="status_ok">#66BB6A</color>
     <color name="status_warning">#BDBDBD</color>
+    <color name="notification">#3F51B5</color>
 </resources>
