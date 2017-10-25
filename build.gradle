@@ -52,6 +52,8 @@ task upload(type: GradleBuild) {
     ]
 }
 
+def gitCommitCount = Integer.parseInt('git rev-list --count master'.execute([], project.rootDir).text.trim())
+
 ext {
     supportLibraryVersion = '26.1.0'
     preferenceLibraryVersion = '2.0.8'
@@ -59,7 +61,7 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 26
     buildToolsVersion = "26.0.2"
-    versionCode = 39
+    versionCode = gitCommitCount
     versionName = "2.0.0 dev"
     apiBaseLibraryVersion = '1'
     apiLibraryVersion = '1'
