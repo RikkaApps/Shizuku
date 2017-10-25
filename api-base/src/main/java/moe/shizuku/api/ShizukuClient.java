@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Process;
+import android.os.StrictMode;
 import android.util.Log;
 
 import java.net.Socket;
@@ -43,6 +44,16 @@ public class ShizukuClient {
     private static UUID sToken = new UUID(0, 0);
 
     private static TokenUpdateReceiver sTokenUpdateReceiver;
+
+    /**
+     * Disable detection of network operations for current thread.
+     */
+    public static void setPermitNetworkThreadPolicy() {
+        StrictMode.ThreadPolicy permitNetworkPolicy = new StrictMode.ThreadPolicy.Builder(StrictMode.getThreadPolicy())
+                .permitNetwork()
+                .build();
+        StrictMode.setThreadPolicy(permitNetworkPolicy);
+    }
 
     /**
      * Return if the manager app is installed.
