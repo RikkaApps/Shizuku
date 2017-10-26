@@ -11,11 +11,13 @@
 
     <permission
         android:name="moe.shizuku.manager.permission.API"
+        android:icon="@drawable/ic_noti_24dp"
         android:description="@string/permission_description"
         android:label="@string/permission_label"
         android:protectionLevel="normal"/>
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
+        android:icon="@drawable/ic_noti_24dp"
         android:description="@string/permission_description"
         android:label="@string/permission_label"
         android:protectionLevel="dangerous"/>
