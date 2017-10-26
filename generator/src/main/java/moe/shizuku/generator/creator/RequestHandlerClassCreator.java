@@ -115,7 +115,7 @@ public class RequestHandlerClassCreator {
         swichStmt.addEntry(new SwitchEntryStmt(
                 JavaParser.parseExpression("Actions." + ActionClassCreator.getActionName(binderName, source)),
                 NodeList.nodeList(
-                        JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method) + ";"),
+                        JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method, false) + ";"),
                         JavaParser.parseStatement("break;"))
         ));
     }

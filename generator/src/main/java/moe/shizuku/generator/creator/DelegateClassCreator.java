@@ -121,7 +121,7 @@ public class DelegateClassCreator {
             format = "return " + format;
         }
 
-        String call = MethodDeclarationUtils.toCallingStatementString(method);
+        String call = MethodDeclarationUtils.toCallingStatementString(method, false);
         if (method.getType().asString().startsWith("ParceledListSlice")) {
             call += ".getList()";
         }
@@ -138,6 +138,6 @@ public class DelegateClassCreator {
     public static String getMethodCallingStatement(String binderName, MethodDeclaration method) {
         String format = "%sDelegate.%s;";
 
-        return String.format(format, binderName.substring(1), MethodDeclarationUtils.toCallingStatementString(method));
+        return String.format(format, binderName.substring(1), MethodDeclarationUtils.toCallingStatementString(method, true));
     }
 }

@@ -74,8 +74,6 @@ public class ApiClassCreator {
     }
 
     private static void addMethod(ClassOrInterfaceDeclaration cls, ClassOrInterfaceDeclaration binder, MethodDeclaration method) {
-        MethodDeclaration m = method.clone();
-
         //NodeList<Parameter> nodeList = new NodeList<>();
         method.getParameters()
                 .stream()
@@ -93,15 +91,15 @@ public class ApiClassCreator {
                 });
         //method.setParameters(nodeList);
 
-        if (m.getType().asString().startsWith("ParceledListSlice")) {
-            String t = ((ClassOrInterfaceType) m.getType()).getTypeArguments().get().stream().findFirst().get().asString();
-            m.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
+        if (method.getType().asString().startsWith("ParceledListSlice")) {
+            String t = ((ClassOrInterfaceType) method.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+            method.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
         }
 
         cls.addMember(method
                 .setModifiers(EnumSet.of(Modifier.PUBLIC, Modifier.STATIC))
                 .addThrownException(new TypeParameter("ShizukuRemoteException"))
-                .setBody(getBlock(binder.getNameAsString(), m)));
+                .setBody(getBlock(binder.getNameAsString(), method)));
     }
 
     private static BlockStmt getBlock(String binderName, MethodDeclaration method) {
