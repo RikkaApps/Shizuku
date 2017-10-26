@@ -54,7 +54,7 @@ public class WorkService extends IntentService {
                 .sendBroadcast(new Intent(Intents.ACTION_AUTH_RESULT)
                         .putExtra(Intents.EXTRA_RESULT, state));
 
-        if (state.getCode() == ShizukuState.STATUS_OK) {
+        if (state.isAuthorized()) {
             ShizukuManagerSettings.setLastLaunchMode(state.isRoot()
                     ? ShizukuManagerSettings.LaunchMethod.ROOT : ShizukuManagerSettings.LaunchMethod.ADB);
         }

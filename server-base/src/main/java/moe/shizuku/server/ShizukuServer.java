@@ -51,8 +51,10 @@ public class ShizukuServer extends Handler {
     }
 
     public boolean start() throws IOException, RemoteException, InterruptedException {
-        if (Compat.VERSION != Build.VERSION.SDK_INT) {
-            ServerLog.e("api version not matching, please open Shizuku Manager and try again.");
+        if (Compat.VERSION == 26 && Build.VERSION.SDK_INT == 27) {
+            ServerLog.w("using preview system, some API may not work");
+        } else if (Compat.VERSION != Build.VERSION.SDK_INT) {
+            ServerLog.e("API version not matched, please open Shizuku Manager and try again.");
             return false;
         }
 

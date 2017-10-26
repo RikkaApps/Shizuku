@@ -67,7 +67,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
         boolean ok = false;
         boolean running = false;
         switch (shizukuState.getCode()) {
-            case ShizukuState.STATUS_OK:
+            case ShizukuState.STATUS_AUTHORIZED:
                 running = true;
                 ok = true;
                 break;

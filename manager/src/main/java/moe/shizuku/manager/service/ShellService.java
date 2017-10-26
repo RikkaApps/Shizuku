@@ -71,7 +71,10 @@ public class ShellService extends Service {
 
     private void kill() {
         if (rootSession != null) {
-            rootSession.kill();
+            try {
+                rootSession.kill();
+            } catch (Exception ignored) {
+            }
             rootSession = null;
         }
     }

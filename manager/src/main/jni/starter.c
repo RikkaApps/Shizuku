@@ -102,7 +102,7 @@ void killOldServer() {
 }
 
 void showServerLogs() {
-    /*printf("\ninfo: " SERVER_NAME " log: \n");
+    printf("\ninfo: " SERVER_NAME " log: \n");
     FILE *logFile;
     if ((logFile = fopen(SERVER_LOG_FILE_PATH, "r")) != NULL) {
         int ch;
@@ -113,7 +113,7 @@ void showServerLogs() {
     } else {
         printf("info: log file is not exist.");
     }
-    fflush(stdout);*/
+    fflush(stdout);
 }
 
 void showLogs() {
@@ -218,18 +218,18 @@ int main(int argc, char **argv) {
                 if (count >= 5) {
                     printf("\ninfo: " SERVER_NAME " started.\n");
                     fflush(stdout);
-                    showServerLogs();
+                    //showServerLogs();
                     return EXIT_SUCCESS;
                 }
             }
-            perrorf("\nwarn: " SERVER_NAME "stopped after started.\n");
+            perrorf("\nwarn: " SERVER_NAME " stopped after started.\n");
             showLogs();
             showServerLogs();
             return EXIT_WARN_SERVER_STOP;
         } else {
             printf("\ninfo: " SERVER_NAME " started.\n");
             fflush(stdout);
-            showServerLogs();
+            //showServerLogs();
             return EXIT_SUCCESS;
         }
     }

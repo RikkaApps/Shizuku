@@ -57,7 +57,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
 
         getItems().add(state);
 
-        if (state.getCode() == ShizukuState.STATUS_OK) {
+        if (state.isAuthorized()) {
             getItems().add(AuthorizationManager.getGrantedPackages(context).size());
         }
 
