@@ -99,17 +99,27 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
     @Override
     public boolean granted(Context context, String packageName) {
-        return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000)
-                == PackageManager.PERMISSION_GRANTED;
+        try {
+            return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000)
+                    == PackageManager.PERMISSION_GRANTED;
+        } catch (ShizukuRemoteException ignored) {
+        }
+        return false;
     }
 
     @Override
     public void grant(Context context, String packageName) {
-        grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+        try {
+            grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+        } catch (ShizukuRemoteException ignored) {
+        }
     }
 
     @Override
     public void revoke(Context context, String packageName) {
-        revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+        try {
+            revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+        } catch (ShizukuRemoteException ignored) {
+        }
     }
 }

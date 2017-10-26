@@ -8,12 +8,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Process;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.lang.ShizukuRemoteException;
 
 import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
 
@@ -22,9 +22,14 @@ public class MainActivity extends Activity {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            new AlertDialog.Builder(context)
-                    .setMessage(ShizukuCompat.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null).toString())
-                    .show();
+            try {
+                new AlertDialog.Builder(context)
+                        //.setMessage(ShizukuCompat.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null).toString())
+                        .setMessage(ShizukuCompat.getInstalledPackages(0, 0).toString())
+                        .show();
+            } catch (ShizukuRemoteException e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
@@ -65,7 +70,11 @@ public class MainActivity extends Activity {
 
                     Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
 
-                    ShizukuCompat.broadcastIntent(new Intent(ACTION));
+                    try {
+                        ShizukuCompat.broadcastIntent(new Intent(ACTION));
+                    } catch (ShizukuRemoteException e) {
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     // user denied or error
                 }
