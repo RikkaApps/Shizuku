@@ -86,6 +86,9 @@ public class ApiClassCreator {
                         if (!"IBinder".equals(parameter.getNameAsString())) {
                             parameter.setType("IInterface");
                         }
+                    } else if (parameter.getType().asString().startsWith("ParceledListSlice")) {
+                        String t = ((ClassOrInterfaceType) parameter.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+                        parameter.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
                     }
                 });
         //method.setParameters(nodeList);
@@ -95,7 +98,7 @@ public class ApiClassCreator {
             m.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
         }
 
-        cls.addMember(m
+        cls.addMember(method
                 .setModifiers(EnumSet.of(Modifier.PUBLIC, Modifier.STATIC))
                 .addThrownException(new TypeParameter("ShizukuRemoteException"))
                 .setBody(getBlock(binder.getNameAsString(), m)));

@@ -18,7 +18,14 @@ public class MethodDeclarationUtils {
         sb.append(method.getNameAsString()).append('(');
         if (method.getParameters().isNonEmpty()) {
             method.getParameters()
-                    .forEach(parameter -> sb.append(parameter.getName()).append(","));
+                    .forEach(parameter -> {
+                        if (parameter.getType().asString().startsWith("ParceledListSlice")) {
+                            sb.append("new ParceledListSlice<>(").append(parameter.getName()).append(')');
+                        } else {
+                            sb.append(parameter.getName());
+                        }
+                        sb.append(",");
+                    });
 
             sb.deleteCharAt(sb.length() - 1);
         }
