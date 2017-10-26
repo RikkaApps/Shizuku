@@ -38,7 +38,7 @@ import java.util.List;
 interface ILauncherApps {
     void addOnAppsChangedListener(String callingPackage, in IOnAppsChangedListener listener);
     void removeOnAppsChangedListener(in IOnAppsChangedListener listener);
-    ParceledListSlice getLauncherActivities(
+    ParceledListSlice<ResolveInfo> getLauncherActivities(
             String callingPackage, String packageName, in UserHandle user);
     ActivityInfo resolveActivity(
             String callingPackage, in ComponentName component, in UserHandle user);
@@ -54,7 +54,7 @@ interface ILauncherApps {
     ApplicationInfo getApplicationInfo(
             String callingPackage, String packageName, int flags, in UserHandle user);
 
-    ParceledListSlice getShortcuts(String callingPackage, long changedSince, String packageName,
+    ParceledListSlice<ShortcutInfo> getShortcuts(String callingPackage, long changedSince, String packageName,
             in List<String> shortcutIds, in ComponentName componentName, int flags, in UserHandle user);
     void pinShortcuts(String callingPackage, String packageName, in List<String> shortcutIds,
             in UserHandle user);
@@ -68,7 +68,7 @@ interface ILauncherApps {
 
     boolean hasShortcutHostPermission(String callingPackage);
 
-    ParceledListSlice getShortcutConfigActivities(
+    ParceledListSlice<ResolveInfo> getShortcutConfigActivities(
             String callingPackage, String packageName, in UserHandle user);
     IntentSender getShortcutConfigActivityIntent(String callingPackage, in ComponentName component,
             in UserHandle user);

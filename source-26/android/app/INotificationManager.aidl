@@ -56,21 +56,21 @@ interface INotificationManager
     boolean areNotificationsEnabled(String pkg);
     int getPackageImportance(String pkg);
 
-    void createNotificationChannelGroups(String pkg, in ParceledListSlice channelGroupList);
-    void createNotificationChannels(String pkg, in ParceledListSlice channelsList);
-    void createNotificationChannelsForPackage(String pkg, int uid, in ParceledListSlice channelsList);
-    ParceledListSlice getNotificationChannelGroupsForPackage(String pkg, int uid, boolean includeDeleted);
+    void createNotificationChannelGroups(String pkg, in ParceledListSlice<NotificationChannelGroup> channelGroupList);
+    void createNotificationChannels(String pkg, in ParceledListSlice<NotificationChannel> channelsList);
+    void createNotificationChannelsForPackage(String pkg, int uid, in ParceledListSlice<NotificationChannel>  channelsList);
+    ParceledListSlice<NotificationChannelGroup> getNotificationChannelGroupsForPackage(String pkg, int uid, boolean includeDeleted);
     NotificationChannelGroup getNotificationChannelGroupForPackage(String groupId, String pkg, int uid);
     void updateNotificationChannelForPackage(String pkg, int uid, in NotificationChannel channel);
     NotificationChannel getNotificationChannel(String pkg, String channelId);
     NotificationChannel getNotificationChannelForPackage(String pkg, int uid, String channelId, boolean includeDeleted);
     void deleteNotificationChannel(String pkg, String channelId);
-    ParceledListSlice getNotificationChannels(String pkg);
-    ParceledListSlice getNotificationChannelsForPackage(String pkg, int uid, boolean includeDeleted);
+    ParceledListSlice<NotificationChannelGroup> getNotificationChannels(String pkg);
+    ParceledListSlice<NotificationChannelGroup> getNotificationChannelsForPackage(String pkg, int uid, boolean includeDeleted);
     int getNumNotificationChannelsForPackage(String pkg, int uid, boolean includeDeleted);
     int getDeletedChannelCount(String pkg, int uid);
     void deleteNotificationChannelGroup(String pkg, String channelGroupId);
-    ParceledListSlice getNotificationChannelGroups(String pkg);
+    ParceledListSlice<NotificationChannelGroup> getNotificationChannelGroups(String pkg);
     boolean onlyHasDefaultChannel(String pkg, int uid);
 
     // TODO: Remove this when callers have been migrated to the equivalent
@@ -94,8 +94,8 @@ interface INotificationManager
 
     void setNotificationsShownFromListener(in INotificationListener token, in String[] keys);
 
-    ParceledListSlice getActiveNotificationsFromListener(in INotificationListener token, in String[] keys, int trim);
-    ParceledListSlice getSnoozedNotificationsFromListener(in INotificationListener token, int trim);
+    ParceledListSlice<StatusBarNotification> getActiveNotificationsFromListener(in INotificationListener token, in String[] keys, int trim);
+    ParceledListSlice<StatusBarNotification> getSnoozedNotificationsFromListener(in INotificationListener token, int trim);
     void requestHintsFromListener(in INotificationListener token, int hints);
     int getHintsFromListener(in INotificationListener token);
     void requestInterruptionFilterFromListener(in INotificationListener token, int interruptionFilter);
@@ -104,8 +104,8 @@ interface INotificationManager
     void setInterruptionFilter(String pkg, int interruptionFilter);
 
     void updateNotificationChannelFromPrivilegedListener(in INotificationListener token, String pkg, in UserHandle user, in NotificationChannel channel);
-    ParceledListSlice getNotificationChannelsFromPrivilegedListener(in INotificationListener token, String pkg, in UserHandle user);
-    ParceledListSlice getNotificationChannelGroupsFromPrivilegedListener(in INotificationListener token, String pkg, in UserHandle user);
+    ParceledListSlice<NotificationChannel> getNotificationChannelsFromPrivilegedListener(in INotificationListener token, String pkg, in UserHandle user);
+    ParceledListSlice<NotificationChannelGroup> getNotificationChannelGroupsFromPrivilegedListener(in INotificationListener token, String pkg, in UserHandle user);
 
     void applyEnqueuedAdjustmentFromAssistant(in INotificationListener token, in Adjustment adjustment);
     void applyAdjustmentFromAssistant(in INotificationListener token, in Adjustment adjustment);
@@ -137,5 +137,5 @@ interface INotificationManager
     byte[] getBackupPayload(int user);
     void applyRestore(in byte[] payload, int user);
 
-    ParceledListSlice getAppActiveNotifications(String callingPkg, int userId);
+    ParceledListSlice<StatusBarNotification> getAppActiveNotifications(String callingPkg, int userId);
 }

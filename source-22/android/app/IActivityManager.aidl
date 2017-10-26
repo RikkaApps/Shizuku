@@ -250,7 +250,7 @@ interface IActivityManager {
             ;
     void releasePersistableUriPermission(Uri uri, int modeFlags, int userId)
             ;
-    ParceledListSlice getPersistedUriPermissions(
+    ParceledListSlice<android.content.UriPermission> getPersistedUriPermissions(
             String packageName, boolean incoming);
 
     void showWaitingForDebugger(IApplicationThread who, boolean waiting)
@@ -341,12 +341,11 @@ interface IActivityManager {
     void finishHeavyWeightApp();
 
     boolean convertFromTranslucent(IBinder token);
-    // TODO
-    //boolean convertToTranslucent(IBinder token, ActivityOptions options);
+
+    boolean convertToTranslucent(IBinder token, ActivityOptions options);
     void notifyActivityDrawn(IBinder token);
 
-    // TODO
-    //ActivityOptions getActivityOptions(IBinder token);
+    ActivityOptions getActivityOptions(IBinder token);
 
     void bootAnimationComplete();
 

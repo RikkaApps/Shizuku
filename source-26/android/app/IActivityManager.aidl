@@ -180,7 +180,7 @@ interface IActivityManager {
      * SIGUSR1 is delivered. All others are ignored.
      */
     void signalPersistentProcesses(int signal);
-    ParceledListSlice getRecentTasks(int maxNum,
+    ParceledListSlice<ActivityManager.RecentTaskInfo> getRecentTasks(int maxNum,
             int flags, int userId);
     oneway void serviceDoneExecuting(in IBinder token, int type, int startId, int res);
     oneway void activityDestroyed(in IBinder token);
@@ -385,7 +385,7 @@ interface IActivityManager {
     void performIdleMaintenance();
     void takePersistableUriPermission(in Uri uri, int modeFlags, int userId);
     void releasePersistableUriPermission(in Uri uri, int modeFlags, int userId);
-    ParceledListSlice getPersistedUriPermissions(in String packageName, boolean incoming);
+    ParceledListSlice<android.content.UriPermission> getPersistedUriPermissions(in String packageName, boolean incoming);
     void appNotRespondingViaProvider(in IBinder connection);
     Rect getTaskBounds(int taskId);
     int getActivityDisplayId(in IBinder activityToken);
@@ -531,7 +531,7 @@ interface IActivityManager {
     // Gets the URI permissions granted to an arbitrary package.
     // NOTE: this is different from getPersistedUriPermissions(), which returns the URIs the package
     // granted to another packages (instead of those granted to it).
-    ParceledListSlice getGrantedUriPermissions(in String packageName, int userId);
+    ParceledListSlice<android.content.UriPermission> getGrantedUriPermissions(in String packageName, int userId);
     // Clears the URI permissions granted to an arbitrary package.
     void clearGrantedUriPermissions(in String packageName, int userId);
     boolean isAppForeground(int uid);

@@ -145,7 +145,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledPackages(int flags, in int userId);
+    ParceledListSlice<PackageInfo> getInstalledPackages(int flags, in int userId);
 
     /**
      * This implements getPackagesHoldingPermissions via a "last returned row"
@@ -153,7 +153,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getPackagesHoldingPermissions(in String[] permissions,
+    ParceledListSlice<PackageInfo> getPackagesHoldingPermissions(in String[] permissions,
             int flags, int userId);
 
     /**
@@ -162,7 +162,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledApplications(int flags, int userId);
+    ParceledListSlice<ApplicationInfo> getInstalledApplications(int flags, int userId);
 
     /**
      * Retrieve all applications that are marked as persistent.

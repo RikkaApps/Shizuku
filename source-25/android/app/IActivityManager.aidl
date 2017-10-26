@@ -149,7 +149,7 @@ interface IActivityManager {
             ActivityManager.TaskDescription description, Bitmap thumbnail);
     Point getAppTaskThumbnailSize();
     List<RunningTaskInfo> getTasks(int maxNum, int flags);
-    ParceledListSlice getRecentTasks(int maxNum,
+    ParceledListSlice<ActivityManager.RecentTaskInfo> getRecentTasks(int maxNum,
             int flags, int userId);
     ActivityManager.TaskThumbnail getTaskThumbnail(int taskId);
     List<RunningServiceInfo> getServices(int maxNum, int flags);
@@ -309,13 +309,13 @@ interface IActivityManager {
     void revokeUriPermission(IApplicationThread caller, Uri uri, int mode, int userId);
     void takePersistableUriPermission(Uri uri, int modeFlags, int userId);
     void releasePersistableUriPermission(Uri uri, int modeFlags, int userId);
-    ParceledListSlice getPersistedUriPermissions(
+    ParceledListSlice<android.content.UriPermission> getPersistedUriPermissions(
             String packageName, boolean incoming);
 
     // Gets the URI permissions granted to an arbitrary package.
     // NOTE: this is different from getPersistedUriPermissions(), which returns the URIs the package
     // granted to another packages (instead of those granted to it).
-    ParceledListSlice getGrantedUriPermissions(String packageName, int userId);
+    ParceledListSlice<android.content.UriPermission> getGrantedUriPermissions(String packageName, int userId);
 
     // Clears the URI permissions granted to an arbitrary package.
     void clearGrantedUriPermissions(String packageName, int userId);
