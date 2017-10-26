@@ -104,8 +104,8 @@ interface IActivityManager {
     boolean startNextMatchingActivity(IBinder callingActivity,
                                       Intent intent, Bundle options);
     int startActivityFromRecents(int taskId, Bundle options);
-    boolean finishActivity(IBinder token, int code, Intent data, boolean finishTask)
-            ;
+    boolean finishActivity(IBinder token, int code, Intent data, boolean finishTask);
+
     void finishSubActivity(IBinder token, String resultWho, int requestCode);
     boolean finishActivityAffinity(IBinder token);
     void finishVoiceTask(IVoiceInteractionSession session);
@@ -142,8 +142,8 @@ interface IActivityManager {
                                                         int flags, int userId);
     ActivityManager.TaskThumbnail getTaskThumbnail(int taskId);
     List<RunningServiceInfo> getServices(int maxNum, int flags);
-    List<ActivityManager.ProcessErrorStateInfo> getProcessesInErrorState()
-            ;
+    List<ActivityManager.ProcessErrorStateInfo> getProcessesInErrorState();
+
     void moveTaskToFront(int task, int flags, Bundle options);
     void moveTaskToBack(int task);
     boolean moveActivityTaskToBack(IBinder token, boolean nonRoot);
@@ -157,18 +157,18 @@ interface IActivityManager {
     int getTaskForActivity(IBinder token, boolean onlyRoot);
     ContentProviderHolder getContentProvider(IApplicationThread caller,
                                              String name, int userId, boolean stable);
-    ContentProviderHolder getContentProviderExternal(String name, int userId, IBinder token)
-            ;
+    ContentProviderHolder getContentProviderExternal(String name, int userId, IBinder token);
+
     void removeContentProvider(IBinder connection, boolean stable);
     void removeContentProviderExternal(String name, IBinder token);
     void publishContentProviders(IApplicationThread caller,
                                  List<ContentProviderHolder> providers);
-    boolean refContentProvider(IBinder connection, int stableDelta, int unstableDelta)
-            ;
+    boolean refContentProvider(IBinder connection, int stableDelta, int unstableDelta);
+
     void unstableProviderDied(IBinder connection);
     void appNotRespondingViaProvider(IBinder connection);
-    PendingIntent getRunningServiceControlPanel(ComponentName service)
-            ;
+    PendingIntent getRunningServiceControlPanel(ComponentName service);
+
     ComponentName startService(IApplicationThread caller, Intent service,
                                String resolvedType, int userId);
     int stopService(IApplicationThread caller, Intent service,
@@ -190,8 +190,8 @@ interface IActivityManager {
                               int res);
     IBinder peekService(Intent service, String resolvedType);
 
-    boolean bindBackupAgent(ApplicationInfo appInfo, int backupRestoreMode)
-            ;
+    boolean bindBackupAgent(ApplicationInfo appInfo, int backupRestoreMode);
+
     void clearPendingBackup();
     void backupAgentCreated(String packageName, IBinder agent);
     void unbindBackupAgent(ApplicationInfo appInfo);
@@ -232,29 +232,28 @@ interface IActivityManager {
     void setProcessForeground(IBinder token, int pid,
                               boolean isForeground);
 
-    int checkPermission(String permission, int pid, int uid)
-            ;
+    int checkPermission(String permission, int pid, int uid);
 
-    int checkUriPermission(Uri uri, int pid, int uid, int mode, int userId)
-            ;
+    int checkUriPermission(Uri uri, int pid, int uid, int mode, int userId);
+
     void grantUriPermission(IApplicationThread caller, String targetPkg, Uri uri,
                             int mode, int userId);
-    void revokeUriPermission(IApplicationThread caller, Uri uri, int mode, int userId)
-            ;
-    void takePersistableUriPermission(Uri uri, int modeFlags, int userId)
-            ;
-    void releasePersistableUriPermission(Uri uri, int modeFlags, int userId)
-            ;
-    ParceledListSlice getPersistedUriPermissions(
+    void revokeUriPermission(IApplicationThread caller, Uri uri, int mode, int userId);
+
+    void takePersistableUriPermission(Uri uri, int modeFlags, int userId);
+
+    void releasePersistableUriPermission(Uri uri, int modeFlags, int userId);
+    
+    ParceledListSlice<android.content.UriPermission> getPersistedUriPermissions(
             String packageName, boolean incoming);
 
-    void showWaitingForDebugger(IApplicationThread who, boolean waiting)
-            ;
+    void showWaitingForDebugger(IApplicationThread who, boolean waiting);
+
 
     void getMemoryInfo(ActivityManager.MemoryInfo outInfo);
 
-    void killBackgroundProcesses(String packageName, int userId)
-            ;
+    void killBackgroundProcesses(String packageName, int userId);
+
     void killAllBackgroundProcesses();
     void forceStopPackage(String packageName, int userId);
 
@@ -264,16 +263,16 @@ interface IActivityManager {
     void unhandledBack();
     ParcelFileDescriptor openContentUri(Uri uri);
     void setDebugApp(
-            String packageName, boolean waitForDebugger, boolean persistent)
-            ;
+            String packageName, boolean waitForDebugger, boolean persistent);
+
     void setAlwaysFinish(boolean enabled);
-    void setActivityController(IActivityController watcher)
-            ;
+    void setActivityController(IActivityController watcher);
+
 
     void enterSafeMode();
 
-    void noteWakeupAlarm(IIntentSender sender, int sourceUid, String sourcePkg)
-            ;
+    void noteWakeupAlarm(IIntentSender sender, int sourceUid, String sourcePkg);
+
 
     boolean killPids(int[] pids, String reason, boolean secure);
     boolean killProcessesBelowForeground(String reason);
@@ -336,12 +335,12 @@ interface IActivityManager {
     void finishHeavyWeightApp();
 
     boolean convertFromTranslucent(IBinder token);
-    // TODO
-    //boolean convertToTranslucent(IBinder token, ActivityOptions options);
+
+    boolean convertToTranslucent(IBinder token, ActivityOptions options);
     void notifyActivityDrawn(IBinder token);
 
-    // TODO
-    //ActivityOptions getActivityOptions(IBinder token);
+
+    ActivityOptions getActivityOptions(IBinder token);
 
     void bootAnimationComplete();
 

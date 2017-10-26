@@ -9,6 +9,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.SwitchEntryStmt;
 import com.github.javaparser.ast.stmt.SwitchStmt;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
@@ -114,7 +115,7 @@ public class RequestHandlerClassCreator {
         swichStmt.addEntry(new SwitchEntryStmt(
                 JavaParser.parseExpression("Actions." + ActionClassCreator.getActionName(binderName, source)),
                 NodeList.nodeList(
-                        JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method) + ";"),
+                        JavaParser.parseStatement(MethodDeclarationUtils.toCallingStatementString(method, false) + ";"),
                         JavaParser.parseStatement("break;"))
         ));
     }
@@ -129,7 +130,13 @@ public class RequestHandlerClassCreator {
         method.getParameters().forEach(parameter -> sb.append(IOBlockHelper.getReadStatement(parameter.getNameAsString(), parameter.getType())));
         sb.append("try{");
         if (!(method.getType() instanceof VoidType)) {
-            sb.append(method.getType().asString()).append(' ').append("result").append('=')
+            String t = method.getType().asString();
+            if (method.getType().asString().startsWith("ParceledListSlice")) {
+                t = ((ClassOrInterfaceType) method.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+                t = JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString();
+            }
+
+            sb.append(t).append(' ').append("result").append('=')
                     .append(DelegateClassCreator.getMethodCallingStatement(binderName, method));
             sb.append("os.writeNoException();");
             sb.append(IOBlockHelper.getWriteStatement(method.getType()));

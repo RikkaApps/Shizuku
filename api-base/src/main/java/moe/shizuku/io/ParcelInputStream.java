@@ -183,7 +183,7 @@ public class ParcelInputStream extends DataInputStream {
         return strings;
     }
 
-    public final void readException() throws IOException {
+    public final void readException() throws IOException, ShizukuRemoteException {
         int code = readInt();
         if (code != 0) {
             String msg = readString();
@@ -191,7 +191,7 @@ public class ParcelInputStream extends DataInputStream {
         }
     }
 
-    private final void readException(int code, String msg) throws IOException {
+    private final void readException(int code, String msg) throws IOException, ShizukuRemoteException {
         switch (code) {
             case EX_SECURITY:
                 throw new SecurityException(msg);

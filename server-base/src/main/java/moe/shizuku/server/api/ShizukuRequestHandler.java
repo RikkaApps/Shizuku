@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.ShizukuServer;
@@ -20,6 +19,11 @@ import moe.shizuku.server.util.Utils;
  */
 
 public class ShizukuRequestHandler extends RequestHandler {
+
+    private static final String ACTION_GET_VERSION = "Shizuku_getVersion";
+    private static final String ACTION_REQUEST_STOP = "Shizuku_requestStop";
+    private static final String ACTION_AUTHORIZE = "Shizuku_authorize";
+    private static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
 
     private final Handler mHandler;
     private final UUID mToken;
@@ -43,16 +47,16 @@ public class ShizukuRequestHandler extends RequestHandler {
         }
 
         switch (action) {
-            case ShizukuClient.ACTION_GET_VERSION:
+            case ACTION_GET_VERSION:
                 version(os);
                 break;
-            case ShizukuClient.ACTION_REQUEST_STOP:
+            case ACTION_REQUEST_STOP:
                 stop(os, mHandler);
                 break;
-            case ShizukuClient.ACTION_AUTHORIZE:
+            case ACTION_AUTHORIZE:
                 authorize(is, os, mToken);
                 break;
-            case ShizukuClient.ACTION_SEND_TOKEN:
+            case ACTION_SEND_TOKEN:
                 sendTokenToManger(is, os, mToken);
                 break;
             default:
@@ -66,16 +70,16 @@ public class ShizukuRequestHandler extends RequestHandler {
     }
 
     private static boolean isActionRequireAuthorization(String action) {
-        return !Objects.equals(action, ShizukuClient.ACTION_GET_VERSION)
-                && !Objects.equals(action, ShizukuClient.ACTION_AUTHORIZE)
-                && !Objects.equals(action, ShizukuClient.ACTION_REQUEST_STOP)
-                && !Objects.equals(action, ShizukuClient.ACTION_SEND_TOKEN);
+        return !Objects.equals(action, ACTION_GET_VERSION)
+                && !Objects.equals(action, ACTION_AUTHORIZE)
+                && !Objects.equals(action, ACTION_REQUEST_STOP)
+                && !Objects.equals(action, ACTION_SEND_TOKEN);
     }
 
     public static void version(ParcelOutputStream os) throws RemoteException, IOException {
         os.writeNoException();
         if (Utils.isServerDead()) {
-            os.writeParcelable(ShizukuState.createServerDead());
+            os.writeParcelable(ShizukuState.createUnavailable());
         } else {
             os.writeParcelable(ShizukuState.createOk());
         }
@@ -87,12 +91,12 @@ public class ShizukuRequestHandler extends RequestHandler {
 
         os.writeNoException();
         if (Utils.isServerDead()) {
-            os.writeParcelable(ShizukuState.createServerDead());
+            os.writeParcelable(ShizukuState.createUnavailable());
         } else if (most != token.getMostSignificantBits()
                 && least != token.getLeastSignificantBits()) {
             os.writeParcelable(ShizukuState.createUnauthorized());
         } else {
-            os.writeParcelable(ShizukuState.createOk());
+            os.writeParcelable(ShizukuState.createAuthorized());
         }
     }
 

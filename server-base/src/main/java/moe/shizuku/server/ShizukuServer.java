@@ -11,10 +11,13 @@ import android.os.RemoteException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.io.ParcelInputStream;
+import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.api.Compat;
 import moe.shizuku.server.util.ServerLog;
 import moe.shizuku.server.util.Utils;
@@ -48,12 +51,14 @@ public class ShizukuServer extends Handler {
     }
 
     public boolean start() throws IOException, RemoteException, InterruptedException {
-        if (Compat.VERSION != Build.VERSION.SDK_INT) {
-            ServerLog.e("api version not matching, please open Shizuku Manager and try again.");
+        if (Compat.VERSION == 26 && Build.VERSION.SDK_INT == 27) {
+            ServerLog.w("using preview system, some API may not work");
+        } else if (Compat.VERSION != Build.VERSION.SDK_INT) {
+            ServerLog.e("API version not matched, please open Shizuku Manager and try again.");
             return false;
         }
 
-        if (ShizukuClient.stopServer()) {
+        if (stopServer()) {
             ServerLog.i("old server found, send stop...");
             Thread.sleep(500);
         }
@@ -140,5 +145,20 @@ public class ShizukuServer extends Handler {
             }
         }
         return null;
+    }
+
+    private static boolean stopServer() {
+        try {
+            Socket socket = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
+            socket.setSoTimeout(ShizukuConstants.TIMEOUT);
+            ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
+            ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
+            os.writeString("Shizuku_requestStop");
+            is.readException();
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

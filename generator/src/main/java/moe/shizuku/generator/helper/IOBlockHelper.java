@@ -1,5 +1,6 @@
 package moe.shizuku.generator.helper;
 
+import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.type.ArrayType;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
@@ -9,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +64,10 @@ public class IOBlockHelper {
                     Type inner = isTypeList(type);
 
                     if (inner != null) {
+                        if (((ClassOrInterfaceType) type).getName().equals("ParceledListSlice")) {
+                            return "ParcelableList";
+                        }
+
                         switch (inner.asString()) {
                             case "String":
                                 return "StringList";
@@ -123,7 +127,12 @@ public class IOBlockHelper {
 
     public static String getReadStatement(String name, Type type) {
         StringBuilder sb = new StringBuilder();
-        sb.append(type.asString()).append(' ').append(name).append('=').append(getReadStatement(type));
+        String t = type.asString();
+        if (t.startsWith("ParceledListSlice")) {
+            t = ((ClassOrInterfaceType) type).getTypeArguments().get().stream().findFirst().get().asString();
+            t = JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString();
+        }
+        sb.append(t).append(' ').append(name).append('=').append(getReadStatement(type));
         return sb.toString();
     }
 
@@ -151,7 +160,8 @@ public class IOBlockHelper {
     public static Type isTypeList(Type type) {
         if (type instanceof ClassOrInterfaceType) {
             ClassOrInterfaceType cls = (ClassOrInterfaceType) type;
-            if (cls.getName().toString().equals("List")) {
+            if (cls.getName().asString().equals("List")
+                    || cls.getName().asString().equals("ParceledListSlice")) {
                 return cls.getTypeArguments().get().stream().findFirst().get();
             }
         }

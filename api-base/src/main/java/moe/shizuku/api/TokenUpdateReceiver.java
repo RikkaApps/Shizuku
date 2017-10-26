@@ -9,7 +9,7 @@ import java.util.UUID;
 import moe.shizuku.ShizukuConstants;
 
 /**
- * Created by rikka on 2017/10/23.
+ * An extent of {@link BroadcastReceiver} that automatically set new token from broadcast.
  */
 
 public abstract class TokenUpdateReceiver extends BroadcastReceiver {
@@ -22,13 +22,21 @@ public abstract class TokenUpdateReceiver extends BroadcastReceiver {
             return;
         }
 
-        long mostSig = intent.getLongExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_MOST_SIG", 0);
-        long leastSig = intent.getLongExtra("moe.shizuku.privileged.api.intent.extra.TOKEN_LEAST_SIG", 0);
+        ShizukuClient.setToken(intent);
+
+        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
 
         if (mostSig != 0 && leastSig != 0) {
-            onTokenUpdate(context, new UUID(mostSig, leastSig));
+            onTokenUpdated(context, new UUID(mostSig, leastSig));
         }
     }
 
-    public abstract void onTokenUpdate(Context context, UUID token);
+    /**
+     * Called when Intent contains valid token, save token here.
+     *
+     * @param context Context
+     * @param token new token
+     */
+    public abstract void onTokenUpdated(Context context, UUID token);
 }

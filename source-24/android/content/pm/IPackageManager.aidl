@@ -69,11 +69,11 @@ interface IPackageManager {
 
     PermissionInfo getPermissionInfo(String name, int flags);
 
-    ParceledListSlice queryPermissionsByGroup(String group, int flags);
+    ParceledListSlice<PermissionInfo> queryPermissionsByGroup(String group, int flags);
 
     PermissionGroupInfo getPermissionGroupInfo(String name, int flags);
 
-    ParceledListSlice getAllPermissionGroups(int flags);
+    ParceledListSlice<PermissionGroupInfo> getAllPermissionGroups(int flags);
 
     ApplicationInfo getApplicationInfo(String packageName, int flags ,int userId);
 
@@ -138,24 +138,24 @@ interface IPackageManager {
 
     boolean canForwardTo(in Intent intent, String resolvedType, int sourceUserId, int targetUserId);
 
-    ParceledListSlice queryIntentActivities(in Intent intent,
+    ParceledListSlice<ResolveInfo> queryIntentActivities(in Intent intent,
             String resolvedType, int flags, int userId);
 
-    ParceledListSlice queryIntentActivityOptions(
+    ParceledListSlice<ResolveInfo> queryIntentActivityOptions(
             in ComponentName caller, in Intent[] specifics,
             in String[] specificTypes, in Intent intent,
             String resolvedType, int flags, int userId);
 
-    ParceledListSlice queryIntentReceivers(in Intent intent,
+    ParceledListSlice<ResolveInfo> queryIntentReceivers(in Intent intent,
             String resolvedType, int flags, int userId);
 
     ResolveInfo resolveService(in Intent intent,
             String resolvedType, int flags, int userId);
 
-    ParceledListSlice queryIntentServices(in Intent intent,
+    ParceledListSlice<ResolveInfo> queryIntentServices(in Intent intent,
             String resolvedType, int flags, int userId);
 
-    ParceledListSlice queryIntentContentProviders(in Intent intent,
+    ParceledListSlice<ResolveInfo> queryIntentContentProviders(in Intent intent,
             String resolvedType, int flags, int userId);
 
     /**
@@ -164,7 +164,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledPackages(int flags, in int userId);
+    ParceledListSlice<PackageInfo> getInstalledPackages(int flags, in int userId);
 
     /**
      * This implements getPackagesHoldingPermissions via a "last returned row"
@@ -172,7 +172,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getPackagesHoldingPermissions(in String[] permissions,
+    ParceledListSlice<PackageInfo> getPackagesHoldingPermissions(in String[] permissions,
             int flags, int userId);
 
     /**
@@ -181,7 +181,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledApplications(int flags, int userId);
+    ParceledListSlice<ApplicationInfo> getInstalledApplications(int flags, int userId);
 
     /**
      * Retrieve all applications that are marked as persistent.
@@ -189,7 +189,7 @@ interface IPackageManager {
      * @return A List&lt;applicationInfo> containing one entry for each persistent
      *         application.
      */
-    ParceledListSlice getPersistentApplications(int flags);
+    ParceledListSlice<ApplicationInfo> getPersistentApplications(int flags);
 
     ProviderInfo resolveContentProvider(String name, int flags, int userId);
 
@@ -204,13 +204,13 @@ interface IPackageManager {
     void querySyncProviders(inout List<String> outNames,
             inout List<ProviderInfo> outInfo);
 
-    ParceledListSlice queryContentProviders(
+    ParceledListSlice<ProviderInfo> queryContentProviders(
             String processName, int uid, int flags);
 
     InstrumentationInfo getInstrumentationInfo(
             in ComponentName className, int flags);
 
-    ParceledListSlice queryInstrumentation(
+    ParceledListSlice<InstrumentationInfo> queryInstrumentation(
             String targetPackage, int flags);
 
     /** @deprecated Use PackageInstaller instead */
@@ -429,7 +429,7 @@ interface IPackageManager {
      * Get a list of features that are available on the
      * system.
      */
-    ParceledListSlice getSystemAvailableFeatures();
+    ParceledListSlice<FeatureInfo> getSystemAvailableFeatures();
 
     boolean hasSystemFeature(String name, int version);
 
@@ -518,8 +518,8 @@ interface IPackageManager {
     void verifyIntentFilter(int id, int verificationCode, in List<String> failedDomains);
     int getIntentVerificationStatus(String packageName, int userId);
     boolean updateIntentVerificationStatus(String packageName, int status, int userId);
-    ParceledListSlice getIntentFilterVerifications(String packageName);
-    ParceledListSlice getAllIntentFilters(String packageName);
+    ParceledListSlice<IntentFilterVerificationInfo> getIntentFilterVerifications(String packageName);
+    ParceledListSlice<IntentFilter> getAllIntentFilters(String packageName);
 
     boolean setDefaultBrowserPackageName(String packageName, int userId);
     String getDefaultBrowserPackageName(int userId);
@@ -557,7 +557,7 @@ interface IPackageManager {
 
     String getPermissionControllerPackageName();
 
-    ParceledListSlice getEphemeralApplications(int userId);
+    ParceledListSlice<EphemeralApplicationInfo> getEphemeralApplications(int userId);
     byte[] getEphemeralApplicationCookie(String packageName, int userId);
     boolean setEphemeralApplicationCookie(String packageName, in byte[] cookie, int userId);
     Bitmap getEphemeralApplicationIcon(String packageName, int userId);

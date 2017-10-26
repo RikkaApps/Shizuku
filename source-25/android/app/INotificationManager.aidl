@@ -73,7 +73,7 @@ interface INotificationManager
 
     void setNotificationsShownFromListener(in INotificationListener token, in String[] keys);
 
-    ParceledListSlice getActiveNotificationsFromListener(in INotificationListener token, in String[] keys, int trim);
+    ParceledListSlice<StatusBarNotification> getActiveNotificationsFromListener(in INotificationListener token, in String[] keys, int trim);
     void requestHintsFromListener(in INotificationListener token, int hints);
     int getHintsFromListener(in INotificationListener token);
     void requestInterruptionFilterFromListener(in INotificationListener token, int interruptionFilter);
@@ -109,5 +109,5 @@ interface INotificationManager
     byte[] getBackupPayload(int user);
     void applyRestore(in byte[] payload, int user);
 
-    ParceledListSlice getAppActiveNotifications(String callingPkg, int userId);
+    ParceledListSlice<StatusBarNotification> getAppActiveNotifications(String callingPkg, int userId);
 }

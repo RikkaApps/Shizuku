@@ -3,11 +3,10 @@ package moe.shizuku.generator.creator;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
@@ -85,9 +84,18 @@ public class ApiClassCreator {
                         if (!"IBinder".equals(parameter.getNameAsString())) {
                             parameter.setType("IInterface");
                         }
+                    } else if (parameter.getType().asString().startsWith("ParceledListSlice")) {
+                        String t = ((ClassOrInterfaceType) parameter.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+                        parameter.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
                     }
                 });
         //method.setParameters(nodeList);
+
+        if (method.getType().asString().startsWith("ParceledListSlice")) {
+            String t = ((ClassOrInterfaceType) method.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+            method.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
+        }
+
         cls.addMember(method
                 .setModifiers(EnumSet.of(Modifier.PUBLIC, Modifier.STATIC))
                 .addThrownException(new TypeParameter("ShizukuRemoteException"))

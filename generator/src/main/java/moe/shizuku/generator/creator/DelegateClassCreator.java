@@ -11,6 +11,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
@@ -95,10 +96,17 @@ public class DelegateClassCreator {
     }
 
     private static void addMethod(ClassOrInterfaceDeclaration cls, ClassOrInterfaceDeclaration binder, MethodDeclaration method) {
+        String statement = getMethodReturningStatement(binder.getNameAsString(), method);
+
+        if (method.getType().asString().startsWith("ParceledListSlice")) {
+            String t = ((ClassOrInterfaceType) method.getType()).getTypeArguments().get().stream().findFirst().get().asString();
+            method.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
+        }
+
         cls.addMember(method
                 .setModifiers(EnumSet.of(Modifier.PUBLIC, Modifier.STATIC))
                 .addThrownException(new TypeParameter("RemoteException"))
-                .setBody(new BlockStmt().addStatement(getMethodReturningStatement(binder.getNameAsString(), method))));
+                .setBody(new BlockStmt().addStatement(statement)));
     }
 
     /** return IAppOpsServiceSingleton.get().checkOperation(code, uid, packageName);
@@ -113,7 +121,12 @@ public class DelegateClassCreator {
             format = "return " + format;
         }
 
-        return String.format(format, binderName, MethodDeclarationUtils.toCallingStatementString(method));
+        String call = MethodDeclarationUtils.toCallingStatementString(method, false);
+        if (method.getType().asString().startsWith("ParceledListSlice")) {
+            call += ".getList()";
+        }
+
+        return String.format(format, binderName, call);
     }
 
     /** return IAppOpsServiceSingleton.get().checkOperation(code, uid, packageName);
@@ -125,6 +138,6 @@ public class DelegateClassCreator {
     public static String getMethodCallingStatement(String binderName, MethodDeclaration method) {
         String format = "%sDelegate.%s;";
 
-        return String.format(format, binderName.substring(1), MethodDeclarationUtils.toCallingStatementString(method));
+        return String.format(format, binderName.substring(1), MethodDeclarationUtils.toCallingStatementString(method, true));
     }
 }

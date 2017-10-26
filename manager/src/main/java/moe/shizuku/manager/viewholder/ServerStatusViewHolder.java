@@ -67,15 +67,15 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
         boolean ok = false;
         boolean running = false;
         switch (shizukuState.getCode()) {
-            case ShizukuState.RESULT_OK:
+            case ShizukuState.STATUS_AUTHORIZED:
                 running = true;
                 ok = true;
                 break;
-            case ShizukuState.RESULT_SERVER_DEAD:
-            case ShizukuState.RESULT_UNAUTHORIZED:
+            case ShizukuState.STATUS_UNAVAILABLE:
+            case ShizukuState.STATUS_UNAUTHORIZED:
                 running = true;
                 break;
-            case ShizukuState.RESULT_UNKNOWN:
+            case ShizukuState.STATUS_UNKNOWN:
                 break;
         }
 
@@ -115,7 +115,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
                     mStatusText.setText(context.getString(R.string.server_running, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion()));
                 }
             } else {
-                if (shizukuState.getCode() == ShizukuState.RESULT_UNAUTHORIZED) {
+                if (shizukuState.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
                     mStatusText.setText(R.string.server_no_token);
                     mCheckToRequest = true;
                 } else {

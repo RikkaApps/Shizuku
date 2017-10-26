@@ -163,7 +163,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledPackages(int flags, in int userId);
+    ParceledListSlice<PackageInfo> getInstalledPackages(int flags, in int userId);
 
     /**
      * This implements getPackagesHoldingPermissions via a "last returned row"
@@ -171,7 +171,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getPackagesHoldingPermissions(in String[] permissions,
+    ParceledListSlice<PackageInfo> getPackagesHoldingPermissions(in String[] permissions,
             int flags, int userId);
 
     /**
@@ -180,7 +180,7 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
-    ParceledListSlice getInstalledApplications(int flags, int userId);
+    ParceledListSlice<ApplicationInfo> getInstalledApplications(int flags, int userId);
 
     /**
      * Retrieve all applications that are marked as persistent.
@@ -203,7 +203,7 @@ interface IPackageManager {
     void querySyncProviders(inout List<String> outNames,
             inout List<ProviderInfo> outInfo);
 
-    ParceledListSlice queryContentProviders(
+    ParceledListSlice<ProviderInfo> queryContentProviders(
             String processName, int uid, int flags);
 
     InstrumentationInfo getInstrumentationInfo(

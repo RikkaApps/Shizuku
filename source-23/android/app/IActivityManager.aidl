@@ -245,7 +245,7 @@ interface IActivityManager {
     void revokeUriPermission(IApplicationThread caller, Uri uri, int mode, int userId);
     void takePersistableUriPermission(Uri uri, int modeFlags, int userId);
     void releasePersistableUriPermission(Uri uri, int modeFlags, int userId);
-    ParceledListSlice getPersistedUriPermissions(
+    ParceledListSlice<android.content.UriPermission> getPersistedUriPermissions(
             String packageName, boolean incoming);
 
     void showWaitingForDebugger(IApplicationThread who, boolean waiting);
