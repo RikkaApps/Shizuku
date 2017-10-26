@@ -20,7 +20,6 @@ import moe.shizuku.server.util.Utils;
 
 public class ShizukuRequestHandler extends RequestHandler {
 
-    private static final String ACTION_GET_VERSION = "Shizuku_getVersion";
     private static final String ACTION_REQUEST_STOP = "Shizuku_requestStop";
     private static final String ACTION_AUTHORIZE = "Shizuku_authorize";
     private static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
@@ -47,9 +46,6 @@ public class ShizukuRequestHandler extends RequestHandler {
         }
 
         switch (action) {
-            case ACTION_GET_VERSION:
-                version(os);
-                break;
             case ACTION_REQUEST_STOP:
                 stop(os, mHandler);
                 break;
@@ -70,19 +66,9 @@ public class ShizukuRequestHandler extends RequestHandler {
     }
 
     private static boolean isActionRequireAuthorization(String action) {
-        return !Objects.equals(action, ACTION_GET_VERSION)
-                && !Objects.equals(action, ACTION_AUTHORIZE)
+        return !Objects.equals(action, ACTION_AUTHORIZE)
                 && !Objects.equals(action, ACTION_REQUEST_STOP)
                 && !Objects.equals(action, ACTION_SEND_TOKEN);
-    }
-
-    public static void version(ParcelOutputStream os) throws RemoteException, IOException {
-        os.writeNoException();
-        if (Utils.isServerDead()) {
-            os.writeParcelable(ShizukuState.createUnavailable());
-        } else {
-            os.writeParcelable(ShizukuState.createOk());
-        }
     }
 
     public static void authorize(ParcelInputStream is, ParcelOutputStream os, UUID token) throws RemoteException, IOException {

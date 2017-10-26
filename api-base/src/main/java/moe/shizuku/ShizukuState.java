@@ -11,11 +11,6 @@ import android.os.Process;
 public final class ShizukuState implements Parcelable {
 
     /**
-     * Server is running.
-     */
-    public static final int STATUS_OK = 0;
-
-    /**
      * Server is running and client is authorized.
      */
     public static final int STATUS_AUTHORIZED = 1;
@@ -38,10 +33,6 @@ public final class ShizukuState implements Parcelable {
     private int mVersion;
     private boolean mIsRoot;
     private int mCode;
-
-    public static ShizukuState createOk() {
-        return new ShizukuState(STATUS_OK);
-    }
 
     public static ShizukuState createAuthorized() {
         return new ShizukuState(STATUS_AUTHORIZED);
@@ -98,7 +89,7 @@ public final class ShizukuState implements Parcelable {
      * @return is server running and available
      */
     public boolean isServerAvailable() {
-        return mCode == STATUS_OK || mCode == STATUS_UNAUTHORIZED || mCode == STATUS_AUTHORIZED;
+        return mCode == STATUS_UNAUTHORIZED || mCode == STATUS_AUTHORIZED;
     }
 
     /**
@@ -113,7 +104,7 @@ public final class ShizukuState implements Parcelable {
     /**
      * Return status code.
      *
-     * @see ShizukuState#STATUS_OK
+     * @see ShizukuState#STATUS_AUTHORIZED
      * @see ShizukuState#STATUS_UNAUTHORIZED
      * @see ShizukuState#STATUS_UNAVAILABLE
      * @see ShizukuState#STATUS_UNKNOWN

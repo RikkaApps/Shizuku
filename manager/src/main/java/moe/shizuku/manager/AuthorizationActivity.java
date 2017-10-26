@@ -36,7 +36,7 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
 
         final String packageName = component.getPackageName();
 
-        ShizukuState shizukuState = ShizukuClient.authorize();
+        ShizukuState shizukuState = ShizukuClient.getState();
         int msg = 0;
         switch (shizukuState.getCode()) {
             case ShizukuState.STATUS_UNAUTHORIZED:

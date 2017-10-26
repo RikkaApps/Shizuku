@@ -48,7 +48,7 @@ public class WorkService extends IntentService {
         }
     }
     private void handleAuth() {
-        ShizukuState state = ShizukuClient.authorize();
+        ShizukuState state = ShizukuClient.getState();
 
         LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(new Intent(Intents.ACTION_AUTH_RESULT)

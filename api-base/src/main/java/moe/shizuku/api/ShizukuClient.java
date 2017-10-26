@@ -26,7 +26,6 @@ public class ShizukuClient {
 
     private static final String TAG = "ShizukuClient";
 
-    private static final String ACTION_GET_VERSION = "Shizuku_getVersion";
     private static final String ACTION_AUTHORIZE = "Shizuku_authorize";
 
     private static final String KEY_TOKEN_MOST_SIG = "moe.shizuku.privilege.api.token_most";
@@ -236,29 +235,6 @@ public class ShizukuClient {
     }
 
     /**
-     * Return a {@link ShizukuState} instance that describes server status.
-     *
-     * @see ShizukuState#isRoot()
-     * @see ShizukuState#isServerAvailable()
-     *
-     * @return server status
-     */
-    public static ShizukuState getState() {
-        try {
-            Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
-            client.setSoTimeout(ShizukuConstants.TIMEOUT);
-            ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());
-            ParcelInputStream is = new ParcelInputStream(client.getInputStream());
-            os.writeString(ACTION_GET_VERSION);
-            is.readException();
-            return is.readParcelable(ShizukuState.CREATOR);
-        } catch (Exception e) {
-            Log.w(TAG, "can't connect to server: " + e.getMessage());
-        }
-        return ShizukuState.createUnknown();
-    }
-
-    /**
      * Return a {@link ShizukuState} instance that describes server status and if the client is
      * authorized.
      *
@@ -268,11 +244,11 @@ public class ShizukuClient {
      *
      * @return status
      */
-    public static ShizukuState authorize() {
-        return authorize(getToken());
+    public static ShizukuState getState() {
+        return getState(getToken());
     }
 
-    private static ShizukuState authorize(UUID token) {
+    private static ShizukuState getState(UUID token) {
         try {
             Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
