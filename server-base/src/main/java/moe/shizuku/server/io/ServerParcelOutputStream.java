@@ -56,9 +56,6 @@ public class ServerParcelOutputStream extends ParcelOutputStream {
                 Bundle data = new Bundle();
                 data.putParcelable(TRANSFER_PROVIDER_KEY_DATA, pfd);
 
-                ServerLog.i("path: " + Os.readlink("/proc/self/fd/" + pfd.getFd()));
-                ServerLog.i("call send | fd: " + pfd.getFd() + " data: " + data.toString());
-
                 Bundle result = provider.call(null, TRANSFER_PROVIDER_METHOD_PUT, TRANSFER_PROVIDER_TYPE_PARCELABLE, data);
 
                 key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
