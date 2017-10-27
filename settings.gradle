@@ -1,9 +1,9 @@
-include ':generator', ':server-stub', ':api'
+include ':generator', ':api'
 
-include ':api-base'
+include ':api-base', ':support-fragment-stub'
 include ':api-21', ':api-22', ':api-23', ':api-24', ':api-25', ':api-26'
 
-include ':server-base'
+include ':server-base', ':server-stub'
 include ':server-21', ':server-22', ':server-23', ':server-24', ':server-25', ':server-26'
 
 include ':manager', ':sample'

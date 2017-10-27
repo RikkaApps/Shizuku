@@ -177,6 +177,17 @@ public class ShizukuClient {
     }
 
     /**
+     * Request permission on API 23+.
+     *
+     * @param activity Activity
+     */
+    public static void requestPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT > 23) {
+            activity.requestPermissions(new String[]{PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+        }
+    }
+
+    /**
      * Request token from manager app.
      * <p>
      * The result will be passed by {@link Activity#onActivityResult(int, int, Intent)}.
@@ -202,6 +213,64 @@ public class ShizukuClient {
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
             activity.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+        }
+    }
+
+    /**
+     * Request token from manager app.
+     * <p>
+     * The result will be passed by {@link android.app.Fragment#onActivityResult(int, int, Intent)}.
+     * <p>
+     * On API 23+, Shizuku Manager use Android's runtime permission, you should use request
+     * permission by yourself first.
+     *
+     * @see #REQUEST_CODE_AUTHORIZATION
+     * @see #AUTH_RESULT_OK
+     * @see #AUTH_RESULT_USER_DENIED
+     * @see #AUTH_RESULT_ERROR
+     *
+     * @see #checkSelfPermission(Context)
+     *
+     * @param android.app.Fragment fragment
+     */
+    public static void requestAuthorization(android.app.Fragment fragment) {
+        if (!checkSelfPermission(fragment.getActivity())) {
+            return;
+        }
+
+        Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
+                .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
+        if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+            fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+        }
+    }
+
+    /**
+     * Request token from manager app.
+     * <p>
+     * The result will be passed by {@link android.support.v4.app.Fragment#onActivityResult(int, int, Intent)}.
+     * <p>
+     * On API 23+, Shizuku Manager use Android's runtime permission, you should use request
+     * permission by yourself first.
+     *
+     * @see #REQUEST_CODE_AUTHORIZATION
+     * @see #AUTH_RESULT_OK
+     * @see #AUTH_RESULT_USER_DENIED
+     * @see #AUTH_RESULT_ERROR
+     *
+     * @see #checkSelfPermission(Context)
+     *
+     * @param android.support.v4.app.Fragment fragment
+     */
+    public static void requestAuthorization(android.support.v4.app.Fragment fragment) {
+        if (!checkSelfPermission(fragment.getActivity())) {
+            return;
+        }
+
+        Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
+                .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
+        if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+            fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
         }
     }
 

@@ -5,6 +5,7 @@ targetCompatibility = "1.7"
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
+    compileOnly project(':support-fragment-stub')
 }
 
 ext {
