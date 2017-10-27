@@ -98,7 +98,7 @@ public class ApiClassCreator {
 
         cls.addMember(method
                 .setModifiers(EnumSet.of(Modifier.PUBLIC, Modifier.STATIC))
-                .addThrownException(new TypeParameter("ShizukuRemoteException"))
+                //.addThrownException(new TypeParameter("ShizukuRemoteException"))
                 .setBody(getBlock(binder.getNameAsString(), method)));
     }
 
@@ -125,10 +125,13 @@ public class ApiClassCreator {
         } else {
         }
 
-        sb.append("}catch(IOException e){\n" +
-                "throw new ShizukuRemoteException(\"Problem connect to shizuku server.\", e);" +
-                "}")
-                .append('}');
+        sb
+                .append("}catch(IOException e){\n" +
+                        "throw new RuntimeException(\"Problem connect to shizuku server.\", e);" +
+                        "}")
+                .append("catch(ShizukuRemoteException e){\n" +
+                        "throw e.rethrowFromSystemServer();" +
+                        "}").append('}');
 
         return JavaParser.parseBlock(sb.toString());
     }

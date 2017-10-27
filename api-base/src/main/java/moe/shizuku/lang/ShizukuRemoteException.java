@@ -20,4 +20,9 @@ public class ShizukuRemoteException extends RemoteException {
         super(message);
         initCause(cause);
     }
+
+    @Override
+    public RuntimeException rethrowFromSystemServer() {
+        return super.rethrowFromSystemServer();
+    }
 }
