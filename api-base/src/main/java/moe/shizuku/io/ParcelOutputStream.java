@@ -1,11 +1,16 @@
 package moe.shizuku.io;
 
+import android.content.IContentProvider;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.BadParcelableException;
+import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.NetworkOnMainThreadException;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.ServiceSpecificException;
 
@@ -17,6 +22,14 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+
+import moe.shizuku.api.ShizukuClient;
+
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_URI;
 
 /**
  * Created by Rikka on 2017/5/18.
@@ -175,7 +188,7 @@ public class ParcelOutputStream extends DataOutputStream {
         }
     }
 
-    public void writeStringList(List<String> strings) throws IOException {
+    public final void writeStringList(List<String> strings) throws IOException {
         if (strings == null) {
             writeInt(-1);
             return;
@@ -321,5 +334,32 @@ public class ParcelOutputStream extends DataOutputStream {
 
     public final void writeInterfaceArray(IInterface[] interfaces) throws IOException {
         writeByte(0);
+    }
+
+    /**
+     * Send ParcelFileDescriptor to server via ContentProvider.
+     * <p>
+     * Keep sync with ServerParcelInputStream<br>
+     * int: client userId<br>
+     * int: key<br>
+     *
+     * @param pfd ParcelFileDescriptor
+     */
+    public void writeParcelFileDescriptor(ParcelFileDescriptor pfd) throws IOException {
+        writeInt(android.os.Process.myUserHandle().getIdentifier());
+
+        int key = -1;
+        try {
+            Bundle data = new Bundle();
+            data.putParcelable(TRANSFER_PROVIDER_KEY_DATA, pfd);
+
+            Bundle result = ShizukuClient.getContext().getContentResolver()
+                    .call(TRANSFER_PROVIDER_URI, TRANSFER_PROVIDER_METHOD_PUT, TRANSFER_PROVIDER_TYPE_PARCELABLE, data);
+
+            key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
+        } catch (Exception e) {
+        }
+
+        writeInt(key);
     }
 }

@@ -42,6 +42,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.ProfilerInfo;
 import android.content.ComponentName;
+import android.content.IContentProvider;
 import android.content.IIntentReceiver;
 import android.content.IIntentSender;
 import android.content.Intent;
@@ -480,59 +481,61 @@ interface IActivityManager {
     void systemBackupRestored();
 
     public static class WaitResult implements Parcelable {
-            protected WaitResult(Parcel in) {
-                throw new RuntimeException("Stub!");
-            }
-
-            public static final Creator<WaitResult> CREATOR = new Creator<WaitResult>() {
-                @Override
-                public WaitResult createFromParcel(Parcel in) {
-                    throw new RuntimeException("Stub!");
-                }
-
-                @Override
-                public WaitResult[] newArray(int size) {
-                    throw new RuntimeException("Stub!");
-                }
-            };
-
-            @Override
-            public int describeContents() {
-                throw new RuntimeException("Stub!");
-            }
-
-            @Override
-            public void writeToParcel(Parcel parcel, int i) {
-                throw new RuntimeException("Stub!");
-            }
+        protected WaitResult(Parcel in) {
+            throw new RuntimeException("Stub!");
         }
 
-        public static class ContentProviderHolder implements Parcelable {
-
-            protected ContentProviderHolder(Parcel in) {
-                throw new RuntimeException("Stub!");
-            }
-
-            public static final Creator<ContentProviderHolder> CREATOR = new Creator<ContentProviderHolder>() {
-                @Override
-                public ContentProviderHolder createFromParcel(Parcel in) {
-                    throw new RuntimeException("Stub!");
-                }
-
-                @Override
-                public ContentProviderHolder[] newArray(int size) {
-                    throw new RuntimeException("Stub!");
-                }
-            };
-
+        public static Creator<WaitResult> CREATOR = new Creator<WaitResult>() {
             @Override
-            public int describeContents() {
+            public WaitResult createFromParcel(Parcel in) {
                 throw new RuntimeException("Stub!");
             }
 
             @Override
-            public void writeToParcel(Parcel parcel, int i) {
+            public WaitResult[] newArray(int size) {
                 throw new RuntimeException("Stub!");
             }
+        };
+
+        @Override
+        public int describeContents() {
+            throw new RuntimeException("Stub!");
         }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            throw new RuntimeException("Stub!");
+        }
+    }
+
+    public static class ContentProviderHolder implements Parcelable {
+
+        public IContentProvider provider;
+
+        protected ContentProviderHolder(Parcel in) {
+            throw new RuntimeException("Stub!");
+        }
+
+        public static Creator<ContentProviderHolder> CREATOR = new Creator<ContentProviderHolder>() {
+            @Override
+            public ContentProviderHolder createFromParcel(Parcel in) {
+                throw new RuntimeException("Stub!");
+            }
+
+            @Override
+            public ContentProviderHolder[] newArray(int size) {
+                throw new RuntimeException("Stub!");
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            throw new RuntimeException("Stub!");
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            throw new RuntimeException("Stub!");
+        }
+    }
 }

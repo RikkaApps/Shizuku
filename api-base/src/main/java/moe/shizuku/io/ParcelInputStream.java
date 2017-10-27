@@ -1,13 +1,14 @@
 package moe.shizuku.io;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.BadParcelableException;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.NetworkOnMainThreadException;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.ServiceSpecificException;
 
@@ -19,7 +20,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import moe.shizuku.ShizukuConstants;
+import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.lang.ShizukuRemoteException;
+
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_URI;
 
 /**
  * Created by Rikka on 2017/5/18.
@@ -343,5 +352,28 @@ public class ParcelInputStream extends DataInputStream {
         //noinspection ResultOfMethodCallIgnored
         readByte();
         return null;
+    }
+
+    /**
+     * Read ParcelFileDescriptor from server via ContentProvider.
+     * <p>
+     * int: key
+     *
+     * @return ParcelFileDescriptor
+     * @throws IOException
+     */
+    public ParcelFileDescriptor readParcelFileDescriptor() throws IOException {
+        int key = readInt();
+
+        if (key == -1) {
+            return null;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(TRANSFER_PROVIDER_KEY_ID, key);
+
+        return ShizukuClient.getContext().getContentResolver()
+                .call(TRANSFER_PROVIDER_URI, TRANSFER_PROVIDER_METHOD_GET, TRANSFER_PROVIDER_TYPE_PARCELABLE, bundle)
+                .getParcelable(TRANSFER_PROVIDER_KEY_DATA);
     }
 }

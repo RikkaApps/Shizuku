@@ -63,6 +63,6 @@ ext {
     buildToolsVersion = "26.0.2"
     versionCode = gitCommitCount
     versionName = "2.0.0 dev"
-    apiBaseLibraryVersion = '7'
-    apiLibraryVersion = '2'
+    apiBaseLibraryVersion = '8'
+    apiLibraryVersion = '3'
 }

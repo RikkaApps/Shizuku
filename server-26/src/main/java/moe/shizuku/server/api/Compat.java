@@ -1,11 +1,12 @@
 package moe.shizuku.server.api;
 
+import android.app.ContentProviderHolder;
+import android.content.IContentProvider;
 import android.content.IIntentReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.UserInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -37,5 +38,13 @@ public class Compat {
 
     public static Intent registerReceiver(IIntentReceiver.Stub receiver, IntentFilter intentFilter, int userId) throws RemoteException {
         return ActivityManagerDelegate.registerReceiver(null, null, receiver, intentFilter, null, userId, 0);
+    }
+
+    public static IContentProvider getContentProvider(String name, int userId, IBinder token) throws RemoteException {
+        ContentProviderHolder holder = ActivityManagerDelegate.getContentProviderExternal(name, userId, token);
+        if (holder == null) {
+            return null;
+        }
+        return holder.provider;
     }
 }

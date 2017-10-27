@@ -46,6 +46,7 @@ import android.app.ProfilerInfo;
 import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
 import android.content.ComponentName;
+import android.content.IContentProvider;
 import android.content.IIntentReceiver;
 import android.content.IIntentSender;
 import android.content.Intent;
@@ -687,6 +688,8 @@ interface IActivityManager {
     }
 
     public static class ContentProviderHolder implements Parcelable {
+
+        public IContentProvider provider;
 
         protected ContentProviderHolder(Parcel in) {
             throw new RuntimeException("Stub!");

@@ -12,6 +12,8 @@ import moe.shizuku.ShizukuState;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.ShizukuServer;
+import moe.shizuku.server.io.ServerParcelInputStream;
+import moe.shizuku.server.io.ServerParcelOutputStream;
 import moe.shizuku.server.util.Utils;
 
 /**
@@ -33,17 +35,9 @@ public class ShizukuRequestHandler extends RequestHandler {
     }
 
     public void handle(Socket socket) throws IOException, RemoteException {
-        ParcelInputStream is = new ParcelInputStream(socket.getInputStream());
-        ParcelOutputStream os = new ParcelOutputStream(socket.getOutputStream());
+        ServerParcelInputStream is = new ServerParcelInputStream(socket.getInputStream());
+        ServerParcelOutputStream os = new ServerParcelOutputStream(socket.getOutputStream());
         String action = is.readString();
-        if (isActionRequireAuthorization(action)) {
-            long most = is.readLong();
-            long least = is.readLong();
-            if (most != mToken.getMostSignificantBits()
-                    && least != mToken.getLeastSignificantBits()) {
-                os.writeException(new SecurityException("unauthorized"));
-            }
-        }
 
         switch (action) {
             case ACTION_REQUEST_STOP:
@@ -56,6 +50,14 @@ public class ShizukuRequestHandler extends RequestHandler {
                 sendTokenToManger(is, os, mToken);
                 break;
             default:
+                long most = is.readLong();
+                long least = is.readLong();
+                if (most != mToken.getMostSignificantBits()
+                        && least != mToken.getLeastSignificantBits()) {
+                    os.writeException(new SecurityException("unauthorized"));
+                    break;
+                }
+
                 handle(action, is, os);
                 break;
         }
@@ -63,12 +65,6 @@ public class ShizukuRequestHandler extends RequestHandler {
         is.close();
         os.flush();
         os.close();
-    }
-
-    private static boolean isActionRequireAuthorization(String action) {
-        return !Objects.equals(action, ACTION_AUTHORIZE)
-                && !Objects.equals(action, ACTION_REQUEST_STOP)
-                && !Objects.equals(action, ACTION_SEND_TOKEN);
     }
 
     public static void authorize(ParcelInputStream is, ParcelOutputStream os, UUID token) throws RemoteException, IOException {

@@ -58,6 +58,7 @@ public class IOBlockHelper {
             switch (type.asString()) {
                 case "String":
                 case "Bitmap":
+                case "ParcelFileDescriptor":
                 case "CharSequence":
                     return type.asString();
                 default:
@@ -110,6 +111,7 @@ public class IOBlockHelper {
         switch (type.asString()) {
             case "String":
             case "Bitmap":
+            case "ParcelFileDescriptor":
             case "CharSequence":
                 return "";
             default:
@@ -147,7 +149,14 @@ public class IOBlockHelper {
 
     public static String getWriteStatement(Type type) {
         StringBuilder sb = new StringBuilder();
-        sb.append("os.write").append(getStreamTypeName(type)).append("(result);");
+        String t = getStreamTypeName(type);
+        sb.append("os.write").append(t);
+        if ("ParcelFileDescriptor".equals(t)) {
+            sb.append("(clientUserId, result);");
+        } else {
+            sb.append("(result);");
+        }
+
         return sb.toString();
     }
 

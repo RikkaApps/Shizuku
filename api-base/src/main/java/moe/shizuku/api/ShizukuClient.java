@@ -1,5 +1,6 @@
 package moe.shizuku.api;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Process;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -55,6 +57,17 @@ public class ShizukuClient {
     private static UUID sToken = new UUID(0, 0);
 
     private static TokenUpdateReceiver sTokenUpdateReceiver;
+
+    @SuppressLint("StaticFieldLeak")
+    private static Context sContext;
+
+    public static void setContext(Context context) {
+        sContext = context;
+    }
+
+    public static Context getContext() {
+        return sContext;
+    }
 
     /**
      * Disable detection of network operations for current thread.
@@ -351,7 +364,7 @@ public class ShizukuClient {
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
         } catch (Exception e) {
-            Log.w(TAG, "can't connect to server: " + e.getMessage());
+            Log.w(TAG, "!!!can't connect to server: " + e.getMessage());
         }
         return ShizukuState.createUnknown();
     }

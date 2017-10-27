@@ -11,16 +11,16 @@
 
     <permission
         android:name="moe.shizuku.manager.permission.API"
-        android:icon="@drawable/ic_noti_24dp"
         android:description="@string/permission_description"
+        android:icon="@drawable/ic_noti_24dp"
         android:label="@string/permission_label"
-        android:protectionLevel="normal"/>
+        android:protectionLevel="normal" />
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
-        android:icon="@drawable/ic_noti_24dp"
         android:description="@string/permission_description"
+        android:icon="@drawable/ic_noti_24dp"
         android:label="@string/permission_label"
-        android:protectionLevel="dangerous"/>
+        android:protectionLevel="dangerous" />
     <permission
         android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
         android:protectionLevel="signature" />
@@ -106,6 +106,14 @@
         <service
             android:name=".service.BootCompleteService"
             android:exported="false" />
+
+        <provider
+            android:name=".provider.TransferProvider"
+            android:authorities="moe.shizuku.manager.transferprovider"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
+
     </application>
 
 </manifest>

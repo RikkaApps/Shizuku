@@ -1,10 +1,12 @@
 package moe.shizuku.server.api;
 
+import android.content.IContentProvider;
 import android.content.IIntentReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.UserInfo;
 import android.net.Uri;
+import android.os.IBinder;
 import android.os.RemoteException;
 
 import java.util.List;
@@ -30,6 +32,10 @@ public class Compat {
     }
 
     public static Intent registerReceiver(IIntentReceiver.Stub receiver, IntentFilter intentFilter, int userId) throws RemoteException {
+        throw new RuntimeException("STUB");
+    }
+
+    public static IContentProvider getContentProvider(String name, int userId, IBinder token) throws RemoteException {
         throw new RuntimeException("STUB");
     }
 }

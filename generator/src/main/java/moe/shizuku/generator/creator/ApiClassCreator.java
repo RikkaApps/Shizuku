@@ -117,6 +117,10 @@ public class ApiClassCreator {
         method.getParameters().forEach(parameter ->
                 sb.append(IOBlockHelper.getWriteStatement(parameter.getNameAsString(), parameter.getType())));
 
+        if ("ParcelFileDescriptor".equals(method.getType().asString())) {
+            sb.append("os.writeInt(android.os.Process.myUserHandle().getIdentifier());");
+        }
+
         sb.append("is.readException();");
 
         if (!(method.getType() instanceof VoidType)) {

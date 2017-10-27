@@ -18,7 +18,19 @@ android {
     }
 }
 
+ext {
+    libraryName = 'Shizuku Privilege API'
+    libraryDescription = 'Shizuku Privilege APIs.'
+    libraryVersion = project.rootProject.ext.apiBaseLibraryVersion
+    artifact = project.name
+    bintrayName = project.name
+}
+
+apply from: project.rootProject.file('bintray.gradle')
+
 dependencies {
+    compileOnly project(':support-fragment-stub')
+    api project(':api-base')
     api project(':api-21')
     api project(':api-22')
     api project(':api-23')

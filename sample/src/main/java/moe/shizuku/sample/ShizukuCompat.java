@@ -21,7 +21,7 @@ import moe.shizuku.lang.ShizukuRemoteException;
 @WorkerThread
 public class ShizukuCompat {
 
-    public static void broadcastIntent(Intent intent) throws ShizukuRemoteException {
+    public static void broadcastIntent(Intent intent) throws RuntimeException {
         if (Build.VERSION.SDK_INT < 23) {
             ShizukuActivityManagerV22.broadcastIntent(
                     null, intent, null, null, 0, null, null, null,-1, true, false, Process.myUserHandle().hashCode());
@@ -31,11 +31,11 @@ public class ShizukuCompat {
         }
     }
 
-    public static List getOpsForPackage(int uid, String packageName, int[] ops) throws ShizukuRemoteException {
+    public static List getOpsForPackage(int uid, String packageName, int[] ops) throws RuntimeException {
         return ShizukuAppOpsServiceV26.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null);
     }
 
-    public static List<PackageInfo> getInstalledPackages(int flags, int userId) throws ShizukuRemoteException {
+    public static List<PackageInfo> getInstalledPackages(int flags, int userId) throws RuntimeException {
         return ShizukuPackageManagerV26.getInstalledPackages(flags, userId);
     }
 }

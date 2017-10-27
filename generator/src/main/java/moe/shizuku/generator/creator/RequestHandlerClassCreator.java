@@ -61,8 +61,8 @@ public class RequestHandlerClassCreator {
 
             cls.addMethod("handle", Modifier.PUBLIC)
                     .addParameter(String.class, "action")
-                    .addParameter("ParcelInputStream", "is")
-                    .addParameter("ParcelOutputStream", "os")
+                    .addParameter("ServerParcelInputStream", "is")
+                    .addParameter("ServerParcelOutputStream", "os")
                     .addThrownException(new TypeParameter("IOException"))
                     .addThrownException(new TypeParameter("RemoteException"))
                     .setBody(handleStmt);
@@ -73,8 +73,8 @@ public class RequestHandlerClassCreator {
             cu.addType(cls)
                     .addImport(IOException.class)
                     .addImport("android.os.RemoteException")
-                    .addImport("moe.shizuku.io.ParcelInputStream")
-                    .addImport("moe.shizuku.io.ParcelOutputStream");
+                    .addImport("moe.shizuku.server.io.ServerParcelInputStream")
+                    .addImport("moe.shizuku.server.io.ServerParcelOutputStream");
         } else {
             cls = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
         }
@@ -108,8 +108,8 @@ public class RequestHandlerClassCreator {
         MethodDeclaration method = cls.addMethod(getMethodName(binderName, source), Modifier.PRIVATE, Modifier.STATIC)
                 .addThrownException(new TypeParameter("IOException"))
                 .addThrownException(new TypeParameter("RemoteException"))
-                .addParameter("ParcelInputStream", "is")
-                .addParameter("ParcelOutputStream", "os")
+                .addParameter("ServerParcelInputStream", "is")
+                .addParameter("ServerParcelOutputStream", "os")
                 .setBody(getBlock(binderName, source));
 
         swichStmt.addEntry(new SwitchEntryStmt(
@@ -128,6 +128,10 @@ public class RequestHandlerClassCreator {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
         method.getParameters().forEach(parameter -> sb.append(IOBlockHelper.getReadStatement(parameter.getNameAsString(), parameter.getType())));
+
+        if ("ParcelFileDescriptor".equals(method.getType().asString())) {
+            sb.append("int clientUserId = is.readInt();");
+        }
         sb.append("try{");
         if (!(method.getType() instanceof VoidType)) {
             String t = method.getType().asString();
@@ -143,8 +147,8 @@ public class RequestHandlerClassCreator {
         } else {
             sb.append(DelegateClassCreator.getMethodCallingStatement(binderName, method));
             sb.append("os.writeNoException();");
-
         }
+
         sb.append("}catch(Throwable tr){\n" +
                 "if (!(tr instanceof IOException)) {\n" +
                 "    os.writeException(tr);\n" +

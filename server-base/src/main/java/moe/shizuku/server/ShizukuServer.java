@@ -15,7 +15,6 @@ import java.net.Socket;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.api.Compat;
