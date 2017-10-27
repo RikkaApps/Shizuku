@@ -32,4 +32,5 @@ dependencies {
 
     implementation project(':api-base')
     implementation project(':api')
+    compileOnly project(':support-fragment-stub')
 }

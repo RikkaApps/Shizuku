@@ -14,14 +14,17 @@ import android.util.SparseArray;
 
 import java.util.Random;
 
-import moe.shizuku.manager.Constants;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
 
 public class TransferProvider extends ContentProvider {
+
+    private static final String TAG = "TransferProvider";
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -61,30 +64,42 @@ public class TransferProvider extends ContentProvider {
     @Override
     public Bundle call(@NonNull String method, @Nullable String arg, @Nullable Bundle extras) {
         if (arg == null || extras == null) {
-            throw new SecurityException("bad request");
+            return null;
         }
 
-        Log.d(Constants.TAG, "" + Binder.getCallingUid());
+        if (!checkPermission()) {
+            return null;
+        }
 
         if (TRANSFER_PROVIDER_METHOD_PUT.equals(method)) {
             return handlePut(arg, extras);
-        } else if (TRANSFER_PROVIDER_METHOD_PUT.equals(method)) {
+        } else if (TRANSFER_PROVIDER_METHOD_GET.equals(method)) {
             return handleGet(arg, extras);
         }
 
-        throw new SecurityException("bad request");
+        return null;
+    }
+
+    private boolean checkPermission() {
+        String packageName = getCallingPackage();
+
+        if (packageName != null
+                && !AuthorizationManager.granted(getContext(), packageName)) {
+            Log.w(TAG, "Package " + packageName + " try to call provider without permission.");
+            return false;
+        }
+        return true;
     }
 
     private Bundle handlePut(String arg, Bundle data) {
-        // TODO: check permission
-
+        int uid = Binder.getCallingUid();
         int id = generateId();
 
         if (TRANSFER_PROVIDER_TYPE_PARCELABLE.equals(arg)) {
             Parcelable p = data.getParcelable(TRANSFER_PROVIDER_KEY_DATA);
             sMap.append(id, p);
 
-            Log.d(Constants.TAG, "put | id: " + id + " p: " + p);
+            Log.d(TAG, "put | key: " + id + " parcelable: " + p);
         }
         Bundle result = new Bundle();
         result.putInt(TRANSFER_PROVIDER_KEY_ID, id);
@@ -92,8 +107,6 @@ public class TransferProvider extends ContentProvider {
     }
 
     private Bundle handleGet(String type, Bundle data) {
-        // TODO: check permission
-
         Bundle result = new Bundle();
 
         int id = data.getInt(TRANSFER_PROVIDER_KEY_ID);
@@ -102,7 +115,7 @@ public class TransferProvider extends ContentProvider {
             Parcelable p = (Parcelable) sMap.get(id);
             result.putParcelable(TRANSFER_PROVIDER_KEY_DATA, p);
 
-            Log.d(Constants.TAG, "get | id: " + id + " p: " + p);
+            Log.d(TAG, "get | key: " + id + " parcelable: " + p);
 
             sMap.remove(id);
         }
