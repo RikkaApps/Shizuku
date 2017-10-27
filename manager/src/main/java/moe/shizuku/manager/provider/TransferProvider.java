@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.util.Random;
+
 import moe.shizuku.manager.Constants;
 
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
@@ -64,19 +66,19 @@ public class TransferProvider extends ContentProvider {
 
         Log.d(Constants.TAG, "" + Binder.getCallingUid());
 
-        int id = extras.getInt(TRANSFER_PROVIDER_KEY_ID) + 1;
-
         if (TRANSFER_PROVIDER_METHOD_PUT.equals(method)) {
-            return handlePut(id, arg, extras);
+            return handlePut(arg, extras);
         } else if (TRANSFER_PROVIDER_METHOD_PUT.equals(method)) {
-            return handleGet(id, arg);
+            return handleGet(arg, extras);
         }
 
         throw new SecurityException("bad request");
     }
 
-    private Bundle handlePut(int id, String arg, Bundle data) {
+    private Bundle handlePut(String arg, Bundle data) {
         // TODO: check permission
+
+        int id = generateId();
 
         if (TRANSFER_PROVIDER_TYPE_PARCELABLE.equals(arg)) {
             Parcelable p = data.getParcelable(TRANSFER_PROVIDER_KEY_DATA);
@@ -84,13 +86,17 @@ public class TransferProvider extends ContentProvider {
 
             Log.d(Constants.TAG, "put | id: " + id + " p: " + p);
         }
-        return new Bundle();
+        Bundle result = new Bundle();
+        result.putInt(TRANSFER_PROVIDER_KEY_ID, id);
+        return result;
     }
 
-    private Bundle handleGet(int id, String type) {
+    private Bundle handleGet(String type, Bundle data) {
         // TODO: check permission
 
         Bundle result = new Bundle();
+
+        int id = data.getInt(TRANSFER_PROVIDER_KEY_ID);
 
         if (TRANSFER_PROVIDER_TYPE_PARCELABLE.equals(type)) {
             Parcelable p = (Parcelable) sMap.get(id);
@@ -101,5 +107,13 @@ public class TransferProvider extends ContentProvider {
             sMap.remove(id);
         }
         return result;
+    }
+
+    private static int generateId() {
+        int id = new Random().nextInt(Integer.MAX_VALUE);
+        if (sMap.indexOfKey(id) >= 0) {
+            return generateId();
+        }
+        return id;
     }
 }

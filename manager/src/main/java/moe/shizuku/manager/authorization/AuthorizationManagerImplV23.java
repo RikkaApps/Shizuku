@@ -33,7 +33,6 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             os.writeString("PackageManager_checkPermission");
             os.writeLong(ShizukuClient.getToken().getMostSignificantBits());
             os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());
-            os.writeInt(Process.myUserHandle().hashCode());
             os.writeString(permName);
             os.writeString(pkgName);
             os.writeInt(userId);
@@ -54,7 +53,6 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             os.writeString("PackageManager_grantRuntimePermission");
             os.writeLong(ShizukuClient.getToken().getMostSignificantBits());
             os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());
-            os.writeInt(Process.myUserHandle().hashCode());
             os.writeString(packageName);
             os.writeString(permissionName);
             os.writeInt(userId);
@@ -73,7 +71,6 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             os.writeString("PackageManager_revokeRuntimePermission");
             os.writeLong(ShizukuClient.getToken().getMostSignificantBits());
             os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());
-            os.writeInt(Process.myUserHandle().hashCode());
             os.writeString(packageName);
             os.writeString(permissionName);
             os.writeInt(userId);
