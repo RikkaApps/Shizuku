@@ -2,17 +2,22 @@ package moe.shizuku.sample;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.support.annotation.WorkerThread;
 
+import java.io.IOException;
 import java.util.List;
 
 import moe.shizuku.api.ShizukuActivityManagerV22;
 import moe.shizuku.api.ShizukuActivityManagerV26;
 import moe.shizuku.api.ShizukuAppOpsServiceV26;
 import moe.shizuku.api.ShizukuPackageManagerV26;
-import moe.shizuku.lang.ShizukuRemoteException;
+import moe.shizuku.api.ShizukuUserManagerV21;
+import moe.shizuku.api.ShizukuUserManagerV26;
 
 /**
  * Created by rikka on 2017/10/19.
@@ -37,5 +42,27 @@ public class ShizukuCompat {
 
     public static List<PackageInfo> getInstalledPackages(int flags, int userId) throws RuntimeException {
         return ShizukuPackageManagerV26.getInstalledPackages(flags, userId);
+    }
+
+    public static Bitmap getUserIcon(int userHandle) {
+        Bitmap bitmap = null;
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            ParcelFileDescriptor pfd = ShizukuUserManagerV26.getUserIcon(0);
+            if (pfd != null) {
+                try {
+                    bitmap = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
+                } finally {
+                    try {
+                        pfd.close();
+                    } catch (IOException ignored) {
+                    }
+                }
+            }
+        } else {
+            bitmap = ShizukuUserManagerV21.getUserIcon(0);
+        }
+
+        return bitmap;
     }
 }

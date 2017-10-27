@@ -9,13 +9,17 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
+import android.os.UserHandle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.api.ShizukuUserManagerV21;
 import moe.shizuku.api.ShizukuUserManagerV26;
 
 import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
@@ -72,19 +76,18 @@ public class MainActivity extends Activity {
                     ShizukuClient.setToken(data);
                     ShizukuClient.saveToken(getSharedPreferences("token", MODE_PRIVATE));
 
-                    Toast.makeText(this, "Testing broadcast", Toast.LENGTH_SHORT).show();
-
                     try {
-                        ParcelFileDescriptor pfd = ShizukuUserManagerV26.getUserIcon(0);
+                        Toast.makeText(this, "getUserIcon", Toast.LENGTH_SHORT).show();
 
-                        Bitmap bitmap = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
                         ImageView imageView = new ImageView(this);
-                        imageView.setImageBitmap(bitmap);
+                        imageView.setImageBitmap(ShizukuCompat.getUserIcon(Process.myUserHandle().hashCode()));
 
                         new AlertDialog.Builder(this)
                                 .setView(imageView)
                                 .setPositiveButton(android.R.string.ok, null)
                                 .show();
+
+                        Toast.makeText(this, "broadcastIntent", Toast.LENGTH_SHORT).show();
 
                         ShizukuCompat.broadcastIntent(new Intent(ACTION));
                     } catch (RuntimeException e) {

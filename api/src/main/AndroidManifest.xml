@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="moe.shizuku.api">
+    package="moe.shizuku.privilege.api">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="moe.shizuku.manager.permission.API" android:maxSdkVersion="23"/>

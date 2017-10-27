@@ -12,8 +12,15 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        sign
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.sign
+        }
         release {
+            signingConfig signingConfigs.sign
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -34,3 +41,5 @@ dependencies {
     implementation project(':api')
     compileOnly project(':support-fragment-stub')
 }
+
+apply from: rootProject.file('signing.gradle')

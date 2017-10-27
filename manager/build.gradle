@@ -86,19 +86,4 @@ dependencies {
     implementation 'moe.shizuku.fontprovider:api:7'
 }
 
-def ksFile = file('signing.properties')
-def props = new Properties()
-if (ksFile.canRead()) {
-    props.load(new FileInputStream(ksFile))
-
-    if (props != null) {
-        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
-        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
-        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
-        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
-    } else {
-        println 'some entries in \'keystore.properties\' not found!'
-    }
-} else {
-    println '\'keystore.properties\' not found!'
-}
+apply from: rootProject.file('signing.gradle')
