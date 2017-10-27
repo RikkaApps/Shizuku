@@ -15,4 +15,8 @@ public class Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         throw new RuntimeException("STUB");
     }
+
+    public final void requestPermissions(String[] permissions, int requestCode) {
+        throw new RuntimeException("STUB");
+    }
 }

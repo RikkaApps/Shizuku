@@ -188,6 +188,28 @@ public class ShizukuClient {
     }
 
     /**
+     * Request permission on API 23+.
+     *
+     * @param fragment Fragment
+     */
+    public static void requestPermission(android.app.Fragment fragment) {
+        if (Build.VERSION.SDK_INT > 23) {
+            fragment.requestPermissions(new String[]{PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+        }
+    }
+
+    /**
+     * Request permission on API 23+.
+     *
+     * @param fragment Fragment
+     */
+    public static void requestPermission(android.support.v4.app.Fragment fragment) {
+        if (Build.VERSION.SDK_INT > 23) {
+            fragment.requestPermissions(new String[]{PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+        }
+    }
+
+    /**
      * Request token from manager app.
      * <p>
      * The result will be passed by {@link Activity#onActivityResult(int, int, Intent)}.
@@ -231,7 +253,7 @@ public class ShizukuClient {
      *
      * @see #checkSelfPermission(Context)
      *
-     * @param android.app.Fragment fragment
+     * @param fragment Fragment
      */
     public static void requestAuthorization(android.app.Fragment fragment) {
         if (!checkSelfPermission(fragment.getActivity())) {
@@ -260,7 +282,7 @@ public class ShizukuClient {
      *
      * @see #checkSelfPermission(Context)
      *
-     * @param android.support.v4.app.Fragment fragment
+     * @param fragment Fragment
      */
     public static void requestAuthorization(android.support.v4.app.Fragment fragment) {
         if (!checkSelfPermission(fragment.getActivity())) {
