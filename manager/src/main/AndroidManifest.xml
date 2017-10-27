@@ -12,13 +12,13 @@
     <permission
         android:name="moe.shizuku.manager.permission.API"
         android:description="@string/permission_description"
-        android:icon="@drawable/ic_noti_24dp"
+        android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_label"
         android:protectionLevel="normal" />
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
         android:description="@string/permission_description"
-        android:icon="@drawable/ic_noti_24dp"
+        android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_label"
         android:protectionLevel="dangerous" />
     <permission
