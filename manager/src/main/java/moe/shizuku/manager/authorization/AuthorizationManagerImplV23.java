@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Process;
-import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
@@ -24,7 +27,7 @@ import moe.shizuku.manager.Manifest;
 
 public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
-    public static int checkPermission(String permName, String pkgName, int userId) throws ShizukuRemoteException {
+    public static int checkPermission(String permName, String pkgName, int userId) throws RuntimeException {
         try {
             Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
@@ -40,11 +43,13 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             int _result = is.readInt();
             return _result;
         } catch (IOException e) {
-            throw new ShizukuRemoteException("Problem connect to shizuku server.", e);
+            throw new RuntimeException("Problem connect to shizuku server.", e);
+        } catch (ShizukuRemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
-    public static void grantRuntimePermission(String packageName, String permissionName, int userId) throws ShizukuRemoteException {
+    public static void grantRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
         try {
             Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
@@ -58,11 +63,13 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             os.writeInt(userId);
             is.readException();
         } catch (IOException e) {
-            throw new ShizukuRemoteException("Problem connect to shizuku server.", e);
+            throw new RuntimeException("Problem connect to shizuku server.", e);
+        } catch (ShizukuRemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
-    public static void revokeRuntimePermission(String packageName, String permissionName, int userId) throws ShizukuRemoteException {
+    public static void revokeRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
         try {
             Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);
             client.setSoTimeout(ShizukuConstants.TIMEOUT);
@@ -76,7 +83,9 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             os.writeInt(userId);
             is.readException();
         } catch (IOException e) {
-            throw new ShizukuRemoteException("Problem connect to shizuku server.", e);
+            throw new RuntimeException("Problem connect to shizuku server.", e);
+        } catch (ShizukuRemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
@@ -98,28 +107,56 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     @Override
-    public boolean granted(Context context, String packageName) {
+    public boolean granted(Context context, final String packageName) {
         try {
-            return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000)
-                    == PackageManager.PERMISSION_GRANTED;
-        } catch (ShizukuRemoteException ignored) {
+            return Single
+                    .fromCallable(new Callable<Integer>() {
+                        @Override
+                        public Integer call() throws Exception {
+                            return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .toFuture()
+                    .get() == PackageManager.PERMISSION_GRANTED;
+        } catch (Exception ignored) {
         }
         return false;
     }
 
     @Override
-    public void grant(Context context, String packageName) {
+    public void grant(Context context, final String packageName) {
         try {
-            grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
-        } catch (ShizukuRemoteException ignored) {
+            Single
+                    .fromCallable(new Callable<Object>() {
+                        @Override
+                        public Object call() throws Exception {
+                            grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+                            return null;
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .toFuture()
+                    .get();
+        } catch (Exception ignored) {
         }
     }
 
     @Override
-    public void revoke(Context context, String packageName) {
+    public void revoke(Context context, final String packageName) {
         try {
-            revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
-        } catch (ShizukuRemoteException ignored) {
+            Single
+                    .fromCallable(new Callable<Object>() {
+                        @Override
+                        public Object call() throws Exception {
+                            revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+                            return null;
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .toFuture()
+                    .get();
+        } catch (Exception ignored) {
         }
     }
 }

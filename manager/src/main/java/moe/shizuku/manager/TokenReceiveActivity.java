@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.service.WorkService;
 
@@ -30,12 +30,8 @@ public class TokenReceiveActivity extends Activity {
 
             //broadcast new token to other apps
             intent = new Intent(intent);
-            intent.setComponent(null);
-            intent.setAction(BuildConfig.APPLICATION_ID + ".intent.action.UPDATE_TOKEN");
-            intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_EXCLUDE_STOPPED_PACKAGES);
-
-            StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().build();
-            StrictMode.setThreadPolicy(tp);
+            intent.setAction(ShizukuConstants.ACTION_UPDATE_TOKEN);
+            intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
 
             for (String packageName : AuthorizationManager.getGrantedPackages(context)) {
                 context.sendBroadcast(intent.setPackage(packageName), Manifest.permission.API);

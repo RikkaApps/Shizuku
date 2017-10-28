@@ -2,6 +2,7 @@ package moe.shizuku.manager.authorization;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.WorkerThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * Created by Rikka on 2017/5/17.
  */
 
+@WorkerThread
 public class AuthorizationManager {
 
     private static AuthorizationManagerImpl sImpl;

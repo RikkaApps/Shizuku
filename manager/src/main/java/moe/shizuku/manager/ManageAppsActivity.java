@@ -3,7 +3,6 @@ package moe.shizuku.manager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
@@ -20,9 +19,6 @@ public class ManageAppsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apps);
 

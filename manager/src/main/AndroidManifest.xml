@@ -39,7 +39,7 @@
             android:enabled="@bool/auth_activity_enabled"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:permission="moe.shizuku.manager.permission.API"
+            android:permission="@string/permission"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
@@ -52,7 +52,7 @@
             android:enabled="@bool/auth_activity_v23_enabled"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:permission="moe.shizuku.manager.permission.API_V23"
+            android:permission="@string/permission"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
@@ -113,6 +113,13 @@
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
+
+        <provider
+            android:name=".provider.TokenProvider"
+            android:authorities="moe.shizuku.manager.tokenprovider"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="@string/permission"/>
 
     </application>
 
