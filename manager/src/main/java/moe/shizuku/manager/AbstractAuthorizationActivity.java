@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuConstants;
+import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 
 public abstract class AbstractAuthorizationActivity extends Activity {
@@ -16,6 +20,15 @@ public abstract class AbstractAuthorizationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public ShizukuState getServerState() {
+        return Single.fromCallable(new Callable<ShizukuState>() {
+            @Override
+            public ShizukuState call() throws Exception {
+                return ShizukuClient.getState();
+            }
+        }).subscribeOn(Schedulers.io()).blockingGet();
     }
 
     public void setResult(boolean granted, String packageName) {

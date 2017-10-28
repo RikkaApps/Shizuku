@@ -14,6 +14,7 @@ import android.util.SparseArray;
 
 import java.util.Random;
 
+import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
@@ -43,6 +44,7 @@ public class TransferProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        ShizukuManagerApplication.init(getContext());
         return true;
     }
 

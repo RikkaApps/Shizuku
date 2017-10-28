@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 
@@ -27,7 +31,7 @@ public class AuthorizationActivityV23 extends AbstractAuthorizationActivity {
             return;
         }
 
-        ShizukuState shizukuState = ShizukuClient.getState();
+        ShizukuState shizukuState = getServerState();
         int msg = 0;
         switch (shizukuState.getCode()) {
             case ShizukuState.STATUS_UNAUTHORIZED:

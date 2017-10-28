@@ -117,8 +117,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
                         }
                     })
                     .subscribeOn(Schedulers.io())
-                    .toFuture()
-                    .get() == PackageManager.PERMISSION_GRANTED;
+                    .blockingGet() == PackageManager.PERMISSION_GRANTED;
         } catch (Exception ignored) {
         }
         return false;
@@ -136,8 +135,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
                         }
                     })
                     .subscribeOn(Schedulers.io())
-                    .toFuture()
-                    .get();
+                    .blockingGet();
         } catch (Exception ignored) {
         }
     }
@@ -154,8 +152,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
                         }
                     })
                     .subscribeOn(Schedulers.io())
-                    .toFuture()
-                    .get();
+                    .blockingGet();
         } catch (Exception ignored) {
         }
     }
