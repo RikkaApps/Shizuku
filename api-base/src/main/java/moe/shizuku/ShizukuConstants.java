@@ -19,6 +19,7 @@ public final class ShizukuConstants {
 
     public static final String ACTION_SERVER_STARTED = MANAGER_APPLICATION_ID + ".intent.action.SERVER_STARTED";
     public static final String ACTION_REQUEST_AUTHORIZATION = MANAGER_APPLICATION_ID + ".intent.action.REQUEST_AUTHORIZATION";
+    public static final String ACTION_UPDATE_TOKEN = MANAGER_APPLICATION_ID + ".intent.action.UPDATE_TOKEN";
 
     public static final String EXTRA_TOKEN_MOST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_MOST_SIG";
     public static final String EXTRA_TOKEN_LEAST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_LEAST_SIG";
@@ -30,4 +31,6 @@ public final class ShizukuConstants {
     public static final String TRANSFER_PROVIDER_TYPE_PARCELABLE = "type_parcelable";
     public static final String TRANSFER_PROVIDER_KEY_ID = "id";
     public static final String TRANSFER_PROVIDER_KEY_DATA = "data";
+
+    public static final Uri TOKEN_PROVIDER_URI = Uri.parse("content://moe.shizuku.manager.tokenprovider");
 }

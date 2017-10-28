@@ -2,13 +2,14 @@ package moe.shizuku.api;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Process;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -56,10 +57,61 @@ public class ShizukuClient {
 
     private static UUID sToken = new UUID(0, 0);
 
-    private static TokenUpdateReceiver sTokenUpdateReceiver;
+    public static class TokenUpdatedReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!ShizukuConstants.ACTION_UPDATE_TOKEN.equals(intent.getAction())) {
+                return;
+            }
+
+            ShizukuClient.setToken(intent);
+        }
+    }
+
+    private static TokenUpdatedReceiver sTokenUpdateReceiver;
+
+    public interface TokenUpdatedListener {
+
+        /**
+         * Save token here.
+         *
+         * @param token Token
+         */
+        void onTokenUpdated(UUID token);
+    }
+
+    private static TokenUpdatedListener sTokenUpdatedListener;
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
+
+    private static SharedPreferences sPreferences;
+
+    /**
+     * Initialize ShizukuClient with built-in token storage logic.
+     * <p>Only need call once in Application init.
+     *
+     * @param context Context
+     */
+    public static void initialize(Context context) {
+        if (getManagerVersion(context) <= 106) {
+            return;
+        }
+
+        sContext = context;
+        sPreferences = context.getSharedPreferences("moe.shizuku.privilege.api.token", Context.MODE_PRIVATE);
+        sToken = loadToken(sPreferences);
+        sTokenUpdatedListener = new TokenUpdatedListener() {
+            @Override
+            public void onTokenUpdated(UUID token) {
+                saveToken(sPreferences);
+            }
+        };
+
+        requestToken(context);
+        registerTokenUpdateReceiver(context, new TokenUpdatedReceiver());
+    }
 
     public static void setContext(Context context) {
         sContext = context;
@@ -69,8 +121,15 @@ public class ShizukuClient {
         return sContext;
     }
 
+    public static void setTokenUpdatedListener(TokenUpdatedListener tokenUpdatedListener) {
+        sTokenUpdatedListener = tokenUpdatedListener;
+    }
+
     /**
      * Disable detection of network operations for current thread.
+     * <p>
+     * Highly not recommended. According to user report, on some Samsung devices, use socket in
+     * main thread when battery saver is on will cause ANR.
      */
     public static void setPermitNetworkThreadPolicy() {
         StrictMode.ThreadPolicy permitNetworkPolicy = new StrictMode.ThreadPolicy.Builder(StrictMode.getThreadPolicy())
@@ -121,6 +180,10 @@ public class ShizukuClient {
      */
     public static void setToken(UUID token) {
         sToken = token;
+
+        if (sTokenUpdatedListener != null) {
+            sTokenUpdatedListener.onTokenUpdated(token);
+        }
     }
 
     /**
@@ -130,12 +193,10 @@ public class ShizukuClient {
      *
      * @param preferences SharedPreferences
      */
-    public static void loadToken(SharedPreferences preferences) {
+    private static UUID loadToken(SharedPreferences preferences) {
         long mostSig = preferences.getLong(KEY_TOKEN_MOST_SIG, 0);
         long leastSig = preferences.getLong(KEY_TOKEN_LEAST_SIG, 0);
-        if (mostSig != 0 && leastSig != 0) {
-            setToken(new UUID(mostSig, leastSig));
-        }
+        return new UUID(mostSig, leastSig);
     }
 
     /**
@@ -145,7 +206,7 @@ public class ShizukuClient {
      *
      * @param preferences SharedPreferences
      */
-    public static void saveToken(SharedPreferences preferences) {
+    private static void saveToken(SharedPreferences preferences) {
         long mostSig = getToken().getLeastSignificantBits();
         long leastSig = getToken().getLeastSignificantBits();
         if (mostSig != 0 && leastSig != 0) {
@@ -165,6 +226,19 @@ public class ShizukuClient {
     public static void setToken(Intent intent) {
         long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
+        if (mostSig != 0 && leastSig != 0) {
+            setToken(new UUID(mostSig, leastSig));
+        }
+    }
+
+    /**
+     * Set token from Bundle passed by {@link #requestToken(Context)}.
+     *
+     * @param bundle bundle
+     */
+    private static void setToken(Bundle bundle) {
+        long mostSig = bundle.getLong(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = bundle.getLong(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
         if (mostSig != 0 && leastSig != 0) {
             setToken(new UUID(mostSig, leastSig));
         }
@@ -223,6 +297,34 @@ public class ShizukuClient {
     }
 
     /**
+     * Request token from manager app if user have already granted permission.
+     * <p>
+     * On API 23+, Shizuku Manager use Android's runtime permission, you should request permission
+     * by yourself first.
+     *
+     * @param context Context
+     * @return true if token returned
+     */
+    public static boolean requestToken(Context context) {
+        if (!checkSelfPermission(context)) {
+            return false;
+        }
+
+        try {
+            Bundle bundle = context.getContentResolver().call(
+                    ShizukuConstants.TOKEN_PROVIDER_URI, "request", null, null);
+            if (bundle != null) {
+                setToken(bundle);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            Log.w(TAG, "can't request token use ContentProvider", e);
+        }
+        return false;
+    }
+
+    /**
      * Request token from manager app.
      * <p>
      * The result will be passed by {@link Activity#onActivityResult(int, int, Intent)}.
@@ -247,7 +349,11 @@ public class ShizukuClient {
         Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            try {
+                activity.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            } catch (Exception e) {
+                Log.w(TAG, "can't startActivityForResult", e);
+            }
         }
     }
 
@@ -276,7 +382,11 @@ public class ShizukuClient {
         Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
-            fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            try {
+                fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            } catch (Exception e) {
+                Log.w(TAG, "can't startActivityForResult", e);
+            }
         }
     }
 
@@ -305,23 +415,26 @@ public class ShizukuClient {
         Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
-            fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            try {
+                fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            } catch (Exception e) {
+                Log.w(TAG, "can't startActivityForResult", e);
+            }
         }
     }
 
     /**
      * Register receiver to receive token update broadcast, old receiver will be unregistered automatically
      *
-     * @see TokenUpdateReceiver
      * @param context Context
      * @param receiver Receiver
      */
-    public static void registerTokenUpdateReceiver(Context context, TokenUpdateReceiver receiver) {
+    public static void registerTokenUpdateReceiver(Context context, TokenUpdatedReceiver receiver) {
         unregisterTokenUpdateReceiver(context);
 
         sTokenUpdateReceiver = receiver;
         context.registerReceiver(sTokenUpdateReceiver,
-                new IntentFilter(ShizukuConstants.MANAGER_APPLICATION_ID + ".intent.action.UPDATE_TOKEN"),
+                new IntentFilter(ShizukuConstants.ACTION_UPDATE_TOKEN),
                 ShizukuConstants.MANAGER_APPLICATION_ID + ".permission.RECEIVE_SERVER_STARTED",
                 null);
     }
@@ -364,7 +477,7 @@ public class ShizukuClient {
             is.readException();
             return is.readParcelable(ShizukuState.CREATOR);
         } catch (Exception e) {
-            Log.w(TAG, "!!!can't connect to server: " + e.getMessage());
+            Log.w(TAG, "can't connect to server: " + e.getMessage());
         }
         return ShizukuState.createUnknown();
     }

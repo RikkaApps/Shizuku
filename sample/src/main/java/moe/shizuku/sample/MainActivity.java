@@ -7,20 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.os.Process;
-import android.os.UserHandle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import moe.shizuku.api.ShizukuClient;
-import moe.shizuku.api.ShizukuUserManagerV21;
-import moe.shizuku.api.ShizukuUserManagerV26;
 
 import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
 
@@ -47,15 +40,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ShizukuClient.isManagerInstalled(this)) {
+            return;
+        }
+
+        // Highly not recommended.
         ShizukuClient.setPermitNetworkThreadPolicy();
-        ShizukuClient.setContext(getApplicationContext());
 
-        ShizukuClient.loadToken(getSharedPreferences("token", MODE_PRIVATE));
+        ShizukuClient.initialize(getApplicationContext());
 
-        if (ShizukuClient.checkSelfPermission(this)) {
-            ShizukuClient.requestAuthorization(this);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+        if (!ShizukuClient.getState().isAuthorized()) {
+            if (ShizukuClient.checkSelfPermission(this)) {
+                ShizukuClient.requestAuthorization(this);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+            }
         }
 
         registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION));
@@ -74,7 +73,6 @@ public class MainActivity extends Activity {
             case ShizukuClient.REQUEST_CODE_AUTHORIZATION:
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
                     ShizukuClient.setToken(data);
-                    ShizukuClient.saveToken(getSharedPreferences("token", MODE_PRIVATE));
 
                     try {
                         Toast.makeText(this, "getUserIcon", Toast.LENGTH_SHORT).show();
