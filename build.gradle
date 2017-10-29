@@ -62,7 +62,7 @@ ext {
     targetSdkVersion = 26
     buildToolsVersion = "26.0.2"
     versionCode = gitCommitCount
-    versionName = "2.0.0 dev"
+    versionName = "2.0.0"
     apiBaseLibraryVersion = '8'
     apiLibraryVersion = '3'
 }
