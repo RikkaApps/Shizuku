@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+import moe.shizuku.ShizukuConstants;
 import moe.shizuku.manager.utils.Shell;
 import moe.shizuku.support.utils.IOUtils;
 
@@ -39,7 +40,8 @@ public class ServerLauncher {
     }
 
     private static void copyDex(Context context) {
-        String dex = String.format(Locale.ENGLISH, "server-%d.dex", Build.VERSION.SDK_INT);
+        int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
+        String dex = String.format(Locale.ENGLISH, "server-%d.dex", apiVersion);
         File file = new File(context.getExternalFilesDir(null), dex);
 
         DEX_PATH = file.getAbsolutePath();

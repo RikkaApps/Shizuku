@@ -218,7 +218,7 @@ int main(int argc, char **argv) {
                 if (count >= 5) {
                     printf("\ninfo: " SERVER_NAME " started.\n");
                     fflush(stdout);
-                    //showServerLogs();
+                    showServerLogs();
                     return EXIT_SUCCESS;
                 }
             }
@@ -229,7 +229,7 @@ int main(int argc, char **argv) {
         } else {
             printf("\ninfo: " SERVER_NAME " started.\n");
             fflush(stdout);
-            //showServerLogs();
+            showServerLogs();
             return EXIT_SUCCESS;
         }
     }
