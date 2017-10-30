@@ -3,6 +3,7 @@ package moe.shizuku.manager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -12,13 +13,26 @@ import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.fontprovider.FontProviderClient;
 
 public abstract class AbstractAuthorizationActivity extends Activity {
 
     private static final String ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT";
 
+    private static boolean sFontInitialized = false;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (!sFontInitialized) {
+            FontProviderClient client = FontProviderClient.create(this);
+            if (client != null) {
+                client.replace("Noto Sans CJK",
+                        "sans-serif", "sans-serif-medium");
+            }
+
+            sFontInitialized = true;
+        }
+
         super.onCreate(savedInstanceState);
     }
 

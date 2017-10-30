@@ -13,21 +13,18 @@ import moe.shizuku.fontprovider.FontProviderClient;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static boolean sFontProviderInitialized;
+    private static boolean sFontInitialized = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (!sFontProviderInitialized) {
-            FontProviderClient.create(this, new FontProviderClient.Callback() {
-                @Override
-                public boolean onServiceConnected(FontProviderClient client, ServiceConnection serviceConnection) {
-                    client.replace("sans-serif", "Noto Sans CJK");
-                    client.replace("sans-serif-medium", "Noto Sans CJK");
-                    return true;
-                }
-            });
+        if (!sFontInitialized) {
+            FontProviderClient client = FontProviderClient.create(this);
+            if (client != null) {
+                client.replace("Noto Sans CJK",
+                        "sans-serif", "sans-serif-medium");
+            }
 
-            sFontProviderInitialized = true;
+            sFontInitialized = true;
         }
 
         super.onCreate(savedInstanceState);
