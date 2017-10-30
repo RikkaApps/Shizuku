@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku Manager</string>
 
-    <string name="permission_label">use Shizuku API</string>
-    <string name="permission_description">use APIs provided by Shizuku</string>
+    <string name="permission_group_label" translatable="false">Shizuku</string>
+    <string name="permission_group_description">access privileged APIs provided by Shizuku</string>
+    <string name="permission_label">access Shizuku privileged API</string>
+    <string name="permission_description">Allow the app to use privileged APIs provided by Shizuku.</string>
 
     <string name="server_running">running version %2$d (%1$s)</string>
     <string name="server_running_update">running version %2$d (%1$s)\nrestart server to update to %3$d</string>

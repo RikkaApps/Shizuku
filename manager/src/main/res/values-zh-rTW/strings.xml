@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_label">使用 Shizuku API</string>
-    <string name="permission_description">使用 Shizuku 提供的 API</string>
+    <string name="permission_group_description">使用由 Shizuku 提供的特權 API</string>
+    <string name="permission_label">使用 Shizuku 特權 API</string>
+    <string name="permission_description">允許應用使用由 Shizuku 提供的特權 API。</string>
 
     <string name="server_running">版本 %2$d 運行中（%1$s）</string>
     <string name="server_running_update">版本 %2$d 運行中（%1$s）\n重啟服務以升級至版本 %3$d</string>
