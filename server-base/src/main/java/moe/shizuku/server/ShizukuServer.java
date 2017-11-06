@@ -95,8 +95,10 @@ public class ShizukuServer extends Handler {
             for (UserInfo userInfo : Compat.getUsers()) {
                 sendTokenToManger(token, userInfo.id);
             }
-        } catch (RemoteException e) {
-            ServerLog.e("failed send token to manager app (filed to get users)", e);
+        } catch (Exception e) {
+            ServerLog.e("exception when call getUsers, try user 0", e);
+
+            sendTokenToManger(token, 0);
         }
     }
 
@@ -117,7 +119,7 @@ public class ShizukuServer extends Handler {
             Compat.startActivityAsUser(intent, mimeType, userId);
 
             ServerLog.i("send token to manager app in user " + userId);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             ServerLog.e("failed send token to manager app", e);
         }
     }
