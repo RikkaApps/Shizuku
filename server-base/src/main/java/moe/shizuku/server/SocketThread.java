@@ -68,6 +68,7 @@ public class SocketThread implements Runnable {
         for (; ; ) {
             try {
                 Socket socket = mServerSocket.accept();
+                socket.setSoTimeout(30000);
                 mThreadPool.execute(new HandlerRunnable(socket, mRequestHandler));
             } catch (IOException e) {
                 if (SocketException.class.equals(e.getClass()) && "Socket closed".equals(e.getMessage())) {

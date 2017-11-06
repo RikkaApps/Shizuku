@@ -129,7 +129,9 @@ public class RequestHandlerClassCreator {
         sb.append('{');
         method.getParameters().forEach(parameter -> sb.append(IOBlockHelper.getReadStatement(parameter.getNameAsString(), parameter.getType())));
 
-        if ("ParcelFileDescriptor".equals(method.getType().asString())) {
+        if ("IBinder".equals(method.getType().asString())
+                || IOBlockHelper.isTypeInterface(method.getType())
+                || "ParcelFileDescriptor".equals(method.getType().asString())) {
             sb.append("int clientUserId = is.readInt();");
         }
         sb.append("try{");

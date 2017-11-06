@@ -13,7 +13,7 @@ public final class ShizukuConstants {
     public static final int PORT = 55609;
     public static final InetAddress HOST = InetAddress.getLoopbackAddress();
     public static final int TIMEOUT = 10000;
-    public static final int SERVER_VERSION = 26;
+    public static final int SERVER_VERSION = 27;
     public static final int MAX_SDK = 26;
 
     public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";
@@ -30,6 +30,7 @@ public final class ShizukuConstants {
     public static final String TRANSFER_PROVIDER_METHOD_GET = "get";
     public static final String TRANSFER_PROVIDER_METHOD_PUT = "put";
     public static final String TRANSFER_PROVIDER_TYPE_PARCELABLE = "type_parcelable";
+    public static final String TRANSFER_PROVIDER_TYPE_BINDER = "type_binder";
     public static final String TRANSFER_PROVIDER_KEY_ID = "id";
     public static final String TRANSFER_PROVIDER_KEY_DATA = "data";
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_server_summary_adb"><![CDATA[
+    <b>以下步骤需要在每次重新启动后进行。</b>
+    <p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。
+    <br>在电脑的终端中输入以下内容<p>
+    <font face="monospace">%s</font>
+    <p>按下回车，如果成功将看到主界面运行状态刷新。
+    <p><b>由于系统行为变化，在 Android 8.0 之后，请不要关闭“USB 调试”或改变 USB 使用模式，否则服务将被停止。</b>]]></string>
+</resources>

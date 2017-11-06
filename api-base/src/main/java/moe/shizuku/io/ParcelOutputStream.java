@@ -1,5 +1,6 @@
 package moe.shizuku.io;
 
+import android.app.IApplicationThread;
 import android.content.IContentProvider;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import moe.shizuku.api.ShizukuClient;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_URI;
 
@@ -259,7 +261,7 @@ public class ParcelOutputStream extends DataOutputStream {
 
     public final void writeParcelable(Parcelable parcelable) throws IOException {
         if (parcelable == null) {
-            writeInt(-1);
+            writeBytes((byte[]) null);
             return;
         }
 
@@ -313,11 +315,29 @@ public class ParcelOutputStream extends DataOutputStream {
     }
 
     public final void writeBinder(IBinder binder) throws IOException {
-        writeByte(0);
+        int key = -1;
+        if (binder == null) {
+            writeInt(key);
+            return;
+        }
+
+        try {
+            Bundle data = new Bundle();
+            data.putBinder(TRANSFER_PROVIDER_KEY_DATA, binder);
+
+            Bundle result = ShizukuClient.getContext().getContentResolver()
+                    .call(TRANSFER_PROVIDER_URI, TRANSFER_PROVIDER_METHOD_PUT, TRANSFER_PROVIDER_TYPE_BINDER, data);
+
+            key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
+        } catch (Exception e) {
+        }
+
+        writeInt(key);
+        writeInt(android.os.Process.myUserHandle().getIdentifier());
     }
 
     public final void writeInterface(IInterface _interface) throws IOException {
-        writeByte(0);
+        writeBinder(_interface.asBinder());
     }
 
     public final void writeBinderList(List<? extends IBinder> binders) throws IOException {
@@ -328,27 +348,30 @@ public class ParcelOutputStream extends DataOutputStream {
         writeByte(0);
     }
 
-    public final void writeBinderArray(IBinder[] binders) throws IOException {
+    /*public final void writeBinderArray(IBinder[] binders) throws IOException {
         writeByte(0);
     }
 
     public final void writeInterfaceArray(IInterface[] interfaces) throws IOException {
         writeByte(0);
-    }
+    }*/
 
     /**
      * Send ParcelFileDescriptor to server via ContentProvider.
      * <p>
      * Keep sync with ServerParcelInputStream<br>
-     * int: client userId<br>
      * int: key<br>
+     * int: client userId<br>
      *
      * @param pfd ParcelFileDescriptor
      */
     public void writeParcelFileDescriptor(ParcelFileDescriptor pfd) throws IOException {
-        writeInt(android.os.Process.myUserHandle().getIdentifier());
-
         int key = -1;
+        if (pfd == null) {
+            writeInt(key);
+            return;
+        }
+
         try {
             Bundle data = new Bundle();
             data.putParcelable(TRANSFER_PROVIDER_KEY_DATA, pfd);
@@ -361,5 +384,6 @@ public class ParcelOutputStream extends DataOutputStream {
         }
 
         writeInt(key);
+        writeInt(android.os.Process.myUserHandle().getIdentifier());
     }
 }

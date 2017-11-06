@@ -66,5 +66,5 @@ ext {
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
     apiBaseLibraryVersion = '8'
-    apiLibraryVersion = '3'
+    apiLibraryVersion = '4'
 }

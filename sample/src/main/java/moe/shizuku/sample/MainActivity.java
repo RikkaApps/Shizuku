@@ -2,17 +2,23 @@ package moe.shizuku.sample;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ITaskStackListener;
+import android.app.TaskStackListener;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
+import android.os.RemoteException;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import moe.shizuku.api.ShizukuActivityManagerV26;
 import moe.shizuku.api.ShizukuClient;
 
 import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
@@ -55,6 +61,8 @@ public class MainActivity extends Activity {
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
             }
+        } else {
+            test();
         }
 
         registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION));
@@ -65,6 +73,43 @@ public class MainActivity extends Activity {
         super.onDestroy();
 
         unregisterReceiver(mBroadcastReceiver);
+
+        /*if (mTaskStackListener != null) {
+            ShizukuActivityManagerV26.unregisterTaskStackListener(mTaskStackListener);
+        }*/
+    }
+
+    private ITaskStackListener mTaskStackListener;
+
+    private void test() {
+        try {
+            Toast.makeText(this, "getUserIcon", Toast.LENGTH_SHORT).show();
+
+            ImageView imageView = new ImageView(this);
+            imageView.setImageBitmap(ShizukuCompat.getUserIcon(Process.myUserHandle().hashCode()));
+
+            new AlertDialog.Builder(this)
+                    .setView(imageView)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+
+            Toast.makeText(this, "broadcastIntent", Toast.LENGTH_SHORT).show();
+
+            //ShizukuCompat.broadcastIntent(new Intent(ACTION));
+
+            Toast.makeText(this, "registerTaskStackListener", Toast.LENGTH_SHORT).show();
+
+            mTaskStackListener = new TaskStackListener() {
+                @Override
+                public void onTaskStackChanged() throws RemoteException {
+                    String pkg = ShizukuActivityManagerV26.getTasks(1, 0).get(0).topActivity.getPackageName();
+                    Log.d("ShizukuSample", pkg);
+                }
+            };
+            ShizukuActivityManagerV26.registerTaskStackListener(mTaskStackListener);
+        } catch (RuntimeException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -74,23 +119,7 @@ public class MainActivity extends Activity {
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
                     ShizukuClient.setToken(data);
 
-                    try {
-                        Toast.makeText(this, "getUserIcon", Toast.LENGTH_SHORT).show();
-
-                        ImageView imageView = new ImageView(this);
-                        imageView.setImageBitmap(ShizukuCompat.getUserIcon(Process.myUserHandle().hashCode()));
-
-                        new AlertDialog.Builder(this)
-                                .setView(imageView)
-                                .setPositiveButton(android.R.string.ok, null)
-                                .show();
-
-                        Toast.makeText(this, "broadcastIntent", Toast.LENGTH_SHORT).show();
-
-                        ShizukuCompat.broadcastIntent(new Intent(ACTION));
-                    } catch (RuntimeException e) {
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    test();
                 } else {
                     // user denied or error
                 }

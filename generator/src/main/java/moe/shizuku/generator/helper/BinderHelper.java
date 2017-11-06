@@ -37,6 +37,7 @@ public class BinderHelper {
         addName("ISearchManager",               "search");
         addName("INotificationManager",         "notification");
         addName("IStatusBarService",            "statusbar");
+        addName("IOverlayManager",              "overlay");
 
     }
 

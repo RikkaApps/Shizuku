@@ -27,6 +27,7 @@ import moe.shizuku.lang.ShizukuRemoteException;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_URI;
 
@@ -318,16 +319,26 @@ public class ParcelInputStream extends DataInputStream {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
     }
 
-    public final IBinder readBinder() throws IOException {
-        //noinspection ResultOfMethodCallIgnored
-        readByte();
-        return null;
-    }
+    /**
+     * Read IBinder from server via ContentProvider.
+     * <p>
+     * int: key
+     *
+     * @return IBinder
+     * @throws IOException connection problem
+     */
+    public IBinder readBinder() throws IOException {
+        int key = readInt();
+        if (key == -1) {
+            return null;
+        }
 
-    public final IInterface readInterface() throws IOException {
-        //noinspection ResultOfMethodCallIgnored
-        readByte();
-        return null;
+        Bundle bundle = new Bundle();
+        bundle.putInt(TRANSFER_PROVIDER_KEY_ID, key);
+
+        return ShizukuClient.getContext().getContentResolver()
+                .call(TRANSFER_PROVIDER_URI, TRANSFER_PROVIDER_METHOD_GET, TRANSFER_PROVIDER_TYPE_BINDER, bundle)
+                .getBinder(TRANSFER_PROVIDER_KEY_DATA);
     }
 
     public final List<IBinder> readBinderList() throws IOException {
@@ -336,13 +347,13 @@ public class ParcelInputStream extends DataInputStream {
         return null;
     }
 
-    public final List<? extends IInterface> readInterfaceList() throws IOException {
+    public final <T extends IInterface> List<T> readInterfaceList() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         readByte();
         return null;
     }
 
-    public final IBinder[] readBinderArray() throws IOException {
+    /*public final IBinder[] readBinderArray() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         readByte();
         return null;
@@ -352,7 +363,7 @@ public class ParcelInputStream extends DataInputStream {
         //noinspection ResultOfMethodCallIgnored
         readByte();
         return null;
-    }
+    }*/
 
     /**
      * Read ParcelFileDescriptor from server via ContentProvider.
@@ -360,11 +371,10 @@ public class ParcelInputStream extends DataInputStream {
      * int: key
      *
      * @return ParcelFileDescriptor
-     * @throws IOException
+     * @throws IOException connection problem
      */
     public ParcelFileDescriptor readParcelFileDescriptor() throws IOException {
         int key = readInt();
-
         if (key == -1) {
             return null;
         }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_server_summary_adb"><![CDATA[
+    <<b>You will have to re-execute following steps every time you reboot your device.</b>
+    <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
+    <br>Type following content into computer\'s terminal and hit Enter
+    <p>
+    <font face="monospace">%s</font>
+    <p>The server running status will refresh if this operation succeed
+    <p><b>After Android 8.0, due to system behavior changes, please do not disable neither \"USB debugging\" nor change USB usage mode, or the server will be stopped.</b>]]></string>
+</resources>

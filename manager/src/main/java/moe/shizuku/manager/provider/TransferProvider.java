@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
 
 public class TransferProvider extends ContentProvider {
@@ -93,15 +95,20 @@ public class TransferProvider extends ContentProvider {
         return true;
     }
 
-    private Bundle handlePut(String arg, Bundle data) {
+    private Bundle handlePut(String type, Bundle data) {
         int uid = Binder.getCallingUid();
         int id = generateId();
 
-        if (TRANSFER_PROVIDER_TYPE_PARCELABLE.equals(arg)) {
+        if (TRANSFER_PROVIDER_TYPE_PARCELABLE.equals(type)) {
             Parcelable p = data.getParcelable(TRANSFER_PROVIDER_KEY_DATA);
             sMap.append(id, p);
 
             Log.d(TAG, "put | key: " + id + " parcelable: " + p);
+        } else if (TRANSFER_PROVIDER_TYPE_BINDER.equals(type)) {
+            IBinder p = data.getBinder(TRANSFER_PROVIDER_KEY_DATA);
+            sMap.append(id, p);
+
+            Log.d(TAG, "put | key: " + id + " binder: " + p);
         }
         Bundle result = new Bundle();
         result.putInt(TRANSFER_PROVIDER_KEY_ID, id);
@@ -118,6 +125,13 @@ public class TransferProvider extends ContentProvider {
             result.putParcelable(TRANSFER_PROVIDER_KEY_DATA, p);
 
             Log.d(TAG, "get | key: " + id + " parcelable: " + p);
+
+            sMap.remove(id);
+        } else if (TRANSFER_PROVIDER_TYPE_BINDER.equals(type)) {
+            IBinder p = (IBinder) sMap.get(id);
+            result.putBinder(TRANSFER_PROVIDER_KEY_DATA, p);
+
+            Log.d(TAG, "get | key: " + id + " binder: " + p);
 
             sMap.remove(id);
         }

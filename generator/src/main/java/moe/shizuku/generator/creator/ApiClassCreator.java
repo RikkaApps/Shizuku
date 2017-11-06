@@ -10,6 +10,8 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.VoidType;
 
+import org.omg.IOP.IORHelper;
+
 import java.util.EnumSet;
 
 import moe.shizuku.generator.helper.IOBlockHelper;
@@ -81,9 +83,9 @@ public class ApiClassCreator {
                 .forEach(nodeList::add);*/
                 .forEach(parameter -> {
                     if (IOBlockHelper.isTypeBinderOrInterface(parameter.getType())) {
-                        if (!"IBinder".equals(parameter.getNameAsString())) {
+                        /*if (!"IBinder".equals(parameter.getNameAsString())) {
                             parameter.setType("IInterface");
-                        }
+                        }*/
                     } else if (parameter.getType().asString().startsWith("ParceledListSlice")) {
                         String t = ((ClassOrInterfaceType) parameter.getType()).getTypeArguments().get().stream().findFirst().get().asString();
                         parameter.setType(JavaParser.parseClassOrInterfaceType("List<" + t + ">").asString());
@@ -117,7 +119,9 @@ public class ApiClassCreator {
         method.getParameters().forEach(parameter ->
                 sb.append(IOBlockHelper.getWriteStatement(parameter.getNameAsString(), parameter.getType())));
 
-        if ("ParcelFileDescriptor".equals(method.getType().asString())) {
+        if ("IBinder".equals(method.getType().asString())
+            || IOBlockHelper.isTypeInterface(method.getType())
+            || "ParcelFileDescriptor".equals(method.getType().asString())) {
             sb.append("os.writeInt(android.os.Process.myUserHandle().getIdentifier());");
         }
 

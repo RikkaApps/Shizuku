@@ -19,6 +19,7 @@ import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_NAME;
+import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
 
 /**
@@ -38,6 +39,33 @@ public class ServerParcelOutputStream extends ParcelOutputStream {
      */
     public ServerParcelOutputStream(OutputStream out) {
         super(out);
+    }
+
+    /**
+     * Send IBinder to client via ContentProvider.
+     *
+     * @param userId client user id
+     * @param binder IBinder
+     */
+    public final void writeBinder(int userId, IBinder binder) throws IOException {
+        int key = -1;
+
+        try {
+            IBinder token = new Binder();
+            IContentProvider provider = Compat.getContentProvider(TRANSFER_PROVIDER_NAME, userId, token);
+            if (provider != null) {
+                Bundle data = new Bundle();
+                data.putBinder(TRANSFER_PROVIDER_KEY_DATA, binder);
+
+                Bundle result = provider.call(null, TRANSFER_PROVIDER_METHOD_PUT, TRANSFER_PROVIDER_TYPE_BINDER, data);
+
+                key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
+            }
+        } catch (Exception e) {
+            ServerLog.e("failed send Binder to manager app", e);
+        }
+
+        writeInt(key);
     }
 
     /**
