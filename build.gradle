@@ -54,7 +54,7 @@ task upload(type: GradleBuild) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.0.0'
+def baseVersionName = '2.1.0-beta'
 
 ext {
     supportLibraryVersion = '26.1.0'

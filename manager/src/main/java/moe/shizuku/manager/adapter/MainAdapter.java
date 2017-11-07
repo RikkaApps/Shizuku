@@ -14,6 +14,7 @@ import moe.shizuku.manager.viewholder.ServerStatusViewHolder;
 import moe.shizuku.manager.viewholder.StartAdbViewHolder;
 import moe.shizuku.manager.viewholder.StartRootViewHolder;
 import moe.shizuku.support.recyclerview.BaseRecyclerViewAdapter;
+import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.recyclerview.CreatorPool;
 
 /**
@@ -22,14 +23,24 @@ import moe.shizuku.support.recyclerview.CreatorPool;
 
 public class MainAdapter extends BaseRecyclerViewAdapter {
 
+    private static final Object ITEM_ADB = new Object();
+
     private static class MainCreatorPool extends CreatorPool {
 
         @Override
         public int getCreatorIndex(BaseRecyclerViewAdapter adapter, int position) {
-            if (adapter.getItemAt(position) == null) {
+            if (adapter.getItemAt(position) == ITEM_ADB) {
                 return 3;
             }
             return super.getCreatorIndex(adapter, position);
+        }
+
+        @Override
+        public BaseViewHolder.Creator getCreator(int index) {
+            if (index == 3) {
+                return StartAdbViewHolder.CREATOR;
+            }
+            return super.getCreator(index);
         }
     }
 
@@ -39,8 +50,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
         getCreatorPool()
                 .putRule(ShizukuState.class, ServerStatusViewHolder.CREATOR)
                 .putRule(Integer.class, ManageAppsViewHolder.CREATOR)
-                .putRule(Boolean.class, StartRootViewHolder.CREATOR)
-                .putRule(Object.class, StartAdbViewHolder.CREATOR);
+                .putRule(Boolean.class, StartRootViewHolder.CREATOR);
 
         updateData(context, ShizukuState.createUnknown());
 
@@ -66,11 +76,11 @@ public class MainAdapter extends BaseRecyclerViewAdapter {
             boolean rootRestart = state.isRoot();
 
             if (adb) {
-                getItems().add(null);
+                getItems().add(ITEM_ADB);
                 getItems().add(rootRestart);
             } else {
                 getItems().add(rootRestart);
-                getItems().add(null);
+                getItems().add(ITEM_ADB);
             }
         }
 

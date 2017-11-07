@@ -41,14 +41,15 @@ public class ServerLauncher {
 
     private static void copyDex(Context context) {
         int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
-        String dex = String.format(Locale.ENGLISH, "server-%d.dex", apiVersion);
-        File file = new File(context.getExternalFilesDir(null), dex);
+        String source = String.format(Locale.ENGLISH, "server-%d.dex", apiVersion);
+        String target = String.format(Locale.ENGLISH, "server-%d-v%d.dex", apiVersion, ShizukuConstants.SERVER_VERSION);
+        File file = new File(context.getExternalFilesDir(null), target);
 
         DEX_PATH = file.getAbsolutePath();
         COMMAND_ROOT_OLD = "app_process -Djava.class.path=" + DEX_PATH + " /system/bin --nice-name=shizuku_server moe.shizuku.server.ShizukuServer &";
 
         try {
-            InputStream is = context.getAssets().open(dex);
+            InputStream is = context.getAssets().open(source);
             OutputStream os = new FileOutputStream(file);
 
             IOUtils.copy(is, os);
