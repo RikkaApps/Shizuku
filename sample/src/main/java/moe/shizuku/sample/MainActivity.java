@@ -74,9 +74,9 @@ public class MainActivity extends Activity {
 
         unregisterReceiver(mBroadcastReceiver);
 
-        /*if (mTaskStackListener != null) {
+        if (mTaskStackListener != null) {
             ShizukuActivityManagerV26.unregisterTaskStackListener(mTaskStackListener);
-        }*/
+        }
     }
 
     private ITaskStackListener mTaskStackListener;
@@ -102,8 +102,15 @@ public class MainActivity extends Activity {
             mTaskStackListener = new TaskStackListener() {
                 @Override
                 public void onTaskStackChanged() throws RemoteException {
-                    String pkg = ShizukuActivityManagerV26.getTasks(1, 0).get(0).topActivity.getPackageName();
+                    final String pkg = ShizukuActivityManagerV26.getTasks(1, 0).get(0).topActivity.getPackageName();
                     Log.d("ShizukuSample", pkg);
+
+                    getWindow().getDecorView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, pkg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             };
             ShizukuActivityManagerV26.registerTaskStackListener(mTaskStackListener);
