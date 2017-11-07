@@ -12,7 +12,6 @@
 
     <string name="server_start">啟動</string>
     <string name="server_restart">重新啟動</string>
-    <string name="server_update">重新啟動以升級服務</string>
 
     <string name="start_server_title_root"><![CDATA[透過 root 權限啟動服務]]></string>
     <string name="start_server_title_adb"><![CDATA[透過 adb 啟動或升級服務]]></string>

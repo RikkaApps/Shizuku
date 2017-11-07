@@ -14,7 +14,6 @@
 
     <string name="server_start">Start</string>
     <string name="server_restart">Restart</string>
-    <string name="server_update">Restart to update server</string>
 
     <string name="start_server_title_root"><![CDATA[Start server with root permission]]></string>
     <string name="start_server_title_adb"><![CDATA[Start / update server with adb]]></string>
