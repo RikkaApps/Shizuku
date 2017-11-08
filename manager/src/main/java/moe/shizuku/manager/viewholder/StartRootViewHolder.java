@@ -109,7 +109,7 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
         });
     }
 
-    private void startShell(final Context context, final String command) {
+    private void startShell(final Context context, final String... command) {
         start.setEnabled(false);
         restart.setEnabled(false);
 

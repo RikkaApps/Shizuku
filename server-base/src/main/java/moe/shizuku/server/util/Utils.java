@@ -31,7 +31,7 @@ public class Utils {
             System.setOut(os);
             System.setErr(os);
 
-            ServerLog.v("set output to " + LOG_FILE);
+            //ServerLog.v("set output to " + LOG_FILE);
         } catch (IOException e) {
             ServerLog.w("failed to set output: " + e.getMessage());
         }

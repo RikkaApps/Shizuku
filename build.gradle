@@ -21,6 +21,7 @@ allprojects {
         jcenter()
         google()
         mavenLocal()
+        maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
     }
 }
 
@@ -40,9 +41,14 @@ task install(type: GradleBuild) {
     ]
 }
 
-task upload(type: GradleBuild) {
+task uploadApi(type: GradleBuild) {
     tasks = [
-            ':api-base:bintrayUpload',
+            ':api-21:install',
+            ':api-22:install',
+            ':api-23:install',
+            ':api-24:install',
+            ':api-25:install',
+            ':api-26:install',
             ':api-21:bintrayUpload',
             ':api-22:bintrayUpload',
             ':api-23:bintrayUpload',
@@ -52,13 +58,20 @@ task upload(type: GradleBuild) {
     ]
 }
 
+task uploadApiBase(type: GradleBuild) {
+    tasks = [
+            ':api-base:install',
+            ':api-base:bintrayUpload',
+    ]
+}
+
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.1.0-beta'
+def baseVersionName = '2.1.1-beta'
 
 ext {
     supportLibraryVersion = '26.1.0'
-    preferenceLibraryVersion = '2.0.8'
+    preferenceLibraryVersion = '2.2.0'
 
     minSdkVersion = 21
     targetSdkVersion = 26

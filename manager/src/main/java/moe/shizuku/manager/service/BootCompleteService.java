@@ -77,9 +77,9 @@ public class BootCompleteService extends Service {
                 };
 
                 if (ShizukuManagerSettings.getRootLaunchMethod() == ShizukuManagerSettings.RootLaunchMethod.ALTERNATIVE) {
-                    service.run(ServerLauncher.COMMAND_ROOT_OLD, 0, listener);
+                    service.run(new String[]{ServerLauncher.COMMAND_ROOT_OLD}, 0, listener);
                 } else {
-                    service.run(ServerLauncher.COMMAND_ROOT, 0, listener);
+                    service.run(new String[]{ServerLauncher.COMMAND_ROOT}, 0, listener);
                 }
             }
         });

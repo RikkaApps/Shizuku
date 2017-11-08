@@ -1,20 +1,13 @@
 package moe.shizuku.manager.service;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 
 import java.util.List;
 
-import moe.shizuku.manager.R;
 import moe.shizuku.manager.utils.Shell;
-
-import static moe.shizuku.manager.Constants.NOTIFICATION_CHANNEL_STATUS;
-import static moe.shizuku.manager.Constants.NOTIFICATION_ID_STATUS;
 
 public class ShellService extends Service {
 
@@ -26,7 +19,7 @@ public class ShellService extends Service {
 
     public class ShellServiceBinder extends Binder {
 
-        public void run(String command, int code, Listener listener) {
+        public void run(String[] command, int code, Listener listener) {
             ShellService.this.run(command, code, listener);
         }
     }
@@ -38,11 +31,11 @@ public class ShellService extends Service {
         super.onCreate();
     }
 
-    public void run(String command, int code, Listener listener) {
+    public void run(String[] command, int code, Listener listener) {
         openRootShell(command, code, listener);
     }
 
-    private void openRootShell(final String command, final int code, final Listener listener) {
+    private void openRootShell(final String[] command, final int code, final Listener listener) {
         if (rootSession != null) {
             rootSession.addCommand(command, code, listener);
         } else {

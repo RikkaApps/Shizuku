@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class ServerLog {
 
-    private static String TAG = "Shizuku Server";
+    private static String TAG = "ShizukuServer";
     private static String PREFIX = ""/*Integer.toString(Process.myPid())+  " | "*/;
 
     public static void v(String msg) {

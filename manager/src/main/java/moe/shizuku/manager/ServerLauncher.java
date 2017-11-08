@@ -71,7 +71,7 @@ public class ServerLauncher {
                 file.createNewFile();
             }
 
-            COMMAND_ROOT = "sh " + file.getAbsolutePath() + " --skip-check";
+            COMMAND_ROOT = "sh " + file.getAbsolutePath();
 
             @SuppressLint("SdCardPath")
             File sdcardFile = new File("/sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh");
