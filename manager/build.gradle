@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -42,28 +41,6 @@ android {
     lintOptions {
         disable 'AppCompatCustomView'
     }
-}
-
-task generate(type: GradleBuild) {
-    tasks = [
-            ':server-base:build',
-            ':generator:generate',
-            ':server-21:dex',
-            ':server-22:dex',
-            ':server-23:dex',
-            ':server-24:dex',
-            ':server-25:dex',
-            ':server-26:dex',
-    ]
-}
-
-// for test
-task generateApi26(type: GradleBuild) {
-    tasks = [
-            ':server-base:build',
-            ':generator:generateApi26',
-            ':server-26:dex',
-    ]
 }
 
 dependencies {

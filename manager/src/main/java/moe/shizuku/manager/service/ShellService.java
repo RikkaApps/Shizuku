@@ -42,7 +42,7 @@ public class ShellService extends Service {
             rootSession = new Shell.Builder()
                     .useSU()
                     .setWantSTDERR(true)
-                    .setWatchdogTimeout(5)
+                    .setWatchdogTimeout(10)
                     .setMinimalLogging(true)
                     .open(new Shell.OnCommandResultListener() {
 

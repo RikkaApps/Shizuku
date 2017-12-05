@@ -14,6 +14,7 @@ import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.ServiceSpecificException;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -330,6 +331,10 @@ public class ParcelOutputStream extends DataOutputStream {
 
             key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
         } catch (Exception e) {
+            Log.w("ShizukuClient", "Failed to transfer IBinder to manager app.", e);
+
+            writeInt(-1);
+            return;
         }
 
         writeInt(key);
@@ -381,6 +386,10 @@ public class ParcelOutputStream extends DataOutputStream {
 
             key = result.getInt(TRANSFER_PROVIDER_KEY_ID);
         } catch (Exception e) {
+            Log.w("ShizukuClient", "Failed to transfer ParcelFileDescriptor to manager app.", e);
+
+            writeInt(-1);
+            return;
         }
 
         writeInt(key);

@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
@@ -65,13 +65,46 @@ task uploadApiBase(type: GradleBuild) {
     ]
 }
 
+task generate(type: GradleBuild) {
+    tasks = [
+            ':server-base:build',
+            ':generator:generate',
+            ':server-21:dex',
+            ':server-22:dex',
+            ':server-23:dex',
+            ':server-24:dex',
+            ':server-25:dex',
+            ':server-26:dex',
+    ]
+}
+
+task generateApi26(type: GradleBuild) {
+    tasks = [
+            ':server-base:build',
+            ':generator:generateApi26',
+            ':server-26:dex',
+    ]
+}
+
+task dex(type: GradleBuild) {
+    tasks = [
+            ':server-base:build',
+            ':server-21:dex',
+            ':server-22:dex',
+            ':server-23:dex',
+            ':server-24:dex',
+            ':server-25:dex',
+            ':server-26:dex',
+    ]
+}
+
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.1.1-beta'
+def baseVersionName = '2.1.2'
 
 ext {
     supportLibraryVersion = '26.1.0'
-    preferenceLibraryVersion = '2.2.0'
+    preferenceLibraryVersion = '2.2.1'
 
     minSdkVersion = 21
     targetSdkVersion = 26

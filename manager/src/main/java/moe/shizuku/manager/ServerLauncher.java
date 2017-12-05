@@ -48,6 +48,10 @@ public class ServerLauncher {
         DEX_PATH = file.getAbsolutePath();
         COMMAND_ROOT_OLD = "app_process -Djava.class.path=" + DEX_PATH + " /system/bin --nice-name=shizuku_server moe.shizuku.server.ShizukuServer &";
 
+        if (file.exists() && !BuildConfig.DEBUG) {
+            return;
+        }
+
         try {
             InputStream is = context.getAssets().open(source);
             OutputStream os = new FileOutputStream(file);

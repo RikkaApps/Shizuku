@@ -191,9 +191,9 @@ int main(int argc, char **argv) {
         }
         count = 0;
         while (getRikkaServerPid() != 0) {
-            printf("info: checking " SERVER_NAME " stability %d...\n", count);
+            printf("info: checking " SERVER_NAME " stability...\n");
             fflush(stdout);
-            usleep(1000 * 1000);
+            usleep(1000 * 500);
             count++;
             if (count >= 3) {
                 printf("info: " SERVER_NAME " started.\n");
