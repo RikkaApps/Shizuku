@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Process;
-import android.support.annotation.WorkerThread;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +18,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import moe.shizuku.ShizukuConstants;
-import moe.shizuku.manager.utils.Shell;
 import moe.shizuku.support.utils.IOUtils;
 
 /**

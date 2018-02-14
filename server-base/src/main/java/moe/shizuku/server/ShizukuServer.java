@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+import android.system.Os;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -19,7 +20,6 @@ import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.api.Compat;
 import moe.shizuku.server.util.ServerLog;
-import moe.shizuku.server.util.Utils;
 
 public class ShizukuServer extends Handler {
 
@@ -125,7 +125,14 @@ public class ShizukuServer extends Handler {
     }
 
     public static void main(String[] args) throws IOException, RemoteException, InterruptedException {
-        Utils.setOut();
+        // fix owner
+        if (Process.myUid() == 0) {
+            try {
+                Os.chown("/data/local/tmp/shizuku_starter", 2000, 2000);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
 
         Looper.prepare();
 
