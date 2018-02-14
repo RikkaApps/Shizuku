@@ -13,8 +13,8 @@ public final class ShizukuConstants {
     public static final int PORT = 55609;
     public static final InetAddress HOST = InetAddress.getLoopbackAddress();
     public static final int TIMEOUT = 10000;
-    public static final int SERVER_VERSION = 28;
-    public static final int MAX_SDK = 26;
+    public static final int SERVER_VERSION = 29;
+    public static final int MAX_SDK = 27;
 
     public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";
 

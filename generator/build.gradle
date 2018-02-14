@@ -22,11 +22,11 @@ task generate(type: Exec) {
     commandLine 'java', '-jar', jarPath
 }
 
-task generateApi26(type: Exec) {
+task generateApi27(type: Exec) {
     dependsOn jar
 
     workingDir rootProject.rootDir
-    commandLine 'java', '-jar', jarPath, '26'
+    commandLine 'java', '-jar', jarPath, '27'
 }
 
 repositories {

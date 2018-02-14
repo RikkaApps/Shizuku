@@ -32,8 +32,8 @@ fi
 
 # download system service aidl files
 
-branches=(lollipop-release lollipop-mr1-release marshmallow-release nougat-release nougat-mr1-release oreo-release)
-apis=(21 22 23 24 25 26)
+branches=(lollipop-release lollipop-mr1-release marshmallow-release nougat-release nougat-mr1-release oreo-release oreo-mr1-release)
+apis=(21 22 23 24 25 26 27)
 
 files=(
     android/content/pm/IPackageManager.aidl                     platform_frameworks_base    core/java
@@ -93,11 +93,14 @@ done
 echo
 echo download android.jar from Trumeet/android-hidden-api
 
-download "https://raw.githubusercontent.com/Trumeet/android-hidden-api/master/android-26/android.jar" "android-26/android.jar"
+for api in {26..27}
+do
+    download "https://raw.githubusercontent.com/Trumeet/android-hidden-api/master/android-$api/android.jar" "android-$api/android.jar"
+done
 
 # generate codes and shizuku server dex
 
 echo
 echo generate codes and shizuku server dex
 
-./gradlew :manager:generate
+./gradlew :generate

@@ -2,6 +2,7 @@ package moe.shizuku.generator;
 
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.utils.CodeGenerationUtils;
 import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import moe.shizuku.generator.creator.ApiClassCreator;
 import moe.shizuku.generator.creator.DelegateClassCreator;
 import moe.shizuku.generator.creator.RequestHandlerClassCreator;
 import moe.shizuku.generator.helper.IOBlockHelper;
+import moe.shizuku.generator.utils.CompilationUnitUtils;
 import moe.shizuku.generator.utils.SourceRootUtils;
 
 /**
@@ -38,6 +40,7 @@ public class Generator {
             new Generator(24).generate();
             new Generator(25).generate();
             new Generator(26).generate();
+            new Generator(27).generate();
         }
     }
 
@@ -77,6 +80,9 @@ public class Generator {
                 .map(ParseResult::getResult)
                 .map(Optional::get)
                 .forEach(compilationUnit -> {
+                    Path path = CodeGenerationUtils.fileInPackageRelativePath(CompilationUnitUtils.getPackageName(compilationUnit), CompilationUnitUtils.getFileName(compilationUnit));
+                    System.out.println("Parsing " + path);
+
                     generateServer(sr, compilationUnit);
                     generateApi(sr, compilationUnit);
                 });

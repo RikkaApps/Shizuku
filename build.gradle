@@ -6,9 +6,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0-beta2'
 
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -38,6 +38,7 @@ task install(type: GradleBuild) {
             ':api-24:install',
             ':api-25:install',
             ':api-26:install',
+            ':api-27:install',
     ]
 }
 
@@ -49,12 +50,14 @@ task uploadApi(type: GradleBuild) {
             ':api-24:install',
             ':api-25:install',
             ':api-26:install',
+            ':api-27:install',
             ':api-21:bintrayUpload',
             ':api-22:bintrayUpload',
             ':api-23:bintrayUpload',
             ':api-24:bintrayUpload',
             ':api-25:bintrayUpload',
             ':api-26:bintrayUpload',
+            ':api-27:bintrayUpload',
     ]
 }
 
@@ -75,14 +78,15 @@ task generate(type: GradleBuild) {
             ':server-24:dex',
             ':server-25:dex',
             ':server-26:dex',
+            ':server-27:dex',
     ]
 }
 
-task generateApi26(type: GradleBuild) {
+task generateApi27(type: GradleBuild) {
     tasks = [
             ':server-base:build',
-            ':generator:generateApi26',
-            ':server-26:dex',
+            ':generator:generateApi27',
+            ':server-27:dex',
     ]
 }
 
@@ -95,6 +99,7 @@ task dex(type: GradleBuild) {
             ':server-24:dex',
             ':server-25:dex',
             ':server-26:dex',
+            ':server-27:dex',
     ]
 }
 
@@ -103,14 +108,14 @@ def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], pr
 def baseVersionName = '2.1.2'
 
 ext {
-    supportLibraryVersion = '26.1.0'
-    preferenceLibraryVersion = '2.2.1'
+    supportLibraryVersion = '27.0.2'
+    preferenceLibraryVersion = '2.2.3'
 
     minSdkVersion = 21
-    targetSdkVersion = 26
-    buildToolsVersion = "26.0.2"
+    targetSdkVersion = 27
+    buildToolsVersion = "27.0.2"
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiBaseLibraryVersion = '8'
+    apiBaseLibraryVersion = '9'
     apiLibraryVersion = '4'
 }

@@ -12,6 +12,10 @@ if (OperatingSystem.current().isWindows()) {
 }
 
 task dex(type: Exec) {
+    onlyIf {
+        !jar.state.upToDate
+    }
+    
     dependsOn jar
 
     file(rootProject.rootDir.path + "/manager/src/main/assets/").mkdirs()
