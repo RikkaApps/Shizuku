@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <time.h>
+#include <string.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -19,8 +20,6 @@
 #define EXIT_FATAL_APP_PROCESS 5
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
-
-#define LOG_FILE_PATH "/sdcard/Android/data/moe.shizuku.privileged.api/files/shizuku_starter.log"
 
 #define SERVER_NAME "shizuku_server"
 
@@ -151,8 +150,6 @@ int main(int argc, char **argv) {
             printf("fatal: can't fork");
             return EXIT_FATAL_FORK;
         } else {
-            freopen(LOG_FILE_PATH, "w", stdout);
-            dup2(fileno(stdout), fileno(stderr));
             setClasspathEnv(path);
             char *appProcessArgs[] = {
                     "/system/bin/app_process",
