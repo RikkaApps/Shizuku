@@ -155,7 +155,7 @@ public class ShizukuClient {
      */
     public static int getManagerVersion(Context context) {
         try {
-            return context.getPackageManager().getApplicationInfo(ShizukuConstants.MANAGER_APPLICATION_ID, 0).versionCode;
+            return context.getPackageManager().getPackageInfo(ShizukuConstants.MANAGER_APPLICATION_ID, 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             return -1;
         }

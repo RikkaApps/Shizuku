@@ -47,6 +47,7 @@ public class ApiClassCreator {
                 .addImport("java.net.Socket")
                 .addImport("android.os.IInterface")
                 .addImport("moe.shizuku.ShizukuConstants")
+                .addImport("moe.shizuku.io.CloseableUtils")
                 .addImport("moe.shizuku.io.ParcelInputStream")
                 .addImport("moe.shizuku.io.ParcelOutputStream")
                 .addImport("moe.shizuku.lang.ShizukuRemoteException");
@@ -106,12 +107,15 @@ public class ApiClassCreator {
 
     private static BlockStmt getBlock(String binderName, MethodDeclaration method) {
         StringBuilder sb = new StringBuilder();
-        sb.append('{');
-        sb.append("try{")
-                .append("Socket client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);")
+        sb.append('{')
+                .append("Socket client = null;")
+                .append("ParcelOutputStream os = null;")
+                .append("ParcelInputStream is = null;")
+                .append("try{")
+                .append("client = new Socket(ShizukuConstants.HOST, ShizukuConstants.PORT);")
                 .append("client.setSoTimeout(ShizukuConstants.TIMEOUT);")
-                .append("ParcelOutputStream os = new ParcelOutputStream(client.getOutputStream());")
-                .append("ParcelInputStream is = new ParcelInputStream(client.getInputStream());")
+                .append("os = new ParcelOutputStream(client.getOutputStream());")
+                .append("is = new ParcelInputStream(client.getInputStream());")
                 .append("os.writeString(Actions").append(SUFFIX).append('.').append(ActionClassCreator.getActionName(binderName, method)).append(");")
                 .append("os.writeLong(ShizukuClient.getToken().getMostSignificantBits());")
                 .append("os.writeLong(ShizukuClient.getToken().getLeastSignificantBits());");
@@ -139,7 +143,13 @@ public class ApiClassCreator {
                         "}")
                 .append("catch(ShizukuRemoteException e){\n" +
                         "throw e.rethrowFromSystemServer();" +
-                        "}").append('}');
+                        "}")
+                .append("finally {\n" +
+                        "CloseableUtils.closeSilently(os);\n" +
+                        "CloseableUtils.closeSilently(is);\n" +
+                        "CloseableUtils.closeSilently(client);\n" +
+                        "}")
+                .append('}');
 
         return JavaParser.parseBlock(sb.toString());
     }

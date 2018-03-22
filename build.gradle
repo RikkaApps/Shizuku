@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-beta4'
+        classpath 'com.android.tools.build:gradle:3.1.0-rc02'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
@@ -116,6 +116,6 @@ ext {
     buildToolsVersion = "27.0.2"
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiBaseLibraryVersion = '9'
-    apiLibraryVersion = '4'
+    apiBaseLibraryVersion = '10'
+    apiLibraryVersion = '5'
 }
