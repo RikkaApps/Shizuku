@@ -15,17 +15,22 @@ import moe.shizuku.manager.viewholder.StartAdbViewHolder;
 import moe.shizuku.manager.viewholder.StartRootViewHolder;
 import moe.shizuku.support.recyclerview.BaseRecyclerViewAdapter;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.recyclerview.CreatorPool;
+import moe.shizuku.support.recyclerview.ClassCreatorPool;
 
 /**
  * Created by rikka on 2017/10/22.
  */
 
-public class MainAdapter extends BaseRecyclerViewAdapter {
+public class MainAdapter extends BaseRecyclerViewAdapter<MainAdapter.MainCreatorPool> {
 
     private static final Object ITEM_ADB = new Object();
 
-    private static class MainCreatorPool extends CreatorPool {
+    @Override
+    public MainCreatorPool onCreateCreatorPool() {
+        return new MainCreatorPool();
+    }
+
+    public static class MainCreatorPool extends ClassCreatorPool {
 
         @Override
         public int getCreatorIndex(BaseRecyclerViewAdapter adapter, int position) {
