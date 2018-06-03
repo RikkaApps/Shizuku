@@ -55,6 +55,9 @@ public class ShizukuServer extends Handler {
                 ServerLog.w("unsupported system (" + Build.VERSION.SDK_INT + ") detected, some API may not work");
             } else if (Build.VERSION.SDK_INT == ShizukuConstants.MAX_SDK && Build.VERSION.PREVIEW_SDK_INT > 0) {
                 ServerLog.w("preview system detect, some API may not work");
+                if (Build.VERSION.PREVIEW_SDK_INT == 2) {
+                    disableHiddenApiBlacklist();
+                }
             }
         } else if (Compat.VERSION != Build.VERSION.SDK_INT) {
             ServerLog.e("API version not matched, please open Shizuku Manager and try again.");
@@ -88,6 +91,21 @@ public class ShizukuServer extends Handler {
         sendTokenToManger(mToken);
 
         return true;
+    }
+
+    private static void disableHiddenApiBlacklist() {
+        try {
+            java.lang.Process process = new ProcessBuilder(new String[]{"settings", "put", "global", "hidden_api_blacklist_exemptions", "*"}).start();
+
+            int res;
+            if ((res = process.waitFor()) == 0) {
+                ServerLog.i("disabled hidden api blacklist");
+            } else {
+                ServerLog.w("failed to disable hidden api blacklist, res=" + res);
+            }
+        } catch (Throwable tr) {
+            ServerLog.w("failed to disable hidden api blacklist", tr);
+        }
     }
 
     public static void sendTokenToManger(UUID token) {
