@@ -2,65 +2,71 @@
 <resources>
     <string name="permission_group_description">使用由 Shizuku 提供的特權 API</string>
     <string name="permission_label">使用 Shizuku 特權 API</string>
-    <string name="permission_description">允許應用使用由 Shizuku 提供的特權 API。</string>
+    <string name="permission_description">允許應用程式使用由 Shizuku 提供的特權 API。</string>
 
-    <string name="server_running">版本 %2$d 運行中（%1$s）</string>
-    <string name="server_running_update">版本 %2$d 運行中（%1$s）\n重啟服務以升級至版本 %3$d</string>
-    <string name="server_not_running">按此檢查服務是否運行</string>
+    <string name="server_running">版本 %2$d 執行中（%1$s）</string>
+    <string name="server_running_update">版本 %2$d 執行中（%1$s）\n重新啟動服務以升級至版本 %3$d</string>
+    <string name="server_not_running">按此檢查服務是否執行</string>
     <string name="server_require_restart">需要重新啟動服務</string>
-    <string name="server_no_token">運行中，但未正確接收令牌\n點擊請求令牌</string>
+    <string name="server_no_token">執行中，但未正確接收憑證\n點擊請求憑證</string>
 
     <string name="server_start">啟動</string>
     <string name="server_restart">重新啟動</string>
 
     <string name="start_server_title_root"><![CDATA[透過 root 權限啟動服務]]></string>
     <string name="start_server_title_adb"><![CDATA[透過 adb 啟動或升級服務]]></string>
-    <string name="start_server_summary_adb"><![CDATA[<b>以下步驟需要在每次重新啟動後進行。</b><p>在“開發者選項”中開啟“USB 調試”，將設備連接至電腦。<br>在電腦的命令提示字元中輸入以下內容<p><font face="monospace">%s</font><p>按下確認鍵，如果成功將看到主界面運行狀態更新。]]></string>
+    <string name="start_server_summary_adb"><![CDATA[
+    <b>由於系統行爲變動，在 Android 8.0 之後，請不要關閉「USB 偵錯」或將 USB 使用模式改爲「僅充電」，否則服務將被停止。</b>
+    <p><b>以下步驟需要在每次重新啟動後進行。</b>
+    <p>在「開發人員選項」中開啟「USB 偵錯」，將裝置連接至電腦。
+    <br>在電腦的命令提示字元中輸入以下內容
+    <p><font face="monospace">%s</font>
+    <p>按下確認鍵，如果成功將看到主介面的執行狀態更新。]]></string>
 
     <string name="copy_command">複製</string>
-    <string name="send_command">發送</string>
+    <string name="send_command">傳送</string>
 
-    <string name="auth_allow">總是允許</string>
+    <string name="auth_allow">一律允許</string>
     <string name="auth_deny">拒絕</string>
     <string name="auth_message"><![CDATA[要允許 <b>%1$s</b> 以 <b>%2$s</b> 身份調用 API 嗎？]]></string>
 
-    <string name="auth_manager_no_token">Shizuku Manager 未正確接收令牌，請嘗試重新啟動服務，或是使用主界面的取得令牌。</string>
-    <string name="auth_server_dead">可能由於非正常重啟等原因，服務需要重新啟動。</string>
-    <string name="auth_cannot_connect">無法連接服務，請確認服務正在運行。</string>
+    <string name="auth_manager_no_token">Shizuku Manager 未正確接收憑證，請嘗試重新啟動服務，或是使用主介面的取得憑證。</string>
+    <string name="auth_server_dead">可能由於非正常重新啟動等原因，服務需要重新啟動。</string>
+    <string name="auth_cannot_connect">無法連接服務，請確認服務正在執行。</string>
 
     <string name="authorized_apps_manage">自動授權的程式</string>
     <plurals name="authorized_apps_count">
-        <item quantity="other"><![CDATA[已授權 %d 個無需確認取得令牌的程式]]></item>
+        <item quantity="other"><![CDATA[已授權 %d 個無需確認取得憑證的程式]]></item>
     </plurals>
-    <string name="view_authorized_apps"><![CDATA[令牌只會在服務重啟後失效<br>按此管理授權的程式]]></string>
+    <string name="view_authorized_apps"><![CDATA[憑證只會在服務重新啟動後失效<br>按此管理授權的程式]]></string>
 
     <string name="copied_to_clipboard">%s\n已被複製到剪貼簿。</string>
 
-    <string name="open_manager">打開 Shizuku Manager</string>
+    <string name="open_manager">開啟 Shizuku Manager</string>
 
     <string name="action_about">關於</string>
 
-    <string name="about_icon_credits"><![CDATA[感谢 <a href="https://twitter.com/xiaoya_er">小雅</a> 制作应用图标]]></string>
+    <string name="about_icon_credits"><![CDATA[感謝 <a href="https://twitter.com/xiaoya_er">小雅</a> 製作應用程式的圖示]]></string>
 
     <string name="action_settings">設定</string>
 
-    <string name="start_root_choose_launch_method">選擇啟動方式</string>
-    <string name="start_root_method_usual">通常方式</string>
-    <string name="start_root_method_usual_summary">應該在大部分設備上工作</string>
-    <string name="start_root_method_alternative">替代方式</string>
-    <string name="start_root_method_alternative_summary">如果遇到問題試試這個</string>
+    <string name="start_root_choose_launch_method">選擇啟動模式</string>
+    <string name="start_root_method_usual">普通模式</string>
+    <string name="start_root_method_usual_summary">應該在大部分裝置上運作</string>
+    <string name="start_root_method_alternative">替代模式</string>
+    <string name="start_root_method_alternative_summary">若普通模式無法正常運作，請嘗試這個。</string>
 
     <string name="remember_choice">記住我的選擇</string>
 
     <string name="settings_root_launch_method">啟動方式（root）</string>
     <string name="settings_root_launch_ask_every_time">每次詢問</string>
 
-    <string name="cannot_start_no_root">未授予 root 權限或是該設備沒有 root，因此無法啟動服務。。</string>
-    <string name="cannot_start_shell_failed">執行 shell 命令時出錯。</string>
+    <string name="cannot_start_no_root">未授予 root 權限或是該裝置沒有 root，因此無法啟動服務。</string>
+    <string name="cannot_start_shell_failed">執行 shell 命令時發生問題。</string>
 
     <string name="channel_service_status">服務啟動狀態</string>
     <string name="notification_service_starting">Shizuku 服務正在啟動…</string>
-    <string name="notification_service_start_failed">啟動 Shizuku 服務失敗。</string>
+    <string name="notification_service_start_failed">啟動 Shizuku 服務時失敗。</string>
     <string name="notification_service_start_no_root">請求 root 權限失敗。</string>
 
 </resources>
