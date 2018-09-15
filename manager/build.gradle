@@ -31,16 +31,30 @@ android {
             path 'src/main/jni/CMakeLists.txt'
         }
     }
-    sourceSets {
-        main {
-            // don't need anymore since gradle will auto put binary output into apk
-            // executable files output directory defined in src/main/jni/CMakeList.txt
-            //jniLibs.srcDirs 'build/starter'
-        }
-    }
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "shizuku-manager-${variant.versionCode}-${variant.flavorName}.apk"
+
+            if (variant.getBuildType().isMinifyEnabled()) {
+                variant.assemble.doLast {
+                    copy {
+                        from variant.mappingFile
+                        into "${rootDir}/${project.name}/release"
+                        rename { String fileName ->
+                            "mapping-${variant.versionCode}-${variant.flavorName}.txt"
+                        }
+                    }
+                    copy {
+                        from variant.outputs*.outputFile
+                        into "${rootDir}/${project.name}/release"
+                    }
+                }
+            }
+        }
     }
 }
 
