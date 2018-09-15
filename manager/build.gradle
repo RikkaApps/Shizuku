@@ -37,7 +37,7 @@ android {
     }
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "shizuku-manager-${variant.versionCode}-${variant.flavorName}.apk"
+            outputFileName = "shizuku-manager-${variant.versionCode}.apk"
 
             if (variant.getBuildType().isMinifyEnabled()) {
                 variant.assemble.doLast {
@@ -45,7 +45,7 @@ android {
                         from variant.mappingFile
                         into "${rootDir}/${project.name}/release"
                         rename { String fileName ->
-                            "mapping-${variant.versionCode}-${variant.flavorName}.txt"
+                            "mapping-${variant.versionCode}.txt"
                         }
                     }
                     copy {
