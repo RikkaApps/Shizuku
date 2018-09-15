@@ -3,28 +3,32 @@ import org.gradle.internal.os.OperatingSystem
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def sdkDir = properties.getProperty('sdk.dir')
+def buildToolsVersion = "28.0.1"
 
 def dx
 if (OperatingSystem.current().isWindows()) {
-    dx = sdkDir + "\\build-tools\\" + rootProject.ext.buildToolsVersion + '\\dx.bat'
+    dx = sdkDir + "\\build-tools\\" + buildToolsVersion + '\\dx.bat'
 } else {
-    dx = sdkDir + "/build-tools/" + rootProject.ext.buildToolsVersion + '/dx'
+    dx = sdkDir + "/build-tools/" + buildToolsVersion + '/dx'
 }
 
 task dex(type: Exec) {
     onlyIf {
         !jar.state.upToDate
     }
-    
+
     dependsOn jar
 
     file(rootProject.rootDir.path + "/manager/src/main/assets/").mkdirs()
     file(project.buildDir.path + "/libs/").mkdirs()
 
+    def input = file(project.buildDir.path + "/libs/" + project.name + ".jar").path
+    def output = file(rootProject.rootDir.path + "/manager/src/main/assets/" + project.name + ".dex").path
+
     commandLine dx,
             '--dex',
-            '--output=' + file(rootProject.rootDir.path + "/manager/src/main/assets/" + project.name + ".dex").path,
-            file(project.buildDir.path + "/libs/" + project.name + ".jar").path
+            '--output=' + output,
+            input
 }
 
 jar {

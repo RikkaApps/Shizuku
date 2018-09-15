@@ -13,7 +13,7 @@ public final class ShizukuConstants {
     public static final int PORT = 55609;
     public static final InetAddress HOST = InetAddress.getLoopbackAddress();
     public static final int TIMEOUT = 10000;
-    public static final int SERVER_VERSION = 30;
+    public static final int SERVER_VERSION = 31;
     public static final int MAX_SDK = 27;
 
     public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";
@@ -24,6 +24,7 @@ public final class ShizukuConstants {
 
     public static final String EXTRA_TOKEN_MOST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_MOST_SIG";
     public static final String EXTRA_TOKEN_LEAST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_LEAST_SIG";
+    public static final String EXTRA_BINDER = MANAGER_APPLICATION_ID + ".intent.extra.BINDER";
 
     public static final Uri TRANSFER_PROVIDER_URI = Uri.parse("content://moe.shizuku.manager.transferprovider");
     public static final String TRANSFER_PROVIDER_NAME = "moe.shizuku.manager.transferprovider";

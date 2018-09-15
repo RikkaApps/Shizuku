@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Light" parent="Theme.Design.Light.LightStatusBar">
+        <item name="android:colorAccent">#1a73e8</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.Design">
+        <item name="android:colorAccent">#81D4fA</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme.Apps" parent="AppTheme.Light">
+        <item name="android:windowBackground">@color/cardview_light_background</item>
+    </style>
+
+    <style name="AppTheme.DayNight" parent="AppTheme.Light"/>
+</resources>

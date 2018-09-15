@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
-        <item name="colorAccent">#4285F4</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-    </style>
-
-    <style name="AppTheme.Apps">
-        <item name="android:windowBackground">@color/cardview_light_background</item>
-    </style>
 
     <style name="Card">
         <item name="android:layout_width">match_parent</item>

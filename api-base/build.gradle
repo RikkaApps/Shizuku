@@ -3,13 +3,8 @@ apply plugin: 'java-library'
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def sdkDir = properties.getProperty('sdk.dir')
-
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-26/android.jar')
-    //compileOnly files(sdkDir + "/platforms/android-27/android.jar")
     compileOnly project(':support-fragment-stub')
 }
 
@@ -21,4 +16,4 @@ ext {
     bintrayName = project.name
 }
 
-apply from: project.rootProject.file('bintray.gradle')
+//apply from: project.rootProject.file('bintray.gradle')

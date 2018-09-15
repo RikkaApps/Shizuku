@@ -2,10 +2,12 @@ package moe.shizuku.server;
 
 import android.content.Intent;
 import android.content.pm.UserInfo;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Parcel;
 import android.os.Process;
 import android.os.RemoteException;
 import android.system.Os;
@@ -16,6 +18,7 @@ import java.net.Socket;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
+import moe.shizuku.api.BinderHolder;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.server.api.Compat;
@@ -49,19 +52,29 @@ public class ShizukuServer extends Handler {
         }
     }
 
-    public boolean start() throws IOException, RemoteException, InterruptedException {
+    private Binder mBinder = new Binder() {
+
+        @Override
+        protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+            //ServerLog.i("bky " + code);
+            return super.onTransact(code, data, reply, flags);
+        }
+    };
+
+    public boolean start() throws IOException, InterruptedException {
         if (Compat.VERSION == ShizukuConstants.MAX_SDK) {
             if (Build.VERSION.SDK_INT > ShizukuConstants.MAX_SDK) {
                 ServerLog.w("unsupported system (" + Build.VERSION.SDK_INT + ") detected, some API may not work");
             } else if (Build.VERSION.SDK_INT == ShizukuConstants.MAX_SDK && Build.VERSION.PREVIEW_SDK_INT > 0) {
                 ServerLog.w("preview system detect, some API may not work");
-                if (Build.VERSION.PREVIEW_SDK_INT == 2) {
-                    disableHiddenApiBlacklist();
-                }
             }
         } else if (Compat.VERSION != Build.VERSION.SDK_INT) {
             ServerLog.e("API version not matched, please open Shizuku Manager and try again.");
             return false;
+        }
+
+        if (Build.VERSION.SDK_INT >= 28) {
+            disableHiddenApiBlacklist();
         }
 
         if (stopServer()) {
@@ -78,7 +91,7 @@ public class ShizukuServer extends Handler {
         }
         serverSocket.setReuseAddress(true);
 
-        SocketThread socket = new SocketThread(this, serverSocket, mToken);
+        SocketThread socket = new SocketThread(this, serverSocket, mToken, mBinder);
 
         Thread socketThread = new Thread(socket);
         socketThread.start();
@@ -88,7 +101,7 @@ public class ShizukuServer extends Handler {
         ServerLog.i("start version: " + ShizukuConstants.SERVER_VERSION + " token: " + mToken);
 
         // send token to manager app
-        sendTokenToManger(mToken);
+        sendTokenToManger(mToken, mBinder);
 
         return true;
     }
@@ -108,25 +121,28 @@ public class ShizukuServer extends Handler {
         }
     }
 
-    public static void sendTokenToManger(UUID token) {
+    public static void sendTokenToManger(UUID token, Binder binder) {
         try {
             for (UserInfo userInfo : Compat.getUsers()) {
-                sendTokenToManger(token, userInfo.id);
+                sendTokenToManger(token, binder, userInfo.id);
             }
         } catch (Exception e) {
             ServerLog.e("exception when call getUsers, try user 0", e);
 
-            sendTokenToManger(token, 0);
+            sendTokenToManger(token, binder, 0);
         }
     }
 
-    public static void sendTokenToManger(UUID token, int userId) {
+    public static void sendTokenToManger(UUID token, Binder binder, int userId) {
         Intent intent = new Intent(ShizukuConstants.ACTION_SERVER_STARTED)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addCategory(Intent.CATEGORY_DEFAULT)
                 .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID)
+                //.putExtra(ShizukuConstants.EXTRA_BINDER, new BinderHolder(binder))
                 .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
                 .putExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
+
+        //ServerLog.i("bky " + binder.pingBinder());
 
         try {
             String mimeType = intent.getType();

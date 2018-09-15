@@ -10,8 +10,6 @@ import android.os.NetworkOnMainThreadException;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
-import android.os.ServiceSpecificException;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.lang.ShizukuRemoteException;
 
@@ -217,8 +214,8 @@ public class ParcelInputStream extends DataInputStream {
                 throw new NetworkOnMainThreadException();
             case EX_UNSUPPORTED_OPERATION:
                 throw new UnsupportedOperationException(msg);
-            case EX_SERVICE_SPECIFIC:
-                throw new ServiceSpecificException(readInt(), msg);
+            /*case EX_SERVICE_SPECIFIC:
+                throw new ServiceSpecificException(readInt(), msg);*/
         }
         throw new ShizukuRemoteException(msg);
     }
@@ -254,6 +251,7 @@ public class ParcelInputStream extends DataInputStream {
         parcel.setDataPosition(0);
         try {
             Constructor constructor = cls.getConstructor(Parcel.class);
+            //noinspection unchecked
             T result = (T) constructor.newInstance(parcel);
             parcel.recycle();
             return result;

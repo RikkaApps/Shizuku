@@ -27,44 +27,6 @@ public class ShizukuManagerSettings {
     }
 
     @IntDef({
-            RootLaunchMethod.ASK,
-            RootLaunchMethod.USUAL,
-            RootLaunchMethod.ALTERNATIVE,
-    })
-    @Retention(SOURCE)
-    public @interface RootLaunchMethod {
-        int ASK = 0;
-        int USUAL = 1;
-        int ALTERNATIVE = 2;
-    }
-
-    public static @RootLaunchMethod int getRootLaunchMethod() {
-        switch (Settings.getString("root_launch_method", "ask")) {
-            case "ask":
-                return RootLaunchMethod.ASK;
-            case "usual":
-                return RootLaunchMethod.USUAL;
-            case "alternative":
-                return RootLaunchMethod.ALTERNATIVE;
-        }
-        return RootLaunchMethod.ASK;
-    }
-
-    public static void setRootLaunchMethod(@RootLaunchMethod int method) {
-        switch (method) {
-            case RootLaunchMethod.ASK:
-                Settings.putString("root_launch_method", "ask");
-                break;
-            case RootLaunchMethod.USUAL:
-                Settings.putString("root_launch_method", "usual");
-                break;
-            case RootLaunchMethod.ALTERNATIVE:
-                Settings.putString("root_launch_method", "alternative");
-                break;
-        }
-    }
-
-    @IntDef({
             LaunchMethod.UNKNOWN,
             LaunchMethod.ROOT,
             LaunchMethod.ADB,
@@ -85,6 +47,8 @@ public class ShizukuManagerSettings {
     }
 
     public static UUID getToken(Context context) {
+        context = ShizukuManagerApplication.getDeviceProtectedStorageContext(context);
+
         SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         long mostSig = preferences.getLong("token_most", 0);
         long leastSig = preferences.getLong("token_least", 0);
@@ -92,6 +56,8 @@ public class ShizukuManagerSettings {
     }
 
     public static void putToken(Context context, Intent intent) {
+        context = ShizukuManagerApplication.getDeviceProtectedStorageContext(context);
+
         long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
 

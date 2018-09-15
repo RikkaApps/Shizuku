@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import java.util.List;
-
 import moe.shizuku.manager.utils.Shell;
 
 public class ShellService extends Service {
@@ -44,19 +42,15 @@ public class ShellService extends Service {
                     .setWantSTDERR(true)
                     .setWatchdogTimeout(10)
                     .setMinimalLogging(true)
-                    .open(new Shell.OnCommandResultListener() {
+                    .open((commandCode, exitCode, output) -> {
+                        if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING) {
+                            if (listener != null) {
+                                listener.onFailed();
 
-                        @Override
-                        public void onCommandResult(int commandCode, int exitCode, List<String> output) {
-                            if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING) {
-                                if (listener != null) {
-                                    listener.onFailed();
-
-                                    rootSession = null;
-                                }
-                            } else {
-                                rootSession.addCommand(command, code, listener);
+                                rootSession = null;
                             }
+                        } else {
+                            rootSession.addCommand(command, code, listener);
                         }
                     });
         }

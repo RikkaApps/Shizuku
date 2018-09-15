@@ -1,69 +1,54 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku Manager</string>
-
     <string name="permission_group_label" translatable="false">Shizuku</string>
     <string name="permission_group_description">access privileged APIs provided by Shizuku</string>
     <string name="permission_label">access Shizuku privileged API</string>
     <string name="permission_description">Allow the app to use privileged APIs provided by Shizuku.</string>
-
     <string name="server_running">running version %2$d (%1$s)</string>
     <string name="server_running_update">running version %2$d (%1$s)\nrestart server to update to %3$d</string>
     <string name="server_not_running">Tap to check if server is running</string>
     <string name="server_require_restart">Require restart server</string>
     <string name="server_no_token">running, but no correct token received\ntap to request token</string>
-
     <string name="server_start">Start</string>
     <string name="server_restart">Restart</string>
-
     <string name="start_server_title_root"><![CDATA[Start server with root permission]]></string>
     <string name="start_server_title_adb"><![CDATA[Start / update server with adb]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b><p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.<br>Type following content into computer\'s terminal and hit Enter<p><font face="monospace">%s</font><p>The server running status will refresh if this operation succeed]]></string>
-
     <string name="copy_command">Copy</string>
     <string name="send_command">Send</string>
-
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
-
     <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart server or use \"get token\" in the manager.</string>
     <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart server is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to server, please check if the server is running.</string>
-
     <string name="authorized_apps_manage">Authorized apps</string>
     <plurals name="authorized_apps_count">
         <item quantity="one"><![CDATA[Authorized %s application to get token without confirmation]]></item>
         <item quantity="other"><![CDATA[Authorized %s applications to get token without confirmation]]></item>
     </plurals>
     <string name="view_authorized_apps"><![CDATA[Token will be invalided after server restart<br>Tap to manage authorized apps]]></string>
-
     <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
-
     <string name="open_manager">Open Shizuku Manager</string>
-
     <string name="action_about">About</string>
     <string name="about_icon_credits"><![CDATA[Thanks <a href="https://twitter.com/xiaoya_er">小雅</a> for illustrating app icon]]></string>
-
     <string name="action_settings">Settings</string>
-
     <string name="start_root_choose_launch_method">Choose start method</string>
     <string name="start_root_method_usual">The usual way</string>
     <string name="start_root_method_usual_summary">Should work on most devices</string>
     <string name="start_root_method_alternative">Alternative way</string>
     <string name="start_root_method_alternative_summary">Try this if you have problem</string>
-
     <string name="remember_choice">Remember my choice</string>
-
     <string name="settings_root_launch_method">Start method (root)</string>
     <string name="settings_root_launch_ask_every_time">Ask every time</string>
-
     <string name="starting_shell" translatable="false">Starting root shell…</string>
     <string name="cannot_start_no_root">Can\'t start service because root permission is not granted or this device is not rooted.</string>
     <string name="cannot_start_shell_failed">There\'s something wrong when running shell command.</string>
-
     <string name="channel_service_status">Service start status</string>
     <string name="notification_service_starting">Shizuku service is starting…</string>
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
+    <string name="channel_work_status">Working status</string>
+    <string name="notification_working">Working…</string>
 
 </resources>

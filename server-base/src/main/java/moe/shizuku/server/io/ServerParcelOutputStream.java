@@ -5,7 +5,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
-import android.system.Os;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;

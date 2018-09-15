@@ -3,64 +3,49 @@
     <string name="permission_group_description">使用由 Shizuku 提供的特权 API</string>
     <string name="permission_label">使用 Shizuku 特权 API</string>
     <string name="permission_description">允许应用使用由 Shizuku 提供的特权 API。</string>
-
     <string name="server_running">版本 %2$d 运行中（%1$s）</string>
     <string name="server_running_update">版本 %2$d 运行中（%1$s）\n重启服务以升级至版本 %3$d</string>
     <string name="server_not_running">点击检查服务是否运行</string>
     <string name="server_require_restart">需要重新启动服务</string>
     <string name="server_no_token">运行中，但未正确接收令牌\n点击请求令牌</string>
-
     <string name="server_start">启动</string>
     <string name="server_restart">重新启动</string>
-
     <string name="start_server_title_root"><![CDATA[通过 root 权限启动服务]]></string>
     <string name="start_server_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>以下步骤需要在每次重新启动后进行。</b><p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。<br>在电脑的终端中输入以下内容<p><font face="monospace">%s</font><p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
-
     <string name="copy_command">复制</string>
     <string name="send_command">发送</string>
-
     <string name="auth_allow">总是允许</string>
     <string name="auth_deny">拒绝</string>
     <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 身份调用 API 吗？]]></string>
-
     <string name="auth_manager_no_token">Shizuku Manager 未正确接收令牌，请尝试重新启动服务，或是使用主界面的获取令牌。</string>
     <string name="auth_server_dead">可能由于非正常重启等原因，服务需要重新启动。</string>
     <string name="auth_cannot_connect">无法连接服务，请确认服务正在运行。</string>
-
     <string name="authorized_apps_manage">自动授权的应用</string>
     <plurals name="authorized_apps_count">
         <item quantity="other"><![CDATA[已授权 %d 个无需确认获取令牌的应用]]></item>
     </plurals>
     <string name="view_authorized_apps"><![CDATA[令牌只会在服务重启后失效<br>点击管理授权的应用]]></string>
-
     <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
-
     <string name="open_manager">打开 Shizuku Manager</string>
-
     <string name="action_about">关于</string>
-
     <string name="about_icon_credits"><![CDATA[感谢 <a href="http://weibo.com/528556720">小雅</a> 制作应用图标]]></string>
-
     <string name="action_settings">设置</string>
-
     <string name="start_root_choose_launch_method">选择启动方式</string>
     <string name="start_root_method_usual">通常方式</string>
     <string name="start_root_method_usual_summary">应该在大部分设备上工作</string>
     <string name="start_root_method_alternative">替代方式</string>
     <string name="start_root_method_alternative_summary">如果遇到问题试试这个</string>
-
     <string name="remember_choice">记住我的选择</string>
-
     <string name="settings_root_launch_method">启动方式（root）</string>
     <string name="settings_root_launch_ask_every_time">每次询问</string>
-
     <string name="cannot_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
     <string name="cannot_start_shell_failed">运行 shell 命令时出错。</string>
-
     <string name="channel_service_status">服务启动状态</string>
     <string name="notification_service_starting">Shizuku 服务正在启动…</string>
     <string name="notification_service_start_failed">启动 Shizuku 服务失败。</string>
     <string name="notification_service_start_no_root">请求 root 权限失败。</string>
+    <string name="channel_work_status">工作状态</string>
+    <string name="notification_working">工作中…</string>
 
 </resources>

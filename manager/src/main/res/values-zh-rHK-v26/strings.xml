@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="start_server_summary_adb"><![CDATA[
-    <b>由於系統行爲變化，在 Android 8.0 之後，請不要關閉“USB 調試”或將 USB 使用模式改爲”僅充電“，否則服務將被停止。</b>
+    由於系統行爲變化，在 Android 8.0 之後，請<b>不要關閉“USB 調試”</b>並保證 <b>USB 使用模式是“僅充電”</b>，否則服務將被停止。
     <p><b>以下步驟需要在每次重新啟動後進行。</b>
     <p>在“開發者選項”中開啟“USB 調試”，將設備連接至電腦。
     <br>在電腦的命令提示字元中輸入以下內容

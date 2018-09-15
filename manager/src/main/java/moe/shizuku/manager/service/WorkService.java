@@ -1,9 +1,14 @@
 package moe.shizuku.manager.service;
 
-import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Process;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -16,9 +21,14 @@ import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.io.ParcelOutputStream;
 import moe.shizuku.manager.Constants;
 import moe.shizuku.manager.Intents;
+import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.utils.NotificationHelper;
+import moe.shizuku.support.app.ForegroundIntentService;
 
-public class WorkService extends IntentService {
+import static moe.shizuku.manager.Constants.NOTIFICATION_CHANNEL_WORK;
+
+public class WorkService extends ForegroundIntentService {
 
     public WorkService() {
         super("WorkService");
@@ -27,13 +37,46 @@ public class WorkService extends IntentService {
     public static void startAuth(Context context) {
         Intent intent = new Intent(context, WorkService.class);
         intent.setAction(Intents.ACTION_AUTH);
-        context.startService(intent);
+        ContextCompat.startForegroundService(context, intent);
     }
 
     public static void startRequestToken(Context context) {
         Intent intent = new Intent(context, WorkService.class);
         intent.setAction(Intents.ACTION_REQUEST_TOKEN);
-        context.startService(intent);
+        ContextCompat.startForegroundService(context, intent);
+    }
+
+    @Override
+    public int getForegroundServiceNotificationId() {
+        return Constants.NOTIFICATION_ID_WORK;
+    }
+
+    @Override
+    public Notification onStartForeground() {
+        NotificationCompat.Builder builder = NotificationHelper.create(this, NOTIFICATION_CHANNEL_WORK, R.string.notification_working)
+                .setOngoing(true);
+
+        if (Build.VERSION.SDK_INT < 26) {
+            builder.setPriority(NotificationCompat.PRIORITY_MIN);
+        }
+
+        return builder.build();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if (notificationManager != null
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_WORK, getString(R.string.channel_service_status), NotificationManager.IMPORTANCE_MIN);
+            channel.setSound(null, null);
+            channel.setShowBadge(false);
+
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
@@ -47,6 +90,7 @@ public class WorkService extends IntentService {
             }
         }
     }
+
     private void handleAuth() {
         ShizukuState state = ShizukuClient.getState();
 

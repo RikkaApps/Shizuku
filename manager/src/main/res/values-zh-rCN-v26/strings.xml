@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="start_server_summary_adb"><![CDATA[
-    <b>由于系统行为变化，在 Android 8.0 之后，请不要关闭“USB 调试”或将 USB 使用模式改为”仅充电“，否则服务将被停止。</b>
+    由于系统行为变化，在 Android 8.0 之后，请<b>不要关闭“USB 调试”</b>并保证 <b>USB 使用模式是“仅充电”</b>，否则服务将被停止。
     <p><b>以下步骤需要在每次重新启动后进行。</b>
     <p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。
     <br>在电脑的终端中输入以下内容<p>

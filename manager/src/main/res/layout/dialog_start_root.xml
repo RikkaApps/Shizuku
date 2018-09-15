@@ -11,8 +11,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:minHeight="?listPreferredItemHeightSmall"
+        android:background="?android:selectableItemBackground"
+        android:minHeight="?android:listPreferredItemHeightSmall"
         android:gravity="center_vertical"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
@@ -20,9 +20,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?textColorAlertDialogListItem"
-            android:paddingStart="?dialogPreferredPadding"
-            android:paddingEnd="?dialogPreferredPadding"
+            android:textColor="?android:textColorAlertDialogListItem"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="16sp"
             android:text="@string/start_root_method_usual" />
 
@@ -30,8 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorSecondary"
-            android:paddingStart="?dialogPreferredPadding"
-            android:paddingEnd="?dialogPreferredPadding"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="14sp"
             android:text="@string/start_root_method_usual_summary" />
 
@@ -42,8 +42,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:minHeight="?listPreferredItemHeightSmall"
+        android:background="?android:selectableItemBackground"
+        android:minHeight="?android:listPreferredItemHeightSmall"
         android:gravity="center_vertical"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
@@ -51,9 +51,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?textColorAlertDialogListItem"
-            android:paddingStart="?dialogPreferredPadding"
-            android:paddingEnd="?dialogPreferredPadding"
+            android:textColor="?android:textColorAlertDialogListItem"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="16sp"
             android:text="@string/start_root_method_alternative" />
 
@@ -61,8 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorSecondary"
-            android:paddingStart="?dialogPreferredPadding"
-            android:paddingEnd="?dialogPreferredPadding"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="14sp"
             android:text="@string/start_root_method_alternative_summary" />
 

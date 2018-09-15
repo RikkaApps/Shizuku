@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.Apps">
+    <style name="AppTheme.Apps" parent="AppTheme">
         <item name="android:windowBackground">@color/cardview_dark_background</item>
     </style>
+
+    <style name="AppTheme.DayNight" parent="AppTheme"/>
 </resources>

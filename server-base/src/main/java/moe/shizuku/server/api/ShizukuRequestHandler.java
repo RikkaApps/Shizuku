@@ -1,5 +1,6 @@
 package moe.shizuku.server.api;
 
+import android.os.Binder;
 import android.os.Handler;
 import android.os.RemoteException;
 
@@ -28,10 +29,12 @@ public class ShizukuRequestHandler extends RequestHandler {
 
     private final Handler mHandler;
     private final UUID mToken;
+    private final Binder mBinder;
 
-    public ShizukuRequestHandler(Handler handler, UUID token) {
+    public ShizukuRequestHandler(Handler handler, UUID token, Binder binder) {
         mHandler = handler;
         mToken = token;
+        mBinder = binder;
     }
 
     public void handle(Socket socket) throws IOException, RemoteException {
@@ -47,7 +50,7 @@ public class ShizukuRequestHandler extends RequestHandler {
                 authorize(is, os, mToken);
                 break;
             case ACTION_SEND_TOKEN:
-                sendTokenToManger(is, os, mToken);
+                sendTokenToManger(is, os, mToken, mBinder);
                 break;
             default:
                 long most = is.readLong();
@@ -88,11 +91,11 @@ public class ShizukuRequestHandler extends RequestHandler {
         handler.sendEmptyMessage(ShizukuServer.MESSAGE_EXIT);
     }
 
-    private static void sendTokenToManger(ParcelInputStream is, ParcelOutputStream os, UUID token) throws IOException, RemoteException {
+    private static void sendTokenToManger(ParcelInputStream is, ParcelOutputStream os, UUID token, Binder binder) throws IOException, RemoteException {
         int uid = is.readInt();
         int userId = uid / 100000;
 
-        ShizukuServer.sendTokenToManger(token, userId);
+        ShizukuServer.sendTokenToManger(token, binder, userId);
 
         os.writeNoException();
     }

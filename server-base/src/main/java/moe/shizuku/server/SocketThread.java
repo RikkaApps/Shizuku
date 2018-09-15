@@ -1,5 +1,6 @@
 package moe.shizuku.server;
 
+import android.os.Binder;
 import android.os.Handler;
 import android.os.Process;
 import android.os.RemoteException;
@@ -28,10 +29,10 @@ public class SocketThread implements Runnable {
 
     private final ShizukuRequestHandler mRequestHandler;
 
-    SocketThread(Handler handler, ServerSocket serverSocket, UUID token) {
+    SocketThread(Handler handler, ServerSocket serverSocket, UUID token, Binder binder) {
         mHandler = handler;
         mServerSocket = serverSocket;
-        mRequestHandler = new ShizukuRequestHandler(mHandler, token);
+        mRequestHandler = new ShizukuRequestHandler(mHandler, token, binder);
     }
 
     private static class HandlerRunnable implements Runnable {

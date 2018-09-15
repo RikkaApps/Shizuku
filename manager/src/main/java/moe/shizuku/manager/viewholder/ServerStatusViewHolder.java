@@ -2,10 +2,8 @@ package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,17 +16,9 @@ import moe.shizuku.manager.R;
 import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
-/**
- * Created by rikka on 2017/10/22.
- */
 public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> implements View.OnClickListener {
 
-    public static final Creator<ShizukuState> CREATOR = new Creator<ShizukuState>() {
-        @Override
-        public BaseViewHolder<ShizukuState> createViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            return new ServerStatusViewHolder(inflater.inflate(R.layout.item_server_status, parent, false));
-        }
-    };
+    public static final Creator<ShizukuState> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_server_status, parent, false));
 
     private TextView mStatusText;
     private ImageView mStatusIcon;
@@ -88,15 +78,12 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
                 mToken = ShizukuClient.getToken();
 
                 final View view = (View) mStatusIcon.getParent();
-                view.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int centerX = mStatusIcon.getWidth() / 2;
-                        int centerY = mStatusIcon.getHeight() / 2;
-                        float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
+                view.post(() -> {
+                    int centerX = mStatusIcon.getWidth() / 2;
+                    int centerY = mStatusIcon.getHeight() / 2;
+                    float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
 
-                        ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
-                    }
+                    ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
                 });
             }
         } else {

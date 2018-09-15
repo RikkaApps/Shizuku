@@ -2,21 +2,11 @@ package moe.shizuku.manager;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import java.util.concurrent.Callable;
-
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
-
-/**
- * Created by rikka on 2017/10/23.
- */
 
 public class AuthorizationActivityV23 extends AbstractAuthorizationActivity {
 
@@ -51,19 +41,11 @@ public class AuthorizationActivityV23 extends AbstractAuthorizationActivity {
             new AlertDialog.Builder(this)
                     .setMessage(msg)
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(AuthorizationActivityV23.this, MainActivity.class)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        }
-                    })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            setResult(ShizukuClient.AUTH_RESULT_ERROR);
-                            finish();
-                        }
+                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV23.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)))
+                    .setOnDismissListener(dialog -> {
+                        setResult(ShizukuClient.AUTH_RESULT_ERROR);
+                        finish();
                     })
                     .setCancelable(false)
                     .show();

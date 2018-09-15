@@ -8,15 +8,11 @@ import android.support.v4.content.ContextCompat;
 
 import moe.shizuku.manager.R;
 
-/**
- * Created by rikka on 2017/10/25.
- */
-
 public class NotificationHelper {
 
     public static NotificationCompat.Builder create(Context context, String channel, @StringRes int text) {
         return new NotificationCompat.Builder(context, channel)
-                .setContentText(context.getString(text))
+                .setContentTitle(context.getString(text))
                 .setColor(ContextCompat.getColor(context, R.color.notification))
                 .setSmallIcon(R.drawable.ic_noti_24dp)
                 .setWhen(System.currentTimeMillis())

@@ -12,15 +12,12 @@ import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
 import moe.shizuku.manager.service.BootCompleteService;
 
-/**
- * Created by Rikka on 2017/5/24.
- */
-
 public class BootCompleteReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+        if (!Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction())
+                && !Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             return;
         }
 

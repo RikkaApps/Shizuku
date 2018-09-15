@@ -4,13 +4,10 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
-import android.os.RemoteException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.io.ParcelInputStream;
 import moe.shizuku.server.api.Compat;
 import moe.shizuku.server.util.ServerLog;
@@ -21,7 +18,6 @@ import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_NAME;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_URI;
 
 /**
  * Created by rikka on 2017/10/27.

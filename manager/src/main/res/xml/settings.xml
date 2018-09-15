@@ -1,12 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <SimpleMenuPreference
-        android:key="root_launch_method"
-        android:title="@string/settings_root_launch_method"
-        android:summary="%s"
-        android:entries="@array/root_launch_method"
-        android:entryValues="@array/root_launch_method_value"
-        android:defaultValue="ask"/>
-
 </PreferenceScreen>

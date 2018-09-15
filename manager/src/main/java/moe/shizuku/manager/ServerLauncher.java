@@ -20,36 +20,48 @@ import java.util.Locale;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.support.utils.IOUtils;
 
-/**
- * Created by Rikka on 2017/5/13.
- */
-
 public class ServerLauncher {
 
-    public static String COMMAND_ROOT;
-    public static String COMMAND_ROOT_OLD;
+    public static String COMMAND_ROOT[] = new String[2];
     public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
-    public static String DEX_PATH;
+    private static String DEX_PATH[] = new String[2];
 
-    public static void init(Context context) {
-        copyDex(context);
-        writeSH(context);
+    static void init(Context context) {
+        try {
+            copyDex(context);
+            writeSH(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void copyDex(Context context) {
+    private static File getParent(Context context) {
+        return ShizukuManagerApplication.getDeviceProtectedStorageContext(context).getFilesDir();
+    }
+
+    private static void copyDex(Context context) throws IOException {
         int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
         String source = String.format(Locale.ENGLISH, "server-%d.dex", apiVersion);
         String target = String.format(Locale.ENGLISH, "server-%d-v%d.dex", apiVersion, ShizukuConstants.SERVER_VERSION);
-        File file = new File(context.getExternalFilesDir(null), target);
 
-        DEX_PATH = file.getAbsolutePath();
-        COMMAND_ROOT_OLD = "app_process -Djava.class.path=" + DEX_PATH + " /system/bin --nice-name=shizuku_server moe.shizuku.server.ShizukuServer &";
+        File external = context.getExternalFilesDir(null);
+        File internal = getParent(context);
 
-        if (file.exists() && !BuildConfig.DEBUG) {
-            return;
+        File files[] = new File[external == null ? 1 : 2];
+        files[0] = new File(internal, target);
+        if (external != null) {
+            files[1] = new File(external, target);
         }
 
-        try {
+        int i = 0;
+        for (File file : files) {
+            DEX_PATH[i] = file.getAbsolutePath();
+
+            if (file.exists() && !BuildConfig.DEBUG) {
+                i++;
+                continue;
+            }
+
             InputStream is = context.getAssets().open(source);
             OutputStream os = new FileOutputStream(file);
 
@@ -58,21 +70,33 @@ public class ServerLauncher {
             os.flush();
             os.close();
             is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            i++;
         }
     }
 
-    private static void writeSH(Context context) {
+    private static void writeSH(Context context) throws IOException {
         // adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh
-        try {
-            File file = new File(context.getExternalFilesDir(null), "start.sh");
+        String target = "start.sh";
+
+        File external = context.getExternalFilesDir(null);
+        File internal = getParent(context);
+
+        File files[] = new File[external == null ? 1 : 2];
+        files[0] = new File(internal, target);
+
+        if (external != null) {
+            files[1] = new File(external, target);
+        }
+
+        int i = 0;
+        for (File file : files) {
             if (!file.exists()) {
                 //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
             }
 
-            COMMAND_ROOT = "sh " + file.getAbsolutePath();
+            COMMAND_ROOT[i] = "sh " + file.getAbsolutePath();
 
             @SuppressLint("SdCardPath")
             File sdcardFile = new File("/sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh");
@@ -88,17 +112,18 @@ public class ServerLauncher {
             while ((line = is.readLine()) != null) {
                 os.println(line
                         .replace("%%%STARTER_PATH%%%", getStarterPath(context))
-                        .replace("%%%STARTER_PARAM%%%", getStarterParam())
+                        .replace("%%%STARTER_PARAM%%%", getStarterParam(i))
                 );
             }
             os.flush();
             os.close();
-        } catch (Exception ignored) {
+
+            i++;
         }
     }
 
-    private static String getStarterParam() {
-        return "--path=" + DEX_PATH
+    private static String getStarterParam(int i) {
+        return "--path=" + DEX_PATH[i]
                 /*+ " --token=" + UUID.randomUUID()*/;
     }
 

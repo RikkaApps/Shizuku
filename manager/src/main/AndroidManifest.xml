@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
 
     <permission-group
@@ -12,6 +13,7 @@
         android:description="@string/permission_group_description"
         android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_group_label" />
+
     <permission
         android:name="moe.shizuku.manager.permission.API"
         android:permissionGroup="moe.shizuku.manager.permission-group.API"
@@ -33,12 +35,14 @@
     <application
         android:name=".ShizukuManagerApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:directBootAware="true"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme.DayNight"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="n">
         <activity
             android:name=".AuthorizationActivity"
             android:enabled="@bool/auth_activity_enabled"
@@ -82,6 +86,7 @@
             android:theme="@style/AppTheme.Apps" />
         <activity
             android:name=".TokenReceiveActivity"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
@@ -95,6 +100,7 @@
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="999">
@@ -114,6 +120,7 @@
 
         <provider
             android:name=".provider.TransferProvider"
+            android:directBootAware="true"
             android:authorities="moe.shizuku.manager.transferprovider"
             android:enabled="true"
             android:exported="true"
@@ -121,10 +128,11 @@
 
         <provider
             android:name=".provider.TokenProvider"
+            android:directBootAware="true"
             android:authorities="moe.shizuku.manager.tokenprovider"
             android:enabled="true"
             android:exported="true"
-            android:permission="@string/permission"/>
+            android:permission="@string/permission" />
 
     </application>
 

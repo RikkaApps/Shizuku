@@ -1,6 +1,6 @@
 #!/system/bin/sh
 
-STARTER_PATH=%%%STARTER_PATH%%%
+STARTER_PATH="%%%STARTER_PATH%%%"
 STARTER_PARAM="%%%STARTER_PARAM%%%"
 
 echo "info: start.sh begin"

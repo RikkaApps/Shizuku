@@ -56,19 +56,11 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
             new AlertDialog.Builder(this)
                     .setMessage(msg)
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.open_manager, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        }
-                    })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            setResult(ShizukuClient.AUTH_RESULT_ERROR);
-                            finish();
-                        }
+                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)))
+                    .setOnDismissListener(dialog -> {
+                        setResult(ShizukuClient.AUTH_RESULT_ERROR);
+                        finish();
                     })
                     .setCancelable(false)
                     .show();
@@ -99,37 +91,23 @@ public class AuthorizationActivity extends AbstractAuthorizationActivity {
 
         Dialog dialog = new AlertDialog.Builder(this)
                 .setMessage(message)
-                .setPositiveButton(R.string.auth_allow, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AuthorizationManager.grant(AuthorizationActivity.this, packageName);
+                .setPositiveButton(R.string.auth_allow, (d, which) -> {
+                    AuthorizationManager.grant(AuthorizationActivity.this, packageName);
 
-                        setResult(true, packageName);
-                    }
+                    setResult(true, packageName);
                 })
-                .setNegativeButton(R.string.auth_deny, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AuthorizationManager.revoke(AuthorizationActivity.this, packageName);
+                .setNegativeButton(R.string.auth_deny, (d, which) -> {
+                    AuthorizationManager.revoke(AuthorizationActivity.this, packageName);
 
-                        setResult(false, packageName);
-                    }
+                    setResult(false, packageName);
                 })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                .setOnDismissListener(d -> finish())
                 .setCancelable(false)
                 .create();
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                AlertDialog dialog = (AlertDialog) dialogInterface;
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
-            }
+        dialog.setOnShowListener(d -> {
+            AlertDialog alertDialog = (AlertDialog) d;
+            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
         });
         dialog.show();
 
