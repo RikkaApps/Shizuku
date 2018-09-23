@@ -18,6 +18,9 @@
     <br>在電腦的命令提示字元中輸入以下內容
     <p><font face="monospace">%s</font>
     <p>按下確認鍵，如果成功將看到主介面的執行狀態更新。]]></string>
+    <string name="start_server_summary_root"><![CDATA[
+    若啓動成功，則 Shizuku 將在開機後自動啓動。
+    <br>如果無法正常工作，請檢查您的系統或是第三方工具是否限制了 Shizuku Manager 開機啓動。]]></string>
     <string name="copy_command">複製</string>
     <string name="send_command">傳送</string>
     <string name="auth_allow">一律允許</string>

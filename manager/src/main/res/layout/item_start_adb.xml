@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:paddingTop="4dp"
+            android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:textColor="?android:textColorSecondary"
             app:textHtml="@string/start_server_summary_adb"/>

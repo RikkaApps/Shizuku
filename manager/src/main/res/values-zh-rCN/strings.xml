@@ -18,6 +18,9 @@
     <br>在电脑的终端中输入以下内容
     <p><font face="monospace">%s</font>
     <p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
+    <string name="start_server_summary_root"><![CDATA[
+    若启动成功，则 Shizuku 将在开机后自动启动。
+    <br>如果无法正常工作，请检查您的系统或是第三方工具是否限制了 Shizuku Manager 开机启动。]]></string>
     <string name="copy_command">复制</string>
     <string name="send_command">发送</string>
     <string name="auth_allow">总是允许</string>
