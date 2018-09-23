@@ -1,5 +1,6 @@
 package moe.shizuku.manager.authorization;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -109,12 +109,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     public boolean granted(Context context, final String packageName) {
         try {
             return Single
-                    .fromCallable(new Callable<Integer>() {
-                        @Override
-                        public Integer call() throws Exception {
-                            return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000);
-                        }
-                    })
+                    .fromCallable(() -> checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000))
                     .subscribeOn(Schedulers.io())
                     .blockingGet() == PackageManager.PERMISSION_GRANTED;
         } catch (Exception ignored) {
@@ -122,16 +117,15 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         return false;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void grant(Context context, final String packageName) {
         try {
+            //noinspection ResultOfMethodCallIgnored
             Single
-                    .fromCallable(new Callable<Object>() {
-                        @Override
-                        public Object call() throws Exception {
-                            grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
-                            return null;
-                        }
+                    .fromCallable(() -> {
+                        grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+                        return null;
                     })
                     .subscribeOn(Schedulers.io())
                     .blockingGet();
@@ -139,16 +133,15 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         }
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void revoke(Context context, final String packageName) {
         try {
+            //noinspection ResultOfMethodCallIgnored
             Single
-                    .fromCallable(new Callable<Object>() {
-                        @Override
-                        public Object call() throws Exception {
-                            revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
-                            return null;
-                        }
+                    .fromCallable(() -> {
+                        revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
+                        return null;
                     })
                     .subscribeOn(Schedulers.io())
                     .blockingGet();

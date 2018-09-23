@@ -7,6 +7,9 @@ import android.os.Process;
 import android.util.Log;
 
 import androidx.core.content.ContextCompat;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.Constants;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
@@ -26,7 +29,14 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         }
 
         if (ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
-            Log.i(Constants.TAG, "start on boot");
+            Log.i(Constants.TAG, "start on boot, action=" + intent.getAction());
+
+            boolean isRunning = Single.fromCallable(() -> ShizukuClient.getState().isServerAvailable()).subscribeOn(Schedulers.io())
+                    .blockingGet();
+            if (isRunning) {
+                Log.i(Constants.TAG, "service is running");
+                return;
+            }
 
             ContextCompat.startForegroundService(context, new Intent(context, BootCompleteService.class));
         }

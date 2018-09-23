@@ -51,8 +51,6 @@ public class BootCompleteService extends Service {
         }
 
         startForeground(NOTIFICATION_ID_STATUS, builder.build());
-
-        Log.d(TAG, "startForeground");
     }
 
     @Override
