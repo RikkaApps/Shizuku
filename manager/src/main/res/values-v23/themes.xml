@@ -14,5 +14,4 @@
         <item name="android:windowBackground">@color/cardview_light_background</item>
     </style>
 
-    <style name="AppTheme.DayNight" parent="AppTheme.Light"/>
 </resources>

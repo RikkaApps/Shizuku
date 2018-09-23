@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorAlertDialogListItem"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="16sp"
             android:text="@string/start_root_method_usual" />
 
@@ -30,8 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorSecondary"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="14sp"
             android:text="@string/start_root_method_usual_summary" />
 
@@ -52,8 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorAlertDialogListItem"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="16sp"
             android:text="@string/start_root_method_alternative" />
 
@@ -61,8 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:textColorSecondary"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
+            android:paddingStart="?android:dialogPreferredPadding"
+            android:paddingEnd="?android:dialogPreferredPadding"
             android:textSize="14sp"
             android:text="@string/start_root_method_alternative_summary" />
 
