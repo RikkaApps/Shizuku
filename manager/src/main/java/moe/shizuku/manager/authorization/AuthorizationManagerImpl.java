@@ -11,7 +11,10 @@ import java.util.List;
 public interface AuthorizationManagerImpl {
 
     List<String> getPackages(Context context);
+
     boolean granted(Context context, String packageName);
+
     void grant(Context context, String packageName);
+
     void revoke(Context context, String packageName);
 }

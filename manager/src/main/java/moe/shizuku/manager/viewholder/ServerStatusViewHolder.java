@@ -1,7 +1,6 @@
 package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
+import androidx.core.content.ContextCompat;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;

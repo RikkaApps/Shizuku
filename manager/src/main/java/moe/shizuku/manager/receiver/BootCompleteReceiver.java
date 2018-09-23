@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Process;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import moe.shizuku.manager.Constants;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;

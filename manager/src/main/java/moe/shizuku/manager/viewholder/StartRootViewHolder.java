@@ -3,10 +3,10 @@ package moe.shizuku.manager.viewholder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.support.v4.app.ShareCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.app.ShareCompat;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.service.ShellService;

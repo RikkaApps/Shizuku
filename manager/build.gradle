@@ -8,7 +8,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "versionName", "${rootProject.ext.versionName}"
     }
@@ -60,21 +60,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation project(':api-base')
-    implementation "com.android.support:support-fragment:$supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
-    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "androidx.core:core:$androidXLibraryVersion"
+    implementation "androidx.fragment:fragment:$androidXLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
+    implementation "androidx.cardview:cardview:$androidXLibraryVersion"
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation "moe.shizuku.support:design:2.1.0"
-    implementation 'moe.shizuku.support:support-utils:2.3.6'
-    implementation 'moe.shizuku.support:recyclerview-utils:2.1.3'
+    implementation "moe.shizuku.support:design:3.0.0"
+    implementation 'moe.shizuku.support:support-utils:3.0.0'
+    implementation 'moe.shizuku.support:recyclerview-utils:3.0.0'
     implementation 'moe.shizuku.fontprovider:api:10'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'

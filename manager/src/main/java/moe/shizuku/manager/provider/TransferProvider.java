@@ -8,13 +8,13 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
 
 import java.util.Random;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 

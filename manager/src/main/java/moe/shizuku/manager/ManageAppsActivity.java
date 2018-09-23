@@ -3,13 +3,13 @@ package moe.shizuku.manager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import moe.shizuku.manager.adapter.AppAdapter;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.utils.AppNameComparator;

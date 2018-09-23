@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import androidx.core.util.Pair;
 import moe.shizuku.manager.Manifest;
 
 /**
@@ -82,7 +82,7 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
         PackageManager pm = context.getPackageManager();
 
         Set<Pair<String, Long>> to = new HashSet<>();
-        for (String p: from) {
+        for (String p : from) {
             String[] temp = p.split("\\|");
             if (temp.length == 2) {
                 String packageName = temp[0];
@@ -114,7 +114,7 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
 
     private static Set<String> toPreference(Set<Pair<String, Long>> from) {
         Set<String> to = new HashSet<>();
-        for (Pair<String, Long> p: from) {
+        for (Pair<String, Long> p : from) {
             to.add(p.first + "|" + p.second);
         }
         return to;

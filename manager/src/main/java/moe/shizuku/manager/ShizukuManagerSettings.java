@@ -3,12 +3,12 @@ package moe.shizuku.manager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.IntDef;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.util.UUID;
 
+import androidx.annotation.IntDef;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.support.utils.Settings;
@@ -38,7 +38,8 @@ public class ShizukuManagerSettings {
         int ADB = 1;
     }
 
-    public static @LaunchMethod int getLastLaunchMode() {
+    public static @LaunchMethod
+    int getLastLaunchMode() {
         return Settings.getInt("mode", LaunchMethod.UNKNOWN);
     }
 

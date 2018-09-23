@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Process;
-import android.util.Log;
 
 import java.io.IOException;
 import java.net.Socket;

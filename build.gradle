@@ -6,9 +6,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha10'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha11'
 
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -105,16 +105,16 @@ task dex(type: GradleBuild) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.2.0'
+def baseVersionName = '2.2.1'
 
 ext {
-    supportLibraryVersion = '28.0.0-rc02'
-    preferenceLibraryVersion = '2.2.3'
+    androidXLibraryVersion = '1.0.0'
+    preferenceLibraryVersion = '3.0.0'
 
     minSdkVersion = 21
     targetSdkVersion = 28
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiBaseLibraryVersion = '10'
+    apiBaseLibraryVersion = '11'
     apiLibraryVersion = '5'
 }

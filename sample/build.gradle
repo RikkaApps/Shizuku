@@ -9,7 +9,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         sign
@@ -28,14 +28,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    implementation "com.android.support:support-annotations:$supportLibraryVersion"
-    implementation "com.android.support:support-compat:$supportLibraryVersion"
-
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    implementation "androidx.annotation:annotation:$androidXLibraryVersion"
+    implementation "androidx.core:core:$androidXLibraryVersion"
     implementation project(':api-base')
     implementation project(':api')
     compileOnly project(':support-fragment-stub')

@@ -16,4 +16,4 @@ ext {
     bintrayName = project.name
 }
 
-//apply from: project.rootProject.file('bintray.gradle')
+apply from: project.rootProject.file('bintray.gradle')

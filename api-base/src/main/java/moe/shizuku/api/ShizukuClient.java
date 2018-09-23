@@ -297,6 +297,17 @@ public class ShizukuClient {
     }
 
     /**
+     * Request permission on API 23+.
+     *
+     * @param fragment Fragment
+     */
+    public static void requestPermission(androidx.fragment.app.Fragment fragment) {
+        if (Build.VERSION.SDK_INT > 23) {
+            fragment.requestPermissions(new String[]{PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+        }
+    }
+
+    /**
      * Request token from manager app if user have already granted permission.
      * <p>
      * On API 23+, Shizuku Manager use Android's runtime permission, you should request permission
@@ -408,6 +419,39 @@ public class ShizukuClient {
      * @param fragment Fragment
      */
     public static void requestAuthorization(android.support.v4.app.Fragment fragment) {
+        if (!checkSelfPermission(fragment.getActivity())) {
+            return;
+        }
+
+        Intent intent = new Intent(ShizukuConstants.ACTION_REQUEST_AUTHORIZATION)
+                .setPackage(ShizukuConstants.MANAGER_APPLICATION_ID);
+        if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+            try {
+                fragment.startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION);
+            } catch (Exception e) {
+                Log.w(TAG, "can't startActivityForResult", e);
+            }
+        }
+    }
+
+    /**
+     * Request token from manager app.
+     * <p>
+     * The result will be passed by {@link androidx.fragment.app.Fragment#onActivityResult(int, int, Intent)}.
+     * <p>
+     * On API 23+, Shizuku Manager use Android's runtime permission, you should use request
+     * permission by yourself first.
+     *
+     * @see #REQUEST_CODE_AUTHORIZATION
+     * @see #AUTH_RESULT_OK
+     * @see #AUTH_RESULT_USER_DENIED
+     * @see #AUTH_RESULT_ERROR
+     *
+     * @see #checkSelfPermission(Context)
+     *
+     * @param fragment Fragment
+     */
+    public static void requestAuthorization(androidx.fragment.app.Fragment fragment) {
         if (!checkSelfPermission(fragment.getActivity())) {
             return;
         }

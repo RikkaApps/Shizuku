@@ -7,11 +7,11 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
-import android.support.annotation.WorkerThread;
 
 import java.io.IOException;
 import java.util.List;
 
+import androidx.annotation.WorkerThread;
 import moe.shizuku.api.ShizukuActivityManagerV22;
 import moe.shizuku.api.ShizukuActivityManagerV26;
 import moe.shizuku.api.ShizukuAppOpsServiceV26;
@@ -29,10 +29,10 @@ public class ShizukuCompat {
     public static void broadcastIntent(Intent intent) throws RuntimeException {
         if (Build.VERSION.SDK_INT < 23) {
             ShizukuActivityManagerV22.broadcastIntent(
-                    null, intent, null, null, 0, null, null, null,-1, true, false, Process.myUserHandle().hashCode());
+                    null, intent, null, null, 0, null, null, null, -1, true, false, Process.myUserHandle().hashCode());
         } else {
             ShizukuActivityManagerV26.broadcastIntent(
-                    null, intent, null, null, 0, null, null, null,-1, null, true, false, Process.myUserHandle().hashCode());
+                    null, intent, null, null, 0, null, null, null, -1, null, true, false, Process.myUserHandle().hashCode());
         }
     }
 

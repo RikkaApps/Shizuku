@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
-import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.utils.NotificationHelper;
 

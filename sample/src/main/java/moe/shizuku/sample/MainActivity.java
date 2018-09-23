@@ -9,15 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.os.RemoteException;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import moe.shizuku.api.ShizukuActivityManagerV26;
 import moe.shizuku.api.ShizukuClient;
 

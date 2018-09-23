@@ -2,10 +2,10 @@ package moe.shizuku.manager.utils;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 
+import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import moe.shizuku.manager.R;
 
 public class NotificationHelper {

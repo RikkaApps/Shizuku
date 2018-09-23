@@ -2,10 +2,11 @@ package moe.shizuku.manager.authorization;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.WorkerThread;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.WorkerThread;
 
 /**
  * Created by Rikka on 2017/5/17.

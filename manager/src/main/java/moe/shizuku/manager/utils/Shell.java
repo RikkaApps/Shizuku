@@ -158,7 +158,7 @@ public class Shell {
      * @return Result of the commands
      */
     public static Result run(String shell, String[] commands, String[] environment,
-                                   boolean wantSTDERR) {
+                             boolean wantSTDERR) {
         String shellUpper = shell.toUpperCase(Locale.ENGLISH);
 
         if (Debug.getSanityChecksEnabledEffective() && Debug.onMainThread()) {
@@ -421,7 +421,7 @@ public class Shell {
 
                 List<String> ret = Shell.run(
                         internal ? "su -V" : "su -v",
-                        new String[] { "exit" },
+                        new String[]{"exit"},
                         null,
                         false
                 ).output;

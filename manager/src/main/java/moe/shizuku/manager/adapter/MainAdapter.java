@@ -6,9 +6,9 @@ import android.os.Process;
 import java.util.ArrayList;
 
 import moe.shizuku.ShizukuState;
-import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.viewholder.ManageAppsViewHolder;
 import moe.shizuku.manager.viewholder.ServerStatusViewHolder;
 import moe.shizuku.manager.viewholder.StartAdbViewHolder;

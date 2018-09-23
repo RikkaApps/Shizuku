@@ -3,15 +3,10 @@ package moe.shizuku.manager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.Parcel;
-import android.os.RemoteException;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.BinderHolder;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.manager.service.WorkService;
 

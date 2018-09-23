@@ -2,7 +2,6 @@ package android.app;
 
 import android.content.ComponentName;
 import android.os.Binder;
-import android.os.IBinder;
 import android.os.RemoteException;
 
 /**

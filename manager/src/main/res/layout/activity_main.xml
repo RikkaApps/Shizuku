@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/list"
@@ -8,6 +8,6 @@
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
     android:clipToPadding="false"
-    app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-</android.support.v7.widget.RecyclerView>
+</androidx.recyclerview.widget.RecyclerView>
