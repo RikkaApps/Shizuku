@@ -1,10 +1,8 @@
 package moe.shizuku.manager;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Process;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,8 +20,8 @@ import moe.shizuku.support.utils.IOUtils;
 
 public class ServerLauncher {
 
+    public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
     public static String COMMAND_ROOT[] = new String[2];
-    public static String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
     private static String DEX_PATH[] = new String[2];
 
     static void init(Context context) {
@@ -97,14 +95,6 @@ public class ServerLauncher {
             }
 
             COMMAND_ROOT[i] = "sh " + file.getAbsolutePath();
-
-            @SuppressLint("SdCardPath")
-            File sdcardFile = new File("/sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh");
-            // not user 0 or no /sdcard
-            if (Process.myUserHandle().hashCode() != 0
-                    || !sdcardFile.exists()) {
-                COMMAND_ADB = "adb shell sh" + file.getAbsolutePath();
-            }
 
             BufferedReader is = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.start)));
             PrintWriter os = new PrintWriter(new FileWriter(file));
