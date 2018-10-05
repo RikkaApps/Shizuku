@@ -1,5 +1,6 @@
 package moe.shizuku.manager.service;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -63,20 +64,13 @@ public class WorkService extends ForegroundIntentService {
         return builder.build();
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
-    public void onCreate() {
-        super.onCreate();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        if (notificationManager != null
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_WORK, getString(R.string.channel_service_status), NotificationManager.IMPORTANCE_MIN);
-            channel.setSound(null, null);
-            channel.setShowBadge(false);
-
-            notificationManager.createNotificationChannel(channel);
-        }
+    public void onCreateNotificationChannel(NotificationManager notificationManager) {
+        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_WORK, getString(R.string.channel_service_status), NotificationManager.IMPORTANCE_MIN);
+        channel.setSound(null, null);
+        channel.setShowBadge(false);
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Override

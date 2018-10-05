@@ -73,8 +73,8 @@ dependencies {
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
     implementation "moe.shizuku.support:design:3.0.0"
-    implementation 'moe.shizuku.support:support-utils:3.0.0'
-    implementation 'moe.shizuku.support:recyclerview-utils:3.0.0'
+    implementation 'moe.shizuku.support:support-utils:3.0.2'
+    implementation 'moe.shizuku.support:recyclerview-utils:3.0.2'
     implementation 'moe.shizuku.fontprovider:api:10'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
