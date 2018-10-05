@@ -2,11 +2,12 @@ package moe.shizuku.server.api;
 
 import android.os.Binder;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Objects;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuState;
@@ -26,6 +27,12 @@ public class ShizukuRequestHandler extends RequestHandler {
     private static final String ACTION_REQUEST_STOP = "Shizuku_requestStop";
     private static final String ACTION_AUTHORIZE = "Shizuku_authorize";
     private static final String ACTION_SEND_TOKEN = "Shizuku_sendToken";
+
+    private static final IBinder BINDER;
+
+    static {
+        BINDER = ServiceManager.getService("package");
+    }
 
     private final Handler mHandler;
     private final UUID mToken;
@@ -75,7 +82,7 @@ public class ShizukuRequestHandler extends RequestHandler {
         long least = is.readLong();
 
         os.writeNoException();
-        if (Utils.isServerDead()) {
+        if (Utils.isServerDead() || BINDER == null || !BINDER.pingBinder()) {
             os.writeParcelable(ShizukuState.createUnavailable());
         } else if (most != token.getMostSignificantBits()
                 && least != token.getLeastSignificantBits()) {
