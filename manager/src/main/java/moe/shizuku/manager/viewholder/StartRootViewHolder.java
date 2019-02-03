@@ -80,7 +80,7 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
         mBindServiceHelper.bind(binder -> {
             ShellService.ShellServiceBinder service = (ShellService.ShellServiceBinder) binder;
 
-            service.run(command, 0, new ShellService.Listener() {
+            service.run(command, new ShellService.Listener() {
                 @Override
                 public void onFailed() {
                     mBindServiceHelper.unbind();
@@ -98,7 +98,7 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
                 }
 
                 @Override
-                public void onCommandResult(int commandCode, int exitCode) {
+                public void onCommandResult(int exitCode) {
                     mBindServiceHelper.unbind();
 
                     if (mAlertDialog == null) {

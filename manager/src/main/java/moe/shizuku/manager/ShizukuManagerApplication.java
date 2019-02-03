@@ -1,11 +1,12 @@
 package moe.shizuku.manager;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.UserManager;
 
-public class ShizukuManagerApplication extends Application {
+import com.topjohnwu.superuser.ContainerApp;
+
+public class ShizukuManagerApplication extends ContainerApp {
 
     private static boolean sInitialized = false;
 

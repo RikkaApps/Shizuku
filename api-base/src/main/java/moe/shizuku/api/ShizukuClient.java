@@ -212,7 +212,7 @@ public class ShizukuClient {
         if (mostSig != 0 && leastSig != 0) {
             preferences.edit()
                     .putLong(KEY_TOKEN_MOST_SIG, mostSig)
-                    .putLong(KEY_TOKEN_MOST_SIG, leastSig)
+                    .putLong(KEY_TOKEN_LEAST_SIG, leastSig)
                     .apply();
         }
     }

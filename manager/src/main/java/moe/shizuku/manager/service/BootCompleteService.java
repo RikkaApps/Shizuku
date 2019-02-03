@@ -68,7 +68,7 @@ public class BootCompleteService extends Service {
                 }
 
                 @Override
-                public void onCommandResult(int commandCode, int exitCode) {
+                public void onCommandResult(int exitCode) {
                     stopSelf();
 
                     if (exitCode == 0) {
@@ -85,7 +85,7 @@ public class BootCompleteService extends Service {
             };
 
 
-            service.run(new String[]{ServerLauncher.COMMAND_ROOT[0]}, 0, listener);
+            service.run(new String[]{ServerLauncher.COMMAND_ROOT[0]}, listener);
         });
         return START_STICKY;
     }

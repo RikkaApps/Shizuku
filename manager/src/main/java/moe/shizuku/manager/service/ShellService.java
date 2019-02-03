@@ -5,20 +5,21 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import moe.shizuku.manager.utils.Shell;
+import com.topjohnwu.superuser.CallbackList;
+import com.topjohnwu.superuser.Shell;
 
 public class ShellService extends Service {
 
-    private static Shell.Interactive rootSession;
-
-    public interface Listener extends Shell.OnCommandLineListener {
+    public interface Listener {
+        void onCommandResult(int exitCode);
+        void onLine(String line);
         void onFailed();
     }
 
     public class ShellServiceBinder extends Binder {
 
-        public void run(String[] command, int code, Listener listener) {
-            ShellService.this.run(command, code, listener);
+        public void run(String[] command, Listener listener) {
+            ShellService.this.run(command, listener);
         }
     }
 
@@ -29,40 +30,38 @@ public class ShellService extends Service {
         super.onCreate();
     }
 
-    public void run(String[] command, int code, Listener listener) {
-        openRootShell(command, code, listener);
+    public void run(String[] command, Listener listener) {
+        openRootShell(command, listener);
     }
 
-    private void openRootShell(final String[] command, final int code, final Listener listener) {
-        if (rootSession != null) {
-            rootSession.addCommand(command, code, listener);
-        } else {
-            rootSession = new Shell.Builder()
-                    .useSU()
-                    .setWantSTDERR(true)
-                    .setWatchdogTimeout(10)
-                    .setMinimalLogging(true)
-                    .open((commandCode, exitCode, output) -> {
-                        if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING) {
-                            if (listener != null) {
-                                listener.onFailed();
+    private void openRootShell(final String[] command, final Listener listener) {
+        if (!Shell.rootAccess()) {
+            if (listener != null)
+                listener.onFailed();
 
-                                rootSession = null;
-                            }
-                        } else {
-                            rootSession.addCommand(command, code, listener);
-                        }
-                    });
+            return;
         }
+
+        Shell.su(command).to(new CallbackList<String>() {
+
+            @Override
+            public void onAddElement(String s) {
+                if (listener != null)
+                    listener.onLine(s);
+            }
+
+        }).submit(out -> {
+            if (listener != null)
+                listener.onCommandResult(out.getCode());
+        });
     }
 
     private void kill() {
-        if (rootSession != null) {
+        if (Shell.getCachedShell() != null) {
             try {
-                rootSession.kill();
+                Shell.getCachedShell().close();
             } catch (Exception ignored) {
             }
-            rootSession = null;
         }
     }
 

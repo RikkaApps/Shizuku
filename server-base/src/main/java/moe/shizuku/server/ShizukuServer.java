@@ -63,9 +63,9 @@ public class ShizukuServer extends Handler {
 
     public boolean start() throws IOException, InterruptedException {
         if (Compat.VERSION == ShizukuConstants.MAX_SDK) {
-            if (Build.VERSION.SDK_INT > ShizukuConstants.MAX_SDK) {
+            /*if (Build.VERSION.SDK_INT > ShizukuConstants.MAX_SDK) {
                 ServerLog.w("unsupported system (" + Build.VERSION.SDK_INT + ") detected, some API may not work");
-            } else if (Build.VERSION.SDK_INT == ShizukuConstants.MAX_SDK && Build.VERSION.PREVIEW_SDK_INT > 0) {
+            } else */if (Build.VERSION.SDK_INT == ShizukuConstants.MAX_SDK && Build.VERSION.PREVIEW_SDK_INT > 0) {
                 ServerLog.w("preview system detect, some API may not work");
             }
         } else if (Compat.VERSION != Build.VERSION.SDK_INT) {

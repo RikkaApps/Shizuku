@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
@@ -21,6 +21,7 @@ allprojects {
         jcenter()
         google()
         mavenLocal()
+        maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
     }
 }
@@ -105,7 +106,7 @@ task dex(type: GradleBuild) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.2.2'
+def baseVersionName = '2.2.3'
 
 ext {
     androidXLibraryVersion = '1.0.0'
@@ -115,6 +116,6 @@ ext {
     targetSdkVersion = 28
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiBaseLibraryVersion = '11'
+    apiBaseLibraryVersion = '12'
     apiLibraryVersion = '5'
 }
