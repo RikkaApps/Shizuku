@@ -24,15 +24,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class !android.support.** { *; }
-
--keep class android.support.v7.widget.LinearLayoutManager {
-  <init>(...);
-}
--keepnames class android.support.v7.widget.LinearLayoutManager
-
 -keep class android.** { *; }
 -dontwarn android.**
 -keep class com.android.internal.** { *; }
 -dontwarn com.android.internal.**
 
+-dontwarn moe.shizuku.support.design.AboutDialogHelper
