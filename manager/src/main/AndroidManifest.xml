@@ -58,6 +58,7 @@
         </activity>
         <activity
             android:name=".AuthorizationActivityV23"
+            android:directBootAware="true"
             android:enabled="@bool/auth_activity_v23_enabled"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -113,12 +114,15 @@
 
         <service
             android:name=".service.WorkService"
+            android:directBootAware="true"
             android:exported="false" />
         <service
             android:name=".service.ShellService"
+            android:directBootAware="true"
             android:exported="false" />
         <service
             android:name=".service.BootCompleteService"
+            android:directBootAware="true"
             android:exported="false" />
 
         <provider
