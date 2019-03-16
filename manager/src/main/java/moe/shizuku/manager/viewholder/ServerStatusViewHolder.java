@@ -13,7 +13,7 @@ import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.service.WorkService;
+import moe.shizuku.manager.legacy.service.WorkService;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> implements View.OnClickListener {

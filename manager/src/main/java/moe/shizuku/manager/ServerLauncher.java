@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.support.utils.IOUtils;
@@ -23,8 +24,9 @@ public class ServerLauncher {
     public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
     public static String COMMAND_ROOT[] = new String[2];
     private static String DEX_PATH[] = new String[2];
+    private static String DEX_LEGACY_PATH[] = new String[2];
 
-    static void init(Context context) {
+    public static void init(Context context) {
         try {
             copyDex(context);
             writeSH(context);
@@ -39,9 +41,14 @@ public class ServerLauncher {
 
     private static void copyDex(Context context) throws IOException {
         int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
-        String source = String.format(Locale.ENGLISH, "server-%d.dex", apiVersion);
-        String target = String.format(Locale.ENGLISH, "server-%d-v%d.dex", apiVersion, ShizukuConstants.SERVER_VERSION);
+        String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
+        String target = String.format(Locale.ENGLISH, "server-v2-%d-v%d.dex", apiVersion, ShizukuConstants.SERVER_VERSION);
 
+        copyDex(context, source, target, DEX_LEGACY_PATH);
+        copyDex(context, "server.dex", "server.dex", DEX_PATH);
+    }
+
+    private static void copyDex(Context context, String source, String target, String[] out) throws IOException {
         File external = context.getExternalFilesDir(null);
         File internal = getParent(context);
 
@@ -53,7 +60,7 @@ public class ServerLauncher {
 
         int i = 0;
         for (File file : files) {
-            DEX_PATH[i] = file.getAbsolutePath();
+            out[i] = file.getAbsolutePath();
 
             if (file.exists() && !BuildConfig.DEBUG) {
                 i++;
@@ -113,8 +120,9 @@ public class ServerLauncher {
     }
 
     private static String getStarterParam(int i) {
-        return "--path=" + DEX_PATH[i]
-                /*+ " --token=" + UUID.randomUUID()*/;
+        return "--path-legacy=" + DEX_LEGACY_PATH[i]
+                + " --path=" + DEX_PATH[i]
+                + " --token=" + UUID.randomUUID();
     }
 
     private static String getStarterPath(Context context) {

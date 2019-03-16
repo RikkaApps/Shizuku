@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -18,7 +17,6 @@ import moe.shizuku.manager.utils.NotificationHelper;
 
 import static moe.shizuku.manager.Constants.NOTIFICATION_CHANNEL_STATUS;
 import static moe.shizuku.manager.Constants.NOTIFICATION_ID_STATUS;
-import static moe.shizuku.manager.Constants.TAG;
 
 /**
  * Created by rikka on 2017/10/23.

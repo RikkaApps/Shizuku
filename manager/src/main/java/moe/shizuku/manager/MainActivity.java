@@ -17,7 +17,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.manager.adapter.MainAdapter;
-import moe.shizuku.manager.service.WorkService;
+import moe.shizuku.manager.legacy.service.WorkService;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 

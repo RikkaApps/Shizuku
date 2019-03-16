@@ -6,9 +6,9 @@ import android.os.Process;
 import java.util.ArrayList;
 
 import moe.shizuku.ShizukuState;
-import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
-import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.manager.legacy.LegacySettings;
+import moe.shizuku.manager.legacy.LegacySettings.LaunchMethod;
+import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
 import moe.shizuku.manager.viewholder.ManageAppsViewHolder;
 import moe.shizuku.manager.viewholder.ServerStatusViewHolder;
 import moe.shizuku.manager.viewholder.StartAdbViewHolder;
@@ -77,7 +77,7 @@ public class MainAdapter extends BaseRecyclerViewAdapter<MainAdapter.MainCreator
         }
 
         if (Process.myUid() / 100000 == 0) {
-            boolean adb = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ADB;
+            boolean adb = LegacySettings.getLastLaunchMode() == LaunchMethod.ADB;
             boolean rootRestart = state.isRoot();
 
             if (adb) {

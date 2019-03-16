@@ -11,6 +11,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "versionName", "${rootProject.ext.versionName}"
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_STL=c++_static'
+            }
+        }
     }
     signingConfigs {
         sign
@@ -61,25 +67,27 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-    implementation project(':api-base')
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation "androidx.core:core:$androidXLibraryVersion"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
     implementation "androidx.cardview:cardview:$androidXLibraryVersion"
-    implementation 'com.github.topjohnwu.libsu:core:2.2.1'
+    implementation 'com.github.topjohnwu.libsu:core:2.3.1'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation "moe.shizuku.support:design:3.0.0"
+    implementation "moe.shizuku.support:design:3.1.0"
     implementation 'moe.shizuku.support:support-utils:3.0.4'
     implementation 'moe.shizuku.support:recyclerview-utils:3.0.4'
+    implementation "moe.shizuku.support:htmlcompat:2.0.0"
     implementation 'moe.shizuku.fontprovider:api:10'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'moe.shizuku.privilege:api-base:12'
+
 }
 
 apply from: rootProject.file('signing.gradle')
 
-preBuild.dependsOn ':dex'
+preBuild.dependsOn ':server:dex'

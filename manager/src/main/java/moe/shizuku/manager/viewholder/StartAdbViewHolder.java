@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
-import moe.shizuku.manager.widget.HtmlTextView;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.utils.ClipboardUtils;
+import moe.shizuku.support.widget.HtmlCompatTextView;
 
 /**
  * Created by rikka on 2017/10/23.
@@ -25,7 +25,7 @@ public class StartAdbViewHolder extends BaseViewHolder<Object> {
         }
     };
 
-    private HtmlTextView text;
+    private HtmlCompatTextView text;
 
     public StartAdbViewHolder(View itemView) {
         super(itemView);

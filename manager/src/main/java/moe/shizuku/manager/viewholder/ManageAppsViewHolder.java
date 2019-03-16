@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import moe.shizuku.manager.ManageAppsActivity;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.widget.HtmlTextView;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
+import moe.shizuku.support.widget.HtmlCompatTextView;
 
 /**
  * Created by rikka on 2017/10/23.
@@ -23,7 +23,7 @@ public class ManageAppsViewHolder extends BaseViewHolder<Integer> {
         }
     };
 
-    private HtmlTextView text;
+    private HtmlCompatTextView text;
 
     public ManageAppsViewHolder(View itemView) {
         super(itemView);

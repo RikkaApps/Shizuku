@@ -1,3 +1,0 @@
-/build
-*.java
-!src/main/java/moe/shizuku/server/api/Compat.java

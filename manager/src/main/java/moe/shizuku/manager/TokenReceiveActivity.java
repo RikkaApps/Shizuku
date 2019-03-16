@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
 import moe.shizuku.ShizukuConstants;
-import moe.shizuku.manager.authorization.AuthorizationManager;
-import moe.shizuku.manager.service.WorkService;
-
-/**
- * Created by rikka on 2017/9/23.
- */
+import moe.shizuku.api.BinderHolder;
+import moe.shizuku.manager.legacy.LegacySettings;
+import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
+import moe.shizuku.manager.legacy.service.WorkService;
 
 public class TokenReceiveActivity extends Activity {
 
@@ -24,9 +24,11 @@ public class TokenReceiveActivity extends Activity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            ShizukuManagerSettings.putToken(ShizukuManagerApplication.getDeviceProtectedStorageContext(context), intent);
+            intent.setExtrasClassLoader(getClassLoader());
 
-            /*BinderHolder binderHolder = intent.getParcelableExtra(ShizukuConstants.EXTRA_BINDER);
+            LegacySettings.putToken(ShizukuManagerApplication.getDeviceProtectedStorageContext(context), intent);
+
+            BinderHolder binderHolder = intent.getParcelableExtra(ShizukuConstants.EXTRA_BINDER);
             if (binderHolder != null) {
                 Parcel data = Parcel.obtain();
                 Parcel reply = Parcel.obtain();
@@ -37,7 +39,7 @@ public class TokenReceiveActivity extends Activity {
                 }
                 data.recycle();
                 reply.recycle();
-            }*/
+            }
 
             WorkService.startAuth(context);
 

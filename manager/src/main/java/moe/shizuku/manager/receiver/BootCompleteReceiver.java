@@ -11,8 +11,8 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.Constants;
-import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
+import moe.shizuku.manager.legacy.LegacySettings;
+import moe.shizuku.manager.legacy.LegacySettings.LaunchMethod;
 import moe.shizuku.manager.service.BootCompleteService;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
@@ -28,7 +28,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
+        if (LegacySettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(Constants.TAG, "start on boot, action=" + intent.getAction());
 
             boolean isRunning = Single.fromCallable(() -> ShizukuClient.getState().isServerAvailable()).subscribeOn(Schedulers.io())

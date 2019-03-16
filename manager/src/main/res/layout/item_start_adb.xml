@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <moe.shizuku.manager.widget.HtmlTextView
+        <moe.shizuku.support.widget.HtmlCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
@@ -18,9 +18,9 @@
             android:paddingEnd="16dp"
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material.Body2"
-            app:textHtml="@string/start_server_title_adb"/>
+            app:htmlText="@string/start_server_title_adb"/>
 
-        <moe.shizuku.manager.widget.HtmlTextView
+        <moe.shizuku.support.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:textColor="?android:textColorSecondary"
-            app:textHtml="@string/start_server_summary_adb"/>
+            app:htmlText="@string/start_server_summary_adb"/>
 
         <TextView
             android:id="@android:id/button1"

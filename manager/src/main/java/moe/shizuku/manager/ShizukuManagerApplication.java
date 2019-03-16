@@ -1,12 +1,19 @@
 package moe.shizuku.manager;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.UserManager;
 
-import com.topjohnwu.superuser.ContainerApp;
+import com.topjohnwu.superuser.Shell;
 
-public class ShizukuManagerApplication extends ContainerApp {
+import moe.shizuku.manager.legacy.LegacySettings;
+
+public class ShizukuManagerApplication extends Application {
+
+    static {
+        Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR);
+    }
 
     private static boolean sInitialized = false;
 
@@ -41,7 +48,7 @@ public class ShizukuManagerApplication extends ContainerApp {
             return;
         }
 
-        ShizukuManagerSettings.init(getDeviceProtectedStorageContext(context));
+        LegacySettings.init(getDeviceProtectedStorageContext(context));
         ServerLauncher.init(context);
 
         sInitialized = true;

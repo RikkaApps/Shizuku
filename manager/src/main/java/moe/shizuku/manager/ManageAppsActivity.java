@@ -11,7 +11,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import moe.shizuku.manager.adapter.AppAdapter;
-import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
 import moe.shizuku.manager.utils.AppNameComparator;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 

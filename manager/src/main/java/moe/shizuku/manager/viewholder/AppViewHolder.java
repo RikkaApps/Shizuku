@@ -15,7 +15,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 /**

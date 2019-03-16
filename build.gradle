@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
@@ -30,83 +30,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task install(type: GradleBuild) {
-    tasks = [
-            ':api-base:install',
-            ':api-21:install',
-            ':api-22:install',
-            ':api-23:install',
-            ':api-24:install',
-            ':api-25:install',
-            ':api-26:install',
-            ':api-27:install',
-    ]
-}
-
-task uploadApi(type: GradleBuild) {
-    tasks = [
-            ':api-21:install',
-            ':api-22:install',
-            ':api-23:install',
-            ':api-24:install',
-            ':api-25:install',
-            ':api-26:install',
-            ':api-27:install',
-            ':api-21:bintrayUpload',
-            ':api-22:bintrayUpload',
-            ':api-23:bintrayUpload',
-            ':api-24:bintrayUpload',
-            ':api-25:bintrayUpload',
-            ':api-26:bintrayUpload',
-            ':api-27:bintrayUpload',
-    ]
-}
-
-task uploadApiBase(type: GradleBuild) {
-    tasks = [
-            ':api-base:install',
-            ':api-base:bintrayUpload',
-    ]
-}
-
-task generate(type: GradleBuild) {
-    tasks = [
-            ':server-base:build',
-            ':generator:generate',
-            ':server-21:dex',
-            ':server-22:dex',
-            ':server-23:dex',
-            ':server-24:dex',
-            ':server-25:dex',
-            ':server-26:dex',
-            ':server-27:dex',
-    ]
-}
-
-task generateApi27(type: GradleBuild) {
-    tasks = [
-            ':server-base:build',
-            ':generator:generateApi27',
-            ':server-27:dex',
-    ]
-}
-
-task dex(type: GradleBuild) {
-    tasks = [
-            ':server-base:build',
-            ':server-21:dex',
-            ':server-22:dex',
-            ':server-23:dex',
-            ':server-24:dex',
-            ':server-25:dex',
-            ':server-26:dex',
-            ':server-27:dex',
-    ]
-}
-
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '2.2.3'
+def baseVersionName = '3.0.0'
 
 ext {
     androidXLibraryVersion = '1.0.0'

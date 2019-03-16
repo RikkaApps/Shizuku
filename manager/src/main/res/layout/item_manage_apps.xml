@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <moe.shizuku.manager.widget.HtmlTextView
+        <moe.shizuku.support.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,9 +20,9 @@
             android:paddingEnd="16dp"
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material.Body2"
-            tools:textHtml="Authorized 0 application to get token without confirmation"/>
+            tools:htmlText="Authorized 0 application to get token without confirmation"/>
 
-        <moe.shizuku.manager.widget.HtmlTextView
+        <moe.shizuku.support.widget.HtmlCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
@@ -30,7 +30,7 @@
             android:paddingTop="4dp"
             android:paddingBottom="16dp"
             android:textColor="?android:textColorSecondary"
-            app:textHtml="@string/view_authorized_apps"/>
+            app:htmlText="@string/view_authorized_apps"/>
 
     </LinearLayout>
 
