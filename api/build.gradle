@@ -1,0 +1,6 @@
+apply plugin: 'java-library'
+
+dependencies {
+    compileOnly files(rootProject.rootDir.absolutePath + '/android-27/android.jar')
+	compile project(':server-api')
+}

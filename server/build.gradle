@@ -3,4 +3,10 @@ apply from: rootProject.file('server-dex.gradle')
 
 dependencies {
     compileOnly files(rootProject.rootDir.absolutePath + '/android-27/android.jar')
+    compile project(':shared')
+}
+
+project.afterEvaluate {
+    compileJava.dependsOn ':server-api-aidl:compileReleaseAidl'
+    compileJava.dependsOn ':shared:build'
 }

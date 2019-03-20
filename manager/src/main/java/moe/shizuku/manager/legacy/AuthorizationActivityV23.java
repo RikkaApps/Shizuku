@@ -10,7 +10,7 @@ import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
 
-public class AuthorizationActivityV23 extends AbstractAuthorizationActivity {
+public final class AuthorizationActivityV23 extends AuthorizationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

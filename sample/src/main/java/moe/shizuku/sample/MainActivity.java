@@ -1,80 +1,55 @@
 package moe.shizuku.sample;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ITaskStackListener;
 import android.app.TaskStackListener;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Process;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import moe.shizuku.api.ShizukuActivityManagerV26;
-import moe.shizuku.api.ShizukuClient;
-
-import static moe.shizuku.api.ShizukuClient.REQUEST_CODE_PERMISSION;
+import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.api.ShizukuManager;
 
 public class MainActivity extends Activity {
 
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                new AlertDialog.Builder(context)
-                        //.setMessage(ShizukuCompat.getOpsForPackage(Process.myUid(), BuildConfig.APPLICATION_ID, null).toString())
-                        .setMessage(ShizukuCompat.getInstalledPackages(0, 0).toString())
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
-            } catch (RuntimeException e) {
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    private static final String ACTION = "QAQAQ";
+    private static final int REQUEST_CODE_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!ShizukuClient.isManagerInstalled(this)) {
+        // TODO V2
+        if (!ShizukuManager.isV3(this)) {
+            Toast.makeText(MainActivity.this, "ShizukuManager#isV3 false", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Highly not recommended.
-        ShizukuClient.setPermitNetworkThreadPolicy();
+        ShizukuManager.setBinderReceivedListener(() -> {
+            Toast.makeText(this, "onBinderReceived", Toast.LENGTH_SHORT).show();
+        });
 
-        ShizukuClient.initialize(getApplicationContext());
-
-        if (!ShizukuClient.getState().isAuthorized()) {
-            if (ShizukuClient.checkSelfPermission(this)) {
-                ShizukuClient.requestAuthorization(this);
+        if (ShizukuManager.get() == null) {
+            if (ShizukuManager.checkSelfPermission(this)) {
+                //ShizukuManager.requestAuthorization(this);
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
+                ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
             }
+            ShizukuManager.requestBinder(this);
         } else {
             test();
         }
-
-        registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        unregisterReceiver(mBroadcastReceiver);
-
         if (mTaskStackListener != null) {
-            ShizukuActivityManagerV26.unregisterTaskStackListener(mTaskStackListener);
+            ShizukuApi.unregisterTaskStackListener(mTaskStackListener);
         }
     }
 
@@ -82,43 +57,19 @@ public class MainActivity extends Activity {
 
     private void test() {
         try {
-            Toast.makeText(this, "getUserIcon", Toast.LENGTH_SHORT).show();
-
-            ImageView imageView = new ImageView(this);
-            imageView.setImageBitmap(ShizukuCompat.getUserIcon(Process.myUserHandle().hashCode()));
-
-            new AlertDialog.Builder(this)
-                    .setView(imageView)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-
-            Toast.makeText(this, "broadcastIntent", Toast.LENGTH_SHORT).show();
-
-            //ShizukuCompat.broadcastIntent(new Intent(ACTION));
-
-            Toast.makeText(this, "registerTaskStackListener", Toast.LENGTH_SHORT).show();
-
             mTaskStackListener = new TaskStackListener() {
                 @Override
                 public void onTaskStackChanged() throws RemoteException {
-                    final String pkg = ShizukuActivityManagerV26.getTasks(1, 0).get(0).topActivity.getPackageName();
-                    Log.d("ShizukuSample", pkg);
-
-                    getWindow().getDecorView().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(MainActivity.this, pkg, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Log.d("ShizukuSample", "onTaskStackChanged");
                 }
             };
-            ShizukuActivityManagerV26.registerTaskStackListener(mTaskStackListener);
+            ShizukuApi.registerTaskStackListener(mTaskStackListener);
         } catch (RuntimeException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ShizukuClient.REQUEST_CODE_AUTHORIZATION:
@@ -133,16 +84,14 @@ public class MainActivity extends Activity {
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
-    }
+    }*/
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_PERMISSION:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClient.requestAuthorization(this);
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //ShizukuClient.requestAuthorization(this);
                 } else {
                     // denied
                 }

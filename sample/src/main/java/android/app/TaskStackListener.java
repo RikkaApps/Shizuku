@@ -1,6 +1,7 @@
 package android.app;
 
 import android.content.ComponentName;
+import android.os.IBinder;
 import android.os.RemoteException;
 
 /**
@@ -58,5 +59,10 @@ public class TaskStackListener extends ITaskStackListener.Stub {
     }
 
     public void onTaskSnapshotChanged(int taskId, ActivityManager.TaskSnapshot snapshot) throws RemoteException {
+    }
+
+    @Override
+    public IBinder asBinder() {
+        throw new UnsupportedOperationException();
     }
 }

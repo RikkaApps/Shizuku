@@ -6,7 +6,7 @@ import java.util.Locale;
 
 public class Logger {
 
-    public static final Logger LOGGER = new Logger("ShizukuV3");
+    public static final Logger LOGGER = new Logger("ShizukuServerV3");
 
     private String TAG;
 

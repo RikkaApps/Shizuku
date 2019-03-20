@@ -24,6 +24,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -33,9 +37,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation "androidx.annotation:annotation:$androidXLibraryVersion"
     implementation "androidx.core:core:$androidXLibraryVersion"
-    implementation project(':api-base')
-    implementation project(':api')
-    compileOnly project(':support-fragment-stub')
+    implementation project(':api-public')
+
+    implementation 'me.weishu:free_reflection:1.2.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')

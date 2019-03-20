@@ -9,8 +9,10 @@ public class Intents {
     private static final String PACKAGE = "moe.shizuku.manager";
 
     // intent service actions
-    public static final String ACTION_AUTH = PACKAGE + ".service.action.AUTH";
-    public static final String ACTION_REQUEST_TOKEN = PACKAGE + ".service.action.REQUEST_TOKEN";
+    public static final String ACTION_AUTH_V2 = PACKAGE + ".service.action.AUTH_V2";
+    public static final String ACTION_REQUEST_TOKEN_V2 = PACKAGE + ".service.action.REQUEST_TOKEN_V2";
+    public static final String ACTION_AUTH_V3 = PACKAGE + ".service.action.AUTH_V3";
+    public static final String ACTION_REQUEST_TOKEN_V3 = PACKAGE + ".service.action.REQUEST_TOKEN_V3";
 
     // local broadcast actions
     public static final String ACTION_AUTH_RESULT = PACKAGE + ".intent.action.AUTH_RESULT";

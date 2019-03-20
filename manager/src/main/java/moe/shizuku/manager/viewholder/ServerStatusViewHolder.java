@@ -13,7 +13,7 @@ import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.legacy.service.WorkService;
+import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> implements View.OnClickListener {
@@ -40,9 +40,11 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
     @Override
     public void onClick(View v) {
         if (mCheckToRequest) {
-            WorkService.startRequestToken(v.getContext());
+            WorkService.startRequestTokenV2(v.getContext());
+            WorkService.startRequestTokenV3(v.getContext());
         } else {
-            WorkService.startAuth(v.getContext());
+            WorkService.startAuthV2(v.getContext());
+            WorkService.startAuthV3(v.getContext());
         }
     }
 

@@ -1,4 +1,4 @@
-package moe.shizuku.manager;
+package moe.shizuku.manager.app;
 
 import android.os.Build;
 import android.os.Bundle;

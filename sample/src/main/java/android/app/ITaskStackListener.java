@@ -2,13 +2,14 @@ package android.app;
 
 import android.content.ComponentName;
 import android.os.Binder;
+import android.os.IInterface;
 import android.os.RemoteException;
 
 /**
  * Created by rikka on 2017/11/6.
  */
 
-public interface ITaskStackListener {
+public interface ITaskStackListener extends IInterface {
 
     void onTaskStackChanged() throws RemoteException;
 

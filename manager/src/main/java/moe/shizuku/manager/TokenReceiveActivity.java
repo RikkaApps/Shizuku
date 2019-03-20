@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
 import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.BinderHolder;
+import moe.shizuku.api.BinderContainer;
+import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.api.ShizukuManager;
 import moe.shizuku.manager.legacy.LegacySettings;
 import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
-import moe.shizuku.manager.legacy.service.WorkService;
+import moe.shizuku.manager.service.WorkService;
 
 public class TokenReceiveActivity extends Activity {
 
@@ -28,20 +28,12 @@ public class TokenReceiveActivity extends Activity {
 
             LegacySettings.putToken(ShizukuManagerApplication.getDeviceProtectedStorageContext(context), intent);
 
-            BinderHolder binderHolder = intent.getParcelableExtra(ShizukuConstants.EXTRA_BINDER);
-            if (binderHolder != null) {
-                Parcel data = Parcel.obtain();
-                Parcel reply = Parcel.obtain();
-                try {
-                    binderHolder.binder.transact(1, data, reply, 0);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                data.recycle();
-                reply.recycle();
+            BinderContainer container = intent.getParcelableExtra(ShizukuApiConstants.EXTRA_BINDER);
+            if (container != null && container.binder != null) {
+                ShizukuManager.setRemote(container.binder);
             }
 
-            WorkService.startAuth(context);
+            WorkService.startAuthV2(context);
 
             //broadcast new token to other apps
             intent = new Intent(intent);

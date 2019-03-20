@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+}
+
+dependencies {
+    //implementation project(':shared')
+}
+
+project.afterEvaluate {
+    compileReleaseAidl.setSourceOutputDir(project(':server-api').file('src/main/java'))
+}

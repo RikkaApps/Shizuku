@@ -17,9 +17,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.manager.adapter.MainAdapter;
-import moe.shizuku.manager.legacy.service.WorkService;
+import moe.shizuku.manager.app.BaseActivity;
+import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
-
 
 public class MainActivity extends BaseActivity {
 
@@ -62,7 +62,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void check() {
-        WorkService.startAuth(this);
+        WorkService.startAuthV2(this);
+        WorkService.startAuthV3(this);
     }
 
     @Override

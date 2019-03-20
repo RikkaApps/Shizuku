@@ -1,4 +1,6 @@
-include ':support-fragment-stub'
-
+include ':shared', ':server-api', ':server-api-aidl'
 include ':server'
 include ':manager'
+include ':api', ':api-public'
+include ':sample'
+include ':support-fragment-stub'

@@ -27,7 +27,8 @@
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
-#define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuServer"
+#define SERVER_CLASS_PATH_LEGACY "moe.shizuku.server.ShizukuServer"
+#define SERVER_CLASS_PATH "moe.shizuku.server.Starter"
 
 static struct timespec ts{};
 
@@ -200,7 +201,7 @@ int main(int argc, char **argv) {
 
     printf("info: starting server v2 (legacy)...\n");
     fflush(stdout);
-    start_server(path_legacy, SERVER_CLASS_PATH, token, SERVER_NAME_LEGACY);
+    start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY);
 
     exit_with_logcat(EXIT_SUCCESS);
 }

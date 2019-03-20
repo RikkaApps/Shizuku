@@ -64,6 +64,17 @@ android {
     }
 }
 
+android.applicationVariants.all { variant ->
+    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
+    String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
+    task "${taskName}" {
+        doLast {
+            delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
+        }
+    }
+    variant.processJavaResources.dependsOn(taskName)
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
@@ -85,7 +96,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'moe.shizuku.privilege:api-base:12'
-
+    implementation project(':shared')
+    implementation project(':api-public')
+    implementation project(':server-api')
 }
 
 apply from: rootProject.file('signing.gradle')

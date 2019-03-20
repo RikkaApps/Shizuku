@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.preference.PreferenceFragment;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
