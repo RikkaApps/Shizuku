@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 
 import moe.shizuku.server.IShizukuService;
 
-public class ShizukuManager {
+public class ShizukuClientV3 {
 
     public interface OnBinderReceivedListener {
         void onBinderReceived();
@@ -61,7 +61,18 @@ public class ShizukuManager {
         return getThrow().asBinder();
     }
 
-    public static void requestBinder(Context context) {
+    public static boolean isAlive() {
+        if (sRemote == null)
+            return false;
+
+        return sRemote.asBinder().pingBinder();
+    }
+
+    public static int getLatestVersion() {
+        return ShizukuApiConstants.SERVER_VERSION;
+    }
+
+    public static int requestBinder(Context context) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable<Integer> task = new Callable<Integer>() {
             public Integer call() {
@@ -86,7 +97,7 @@ public class ShizukuManager {
 
         Future<Integer> future = executor.submit(task);
         try {
-            future.get();
+            return future.get();
         } catch (InterruptedException e) {
             // handle the interrupts
         } catch (ExecutionException e) {
@@ -94,9 +105,10 @@ public class ShizukuManager {
         } finally {
             future.cancel(true);
         }
+        return -1;
     }
 
-    public static boolean isV3(Context context) {
+    public static boolean isManagerV3Installed(Context context) {
         try {
             return context.getPackageManager().getPackageInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0).versionCode >= 179;
         } catch (PackageManager.NameNotFoundException e) {

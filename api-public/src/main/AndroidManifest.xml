@@ -11,13 +11,16 @@
             android:name=".ShizukuBinderReceiveActivity"
             android:theme="@style/ShizukuClient.Translucent"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:exported="false">
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:exported="true">
             <intent-filter>
-                <action android:name="moe.shizuku.server.intent.action.SEND_BINDER" />
+                <action android:name="moe.shizuku.client.intent.action.SEND_BINDER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>
+
+        <meta-data android:name="moe.shizuku.client.V3_SUPPORT" android:value="true"/>
     </application>
 
 </manifest>

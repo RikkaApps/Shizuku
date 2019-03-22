@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
+    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API" tools:node="remove"/>
+    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.API_V23" tools:node="remove"/>
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
@@ -14,6 +17,9 @@
         android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_group_label" />
 
+    <permission
+        android:name="moe.shizuku.redirectstorage.permission.MANAGER"
+        android:protectionLevel="signature" />
     <permission
         android:name="moe.shizuku.manager.permission.API"
         android:permissionGroup="moe.shizuku.manager.permission-group.API"
@@ -58,31 +64,6 @@
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
             android:theme="@style/AppTheme.Apps" />
-        <activity
-            android:name=".TokenReceiveActivity"
-            android:directBootAware="true"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
-            android:theme="@style/Translucent">
-            <intent-filter>
-                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!--<activity
-            android:name=".RequestBinderActivity"
-            android:directBootAware="true"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:permission="@string/permission"
-            android:theme="@style/GrantPermissions">
-            <intent-filter>
-                <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>-->
-
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:directBootAware="true"
@@ -95,7 +76,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <service
             android:name=".service.WorkService"
             android:directBootAware="true"
@@ -137,7 +117,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".legacy.TokenReceiveActivity"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:theme="@style/Translucent">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.SERVER_STARTED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <provider
             android:name=".legacy.provider.TransferProvider"
             android:directBootAware="true"

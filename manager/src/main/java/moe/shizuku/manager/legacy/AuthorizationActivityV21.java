@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
-import moe.shizuku.manager.Constants;
+import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
 /**
  * Created by rikka on 2017/10/23.
@@ -74,14 +74,14 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
         try {
             pi = getPackageManager().getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException ignored) {
-            Log.wtf(Constants.TAG, "auth | package not found: " + packageName);
+            Log.wtf(AppConstants.TAG, "auth | package not found: " + packageName);
 
             setResult(ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
         }
 
-        if (AuthorizationManager.granted(this, packageName)) {
+        if (AuthorizationManager.granted(packageName)) {
             setResult(true, packageName);
             finish();
             return;
@@ -95,12 +95,12 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
         Dialog dialog = new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton(R.string.auth_allow, (d, which) -> {
-                    AuthorizationManager.grant(AuthorizationActivityV21.this, packageName);
+                    AuthorizationManager.grant(packageName);
 
                     setResult(true, packageName);
                 })
                 .setNegativeButton(R.string.auth_deny, (d, which) -> {
-                    AuthorizationManager.revoke(AuthorizationActivityV21.this, packageName);
+                    AuthorizationManager.revoke(packageName);
 
                     setResult(false, packageName);
                 })

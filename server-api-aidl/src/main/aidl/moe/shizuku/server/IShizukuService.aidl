@@ -5,4 +5,5 @@ interface IShizukuService {
     int getVersion() = 1;
     int getUid() = 2;
     int checkPermission(String permission) = 3;
+    String getToken() = 4;
 }

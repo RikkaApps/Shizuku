@@ -84,6 +84,7 @@ dependencies {
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
     implementation "androidx.cardview:cardview:$androidXLibraryVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     implementation 'com.github.topjohnwu.libsu:core:2.3.1'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"

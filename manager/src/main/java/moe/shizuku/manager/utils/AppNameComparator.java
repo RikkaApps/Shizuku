@@ -41,25 +41,16 @@ public class AppNameComparator {
     public AppNameComparator(final Context context) {
         mPackageManager = context.getPackageManager();
         mCollator = Collator.getInstance();
-        mPackageInfoComparator = new Comparator<PackageInfo>() {
-
-            @Override
-            public final int compare(PackageInfo a, PackageInfo b) {
-                // Order by the title in the current locale
-                int result = compareTitles(a.applicationInfo.loadLabel(mPackageManager).toString(), b.applicationInfo.loadLabel(mPackageManager).toString());
-                if (result == 0) {
-                    // If two apps have the same title, then order by the component name
-                    result = a.packageName.compareTo(b.packageName);
-                }
-                return result;
+        mPackageInfoComparator = (a, b) -> {
+            // Order by the title in the current locale
+            int result = compareTitles(a.applicationInfo.loadLabel(mPackageManager).toString(), b.applicationInfo.loadLabel(mPackageManager).toString());
+            if (result == 0) {
+                // If two apps have the same title, then order by the component name
+                result = a.packageName.compareTo(b.packageName);
             }
+            return result;
         };
-        mSectionNameComparator = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return compareTitles(o1, o2);
-            }
-        };
+        mSectionNameComparator = this::compareTitles;
     }
 
     /**

@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.ShizukuManagerApplication;
-import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
 /**
  * Created by rikka on 2017/10/28.
@@ -63,7 +63,7 @@ public class TokenProvider extends ContentProvider {
 
         if (packageName != null
                 && Build.VERSION.SDK_INT < 23 // system will help us check on 23+
-                && !AuthorizationManager.granted(getContext(), packageName)) {
+                && !AuthorizationManager.granted(packageName)) {
             return null;
         }
 

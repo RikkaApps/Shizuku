@@ -4,7 +4,7 @@ import moe.shizuku.api.ShizukuApiConstants;
 
 public class ServerConstants {
 
-    public static final int SOCKET_ACTION_REQUEST_BINDER = 100;
+    public static final int SOCKET_ACTION_MANAGER_REQUEST_BINDER = 100;
 
     public static final String EXTRA_TOKEN_LEAST_SIG = ShizukuApiConstants.MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_LEAST_SIG";
     public static final String EXTRA_TOKEN_MOST_SIG = ShizukuApiConstants.MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_MOST_SIG";

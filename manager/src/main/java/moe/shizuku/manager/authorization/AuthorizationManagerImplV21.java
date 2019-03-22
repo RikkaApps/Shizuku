@@ -1,4 +1,4 @@
-package moe.shizuku.manager.legacy.authorization;
+package moe.shizuku.manager.authorization;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,10 +13,6 @@ import java.util.Set;
 import androidx.core.util.Pair;
 import moe.shizuku.manager.Manifest;
 
-/**
- * Created by rikka on 2017/10/23.
- */
-
 public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
 
     private static final String NAME = "settings";
@@ -25,7 +21,12 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
     private static SharedPreferences sSharedPreferences;
     private static Set<Pair<String, Long>> sPackages;
 
-    private static void init(Context context) {
+    private Context mContext;
+
+    @Override
+    public void init(Context context) {
+        mContext = context;
+
         if (sSharedPreferences == null) {
             sSharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
             sPackages = new HashSet<>();
@@ -33,7 +34,8 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
         }
     }
 
-    private static boolean granted(String packageName) {
+    @Override
+    public boolean granted(String packageName) {
         if (packageName == null) {
             return false;
         }
@@ -45,7 +47,7 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
         return false;
     }
 
-    private static void set(String packageName, long firstInstallTime, boolean grant) {
+    private void set(String packageName, long firstInstallTime, boolean grant) {
         if (grant) {
             grant(packageName, firstInstallTime);
         } else {
@@ -70,7 +72,8 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
                 .apply();
     }
 
-    private static void revoke(String packageName) {
+    @Override
+    public void revoke(String packageName) {
         remove(packageName);
 
         sSharedPreferences.edit()
@@ -121,41 +124,29 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
     }
 
     @Override
-    public List<String> getPackages(Context context) {
+    public List<String> getPackages() {
         List<String> packages = new ArrayList<>();
 
-        for (PackageInfo pi : context.getPackageManager().getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
-            if (pi.requestedPermissions != null) {
-                for (String p : pi.requestedPermissions) {
-                    if (Manifest.permission.API.equals(p)) {
-                        packages.add(pi.packageName);
-                        break;
-                    }
+        for (PackageInfo pi : mContext.getPackageManager().getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
+            if (pi.requestedPermissions == null)
+                continue;
+
+            for (String p : pi.requestedPermissions) {
+                if (Manifest.permission.API.equals(p)) {
+                    packages.add(pi.packageName);
+                    break;
                 }
             }
         }
         return packages;
     }
 
-    @Override
-    public boolean granted(Context context, String packageName) {
-        init(context);
-        return granted(packageName);
-    }
 
     @Override
-    public void grant(Context context, String packageName) {
-        init(context);
-
+    public void grant(String packageName) {
         try {
-            grant(packageName, context.getPackageManager().getPackageInfo(packageName, 0).firstInstallTime);
+            grant(packageName, mContext.getPackageManager().getPackageInfo(packageName, 0).firstInstallTime);
         } catch (PackageManager.NameNotFoundException ignored) {
         }
-    }
-
-    @Override
-    public void revoke(Context context, String packageName) {
-        init(context);
-        revoke(packageName);
     }
 }

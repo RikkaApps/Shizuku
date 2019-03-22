@@ -8,29 +8,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="16dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@android:id/icon"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="24dp"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_server_error_48dp"
-            android:background="@color/status_warning"
-            android:tint="?android:attr/textColorPrimaryInverse"
+            android:src="@drawable/ic_server_error_24dp"
+            android:tintMode="src_in"
             android:scaleType="center"/>
 
-        <TextView
+        <moe.shizuku.support.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:padding="8dp"
-            android:textColor="@color/status_warning"
-            android:gravity="center"
-            android:fontFamily="sans-serif-medium"
+            android:layout_marginStart="24dp"
+            android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             android:lineSpacingExtra="2dp"
             tools:text="Running (version 10)"/>

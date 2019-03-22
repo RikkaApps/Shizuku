@@ -8,27 +8,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="16dp">
 
         <moe.shizuku.support.widget.HtmlCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material.Body2"
+            android:drawableStart="@drawable/ic_adb_24dp"
+            android:drawableTint="?android:textColorSecondary"
+            android:drawableTintMode="src_in"
+            android:drawablePadding="24dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:htmlText="@string/start_server_title_adb"/>
 
         <moe.shizuku.support.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:textColor="?android:textColorSecondary"
+            app:htmlFlags="trim_whitespace"
             app:htmlText="@string/start_server_summary_adb"/>
 
         <TextView

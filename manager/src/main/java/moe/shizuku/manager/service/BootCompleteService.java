@@ -15,8 +15,8 @@ import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.utils.NotificationHelper;
 
-import static moe.shizuku.manager.Constants.NOTIFICATION_CHANNEL_STATUS;
-import static moe.shizuku.manager.Constants.NOTIFICATION_ID_STATUS;
+import static moe.shizuku.manager.AppConstants.NOTIFICATION_CHANNEL_STATUS;
+import static moe.shizuku.manager.AppConstants.NOTIFICATION_ID_STATUS;
 
 /**
  * Created by rikka on 2017/10/23.

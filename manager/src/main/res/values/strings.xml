@@ -1,18 +1,19 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku Manager</string>
     <string name="permission_group_label" translatable="false">Shizuku</string>
-    <string name="permission_group_description">access privileged APIs provided by Shizuku</string>
-    <string name="permission_label">access Shizuku privileged API</string>
-    <string name="permission_description">Allow the app to use privileged APIs provided by Shizuku.</string>
-    <string name="server_running">running version %2$d (%1$s)</string>
-    <string name="server_running_update">running version %2$d (%1$s)\nrestart server to update to %3$d</string>
-    <string name="server_not_running">Tap to check if server is running</string>
-    <string name="server_require_restart">Require restart server</string>
-    <string name="server_no_token">running, but no correct token received\ntap to request token</string>
+    <string name="permission_group_description">access Shizuku</string>
+    <string name="permission_label">access system APIs with higher privileges</string>
+    <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
+    <string name="server_running">Service %1$s is running (version %3$d, %2$s)</string>
+    <string name="server_running_update">Service %1$s is running (version %3$d, %2$s, restart to update to version %4$d)</string>
+    <string name="server_not_running">Service %1$s not running</string>
+    <string name="server_not_running_tap_retry">Service %1$s not running, tap to check again</string>
+    <string name="server_require_restart">>Service %1$s requires restart</string>
+    <string name="server_no_token">Service %1$s is running, but no correct token received, tap to request token</string>
     <string name="server_start">Start</string>
     <string name="server_restart">Restart</string>
-    <string name="start_server_title_root"><![CDATA[Start server with root permission]]></string>
-    <string name="start_server_title_adb"><![CDATA[Start / update server with adb]]></string>
+    <string name="start_server_title_root"><![CDATA[Start core service with root permission]]></string>
+    <string name="start_server_title_adb"><![CDATA[Start / update core service with adb]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b>
     <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
     <br>Type following content into computer\'s terminal and hit Enter
@@ -26,15 +27,16 @@
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
-    <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart server or use \"get token\" in the manager.</string>
-    <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart server is required.</string>
-    <string name="auth_cannot_connect">Can\'t connect to server, please check if the server is running.</string>
+    <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
+    <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
+    <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
     <string name="authorized_apps_manage">Authorized apps</string>
     <plurals name="authorized_apps_count">
-        <item quantity="one"><![CDATA[Authorized %s application to get token without confirmation]]></item>
-        <item quantity="other"><![CDATA[Authorized %s applications to get token without confirmation]]></item>
+        <item quantity="zero"><![CDATA[Authorized %d application]]></item>
+        <item quantity="one"><![CDATA[Authorized %d application]]></item>
+        <item quantity="other"><![CDATA[Authorized %d applications]]></item>
     </plurals>
-    <string name="view_authorized_apps"><![CDATA[Token will be invalided after server restart<br>Tap to manage authorized apps]]></string>
+    <string name="view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
     <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
     <string name="open_manager">Open Shizuku Manager</string>
     <string name="action_about">About</string>
@@ -57,5 +59,10 @@
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
+    <string name="no_v3_support">* not yet adapted Shizuku v3</string>
+    <string name="v3_not_running">core service v3 is not running</string>
+    <string name="server_status_format" translatable="false"><![CDATA[<font face="sans-serif-medium">%1$s</font><br><small>%2$s</small>]]></string>
+    <string name="service_name_v3" translatable="false">v3</string>
+    <string name="service_name_v2">v2 (old)</string>
 
 </resources>

@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.api.ShizukuManager;
+import moe.shizuku.api.ShizukuClientV3;
 
 public class MainActivity extends Activity {
 
@@ -23,22 +23,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // TODO V2
-        if (!ShizukuManager.isV3(this)) {
-            Toast.makeText(MainActivity.this, "ShizukuManager#isV3 false", Toast.LENGTH_SHORT).show();
+        if (!ShizukuClientV3.isManagerV3Installed(this)) {
+            Toast.makeText(MainActivity.this, "ShizukuManager#isManagerV3Installed false", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ShizukuManager.setBinderReceivedListener(() -> {
+        ShizukuClientV3.setBinderReceivedListener(() -> {
             Toast.makeText(this, "onBinderReceived", Toast.LENGTH_SHORT).show();
         });
 
-        if (ShizukuManager.get() == null) {
-            if (ShizukuManager.checkSelfPermission(this)) {
+        if (ShizukuClientV3.get() == null) {
+            if (ShizukuClientV3.checkSelfPermission(this)) {
                 //ShizukuManager.requestAuthorization(this);
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
             }
-            ShizukuManager.requestBinder(this);
+            ShizukuClientV3.requestBinder(this);
         } else {
             test();
         }

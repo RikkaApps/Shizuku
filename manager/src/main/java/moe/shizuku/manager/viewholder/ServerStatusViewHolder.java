@@ -1,30 +1,29 @@
 package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.util.UUID;
 
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.service.WorkService;
+import moe.shizuku.manager.model.ServiceStatus;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
+import moe.shizuku.support.text.HtmlCompat;
+import moe.shizuku.support.widget.HtmlCompatTextView;
 
-public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> implements View.OnClickListener {
+public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implements View.OnClickListener {
 
-    public static final Creator<ShizukuState> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_server_status, parent, false));
+    public static final Creator<ServiceStatus> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_server_status, parent, false));
 
-    private TextView mStatusText;
+    private HtmlCompatTextView mStatusText;
     private ImageView mStatusIcon;
-
-    private boolean mCheckToRequest;
-    private UUID mToken;
 
     public ServerStatusViewHolder(View itemView) {
         super(itemView);
@@ -32,85 +31,89 @@ public class ServerStatusViewHolder extends BaseViewHolder<ShizukuState> impleme
         mStatusText = itemView.findViewById(android.R.id.text1);
         mStatusIcon = itemView.findViewById(android.R.id.icon);
 
-        mToken = ShizukuClient.getToken();
-
         itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (mCheckToRequest) {
+        LocalBroadcastManager.getInstance(v.getContext())
+                .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
+        /*if (mCheckToRequest) {
             WorkService.startRequestTokenV2(v.getContext());
-            WorkService.startRequestTokenV3(v.getContext());
         } else {
-            WorkService.startAuthV2(v.getContext());
-            WorkService.startAuthV3(v.getContext());
+            //WorkService.startAuthV2(v.getContext());
         }
+
+        WorkService.startRequestBinder(v.getContext());*/
     }
 
     @Override
     public void onBind() {
-        Context context = itemView.getContext();
+        final Context context = itemView.getContext();
+        final ServiceStatus status = getData();
+        final ShizukuState v2Status = getData().getV2Status();
 
-        ShizukuState shizukuState = getData();
+        boolean runningV2 = false;
+        boolean okV3 = status.isV3Running();
+        boolean okV2 = false;
+        boolean isRootV2 = v2Status.isRoot(), isRootV3 = status.getUid() == 0;
+        int versionV2 = v2Status.getVersion(), versionV3 = status.getVersion();
 
-        mCheckToRequest = false;
-
-        boolean ok = false;
-        boolean running = false;
-        switch (shizukuState.getCode()) {
+        switch (v2Status.getCode()) {
             case ShizukuState.STATUS_AUTHORIZED:
-                running = true;
-                ok = true;
+                runningV2 = true;
+                okV2 = true;
                 break;
             case ShizukuState.STATUS_UNAVAILABLE:
             case ShizukuState.STATUS_UNAUTHORIZED:
-                running = true;
+                runningV2 = true;
                 break;
             case ShizukuState.STATUS_UNKNOWN:
                 break;
         }
 
-        if (ok) {
-            mStatusIcon.setBackgroundColor(ContextCompat.getColor(context, R.color.status_ok));
-            mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_48dp));
-            mStatusText.setTextColor(ContextCompat.getColor(context, R.color.status_ok));
-
-            if (!ShizukuClient.getToken().equals(mToken)) {
-                mToken = ShizukuClient.getToken();
-
-                final View view = (View) mStatusIcon.getParent();
-                view.post(() -> {
-                    int centerX = mStatusIcon.getWidth() / 2;
-                    int centerY = mStatusIcon.getHeight() / 2;
-                    float radius = (float) Math.sqrt(centerX * centerX + (centerY + mStatusText.getHeight()) * (centerY + mStatusText.getHeight()));
-
-                    ViewAnimationUtils.createCircularReveal(view, centerX, centerY, 0, radius).start();
-                });
-            }
+        if (okV2 && okV3) {
+            mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_24dp));
+            mStatusIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.status_ok)));
         } else {
-            mStatusIcon.setBackgroundColor(ContextCompat.getColor(context, R.color.status_warning));
-            mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_48dp));
-            mStatusText.setTextColor(ContextCompat.getColor(context, R.color.status_warning));
+            mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_24dp));
+            mStatusIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.status_warning)));
         }
 
-        if (!running) {
-            mStatusText.setText(R.string.server_not_running);
+        String v2Text, v3Text;
+        String v2Name = context.getString(R.string.service_name_v2);
+        String v3Name = context.getString(R.string.service_name_v3);
+        String v2User = isRootV2 ? "root" : "adb";
+        String v3User = isRootV3 ? "root" : "adb";
+
+        if (!runningV2) {
+            v2Text = context.getString(R.string.server_not_running_tap_retry, v2Name);
         } else {
-            if (ok) {
-                if (shizukuState.versionUnmatched()) {
-                    mStatusText.setText(context.getString(R.string.server_running_update, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion(), ShizukuConstants.SERVER_VERSION));
+            if (okV2) {
+                if (v2Status.versionUnmatched()) {
+                    v2Text = context.getString(R.string.server_running_update, v2Name, v2User, versionV2, ShizukuConstants.SERVER_VERSION);
                 } else {
-                    mStatusText.setText(context.getString(R.string.server_running, shizukuState.isRoot() ? "root" : "adb", shizukuState.getVersion()));
+                    v2Text = context.getString(R.string.server_running, v2Name, v2User, versionV2);
                 }
             } else {
-                if (shizukuState.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
-                    mStatusText.setText(R.string.server_no_token);
-                    mCheckToRequest = true;
+                if (v2Status.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
+                    v2Text = context.getString(R.string.server_no_token, v2Name);
                 } else {
-                    mStatusText.setText(R.string.server_require_restart);
+                    v2Text = context.getString(R.string.server_require_restart, v2Name);
                 }
             }
         }
+
+        if (okV3) {
+            if (status.getVersion() != ShizukuClientV3.getLatestVersion()) {
+                v3Text = context.getString(R.string.server_running_update, v3Name, v3User, versionV3, ShizukuClientV3.getLatestVersion());
+            } else {
+                v3Text = context.getString(R.string.server_running,  v3Name, v3User, versionV3);
+            }
+        } else {
+            v3Text = context.getString(R.string.server_not_running_tap_retry, v3Name);
+        }
+
+        mStatusText.setHtmlText(context.getString(R.string.server_status_format, v3Text, v2Text), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
     }
 }

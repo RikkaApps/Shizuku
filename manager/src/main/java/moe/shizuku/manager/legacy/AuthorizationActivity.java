@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.BuildConfig;
 
@@ -22,7 +23,7 @@ public abstract class AuthorizationActivity extends BaseActivity {
 
     public void setResult(boolean granted, String packageName) {
         if (granted) {
-            UUID token = LegacySettings.getToken(this);
+            UUID token = ShizukuManagerSettings.getToken();
             Intent intent = new Intent(ACTION_AUTHORIZATION)
                     .setPackage(packageName)
                     .putExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())

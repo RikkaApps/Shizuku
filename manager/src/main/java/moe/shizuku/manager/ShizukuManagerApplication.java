@@ -2,14 +2,22 @@ package moe.shizuku.manager;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.UserManager;
 
 import com.topjohnwu.superuser.Shell;
 
-import moe.shizuku.manager.legacy.LegacySettings;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelStore;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
-public class ShizukuManagerApplication extends Application {
+import static moe.shizuku.manager.utils.Logger.LOGGER;
+
+public class ShizukuManagerApplication extends Application implements ViewModelStoreOwner {
 
     static {
         Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR);
@@ -48,16 +56,33 @@ public class ShizukuManagerApplication extends Application {
             return;
         }
 
-        LegacySettings.init(getDeviceProtectedStorageContext(context));
+        ShizukuManagerSettings.initialize(getDeviceProtectedStorageContext(context));
+        AuthorizationManager.init(context);
         ServerLauncher.init(context);
+
+        ShizukuClientV3.setBinderReceivedListener(() -> {
+            LOGGER.i("onBinderReceived");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(AppConstants.ACTION_BINDER_RECEIVED));
+        });
 
         sInitialized = true;
     }
+
+    private ViewModelStore mViewModelStore;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         init(this);
+    }
+
+    @NonNull
+    @Override
+    public ViewModelStore getViewModelStore() {
+        if (mViewModelStore == null) {
+            mViewModelStore = new ViewModelStore();
+        }
+        return mViewModelStore;
     }
 }

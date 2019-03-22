@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.api.ShizukuManager;
+import moe.shizuku.api.ShizukuClientV3;
 
 public class ShizukuApi {
 
@@ -66,7 +66,7 @@ public class ShizukuApi {
             data.writeInterfaceToken("android.app.IActivityManager");
             data.writeStrongBinder(taskStackListener.asBinder());
             try {
-                ShizukuManager.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+                ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
                 reply.readException();
 
                 Log.i("ShizukuSample", "registerTaskStackListener");
@@ -91,7 +91,7 @@ public class ShizukuApi {
             data.writeInterfaceToken("android.app.IActivityManager");
             data.writeStrongBinder(taskStackListener.asBinder());
             try {
-                ShizukuManager.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+                ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
                 reply.readException();
 
                 Log.i("ShizukuSample", "unregisterTaskStackListener");

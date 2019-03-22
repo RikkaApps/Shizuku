@@ -2,17 +2,15 @@ package moe.shizuku.manager.adapter;
 
 import android.content.pm.PackageInfo;
 
+import java.util.List;
+
 import moe.shizuku.manager.viewholder.AppViewHolder;
 import moe.shizuku.support.recyclerview.BaseRecyclerViewAdapter;
 import moe.shizuku.support.recyclerview.ClassCreatorPool;
 
-/**
- * Created by Rikka on 2017/5/20.
- */
+public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
 
-public class AppAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
-
-    public AppAdapter() {
+    public AppsAdapter() {
         super();
 
         getCreatorPool().putRule(PackageInfo.class, AppViewHolder.CREATOR);
@@ -21,5 +19,11 @@ public class AppAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
     @Override
     public ClassCreatorPool onCreateCreatorPool() {
         return new ClassCreatorPool();
+    }
+
+    public void updateData(List<PackageInfo> data) {
+        getItems().clear();
+        getItems().addAll(data);
+        notifyDataSetChanged();
     }
 }

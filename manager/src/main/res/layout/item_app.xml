@@ -8,15 +8,15 @@
               android:background="?android:attr/selectableItemBackground"
               android:paddingStart="@dimen/list_padding"
               android:paddingEnd="@dimen/list_padding"
-              android:paddingTop="12dp"
-              android:paddingBottom="12dp"
+              android:paddingTop="16dp"
+              android:paddingBottom="16dp"
               android:gravity="center_vertical"
               tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         tools:src="@mipmap/ic_launcher"
         android:contentDescription="@null"/>
 
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:orientation="vertical"
         android:gravity="center_vertical">
 
@@ -34,14 +34,24 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material"
+            android:fontFamily="sans-serif-medium"
             tools:text="Shizuku Manager"/>
 
         <TextView
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="moe.shizuku.manager"/>
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2sp"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:text="@string/no_v3_support"/>
 
     </LinearLayout>
 

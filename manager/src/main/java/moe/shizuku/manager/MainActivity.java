@@ -7,32 +7,48 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.UUID;
+
+import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
-import moe.shizuku.ShizukuState;
-import moe.shizuku.manager.adapter.MainAdapter;
+import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.manager.adapter.HomeAdapter;
 import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.service.WorkService;
+import moe.shizuku.manager.viewmodel.AppsViewModel;
+import moe.shizuku.manager.viewmodel.HomeViewModel;
+import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 public class MainActivity extends BaseActivity {
 
-    private class ServerStartedReceiver extends BroadcastReceiver {
+    private BroadcastReceiver mBinderReceivedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mAdapter.updateData(context, intent.<ShizukuState>getParcelableExtra(Intents.EXTRA_RESULT));
+            mAppsModel.load(context);
+            mAdapter.updateData(context);
         }
-    }
+    };
 
-    private BroadcastReceiver mServerStartedReceiver = new ServerStartedReceiver();
+    private BroadcastReceiver mRequestRefreshReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            checkServerStatus();
+        }
+    };
 
-    private MainAdapter mAdapter;
+    private HomeViewModel mHomeModel;
+    private AppsViewModel mAppsModel;
+
+    private HomeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,42 +57,74 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAdapter = new MainAdapter(this);
+        mHomeModel = ViewModelProviders.of(this).get("home", HomeViewModel.class);
+        mHomeModel.observe(this, object -> {
+            if (isFinishing())
+                return;
+
+            if (object != null && !(object instanceof Throwable)) {
+                final Context context = this;
+                mAdapter.updateData(context);
+
+                if (mHomeModel.getServiceStatus().isV3Running()) {
+                    ShizukuManagerSettings.setLastLaunchMode(mHomeModel.getServiceStatus().getUid() == 0
+                            ? ShizukuManagerSettings.LaunchMethod.ROOT : ShizukuManagerSettings.LaunchMethod.ADB);
+                }
+            } else if (object != null) {
+
+            }
+        });
+
+        mAppsModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel.class);
+        mAppsModel.observe(this, object -> {
+            if (object != null && !(object instanceof Throwable)) {
+                final Context context = this;
+                mAdapter.updateData(context);
+            } else if (object != null) {
+
+            }
+        });
+
+        if (ShizukuClientV3.isAlive()) {
+            mAppsModel.load(this);
+        }
+
+        mAdapter = new HomeAdapter(this, mHomeModel, mAppsModel);
 
         RecyclerView recyclerView = findViewById(android.R.id.list);
         recyclerView.setAdapter(mAdapter);
 
         RecyclerViewHelper.fixOverScroll(recyclerView);
 
-        mServerStartedReceiver = new ServerStartedReceiver();
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mBinderReceivedReceiver, new IntentFilter(AppConstants.ACTION_BINDER_RECEIVED));
 
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mServerStartedReceiver, new IntentFilter(Intents.ACTION_AUTH_RESULT));
+                .registerReceiver(mRequestRefreshReceiver, new IntentFilter(AppConstants.ACTION_REQUEST_REFRESH));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        check();
+        checkServerStatus();
     }
 
-    private void check() {
-        WorkService.startAuthV2(this);
-        WorkService.startAuthV3(this);
+    private void checkServerStatus() {
+        mHomeModel.load();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        LocalBroadcastManager.getInstance(this)
-                .unregisterReceiver(mServerStartedReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBinderReceivedReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRequestRefreshReceiver);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -91,9 +139,9 @@ public class MainActivity extends BaseActivity {
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setMovementMethod(LinkMovementMethod.getInstance());
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setText(Html.fromHtml(getString(R.string.about_icon_credits)));
                 return true;
-            case R.id.action_settings:
+            /*case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

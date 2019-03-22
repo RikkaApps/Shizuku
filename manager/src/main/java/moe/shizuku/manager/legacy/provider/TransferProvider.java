@@ -16,7 +16,7 @@ import java.util.Random;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import moe.shizuku.manager.ShizukuManagerApplication;
-import moe.shizuku.manager.legacy.authorization.AuthorizationManager;
+import moe.shizuku.manager.authorization.AuthorizationManager;
 
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
 import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
@@ -88,7 +88,7 @@ public class TransferProvider extends ContentProvider {
         String packageName = getCallingPackage();
 
         if (packageName != null
-                && !AuthorizationManager.granted(getContext(), packageName)) {
+                && !AuthorizationManager.granted(packageName)) {
             Log.w(TAG, "Package " + packageName + " try to call provider without permission.");
             return false;
         }

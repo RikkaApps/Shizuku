@@ -67,7 +67,7 @@ public class ShizukuService extends IShizukuService.Stub {
     }*/
 
     private void transactRemote(IBinder binder, int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-        LOGGER.i("transactRemote %s code=%d", binder.getClass(), code);
+        LOGGER.d("transactRemote code=%d", code);
         Parcel newData = Parcel.obtain();
         try {
             newData.appendFrom(data, data.dataPosition(), data.dataAvail());
@@ -100,8 +100,13 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     @Override
+    public String getToken() throws RemoteException {
+        return mToken.toString();
+    }
+
+    @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-        LOGGER.i("transact %d calling uid: %d", code, Binder.getCallingUid());
+        LOGGER.d("transact %d, calling uid: %d", code, Binder.getCallingUid());
         if (code == ShizukuApiConstants.BINDER_TRANSACTION_transactRemote) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
             IBinder targetBinder = data.readStrongBinder();
@@ -151,24 +156,8 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private static void sendTokenToManger(UUID token, Binder binder, int userId) {
-        Intent intent = new Intent(ServerConstants.ACTION_SERVER_STARTED)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addCategory(Intent.CATEGORY_DEFAULT)
-                .setPackage(ShizukuApiConstants.MANAGER_APPLICATION_ID)
-                .putExtra(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder))
-                .putExtra(ServerConstants.EXTRA_TOKEN_MOST_SIG, token.getMostSignificantBits())
-                .putExtra(ServerConstants.EXTRA_TOKEN_LEAST_SIG, token.getLeastSignificantBits());
-
-        try {
-            IActivityManager am = Api.ACTIVITY_MANAGER_SINGLETON.get();
-            am.startActivityAsUser(null, null, intent, null,
-                    null, null, 0, 0, null, null, userId);
-
-            LOGGER.i("send token to manager app in user " + userId);
-        } catch (Exception e) {
-            LOGGER.e("failed send token to manager app", e);
-        }
+    static void sendTokenToManger(UUID token, Binder binder, int userId) {
+        sendTokenToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
     }
 
     static void sendTokenToUserApp(Binder binder, String packageName, int userId) {

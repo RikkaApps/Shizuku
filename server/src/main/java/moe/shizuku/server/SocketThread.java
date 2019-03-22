@@ -8,7 +8,6 @@ import android.net.LocalSocket;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
-import android.os.RemoteException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,6 +19,7 @@ import java.util.concurrent.Executors;
 
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
+import moe.shizuku.server.utils.BuildUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
@@ -77,7 +77,7 @@ public class SocketThread implements Runnable {
         int pid = cred.getPid();
         int action = is.readInt();
         switch (action) {
-            case ServerConstants.SOCKET_ACTION_REQUEST_BINDER: {
+            case ServerConstants.SOCKET_ACTION_MANAGER_REQUEST_BINDER: {
                 requestBinderFromManagerApp(uid, os);
                 break;
             }
@@ -89,7 +89,7 @@ public class SocketThread implements Runnable {
         LOGGER.d("handle request: version=%d, uid=%d, action=%d", version, uid, action);
     }
 
-    private static void requestBinderFromManagerApp(int uid, DataOutputStream os) throws IOException {
+    private void requestBinderFromManagerApp(int uid, DataOutputStream os) throws IOException {
         PackageInfo pi = null;
         try {
             pi = Api.getPackageInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, uid / 100000);
@@ -102,19 +102,20 @@ public class SocketThread implements Runnable {
             os.writeInt(-1);
         } else {
             os.writeInt(0);
+            ShizukuService.sendTokenToManger(mToken, mBinder, uid / 100000);
         }
     }
 
     private void requestBinderFromUserApp(int uid, int pid, DataInputStream is, DataOutputStream os) throws IOException {
         String packageName = is.readUTF();
         String token;
-        if (Build.VERSION.SDK_INT < 23) {
+        if (BuildUtils.isPreM()) {
             token = is.readUTF();
         }
 
         boolean granted = false;
 
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (!BuildUtils.isPreM()) {
             try {
                 granted = Api.checkPermission(ShizukuApiConstants.PERMISSION_V23, pid, uid) == PackageManager.PERMISSION_GRANTED;
             } catch (Throwable tr) {

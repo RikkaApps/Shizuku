@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/status"
@@ -9,29 +8,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
-            android:id="@android:id/text1"
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_manage_apps_24dp"
+            android:tint="?android:textColorSecondary"
+            android:tintMode="src_in"
+            android:scaleType="center"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textAppearance="@android:style/TextAppearance.Material.Body2"
-            tools:htmlText="Authorized 0 application to get token without confirmation"/>
+            android:layout_marginStart="24dp"
+            android:orientation="vertical"
+            android:duplicateParentState="true">
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="16dp"
-            android:textColor="?android:textColorSecondary"
-            app:htmlText="@string/view_authorized_apps"/>
+            <moe.shizuku.support.widget.HtmlCompatTextView
+                android:id="@android:id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                android:duplicateParentState="true"
+                tools:htmlText="Authorized 0 application to get token without confirmation" />
+
+            <moe.shizuku.support.widget.HtmlCompatTextView
+                android:id="@android:id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:textSize="14sp"
+                android:textColor="?android:textColorSecondary"
+                android:duplicateParentState="true"
+                app:htmlText="@string/view_authorized_apps" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

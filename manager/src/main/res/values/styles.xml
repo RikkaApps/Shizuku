@@ -17,8 +17,8 @@
     </style>
 
     <style name="Card.ServerStatus" parent="Card">
-        <item name="contentPaddingTop">0dp</item>
-        <item name="contentPaddingBottom">0dp</item>
+        <item name="contentPaddingTop">8dp</item>
+        <item name="contentPaddingBottom">8dp</item>
     </style>
 
     <style name="CardButton">

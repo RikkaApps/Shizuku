@@ -2,51 +2,47 @@ package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import moe.shizuku.api.ShizukuClientV3;
 import moe.shizuku.manager.ManageAppsActivity;
 import moe.shizuku.manager.R;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.widget.HtmlCompatTextView;
 
-/**
- * Created by rikka on 2017/10/23.
- */
-public class ManageAppsViewHolder extends BaseViewHolder<Integer> {
+public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements View.OnClickListener {
 
-    public static final Creator<Integer> CREATOR = new Creator<Integer>() {
-        @Override
-        public BaseViewHolder<Integer> createViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            return new ManageAppsViewHolder(inflater.inflate(R.layout.item_manage_apps, parent, false));
-        }
-    };
+    public static final Creator<Integer> CREATOR = (inflater, parent) -> new ManageAppsViewHolder(inflater.inflate(R.layout.item_manage_apps, parent, false));
 
-    private HtmlCompatTextView text;
+    private HtmlCompatTextView title;
+    private HtmlCompatTextView summary;
 
     public ManageAppsViewHolder(View itemView) {
         super(itemView);
 
-        text = itemView.findViewById(android.R.id.text1);
+        title = itemView.findViewById(android.R.id.text1);
+        summary = itemView.findViewById(android.R.id.text2);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.getContext().startActivity(new Intent(v.getContext(), ManageAppsActivity.class));
-            }
-        });
+        itemView.setOnClickListener(this);
     }
 
     @Override
     public void onBind() {
         Context context = itemView.getContext();
 
-        text.setHtmlText(context.getResources().getQuantityString(R.plurals.authorized_apps_count, getData(), getData()));
+        title.setHtmlText(context.getResources().getQuantityString(R.plurals.authorized_apps_count, getData(), getData()));
+
+        if (!ShizukuClientV3.isAlive()) {
+            itemView.setEnabled(false);
+            summary.setHtmlText(context.getString(R.string.v3_not_running));
+        } else {
+            itemView.setEnabled(true);
+            summary.setHtmlText(context.getString(R.string.view_authorized_apps));
+        }
     }
 
-    /*@Override
-    public void onBind(@NonNull List<Object> payloads) {
-        super.onBind(payloads);
-    }*/
+    @Override
+    public void onClick(View v) {
+        v.getContext().startActivity(new Intent(v.getContext(), ManageAppsActivity.class));
+    }
 }
