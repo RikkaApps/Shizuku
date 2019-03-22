@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation "androidx.annotation:annotation:$androidXLibraryVersion"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
-    implementation project(':api-public')
+    implementation 'moe.shizuku.privilege:api:3.0.0' // shizuku v3
     implementation 'moe.shizuku.privilege:api-base:12' // shizuku v2
 
     implementation 'me.weishu:free_reflection:1.2.0' // bypass hidden api restriction

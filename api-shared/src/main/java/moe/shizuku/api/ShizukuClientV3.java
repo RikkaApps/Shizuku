@@ -100,7 +100,7 @@ public class ShizukuClientV3 {
         }
     }
 
-    public static boolean requestBinderSync(Context context, long timeout) {
+    public static boolean requestBinderSync(final Context context, long timeout) {
         Callable<Integer> task = new Callable<Integer>() {
             public Integer call() throws IOException {
                 return requestBinder(context);

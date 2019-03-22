@@ -20,9 +20,10 @@ allprojects {
     repositories {
         jcenter()
         google()
-        mavenLocal()
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
+        maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
+        mavenLocal()
     }
 }
 
@@ -42,6 +43,5 @@ ext {
     targetSdkVersion = 28
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiBaseLibraryVersion = '12'
-    apiLibraryVersion = '5'
+    apiLibraryVersion = '3.0.0'
 }
