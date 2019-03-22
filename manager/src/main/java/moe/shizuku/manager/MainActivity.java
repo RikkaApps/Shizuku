@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        if (ShizukuClientV3.isAlive()) {
+        if (ShizukuClientV3.isRemoteAlive()) {
             mAppsModel.load(this);
         }
 

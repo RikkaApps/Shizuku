@@ -14,17 +14,21 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.system.Os;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
 import moe.shizuku.server.utils.BuildUtils;
+import moe.shizuku.server.utils.RemoteProcessHolder;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
-@SuppressWarnings("SameParameterValue")
 public class ShizukuService extends IShizukuService.Stub {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
@@ -33,6 +37,8 @@ public class ShizukuService extends IShizukuService.Stub {
             BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION,
             PERMISSION_MANAGER
     };
+
+    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
     private UUID mToken;
 
@@ -59,10 +65,14 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void enforceCallingPermission(String permission, String func) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
         }
+
+        if (BuildUtils.isPreM())
+            return;
 
         if (checkCallingPermission(permission) == PackageManager.PERMISSION_GRANTED) {
             return;
@@ -93,10 +103,13 @@ public class ShizukuService extends IShizukuService.Stub {
         throw new SecurityException(msg);
     }
 
-    private void transactRemote(IBinder binder, int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+    private void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
+        IBinder targetBinder = data.readStrongBinder();
+        int targetCode = data.readInt();
+
         enforceCallingPermission("transactRemote");
 
-        LOGGER.d("transactRemote code=%d", code);
+        LOGGER.d("transactRemote, code=%d", targetCode);
         Parcel newData = Parcel.obtain();
         try {
             newData.appendFrom(data, data.dataPosition(), data.dataAvail());
@@ -106,7 +119,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
         try {
             long id = Binder.clearCallingIdentity();
-            binder.transact(code, newData, reply, flags);
+            targetBinder.transact(targetCode, newData, reply, flags);
             Binder.restoreCallingIdentity(id);
         } finally {
             newData.recycle();
@@ -122,7 +135,6 @@ public class ShizukuService extends IShizukuService.Stub {
     @Override
     public int getUid() {
         enforceCallingPermission("getUid");
-
         return Os.getuid();
     }
 
@@ -139,13 +151,27 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     @Override
+    public IRemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
+        enforceCallingPermission("newProcess");
+
+        LOGGER.d("newProcess: cmd=%s, env=%s, dir=%s", Arrays.toString(cmd), Arrays.toString(env), dir);
+
+        java.lang.Process process;
+        try {
+            process = Runtime.getRuntime().exec(cmd, env, dir != null ? new File(dir) : null);
+        } catch (IOException e) {
+            throw new RemoteException(e.getMessage());
+        }
+
+        return new RemoteProcessHolder(process);
+    }
+
+    @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-        LOGGER.d("transact %d, calling uid: %d", code, Binder.getCallingUid());
-        if (code == ShizukuApiConstants.BINDER_TRANSACTION_transactRemote) {
+        LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
+        if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
-            IBinder targetBinder = data.readStrongBinder();
-            int targetCode = data.readInt();
-            transactRemote(targetBinder, targetCode, data, reply, flags);
+            transactRemote(data, reply, flags);
             return true;
         }
         return super.onTransact(code, data, reply, flags);

@@ -26,7 +26,7 @@ public class ShizukuBinderReceiveActivity extends Activity {
         if (container != null && container.binder != null) {
             Log.i("ShizukuClient", "binder received");
 
-            ShizukuClientV3.setRemote(container.binder);
+            ShizukuClientV3.setRemoteBinder(container.binder);
 
             if (ShizukuClientV3.getBinderReceivedListener() != null) {
                 ShizukuClientV3.getBinderReceivedListener().onBinderReceived();

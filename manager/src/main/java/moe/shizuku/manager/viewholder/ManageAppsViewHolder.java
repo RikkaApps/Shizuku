@@ -32,7 +32,7 @@ public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements Vie
 
         title.setHtmlText(context.getResources().getQuantityString(R.plurals.authorized_apps_count, getData(), getData()));
 
-        if (!ShizukuClientV3.isAlive()) {
+        if (!ShizukuClientV3.isRemoteAlive()) {
             itemView.setEnabled(false);
             summary.setHtmlText(context.getString(R.string.v3_not_running));
         } else {

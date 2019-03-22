@@ -21,7 +21,7 @@ public class ServiceStatus {
     }
 
     public boolean isV3Running() {
-        return ShizukuClientV3.isAlive();
+        return ShizukuClientV3.isRemoteAlive();
     }
 
     public int getUid() {

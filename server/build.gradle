@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply from: rootProject.file('server-dex.gradle')
 
 dependencies {
-    compileOnly files(rootProject.rootDir.absolutePath + '/android-27/android.jar')
+    compileOnly files(rootProject.rootDir.absolutePath + '/android-21/android.jar')
     compile project(':shared')
 }
 

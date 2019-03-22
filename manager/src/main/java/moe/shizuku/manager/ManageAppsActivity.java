@@ -24,7 +24,7 @@ public class ManageAppsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!ShizukuClientV3.isAlive() && !isFinishing()) {
+        if (!ShizukuClientV3.isRemoteAlive() && !isFinishing()) {
             LocalBroadcastManager.getInstance(this)
                     .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
 
@@ -72,7 +72,7 @@ public class ManageAppsActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if (!ShizukuClientV3.isAlive() && !isFinishing()) {
+        if (!ShizukuClientV3.isRemoteAlive() && !isFinishing()) {
             LocalBroadcastManager.getInstance(this)
                     .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
             finish();

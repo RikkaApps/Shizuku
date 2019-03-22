@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.sample">
 
+    <uses-permission android:name="moe.shizuku.manager.permission.API" android:maxSdkVersion="23"/>
+    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.API_V23" />
+    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.EXEC_COMMAND" />
+
     <application
         android:allowBackup="false"
         android:name=".Application"

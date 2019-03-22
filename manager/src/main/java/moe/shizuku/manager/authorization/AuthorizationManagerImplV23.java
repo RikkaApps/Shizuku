@@ -59,7 +59,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     private static List<PackageInfo> getInstalledPackages(int flags, int userId) {
-        if (ShizukuClientV3.getBinder() == null) {
+        if (!ShizukuClientV3.isRemoteAlive()) {
             return new ArrayList<>();
         }
 
@@ -75,7 +75,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         data.writeInt(userId);
 
         try {
-            ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+            ShizukuClientV3.transactRemote(data, reply, 0);
             reply.readException();
             if (reply.readInt() != 0) {
                 //noinspection unchecked
@@ -92,7 +92,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     private static int checkPermission(String permName, String pkgName, int userId) throws RuntimeException {
-        if (ShizukuClientV3.getBinder() == null) {
+        if (!ShizukuClientV3.isRemoteAlive()) {
             return PackageManager.PERMISSION_DENIED;
         }
 
@@ -109,7 +109,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         data.writeInt(userId);
 
         try {
-            ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+            ShizukuClientV3.transactRemote(data, reply, 0);
             reply.readException();
             return reply.readInt();
         } catch (Throwable tr) {
@@ -121,7 +121,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     private static void grantRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
-        if (ShizukuClientV3.getBinder() == null) {
+        if (!ShizukuClientV3.isRemoteAlive()) {
             return;
         }
 
@@ -138,7 +138,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         data.writeInt(userId);
 
         try {
-            ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+            ShizukuClientV3.transactRemote(data, reply, 0);
             reply.readException();
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);
@@ -149,7 +149,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     private static void revokeRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
-        if (ShizukuClientV3.getBinder() == null) {
+        if (!ShizukuClientV3.isRemoteAlive()) {
             return;
         }
 
@@ -166,7 +166,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         data.writeInt(userId);
 
         try {
-            ShizukuClientV3.getBinderThrow().transact(ShizukuApiConstants.BINDER_TRANSACTION_transactRemote, data, reply, 0);
+            ShizukuClientV3.transactRemote(data, reply, 0);
             reply.readException();
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);

@@ -15,7 +15,7 @@ public class ShizukuApiConstants {
     public static final int SERVER_VERSION = 1;
 
     public static final String BINDER_DESCRIPTOR = "moe.shizuku.server.IShizukuService";
-    public static final int BINDER_TRANSACTION_transactRemote = 1;
+    public static final int BINDER_TRANSACTION_transact = 1;
 
     public static final String ACTION_SEND_BINDER = "moe.shizuku.client.intent.action.SEND_BINDER";
 

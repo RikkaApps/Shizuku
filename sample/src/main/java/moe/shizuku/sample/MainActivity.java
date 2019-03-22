@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.api.ShizukuClientV3;
@@ -31,9 +37,9 @@ public class MainActivity extends Activity {
                 runTestV3();
             });
 
-            if (!ShizukuClientV3.isAlive()) {
+            if (!ShizukuClientV3.isRemoteAlive()) {
                 if (!ShizukuClientV3.isPreM()) {
-                    if (ShizukuClientV3.checkSelfPermission(this))
+                    if (ActivityCompat.checkSelfPermission(this, ShizukuApiConstants.PERMISSION) == PackageManager.PERMISSION_GRANTED)
                         ShizukuClientV3.requestBinderSync(this, 5000);
                     else
                         ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
@@ -158,6 +164,29 @@ public class MainActivity extends Activity {
             Log.d("ShizukuSample", "getInstalledPackages: " + ShizukuApi.PackageManager_getInstalledPackages(0, 0));
         } catch (Throwable tr) {
             Log.e("ShizukuSample", "registerTaskStackListener", tr);
+        }
+
+        try {
+            RemoteProcess remoteProcess = ShizukuClientV3.newRemoteProcess(new String[]{"sh"}, null, null);
+            InputStream is = remoteProcess.getInputStream();
+            OutputStream os = remoteProcess.getOutputStream();
+            os.write("echo test\n".getBytes());
+            os.write("id\n".getBytes());
+            os.write("exit\n".getBytes());
+            os.close();
+
+            StringBuilder sb = new StringBuilder();
+            int c;
+            while ((c = is.read()) != -1) {
+                sb.append((char) c);
+            }
+            is.close();
+
+            Log.d("ShizukuSample", "newRemoteProcess: " + remoteProcess);
+            Log.d("ShizukuSample", "waitFor: " + remoteProcess.waitFor());
+            Log.d("ShizukuSample", "output: " + sb);
+        } catch (Throwable tr) {
+            Log.e("ShizukuSample", "newRemoteProcess", tr);
         }
     }
 }

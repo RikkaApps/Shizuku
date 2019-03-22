@@ -21,6 +21,9 @@
         android:name="moe.shizuku.manager.permission.MANAGER"
         android:protectionLevel="signature" />
     <permission
+        android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
+        android:protectionLevel="signature" />
+    <permission
         android:name="moe.shizuku.manager.permission.API"
         android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:description="@string/permission_description"
@@ -34,9 +37,6 @@
         android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_label"
         android:protectionLevel="dangerous" />
-    <permission
-        android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
-        android:protectionLevel="signature" />
 
     <application
         android:name=".ShizukuManagerApplication"

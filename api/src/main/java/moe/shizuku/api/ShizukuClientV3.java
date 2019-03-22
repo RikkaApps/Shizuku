@@ -7,6 +7,8 @@ import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -43,37 +45,39 @@ public class ShizukuClientV3 {
         sBinderReceivedListener = binderReceivedListener;
     }
 
-    public static void setRemote(IShizukuService remote) {
-        sRemote = remote;
-    }
-
-    public static void setRemote(IBinder remote) {
+    public static void setRemoteBinder(IBinder remote) {
         sRemote = IShizukuService.Stub.asInterface(remote);
     }
 
-    public static IShizukuService get() {
-        return sRemote;
-    }
-
-    public static IShizukuService getThrow() {
-        if (sRemote == null)
-            throw new NullPointerException();
-        return sRemote;
-    }
-
-    public static IBinder getBinder() {
+    public static IBinder getRemoteBinder() {
         return sRemote != null ? sRemote.asBinder() : null;
     }
 
-    public static IBinder getBinderThrow() {
-        return getThrow().asBinder();
-    }
-
-    public static boolean isAlive() {
+    public static boolean isRemoteAlive() {
         if (sRemote == null)
             return false;
 
         return sRemote.asBinder().pingBinder();
+    }
+
+    public static boolean transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
+        return sRemote.asBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
+    }
+
+    public static RemoteProcess newRemoteProcess(String[] cmd, String[] env, String dir) throws RemoteException {
+        return new RemoteProcess(sRemote.newProcess(cmd, env, dir));
+    }
+
+    public static int getRemoteUid() throws RemoteException {
+        return sRemote.getUid();
+    }
+
+    public static int getRemoteVersion() throws RemoteException {
+        return sRemote.getVersion();
+    }
+
+    public static int checkRemotePermission(String permission) throws RemoteException {
+        return sRemote.checkPermission(permission);
     }
 
     public static int getLatestVersion() {
@@ -126,14 +130,6 @@ public class ShizukuClientV3 {
 
     public static boolean isPreM() {
         return Build.VERSION.SDK_INT < 23;
-    }
-
-    public static boolean checkSelfPermission(Context context) {
-        if (!isPreM()) {
-            return context.checkSelfPermission(ShizukuApiConstants.PERMISSION) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            return true;
-        }
     }
 
     public static void setPre23Token(Intent intent) {

@@ -14,7 +14,6 @@ import moe.shizuku.manager.viewholder.StartAdbViewHolder;
 import moe.shizuku.manager.viewholder.StartRootViewHolder;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.HomeViewModel;
-import moe.shizuku.server.IShizukuService;
 import moe.shizuku.support.recyclerview.IdBasedRecyclerViewAdapter;
 import moe.shizuku.support.recyclerview.IndexCreatorPool;
 
@@ -41,7 +40,7 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
 
     public void updateData(Context context) {
         final HomeViewModel vm = mHomeModel;
-        final IShizukuService service = ShizukuClientV3.get();
+        final boolean v3 = ShizukuClientV3.isRemoteAlive();
 
         clear();
         addItem(ServerStatusViewHolder.CREATOR, vm.getServiceStatus(), 0);
@@ -51,9 +50,9 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
         if (Process.myUid() / 100000 == 0) {
             boolean adb = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ADB;
             boolean rootRestart = vm.getServiceStatus().getV2Status().isRoot();
-            if (service != null) {
+            if (v3) {
                 try {
-                    rootRestart |= service.getUid() == 0;
+                    rootRestart |= ShizukuClientV3.getRemoteUid() == 0;
                 } catch (Throwable ignored) {
                 }
             }

@@ -61,15 +61,14 @@ public class HomeViewModel extends ViewModel {
         ShizukuState v2Status;
         serviceStatus.setV2Status((v2Status = ShizukuClient.getState()));
 
-        IShizukuService service = ShizukuClientV3.get();
-        if (service != null) {
-            if (service.asBinder().pingBinder()) {
+        if (ShizukuClientV3.getRemoteBinder() != null) {
+            if (ShizukuClientV3.isRemoteAlive()) {
                 try {
-                    serviceStatus.setUid(service.getUid());
-                    serviceStatus.setVersion(service.getVersion());
+                    serviceStatus.setUid(ShizukuClientV3.getRemoteUid());
+                    serviceStatus.setVersion(ShizukuClientV3.getRemoteVersion());
 
                     if (v2Status.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
-                        String token = service.getToken();
+                        String token = IShizukuService.Stub.asInterface(ShizukuClientV3.getRemoteBinder()).getToken();
                         ShizukuManagerSettings.putToken(UUID.fromString(token));
 
                         serviceStatus.setV2Status(ShizukuClient.getState());
@@ -78,7 +77,7 @@ public class HomeViewModel extends ViewModel {
                     LOGGER.w(tr, "");
                 }
             } else {
-                ShizukuClientV3.setRemote((IBinder) null);
+                ShizukuClientV3.setRemoteBinder(null);
             }
         } else {
             requestBinder();
