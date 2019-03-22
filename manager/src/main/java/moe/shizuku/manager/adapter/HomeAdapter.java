@@ -2,7 +2,6 @@ package moe.shizuku.manager.adapter;
 
 import android.content.Context;
 import android.os.Process;
-import android.os.RemoteException;
 
 import java.util.ArrayList;
 
@@ -47,9 +46,7 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
         clear();
         addItem(ServerStatusViewHolder.CREATOR, vm.getServiceStatus(), 0);
 
-        //if (ShizukuClientV3.getBinder() != null) {
         addItem(ManageAppsViewHolder.CREATOR, mAppsModel.getData() != null ? mAppsModel.getData().size() : 0, 1);
-        //}
 
         if (Process.myUid() / 100000 == 0) {
             boolean adb = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ADB;
@@ -57,7 +54,7 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
             if (service != null) {
                 try {
                     rootRestart |= service.getUid() == 0;
-                } catch (RemoteException ignored) {
+                } catch (Throwable ignored) {
                 }
             }
 

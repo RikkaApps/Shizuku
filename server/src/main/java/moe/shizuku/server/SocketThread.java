@@ -6,7 +6,6 @@ import android.net.Credentials;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Process;
 
 import java.io.DataInputStream;
@@ -108,30 +107,28 @@ public class SocketThread implements Runnable {
 
     private void requestBinderFromUserApp(int uid, int pid, DataInputStream is, DataOutputStream os) throws IOException {
         String packageName = is.readUTF();
-        String token;
-        if (BuildUtils.isPreM()) {
-            token = is.readUTF();
-        }
-
         boolean granted = false;
 
-        if (!BuildUtils.isPreM()) {
+        if (BuildUtils.isPreM()) {
+            if (mToken.toString().equals(is.readUTF())) {
+                granted = true;
+            }
+        } else {
             try {
-                granted = Api.checkPermission(ShizukuApiConstants.PERMISSION_V23, pid, uid) == PackageManager.PERMISSION_GRANTED;
+                granted = Api.checkPermission(ShizukuApiConstants.PERMISSION, pid, uid) == PackageManager.PERMISSION_GRANTED;
             } catch (Throwable tr) {
                 LOGGER.w(tr, "checkPermission");
             }
+        }
 
-            if (!granted) {
-                // no permission
-                os.writeInt(-1);
-            } else {
-                os.writeInt(0);
-                ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
-            }
+        if (!granted) {
+            // no permission
+            os.writeInt(-1);
+        } else {
+            os.writeInt(0);
+            ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
         }
     }
-
 
     @Override
     public void run() {

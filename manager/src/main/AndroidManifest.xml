@@ -18,7 +18,7 @@
         android:label="@string/permission_group_label" />
 
     <permission
-        android:name="moe.shizuku.redirectstorage.permission.MANAGER"
+        android:name="moe.shizuku.manager.permission.MANAGER"
         android:protectionLevel="signature" />
     <permission
         android:name="moe.shizuku.manager.permission.API"

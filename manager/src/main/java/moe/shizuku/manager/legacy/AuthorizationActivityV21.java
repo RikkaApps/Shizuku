@@ -20,10 +20,6 @@ import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 
-/**
- * Created by rikka on 2017/10/23.
- */
-
 public final class AuthorizationActivityV21 extends AuthorizationActivity {
 
     @Override

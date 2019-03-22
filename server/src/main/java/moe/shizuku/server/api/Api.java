@@ -2,6 +2,7 @@ package moe.shizuku.server.api;
 
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.os.IUserManager;
@@ -51,5 +52,21 @@ public class Api {
             throw new RemoteException("can't get IPackageManager");
         }
         return pm.getPackageInfo(packageName, flags, userId);
+    }
+
+    public static ApplicationInfo getApplicationInfo(String packageName, int flags, int userId) throws RemoteException {
+        IPackageManager pm = PACKAGE_MANAGER_SINGLETON.get();
+        if (pm == null) {
+            throw new RemoteException("can't get IPackageManager");
+        }
+        return pm.getApplicationInfo(packageName, flags, userId);
+    }
+
+    public static int checkPermission(String permName, int uid) throws RemoteException {
+        IPackageManager pm = PACKAGE_MANAGER_SINGLETON.get();
+        if (pm == null) {
+            throw new RemoteException("can't get IPackageManager");
+        }
+        return pm.checkUidPermission(permName, uid);
     }
 }

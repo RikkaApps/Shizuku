@@ -50,17 +50,9 @@ public class Starter {
         }
     }
 
-    private static void checkSelfPermission() {
-        /*try {
-            Api.PACKAGE_MANAGER_SINGLETON.get().checkUidPermission(, Os.getuid());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
-    }
-
     private static void checkManagerApp() {
         try {
-            ApplicationInfo ai = Api.PACKAGE_MANAGER_SINGLETON.get().getApplicationInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
+            ApplicationInfo ai = Api.getApplicationInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
             if (ai == null)
                 System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
         } catch (Throwable tr) {
@@ -104,7 +96,6 @@ public class Starter {
         waitSystemService(Context.APP_OPS_SERVICE);
 
         checkManagerApp();
-        checkSelfPermission();
 
         if (Build.VERSION.SDK_INT >= 28) {
             disableHiddenApiBlacklist();

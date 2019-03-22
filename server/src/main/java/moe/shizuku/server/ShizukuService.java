@@ -2,6 +2,7 @@ package moe.shizuku.server;
 
 import android.app.IActivityManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.net.LocalServerSocket;
 import android.os.Binder;
@@ -19,10 +20,19 @@ import java.util.UUID;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
+import moe.shizuku.server.utils.BuildUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
+@SuppressWarnings("SameParameterValue")
 public class ShizukuService extends IShizukuService.Stub {
+
+    private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
+
+    private static final String PERMISSIONS[] = new String[]{
+            BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION,
+            PERMISSION_MANAGER
+    };
 
     private UUID mToken;
 
@@ -38,7 +48,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    /*private int checkCallingPermission(String permission) {
+    private int checkCallingPermission(String permission) {
         try {
             return Api.checkPermission(permission,
                     Binder.getCallingPid(),
@@ -54,8 +64,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
         }
 
-        if (checkCallingPermission(permission)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (checkCallingPermission(permission) == PackageManager.PERMISSION_GRANTED) {
             return;
         }
         String msg = "Permission Denial: " + func + " from pid="
@@ -64,9 +73,29 @@ public class ShizukuService extends IShizukuService.Stub {
                 + " requires " + permission;
         LOGGER.w(msg);
         throw new SecurityException(msg);
-    }*/
+    }
+
+    private void enforceCallingPermission(String func) {
+        if (Binder.getCallingPid() == Os.getpid()) {
+            return;
+        }
+
+        if (checkCallingPermission(PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED
+                || checkCallingPermission(PERMISSIONS[1]) == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        String msg = "Permission Denial: " + func + " from pid="
+                + Binder.getCallingPid()
+                + ", uid=" + Binder.getCallingUid()
+                + " requires " + PERMISSIONS[0]
+                + " or " + PERMISSIONS[1];
+        LOGGER.w(msg);
+        throw new SecurityException(msg);
+    }
 
     private void transactRemote(IBinder binder, int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+        enforceCallingPermission("transactRemote");
+
         LOGGER.d("transactRemote code=%d", code);
         Parcel newData = Parcel.obtain();
         try {
@@ -86,21 +115,26 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public int getVersion() {
+        enforceCallingPermission("getVersion");
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
     @Override
     public int getUid() {
+        enforceCallingPermission("getUid");
+
         return Os.getuid();
     }
 
     @Override
-    public int checkPermission(String permission) {
-        return 0;
+    public int checkPermission(String permission) throws RemoteException {
+        enforceCallingPermission("checkPermission");
+        return Api.checkPermission(permission, Os.getuid());
     }
 
     @Override
     public String getToken() throws RemoteException {
+        enforceCallingPermission(PERMISSION_MANAGER, "getToken");
         return mToken.toString();
     }
 

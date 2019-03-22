@@ -1,6 +1,7 @@
 package moe.shizuku.api;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
@@ -9,15 +10,20 @@ import android.os.IBinder;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import moe.shizuku.server.IShizukuService;
 
 public class ShizukuClientV3 {
+
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
     public interface OnBinderReceivedListener {
         void onBinderReceived();
@@ -26,6 +32,8 @@ public class ShizukuClientV3 {
     private static OnBinderReceivedListener sBinderReceivedListener;
 
     private static IShizukuService sRemote;
+
+    private static UUID sToken = new UUID(0, 0);
 
     public static OnBinderReceivedListener getBinderReceivedListener() {
         return sBinderReceivedListener;
@@ -72,40 +80,40 @@ public class ShizukuClientV3 {
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
-    public static int requestBinder(Context context) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Callable<Integer> task = new Callable<Integer>() {
-            public Integer call() {
-                try (LocalSocket socket = new LocalSocket(LocalSocket.SOCKET_STREAM)) {
-                    socket.connect(new LocalSocketAddress(ShizukuApiConstants.SOCKET_NAME, LocalSocketAddress.Namespace.ABSTRACT));
-                    socket.setSoTimeout(ShizukuApiConstants.SOCKET_TIMEOUT);
-                    DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                    DataInputStream is = new DataInputStream(socket.getInputStream());
-                    os.writeInt(ShizukuApiConstants.SOCKET_VERSION_CODE);
-                    os.writeInt(ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER);
-                    os.writeUTF(context.getPackageName());
-                    if (Build.VERSION.SDK_INT < 23) {
-                        os.writeUTF("TODO token");
-                    }
-                    return is.readInt();
-                } catch (Throwable tr) {
+    public static int requestBinder(Context context) throws IOException {
+        try (LocalSocket socket = new LocalSocket(LocalSocket.SOCKET_STREAM)) {
+            socket.connect(new LocalSocketAddress(ShizukuApiConstants.SOCKET_NAME, LocalSocketAddress.Namespace.ABSTRACT));
+            socket.setSoTimeout(ShizukuApiConstants.SOCKET_TIMEOUT);
+            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+            DataInputStream is = new DataInputStream(socket.getInputStream());
+            os.writeInt(ShizukuApiConstants.SOCKET_VERSION_CODE);
+            os.writeInt(ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER);
+            os.writeUTF(context.getPackageName());
+            if (isPreM()) {
+                os.writeUTF(sToken.toString());
+            }
+            return is.readInt();
+        }
+    }
 
-                }
-                return null;
+    public static boolean requestBinderSync(Context context, long timeout) {
+        Callable<Integer> task = new Callable<Integer>() {
+            public Integer call() throws IOException {
+                return requestBinder(context);
             }
         };
 
-        Future<Integer> future = executor.submit(task);
+        Future<Integer> future = EXECUTOR.submit(task);
         try {
-            return future.get();
-        } catch (InterruptedException e) {
-            // handle the interrupts
-        } catch (ExecutionException e) {
-            // handle other exceptions
+            return future.get(timeout, TimeUnit.MILLISECONDS) == 0;
+        } catch (TimeoutException e) {
+            // handle the timeout
+        } catch (Throwable tr) {
+            // handle other error
         } finally {
             future.cancel(true);
         }
-        return -1;
+        return false;
     }
 
     public static boolean isManagerV3Installed(Context context) {
@@ -116,11 +124,45 @@ public class ShizukuClientV3 {
         }
     }
 
+    public static boolean isPreM() {
+        return Build.VERSION.SDK_INT < 23;
+    }
+
     public static boolean checkSelfPermission(Context context) {
-        if (Build.VERSION.SDK_INT > 23) {
-            return context.checkSelfPermission(ShizukuApiConstants.PERMISSION_V23) == PackageManager.PERMISSION_GRANTED;
+        if (!isPreM()) {
+            return context.checkSelfPermission(ShizukuApiConstants.PERMISSION) == PackageManager.PERMISSION_GRANTED;
         } else {
             return true;
         }
+    }
+
+    public static void setPre23Token(Intent intent) {
+        if (!isPreM())
+            throw new IllegalStateException("token is not required from API 23");
+
+        long mostSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_MOST_SIG, 0);
+        long leastSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_LEAST_SIG, 0);
+        if (mostSig != 0 && leastSig != 0) {
+            setPre23Token(new UUID(mostSig, leastSig));
+        }
+    }
+
+    public static void setPre23Token(UUID token) {
+        if (!isPreM())
+            throw new IllegalStateException("token is not required from API 23");
+
+        sToken = token;
+    }
+
+    public static Intent createPre23AuthorizationIntent(Context context) {
+        if (!isPreM())
+            throw new IllegalStateException("authorization intent is not required from API 23");
+
+        Intent intent = new Intent(ShizukuApiConstants.ACTION_REQUEST_AUTHORIZATION)
+                .setPackage(ShizukuApiConstants.MANAGER_APPLICATION_ID);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            return intent;
+        }
+        return null;
     }
 }

@@ -7,14 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
-import java.util.UUID;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -22,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import moe.shizuku.api.ShizukuClientV3;
 import moe.shizuku.manager.adapter.HomeAdapter;
 import moe.shizuku.manager.app.BaseActivity;
-import moe.shizuku.manager.service.WorkService;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.HomeViewModel;
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
