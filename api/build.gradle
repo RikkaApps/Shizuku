@@ -21,10 +21,18 @@ android {
     }
 }
 
+android.libraryVariants.all { variant ->
+    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
+    task "${taskName}" {
+        doLast { delete "${buildDir}/intermediates/javac/${variant.name}/compile${variant.name}JavaWithJavac/classes/android" }
+    }
+    variant.processJavaResources.dependsOn(taskName)
+}
+
 ext {
     libraryName = 'Shizuku V3'
     libraryDescription = 'Shizuku V3'
-    libraryVersion = project.rootProject.ext.apiLibraryVersion
+    libraryVersion = '3.0.0-alpha2'
     artifact = "api"
     bintrayName = "api"
 }

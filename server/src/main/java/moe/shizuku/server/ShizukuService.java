@@ -154,7 +154,7 @@ public class ShizukuService extends IShizukuService.Stub {
     public IRemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
         enforceCallingPermission("newProcess");
 
-        LOGGER.d("newProcess: cmd=%s, env=%s, dir=%s", Arrays.toString(cmd), Arrays.toString(env), dir);
+        LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
 
         java.lang.Process process;
         try {

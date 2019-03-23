@@ -43,5 +43,4 @@ ext {
     targetSdkVersion = 28
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-    apiLibraryVersion = '3.0.0-alpha1'
 }

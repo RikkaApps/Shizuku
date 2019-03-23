@@ -3,74 +3,26 @@ package moe.shizuku.manager.authorization;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
-import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
-import android.os.ServiceManager;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuService;
+import moe.shizuku.api.SystemServiceHelper;
 import moe.shizuku.manager.Manifest;
 
 @SuppressWarnings("SameParameterValue")
 public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
-
-    private static Map<String, IBinder> systemServiceCache = new HashMap<>();
-    private static Map<String, Integer> transactCodeCache = new HashMap<>();
-
-    private static IBinder getSystemService(final String name) {
-        IBinder binder = systemServiceCache.get(name);
-        if (binder == null) {
-            binder = ServiceManager.getService(name);
-            systemServiceCache.put(name, binder);
-        }
-        return binder;
-    }
-
-    private static Integer getTransactionCode(final String className, final String methodName) {
-        final String stubName = className + "$Stub";
-        final String fieldName = "TRANSACTION_" + methodName;
-        final String key = stubName + "." + fieldName;
-
-        Integer value = transactCodeCache.get(key);
-        if (value != null) return value;
-
-        try {
-            final Class<?> cls = Class.forName(stubName);
-            final Field declaredField = cls.getDeclaredField(fieldName);
-            declaredField.setAccessible(true);
-            value = declaredField.getInt(cls);
-
-            transactCodeCache.put(key, value);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
 
     private static List<PackageInfo> getInstalledPackages(int flags, int userId) {
         if (!ShizukuService.pingBinder()) {
             return new ArrayList<>();
         }
 
-        int code = getTransactionCode("android.content.pm.IPackageManager", "getInstalledPackages");
-
-        Parcel data = Parcel.obtain();
+        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "getInstalledPackages");
         Parcel reply = Parcel.obtain();
-        data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
-        data.writeStrongBinder(getSystemService("package"));
-        data.writeInt(code);
-        data.writeInterfaceToken("android.content.pm.IPackageManager");
         data.writeInt(flags);
         data.writeInt(userId);
 
@@ -96,14 +48,8 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return PackageManager.PERMISSION_DENIED;
         }
 
-        int code = getTransactionCode("android.content.pm.IPackageManager", "checkPermission");
-
-        Parcel data = Parcel.obtain();
+        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "checkPermission");
         Parcel reply = Parcel.obtain();
-        data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
-        data.writeStrongBinder(getSystemService("package"));
-        data.writeInt(code);
-        data.writeInterfaceToken("android.content.pm.IPackageManager");
         data.writeString(permName);
         data.writeString(pkgName);
         data.writeInt(userId);
@@ -125,14 +71,8 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return;
         }
 
-        int code = getTransactionCode("android.content.pm.IPackageManager", "grantRuntimePermission");
-
-        Parcel data = Parcel.obtain();
+        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "grantRuntimePermission");
         Parcel reply = Parcel.obtain();
-        data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
-        data.writeStrongBinder(getSystemService("package"));
-        data.writeInt(code);
-        data.writeInterfaceToken("android.content.pm.IPackageManager");
         data.writeString(packageName);
         data.writeString(permissionName);
         data.writeInt(userId);
@@ -153,14 +93,8 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return;
         }
 
-        int code = getTransactionCode("android.content.pm.IPackageManager", "revokeRuntimePermission");
-
-        Parcel data = Parcel.obtain();
+        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "revokeRuntimePermission");
         Parcel reply = Parcel.obtain();
-        data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
-        data.writeStrongBinder(getSystemService("package"));
-        data.writeInt(code);
-        data.writeInterfaceToken("android.content.pm.IPackageManager");
         data.writeString(packageName);
         data.writeString(permissionName);
         data.writeInt(userId);
