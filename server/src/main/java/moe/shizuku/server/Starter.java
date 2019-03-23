@@ -105,7 +105,6 @@ public class Starter {
 
         Looper.prepare();
 
-        // TODO patch SELinux policy or setcon shell if root
         ShizukuService server = new ShizukuService(getToken(args));
         if (!server.start()) {
             System.exit(1);

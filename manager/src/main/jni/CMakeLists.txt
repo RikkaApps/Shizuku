@@ -6,4 +6,5 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../../build/starter/${ANDROID_
 
 add_executable( libshizuku.so
                 starter.cpp
-                misc.cpp)
+                misc.cpp
+                selinux.cpp)

@@ -10,6 +10,7 @@
 #include <time.h>
 #include <string.h>
 #include "misc.h"
+#include "selinux.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -194,6 +195,11 @@ int main(int argc, char **argv) {
 
     kill_proc_by_name(SERVER_NAME);
     kill_proc_by_name(SERVER_NAME_LEGACY);
+
+    selinux_init();
+
+    // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
+    if (getuid() == 0 && setcon) setcon("u:r:shell:s0");
 
     printf("info: starting server v3...\n");
     fflush(stdout);
