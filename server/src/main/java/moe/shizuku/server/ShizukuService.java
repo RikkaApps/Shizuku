@@ -109,7 +109,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
         enforceCallingPermission("transactRemote");
 
-        LOGGER.d("transactRemote, code=%d", targetCode);
+        LOGGER.d("transact: uid=%d, descriptor=%s, code=%d", Binder.getCallingUid(), targetBinder.getInterfaceDescriptor(), targetCode);
         Parcel newData = Parcel.obtain();
         try {
             newData.appendFrom(data, data.dataPosition(), data.dataAvail());
@@ -168,7 +168,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-        LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
+        //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
         if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
             transactRemote(data, reply, flags);

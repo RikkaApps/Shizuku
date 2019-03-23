@@ -1,7 +1,7 @@
 package moe.shizuku.manager.model;
 
 import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 
 public class ServiceStatus {
 
@@ -21,7 +21,7 @@ public class ServiceStatus {
     }
 
     public boolean isV3Running() {
-        return ShizukuClientV3.isRemoteAlive();
+        return ShizukuService.pingBinder();
     }
 
     public int getUid() {

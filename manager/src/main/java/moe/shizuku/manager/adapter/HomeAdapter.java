@@ -5,7 +5,7 @@ import android.os.Process;
 
 import java.util.ArrayList;
 
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
 import moe.shizuku.manager.viewholder.ManageAppsViewHolder;
@@ -40,7 +40,7 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
 
     public void updateData(Context context) {
         final HomeViewModel vm = mHomeModel;
-        final boolean v3 = ShizukuClientV3.isRemoteAlive();
+        final boolean v3 = ShizukuService.pingBinder();
 
         clear();
         addItem(ServerStatusViewHolder.CREATOR, vm.getServiceStatus(), 0);
@@ -52,7 +52,7 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
             boolean rootRestart = vm.getServiceStatus().getV2Status().isRoot();
             if (v3) {
                 try {
-                    rootRestart |= ShizukuClientV3.getRemoteUid() == 0;
+                    rootRestart |= ShizukuService.getUid() == 0;
                 } catch (Throwable ignored) {
                 }
             }

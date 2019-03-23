@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.ManageAppsActivity;
 import moe.shizuku.manager.R;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
@@ -32,7 +32,7 @@ public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements Vie
 
         title.setHtmlText(context.getResources().getQuantityString(R.plurals.authorized_apps_count, getData(), getData()));
 
-        if (!ShizukuClientV3.isRemoteAlive()) {
+        if (!ShizukuService.pingBinder()) {
             itemView.setEnabled(false);
             summary.setHtmlText(context.getString(R.string.v3_not_running));
         } else {

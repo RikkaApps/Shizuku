@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 
 import static moe.shizuku.manager.utils.Logger.LOGGER;
@@ -60,7 +60,7 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
         AuthorizationManager.init(context);
         ServerLauncher.init(context);
 
-        ShizukuClientV3.setBinderReceivedListener(() -> {
+        ShizukuClientHelper.setBinderReceivedListener(() -> {
             LOGGER.i("onBinderReceived");
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(AppConstants.ACTION_BINDER_RECEIVED));
         });

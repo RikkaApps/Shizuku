@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.HomeAdapter;
 import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        if (ShizukuClientV3.isRemoteAlive()) {
+        if (ShizukuService.pingBinder()) {
             mAppsModel.load(this);
         }
 

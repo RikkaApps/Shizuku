@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 
 public class ShizukuApi {
 
@@ -71,7 +71,7 @@ public class ShizukuApi {
             data.writeInterfaceToken("android.app.IActivityManager");
             data.writeStrongBinder(taskStackListener.asBinder());
             try {
-                ShizukuClientV3.transactRemote(data, reply, 0);
+                ShizukuService.transactRemote(data, reply, 0);
                 reply.readException();
 
                 Log.i("ShizukuSample", "ActivityManager#registerTaskStackListener");
@@ -96,7 +96,7 @@ public class ShizukuApi {
             data.writeInterfaceToken("android.app.IActivityManager");
             data.writeStrongBinder(taskStackListener.asBinder());
             try {
-                ShizukuClientV3.transactRemote(data, reply, 0);
+                ShizukuService.transactRemote(data, reply, 0);
                 reply.readException();
 
                 Log.i("ShizukuSample", "ActivityManager#unregisterTaskStackListener");
@@ -122,7 +122,7 @@ public class ShizukuApi {
 
         List<UserInfo> res = null;
         try {
-            ShizukuClientV3.transactRemote(data, reply, 0);
+            ShizukuService.transactRemote(data, reply, 0);
             reply.readException();
             res = reply.createTypedArrayList(UserInfo.CREATOR);
 
@@ -149,7 +149,7 @@ public class ShizukuApi {
         data.writeInt(userId);
 
         try {
-            ShizukuClientV3.transactRemote(data, reply, 0);
+            ShizukuService.transactRemote(data, reply, 0);
             reply.readException();
             if (reply.readInt() != 0) {
                 //noinspection unchecked

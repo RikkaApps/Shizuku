@@ -1,5 +1,6 @@
 package moe.shizuku.server;
 
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Credentials;
@@ -80,6 +81,10 @@ public class SocketThread implements Runnable {
                 requestBinderFromManagerApp(uid, os);
                 break;
             }
+            case ShizukuApiConstants.SOCKET_ACTION_PING: {
+                os.writeInt(ShizukuApiConstants.SOCKET_OK);
+                break;
+            }
             case ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER: {
                 requestBinderFromUserApp(uid, pid, is, os);
                 break;
@@ -98,9 +103,9 @@ public class SocketThread implements Runnable {
 
         if (pi == null || pi.applicationInfo.uid != uid) {
             // not from manager app
-            os.writeInt(-1);
+            os.writeInt(ShizukuApiConstants.SOCKET_NO_PERMISSION);
         } else {
-            os.writeInt(0);
+            os.writeInt(ShizukuApiConstants.SOCKET_OK);
             ShizukuService.sendTokenToManger(mToken, mBinder, uid / 100000);
         }
     }
@@ -108,6 +113,18 @@ public class SocketThread implements Runnable {
     private void requestBinderFromUserApp(int uid, int pid, DataInputStream is, DataOutputStream os) throws IOException {
         String packageName = is.readUTF();
         boolean granted = false;
+
+        ApplicationInfo ai = null;
+        try {
+            ai = Api.getApplicationInfo(packageName, 0, uid / 100000);
+        } catch (Throwable tr) {
+            LOGGER.w(tr, "getPackageInfo");
+        }
+        if (ai == null || ai.uid != uid) {
+            // package not match
+            os.writeInt(ShizukuApiConstants.SOCKET_PACKAGE_NOT_MATCHING);
+            return;
+        }
 
         if (BuildUtils.isPreM()) {
             if (mToken.toString().equals(is.readUTF())) {
@@ -123,9 +140,9 @@ public class SocketThread implements Runnable {
 
         if (!granted) {
             // no permission
-            os.writeInt(-1);
+            os.writeInt(ShizukuApiConstants.SOCKET_NO_PERMISSION);
         } else {
-            os.writeInt(0);
+            os.writeInt(ShizukuApiConstants.SOCKET_OK);
             ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
         }
     }

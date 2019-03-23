@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.model.ServiceStatus;
@@ -105,8 +105,8 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
         }
 
         if (okV3) {
-            if (status.getVersion() != ShizukuClientV3.getLatestVersion()) {
-                v3Text = context.getString(R.string.server_running_update, v3Name, v3User, versionV3, ShizukuClientV3.getLatestVersion());
+            if (status.getVersion() != ShizukuClientHelper.getLatestVersion()) {
+                v3Text = context.getString(R.string.server_running_update, v3Name, v3User, versionV3, ShizukuClientHelper.getLatestVersion());
             } else {
                 v3Text = context.getString(R.string.server_running,  v3Name, v3User, versionV3);
             }

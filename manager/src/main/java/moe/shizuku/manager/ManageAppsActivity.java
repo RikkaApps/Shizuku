@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.AppsAdapter;
 import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
@@ -24,7 +24,7 @@ public class ManageAppsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!ShizukuClientV3.isRemoteAlive() && !isFinishing()) {
+        if (!ShizukuService.pingBinder() && !isFinishing()) {
             LocalBroadcastManager.getInstance(this)
                     .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
 
@@ -72,7 +72,7 @@ public class ManageAppsActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if (!ShizukuClientV3.isRemoteAlive() && !isFinishing()) {
+        if (!ShizukuService.pingBinder() && !isFinishing()) {
             LocalBroadcastManager.getInstance(this)
                     .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
             finish();

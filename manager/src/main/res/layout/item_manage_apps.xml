@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:duplicateParentState="true">
 
         <ImageView
             android:id="@android:id/icon"
@@ -19,7 +20,8 @@
             android:src="@drawable/ic_manage_apps_24dp"
             android:tint="?android:textColorSecondary"
             android:tintMode="src_in"
-            android:scaleType="center"/>
+            android:scaleType="center"
+            android:duplicateParentState="true" />
 
         <LinearLayout
             android:layout_width="match_parent"

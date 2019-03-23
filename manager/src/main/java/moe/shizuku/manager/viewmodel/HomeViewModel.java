@@ -2,7 +2,6 @@ package moe.shizuku.manager.viewmodel;
 
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
-import android.os.IBinder;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -18,8 +17,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.ShizukuClient;
-import moe.shizuku.api.ShizukuClientV3;
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.model.ServiceStatus;
@@ -61,14 +60,14 @@ public class HomeViewModel extends ViewModel {
         ShizukuState v2Status;
         serviceStatus.setV2Status((v2Status = ShizukuClient.getState()));
 
-        if (ShizukuClientV3.getRemoteBinder() != null) {
-            if (ShizukuClientV3.isRemoteAlive()) {
+        if (ShizukuService.getBinder() != null) {
+            if (ShizukuService.pingBinder()) {
                 try {
-                    serviceStatus.setUid(ShizukuClientV3.getRemoteUid());
-                    serviceStatus.setVersion(ShizukuClientV3.getRemoteVersion());
+                    serviceStatus.setUid(ShizukuService.getUid());
+                    serviceStatus.setVersion(ShizukuService.getVersion());
 
                     if (v2Status.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
-                        String token = IShizukuService.Stub.asInterface(ShizukuClientV3.getRemoteBinder()).getToken();
+                        String token = IShizukuService.Stub.asInterface(ShizukuService.getBinder()).getToken();
                         ShizukuManagerSettings.putToken(UUID.fromString(token));
 
                         serviceStatus.setV2Status(ShizukuClient.getState());
@@ -77,7 +76,7 @@ public class HomeViewModel extends ViewModel {
                     LOGGER.w(tr, "");
                 }
             } else {
-                ShizukuClientV3.setRemoteBinder(null);
+                ShizukuService.setBinder(null);
             }
         } else {
             requestBinder();

@@ -6,19 +6,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.ShizukuClient;
-import moe.shizuku.api.ShizukuClientV3;
+import moe.shizuku.api.ShizukuClientHelper;
 
 public class MainActivity extends Activity {
 
@@ -31,21 +28,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ShizukuClientV3.isManagerV3Installed(this)) {
-            ShizukuClientV3.setBinderReceivedListener(() -> {
+        if (ShizukuClientHelper.isManagerV3Installed(this)) {
+            ShizukuClientHelper.setBinderReceivedListener(() -> {
                 Log.d("ShizukuSample", "onBinderReceived");
                 runTestV3();
             });
 
-            if (!ShizukuClientV3.isRemoteAlive()) {
-                if (!ShizukuClientV3.isPreM()) {
+            if (!ShizukuService.pingBinder()) {
+                if (!ShizukuClientHelper.isPreM()) {
                     if (ActivityCompat.checkSelfPermission(this, ShizukuApiConstants.PERMISSION) == PackageManager.PERMISSION_GRANTED)
-                        ShizukuClientV3.requestBinderSync(this, 5000);
+                        ShizukuClientHelper.requestBinderNoThrow(this);
                     else
                         ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
                 } else {
-                    if (!ShizukuClientV3.requestBinderSync(this, 5000)) {
-                        Intent intent = ShizukuClientV3.createPre23AuthorizationIntent(this);
+                    if (ShizukuClientHelper.requestBinderNoThrow(this) == ShizukuApiConstants.SOCKET_NO_PERMISSION) {
+                        Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
                         if (intent != null) {
                             try {
                                 startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
@@ -104,8 +101,8 @@ public class MainActivity extends Activity {
             }
             case REQUEST_CODE_AUTHORIZATION_V3: {
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
-                    ShizukuClientV3.setPre23Token(data);
-                    ShizukuClientV3.requestBinderSync(this, 5000);
+                    ShizukuClientHelper.setPre23Token(data, this);
+                    ShizukuClientHelper.requestBinderNoThrow(this);
                 } else {
                     // user denied or error
                 }
@@ -130,7 +127,7 @@ public class MainActivity extends Activity {
             }
             case REQUEST_CODE_PERMISSION_V3: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClientV3.requestBinderSync(this, 5000);
+                    ShizukuClientHelper.requestBinderNoThrow(this);
                 } else {
                     // denied
                 }
@@ -167,7 +164,7 @@ public class MainActivity extends Activity {
         }
 
         try {
-            RemoteProcess remoteProcess = ShizukuClientV3.newRemoteProcess(new String[]{"sh"}, null, null);
+            RemoteProcess remoteProcess = ShizukuService.newProcess(new String[]{"sh"}, null, null);
             InputStream is = remoteProcess.getInputStream();
             OutputStream os = remoteProcess.getOutputStream();
             os.write("echo test\n".getBytes());
@@ -182,11 +179,11 @@ public class MainActivity extends Activity {
             }
             is.close();
 
-            Log.d("ShizukuSample", "newRemoteProcess: " + remoteProcess);
+            Log.d("ShizukuSample", "newProcess: " + remoteProcess);
             Log.d("ShizukuSample", "waitFor: " + remoteProcess.waitFor());
             Log.d("ShizukuSample", "output: " + sb);
         } catch (Throwable tr) {
-            Log.e("ShizukuSample", "newRemoteProcess", tr);
+            Log.e("ShizukuSample", "newProcess", tr);
         }
     }
 }
