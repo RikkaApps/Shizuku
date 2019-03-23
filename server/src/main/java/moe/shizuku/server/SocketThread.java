@@ -82,7 +82,7 @@ public class SocketThread implements Runnable {
                 break;
             }
             case ShizukuApiConstants.SOCKET_ACTION_PING: {
-                os.writeInt(ShizukuApiConstants.SOCKET_OK);
+                os.writeInt(ShizukuApiConstants.RESULT_OK);
                 break;
             }
             case ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER: {
@@ -103,9 +103,9 @@ public class SocketThread implements Runnable {
 
         if (pi == null || pi.applicationInfo.uid != uid) {
             // not from manager app
-            os.writeInt(ShizukuApiConstants.SOCKET_NO_PERMISSION);
+            os.writeInt(ShizukuApiConstants.RESULT_NO_PERMISSION);
         } else {
-            os.writeInt(ShizukuApiConstants.SOCKET_OK);
+            os.writeInt(ShizukuApiConstants.RESULT_OK);
             ShizukuService.sendTokenToManger(mToken, mBinder, uid / 100000);
         }
     }
@@ -122,7 +122,7 @@ public class SocketThread implements Runnable {
         }
         if (ai == null || ai.uid != uid) {
             // package not match
-            os.writeInt(ShizukuApiConstants.SOCKET_PACKAGE_NOT_MATCHING);
+            os.writeInt(ShizukuApiConstants.RESULT_PACKAGE_NOT_MATCHING);
             return;
         }
 
@@ -140,9 +140,9 @@ public class SocketThread implements Runnable {
 
         if (!granted) {
             // no permission
-            os.writeInt(ShizukuApiConstants.SOCKET_NO_PERMISSION);
+            os.writeInt(ShizukuApiConstants.RESULT_NO_PERMISSION);
         } else {
-            os.writeInt(ShizukuApiConstants.SOCKET_OK);
+            os.writeInt(ShizukuApiConstants.RESULT_OK);
             ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
         }
     }
