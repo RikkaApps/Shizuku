@@ -1,6 +1,7 @@
 package moe.shizuku.sample;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import moe.shizuku.ShizukuState;
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuService;
@@ -28,52 +30,54 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ShizukuClientHelper.isManagerV3Installed(this)) {
-            ShizukuClientHelper.setBinderReceivedListener(() -> {
-                Log.d("ShizukuSample", "onBinderReceived");
-                runTestV3();
-            });
+        if (!ShizukuClientHelper.isManagerV2Installed(this)) {
+            Log.d("ShizukuSample", "Shizuku Manager version is too low");
+            return;
+        }
 
-            if (!ShizukuService.pingBinder()) {
+        ShizukuClientHelper.setBinderReceivedListener(() -> {
+            Log.d("ShizukuSample", "onBinderReceived");
+            runTestV3();
+        });
+
+        final Context context = this;
+        int v3Code;
+        ShizukuState v2Status;
+
+        // v3 binder not alive, request
+        if (!ShizukuService.pingBinder()) {
+            v3Code = ShizukuClientHelper.requestBinderNoThrow(context);
+
+            if (v3Code == ShizukuApiConstants.RESULT_NO_PERMISSION) {
                 if (!ShizukuClientHelper.isPreM()) {
-                    if (ActivityCompat.checkSelfPermission(this, ShizukuApiConstants.PERMISSION) == PackageManager.PERMISSION_GRANTED)
-                        ShizukuClientHelper.requestBinderNoThrow(this);
-                    else
+                    if (ActivityCompat.checkSelfPermission(context, ShizukuApiConstants.PERMISSION) != PackageManager.PERMISSION_GRANTED)
                         ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
                 } else {
-                    if (ShizukuClientHelper.requestBinderNoThrow(this) == ShizukuApiConstants.RESULT_NO_PERMISSION) {
-                        Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
-                        if (intent != null) {
-                            try {
-                                startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
-                            } catch (Throwable tr) {
-
-                            }
+                    Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(context);
+                    if (intent != null) {
+                        try {
+                            startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
+                        } catch (Throwable tr) {
+                            // activity not found?
                         }
                     }
                 }
+                // show your waiting ui
+            } else if (v3Code == ShizukuApiConstants.RESULT_OK) {
+                // show your waiting ui
             } else {
-                runTestV3();
-            }
-        } else {
-            // v2
-            if (!ShizukuClient.isManagerInstalled(this)) {
-                return;
-            }
-
-            // Highly not recommended.
-            ShizukuClient.setPermitNetworkThreadPolicy();
-
-            ShizukuClient.initialize(getApplicationContext());
-
-            if (!ShizukuClient.getState().isAuthorized()) {
-                if (ShizukuClient.checkSelfPermission(this)) {
-                    ShizukuClient.requestAuthorization(this);
+                // v3 service not running, fallback to v2
+                v2Status = ShizukuClient.getState();
+                if (!v2Status.isAuthorized()) {
+                    if (!ShizukuClient.checkSelfPermission(context)) {
+                        ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V2);
+                    } else {
+                        ShizukuClient.requestAuthorization(this);
+                    }
+                    // show your waiting ui
                 } else {
-                    ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION_V2);
+                    // v2 code
                 }
-            } else {
-                // runTestV2();
             }
         }
     }
