@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.support.app.DayNightDelegate;
+import moe.shizuku.support.app.LocaleDelegate;
 
 import static moe.shizuku.manager.utils.Logger.LOGGER;
 
@@ -22,8 +24,6 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
     static {
         Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR);
     }
-
-    private static boolean sInitialized = false;
 
     public static boolean isUserUnlocked(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -52,11 +52,9 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
     }
 
     public static void init(Context context) {
-        if (sInitialized) {
-            return;
-        }
-
-        ShizukuManagerSettings.initialize(getDeviceProtectedStorageContext(context));
+        ShizukuManagerSettings.initialize(context);
+        LocaleDelegate.setDefaultLocale(ShizukuManagerSettings.getLocale());
+        DayNightDelegate.setDefaultNightMode(ShizukuManagerSettings.getNightMode());
         AuthorizationManager.init(context);
         ServerLauncher.init(context);
 
@@ -64,8 +62,6 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
             LOGGER.i("onBinderReceived");
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(AppConstants.ACTION_BINDER_RECEIVED));
         });
-
-        sInitialized = true;
     }
 
     private ViewModelStore mViewModelStore;

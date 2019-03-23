@@ -135,9 +135,9 @@ public class MainActivity extends BaseActivity {
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setMovementMethod(LinkMovementMethod.getInstance());
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setText(Html.fromHtml(getString(R.string.about_icon_credits)));
                 return true;
-            /*case R.id.action_settings:
+            case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                return true;*/
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

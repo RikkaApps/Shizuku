@@ -3,16 +3,16 @@
     <string name="permission_group_description">使用 Shizuku</string>
     <string name="permission_label">以更高权限使用系统 API</string>
     <string name="permission_description">允许应用以更高权限使用系统 API。</string>
-    <string name="server_running">服务 %1$s 正在运行（版本 %3$d， %2$s）</string>
-    <string name="server_running_update">服务 %1$s 正在运行（版本 %3$d， %2$s，重新启动以升级到版本 %4$d）</string>
+    <string name="server_running">服务 %1$s 正在运行（版本 %3$d，%2$s）</string>
+    <string name="server_running_update">服务 %1$s 正在运行（版本 %3$d，%2$s，重新启动以升级到版本 %4$d）</string>
     <string name="server_not_running">服务 %1$s 没有运行，轻触重新检查</string>
     <string name="server_not_running_tap_retry">服务 %1$s 没有运行，轻触重新检查</string>
     <string name="server_require_restart">服务 %1$s 需要重新启动</string>
     <string name="server_no_token">服务 %1$s 正在运行，但未正确接收令牌，点击请求令牌</string>
     <string name="server_start">启动</string>
     <string name="server_restart">重新启动</string>
-    <string name="start_server_title_root"><![CDATA[通过 root 权限启动核心服务]]></string>
-    <string name="start_server_title_adb"><![CDATA[通过 adb 启动或升级核心服务]]></string>
+    <string name="start_server_title_root"><![CDATA[通过 root 权限启动服务]]></string>
+    <string name="start_server_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
     <string name="start_server_summary_adb"><![CDATA[
     <b>以下步骤需要在每次重新启动后进行。</b>
     <p>在“开发者选项”中开启“USB 调试”，将设备连接至电脑。
@@ -58,5 +58,7 @@
     <string name="notification_working">工作中…</string>
     <string name="no_v3_support">* 尚未适配 Shizuku v3</string>
     <string name="service_name_v2">v2（旧式）</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_user_interface">界面外观</string>
 
 </resources>

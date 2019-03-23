@@ -5,9 +5,11 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
+import java.util.Locale;
 import java.util.UUID;
 
 import androidx.annotation.IntDef;
@@ -15,10 +17,16 @@ import androidx.annotation.NonNull;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
+import moe.shizuku.support.app.DayNightDelegate;
+import moe.shizuku.support.app.DayNightDelegate.NightMode;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class ShizukuManagerSettings {
+
+    public static final String NAME = "settings";
+    public static final String NIGHT_MODE = "night_mode";
+    public static final String LANGUAGE = "language";
 
     private static SharedPreferences sPreferences;
 
@@ -49,10 +57,10 @@ public class ShizukuManagerSettings {
     public static void initialize(Context context) {
         if (sPreferences == null) {
             sPreferences = getSettingsStorageContext(context)
-                    .getSharedPreferences("settings", Context.MODE_PRIVATE);
-        }
+                    .getSharedPreferences(NAME, Context.MODE_PRIVATE);
 
-        ShizukuClient.setToken(ShizukuManagerSettings.getToken());
+            ShizukuClient.setToken(ShizukuManagerSettings.getToken());
+        }
     }
 
     @IntDef({
@@ -105,4 +113,18 @@ public class ShizukuManagerSettings {
 
         Log.i(AppConstants.TAG, "token update: " + token);
     }
+
+    @NightMode
+    public static int getNightMode() {
+        return sPreferences.getInt(NIGHT_MODE, DayNightDelegate.NightMode.MODE_NIGHT_NO);
+    }
+
+    public static Locale getLocale() {
+        String tag = sPreferences.getString(LANGUAGE, null);
+        if (TextUtils.isEmpty(tag) || "SYSTEM".equals(tag)) {
+            return Locale.getDefault();
+        }
+        return Locale.forLanguageTag(tag);
+    }
+
 }

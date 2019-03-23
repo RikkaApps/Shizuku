@@ -12,8 +12,8 @@
     <string name="server_no_token">Service %1$s is running, but no correct token received, tap to request token</string>
     <string name="server_start">Start</string>
     <string name="server_restart">Restart</string>
-    <string name="start_server_title_root"><![CDATA[Start core service with root permission]]></string>
-    <string name="start_server_title_adb"><![CDATA[Start / update core service with adb]]></string>
+    <string name="start_server_title_root"><![CDATA[Start service with root permission]]></string>
+    <string name="start_server_title_adb"><![CDATA[Start / update service with adb]]></string>
     <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b>
     <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
     <br>Type following content into computer\'s terminal and hit Enter
@@ -60,9 +60,11 @@
     <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
     <string name="no_v3_support">* not yet adapted Shizuku v3</string>
-    <string name="v3_not_running">core service v3 is not running</string>
+    <string name="v3_not_running">Service v3 is not running</string>
     <string name="server_status_format" translatable="false"><![CDATA[<font face="sans-serif-medium">%1$s</font><br><small>%2$s</small>]]></string>
     <string name="service_name_v3" translatable="false">v3</string>
     <string name="service_name_v2">v2 (old)</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_user_interface">Appearance</string>
 
 </resources>

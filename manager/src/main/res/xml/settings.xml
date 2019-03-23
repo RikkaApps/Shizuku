@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidElementNotAllowed -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <moe.shizuku.preference.PreferenceCategory
+        android:key="user_interface"
+        android:title="@string/settings_user_interface">
+
+        <SimpleMenuPreference
+            android:key="language"
+            android:title="@string/settings_language"
+            android:summary="%s"
+            android:entries="@array/language"
+            android:entryValues="@array/language_value"
+            android:defaultValue="SYSTEM"/>
+
+        <moe.shizuku.manager.preference.IntegerSimpleMenuPreference
+            android:key="night_mode"
+            android:title="@string/settings_night_mode"
+            android:summary="%s"
+            android:entries="@array/night_mode"
+            android:entryValues="@array/night_mode_value"
+            android:defaultValue="1" />
+
+    </moe.shizuku.preference.PreferenceCategory>
+
 </PreferenceScreen>
