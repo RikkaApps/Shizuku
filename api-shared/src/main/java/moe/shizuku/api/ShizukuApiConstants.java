@@ -24,11 +24,12 @@ public class ShizukuApiConstants {
 
     public static final int SOCKET_TIMEOUT = 2000;
     public static final int SOCKET_VERSION_CODE = 1;
-    public static final int SOCKET_OK = 0;
-    public static final int SOCKET_NO_PERMISSION = -1;
-    public static final int SOCKET_PACKAGE_NOT_MATCHING = -2;
-    public static final int SOCKET_IO_EXCEPTION = 0x3FFFFFFF;
-    public static final int SOCKET_EXCEPTION = 0x3FFFFFFF + 0x1;
+
+    public static final int RESULT_OK = 0;
+    public static final int RESULT_NO_PERMISSION = -1;
+    public static final int RESULT_PACKAGE_NOT_MATCHING = -2;
+    public static final int RESULT_IO_EXCEPTION = 0x3FFFFFFF;
+    public static final int RESULT_EXCEPTION = 0x3FFFFFFF + 0x1;
 
     // for pre-23
     static final String ACTION_REQUEST_AUTHORIZATION = MANAGER_APPLICATION_ID + ".intent.action.REQUEST_AUTHORIZATION";

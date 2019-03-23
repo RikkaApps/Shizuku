@@ -112,7 +112,7 @@ public class ShizukuClientHelper {
         } finally {
             future.cancel(true);
         }
-        return ShizukuApiConstants.SOCKET_EXCEPTION;
+        return ShizukuApiConstants.RESULT_EXCEPTION;
     }
 
     public static boolean isServerRunningNoThrow() {
@@ -124,7 +124,7 @@ public class ShizukuClientHelper {
 
         Future<Integer> future = EXECUTOR.submit(task);
         try {
-            return future.get(ShizukuApiConstants.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS) == ShizukuApiConstants.SOCKET_OK;
+            return future.get(ShizukuApiConstants.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS) == ShizukuApiConstants.RESULT_OK;
         } catch (TimeoutException e) {
             // handle the timeout
         } catch (Throwable tr) {

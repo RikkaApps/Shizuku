@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
                     else
                         ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
                 } else {
-                    if (ShizukuClientHelper.requestBinderNoThrow(this) == ShizukuApiConstants.SOCKET_NO_PERMISSION) {
+                    if (ShizukuClientHelper.requestBinderNoThrow(this) == ShizukuApiConstants.RESULT_NO_PERMISSION) {
                         Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
                         if (intent != null) {
                             try {
