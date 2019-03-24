@@ -28,6 +28,7 @@ public class ShizukuApiConstants {
     public static final int RESULT_OK = 0;
     public static final int RESULT_NO_PERMISSION = -1;
     public static final int RESULT_PACKAGE_NOT_MATCHING = -2;
+    public static final int RESULT_START_ACTIVITY_FAILED = -3;
     public static final int RESULT_IO_EXCEPTION = 0x3FFFFFFF;
     public static final int RESULT_EXCEPTION = 0x3FFFFFFF + 0x1;
 

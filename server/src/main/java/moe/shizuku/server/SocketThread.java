@@ -142,8 +142,8 @@ public class SocketThread implements Runnable {
             // no permission
             os.writeInt(ShizukuApiConstants.RESULT_NO_PERMISSION);
         } else {
-            os.writeInt(ShizukuApiConstants.RESULT_OK);
-            ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
+            boolean success = ShizukuService.sendTokenToUserApp(mBinder, packageName, uid / 100000);
+            os.writeInt(success ? ShizukuApiConstants.RESULT_OK : ShizukuApiConstants.RESULT_START_ACTIVITY_FAILED);
         }
     }
 

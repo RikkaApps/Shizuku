@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
@@ -37,8 +35,6 @@ public class ShizukuService extends IShizukuService.Stub {
             BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION,
             PERMISSION_MANAGER
     };
-
-    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
     private UUID mToken;
 
@@ -209,18 +205,18 @@ public class ShizukuService extends IShizukuService.Stub {
                     sendTokenToManger(token, binder, userInfo.id);
                 }
             }
-        } catch (Exception e) {
-            LOGGER.e("exception when call getUsers, try user 0", e);
+        } catch (Throwable tr) {
+            LOGGER.e("exception when call getUsers, try user 0", tr);
 
             sendTokenToManger(token, binder, 0);
         }
     }
 
-    static void sendTokenToManger(UUID token, Binder binder, int userId) {
-        sendTokenToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
+    static boolean sendTokenToManger(UUID token, Binder binder, int userId) {
+        return sendTokenToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
     }
 
-    static void sendTokenToUserApp(Binder binder, String packageName, int userId) {
+    static boolean sendTokenToUserApp(Binder binder, String packageName, int userId) {
         Intent intent = new Intent(ShizukuApiConstants.ACTION_SEND_BINDER)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addCategory(Intent.CATEGORY_DEFAULT)
@@ -233,8 +229,10 @@ public class ShizukuService extends IShizukuService.Stub {
                     null, null, 0, 0, null, null, userId);
 
             LOGGER.i("send token to user app %s in user %d", packageName, userId);
-        } catch (Exception e) {
-            LOGGER.e(e, "failed send token to user app%s in user %d", packageName, userId);
+            return true;
+        } catch (Throwable tr) {
+            LOGGER.e(tr, "failed send token to user app%s in user %d", packageName, userId);
+            return false;
         }
     }
 }

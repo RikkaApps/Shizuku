@@ -13,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -67,7 +68,7 @@ public class ShizukuClientHelper {
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
-    public static int requestBinder(Context context) throws IOException {
+    public static int requestBinder(String packageName) throws IOException {
         try (LocalSocket socket = new LocalSocket(LocalSocket.SOCKET_STREAM)) {
             socket.connect(new LocalSocketAddress(ShizukuApiConstants.SOCKET_NAME, LocalSocketAddress.Namespace.ABSTRACT));
             socket.setSoTimeout(ShizukuApiConstants.SOCKET_TIMEOUT);
@@ -75,7 +76,7 @@ public class ShizukuClientHelper {
             DataInputStream is = new DataInputStream(socket.getInputStream());
             os.writeInt(ShizukuApiConstants.SOCKET_VERSION_CODE);
             os.writeInt(ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER);
-            os.writeUTF(context.getPackageName());
+            os.writeUTF(packageName);
             if (isPreM()) {
                 os.writeUTF(sToken.toString());
             }
@@ -95,10 +96,10 @@ public class ShizukuClientHelper {
         }
     }
 
-    public static int requestBinderNoThrow(final Context context) {
+    public static int requestBinderNoThrow(final String packageName) {
         Callable<Integer> task = new Callable<Integer>() {
             public Integer call() throws IOException {
-                return requestBinder(context);
+                return requestBinder(packageName);
             }
         };
 
@@ -107,6 +108,9 @@ public class ShizukuClientHelper {
             return future.get(ShizukuApiConstants.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
             // handle the timeout
+        } catch (ExecutionException e) {
+            if (e.getCause() instanceof IOException)
+                return ShizukuApiConstants.RESULT_IO_EXCEPTION;
         } catch (Throwable tr) {
             // handle other error
         } finally {

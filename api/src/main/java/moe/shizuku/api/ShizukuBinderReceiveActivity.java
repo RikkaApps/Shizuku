@@ -27,10 +27,12 @@ public class ShizukuBinderReceiveActivity extends Activity {
             Log.i("ShizukuClient", "binder received");
 
             ShizukuService.setBinder(container.binder);
+        }
 
-            if (ShizukuClientHelper.getBinderReceivedListener() != null) {
-                ShizukuClientHelper.getBinderReceivedListener().onBinderReceived();
-            }
+        // In order for user app report error, we always call listener even if the binder is null.
+        // This activity is protected by INTERACT_ACROSS_USERS_FULL permission, other user apps can't use.
+        if (ShizukuClientHelper.getBinderReceivedListener() != null) {
+            ShizukuClientHelper.getBinderReceivedListener().onBinderReceived();
         }
         finish();
     }

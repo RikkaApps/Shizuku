@@ -26,6 +26,8 @@ public class MainActivity extends Activity {
     private static final int REQUEST_CODE_PERMISSION_V3 = 1;
     private static final int REQUEST_CODE_AUTHORIZATION_V3 = 2;
 
+    private static boolean v3Failed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,24 @@ public class MainActivity extends Activity {
 
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             Log.d("ShizukuSample", "onBinderReceived");
+
+            if (ShizukuService.getBinder() == null) {
+                // ShizukuBinderReceiveActivity started with intent without binder, should never happened
+                Log.d("ShizukuSample", "binder is null");
+                v3Failed = true;
+                return;
+            } else {
+                try {
+                    // test the binder first
+                    Log.d("ShizukuSample", "server version " + ShizukuService.getVersion());
+                } catch (Throwable tr) {
+                    // blocked by SELinux or server dead, should never happened
+                    Log.i("ShizukuSample", "can't contact with remote", tr);
+                    v3Failed = true;
+                    return;
+                }
+            }
+
             runTestV3();
         });
 
@@ -46,7 +66,7 @@ public class MainActivity extends Activity {
 
         // v3 binder not alive, request
         if (!ShizukuService.pingBinder()) {
-            v3Code = ShizukuClientHelper.requestBinderNoThrow(context);
+            v3Code = ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
 
             if (v3Code == ShizukuApiConstants.RESULT_NO_PERMISSION) {
                 if (!ShizukuClientHelper.isPreM()) {
@@ -65,8 +85,13 @@ public class MainActivity extends Activity {
                 // show your waiting ui
             } else if (v3Code == ShizukuApiConstants.RESULT_OK) {
                 // show your waiting ui
+            } else if (v3Code == ShizukuApiConstants.RESULT_PACKAGE_NOT_MATCHING) {
+                // pass wrong package name to ShizukuClientHelper.requestBinder
+            } else if (v3Code == ShizukuApiConstants.RESULT_START_ACTIVITY_FAILED) {
+                // startActivity failed server side, should never happened
             } else {
                 // v3 service not running, fallback to v2
+                // if you are developing new app, ignore v2
                 v2Status = ShizukuClient.getState();
                 if (!v2Status.isAuthorized()) {
                     if (!ShizukuClient.checkSelfPermission(context)) {
@@ -106,7 +131,7 @@ public class MainActivity extends Activity {
             case REQUEST_CODE_AUTHORIZATION_V3: {
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
                     ShizukuClientHelper.setPre23Token(data, this);
-                    ShizukuClientHelper.requestBinderNoThrow(this);
+                    ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
                 } else {
                     // user denied or error
                 }
@@ -131,7 +156,7 @@ public class MainActivity extends Activity {
             }
             case REQUEST_CODE_PERMISSION_V3: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClientHelper.requestBinderNoThrow(this);
+                    ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
                 } else {
                     // denied
                 }
