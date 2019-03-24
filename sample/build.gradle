@@ -30,6 +30,17 @@ android {
     }
 }
 
+android.applicationVariants.all { variant ->
+    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
+    String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
+    task "${taskName}" {
+        doLast {
+            delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
+        }
+    }
+    variant.processJavaResources.dependsOn(taskName)
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

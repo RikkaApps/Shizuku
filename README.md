@@ -2,20 +2,18 @@
 
 ## 这个应用为何而生？
 
-在 Android 系统中，许多 API 需要应用是系统应用或拥有框架签名才能调用。
+这个应用的诞生主要有两大目的。
 
-一些需要 root 权限才能使用的应用可能仅仅只是需要调用那些的 API。由于该限制，他们通常会采取一些不需要直接调用API的变通方式，但执行速度通常会比直接调用 API 慢很多。
-为了更好的用户体验，我们需要一个更快更好的方案。Shizuku Server 就此诞生，同时也让免 root 使用成为可能（通过 adb）。
+1. 提供一个方便地使用系统服务方式
+2. 为部分只需要 adb 权限的应用开发提供便利
 
-## 什么是 Shizuku Server？
+以启用/禁用组件为例，一些需要 root 权限的应用可能会采取直接在 su 中执行 `pm disable` 的做法，这样做的劣势在于需要处理文本来得到返回结果，以及速度比不上直接使用 API。
 
-Shizuku Server 是一个通过 root 或者 adb 启动的进程，普通应用可以通过与该进程交互来调用自身无权调用的 API。调用速度与直接调用 API 几乎没有差距。
+启用/禁用组件实际对应 `android.content.pm.IPackageManager#setComponentEnabledSetting`。如果使用 Shizuku，过程就会变为应用直接与运行在 root 或是 adb 的 Shizuku Server 交互，Shizuku 直接调用 API 并原原本本地返回结果给应用。
 
-## 什么是 Shizuku Manager？
+另外，仅有 adb 拥有 `setComponentEnabledSetting` 所需要的权限 `android.permission.CHANGE_COMPONENT_ENABLED_STATE`，adb 使用也变为可能。
 
-Shizuku Manager 用于启动 Shizuku Server 及管理使用该服务的应用。为了避免 Shizuku Server 被恶意应用调用，普通应用需要先向 Shizuku Manager 请求授权后才能使用。若需要在不同用户下安装使用服务的应用，需要在对应用户中安装 Shizuku Manager 才能授权。
-
-## 如何启动 Shizuku server？
+# 作为普通用户，如何使用 Shizuku？
 
 如果您已经 root 您的设备，直接通过 Shizuku Manager 启动即可。
 
@@ -25,61 +23,111 @@ Shizuku Manager 用于启动 Shizuku Server 及管理使用该服务的应用。
 
 <https://youtu.be/Nk24nhn0Jcs>
 
-# 开发者如何适配？
+# 作为开发者，如何使用 Shizuku？
+
+要使用 Shizuku，你至少大致了解 Android 的 binder 机制。
+
+Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进程（Shizuku 服务进程），使用者应用只需要与该进程交互即可实现以 root 或 adb 权限使用 API 的效果。
+
+相对 Shizuku v2，Shizuku v3 （包含在 3.0.0 以上的 app 中）采用了完全不同的设计，直接使用 binder 与使用者应用交互，并提供了更加直接的 API。同时还添加了直接执行指令功能。另外相对 v2，授权流程更加简单。
+
+以下内容只包含 Shizuku v3。如果你需要开发全新的应用，请直接忽略 v2。
 
 1. 添加依赖
-```
-    implementation 'moe.shizuku.privilege:api-base:9'
-    implementation 'moe.shizuku.privilege:api-26:4'
-```
-详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
+   
+   ```
+   implementation 'moe.shizuku.privilege:api:3.0.0-alpha4' // Shizuku v3
+   ```
+   
+   详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
 
-需注意，如果要使用的 API 在不同 Android Version 里不一致的话，就需要添加多个形如 `api-24`、`api-25`、`api-26` 这样的依赖。
+2. 授权与获取 binder
 
-2. 初始化
+   大致过程为，使用者应用通过 UNIX-domain socket （`android.net.LocalSocket`）连接到 Shizuku 服务进程发送“请求 binder”，服务进程通过 `startActivity` 方式（被启动的 activity 已包含在依赖中），在 Intent 中携带 binder 给使用者应用。
 
-Shizuku Manager 需要在 `Application.onCreate()` 或其他初始化的时机里调用 `ShizukuClient.initialize(context);` 以在有权限时更新 token。
+   对 API 23 及以上，需要先使用运行时权限机制获取 `moe.shizuku.manager.permission.API_V23` 权限。（权限声明包含在依赖中，不需要手动添加）
 
-3. 授权
+   对 API 23 及以下，连接 Shizuku 服务时需要携带 token，需要额外一步启动 Shizuku Manager app 获取 token 的过程。
+   
+   详细过程请参考 sample。
 
-第一次调用之前，需要用户进行授权操作。
+3. 使用：binder transact
+   
+   **要使用 Shizuku，你需要了解你所要使用的 API 的这样的过程。**
 
-详细的示例代码见 <https://github.com/RikkaApps/Shizuku/blob/master/sample/src/main/java/moe/shizuku/sample/MainActivity.java>。其中步骤简述如下：
+   以 `PackageManager#getInstalledPackages` 为例，如果是在自身进程执行，最终会执行 `android.content.pm.IPackageManager$Stub` 中的这样的过程。
 
-在 manifest 中添加权限
-```
-<uses-permission android:name="moe.shizuku.manager.permission.API_V23"/>
-<uses-permission android:name="moe.shizuku.manager.permission.API"/>
-```
-其中 API_V23 用于 6.0 以上的动态 Android 权限，API 用于 6.0 以下。
+   ```
+   Parcel data = Parcel.obtain();
+   Parcel reply = Parcel.obtain();
 
-对 6.0 以上，首先调用系统流程申请权限：
-```
-ActivityCompat.requestPermissions(this, new String[]{ShizukuClient.PERMISSION_V23}, REQUEST_CODE_PERMISSION);
-```
-在`onRequestPermissionsResult()`中回调确认后，再调用 `ShizukuClient.requestAuthorization(this);` 即可在 `onActivityResult()` 中收到并存储结果 token。
-```
- @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ShizukuClient.REQUEST_CODE_AUTHORIZATION:
-                if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
-                    ShizukuClient.setToken(data);
-                    // done.
-                } else {
-                    // user denied or error.
-                }
-                return;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-```
+   ParceledListSlice result;
+   try {
+       data.writeInterfaceToken("android.content.pm.IPackageManager");
+       data.writeInt(flags);
+       data.writeInt(userId);
+       mRemote.transact(TRANSACTION_getInstalledPackages, data, reply, 0);
+       reply.readException();
+       if (0 != _reply.readInt()) {
+            result = (ParceledListSlice)ParceledListSlice.CREATOR.createFromParcel(_reply);
+       } else {
+           result = null;
+       }
+   } finally {
+       reply.recycle();
+       data.recycle();
+   }
+   return result;
+   ```
 
-3. 调用
+   在使用 Shizuku 时，你需要编写的代码类似这样。
 
-以冻结/解冻应用为例，我们需要调用的是 `IPackageManager.setApplicationEnabledSetting` 所以直接使用 `ShizukuPackageManagerV26.setApplicationEnabledSetting` 即可，参数和返回值都与原始方法相同。
+   ```
+   Parcel data = Parcel.obtain();
+   Parcel reply = Parcel.obtain();
+   data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
+   data.writeStrongBinder(SystemServiceHelper.getSystemService("package")); // 第一个是你希望在 Shizuku 服务进程使用的 binder
+   data.writeInt(SystemServiceHelper.getTransactionCode("android.content.pm.IPackageManager", "getInstalledPackages")); // 第二个是 transact code
+   // 原本 data parcel 的内容
+   data.writeInterfaceToken("android.content.pm.IPackageManager");
+   data.writeInt(flags);
+   data.writeInt(userId);
 
-如果原始方法在不同版本 Android 上的参数或名称不同，则需要自己处理并调用不同版本的 Shizuku API。
+   try {
+       // 变为与 Shizuku 服务交互
+       ShizukuService.transactRemote(data, reply, 0);
+	   
+	   // reply parcel 读法与原先一致
+       reply.readException();
+       if (reply.readInt() != 0) {
+           //noinspection unchecked
+           ParceledListSlice<PackageInfo> listSlice = ParceledListSlice.CREATOR.createFromParcel(reply);
+           return listSlice.getList();
+       }
+       return null;
+   } finally {
+       data.recycle();
+       reply.recycle();
+   }
+   return null;
+   ```
 
+   这样将原本 应用 -> IPackageManager 的过程变为了 应用 -> Shizuku 服务。Shizuku 服务会截取 data parcel 后半部分内容，直接使用应用传递来的 reply parcel 来对发来的 binder 执行 transact。 
 
+   **完整用法及其他参考请参看 sample。**
+
+   请务必注意，不同 Android 版本下 API 可能不同，请务必仔细检查。
+
+   `android.app.IActivityManager` 在 API 26 及以后才存在 aidl 形式，因此 `android.app.IActivityManager$Stub` 只在 API 26 以上存在，请务必留意。
+
+   adb 拥有的权限有限，请参考 [frameworks_base/packages/Shell/AndroidManifest.xml](https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/Shell/AndroidManifest.xml)。
+
+   关于 Android 9 hidden api 问题，目前启动 Shizuku 时会尝试使用 `setting put global hidden_api_blacklist_exemptions *`，但在部分设备上似乎无效，请自行使用其他方式。
+
+4. 使用：直接运行指令
+     
+   请参看 sample。
+
+   > 为了避免 SELinux 问题，目前运行在 root 下的 Shizuku 会将 context 设为与 adb shell 相同，请务必注意。
+
+   > adb 与 root 权限相差较大，如果你需要开发 root 权限才可以使用的应用，建议不使用 Shizuku。
