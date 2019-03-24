@@ -103,6 +103,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'moe.shizuku.privilege:api-base:12'
     implementation project(':api')
+    implementation 'me.weishu:free_reflection:1.2.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')

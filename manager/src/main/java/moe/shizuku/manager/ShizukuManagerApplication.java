@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import me.weishu.reflection.Reflection;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.support.app.DayNightDelegate;
@@ -80,5 +81,11 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
             mViewModelStore = new ViewModelStore();
         }
         return mViewModelStore;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        Reflection.unseal(base);
     }
 }
