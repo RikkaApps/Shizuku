@@ -144,9 +144,6 @@ public class ShizukuClientHelper {
     }
 
     public static void setPre23Token(Intent intent, Context context) {
-        if (!isPreM())
-            throw new IllegalStateException("token is not required from API 23");
-
         long mostSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_LEAST_SIG, 0);
         if (mostSig != 0 && leastSig != 0) {
@@ -155,9 +152,6 @@ public class ShizukuClientHelper {
     }
 
     private static void setPre23Token(UUID token, Context context) {
-        if (!isPreM())
-            throw new IllegalStateException("token is not required from API 23");
-
         sToken = token;
         savePre23Token(context, token);
     }

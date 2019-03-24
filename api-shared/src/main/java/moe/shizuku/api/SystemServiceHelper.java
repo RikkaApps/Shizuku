@@ -14,6 +14,12 @@ public class SystemServiceHelper {
     private static Map<String, IBinder> systemServiceCache = new HashMap<>();
     private static Map<String, Integer> transactCodeCache = new HashMap<>();
 
+    /**
+     * Returns a reference to a service with the given name.
+     *
+     * @param name the name of the service to get such as "package" for android.content.pm.IPackageManager
+     * @return a reference to the service, or <code>null</code> if the service doesn't exist
+     */
     public static IBinder getSystemService(String name) {
         IBinder binder = systemServiceCache.get(name);
         if (binder == null) {
@@ -23,6 +29,13 @@ public class SystemServiceHelper {
         return binder;
     }
 
+    /**
+     * Returns transaction code from given class and method name.
+     *
+     * @param className class name such as "android.content.pm.IPackageManager$Stub"
+     * @param methodName method name such as "getInstalledPackages"
+     * @return transaction code, or <code>null</code> if the class or the method doesn't exist
+     */
     public static Integer getTransactionCode(String className, String methodName) {
         final String fieldName = "TRANSACTION_" + methodName;
         final String key = className + "." + fieldName;
@@ -48,14 +61,30 @@ public class SystemServiceHelper {
         return null;
     }
 
+    /**
+     * Obtain a new data parcel for {@link ShizukuService#transactRemote(Parcel, Parcel, int)}.
+     *
+     * @param serviceName system service name
+     * @param interfaceName class name for reflection
+     * @param methodName method name for reflection
+     * @return data parcel
+     *
+     * @throws NullPointerException can't get system service or transaction code
+     */
     public static Parcel obtainParcel(String serviceName, String interfaceName, String methodName) {
         return obtainParcel(serviceName, interfaceName, interfaceName + "$Stub", methodName);
     }
 
     /**
-     * +
+     * Obtain a new data parcel for {@link ShizukuService#transactRemote(Parcel, Parcel, int)}.
      *
-     * @throws NullPointerException Can't get system service or transaction code
+     * @param serviceName system service name
+     * @param interfaceName interface name
+     * @param className class name for reflection
+     * @param methodName method name for reflection
+     * @return data parcel
+     *
+     * @throws NullPointerException can't get system service or transaction code
      */
     public static Parcel obtainParcel(final String serviceName, final String interfaceName, final String className, final String methodName) {
         IBinder binder = getSystemService(serviceName);
