@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.api.ShizukuService;
 
@@ -87,7 +86,7 @@ public class MainActivity extends Activity {
         switch (requestCode) {
             // only called in API pre-23
             case REQUEST_CODE_AUTHORIZATION_V3: {
-                if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     String token = ShizukuClientHelper.setPre23Token(data, this);
                     if (ShizukuService.pingBinder()) {
                         try {

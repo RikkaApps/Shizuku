@@ -49,7 +49,6 @@ dependencies {
     implementation "androidx.annotation:annotation:$androidXLibraryVersion"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation project(':api') // shizuku v3
-    implementation 'moe.shizuku.privilege:api-base:12' // shizuku v2
 
     implementation 'me.weishu:free_reflection:1.2.0' // bypass hidden api restriction
 }
