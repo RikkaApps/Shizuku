@@ -16,7 +16,7 @@ public class IContentProviderHelper {
             for (Method method : IContentProvider.class.getDeclaredMethods()) {
                 if ("call".equals(method.getName())) {
                     method_call = method;
-                    method_call_paramCount = method.getParameterCount();
+                    method_call_paramCount = method.getParameterTypes().length;
                 }
             }
         } catch (Throwable tr) {

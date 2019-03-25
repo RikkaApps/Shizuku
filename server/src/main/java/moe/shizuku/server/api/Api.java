@@ -46,12 +46,14 @@ public class Api {
     };
 
     private static Method method_IActivityManager_getContentProviderExternal;
+    private static int method_IActivityManager_getContentProviderExternal_paramCount;
 
     static {
         try {
             for (Method method : IActivityManager.class.getDeclaredMethods()) {
                 if ("getContentProviderExternal".equals(method.getName())) {
                     method_IActivityManager_getContentProviderExternal = method;
+                    method_IActivityManager_getContentProviderExternal_paramCount = method.getParameterTypes().length;
                 }
             }
         } catch (Throwable tr) {
@@ -114,10 +116,10 @@ public class Api {
         }
 
         try {
-            if (method_IActivityManager_getContentProviderExternal.getParameterCount() == 4) {
+            if (method_IActivityManager_getContentProviderExternal_paramCount == 4) {
                 // Android Q
                 return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token, name /* tag */);
-            } else if (method_IActivityManager_getContentProviderExternal.getParameterCount() == 3) {
+            } else if (method_IActivityManager_getContentProviderExternal_paramCount == 3) {
                 return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token);
             } else {
                 throw new NoSuchMethodError("android.app.IActivityManager.getContentProviderExternal");
