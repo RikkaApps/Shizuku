@@ -2,6 +2,8 @@
 #include <cstring>
 #include <unistd.h>
 #include <dlfcn.h>
+#include <cerrno>
+#include <syscall.h>
 #include "selinux.h"
 
 static int _setcon(const char *ctx) {
@@ -14,7 +16,17 @@ static int _setcon(const char *ctx) {
     return rc != len;
 }
 
+static int _setfilecon(const char *path, const char *ctx) {
+    int rc = syscall(__NR_setxattr, path, "security.selinux"/*XATTR_NAME_SELINUX*/, ctx, strlen(ctx) + 1, 0);
+    if (rc) {
+        errno = -rc;
+        return -1;
+    }
+    return 0;
+}
+
 int (*setcon)(const char *) = _setcon;
+int (*setfilecon)(const char *, const char *) = _setfilecon;
 
 void selinux_init() {
     if (access("/system/lib/libselinux.so", F_OK) != 0)
@@ -22,4 +34,5 @@ void selinux_init() {
 
     void *handle = dlopen("libselinux.so", RTLD_LAZY);
     setcon = (int (*)(const char *)) dlsym(handle, "setcon");
+    setfilecon = (int (*)(const char *, const char *)) dlsym(handle, "setfilecon");
 }

@@ -21,10 +21,11 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class Starter {
 
-    private static void fixStartOwner() {
+    private static void fixFilesOwner() {
         if (Process.myUid() == 0) {
             try {
                 Os.chown("/data/local/tmp/shizuku_starter", 2000, 2000);
+                //Os.chown("/data/local/tmp/shizuku/libhelper.so", 2000, 2000);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -87,7 +88,7 @@ public class Starter {
     }
 
     public static void main(String[] args) throws IOException, RemoteException, InterruptedException {
-        fixStartOwner();
+        fixFilesOwner();
 
         waitServiceManager();
         waitSystemService("package");
@@ -106,7 +107,7 @@ public class Starter {
         Looper.prepare();
 
         ShizukuService server = new ShizukuService(getToken(args));
-        if (!server.start()) {
+        if (!server.sendBinderToManager()) {
             System.exit(1);
             return;
         }

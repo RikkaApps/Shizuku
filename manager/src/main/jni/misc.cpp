@@ -1,4 +1,6 @@
 #include <sys/types.h>
+#include <sys/sendfile.h>
+#include <sys/stat.h>
 #include <zconf.h>
 #include <vector>
 #include <dirent.h>
@@ -100,4 +102,53 @@ std::vector<pid_t> get_pids_by_name(const char *name) {
 
     closedir(dir);
     return res;
+}
+
+int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const char *dst_path) {
+    int src_fd;
+    int dst_fd;
+    struct stat stat_buf{};
+    off_t offset = 0;
+    int64_t size_remaining;
+    size_t count;
+    ssize_t result;
+
+    if ((src_fd = openat(src_path_fd, src_path, O_RDONLY)) == -1)
+        return -1;
+
+    if (fstat(src_fd, &stat_buf) == -1)
+        return -1;
+
+    dst_fd = openat(dst_path_fd, dst_path, O_WRONLY | O_CREAT | O_TRUNC, stat_buf.st_mode);
+    if (dst_fd == -1) {
+        close(src_fd);
+        return false;
+    }
+
+    size_remaining = stat_buf.st_size;
+    for (;;) {
+        if (size_remaining > 0x7ffff000)
+            count = 0x7ffff000;
+        else
+            count = static_cast<size_t>(size_remaining);
+
+        result = sendfile(dst_fd, src_fd, &offset, count);
+        if (result == -1) {
+            close(src_fd);
+            close(dst_fd);
+            unlink(dst_path);
+            return -1;
+        }
+
+        size_remaining -= result;
+        if (size_remaining == 0) {
+            close(src_fd);
+            close(dst_fd);
+            return 0;
+        }
+    }
+}
+
+int copyfile(const char *src_path, const char *dst_path) {
+    return copyfileat(0, src_path, 0, dst_path);
 }

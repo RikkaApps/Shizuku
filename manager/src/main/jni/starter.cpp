@@ -3,12 +3,14 @@
 //
 
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <unistd.h>
 #include <dirent.h>
-#include <time.h>
-#include <string.h>
+#include <ctime>
+#include <cstring>
+#include <libgen.h>
+#include <sys/stat.h>
 #include "misc.h"
 #include "selinux.h"
 
@@ -71,7 +73,7 @@ static void setClasspathEnv(const char *path) {
 }
 
 static int start_server(const char *path, const char *main_class, const char *token,
-                        const char *nice_name) {
+                        const char *nice_name, int change_context) {
     pid_t pid = fork();
     if (pid == 0) {
         pid = daemon(FALSE, FALSE);
@@ -79,11 +81,17 @@ static int start_server(const char *path, const char *main_class, const char *to
             printf("fatal: can't fork");
             exit_with_logcat(EXIT_FATAL_FORK);
         } else {
-            char buf[128];
+            // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
+            if (change_context && getuid() == 0 && setcon) setcon("u:r:shell:s0");
+
+            char buf[128], class_path[PATH_MAX];
             sprintf(buf, "--nice-name=%s", nice_name);
             setClasspathEnv(path);
+            snprintf(class_path, PATH_MAX, "-Djava.class.path=%s", path);
+
             char *appProcessArgs[] = {
                     const_cast<char *>("/system/bin/app_process"),
+                    class_path,
                     const_cast<char *>("/system/bin"),
                     const_cast<char *>(buf),
                     const_cast<char *>(main_class),
@@ -148,7 +156,7 @@ static void check_access(const char* path, const char *name) {
     }
 }
 
-int kill_proc_by_name(const char *name) {
+static int kill_proc_by_name(const char *name) {
     for (auto pid : get_pids_by_name(name)) {
         if (pid == getpid())
             continue;
@@ -161,27 +169,64 @@ int kill_proc_by_name(const char *name) {
     return 0;
 }
 
+static void copy_if_not_exist(const char* src, const char *dst) {
+#ifdef DEBUG
+    copyfile(src, dst);
+#else
+    if (access(dst, F_OK)) {
+        copyfile(src, dst);
+    }
+#endif
+    chmod(dst, 0707);
+    if (getuid() == 0) {
+        chown(dst, 2000, 2000);
+        //setfilecon(dst, "u:object_r:shell_data_file:s0");
+    }
+}
+
 int main(int argc, char **argv) {
+    selinux_init();
+
     clock_gettime(CLOCK_REALTIME, &ts);
 
     char *token = nullptr;
-    char *path = nullptr;
-    char *path_legacy = nullptr;
+    char *_path = nullptr;
+    char *_path_legacy = nullptr;
     int i;
     for (i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--token=", 8) == 0) {
             token = strdup(argv[i] + 8);
         } else if (strncmp(argv[i], "--path=", 7) == 0) {
-            path = strdup(argv[i] + 7);
+            _path = strdup(argv[i] + 7);
         } else if (strncmp(argv[i], "--path-legacy=", 14) == 0) {
-            path_legacy = strdup(argv[i] + 14);
+            _path_legacy = strdup(argv[i] + 14);
         }
     }
 
     if (!token) {
-        perrorf("fatal: %s not set.\n", token);
+        perrorf("fatal: token not set.\n");
         exit(EXIT_FATAL_PATH_NOT_SET);
     }
+
+    check_access(_path, "path");
+    check_access(_path_legacy, "path-legacy");
+
+    mkdir("/data/local/tmp/shizuku", 0707);
+    chmod("/data/local/tmp/shizuku", 0707);
+    if (getuid() == 0) {
+        chown("/data/local/tmp/shizuku", 2000, 2000);
+        //setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
+    }
+
+    char *name = basename(_path);
+    char *name_legacy = basename(_path_legacy);
+
+    char path[PATH_MAX], path_legacy[PATH_MAX];
+    sprintf(path, "/data/local/tmp/shizuku/%s", basename(_path));
+    sprintf(path_legacy, "/data/local/tmp/shizuku/%s", basename(_path_legacy));
+
+    copy_if_not_exist(_path, path);
+    copy_if_not_exist(_path_legacy, path_legacy);
 
     check_access(path, "path");
     check_access(path_legacy, "path-legacy");
@@ -196,18 +241,13 @@ int main(int argc, char **argv) {
     kill_proc_by_name(SERVER_NAME);
     kill_proc_by_name(SERVER_NAME_LEGACY);
 
-    selinux_init();
-
-    // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
-    if (getuid() == 0 && setcon) setcon("u:r:shell:s0");
-
     printf("info: starting server v3...\n");
     fflush(stdout);
-    start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME);
+    start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, true);
 
     printf("info: starting server v2 (legacy)...\n");
     fflush(stdout);
-    start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY);
+    start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY, false);
 
     exit_with_logcat(EXIT_SUCCESS);
 }

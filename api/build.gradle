@@ -12,6 +12,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
         }
     }
     sourceSets {
@@ -32,7 +33,7 @@ android.libraryVariants.all { variant ->
 ext {
     libraryName = 'Shizuku V3'
     libraryDescription = 'Shizuku V3'
-    libraryVersion = '3.0.0-alpha4'
+    libraryVersion = '3.0.0-alpha5'
     artifact = "api"
     bintrayName = "api"
 }

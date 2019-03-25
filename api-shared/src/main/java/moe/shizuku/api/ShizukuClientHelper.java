@@ -4,25 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.LocalSocket;
-import android.net.LocalSocketAddress;
 import android.os.Build;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+
+import moe.shizuku.server.IShizukuService;
 
 public class ShizukuClientHelper {
-
-    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
     public interface OnBinderReceivedListener {
         void onBinderReceived();
@@ -68,77 +56,6 @@ public class ShizukuClientHelper {
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
-    public static int requestBinder(String packageName) throws IOException {
-        try (LocalSocket socket = new LocalSocket(LocalSocket.SOCKET_STREAM)) {
-            socket.connect(new LocalSocketAddress(ShizukuApiConstants.SOCKET_NAME, LocalSocketAddress.Namespace.ABSTRACT));
-            socket.setSoTimeout(ShizukuApiConstants.SOCKET_TIMEOUT);
-            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-            DataInputStream is = new DataInputStream(socket.getInputStream());
-            os.writeInt(ShizukuApiConstants.SOCKET_VERSION_CODE);
-            os.writeInt(ShizukuApiConstants.SOCKET_ACTION_REQUEST_BINDER);
-            os.writeUTF(packageName);
-            if (isPreM()) {
-                os.writeUTF(sToken.toString());
-            }
-            return is.readInt();
-        }
-    }
-
-    public static int isServerRunning() throws IOException {
-        try (LocalSocket socket = new LocalSocket(LocalSocket.SOCKET_STREAM)) {
-            socket.connect(new LocalSocketAddress(ShizukuApiConstants.SOCKET_NAME, LocalSocketAddress.Namespace.ABSTRACT));
-            socket.setSoTimeout(ShizukuApiConstants.SOCKET_TIMEOUT);
-            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-            DataInputStream is = new DataInputStream(socket.getInputStream());
-            os.writeInt(ShizukuApiConstants.SOCKET_VERSION_CODE);
-            os.writeInt(ShizukuApiConstants.SOCKET_ACTION_PING);
-            return is.readInt();
-        }
-    }
-
-    public static int requestBinderNoThrow(final String packageName) {
-        Callable<Integer> task = new Callable<Integer>() {
-            public Integer call() throws IOException {
-                return requestBinder(packageName);
-            }
-        };
-
-        Future<Integer> future = EXECUTOR.submit(task);
-        try {
-            return future.get(ShizukuApiConstants.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            // handle the timeout
-        } catch (ExecutionException e) {
-            if (e.getCause() instanceof IOException)
-                return ShizukuApiConstants.RESULT_IO_EXCEPTION;
-        } catch (Throwable tr) {
-            // handle other error
-        } finally {
-            future.cancel(true);
-        }
-        return ShizukuApiConstants.RESULT_EXCEPTION;
-    }
-
-    public static boolean isServerRunningNoThrow() {
-        Callable<Integer> task = new Callable<Integer>() {
-            public Integer call() throws IOException {
-                return isServerRunning();
-            }
-        };
-
-        Future<Integer> future = EXECUTOR.submit(task);
-        try {
-            return future.get(ShizukuApiConstants.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS) == ShizukuApiConstants.RESULT_OK;
-        } catch (TimeoutException e) {
-            // handle the timeout
-        } catch (Throwable tr) {
-            // handle other error
-        } finally {
-            future.cancel(true);
-        }
-        return false;
-    }
-
     public static boolean isPreM() {
         return Build.VERSION.SDK_INT < 23;
     }
@@ -154,6 +71,10 @@ public class ShizukuClientHelper {
     private static void setPre23Token(UUID token, Context context) {
         sToken = token;
         savePre23Token(context, token);
+
+        /*if (ShizukuService.getBinder() != null && ) {
+            IShizukuService.Stub.asInterface(ShizukuService.getBinder()).setPidToken()
+        }*/
     }
 
     private static final String KEY_TOKEN_MOST_SIG = "moe.shizuku.privilege.api.token_most";

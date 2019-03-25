@@ -2,26 +2,29 @@ package moe.shizuku.server;
 
 import android.app.IActivityManager;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
-import android.net.LocalServerSocket;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.IUserManager;
 import android.os.Parcel;
-import android.os.Process;
 import android.os.RemoteException;
 import android.system.Os;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
+import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 import moe.shizuku.server.utils.RemoteProcessHolder;
 
@@ -30,23 +33,77 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 public class ShizukuService extends IShizukuService.Stub {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
+    private static final String PERMISSION = BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION;
 
-    private static final String PERMISSIONS[] = new String[]{
-            BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION,
-            PERMISSION_MANAGER
-    };
+    private static final Map<Integer, String> PID_TOKEN = new HashMap<>();
 
-    private UUID mToken;
+    private class ProcessObserver extends moe.shizuku.server.api.ProcessObserver {
+
+        private final List<Integer> pids = new ArrayList<>();
+
+        @Override
+        public void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities) throws RemoteException {
+            LOGGER.d("onForegroundActivitiesChanged: pid=%d, uid=%d, foregroundActivities=%s", pid, uid, foregroundActivities ? "true" : "false");
+
+            if (pids.contains(pid) || !foregroundActivities) {
+                return;
+            }
+            pids.add(pid);
+
+            String[] packages = Api.getPackagesForUid(uid);
+            if (packages == null)
+                return;
+
+            LOGGER.d("new process: packages=%s", Arrays.toString(packages));
+
+            int userId = uid / 100000;
+            for (String packageName : packages) {
+                PackageInfo pi = Api.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS, userId);
+                if (pi == null || pi.requestedPermissions == null)
+                    continue;
+
+                if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
+                    if (Api.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED) {
+                        sendBinderToManger(ShizukuService.this, userId);
+                        return;
+                    }
+                } else if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION)) {
+                    sendBinderToUserApp(ShizukuService.this, packageName, userId);
+                    return;
+                }
+            }
+        }
+
+        @Override
+        public void onProcessDied(int pid, int uid) {
+            LOGGER.d("onProcessDied: pid=%d, uid=%d", pid, uid);
+
+            int index = pids.indexOf(pid);
+            if (index != -1) {
+                pids.remove(index);
+
+                PID_TOKEN.remove(pid);
+            }
+        }
+    }
+
+    private String mToken;
 
     ShizukuService(UUID token) {
         super();
 
         if (token == null) {
-            mToken = UUID.randomUUID();
+            mToken = UUID.randomUUID().toString();
         } else {
             LOGGER.i("using token from arg");
 
-            mToken = token;
+            mToken = token.toString();
+        }
+
+        try {
+            Api.registerProcessObserver(new ProcessObserver());
+        } catch (RemoteException e) {
+            LOGGER.e(e, "registerProcessObserver");
         }
     }
 
@@ -61,18 +118,14 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private void enforceCallingPermission(String permission, String func) {
+    private void enforceCallingPermission(String func, String permission) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
         }
 
-        if (BuildUtils.isPreM())
+        if (checkCallingPermission(permission) == PackageManager.PERMISSION_GRANTED)
             return;
 
-        if (checkCallingPermission(permission) == PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
                 + ", uid=" + Binder.getCallingUid()
@@ -81,20 +134,25 @@ public class ShizukuService extends IShizukuService.Stub {
         throw new SecurityException(msg);
     }
 
-    private void enforceCallingPermission(String func) {
+    private void enforceCallingPermission(String func, boolean checkToken) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
         }
 
-        if (checkCallingPermission(PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED
-                || checkCallingPermission(PERMISSIONS[1]) == PackageManager.PERMISSION_GRANTED) {
+        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
             return;
+
+        enforceCallingPermission(func, PERMISSION);
+
+        if (BuildUtils.isPreM() && checkToken) {
+            String token = PID_TOKEN.get(Binder.getCallingPid());
+            if (mToken.equals(token))
+                return;
         }
+
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
-                + ", uid=" + Binder.getCallingUid()
-                + " requires " + PERMISSIONS[0]
-                + " or " + PERMISSIONS[1];
+                + " requires a valid token, call setPidToken first";
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
@@ -103,7 +161,7 @@ public class ShizukuService extends IShizukuService.Stub {
         IBinder targetBinder = data.readStrongBinder();
         int targetCode = data.readInt();
 
-        enforceCallingPermission("transactRemote");
+        enforceCallingPermission("transactRemote", true);
 
         LOGGER.d("transact: uid=%d, descriptor=%s, code=%d", Binder.getCallingUid(), targetBinder.getInterfaceDescriptor(), targetCode);
         Parcel newData = Parcel.obtain();
@@ -124,31 +182,43 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public int getVersion() {
-        enforceCallingPermission("getVersion");
+        enforceCallingPermission("getVersion", true);
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
     @Override
     public int getUid() {
-        enforceCallingPermission("getUid");
+        enforceCallingPermission("getUid", true);
         return Os.getuid();
     }
 
     @Override
     public int checkPermission(String permission) throws RemoteException {
-        enforceCallingPermission("checkPermission");
+        enforceCallingPermission("checkPermission", true);
         return Api.checkPermission(permission, Os.getuid());
     }
 
     @Override
-    public String getToken() throws RemoteException {
-        enforceCallingPermission(PERMISSION_MANAGER, "getToken");
-        return mToken.toString();
+    public String getToken() {
+        enforceCallingPermission("getToken", PERMISSION_MANAGER);
+        return mToken;
+    }
+
+    @Override
+    public boolean setPidToken(String token) {
+        enforceCallingPermission("setPidToken", false);
+
+        if (!BuildUtils.isPreM()) {
+            throw new IllegalStateException("calling setToken on API 23+");
+        }
+
+        PID_TOKEN.put(Binder.getCallingPid(), token);
+        return mToken.equals(token);
     }
 
     @Override
     public IRemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
-        enforceCallingPermission("newProcess");
+        enforceCallingPermission("newProcess", true);
 
         LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
 
@@ -173,50 +243,32 @@ public class ShizukuService extends IShizukuService.Stub {
         return super.onTransact(code, data, reply, flags);
     }
 
-    boolean start() {
-        LocalServerSocket serverSocket;
-        try {
-            serverSocket = new LocalServerSocket(ShizukuApiConstants.SOCKET_NAME);
-        } catch (IOException e) {
-            LOGGER.e("cannot start server socket", e);
-            return false;
-        }
-
-        SocketThread socket = new SocketThread(serverSocket, mToken, this);
-
-        Thread socketThread = new Thread(socket);
-        socketThread.start();
-        LOGGER.i("uid: " + Process.myUid());
-        LOGGER.i("api version: " + Build.VERSION.SDK_INT);
-        LOGGER.i("device: " + Build.DEVICE);
-        LOGGER.i("start version: " + ShizukuApiConstants.SERVER_VERSION + " token: " + mToken);
-
-        // send token to manager app
-        sendTokenToManger(mToken, this);
+    boolean sendBinderToManager() {
+        sendBinderToManger(this);
 
         return true;
     }
 
-    private static void sendTokenToManger(UUID token, Binder binder) {
+    private static void sendBinderToManger(Binder binder) {
         try {
             IUserManager um = Api.USER_MANAGER_SINGLETON.get();
             if (um != null) {
                 for (UserInfo userInfo : um.getUsers(false)) {
-                    sendTokenToManger(token, binder, userInfo.id);
+                    sendBinderToManger(binder, userInfo.id);
                 }
             }
         } catch (Throwable tr) {
             LOGGER.e("exception when call getUsers, try user 0", tr);
 
-            sendTokenToManger(token, binder, 0);
+            sendBinderToManger(binder, 0);
         }
     }
 
-    static boolean sendTokenToManger(UUID token, Binder binder, int userId) {
-        return sendTokenToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
+    static boolean sendBinderToManger(Binder binder, int userId) {
+        return sendBinderToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
     }
 
-    static boolean sendTokenToUserApp(Binder binder, String packageName, int userId) {
+    static boolean sendBinderToUserApp(Binder binder, String packageName, int userId) {
         Intent intent = new Intent(ShizukuApiConstants.ACTION_SEND_BINDER)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addCategory(Intent.CATEGORY_DEFAULT)

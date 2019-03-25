@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.Light" parent="android:Theme.Material.Light">
+    <style name="AppTheme.Light" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">#3F51B5</item>
+        <item name="android:colorPrimaryDark">#3949AB</item>
         <item name="android:colorAccent">#1a73e8</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>

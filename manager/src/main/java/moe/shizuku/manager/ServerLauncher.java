@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
+import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.support.utils.IOUtils;
 
 public class ServerLauncher {
@@ -25,6 +26,15 @@ public class ServerLauncher {
     public static String COMMAND_ROOT[] = new String[2];
     private static String DEX_PATH[] = new String[2];
     private static String DEX_LEGACY_PATH[] = new String[2];
+
+    private static final String V2_DEX_NAME;
+    private static final String V3_DEX_NAME;
+
+    static {
+        int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
+        V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuConstants.SERVER_VERSION, apiVersion);
+        V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
+    }
 
     public static void init(Context context) {
         try {
@@ -42,10 +52,9 @@ public class ServerLauncher {
     private static void copyDex(Context context) throws IOException {
         int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
         String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
-        String target = String.format(Locale.ENGLISH, "server-v2-%d-v%d.dex", apiVersion, ShizukuConstants.SERVER_VERSION);
 
-        copyDex(context, source, target, DEX_LEGACY_PATH);
-        copyDex(context, "server.dex", "server.dex", DEX_PATH);
+        copyDex(context, source, V2_DEX_NAME, DEX_LEGACY_PATH);
+        copyDex(context, "server.dex", V3_DEX_NAME, DEX_PATH);
     }
 
     private static void copyDex(Context context, String source, String target, String[] out) throws IOException {
@@ -108,8 +117,9 @@ public class ServerLauncher {
             String line;
             while ((line = is.readLine()) != null) {
                 os.println(line
-                        .replace("%%%STARTER_PATH%%%", getStarterPath(context))
+                        .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
                         .replace("%%%STARTER_PARAM%%%", getStarterParam(i))
+                        .replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
                 );
             }
             os.flush();
@@ -125,17 +135,17 @@ public class ServerLauncher {
                 + " --token=" + UUID.randomUUID();
     }
 
-    private static String getStarterPath(Context context) {
+    private static String getLibPath(Context context, String name) {
         String path;
         try {
             path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
         } catch (PackageManager.NameNotFoundException ignored) {
-            throw new RuntimeException("it's impossible");
+            throw new RuntimeException();
         }
 
         File sourceDir = new File(path);
         File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
-        File starter = new File(libDir, "libshizuku.so");
-        return "\"" + starter.getAbsolutePath() + "\"";
+        File starter = new File(libDir, name);
+        return starter.getAbsolutePath();
     }
 }

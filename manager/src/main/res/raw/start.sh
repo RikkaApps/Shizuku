@@ -2,13 +2,27 @@
 
 STARTER_PATH="%%%STARTER_PATH%%%"
 STARTER_PARAM="%%%STARTER_PARAM%%%"
+LIBRARY_PATH="%%%LIBRARY_PATH%%%"
 
 echo "info: start.sh begin"
 
 if [[ -f "$STARTER_PATH" ]]; then
-    rm /data/local/tmp/shizuku_starter 2> /dev/null
+    rm -f /data/local/tmp/shizuku_starter
     cp "$STARTER_PATH" /data/local/tmp/shizuku_starter
-    chmod 755 /data/local/tmp/shizuku_starter
+    chmod 700 /data/local/tmp/shizuku_starter
+    chown 2000 /data/local/tmp/shizuku_starter
+    chgrp 2000 /data/local/tmp/shizuku_starter
+
+    mkdir -p /data/local/tmp/shizuku
+    chmod 700 /data/local/tmp/shizuku
+    chown 2000 /data/local/tmp/shizuku
+    chgrp 2000 /data/local/tmp/shizuku
+
+    #rm -f /data/local/tmp/shizuku/libhelper.so
+    #cp "$LIBRARY_PATH" /data/local/tmp/shizuku/libhelper.so
+    #chmod 700 /data/local/tmp/shizuku/libhelper.so
+    #chown 2000 /data/local/tmp/shizuku/libhelper.so
+    #chgrp 2000 /data/local/tmp/shizuku/libhelper.so
 
     export PATH=/data/local/tmp:/system/bin:$PATH
     shizuku_starter ${STARTER_PARAM} $1

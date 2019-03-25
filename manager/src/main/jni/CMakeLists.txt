@@ -4,7 +4,18 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--hash-style=bot
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../../build/starter/${ANDROID_ABI})
 
-add_executable( libshizuku.so
-                starter.cpp
-                misc.cpp
-                selinux.cpp)
+if (CMAKE_BUILD_TYPE STREQUAL Debug)
+    add_definitions(-DDEBUG)
+endif ()
+
+find_library(log-lib log)
+
+add_executable(libshizuku.so
+        starter.cpp misc.cpp selinux.cpp)
+
+target_link_libraries(libshizuku.so ${log-lib})
+
+add_library(helper SHARED
+        helper.cpp selinux.cpp)
+
+target_link_libraries(helper ${log-lib})
