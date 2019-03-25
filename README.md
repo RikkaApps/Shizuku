@@ -38,7 +38,7 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 1. 添加依赖
    
    ```
-   implementation 'moe.shizuku.privilege:api:3.0.0-alpha4' // Shizuku v3
+   implementation 'moe.shizuku.privilege:api:3.0.0-alpha5' // Shizuku v3
    ```
 
    详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
@@ -114,7 +114,6 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
    data.writeInt(userId);
 
    try {
-       // 变为与 Shizuku 服务交互
        ShizukuService.transactRemote(data, reply, 0);
 	   
 	   // reply parcel 读法与原先一致

@@ -171,6 +171,7 @@ static int kill_proc_by_name(const char *name) {
 
 static void copy_if_not_exist(const char* src, const char *dst) {
 #ifdef DEBUG
+    remove(dst);
     copyfile(src, dst);
 #else
     if (access(dst, F_OK)) {
