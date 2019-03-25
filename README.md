@@ -31,27 +31,47 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
 相对 Shizuku v2，Shizuku v3 （包含在 3.0.0 以上的 app 中）采用了完全不同的设计，直接使用 binder 与使用者应用交互，并提供了更加直接的 API。同时还添加了直接执行指令功能。另外相对 v2，授权流程更加简单。
 
-以下内容只包含 Shizuku v3。如果你需要开发全新的应用，请直接忽略 v2。
+下面的使用方式只包含 Shizuku v3。如果你需要开发全新的应用，请直接忽略 v2。
+
+**下面的内容请结合 sample 阅读。**
 
 1. 添加依赖
    
    ```
    implementation 'moe.shizuku.privilege:api:3.0.0-alpha4' // Shizuku v3
    ```
-   
+
    详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
 
-2. 授权与获取 binder
-
-   大致过程为，使用者应用通过 UNIX-domain socket （`android.net.LocalSocket`）连接到 Shizuku 服务进程发送“请求 binder”，服务进程通过 `startActivity` 方式（被启动的 activity 已包含在依赖中），在 Intent 中携带 binder 给使用者应用。
-
-   对 API 23 及以上，需要先使用运行时权限机制获取 `moe.shizuku.manager.permission.API_V23` 权限。（权限声明包含在依赖中，不需要手动添加）
-
-   对 API 23 及以下，连接 Shizuku 服务时需要携带 token，需要额外一步启动 Shizuku Manager app 获取 token 的过程。
+   后面需要用到的权限声明包含在依赖中，不需要手动添加。
    
-   详细过程请参考 sample。
+2. 获取 binder
 
-3. 使用：binder transact
+   在你的 AndroidManifest.xml 中加入
+
+   ```
+   <provider
+        android:name="moe.shizuku.api.BinderReceiveProvider"
+        android:authorities="${applicationId}.shizuku"
+        android:multiprocess="false"
+        android:enabled="true"
+        android:exported="true"
+        android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+   ```
+
+   当使用者应用的 Activity 进入前台时，Shizuku v3 服务使用该 Provider 发送 binder 给应用。
+
+   通常，当进入你自己的 Activity 时，该 provider 中的代码应该已被执行（即已经受到 binder），但还是建议你在你的 Activity 中实现一个简单的等待逻辑，详细参考 sample。
+
+3. 授权
+
+   在使用收到的 binder 之前先需要确认自身权限是否足够。
+
+   对 API 23 及以上，直接使用了运行时权限机制，只需要保证先获取 `moe.shizuku.manager.permission.API_V23` 权限即可。
+
+   对 API 23 以下，需要额外一步启动 Shizuku Manager app 获取 token 的过程，具体流程请参考 sample。
+
+4. 使用：binder transact
    
    **要使用 Shizuku，你需要了解你所要使用的 API 的这样的过程。**
 
@@ -80,7 +100,7 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
    return result;
    ```
 
-   在使用 Shizuku 时，你需要编写的代码类似这样。
+   在使用 Shizuku 时，需要执行下面这样的过程。
 
    ```
    Parcel data = Parcel.obtain();
@@ -116,18 +136,18 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
    **完整用法及其他参考请参看 sample。**
 
-   请务必注意，不同 Android 版本下 API 可能不同，请务必仔细检查。
+   不同 Android 版本下 API 可能不同，请务必仔细检查。此外，`android.app.IActivityManager` 在 API 26 及以后才存在 aidl 形式， `android.app.IActivityManager$Stub` 只在 API 26 以上存在。
 
-   `android.app.IActivityManager` 在 API 26 及以后才存在 aidl 形式，因此 `android.app.IActivityManager$Stub` 只在 API 26 以上存在，请务必留意。
-
-   adb 拥有的权限有限，请参考 [frameworks_base/packages/Shell/AndroidManifest.xml](https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/Shell/AndroidManifest.xml)。
-
-   关于 Android 9 hidden api 问题，目前启动 Shizuku 时会尝试使用 `setting put global hidden_api_blacklist_exemptions *`，但在部分设备上似乎无效，请自行使用其他方式。
-
-4. 使用：直接运行指令
+5. 使用：直接运行指令
      
    请参看 sample。
 
-   > 为了避免 SELinux 问题，目前运行在 root 下的 Shizuku 会将 context 设为与 adb shell 相同，请务必注意。
+   为了避免 SELinux 问题，目前运行在 root 下的 Shizuku 会将 context 设为与 adb shell 相同，请务必注意。
 
-   > adb 与 root 权限相差较大，如果你需要开发 root 权限才可以使用的应用，建议不使用 Shizuku。
+   adb 与 root 权限相差较大，如果你需要开发 root 权限才可以使用的应用，建议不使用 Shizuku。
+
+6. 其他使用方法及注意事项
+
+   [adb 拥有的权限](https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/Shell/AndroidManifest.xml)有限，可以先使用 `ShizukuService#getUid` 及 `ShizukuService#checkPermission` 检查是否为 adb 及是否有权限。
+
+   关于 Android 9 hidden api 问题，目前启动 Shizuku 时会尝试使用 `setting put global hidden_api_blacklist_exemptions *`，但在部分设备上似乎无效，请自行使用其他方式。
