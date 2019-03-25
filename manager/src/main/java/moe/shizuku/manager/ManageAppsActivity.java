@@ -77,6 +77,8 @@ public class ManageAppsActivity extends BaseActivity {
                     .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
             finish();
         }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
