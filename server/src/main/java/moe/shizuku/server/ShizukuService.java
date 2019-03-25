@@ -26,6 +26,7 @@ import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.reflection.ContentProviderHolderHelper;
+import moe.shizuku.server.reflection.IContentProviderHelper;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 
@@ -101,11 +102,14 @@ public class ShizukuService extends IShizukuService.Stub {
             mToken = token.toString();
         }
 
+        LOGGER.i("registerProcessObserver");
+
         try {
             Api.registerProcessObserver(new ProcessObserver());
         } catch (RemoteException e) {
             LOGGER.e(e, "registerProcessObserver");
         }
+        LOGGER.i("registerProcessObserver2");
     }
 
     private int checkCallingPermission(String permission) {
@@ -291,7 +295,7 @@ public class ShizukuService extends IShizukuService.Stub {
             Bundle extra = new Bundle();
             extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
 
-            Bundle reply = provider.call(null, "sendBinder", null, extra);
+            Bundle reply = IContentProviderHelper.call(provider, null, name, "sendBinder", null, extra);
 
             LOGGER.i("send token to user app %s in user %d", packageName, userId);
         } catch (Throwable tr) {

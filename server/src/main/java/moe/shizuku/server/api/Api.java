@@ -16,6 +16,8 @@ import java.lang.reflect.Method;
 
 import moe.shizuku.server.utils.BinderSingleton;
 
+import static moe.shizuku.server.utils.Logger.LOGGER;
+
 public class Api {
 
     public static final BinderSingleton<IActivityManager> ACTIVITY_MANAGER_SINGLETON = new BinderSingleton<IActivityManager>() {
@@ -47,11 +49,13 @@ public class Api {
 
     static {
         try {
-            method_IActivityManager_getContentProviderExternal =
-                    IActivityManager.class.getDeclaredMethod("getContentProviderExternal", String.class, int.class, IBinder.class);
-            method_IActivityManager_getContentProviderExternal.setAccessible(true);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            for (Method method : IActivityManager.class.getDeclaredMethods()) {
+                if ("getContentProviderExternal".equals(method.getName())) {
+                    method_IActivityManager_getContentProviderExternal = method;
+                }
+            }
+        } catch (Throwable tr) {
+            LOGGER.e(tr, "reflection failed");
         }
     }
 
@@ -110,7 +114,14 @@ public class Api {
         }
 
         try {
-            return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token);
+            if (method_IActivityManager_getContentProviderExternal.getParameterCount() == 4) {
+                // Android Q
+                return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token, name /* tag */);
+            } else if (method_IActivityManager_getContentProviderExternal.getParameterCount() == 3) {
+                return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token);
+            } else {
+                throw new NoSuchMethodError("android.app.IActivityManager.getContentProviderExternal");
+            }
         } catch (IllegalAccessException e) {
             // should never happened
             throw new RuntimeException(e);
