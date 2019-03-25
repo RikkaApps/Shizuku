@@ -2,6 +2,7 @@
 <resources>
     <string name="start_server_summary_adb"><![CDATA[
     After Android 8.0, due to system behavior changes, please <b>do not disable \"USB debugging\"</b> and make sure <b>USB usage mode unchanged</b>, or the server will be stopped.
+    Also, <b>if a dialog box from the system appears, do not tap before unplugging the USB cable</b>.
     <p><b>You will have to re-execute following steps every time you reboot your device.</b>
     <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
     <br>Type following content into computer\'s terminal and hit Enter
