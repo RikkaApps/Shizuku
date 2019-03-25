@@ -6,9 +6,13 @@ import android.app.IProcessObserver;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.os.IBinder;
 import android.os.IUserManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import moe.shizuku.server.utils.BinderSingleton;
 
@@ -38,6 +42,18 @@ public class Api {
             return IUserManager.Stub.asInterface(ServiceManager.getService("user"));
         }
     };
+
+    private static Method method_IActivityManager_getContentProviderExternal;
+
+    static {
+        try {
+            method_IActivityManager_getContentProviderExternal =
+                    IActivityManager.class.getDeclaredMethod("getContentProviderExternal", String.class, int.class, IBinder.class);
+            method_IActivityManager_getContentProviderExternal.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static int checkPermission(String permission, int pid, int uid) throws RemoteException {
         IActivityManager am = ACTIVITY_MANAGER_SINGLETON.get();
@@ -86,4 +102,29 @@ public class Api {
         }
         return pm.getPackagesForUid(uid);
     }
+
+    public static Object getContentProviderExternal(String name, int userId, IBinder token) throws RemoteException {
+        IActivityManager am = ACTIVITY_MANAGER_SINGLETON.get();
+        if (am == null) {
+            throw new RemoteException("can't get IActivityManager");
+        }
+
+        try {
+            return method_IActivityManager_getContentProviderExternal.invoke(am, name, userId, token);
+        } catch (IllegalAccessException e) {
+            // should never happened
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e.getTargetException());
+        }
+    }
+
+    public static void removeContentProviderExternal(String name, IBinder token) throws RemoteException {
+        IActivityManager am = ACTIVITY_MANAGER_SINGLETON.get();
+        if (am == null) {
+            throw new RemoteException("can't get IActivityManager");
+        }
+        am.removeContentProviderExternal(name, token);
+    }
+
 }

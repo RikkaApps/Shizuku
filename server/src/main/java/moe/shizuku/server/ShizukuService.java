@@ -1,11 +1,11 @@
 package moe.shizuku.server;
 
-import android.app.IActivityManager;
-import android.content.Intent;
+import android.content.IContentProvider;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IUserManager;
 import android.os.Parcel;
@@ -24,9 +24,10 @@ import java.util.UUID;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.Api;
+import moe.shizuku.server.api.RemoteProcessHolder;
+import moe.shizuku.server.reflection.ContentProviderHolderHelper;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
-import moe.shizuku.server.utils.RemoteProcessHolder;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
@@ -144,11 +145,12 @@ public class ShizukuService extends IShizukuService.Stub {
 
         enforceCallingPermission(func, PERMISSION);
 
-        if (BuildUtils.isPreM() && checkToken) {
-            String token = PID_TOKEN.get(Binder.getCallingPid());
-            if (mToken.equals(token))
-                return;
-        }
+        if (!BuildUtils.isPreM() || !checkToken)
+            return;
+
+        String token = PID_TOKEN.get(Binder.getCallingPid());
+        if (mToken.equals(token))
+            return;
 
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
@@ -264,27 +266,44 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    static boolean sendBinderToManger(Binder binder, int userId) {
-        return sendBinderToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
+    private static void sendBinderToManger(Binder binder, int userId) {
+        sendBinderToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
     }
 
-    static boolean sendBinderToUserApp(Binder binder, String packageName, int userId) {
-        Intent intent = new Intent(ShizukuApiConstants.ACTION_SEND_BINDER)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addCategory(Intent.CATEGORY_DEFAULT)
-                .setPackage(packageName)
-                .putExtra(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
+    private static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
+        String name = packageName + ".shizuku";
+        IBinder token = new Binder();
+        IContentProvider provider = null;
 
         try {
-            IActivityManager am = Api.ACTIVITY_MANAGER_SINGLETON.get();
-            am.startActivityAsUser(null, null, intent, null,
-                    null, null, 0, 0, null, null, userId);
+            Object holder = Api.getContentProviderExternal(name, userId, token);
+            if (holder == null) {
+                LOGGER.e("can't find provider %s in user %d", name, userId);
+                return;
+            }
+
+            provider = ContentProviderHolderHelper.getProvider(holder);
+            if (provider == null) {
+                LOGGER.e("provider is null %s %d", name, userId);
+                return;
+            }
+
+            Bundle extra = new Bundle();
+            extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
+
+            Bundle reply = provider.call(null, "sendBinder", null, extra);
 
             LOGGER.i("send token to user app %s in user %d", packageName, userId);
-            return true;
         } catch (Throwable tr) {
-            LOGGER.e(tr, "failed send token to user app%s in user %d", packageName, userId);
-            return false;
+            LOGGER.e(tr, "failed send token to user app %s in user %d", packageName, userId);
+        } finally {
+            if (provider != null) {
+                try {
+                    Api.removeContentProviderExternal(name, binder);
+                } catch (Throwable tr) {
+                    LOGGER.w(tr, "removeContentProviderExternal");
+                }
+            }
         }
     }
 }

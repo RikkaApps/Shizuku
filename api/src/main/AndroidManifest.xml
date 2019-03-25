@@ -2,25 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.api">
 
-    <uses-permission android:name="moe.shizuku.manager.permission.API" android:maxSdkVersion="23"/>
+    <uses-permission
+        android:name="moe.shizuku.manager.permission.API"
+        android:maxSdkVersion="23" />
     <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.API_V23" />
 
     <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
-        <activity
-            android:name=".ShizukuBinderReceiveActivity"
-            android:theme="@style/ShizukuClient.Translucent"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="moe.shizuku.client.intent.action.SEND_BINDER" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </activity>
-
-        <meta-data android:name="moe.shizuku.client.V3_SUPPORT" android:value="true"/>
+        <meta-data
+            android:name="moe.shizuku.client.V3_SUPPORT"
+            android:value="true" />
     </application>
 
 </manifest>

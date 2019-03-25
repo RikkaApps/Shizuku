@@ -13,7 +13,6 @@ public class ShizukuApiConstants {
     public static final int BINDER_TRANSACTION_transact = 1;
 
     // intent
-    public static final String ACTION_SEND_BINDER = "moe.shizuku.client.intent.action.SEND_BINDER";
     public static final String EXTRA_BINDER = MANAGER_APPLICATION_ID + ".intent.extra.BINDER";
 
     // for pre-23

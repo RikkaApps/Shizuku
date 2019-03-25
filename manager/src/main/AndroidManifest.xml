@@ -8,8 +8,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
-    <uses-permission android:name="moe.shizuku.manager.permission.API" tools:node="remove"/>
-    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.API_V23" tools:node="remove"/>
+    <uses-permission
+        android:name="moe.shizuku.manager.permission.API"
+        tools:node="remove" />
+
+    <uses-permission-sdk-23
+        android:name="moe.shizuku.manager.permission.API_V23"
+        tools:node="remove" />
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
@@ -64,6 +69,7 @@
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
             android:theme="@style/AppTheme.Apps" />
+
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:directBootAware="true"
@@ -76,6 +82,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".service.WorkService"
             android:directBootAware="true"
@@ -88,6 +95,15 @@
             android:name=".service.BootCompleteService"
             android:directBootAware="true"
             android:exported="false" />
+
+        <provider
+            android:name="moe.shizuku.api.BinderReceiveProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:multiprocess="false"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <!-- v2 components -->
         <activity
@@ -129,6 +145,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <provider
             android:name=".legacy.provider.TransferProvider"
             android:directBootAware="true"
