@@ -1,10 +1,13 @@
 package moe.shizuku.sample;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 
 import java.io.InputStream;
@@ -12,98 +15,63 @@ import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import moe.shizuku.ShizukuState;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.api.ShizukuClientHelper;
+import moe.shizuku.api.ShizukuService;
 
 public class MainActivity extends Activity {
 
-    private static final int REQUEST_CODE_PERMISSION_V2 = ShizukuClient.REQUEST_CODE_PERMISSION;
-    private static final int REQUEST_CODE_AUTHORIZATION_V2 = ShizukuClient.REQUEST_CODE_AUTHORIZATION;
     private static final int REQUEST_CODE_PERMISSION_V3 = 1;
     private static final int REQUEST_CODE_AUTHORIZATION_V3 = 2;
 
-    private static boolean v3Failed;
+    private BroadcastReceiver mBinderReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBinderReceiver, new IntentFilter(SampleApplication.ACTION_SEND_BINDER));
 
         if (!ShizukuClientHelper.isManagerV2Installed(this)) {
             Log.d("ShizukuSample", "Shizuku Manager version is too low");
             return;
         }
 
-        ShizukuClientHelper.setBinderReceivedListener(() -> {
-            Log.d("ShizukuSample", "onBinderReceived");
+        showWaiting();
+        checkShizuku();
+    }
 
-            if (ShizukuService.getBinder() == null) {
-                // ShizukuBinderReceiveActivity started with intent without binder, should never happened
-                Log.d("ShizukuSample", "binder is null");
-                v3Failed = true;
-                return;
-            } else {
-                try {
-                    // test the binder first
-                    Log.d("ShizukuSample", "server version " + ShizukuService.getVersion());
-                } catch (Throwable tr) {
-                    // blocked by SELinux or server dead, should never happened
-                    Log.i("ShizukuSample", "can't contact with remote", tr);
-                    v3Failed = true;
-                    return;
-                }
-            }
+    private void showWaiting() {
+        // show loading ui
+    }
 
-            runTestV3();
-        });
+    private void checkShizuku() {
+        // Shizuku v3 service will send binder via Content Provider to this process when this activity comes foreground.
 
-        final Context context = this;
-        int v3Code;
-        ShizukuState v2Status;
+        // Wait a few seconds here for binder
 
-        // v3 binder not alive, request
+        // Thread.sleep(1000); // run codes below in a work thread
         if (!ShizukuService.pingBinder()) {
-            v3Code = ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
-
-            if (v3Code == ShizukuApiConstants.RESULT_NO_PERMISSION) {
-                if (!ShizukuClientHelper.isPreM()) {
-                    if (ActivityCompat.checkSelfPermission(context, ShizukuApiConstants.PERMISSION) != PackageManager.PERMISSION_GRANTED)
-                        ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
-                } else {
-                    Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(context);
-                    if (intent != null) {
-                        try {
-                            startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
-                        } catch (Throwable tr) {
-                            // activity not found?
-                        }
-                    }
-                }
-                // show your waiting ui
-            } else if (v3Code == ShizukuApiConstants.RESULT_OK) {
-                // show your waiting ui
-            } else if (v3Code == ShizukuApiConstants.RESULT_PACKAGE_NOT_MATCHING) {
-                // pass wrong package name to ShizukuClientHelper.requestBinder
-            } else if (v3Code == ShizukuApiConstants.RESULT_START_ACTIVITY_FAILED) {
-                // startActivity failed server side, should never happened
-            } else {
-                // v3 service not running, fallback to v2
-                // if you are developing new app, ignore v2
-                v2Status = ShizukuClient.getState();
-                if (!v2Status.isAuthorized()) {
-                    if (!ShizukuClient.checkSelfPermission(context)) {
-                        ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V2);
-                    } else {
-                        ShizukuClient.requestAuthorization(this);
-                    }
-                    // show your waiting ui
-                } else {
-                    // v2 code
-                }
+            if (SampleApplication.isShizukuV3Failed()) {
+                // provider started with no binder included, binder calls blocked by SELinux or server dead, should never happened
+                // notify user
             }
+
+            // Shizuku v3 may not running, notify user
+
+            // if your app support Shizuku v2, run old v2 codes here
+            // for new apps, recommended to ignore v2
+        } else {
+            // Shizuku v3 binder received
+            runTestV3();
         }
     }
 
@@ -111,27 +79,25 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
-        /*if (mTaskStackListener != null) {
-            ShizukuApi.ActivityManager_unregisterTaskStackListener(mTaskStackListener);
-        }*/
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBinderReceiver);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_AUTHORIZATION_V2: {
-                if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
-                    ShizukuClient.setToken(data);
-                    // runTestV2();
-                } else {
-                    // user denied or error
-                }
-                return;
-            }
+            // only called in API pre-23
             case REQUEST_CODE_AUTHORIZATION_V3: {
                 if (resultCode == ShizukuClient.AUTH_RESULT_OK) {
-                    ShizukuClientHelper.setPre23Token(data, this);
-                    ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
+                    String token = ShizukuClientHelper.setPre23Token(data, this);
+                    if (ShizukuService.pingBinder()) {
+                        try {
+                            // each of your process need to call this
+                            boolean valid = ShizukuService.setCurrentProcessTokenPre23(token);
+                        } catch (RemoteException e) {
+                        }
+                    } else {
+                        // server dead?
+                    }
                 } else {
                     // user denied or error
                 }
@@ -146,17 +112,9 @@ public class MainActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_CODE_PERMISSION_V2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClient.requestAuthorization(this);
-                } else {
-                    // denied
-                }
-                break;
-            }
             case REQUEST_CODE_PERMISSION_V3: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ShizukuClientHelper.requestBinderNoThrow(BuildConfig.APPLICATION_ID);
+                    runTestV3();
                 } else {
                     // denied
                 }
@@ -168,17 +126,26 @@ public class MainActivity extends Activity {
     //private ITaskStackListener mTaskStackListener;
 
     private void runTestV3() {
-        /*try {
-            mTaskStackListener = new TaskStackListener() {
-                @Override
-                public void onTaskStackChanged() throws RemoteException {
-                    Log.d("ShizukuSample", "onTaskStackChanged");
+        if (!ShizukuClientHelper.isPreM()) {
+            // on API 23+, Shizuku v3 uses runtime permission
+            if (ActivityCompat.checkSelfPermission(this, ShizukuApiConstants.PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
+                return;
+            }
+        } else if (!SampleApplication.isShizukuV3TokenValid()){
+            // on API pre-23, Shizuku v3 uses old token, get token from Shizuku Manager app
+            Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
+            if (intent != null) {
+                try {
+                    startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
+                } catch (Throwable tr) {
+                    // should never happened
                 }
-            };
-            ShizukuApi.ActivityManager_registerTaskStackListener(mTaskStackListener);
-        } catch (Throwable tr) {
-            Log.e("ShizukuSample", "registerTaskStackListener", tr);
-        }*/
+            } else {
+                // activity not found
+            }
+            return;
+        }
 
         try {
             Log.d("ShizukuSample", "getUsers: " + ShizukuApi.UserManager_getUsers(true));

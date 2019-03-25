@@ -25,8 +25,6 @@ public class ShizukuApi {
             try {
                 ShizukuService.transactRemote(data, reply, 0);
                 reply.readException();
-
-                Log.i("ShizukuSample", "ActivityManager#registerTaskStackListener");
             } catch (RemoteException e) {
                 Log.e("ShizukuSample", "ActivityManager#registerTaskStackListener", e);
             } finally {
@@ -44,8 +42,6 @@ public class ShizukuApi {
             try {
                 ShizukuService.transactRemote(data, reply, 0);
                 reply.readException();
-
-                Log.i("ShizukuSample", "ActivityManager#unregisterTaskStackListener");
             } catch (RemoteException e) {
                 Log.e("ShizukuSample", "ActivityManager#unregisterTaskStackListener", e);
             } finally {
@@ -65,8 +61,6 @@ public class ShizukuApi {
             ShizukuService.transactRemote(data, reply, 0);
             reply.readException();
             res = reply.createTypedArrayList(UserInfo.CREATOR);
-
-            Log.i("ShizukuSample", "UserManager#getUsers");
         } catch (RemoteException e) {
             Log.e("ShizukuSample", "UserManager#getUsers", e);
         } finally {

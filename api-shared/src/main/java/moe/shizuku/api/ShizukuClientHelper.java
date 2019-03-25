@@ -8,8 +8,6 @@ import android.os.Build;
 
 import java.util.UUID;
 
-import moe.shizuku.server.IShizukuService;
-
 public class ShizukuClientHelper {
 
     public interface OnBinderReceivedListener {
@@ -18,7 +16,7 @@ public class ShizukuClientHelper {
 
     private static OnBinderReceivedListener sBinderReceivedListener;
 
-    private static UUID sToken = new UUID(0, 0);
+    private static String sToken = "";
 
     public static OnBinderReceivedListener getBinderReceivedListener() {
         return sBinderReceivedListener;
@@ -60,31 +58,31 @@ public class ShizukuClientHelper {
         return Build.VERSION.SDK_INT < 23;
     }
 
-    public static void setPre23Token(Intent intent, Context context) {
+    public static String setPre23Token(Intent intent, Context context) {
         long mostSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_LEAST_SIG, 0);
         if (mostSig != 0 && leastSig != 0) {
-            setPre23Token(new UUID(mostSig, leastSig), context);
+            String token = new UUID(mostSig, leastSig).toString();
+            setPre23Token(token, context);
+            return token;
         }
+        return null;
     }
 
-    private static void setPre23Token(UUID token, Context context) {
+    private static void setPre23Token(String token, Context context) {
         sToken = token;
-        savePre23Token(context, token);
-
-        /*if (ShizukuService.getBinder() != null && ) {
-            IShizukuService.Stub.asInterface(ShizukuService.getBinder()).setPidToken()
-        }*/
+        savePre23Token(context, UUID.fromString(token));
     }
 
     private static final String KEY_TOKEN_MOST_SIG = "moe.shizuku.privilege.api.token_most";
     private static final String KEY_TOKEN_LEAST_SIG = "moe.shizuku.privilege.api.token_least";
 
-    public static void loadPre23Token(Context context) {
+    public static String loadPre23Token(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("moe.shizuku.privilege.api.token", Context.MODE_PRIVATE);
         long mostSig = preferences.getLong(KEY_TOKEN_MOST_SIG, 0);
         long leastSig = preferences.getLong(KEY_TOKEN_LEAST_SIG, 0);
-        sToken = new UUID(mostSig, leastSig);
+        sToken = new UUID(mostSig, leastSig).toString();
+        return sToken;
     }
 
     private static void savePre23Token(Context context, UUID token) {
@@ -100,9 +98,6 @@ public class ShizukuClientHelper {
     }
 
     public static Intent createPre23AuthorizationIntent(Context context) {
-        if (!isPreM())
-            throw new IllegalStateException("authorization intent is not required from API 23");
-
         Intent intent = new Intent(ShizukuApiConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuApiConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(context.getPackageManager()) != null) {

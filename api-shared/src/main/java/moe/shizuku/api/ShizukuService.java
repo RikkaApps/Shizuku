@@ -74,7 +74,18 @@ public class ShizukuService {
      * @return PackageManager.PERMISSION_DENIED or PackageManager.PERMISSION_GRANTED
      */
     public static int checkPermission(String permission) throws RemoteException {
-
         return sService.checkPermission(permission);
+    }
+
+    /**
+     * Set token of current process. Do not call this on API 23+.
+     *
+     * @param token token
+     * @return is token correct
+     *
+     * @throws IllegalStateException call on API 23+
+     */
+    public static boolean setCurrentProcessTokenPre23(String token) throws RemoteException {
+        return sService.setPidToken(token);
     }
 }
