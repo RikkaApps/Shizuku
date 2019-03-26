@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,22 @@ import androidx.annotation.Nullable;
 
 public class BinderReceiveProvider extends ContentProvider {
 
+    // For receive Binder from Shizuku
     public static final String METHOD_SEND_BINDER = "sendBinder";
+
+    // For share Binder between processes
+    public static final String METHOD_GET_BINDER = "getBinder";
+
+    private static boolean sIsProviderProcess = false;
 
     @Override
     public boolean onCreate() {
+        sIsProviderProcess = true;
         return true;
+    }
+
+    public static boolean isProviderProcess() {
+        return sIsProviderProcess;
     }
 
     @Nullable
@@ -41,6 +53,14 @@ public class BinderReceiveProvider extends ContentProvider {
                 // This provider is protected by INTERACT_ACROSS_USERS_FULL permission, other user apps can't use.
                 if (ShizukuClientHelper.getBinderReceivedListener() != null) {
                     ShizukuClientHelper.getBinderReceivedListener().onBinderReceived();
+                }
+                break;
+            }
+            case METHOD_GET_BINDER: {
+                // Other processes in the same app can read the provider without permission
+                IBinder binder = ShizukuService.getBinder();
+                if (binder == null) {
+                    reply.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
                 }
                 break;
             }
