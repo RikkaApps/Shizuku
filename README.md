@@ -38,7 +38,7 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 1. 添加依赖
    
    ```
-   implementation 'moe.shizuku.privilege:api:3.0.0-alpha5' // Shizuku v3
+   implementation 'moe.shizuku.privilege:api:3.0.0-alpha6' // Shizuku v3
    ```
 
    详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
@@ -59,9 +59,11 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
         android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
    ```
 
-   当使用者应用的 Activity 进入前台时，Shizuku v3 服务使用该 Provider 发送 binder 给应用。
+   当使用者应用进程启动时，Shizuku v3 服务使用该 Provider 发送 binder 给应用。
 
    通常，当进入你自己的 Activity 时，该 provider 中的代码应该已被执行（即已经受到 binder），但还是建议你在你的 Activity 中实现一个简单的等待逻辑，详细参考 sample。
+
+   对于多进程的应用，请在使用 Shizuku 前执行 `MultiProcessHelper#initialize` 来从已有的其他进程获取 binder。
 
 3. 授权
 
