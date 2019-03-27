@@ -1,7 +1,6 @@
 package moe.shizuku.server;
 
 import android.content.IContentProvider;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Binder;
@@ -14,10 +13,8 @@ import android.system.Os;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,7 +24,6 @@ import moe.shizuku.server.api.Api;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.reflection.ContentProviderHolderHelper;
 import moe.shizuku.server.reflection.IContentProviderHelper;
-import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
@@ -38,56 +34,6 @@ public class ShizukuService extends IShizukuService.Stub {
     private static final String PERMISSION = BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION;
 
     private static final Map<Integer, String> PID_TOKEN = new HashMap<>();
-
-    private class ProcessObserver extends moe.shizuku.server.api.ProcessObserver {
-
-        private final List<Integer> pids = new ArrayList<>();
-
-        @Override
-        public void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities) throws RemoteException {
-            LOGGER.d("onForegroundActivitiesChanged: pid=%d, uid=%d, foregroundActivities=%s", pid, uid, foregroundActivities ? "true" : "false");
-
-            if (pids.contains(pid) || !foregroundActivities) {
-                return;
-            }
-            pids.add(pid);
-
-            String[] packages = Api.getPackagesForUid(uid);
-            if (packages == null)
-                return;
-
-            LOGGER.d("new process: packages=%s", Arrays.toString(packages));
-
-            int userId = uid / 100000;
-            for (String packageName : packages) {
-                PackageInfo pi = Api.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS, userId);
-                if (pi == null || pi.requestedPermissions == null)
-                    continue;
-
-                if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
-                    if (Api.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED) {
-                        sendBinderToManger(ShizukuService.this, userId);
-                        return;
-                    }
-                } else if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION)) {
-                    sendBinderToUserApp(ShizukuService.this, packageName, userId);
-                    return;
-                }
-            }
-        }
-
-        @Override
-        public void onProcessDied(int pid, int uid) {
-            LOGGER.d("onProcessDied: pid=%d, uid=%d", pid, uid);
-
-            int index = pids.indexOf(pid);
-            if (index != -1) {
-                pids.remove(index);
-
-                PID_TOKEN.remove(pid);
-            }
-        }
-    }
 
     private String mToken;
 
@@ -102,14 +48,15 @@ public class ShizukuService extends IShizukuService.Stub {
             mToken = token.toString();
         }
 
-        LOGGER.i("registerProcessObserver");
-
         try {
-            Api.registerProcessObserver(new ProcessObserver());
+            BinderSender.register(this);
         } catch (RemoteException e) {
             LOGGER.e(e, "registerProcessObserver");
         }
-        LOGGER.i("registerProcessObserver2");
+    }
+
+    static Map<Integer, String> getPidToken() {
+        return PID_TOKEN;
     }
 
     private int checkCallingPermission(String permission) {
@@ -270,11 +217,11 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private static void sendBinderToManger(Binder binder, int userId) {
+    static void sendBinderToManger(Binder binder, int userId) {
         sendBinderToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
     }
 
-    private static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
+    static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
         String name = packageName + ".shizuku";
         IBinder token = new Binder();
         IContentProvider provider = null;
@@ -297,9 +244,9 @@ public class ShizukuService extends IShizukuService.Stub {
 
             Bundle reply = IContentProviderHelper.call(provider, null, name, "sendBinder", null, extra);
 
-            LOGGER.i("send token to user app %s in user %d", packageName, userId);
+            LOGGER.i("send binder to user app %s in user %d", packageName, userId);
         } catch (Throwable tr) {
-            LOGGER.e(tr, "failed send token to user app %s in user %d", packageName, userId);
+            LOGGER.e(tr, "failed send binder to user app %s in user %d", packageName, userId);
         } finally {
             if (provider != null) {
                 try {

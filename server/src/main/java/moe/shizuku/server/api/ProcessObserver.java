@@ -16,7 +16,7 @@ public class ProcessObserver extends IProcessObserver.Stub {
     public void onProcessDied(int pid, int uid) throws RemoteException {
     }
 
-    public final void onProcessStateChanged(int pid, int uid, int procState) throws RemoteException {
+    public void onProcessStateChanged(int pid, int uid, int procState) throws RemoteException {
         // no longer exists from API 26
     }
 

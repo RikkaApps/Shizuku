@@ -3,6 +3,7 @@ package moe.shizuku.server.api;
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.app.IProcessObserver;
+import android.app.IUidObserver;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
@@ -99,6 +100,14 @@ public class Api {
             throw new RemoteException("can't get IActivityManager");
         }
         am.registerProcessObserver(processObserver);
+    }
+
+    public static void registerUidObserver(IUidObserver observer, int which, int cutpoint, String callingPackage) throws RemoteException {
+        IActivityManager am = ACTIVITY_MANAGER_SINGLETON.get();
+        if (am == null) {
+            throw new RemoteException("can't get IActivityManager");
+        }
+        am.registerUidObserver(observer, which, cutpoint, callingPackage);
     }
 
     public static String[] getPackagesForUid(int uid) throws RemoteException {
