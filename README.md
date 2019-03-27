@@ -63,7 +63,9 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
    通常，当进入你自己的 Activity 时，该 provider 中的代码应该已被执行（即已经受到 binder），但还是建议你在你的 Activity 中实现一个简单的等待逻辑，详细参考 sample。
 
-   对于多进程的应用，请在使用 Shizuku 前执行 `MultiProcessHelper#initialize` 来从已有的其他进程获取 binder。
+   对于多进程的应用，请在使用 Shizuku 前执行 `MultiProcessHelper#initialize` 来从 `BinderReceiveProvider` 所在进程获取 binder。另外由于 `BinderReceiveProvider` 需要被其他进程启动，建议将 `BinderReceiveProvider` 所在进程（`android:process`）指定为与你的应用中最长时间运行的进程的相同。
+
+   目前 Shizuku v3 服务获取应用进程建立的方式是组合 `IActivityManager#registerProcessObserver` 与 `IActivityManager#registerUidObserver`（26 及以上），可以保证应用进程启动时会被发送 binder。但在 API 26 上，adb 缺少权限无法使用 `registerUidObserver`，因此如果你需要在 可能不是由 Activity 启动的进程 中使用 Shizuku，建议使用启动透明 Activity 的方式触发发送 binder。
 
 3. 授权
 
