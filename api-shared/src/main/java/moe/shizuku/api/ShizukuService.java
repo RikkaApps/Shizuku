@@ -1,12 +1,8 @@
 package moe.shizuku.api;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.util.Log;
 
 import moe.shizuku.server.IShizukuService;
 
@@ -43,7 +39,6 @@ public class ShizukuService {
      * @see SystemServiceHelper#obtainParcel(String, String, String, String)
      */
     public static void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
-        checkProcess();
         sService.asBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
     }
 
@@ -53,25 +48,24 @@ public class ShizukuService {
      * @return RemoteProcess holds the binder of remote process
      */
     public static RemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
-        checkProcess();
         return new RemoteProcess(sService.newProcess(cmd, env, dir));
     }
 
     /**
      * Returns uid of remote service.
+     *
      * @return uid
      */
     public static int getUid() throws RemoteException {
-        checkProcess();
         return sService.getUid();
     }
 
     /**
      * Returns remote service version.
+     *
      * @return server version
      */
     public static int getVersion() throws RemoteException {
-        checkProcess();
         return sService.getVersion();
     }
 
@@ -82,7 +76,6 @@ public class ShizukuService {
      * @return PackageManager.PERMISSION_DENIED or PackageManager.PERMISSION_GRANTED
      */
     public static int checkPermission(String permission) throws RemoteException {
-        checkProcess();
         return sService.checkPermission(permission);
     }
 
@@ -91,44 +84,9 @@ public class ShizukuService {
      *
      * @param token token
      * @return is token correct
-     *
      * @throws IllegalStateException call on API 23+
      */
     public static boolean setCurrentProcessTokenPre23(String token) throws RemoteException {
-        checkProcess();
         return sService.setPidToken(token);
-    }
-
-    /**
-     * For multi-process app only.
-     * Call this method in every sub processes before using shizuku.
-     *
-     * @param context context
-     */
-    public static void initializeSubProcess(Context context) {
-        if (BinderReceiveProvider.isProviderProcess()) return;
-
-        Bundle call = context.getContentResolver().call(Uri.parse("content://" + context.getPackageName() + ".shizuku"),
-                        BinderReceiveProvider.METHOD_GET_BINDER, null, new Bundle());
-        BinderContainer container = call.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
-        if (container != null && container.binder != null) {
-            Log.i("ShizukuClient", "binder received in sub process");
-
-            ShizukuService.setBinder(container.binder);
-        }
-        if (ShizukuClientHelper.getBinderReceivedListener() != null) {
-            ShizukuClientHelper.getBinderReceivedListener().onBinderReceived();
-        }
-        sSubProcessInitialized = true;
-    }
-
-    private static boolean sSubProcessInitialized = false;
-
-    private static void checkProcess() {
-        if (!BinderReceiveProvider.isProviderProcess()
-                && sService == null
-                && !sSubProcessInitialized) {
-            throw new IllegalStateException("Please call ShizukuService#initializeSubProcess before using it in every sub processes!");
-        }
     }
 }

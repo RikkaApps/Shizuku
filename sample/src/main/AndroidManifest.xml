@@ -26,6 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".MultiProcessTestReceiver"
+            android:exported="false"
+            android:process=":test">
+            <intent-filter>
+                <action android:name="moe.shizuku.sample.TEST"/>
+            </intent-filter>
+        </receiver>
         <provider
             android:name="moe.shizuku.api.BinderReceiveProvider"
             android:authorities="${applicationId}.shizuku"

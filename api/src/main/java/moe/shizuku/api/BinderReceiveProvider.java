@@ -2,6 +2,8 @@ package moe.shizuku.api;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,14 +23,25 @@ public class BinderReceiveProvider extends ContentProvider {
 
     private static boolean sIsProviderProcess = false;
 
+    public static boolean isProviderProcess() {
+        return sIsProviderProcess;
+    }
+
+    @Override
+    public void attachInfo(Context context, ProviderInfo info) {
+        super.attachInfo(context, info);
+
+        if (info.multiprocess)
+            throw new IllegalStateException("android:multiprocess should be false");
+
+        if (!info.exported)
+            throw new IllegalStateException("android:exported should be true");
+    }
+
     @Override
     public boolean onCreate() {
         sIsProviderProcess = true;
         return true;
-    }
-
-    public static boolean isProviderProcess() {
-        return sIsProviderProcess;
     }
 
     @Nullable
@@ -43,6 +56,11 @@ public class BinderReceiveProvider extends ContentProvider {
 
         switch (method) {
             case METHOD_SEND_BINDER: {
+                if (ShizukuService.pingBinder()) {
+                    Log.i("ShizukuClient", "BinderReceiveProvider started when already a binder alive");
+                    break;
+                }
+
                 BinderContainer container = extras.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
                 if (container != null && container.binder != null) {
                     Log.i("ShizukuClient", "binder received");
@@ -59,9 +77,10 @@ public class BinderReceiveProvider extends ContentProvider {
             case METHOD_GET_BINDER: {
                 // Other processes in the same app can read the provider without permission
                 IBinder binder = ShizukuService.getBinder();
-                if (binder == null) {
-                    reply.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
-                }
+                if (binder == null || !binder.pingBinder())
+                    return null;
+
+                reply.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
                 break;
             }
         }

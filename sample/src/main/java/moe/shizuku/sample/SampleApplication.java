@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import me.weishu.reflection.Reflection;
-import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.api.MultiProcessHelper;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.api.ShizukuService;
 
@@ -34,6 +34,8 @@ public class SampleApplication extends android.app.Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         Reflection.unseal(base);
+
+        Log.d("ShizukuSample", "initialize " + MultiProcessHelper.initialize(this));
 
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             Log.d("ShizukuSample", "onBinderReceived");

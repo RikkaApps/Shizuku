@@ -46,6 +46,8 @@ public class MainActivity extends Activity {
 
         showWaiting();
         checkShizuku();
+
+        sendBroadcast(new Intent("moe.shizuku.sample.TEST").setPackage(getPackageName()));
     }
 
     private void showWaiting() {
