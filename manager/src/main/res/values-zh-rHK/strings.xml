@@ -4,7 +4,7 @@
     <string name="permission_label">以更高許可權使用系統 API</string>
     <string name="permission_description">允許應用程式以更高許可權使用系統 API。</string>
     <string name="server_running">服務 %1$s 正在執行（版本 %3$d，%2$s）</string>
-    <string name="server_running_update">服務 %1$s 正在執行（版本 %3$d，%2$s，重新啟動以升級到版本 %4$d）</string>
+    <string name="server_running_update">服務 %1$s 正在執行（版本 %3$d，%2$s，再次啟動以升級到版本 %4$d）</string>
     <string name="server_not_running">服務 %1$s 沒有執行</string>
     <string name="server_not_running_tap_retry">服務 %1$s 沒有執行，輕觸重新檢查</string>
     <string name="server_require_restart">服務 %1$s 需要重新啟動</string>
