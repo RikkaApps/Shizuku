@@ -33,7 +33,7 @@ task clean(type: Delete) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '3.2.0'
+def baseVersionName = '3.2.1'
 
 ext {
     androidXLibraryVersion = '1.0.0'

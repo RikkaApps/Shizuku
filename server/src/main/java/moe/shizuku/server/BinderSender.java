@@ -110,16 +110,24 @@ public class BinderSender {
         }
     }
 
-    public static void register(ShizukuService shizukuService) throws RemoteException {
+    public static void register(ShizukuService shizukuService) {
         sShizukuService = shizukuService;
 
-        Api.registerProcessObserver(new ProcessObserver());
+        try {
+            Api.registerProcessObserver(new ProcessObserver());
+        } catch (Throwable tr) {
+            LOGGER.e(tr, "registerProcessObserver");
+        }
 
         if (Build.VERSION.SDK_INT >= 26) {
-            Api.registerUidObserver(new UidObserver(),
-                    ActivityManager.UID_OBSERVER_ACTIVE,
-                    ActivityManager.PROCESS_STATE_UNKNOWN,
-                    null);
+            try {
+                Api.registerUidObserver(new UidObserver(),
+                        ActivityManager.UID_OBSERVER_ACTIVE,
+                        ActivityManager.PROCESS_STATE_UNKNOWN,
+                        null);
+            } catch (Throwable tr) {
+                LOGGER.e(tr, "registerUidObserver");
+            }
         }
     }
 }

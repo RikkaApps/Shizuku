@@ -48,11 +48,7 @@ public class ShizukuService extends IShizukuService.Stub {
             mToken = token.toString();
         }
 
-        try {
-            BinderSender.register(this);
-        } catch (RemoteException e) {
-            LOGGER.e(e, "registerProcessObserver");
-        }
+        BinderSender.register(this);
     }
 
     static Map<Integer, String> getPidToken() {
