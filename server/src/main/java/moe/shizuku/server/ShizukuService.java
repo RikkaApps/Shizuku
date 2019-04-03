@@ -219,8 +219,19 @@ public class ShizukuService extends IShizukuService.Stub {
 
     static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
         String name = packageName + ".shizuku";
-        IBinder token = new Binder();
         IContentProvider provider = null;
+
+        /*
+         When we pass IBinder through binder (and really crossed process), the receive side (here is system_server process)
+         will always get a new instance of android.os.BinderProxy.
+
+         In the implementation of getContentProviderExternal and removeContentProviderExternal, received
+         IBinder is used as the key of a HashMap. But hashCode() is not implemented by BinderProxy, so
+         removeContentProviderExternal will never work.
+
+         Luckily, we can pass null. When token is token, count will be used.
+         */
+        IBinder token = null;
 
         try {
             Object holder = Api.getContentProviderExternal(name, userId, token);
@@ -246,7 +257,7 @@ public class ShizukuService extends IShizukuService.Stub {
         } finally {
             if (provider != null) {
                 try {
-                    Api.removeContentProviderExternal(name, binder);
+                    Api.removeContentProviderExternal(name, token);
                 } catch (Throwable tr) {
                     LOGGER.w(tr, "removeContentProviderExternal");
                 }
