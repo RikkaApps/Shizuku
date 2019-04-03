@@ -48,8 +48,8 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
         addItem(ManageAppsViewHolder.CREATOR, mAppsModel.getData() != null ? mAppsModel.getData().size() : 0, 1);
 
         if (Process.myUid() / 100000 == 0) {
-            boolean adb = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ADB;
-            boolean rootRestart = vm.getServiceStatus().getV2Status().isRoot();
+            boolean root = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT;
+            boolean rootRestart = vm.getServiceStatus().getUid() == 0;
             if (v3) {
                 try {
                     rootRestart |= ShizukuService.getUid() == 0;
@@ -57,12 +57,12 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
                 }
             }
 
-            if (adb) {
-                addItem(StartAdbViewHolder.CREATOR, null, 2);
+            if (root) {
                 addItem(StartRootViewHolder.CREATOR, rootRestart, 3);
+                addItem(StartAdbViewHolder.CREATOR, null, 2);
             } else {
-                addItem(StartRootViewHolder.CREATOR, rootRestart, 3);
                 addItem(StartAdbViewHolder.CREATOR, null, 2);
+                addItem(StartRootViewHolder.CREATOR, rootRestart, 3);
             }
         } else {
 
