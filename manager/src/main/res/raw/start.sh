@@ -12,11 +12,13 @@ if [[ -f "$STARTER_PATH" ]]; then
     chmod 700 /data/local/tmp/shizuku_starter
     chown 2000 /data/local/tmp/shizuku_starter
     chgrp 2000 /data/local/tmp/shizuku_starter
+    chcon u:object_r:shell_data_file:s0 /data/local/tmp/shizuku_starter
 
-    mkdir -p /data/local/tmp/shizuku
-    chmod 700 /data/local/tmp/shizuku
-    chown 2000 /data/local/tmp/shizuku
-    chgrp 2000 /data/local/tmp/shizuku
+    #mkdir -p /data/local/tmp/shizuku
+    #chmod 700 /data/local/tmp/shizuku
+    #chown 2000 /data/local/tmp/shizuku
+    #chgrp 2000 /data/local/tmp/shizuku
+    #chcon u:object_r:shell_data_file:s0 /data/local/tmp/shizuku_starter
 
     #rm -f /data/local/tmp/shizuku/libhelper.so
     #cp "$LIBRARY_PATH" /data/local/tmp/shizuku/libhelper.so

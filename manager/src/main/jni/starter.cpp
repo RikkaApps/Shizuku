@@ -181,7 +181,7 @@ static void copy_if_not_exist(const char* src, const char *dst) {
     chmod(dst, 0707);
     if (getuid() == 0) {
         chown(dst, 2000, 2000);
-        //setfilecon(dst, "u:object_r:shell_data_file:s0");
+        setfilecon(dst, "u:object_r:shell_data_file:s0");
     }
 }
 
@@ -216,7 +216,7 @@ int main(int argc, char **argv) {
     chmod("/data/local/tmp/shizuku", 0707);
     if (getuid() == 0) {
         chown("/data/local/tmp/shizuku", 2000, 2000);
-        //setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
+        setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
     char *name = basename(_path);
