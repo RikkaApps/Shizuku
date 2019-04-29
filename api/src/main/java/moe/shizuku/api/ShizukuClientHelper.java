@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.UUID;
 
 public class ShizukuClientHelper {
@@ -22,11 +25,11 @@ public class ShizukuClientHelper {
         return sBinderReceivedListener;
     }
 
-    public static void setBinderReceivedListener(OnBinderReceivedListener binderReceivedListener) {
+    public static void setBinderReceivedListener(@Nullable OnBinderReceivedListener binderReceivedListener) {
         sBinderReceivedListener = binderReceivedListener;
     }
 
-    public static boolean isManagerV3Installed(Context context) {
+    public static boolean isManagerV3Installed(@NonNull Context context) {
         try {
             return context.getPackageManager().getPackageInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0).versionCode >= 183;
         } catch (PackageManager.NameNotFoundException e) {
@@ -34,7 +37,7 @@ public class ShizukuClientHelper {
         }
     }
 
-    public static boolean isManagerV2Installed(Context context) {
+    public static boolean isManagerV2Installed(@NonNull Context context) {
         try {
             return context.getPackageManager().getPackageInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0).versionCode >= 106;
         } catch (PackageManager.NameNotFoundException e) {
@@ -42,7 +45,7 @@ public class ShizukuClientHelper {
         }
     }
 
-    public static int getManagerVersionCode(Context context) {
+    public static int getManagerVersionCode(@NonNull Context context) {
         try {
             return context.getPackageManager().getPackageInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
@@ -58,7 +61,7 @@ public class ShizukuClientHelper {
         return Build.VERSION.SDK_INT < 23;
     }
 
-    public static String setPre23Token(Intent intent, Context context) {
+    public static String setPre23Token(@NonNull Intent intent, @NonNull Context context) {
         long mostSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_MOST_SIG, 0);
         long leastSig = intent.getLongExtra(ShizukuApiConstants.EXTRA_TOKEN_LEAST_SIG, 0);
         if (mostSig != 0 && leastSig != 0) {
@@ -77,7 +80,7 @@ public class ShizukuClientHelper {
     private static final String KEY_TOKEN_MOST_SIG = "moe.shizuku.privilege.api.token_most";
     private static final String KEY_TOKEN_LEAST_SIG = "moe.shizuku.privilege.api.token_least";
 
-    public static String loadPre23Token(Context context) {
+    public static String loadPre23Token(@NonNull Context context) {
         SharedPreferences preferences = context.getSharedPreferences("moe.shizuku.privilege.api.token", Context.MODE_PRIVATE);
         long mostSig = preferences.getLong(KEY_TOKEN_MOST_SIG, 0);
         long leastSig = preferences.getLong(KEY_TOKEN_LEAST_SIG, 0);
@@ -85,7 +88,7 @@ public class ShizukuClientHelper {
         return sToken;
     }
 
-    private static void savePre23Token(Context context, UUID token) {
+    private static void savePre23Token(@NonNull Context context, @NonNull UUID token) {
         SharedPreferences preferences = context.getSharedPreferences("moe.shizuku.privilege.api.token", Context.MODE_PRIVATE);
         long mostSig = token.getLeastSignificantBits();
         long leastSig = token.getLeastSignificantBits();
@@ -97,7 +100,7 @@ public class ShizukuClientHelper {
         }
     }
 
-    public static Intent createPre23AuthorizationIntent(Context context) {
+    public static Intent createPre23AuthorizationIntent(@NonNull Context context) {
         Intent intent = new Intent(ShizukuApiConstants.ACTION_REQUEST_AUTHORIZATION)
                 .setPackage(ShizukuApiConstants.MANAGER_APPLICATION_ID);
         if (intent.resolveActivity(context.getPackageManager()) != null) {

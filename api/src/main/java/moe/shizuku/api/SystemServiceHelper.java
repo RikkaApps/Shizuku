@@ -4,6 +4,8 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ServiceManager;
 
+import androidx.annotation.NonNull;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class SystemServiceHelper {
      * @param name the name of the service to get such as "package" for android.content.pm.IPackageManager
      * @return a reference to the service, or <code>null</code> if the service doesn't exist
      */
-    public static IBinder getSystemService(String name) {
+    public static IBinder getSystemService(@NonNull String name) {
         IBinder binder = systemServiceCache.get(name);
         if (binder == null) {
             binder = ServiceManager.getService(name);
@@ -36,7 +38,7 @@ public class SystemServiceHelper {
      * @param methodName method name such as "getInstalledPackages"
      * @return transaction code, or <code>null</code> if the class or the method doesn't exist
      */
-    public static Integer getTransactionCode(String className, String methodName) {
+    public static Integer getTransactionCode(@NonNull String className, @NonNull String methodName) {
         final String fieldName = "TRANSACTION_" + methodName;
         final String key = className + "." + fieldName;
 
@@ -71,7 +73,7 @@ public class SystemServiceHelper {
      *
      * @throws NullPointerException can't get system service or transaction code
      */
-    public static Parcel obtainParcel(String serviceName, String interfaceName, String methodName) {
+    public static Parcel obtainParcel(@NonNull String serviceName, @NonNull String interfaceName, @NonNull String methodName) {
         return obtainParcel(serviceName, interfaceName, interfaceName + "$Stub", methodName);
     }
 
@@ -86,7 +88,7 @@ public class SystemServiceHelper {
      *
      * @throws NullPointerException can't get system service or transaction code
      */
-    public static Parcel obtainParcel(final String serviceName, final String interfaceName, final String className, final String methodName) {
+    public static Parcel obtainParcel(@NonNull  String serviceName, @NonNull String interfaceName, @NonNull String className, @NonNull String methodName) {
         IBinder binder = getSystemService(serviceName);
         Integer code = getTransactionCode(className, methodName);
 

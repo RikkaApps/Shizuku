@@ -4,6 +4,9 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import moe.shizuku.server.IShizukuService;
 
 public class ShizukuService {
@@ -14,7 +17,7 @@ public class ShizukuService {
         return sService != null ? sService.asBinder() : null;
     }
 
-    public static void setBinder(IBinder binder) {
+    public static void setBinder(@NonNull IBinder binder) {
         sService = IShizukuService.Stub.asInterface(binder);
     }
 
@@ -38,7 +41,7 @@ public class ShizukuService {
      * @see SystemServiceHelper#obtainParcel(String, String, String)
      * @see SystemServiceHelper#obtainParcel(String, String, String, String)
      */
-    public static void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
+    public static void transactRemote(@NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
         sService.asBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
     }
 
@@ -47,7 +50,7 @@ public class ShizukuService {
      *
      * @return RemoteProcess holds the binder of remote process
      */
-    public static RemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
+    public static RemoteProcess newProcess(@NonNull String[] cmd, @Nullable String[] env, @Nullable String dir) throws RemoteException {
         return new RemoteProcess(sService.newProcess(cmd, env, dir));
     }
 
