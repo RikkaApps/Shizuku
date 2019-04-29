@@ -1,5 +1,6 @@
 package moe.shizuku.api;
 
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
@@ -7,6 +8,7 @@ import android.os.RemoteException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.TimeUnit;
 
 import moe.shizuku.server.IRemoteProcess;
 
@@ -70,6 +72,26 @@ public class RemoteProcess extends Process implements Parcelable {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean alive() {
+        try {
+            return mRemote.alive();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean waitForTimeout(long timeout, TimeUnit unit) throws InterruptedException {
+        try {
+            return mRemote.waitForTimeout(timeout, unit.toString());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public IBinder asBinder() {
+        return mRemote.asBinder();
     }
 
     private RemoteProcess(Parcel in) {
