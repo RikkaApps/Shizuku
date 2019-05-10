@@ -10,41 +10,41 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.Objects;
 
 /**
- * Binder Wrapper for Shizuku transactRemote
- *
+ * Binder wrapper to use ShizukuService#transactRemote more conveniently.
+ * <p>
  * example:
- *     IPackageManager.Stub.asInterface(new ShizukuBinder(SystemServiceHelper.getSystemService("package")))
+ * <br><code>IPackageManager pm = IPackageManager.Stub.asInterface(new ShizukuBinder(SystemServiceHelper.getSystemService("package")));
+ * <br>pm.getInstalledPackages(0, 0);</code>
  */
-public class ShizukuBinder extends Binder {
+public class ShizukuBinderWrapper extends Binder {
+
     private IBinder original;
 
-    public ShizukuBinder(@NonNull IBinder original) {
+    public ShizukuBinderWrapper(@NonNull IBinder original) {
         this.original = Objects.requireNonNull(original);
     }
 
     @Override
     protected boolean onTransact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
-        Parcel data_shizuku = Parcel.obtain();
+        Parcel newData = Parcel.obtain();
         try {
-            data_shizuku.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
-            data_shizuku.writeStrongBinder(original);
-            data_shizuku.writeInt(code);
-
-            data_shizuku.appendFrom(data ,0 ,data.dataSize());
-            ShizukuService.transactRemote(data_shizuku ,reply ,flags);
+            newData.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            newData.writeStrongBinder(original);
+            newData.writeInt(code);
+            newData.appendFrom(data, 0, data.dataSize());
+            ShizukuService.transactRemote(newData, reply, flags);
         } finally {
-            data_shizuku.recycle();
+            newData.recycle();
         }
-
         return true;
     }
 
     @Override
-    public void attachInterface(@Nullable IInterface owner, @Nullable String descriptor) {}
+    public void attachInterface(@Nullable IInterface owner, @Nullable String descriptor) {
+    }
 
     @Nullable
     @Override
@@ -52,7 +52,7 @@ public class ShizukuBinder extends Binder {
         try {
             return original.getInterfaceDescriptor();
         } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName() ,e);
+            throw new IllegalStateException(e.getClass().getSimpleName(), e);
         }
     }
 
@@ -75,9 +75,9 @@ public class ShizukuBinder extends Binder {
     @Override
     public void dump(@NonNull FileDescriptor fd, @Nullable String[] args) {
         try {
-            original.dump(fd ,args);
+            original.dump(fd, args);
         } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName() ,e);
+            throw new IllegalStateException(e.getClass().getSimpleName(), e);
         }
     }
 
@@ -86,13 +86,8 @@ public class ShizukuBinder extends Binder {
         try {
             original.dumpAsync(fd, args);
         } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName() ,e);
+            throw new IllegalStateException(e.getClass().getSimpleName(), e);
         }
-    }
-
-    @Override
-    protected void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter fout, @Nullable String[] args) {
-        throw new UnsupportedOperationException("wrapper binder");
     }
 
     @Override
@@ -100,7 +95,7 @@ public class ShizukuBinder extends Binder {
         try {
             original.linkToDeath(recipient, flags);
         } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName() ,e);
+            throw new IllegalStateException(e.getClass().getSimpleName(), e);
         }
     }
 
