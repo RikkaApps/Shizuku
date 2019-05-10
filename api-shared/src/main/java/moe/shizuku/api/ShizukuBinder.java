@@ -34,8 +34,7 @@ public class ShizukuBinder extends Binder {
             data_shizuku.writeStrongBinder(original);
             data_shizuku.writeInt(code);
 
-            data.setDataPosition(0);
-            data_shizuku.appendFrom(data ,0 ,data.dataAvail());
+            data_shizuku.appendFrom(data ,0 ,data.dataSize());
             ShizukuService.transactRemote(data_shizuku ,reply ,flags);
         } finally {
             data_shizuku.recycle();
