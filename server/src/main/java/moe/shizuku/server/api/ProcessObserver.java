@@ -20,6 +20,10 @@ public class ProcessObserver extends IProcessObserver.Stub {
         // no longer exists from API 26
     }
 
+    public void onForegroundServicesChanged(int pid, int uid, int serviceTypes) throws RemoteException {
+        // from Q beta 3
+    }
+
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         try {
