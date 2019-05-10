@@ -1,14 +1,15 @@
 package moe.shizuku.manager.authorization;
 
+import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
-import android.os.Parcel;
 import android.os.Process;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import moe.shizuku.api.ShizukuBinderWrapper;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.SystemServiceHelper;
 import moe.shizuku.manager.Manifest;
@@ -16,30 +17,25 @@ import moe.shizuku.manager.Manifest;
 @SuppressWarnings("SameParameterValue")
 public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
+    private static final IPackageManager PACKAGE_MANAGER = IPackageManager.Stub.asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
+
+    private static IPackageManager getPackageManager() {
+        return PACKAGE_MANAGER;
+    }
+
     private static List<PackageInfo> getInstalledPackages(int flags, int userId) {
         if (!ShizukuService.pingBinder()) {
             return new ArrayList<>();
         }
 
-        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "getInstalledPackages");
-        Parcel reply = Parcel.obtain();
-        data.writeInt(flags);
-        data.writeInt(userId);
-
         try {
-            ShizukuService.transactRemote(data, reply, 0);
-            reply.readException();
-            if (reply.readInt() != 0) {
-                //noinspection unchecked
-                ParceledListSlice<PackageInfo> listSlice = ParceledListSlice.CREATOR.createFromParcel(reply);
+            ParceledListSlice<PackageInfo> listSlice = getPackageManager().getInstalledPackages(flags, userId);
+            if (listSlice != null) {
                 return listSlice.getList();
             }
             return new ArrayList<>();
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);
-        } finally {
-            data.recycle();
-            reply.recycle();
         }
     }
 
@@ -48,21 +44,10 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return PackageManager.PERMISSION_DENIED;
         }
 
-        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "checkPermission");
-        Parcel reply = Parcel.obtain();
-        data.writeString(permName);
-        data.writeString(pkgName);
-        data.writeInt(userId);
-
         try {
-            ShizukuService.transactRemote(data, reply, 0);
-            reply.readException();
-            return reply.readInt();
+            return getPackageManager().checkPermission(permName, pkgName, userId);
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);
-        } finally {
-            data.recycle();
-            reply.recycle();
         }
     }
 
@@ -71,20 +56,10 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return;
         }
 
-        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "grantRuntimePermission");
-        Parcel reply = Parcel.obtain();
-        data.writeString(packageName);
-        data.writeString(permissionName);
-        data.writeInt(userId);
-
         try {
-            ShizukuService.transactRemote(data, reply, 0);
-            reply.readException();
+            getPackageManager().grantRuntimePermission(packageName, permissionName, userId);
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);
-        } finally {
-            data.recycle();
-            reply.recycle();
         }
     }
 
@@ -93,20 +68,10 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
             return;
         }
 
-        Parcel data = SystemServiceHelper.obtainParcel("package", "android.content.pm.IPackageManager", "revokeRuntimePermission");
-        Parcel reply = Parcel.obtain();
-        data.writeString(packageName);
-        data.writeString(permissionName);
-        data.writeInt(userId);
-
         try {
-            ShizukuService.transactRemote(data, reply, 0);
-            reply.readException();
+            getPackageManager().revokeRuntimePermission(packageName, permissionName, userId);
         } catch (Throwable tr) {
             throw new RuntimeException(tr.getMessage(), tr);
-        } finally {
-            data.recycle();
-            reply.recycle();
         }
     }
 

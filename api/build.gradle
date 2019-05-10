@@ -33,7 +33,7 @@ android.libraryVariants.all { variant ->
 ext {
     libraryName = 'Shizuku V3'
     libraryDescription = 'Shizuku V3'
-    libraryVersion = '3.0.0-alpha7'
+    libraryVersion = '3.0.0-alpha8'
     artifact = "api"
     bintrayName = "api"
 }

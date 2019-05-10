@@ -56,6 +56,8 @@ public class ManageAppsActivity extends BaseActivity {
 
                 Throwable tr = (Throwable) object;
                 Toast.makeText(this, Objects.toString(tr, "unknown"), Toast.LENGTH_SHORT).show();
+
+                tr.printStackTrace();
             }
         });
         if (mModel.getData() != null) {
