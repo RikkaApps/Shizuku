@@ -88,7 +88,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation "androidx.core:core:1.0.1"
+    implementation "androidx.core:core:1.0.2"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
@@ -104,7 +104,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'moe.shizuku.privilege:api-base:12'
-    implementation project(':api')
+    implementation 'moe.shizuku.privilege:api:3.0.0-alpha8'
     implementation 'me.weishu:free_reflection:2.0.0' // bypass hidden api restriction
 }
 
