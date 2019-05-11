@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay"/>
+
+    <style name="ThemeOverlay.Black">
+        <item name="android:colorPrimary">@android:color/black</item>
+        <item name="android:colorPrimaryDark">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
+        <item name="android:colorAccent">@color/material_light_blue_100</item>
+    </style>
+</resources>

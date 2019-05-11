@@ -2,12 +2,17 @@ package moe.shizuku.manager.app;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
+import java.util.Objects;
+
 import moe.shizuku.fontprovider.FontProviderClient;
+import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.support.app.DayNightDelegate;
 import moe.shizuku.support.app.LocaleDelegate;
@@ -19,6 +24,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     private LocaleDelegate mLocaleDelegate;
     private DayNightDelegate mDayNightDelegate;
+    private String mTheme;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
 
         getLocaleDelegate().onCreate(this);
+        mTheme = ThemeHelper.getTheme(this);
 
         super.onCreate(savedInstanceState);
     }
@@ -42,9 +49,28 @@ public abstract class BaseActivity extends FragmentActivity {
         super.onResume();
 
         if (getLocaleDelegate().isLocaleChanged()
-                || getDayNightDelegate().getNightMode() != DayNightDelegate.getDefaultNightMode()) {
+                || getDayNightDelegate().getNightMode() != DayNightDelegate.getDefaultNightMode()
+                || !Objects.equals(mTheme, ThemeHelper.getTheme(this))) {
             recreate();
         }
+    }
+
+    @Override
+    protected void onApplyThemeResource(Resources.Theme theme, int resid, boolean first) {
+        // apply real style and our custom style
+        if (getParent() == null) {
+            theme.applyStyle(resid, true);
+        } else {
+            try {
+                theme.setTo(getParent().getTheme());
+            } catch (Exception e) {
+                // Empty
+            }
+            theme.applyStyle(resid, false);
+        }
+        theme.applyStyle(ThemeHelper.getThemeStyleRes(this), true);
+        // only pass theme style to super, so styled theme will not be overwritten
+        super.onApplyThemeResource(theme, R.style.ThemeOverlay, first);
     }
 
     @Override

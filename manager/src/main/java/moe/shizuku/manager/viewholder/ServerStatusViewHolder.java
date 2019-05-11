@@ -20,7 +20,7 @@ import moe.shizuku.support.widget.HtmlCompatTextView;
 
 public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implements View.OnClickListener {
 
-    public static final Creator<ServiceStatus> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_server_status, parent, false));
+    public static final Creator<ServiceStatus> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_home_server_status, parent, false));
 
     private HtmlCompatTextView mStatusText;
     private ImageView mStatusIcon;

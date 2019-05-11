@@ -11,21 +11,27 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import moe.shizuku.manager.app.ThemeHelper;
 import moe.shizuku.preference.ListPreference;
 import moe.shizuku.preference.Preference;
 import moe.shizuku.preference.PreferenceFragment;
+import moe.shizuku.preference.SwitchPreference;
 import moe.shizuku.support.app.DayNightDelegate;
 import moe.shizuku.support.app.LocaleDelegate;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 import moe.shizuku.support.utils.HtmlUtils;
+import moe.shizuku.support.utils.ResourceUtils;
 
 public class SettingsFragment extends PreferenceFragment {
 
     public static final String KEY_LANGUAGE = ShizukuManagerSettings.LANGUAGE;
     public static final String KEY_NIGHT_MODE = ShizukuManagerSettings.NIGHT_MODE;
+    public static final String KEY_BLACK_NIGHT_THEME = ThemeHelper.KEY_BLACK_NIGHT_THEME;
 
     private ListPreference languagePreference;
     private Preference nightModePreference;
+    private SwitchPreference blackNightThemePreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -37,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         languagePreference = (ListPreference) findPreference(KEY_LANGUAGE);
         nightModePreference = findPreference(KEY_NIGHT_MODE);
+        blackNightThemePreference = (SwitchPreference) findPreference(KEY_BLACK_NIGHT_THEME);
 
         languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
             if (newValue instanceof String) {
@@ -79,6 +86,12 @@ public class SettingsFragment extends PreferenceFragment {
             }
             return true;
         });
+
+        blackNightThemePreference.setOnPreferenceChangeListener(((preference, newValue) -> {
+            if (ResourceUtils.isNightMode(requireContext().getResources().getConfiguration()))
+                recreateActivity();
+            return true;
+        }));
     }
 
     @Nullable

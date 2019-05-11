@@ -4,16 +4,20 @@
         <item name="android:colorPrimary">#3F51B5</item>
         <item name="android:colorPrimaryDark">#3949AB</item>
         <item name="android:colorAccent">#1a73e8</item>
+        <item name="android:colorBackground">?cardBackground</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="homeCardStyle">@style/Card.Light</item>
     </style>
 
     <style name="AppTheme" parent="android:Theme.Material">
-        <item name="android:colorAccent">#81D4fA</item>
+        <item name="android:colorAccent">#8ab4f8</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:colorBackground">?cardBackground</item>
+        <item name="homeCardStyle">@style/Card</item>
     </style>
 
     <style name="AppTheme.Apps" parent="AppTheme.Light">
-        <item name="android:windowBackground">@color/cardview_light_background</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
     </style>
 
     <style name="AppTheme.DayNight" parent="AppTheme.Light"/>

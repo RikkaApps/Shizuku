@@ -18,7 +18,7 @@ import moe.shizuku.support.recyclerview.BaseViewHolder;
 
 public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.OnClickListener {
 
-    public static final Creator<PackageInfo> CREATOR = (inflater, parent) -> new AppViewHolder(inflater.inflate(R.layout.item_app, parent, false));
+    public static final Creator<PackageInfo> CREATOR = (inflater, parent) -> new AppViewHolder(inflater.inflate(R.layout.item_applist, parent, false));
 
     private ImageView icon;
     private TextView name;

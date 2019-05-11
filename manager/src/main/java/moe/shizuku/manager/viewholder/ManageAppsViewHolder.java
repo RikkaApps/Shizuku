@@ -12,7 +12,7 @@ import moe.shizuku.support.widget.HtmlCompatTextView;
 
 public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements View.OnClickListener {
 
-    public static final Creator<Integer> CREATOR = (inflater, parent) -> new ManageAppsViewHolder(inflater.inflate(R.layout.item_manage_apps, parent, false));
+    public static final Creator<Integer> CREATOR = (inflater, parent) -> new ManageAppsViewHolder(inflater.inflate(R.layout.item_home_manage_apps, parent, false));
 
     private HtmlCompatTextView title;
     private HtmlCompatTextView summary;

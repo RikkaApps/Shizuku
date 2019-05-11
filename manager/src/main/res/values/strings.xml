@@ -65,5 +65,6 @@
     <string name="service_name_v2">v2 (old)</string>
     <string name="settings_language">Language</string>
     <string name="settings_user_interface">Appearance</string>
-
+    <string name="black_night_theme">Black night theme</string>
+    <string name="black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
 </resources>

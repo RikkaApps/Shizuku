@@ -2,9 +2,7 @@ package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import moe.shizuku.manager.R;
@@ -15,7 +13,7 @@ import moe.shizuku.support.widget.HtmlCompatTextView;
 
 public class StartAdbViewHolder extends BaseViewHolder<Object> {
 
-    public static final Creator<Object> CREATOR = (inflater, parent) -> new StartAdbViewHolder(inflater.inflate(R.layout.item_start_adb, parent, false));
+    public static final Creator<Object> CREATOR = (inflater, parent) -> new StartAdbViewHolder(inflater.inflate(R.layout.item_home_start_adb, parent, false));
 
     private HtmlCompatTextView text;
 

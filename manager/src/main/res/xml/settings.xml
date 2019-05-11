@@ -22,6 +22,12 @@
             android:entryValues="@array/night_mode_value"
             android:defaultValue="1" />
 
+        <SwitchPreference
+            android:key="black_night_theme"
+            android:title="@string/black_night_theme"
+            android:summary="@string/black_night_theme_summary"
+            android:defaultValue="false"/>
+
     </moe.shizuku.preference.PreferenceCategory>
 
 </PreferenceScreen>

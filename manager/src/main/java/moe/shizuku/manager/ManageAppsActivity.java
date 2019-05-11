@@ -62,6 +62,8 @@ public class ManageAppsActivity extends BaseActivity {
         });
         if (mModel.getData() != null) {
             mAdapter.updateData(mModel.getData());
+        } else {
+            mModel.load(this);
         }
 
         RecyclerView recyclerView = findViewById(android.R.id.list);

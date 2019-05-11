@@ -91,7 +91,6 @@ dependencies {
     implementation "androidx.core:core:1.0.1"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
-    implementation "androidx.cardview:cardview:$androidXLibraryVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     implementation 'com.github.topjohnwu.libsu:core:2.3.3'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"

@@ -60,5 +60,6 @@
     <string name="service_name_v2">v2（舊式）</string>
     <string name="settings_language">語言</string>
     <string name="settings_user_interface">界面外觀</string>
-
+    <string name="black_night_theme">黑色夜間主題</string>
+    <string name="black_night_theme_summary">當夜間模式啟用時使用純黑色主題</string>
 </resources>

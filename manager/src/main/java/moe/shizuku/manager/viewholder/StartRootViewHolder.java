@@ -16,7 +16,7 @@ import moe.shizuku.support.utils.ContextUtils;
 
 public class StartRootViewHolder extends BaseViewHolder<Boolean> {
 
-    public static final Creator<Boolean> CREATOR = (inflater, parent) -> new StartRootViewHolder(inflater.inflate(R.layout.item_start_root, parent, false));
+    public static final Creator<Boolean> CREATOR = (inflater, parent) -> new StartRootViewHolder(inflater.inflate(R.layout.item_home_start_root, parent, false));
 
     private View start;
     private View restart;

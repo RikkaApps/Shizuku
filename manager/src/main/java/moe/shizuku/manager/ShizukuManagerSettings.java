@@ -30,6 +30,10 @@ public class ShizukuManagerSettings {
 
     private static SharedPreferences sPreferences;
 
+    public static SharedPreferences getPreferences() {
+        return sPreferences;
+    }
+
     @NonNull
     private static Context getSettingsStorageContext(@NonNull Context context) {
         Context storageContext;
@@ -116,7 +120,7 @@ public class ShizukuManagerSettings {
 
     @NightMode
     public static int getNightMode() {
-        return sPreferences.getInt(NIGHT_MODE, DayNightDelegate.NightMode.MODE_NIGHT_NO);
+        return sPreferences.getInt(NIGHT_MODE, NightMode.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public static Locale getLocale() {

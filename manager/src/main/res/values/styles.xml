@@ -4,21 +4,20 @@
     <style name="Card">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:stateListAnimator">@animator/raise</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
-        <item name="contentPaddingTop">8dp</item>
-        <item name="contentPaddingBottom">8dp</item>
-        <item name="cardCornerRadius">2dp</item>
-        <item name="cardElevation">2dp</item>
+        <item name="android:foreground">@drawable/material_button_outline_foreground</item>
+        <item name="android:background">@drawable/material_button_outline_background_dark</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
     </style>
 
-    <style name="Card.ServerStatus" parent="Card">
-        <item name="contentPaddingTop">8dp</item>
-        <item name="contentPaddingBottom">8dp</item>
+    <style name="Card.Light">
+        <item name="android:background">@drawable/material_button_outline_background</item>
     </style>
 
     <style name="CardButton">
