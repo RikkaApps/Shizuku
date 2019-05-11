@@ -30,6 +30,8 @@ android {
     }
 }
 
+// task to remove all .class generated from stub class, or app will crash if proguarded
+// if you use other plugin, you must find where the plugin generate file and delete them
 android.applicationVariants.all { variant ->
     String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
     String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
@@ -44,13 +46,13 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation "androidx.annotation:annotation:$androidXLibraryVersion"
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation project(':api') // shizuku v3
 
-    implementation 'me.weishu:free_reflection:1.2.0' // bypass hidden api restriction
+    implementation 'me.weishu:free_reflection:2.0.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')

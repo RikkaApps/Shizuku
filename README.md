@@ -38,7 +38,7 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 1. 添加依赖
    
    ```
-   implementation 'moe.shizuku.privilege:api:3.0.0-alpha6' // Shizuku v3
+   implementation 'moe.shizuku.privilege:api:3.0.0-alpha8' // Shizuku v3
    ```
 
    详细版本号可在 https://bintray.com/rikkaw/Shizuku/ 查看。
@@ -75,9 +75,20 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
    对 API 23 以下，需要额外一步启动 Shizuku Manager app 获取 token 的过程，具体流程请参考 sample。
 
-4. 使用：binder transact
+4. 使用：binder transact（使用 ShizukuBinderWrapper）
+
+   API `3.0.0-alpha8` 起增加了 `ShizukuBinderWrapper`，大致使用方法如下，完整用法及其他参考请参看 sample。
+
+   ```
+   IPackageManager pm = IPackageManager.Stub.asInterface(new ShizukuBinder(SystemServiceHelper.getSystemService("package")));
+   pm.getInstalledPackages(0, 0);
+   ```
+
+5. 使用：binder transact（直接使用）
+
+   > 这种方式使用起来更加麻烦且更容易遇到问题（最后的“特别注意”），更推荐使用上面的方法。
    
-   **要使用 Shizuku，你需要了解你所要使用的 API 的这样的过程。**
+   **使用这种方式，你需要了解你所要使用的 API 背后的过程。**
 
    以 `PackageManager#getInstalledPackages` 为例，如果是在自身进程执行，最终会执行 `android.content.pm.IPackageManager$Stub` 中的这样的过程。
 
@@ -139,9 +150,12 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
    **完整用法及其他参考请参看 sample。**
 
-   不同 Android 版本下 API 可能不同，请务必仔细检查。此外，`android.app.IActivityManager` 在 API 26 及以后才存在 aidl 形式， `android.app.IActivityManager$Stub` 只在 API 26 以上存在。
+   特别注意：
+   
+   * 不同 Android 版本下 API 可能不同，请务必仔细检查。此外，`android.app.IActivityManager` 在 API 26 及以后才存在 aidl 形式， `android.app.IActivityManager$Stub` 只在 API 26 以上存在。
+   * `SystemServiceHelper.getTransactionCode` 可能不能获得正确的 transaction code，比如在 API 25 上不存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages` 而存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages_47`。你需要自己检查并处理这种情况，我们更推荐你使用 `ShizukuBinderWrapper` 的方式。
 
-5. 使用：直接运行指令
+6. 使用：直接运行指令
      
    请参看 sample。
 
@@ -149,7 +163,7 @@ Shizuku Manager app 会引导用户使用 root 或是 adb 方式运行一个进�
 
    adb 与 root 权限相差较大，如果你需要开发 root 权限才可以使用的应用，建议不使用 Shizuku。
 
-6. 其他使用方法及注意事项
+7. 其他使用方法及注意事项
 
    [adb 拥有的权限](https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/Shell/AndroidManifest.xml)有限，可以先使用 `ShizukuService#getUid` 及 `ShizukuService#checkPermission` 检查是否为 adb 及是否有权限。
 

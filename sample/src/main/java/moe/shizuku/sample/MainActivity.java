@@ -151,13 +151,13 @@ public class MainActivity extends Activity {
         try {
             Log.d("ShizukuSample", "getUsers: " + ShizukuApi.UserManager_getUsers(true));
         } catch (Throwable tr) {
-            Log.e("ShizukuSample", "registerTaskStackListener", tr);
+            Log.e("ShizukuSample", "getUsers", tr);
         }
 
         try {
             Log.d("ShizukuSample", "getInstalledPackages: " + ShizukuApi.PackageManager_getInstalledPackages(0, 0));
         } catch (Throwable tr) {
-            Log.e("ShizukuSample", "registerTaskStackListener", tr);
+            Log.e("ShizukuSample", "getInstalledPackages", tr);
         }
 
         try {
