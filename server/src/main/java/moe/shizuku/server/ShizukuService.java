@@ -1,6 +1,8 @@
 package moe.shizuku.server;
 
 import android.content.IContentProvider;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Binder;
@@ -24,6 +26,7 @@ import moe.shizuku.server.api.Api;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.reflection.ContentProviderHolderHelper;
 import moe.shizuku.server.reflection.IContentProviderHelper;
+import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
@@ -192,10 +195,38 @@ public class ShizukuService extends IShizukuService.Stub {
         return super.onTransact(code, data, reply, flags);
     }
 
-    boolean sendBinderToManager() {
-        sendBinderToManger(this);
+    void sendBinderToClients() {
+        try {
+            IUserManager um = Api.USER_MANAGER_SINGLETON.get();
+            if (um != null) {
+                for (UserInfo userInfo : um.getUsers(false)) {
+                    sendBinderToClients(this, userInfo.id);
+                }
+            }
+        } catch (Throwable tr) {
+            LOGGER.e("exception when call getUsers, try user 0", tr);
 
-        return true;
+            sendBinderToClients(this, 0);
+        }
+    }
+
+    private static void sendBinderToClients(Binder binder, int userId) {
+        try {
+            for (PackageInfo pi : Api.getInstalledPackages(PackageManager.GET_PERMISSIONS, userId)) {
+                if (pi == null || pi.requestedPermissions == null)
+                    continue;
+
+                if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION)) {
+                    sendBinderToUserApp(binder, pi.packageName, userId);
+                }
+            }
+        } catch (Throwable tr) {
+            LOGGER.e("exception when call getInstalledPackages", tr);
+        }
+    }
+
+    void sendBinderToManager() {
+        sendBinderToManger(this);
     }
 
     private static void sendBinderToManger(Binder binder) {

@@ -107,11 +107,8 @@ public class Starter {
         Looper.prepare();
 
         ShizukuService server = new ShizukuService(getToken(args));
-        if (!server.sendBinderToManager()) {
-            System.exit(1);
-            return;
-        }
-
+        server.sendBinderToManager();
+        server.sendBinderToClients();
         Looper.loop();
 
         LOGGER.i("server exit");

@@ -7,6 +7,7 @@ import android.app.IUidObserver;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.ParceledListSlice;
 import android.os.IBinder;
 import android.os.IUserManager;
 import android.os.RemoteException;
@@ -14,6 +15,8 @@ import android.os.ServiceManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import moe.shizuku.server.utils.BinderSingleton;
 
@@ -116,6 +119,32 @@ public class Api {
             throw new RemoteException("can't get IPackageManager");
         }
         return pm.getPackagesForUid(uid);
+    }
+
+    public static List<ApplicationInfo> getInstalledApplications(int flags, int userId) throws RemoteException {
+        IPackageManager pm = PACKAGE_MANAGER_SINGLETON.get();
+        if (pm == null) {
+            throw new RemoteException("can't get IPackageManager");
+        }
+        //noinspection unchecked
+        ParceledListSlice<ApplicationInfo> list = pm.getInstalledApplications(flags, userId);
+        if (list != null)
+            return list.getList();
+        else
+            return new ArrayList<>();
+    }
+
+    public static List<PackageInfo> getInstalledPackages(int flags, int userId) throws RemoteException {
+        IPackageManager pm = PACKAGE_MANAGER_SINGLETON.get();
+        if (pm == null) {
+            throw new RemoteException("can't get IPackageManager");
+        }
+        //noinspection unchecked
+        ParceledListSlice<PackageInfo> list = pm.getInstalledPackages(flags, userId);
+        if (list != null)
+            return list.getList();
+        else
+            return new ArrayList<>();
     }
 
     public static Object getContentProviderExternal(String name, int userId, IBinder token) throws RemoteException {
