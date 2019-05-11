@@ -13,11 +13,26 @@ public class ShizukuService {
 
     private static IShizukuService sService;
 
+    private static IBinder requireBinder() {
+        IBinder binder = getBinder();
+        if (binder == null) {
+            throw new IllegalStateException("Binder haven't received, check Shizuku and your code.");
+        }
+        return binder;
+    }
+
+    private static IShizukuService requireService() {
+        if (sService == null) {
+            throw new IllegalStateException("Binder haven't received, check Shizuku and your code.");
+        }
+        return sService;
+    }
+
     public static IBinder getBinder() {
         return sService != null ? sService.asBinder() : null;
     }
 
-    public static void setBinder(@NonNull IBinder binder) {
+    public static void setBinder(IBinder binder) {
         sService = IShizukuService.Stub.asInterface(binder);
     }
 
@@ -42,7 +57,7 @@ public class ShizukuService {
      * @see SystemServiceHelper#obtainParcel(String, String, String, String)
      */
     public static void transactRemote(@NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
-        sService.asBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
+        requireBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
     }
 
     /**
@@ -51,7 +66,7 @@ public class ShizukuService {
      * @return RemoteProcess holds the binder of remote process
      */
     public static RemoteProcess newProcess(@NonNull String[] cmd, @Nullable String[] env, @Nullable String dir) throws RemoteException {
-        return new RemoteProcess(sService.newProcess(cmd, env, dir));
+        return new RemoteProcess(requireService().newProcess(cmd, env, dir));
     }
 
     /**
@@ -60,7 +75,7 @@ public class ShizukuService {
      * @return uid
      */
     public static int getUid() throws RemoteException {
-        return sService.getUid();
+        return requireService().getUid();
     }
 
     /**
@@ -69,7 +84,7 @@ public class ShizukuService {
      * @return server version
      */
     public static int getVersion() throws RemoteException {
-        return sService.getVersion();
+        return requireService().getVersion();
     }
 
     /**
@@ -79,7 +94,7 @@ public class ShizukuService {
      * @return PackageManager.PERMISSION_DENIED or PackageManager.PERMISSION_GRANTED
      */
     public static int checkPermission(String permission) throws RemoteException {
-        return sService.checkPermission(permission);
+        return requireService().checkPermission(permission);
     }
 
     /**
@@ -90,6 +105,6 @@ public class ShizukuService {
      * @throws IllegalStateException call on API 23+
      */
     public static boolean setCurrentProcessTokenPre23(String token) throws RemoteException {
-        return sService.setPidToken(token);
+        return requireService().setPidToken(token);
     }
 }
