@@ -16,6 +16,7 @@ import moe.shizuku.manager.R;
 import moe.shizuku.manager.model.ServiceStatus;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.text.HtmlCompat;
+import moe.shizuku.support.utils.ResourceUtils;
 import moe.shizuku.support.widget.HtmlCompatTextView;
 
 public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implements View.OnClickListener {
@@ -74,10 +75,10 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
 
         if (okV2 && okV3) {
             mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_24dp));
-            mStatusIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.status_ok)));
+            mStatusIcon.setImageTintList(ResourceUtils.resolveColorStateList(context.getTheme(), R.attr.colorSafe));
         } else {
             mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_24dp));
-            mStatusIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.status_warning)));
+            mStatusIcon.setImageTintList(ResourceUtils.resolveColorStateList(context.getTheme(), R.attr.colorInactive));
         }
 
         String v2Text, v3Text;

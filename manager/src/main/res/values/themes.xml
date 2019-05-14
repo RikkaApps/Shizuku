@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.Light" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:colorPrimary">#3F51B5</item>
-        <item name="android:colorPrimaryDark">#3949AB</item>
-        <item name="android:colorAccent">#1a73e8</item>
-        <item name="android:colorBackground">?cardBackground</item>
+    <style name="Theme.Light" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/background_color_light</item>
+        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
+        <item name="android:colorAccent">@color/accent_color_light</item>
+        <item name="android:colorBackground">@color/background_color_light</item>
+        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Light</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="homeCardStyle">@style/Card.Light</item>
     </style>
 
-    <style name="AppTheme" parent="android:Theme.Material">
-        <item name="android:colorAccent">#8ab4f8</item>
+    <style name="Theme" parent="android:Theme.Material">
+        <item name="android:colorPrimary">@color/background_color_dark</item>
+        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
+        <item name="android:colorAccent">@color/accent_color_dark</item>
+        <item name="android:colorBackground">@color/background_color_dark</item>
+        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="android:colorBackground">?cardBackground</item>
         <item name="homeCardStyle">@style/Card</item>
     </style>
 
-    <style name="AppTheme.Apps" parent="AppTheme.Light">
-        <item name="android:windowBackground">?android:colorBackground</item>
-    </style>
-
-    <style name="AppTheme.DayNight" parent="AppTheme.Light"/>
 </resources>

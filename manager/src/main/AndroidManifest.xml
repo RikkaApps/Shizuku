@@ -51,10 +51,11 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.DayNight"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

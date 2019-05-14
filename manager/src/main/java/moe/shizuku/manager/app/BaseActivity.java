@@ -42,6 +42,10 @@ public abstract class BaseActivity extends FragmentActivity {
         mTheme = ThemeHelper.getTheme(this);
 
         super.onCreate(savedInstanceState);
+
+        if (getActionBar() != null) {
+            getActionBar().setElevation(0f);
+        }
     }
 
     @Override

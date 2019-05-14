@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.Light"/>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Apps" parent="AppTheme">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
 
     <style name="Card">
         <item name="android:layout_width">match_parent</item>

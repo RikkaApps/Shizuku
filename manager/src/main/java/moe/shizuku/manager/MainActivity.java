@@ -13,15 +13,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.HomeAdapter;
 import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.HomeViewModel;
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
+import moe.shizuku.support.design.RaisedToolbar;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
 
 public class MainActivity extends BaseActivity {
@@ -41,6 +45,8 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    private RaisedToolbar mToolbar;
+
     private HomeViewModel mHomeModel;
     private AppsViewModel mAppsModel;
 
@@ -52,6 +58,8 @@ public class MainActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setActionBar(mToolbar = findViewById(R.id.toolbar));
 
         mHomeModel = ViewModelProviders.of(this).get("home", HomeViewModel.class);
         mHomeModel.observe(this, object -> {
@@ -89,6 +97,16 @@ public class MainActivity extends BaseActivity {
 
         RecyclerView recyclerView = findViewById(android.R.id.list);
         recyclerView.setAdapter(mAdapter);
+
+        recyclerView.setPaddingRelative(0, recyclerView.getPaddingTop() + recyclerView.getPaddingBottom(), 0, recyclerView.getPaddingBottom());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (lm != null)
+                    mToolbar.setRaised(lm.findFirstCompletelyVisibleItemPosition() > 0);
+            }
+        });
 
         RecyclerViewHelper.fixOverScroll(recyclerView);
 

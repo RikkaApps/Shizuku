@@ -7,6 +7,6 @@
         <item name="android:colorPrimaryDark">@android:color/black</item>
         <item name="android:colorBackground">@android:color/black</item>
         <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
-        <item name="android:colorAccent">@color/material_light_blue_100</item>
+        <item name="android:colorAccent">@color/accent_color_dark</item>
     </style>
 </resources>

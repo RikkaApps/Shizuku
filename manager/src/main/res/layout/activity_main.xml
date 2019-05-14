@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
+    android:orientation="vertical"
     android:clipToPadding="false"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+    android:clipChildren="false">
 
-</androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?android:actionBarSize"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideOverlay"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <moe.shizuku.support.design.RaisedToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="?android:colorPrimary"
+        android:stateListAnimator="@animator/raise_animator" />
+
+</FrameLayout>

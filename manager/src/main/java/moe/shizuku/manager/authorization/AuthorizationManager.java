@@ -6,8 +6,6 @@ import android.os.Build;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.WorkerThread;
-
 public class AuthorizationManager {
 
     private static final AuthorizationManagerImpl IMPL;
