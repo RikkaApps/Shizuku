@@ -40,7 +40,7 @@ android.applicationVariants.all { variant ->
             delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
         }
     }
-    variant.processJavaResources.dependsOn(taskName)
+    variant.processJavaResourcesProvider.get().dependsOn(taskName)
 }
 
 dependencies {

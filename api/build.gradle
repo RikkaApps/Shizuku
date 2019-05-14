@@ -27,7 +27,7 @@ android.libraryVariants.all { variant ->
     task "${taskName}" {
         doLast { delete "${buildDir}/intermediates/javac/${variant.name}/compile${variant.name}JavaWithJavac/classes/android" }
     }
-    variant.processJavaResources.dependsOn(taskName)
+    variant.processJavaResourcesProvider.get().dependsOn(taskName)
 }
 
 ext {

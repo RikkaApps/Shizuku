@@ -54,7 +54,7 @@ android {
             outputFileName = "shizuku-manager-${variant.versionCode}.apk"
 
             if (variant.getBuildType().isMinifyEnabled()) {
-                variant.assemble.doLast {
+                variant.assembleProvider.get().doLast {
                     copy {
                         from variant.mappingFile
                         into "${rootDir}/${project.name}/release"
@@ -80,7 +80,7 @@ android.applicationVariants.all { variant ->
             delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
         }
     }
-    variant.processJavaResources.dependsOn(taskName)
+    variant.processJavaResourcesProvider.get().dependsOn(taskName)
 }
 
 dependencies {
@@ -96,7 +96,7 @@ dependencies {
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation "moe.shizuku.support:design:3.1.2"
+    implementation "moe.shizuku.support:design:3.1.5"
     implementation 'moe.shizuku.support:support-utils:3.0.6'
     implementation 'moe.shizuku.support:recyclerview-utils:3.0.4'
     implementation "moe.shizuku.support:htmlcompat:2.0.0"
