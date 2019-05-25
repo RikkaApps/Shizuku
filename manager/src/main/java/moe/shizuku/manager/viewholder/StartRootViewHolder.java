@@ -3,6 +3,7 @@ package moe.shizuku.manager.viewholder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import moe.shizuku.manager.service.ShellService;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.utils.ContextUtils;
+import moe.shizuku.support.widget.HtmlCompatTextView;
 
 public class StartRootViewHolder extends BaseViewHolder<Boolean> {
 
@@ -37,6 +39,8 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
 
         start.setOnClickListener(listener);
         restart.setOnClickListener(listener);
+
+        itemView.<HtmlCompatTextView>findViewById(android.R.id.text1).setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void onStartClicked(View v) {

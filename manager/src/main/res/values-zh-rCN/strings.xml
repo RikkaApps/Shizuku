@@ -21,7 +21,9 @@
     <p>按下回车，如果成功将看到主界面运行状态刷新。]]></string>
     <string name="start_server_summary_root"><![CDATA[
     若启动成功，则 Shizuku 将在开机后自动启动。
-    <br>如果无法正常工作，请检查您的系统或是第三方工具是否限制了 Shizuku Manager 开机启动。]]></string>
+    <br>如果无法正常开机启动，请检查您的系统或是第三方工具是否限制了 Shizuku Manager。
+    <p>除 Google 外，几乎所有厂商都有自己的后台限制机制（部分厂商尤为疯狂，如 OnePlus，严重影响许多应用的功能）。
+    <br>请参考 <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> 了解如何关闭限制。]]></string>
     <string name="copy_command">复制</string>
     <string name="send_command">发送</string>
     <string name="auth_allow">总是允许</string>
