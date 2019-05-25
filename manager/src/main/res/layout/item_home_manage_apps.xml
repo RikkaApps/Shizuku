@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_manage_apps_24dp"
-        android:tint="?android:textColorSecondary"
+        android:tint="?appColorPrimary"
         android:tintMode="src_in"
         android:scaleType="center"
         android:duplicateParentState="true" />

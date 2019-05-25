@@ -8,4 +8,7 @@
 
     <color name="background_color_dark">@color/material_grey_800</color>
     <color name="accent_color_dark">@color/material_light_blue_100</color>
+
+    <color name="app_color_light">#3F51B5</color>
+    <color name="app_color_dark">#9FA8DA</color>
 </resources>
