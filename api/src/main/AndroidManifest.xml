@@ -11,6 +11,9 @@
         <meta-data
             android:name="moe.shizuku.client.V3_SUPPORT"
             android:value="true" />
+        <meta-data
+            android:name="moe.shizuku.client.V3_API_VERSION"
+            android:value="${versionName}" />
     </application>
 
 </manifest>

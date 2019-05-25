@@ -6,7 +6,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName '1'
+        versionName '3.0.0-alpha9'
+        manifestPlaceholders = [versionName: versionName]
     }
     buildTypes {
         release {
@@ -25,7 +26,9 @@ android {
 android.libraryVariants.all { variant ->
     String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
     task "${taskName}" {
-        doLast { delete "${buildDir}/intermediates/javac/${variant.name}/compile${variant.name}JavaWithJavac/classes/android" }
+        doLast {
+            delete "${buildDir}/intermediates/javac/${variant.name}/compile${variant.name}JavaWithJavac/classes/android"
+        }
     }
     variant.processJavaResourcesProvider.get().dependsOn(taskName)
 }
@@ -33,7 +36,7 @@ android.libraryVariants.all { variant ->
 ext {
     libraryName = 'Shizuku V3'
     libraryDescription = 'Shizuku V3'
-    libraryVersion = '3.0.0-alpha9'
+    libraryVersion = android.defaultConfig.versionName
     artifact = "api"
     bintrayName = "api"
 }

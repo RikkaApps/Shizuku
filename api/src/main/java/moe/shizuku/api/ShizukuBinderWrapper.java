@@ -19,7 +19,7 @@ import java.util.Objects;
  * <br><code>IPackageManager pm = IPackageManager.Stub.asInterface(new ShizukuBinder(SystemServiceHelper.getSystemService("package")));
  * <br>pm.getInstalledPackages(0, 0);</code>
  */
-public class ShizukuBinderWrapper extends Binder {
+public class ShizukuBinderWrapper implements IBinder {
 
     private IBinder original;
 
@@ -28,7 +28,7 @@ public class ShizukuBinderWrapper extends Binder {
     }
 
     @Override
-    protected boolean onTransact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
+    public boolean transact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
         Parcel newData = Parcel.obtain();
         try {
             newData.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR);
@@ -40,10 +40,6 @@ public class ShizukuBinderWrapper extends Binder {
             newData.recycle();
         }
         return true;
-    }
-
-    @Override
-    public void attachInterface(@Nullable IInterface owner, @Nullable String descriptor) {
     }
 
     @Nullable
