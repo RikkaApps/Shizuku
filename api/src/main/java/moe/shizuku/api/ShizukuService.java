@@ -13,34 +13,32 @@ public class ShizukuService {
 
     private static IShizukuService sService;
 
-    private static IBinder requireBinder() {
-        IBinder binder = getBinder();
-        if (binder == null) {
-            throw new IllegalStateException("Binder haven't received, check Shizuku and your code.");
-        }
-        return binder;
-    }
-
-    private static IShizukuService requireService() {
-        if (sService == null) {
-            throw new IllegalStateException("Binder haven't received, check Shizuku and your code.");
-        }
-        return sService;
-    }
-
-    public static IBinder getBinder() {
-        return sService != null ? sService.asBinder() : null;
-    }
-
     public static void setBinder(IBinder binder) {
         sService = IShizukuService.Stub.asInterface(binder);
     }
 
+    private static IShizukuService requireService() {
+        if (getService() == null) {
+            throw new IllegalStateException("Binder haven't received, check Shizuku and your code.");
+        }
+        return getService();
+    }
+
+    private static IShizukuService getService() {
+        return sService;
+    }
+
+    public static IBinder getBinder() {
+        IShizukuService service = getService();
+        return service != null ? service.asBinder() : null;
+    }
+
     public static boolean pingBinder() {
-        if (sService == null)
+        if (getBinder() == null)
             return false;
 
-        return sService.asBinder().pingBinder();
+        IBinder binder = getBinder();
+        return binder != null && binder.pingBinder();
     }
 
     /**
@@ -57,7 +55,7 @@ public class ShizukuService {
      * @see SystemServiceHelper#obtainParcel(String, String, String, String)
      */
     public static void transactRemote(@NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
-        requireBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
+        requireService().asBinder().transact(ShizukuApiConstants.BINDER_TRANSACTION_transact, data, reply, flags);
     }
 
     /**

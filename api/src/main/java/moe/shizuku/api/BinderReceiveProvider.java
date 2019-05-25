@@ -3,6 +3,7 @@ package moe.shizuku.api;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +26,10 @@ public class BinderReceiveProvider extends ContentProvider {
 
     public static boolean isProviderProcess() {
         return sIsProviderProcess;
+    }
+
+    public static void setIsProviderProcess(boolean isProviderProcess) {
+        sIsProviderProcess = isProviderProcess;
     }
 
     @Override
@@ -66,6 +71,12 @@ public class BinderReceiveProvider extends ContentProvider {
                     Log.i("ShizukuClient", "binder received");
 
                     ShizukuService.setBinder(container.binder);
+
+                    //noinspection ConstantConditions
+                    Intent intent = new Intent(MultiProcessHelper.ACTION_BINDER_RECEIVED)
+                            .putExtra(ShizukuApiConstants.EXTRA_BINDER, container)
+                            .setPackage(getContext().getPackageName());
+                    getContext().sendBroadcast(intent);
                 }
                 // In order for user app report error, we always call listener even if the binder is null.
                 // This provider is protected by INTERACT_ACROSS_USERS_FULL permission, other user apps can't use.
