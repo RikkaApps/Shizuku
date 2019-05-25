@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (lm != null)
-                    mToolbar.setRaised(lm.findFirstCompletelyVisibleItemPosition() > 0);
+                    mToolbar.setRaised(lm.findFirstCompletelyVisibleItemPosition() != 0);
             }
         });
 
