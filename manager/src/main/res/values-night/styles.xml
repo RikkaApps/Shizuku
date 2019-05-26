@@ -6,4 +6,6 @@
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
 
+    <style name="Widget.MaterialCircleIconView.DayNight" parent="Widget.MaterialCircleIconView.Dark"/>
+
 </resources>

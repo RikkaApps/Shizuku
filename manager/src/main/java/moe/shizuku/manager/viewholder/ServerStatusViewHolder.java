@@ -14,6 +14,7 @@ import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.model.ServiceStatus;
+import moe.shizuku.manager.widget.MaterialCircleIconView;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.text.HtmlCompat;
 import moe.shizuku.support.utils.ResourceUtils;
@@ -24,7 +25,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
     public static final Creator<ServiceStatus> CREATOR = (inflater, parent) -> new ServerStatusViewHolder(inflater.inflate(R.layout.item_home_server_status, parent, false));
 
     private HtmlCompatTextView mStatusText;
-    private ImageView mStatusIcon;
+    private MaterialCircleIconView mStatusIcon;
 
     public ServerStatusViewHolder(View itemView) {
         super(itemView);
@@ -75,10 +76,10 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
 
         if (okV2 && okV3) {
             mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_24dp));
-            mStatusIcon.setImageTintList(ResourceUtils.resolveColorStateList(context.getTheme(), R.attr.colorSafe));
+            mStatusIcon.setColorName("blue");
         } else {
             mStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_24dp));
-            mStatusIcon.setImageTintList(ResourceUtils.resolveColorStateList(context.getTheme(), R.attr.colorInactive));
+            mStatusIcon.setColorName("blue_grey");
         }
 
         String v2Text, v3Text;
