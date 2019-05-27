@@ -6,20 +6,18 @@
     android:orientation="horizontal"
     style="?homeCardStyle">
 
-    <ImageView
+    <moe.shizuku.manager.widget.MaterialCircleIconView
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_server_error_24dp"
-        android:tintMode="src_in"
-        android:scaleType="center" />
+        android:src="@drawable/ic_server_error_24dp" />
 
     <moe.shizuku.support.widget.HtmlCompatTextView
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
         android:lineSpacingExtra="2dp"

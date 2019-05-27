@@ -9,18 +9,32 @@
     android:paddingEnd="0dp"
     android:paddingBottom="8dp">
 
-    <moe.shizuku.support.widget.HtmlCompatTextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textAppearance="@android:style/TextAppearance.Material.Body2"
-        android:drawableStart="@drawable/ic_adb_24dp"
-        android:drawableTint="?android:textColorSecondary"
-        android:drawableTintMode="src_in"
-        android:drawablePadding="24dp"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:htmlText="@string/start_server_title_adb" />
+        android:gravity="center_vertical">
+
+        <moe.shizuku.manager.widget.MaterialCircleIconView
+            android:id="@android:id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_adb_24dp"
+            android:duplicateParentState="true"
+            app:iconColorName="teal"/>
+
+        <moe.shizuku.support.widget.HtmlCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAppearance="@android:style/TextAppearance.Material.Body2"
+            android:layout_marginStart="16dp"
+            app:htmlText="@string/start_server_title_adb" />
+
+    </LinearLayout>
 
     <moe.shizuku.support.widget.HtmlCompatTextView
         android:id="@android:id/text1"

@@ -35,10 +35,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingStart">28dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:drawablePadding">24dp</item>
+        <item name="android:textColor">?appColorPrimary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="GrantPermissions"
@@ -50,5 +52,23 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="Widget.MaterialCircleIconView.Light" parent="android:Widget">
+        <item name="iconForegroundChroma">600</item>
+        <item name="iconBackgroundChroma">50</item>
+        <item name="android:background">@drawable/shape_circle_icon_background</item>
+        <item name="android:tintMode">src_in</item>
+        <item name="android:backgroundTintMode">src_in</item>
+    </style>
+
+    <style name="Widget.MaterialCircleIconView.Dark" parent="android:Widget">
+        <item name="iconForegroundChroma">100</item>
+        <item name="iconBackgroundChroma">600</item>
+        <item name="android:background">@drawable/shape_circle_icon_background</item>
+        <item name="android:tintMode">src_in</item>
+        <item name="android:backgroundTintMode">src_in</item>
+    </style>
+
+    <style name="Widget.MaterialCircleIconView.DayNight" parent="Widget.MaterialCircleIconView.Light"/>
 
 </resources>
