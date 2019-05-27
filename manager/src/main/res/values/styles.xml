@@ -35,10 +35,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingStart">28dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:drawablePadding">24dp</item>
+        <item name="android:textColor">?appColorPrimary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="GrantPermissions"

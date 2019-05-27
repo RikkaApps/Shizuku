@@ -17,7 +17,7 @@
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
         android:lineSpacingExtra="2dp"
