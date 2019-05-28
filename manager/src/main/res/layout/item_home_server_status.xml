@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?homeCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    style="?homeCardStyle">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <moe.shizuku.manager.widget.MaterialCircleIconView
         android:id="@android:id/icon"
@@ -18,9 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:lineSpacingExtra="2dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
-        android:lineSpacingExtra="2dp"
         tools:text="Running (version 10)" />
 
 </LinearLayout>

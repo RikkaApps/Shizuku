@@ -53,7 +53,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Widget.MaterialCircleIconView.Light" parent="android:Widget">
+    <style name="MaterialCircleIconViewLight">
         <item name="iconForegroundChroma">600</item>
         <item name="iconBackgroundChroma">50</item>
         <item name="android:background">@drawable/shape_circle_icon_background</item>
@@ -61,14 +61,12 @@
         <item name="android:backgroundTintMode">src_in</item>
     </style>
 
-    <style name="Widget.MaterialCircleIconView.Dark" parent="android:Widget">
+    <style name="MaterialCircleIconViewDark">
         <item name="iconForegroundChroma">100</item>
         <item name="iconBackgroundChroma">600</item>
         <item name="android:background">@drawable/shape_circle_icon_background</item>
         <item name="android:tintMode">src_in</item>
         <item name="android:backgroundTintMode">src_in</item>
     </style>
-
-    <style name="Widget.MaterialCircleIconView.DayNight" parent="Widget.MaterialCircleIconView.Light"/>
 
 </resources>

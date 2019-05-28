@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Light" parent="android:Theme.Material.Light.DarkActionBar">
+
+    <style name="BaseTheme.Light" parent="Theme.Design.Light.LightStatusBar">
         <item name="android:colorPrimary">@color/background_color_light</item>
-        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
         <item name="android:colorAccent">@color/accent_color_light</item>
         <item name="android:colorBackground">@color/background_color_light</item>
         <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Light</item>
         <item name="appColorPrimary">@color/app_color_light</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="homeCardStyle">@style/Card.Light</item>
+        <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
     </style>
 
-    <style name="Theme" parent="android:Theme.Material">
+    <style name="Theme.Light" parent="BaseTheme.Light" />
+
+    <style name="BaseTheme" parent="Theme.Design">
         <item name="android:colorPrimary">@color/background_color_dark</item>
         <item name="android:colorPrimaryDark">?android:colorPrimary</item>
         <item name="android:colorAccent">@color/accent_color_dark</item>
@@ -20,6 +23,9 @@
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="homeCardStyle">@style/Card</item>
+        <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
     </style>
+
+    <style name="Theme" parent="BaseTheme" />
 
 </resources>

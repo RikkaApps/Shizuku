@@ -20,8 +20,10 @@ public class MaterialCircleIconView extends ImageView {
 
     @NonNull
     private String mIconForegroundChroma;
+
     @NonNull
     private String mIconBackgroundChroma;
+
     @NonNull
     private String mColorName;
 
@@ -34,7 +36,7 @@ public class MaterialCircleIconView extends ImageView {
     }
 
     public MaterialCircleIconView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, R.style.Widget_MaterialCircleIconView_Light);
+        this(context, attrs, defStyleAttr, R.style.MaterialCircleIconViewLight);
     }
 
     public MaterialCircleIconView(Context context, @Nullable AttributeSet attrs,

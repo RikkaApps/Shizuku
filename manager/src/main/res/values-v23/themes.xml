@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Light" parent="Theme.Design.Light.LightStatusBar">
-        <item name="android:colorPrimary">@color/background_color_light</item>
+
+    <style name="Theme.Light.V23" parent="BaseTheme.Light">
         <item name="android:colorPrimaryDark">?android:colorPrimary</item>
-        <item name="android:colorAccent">@color/accent_color_light</item>
-        <item name="android:colorBackground">@color/background_color_light</item>
-        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Light</item>
-        <item name="appColorPrimary">@color/app_color_light</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="homeCardStyle">@style/Card.Light</item>
     </style>
 
-    <style name="Theme" parent="Theme.Design">
-        <item name="android:colorPrimary">@color/background_color_dark</item>
-        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
-        <item name="android:colorAccent">@color/accent_color_dark</item>
-        <item name="android:colorBackground">@color/background_color_dark</item>
-        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
-        <item name="appColorPrimary">@color/app_color_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="homeCardStyle">@style/Card</item>
-    </style>
-
+    <style name="Theme.Light" parent="Theme.Light.V23" />
 </resources>
