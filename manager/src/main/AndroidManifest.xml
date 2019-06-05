@@ -98,7 +98,7 @@
             android:exported="false" />
 
         <provider
-            android:name="moe.shizuku.api.BinderReceiveProvider"
+            android:name="moe.shizuku.api.ShizukuBinderReceiveProvider"
             android:authorities="${applicationId}.shizuku"
             android:multiprocess="false"
             android:directBootAware="true"

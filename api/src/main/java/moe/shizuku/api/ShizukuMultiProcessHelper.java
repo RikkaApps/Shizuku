@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MultiProcessHelper {
+public class ShizukuMultiProcessHelper {
 
     public static final String ACTION_BINDER_RECEIVED = "moe.shizuku.api.action.BINDER_RECEIVED";
 
@@ -40,11 +40,11 @@ public class MultiProcessHelper {
      * @param context context
      * @return true if successfully get binder from other process or called from provider's process or already have a binder alive
      *
-     * @deprecated use {@link MultiProcessHelper#initialize(Context, boolean)} instead
+     * @deprecated use {@link ShizukuMultiProcessHelper#initialize(Context, boolean)} instead
      */
     @Deprecated
     public static boolean initialize(Context context) {
-        return initialize(context, BinderReceiveProvider.isProviderProcess());
+        return initialize(context, ShizukuBinderReceiveProvider.isProviderProcess());
     }
 
     /**
@@ -52,11 +52,11 @@ public class MultiProcessHelper {
      * Call this method in every processes before using Shizuku.
      *
      * @param context context
-     * @param isProviderProcess current process is the process of BinderReceiveProvider
+     * @param isProviderProcess current process is the process of ShizukuBinderReceiveProvider
      * @return true if successfully get binder from other process or called from provider's process or already have a binder alive
      */
     public static boolean initialize(Context context, boolean isProviderProcess) {
-        BinderReceiveProvider.setIsProviderProcess(isProviderProcess);
+        ShizukuBinderReceiveProvider.setIsProviderProcess(isProviderProcess);
 
         if (sReceiver == null && !isProviderProcess) {
             sReceiver = new BinderReceiver();
@@ -66,8 +66,14 @@ public class MultiProcessHelper {
     }
 
     private static boolean requestBinder(String packageName, ContentResolver contentResolver) {
-        Bundle reply = contentResolver.call(Uri.parse("content://" + packageName + ".shizuku"),
-                BinderReceiveProvider.METHOD_GET_BINDER, null, new Bundle());
+        Bundle reply;
+        try {
+            reply = contentResolver.call(Uri.parse("content://" + packageName + ".shizuku"),
+                    ShizukuBinderReceiveProvider.METHOD_GET_BINDER, null, new Bundle());
+        } catch (Throwable tr) {
+            return false;
+        }
+
         if (reply == null)
             return false;
 

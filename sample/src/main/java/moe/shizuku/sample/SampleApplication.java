@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import me.weishu.reflection.Reflection;
-import moe.shizuku.api.MultiProcessHelper;
+import moe.shizuku.api.ShizukuMultiProcessHelper;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.api.ShizukuService;
 
@@ -56,13 +56,13 @@ public class SampleApplication extends android.app.Application {
         super.attachBaseContext(base);
         Reflection.unseal(base);
 
-        Log.d("ShizukuSample", "initialize " + MultiProcessHelper.initialize(this, !getProcessName().endsWith(":test")));
+        Log.d("ShizukuSample", "initialize " + ShizukuMultiProcessHelper.initialize(this, !getProcessName().endsWith(":test")));
 
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             Log.d("ShizukuSample", "onBinderReceived");
 
             if (ShizukuService.getBinder() == null) {
-                // BinderReceiveProvider started without binder, should never happened
+                // ShizukuBinderReceiveProvider started without binder, should never happened
                 Log.d("ShizukuSample", "binder is null");
                 v3Failed = true;
                 return;

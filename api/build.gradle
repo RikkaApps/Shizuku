@@ -6,7 +6,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName '3.0.0-alpha9'
+        versionName '3.0.0-alpha10'
         manifestPlaceholders = [versionName: versionName]
     }
     buildTypes {

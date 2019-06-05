@@ -14,7 +14,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class BinderReceiveProvider extends ContentProvider {
+public class ShizukuBinderReceiveProvider extends ContentProvider {
 
     // For receive Binder from Shizuku
     public static final String METHOD_SEND_BINDER = "sendBinder";
@@ -62,7 +62,7 @@ public class BinderReceiveProvider extends ContentProvider {
         switch (method) {
             case METHOD_SEND_BINDER: {
                 if (ShizukuService.pingBinder()) {
-                    Log.i("ShizukuClient", "BinderReceiveProvider started when already a binder alive");
+                    Log.i("ShizukuClient", "ShizukuBinderReceiveProvider started when already a binder alive");
                     break;
                 }
 
@@ -73,7 +73,7 @@ public class BinderReceiveProvider extends ContentProvider {
                     ShizukuService.setBinder(container.binder);
 
                     //noinspection ConstantConditions
-                    Intent intent = new Intent(MultiProcessHelper.ACTION_BINDER_RECEIVED)
+                    Intent intent = new Intent(ShizukuMultiProcessHelper.ACTION_BINDER_RECEIVED)
                             .putExtra(ShizukuApiConstants.EXTRA_BINDER, container)
                             .setPackage(getContext().getPackageName());
                     getContext().sendBroadcast(intent);
