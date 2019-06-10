@@ -61,7 +61,7 @@
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
-    <string name="no_v3_support">* not yet adapted Shizuku v3</string>
+    <string name="no_v3_support">* requires Shizuku v2</string>
     <string name="server_status_format" translatable="false"><![CDATA[<font face="sans-serif-medium">%1$s</font><br><small>%2$s</small>]]></string>
     <string name="service_name_v3" translatable="false">v3</string>
     <string name="service_name_v2">v2 (old)</string>

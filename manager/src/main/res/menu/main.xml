@@ -3,10 +3,14 @@
 
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings"/>
+        android:icon="@drawable/ic_action_settings_24dp"
+        android:title="@string/action_settings"
+        android:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_about"
-        android:title="@string/action_about"/>
+        android:icon="@drawable/ic_action_about_24dp"
+        android:title="@string/action_about"
+        android:showAsAction="ifRoom"/>
 
 </menu>

@@ -58,7 +58,7 @@
     <string name="notification_service_start_no_root">請求 root 權限失敗。</string>
     <string name="channel_work_status">工作狀態</string>
     <string name="notification_working">工作中…</string>
-    <string name="no_v3_support">* 尚未適配 Shizuku v3</string>
+    <string name="no_v3_support">* 需要 Shizuku v2</string>
     <string name="service_name_v2">v2（舊式）</string>
     <string name="settings_language">語言</string>
     <string name="settings_user_interface">界面外觀</string>
