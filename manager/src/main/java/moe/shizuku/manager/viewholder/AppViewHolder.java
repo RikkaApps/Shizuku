@@ -64,7 +64,7 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         pkg.setText(ai.packageName);
         switch_widget.setChecked(AuthorizationManager.granted(ai.packageName));
 
-        //v3.setVisibility((ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) ? View.VISIBLE : View.GONE);
+        v3.setVisibility((ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) ? View.VISIBLE : View.GONE);
         v3.setVisibility(View.GONE);
     }
 

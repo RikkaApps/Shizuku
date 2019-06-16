@@ -62,11 +62,18 @@
     <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
     <string name="no_v3_support">* requires Shizuku v2</string>
-    <string name="server_status_format" translatable="false"><![CDATA[<font face="sans-serif-medium">%1$s</font><br><small>%2$s</small>]]></string>
     <string name="service_name_v3" translatable="false">v3</string>
     <string name="service_name_v2">v2 (old)</string>
     <string name="settings_language">Language</string>
     <string name="settings_user_interface">Appearance</string>
     <string name="black_night_theme">Black night theme</string>
     <string name="black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
+    <string name="settings_startup">Startup</string>
+    <string name="start_v2_service">Don\'t start v2 (legacy) service</string>
+    <plurals name="start_v2_service_summary">
+        <item quantity="zero">%d app requires v2 service</item>
+        <item quantity="one">%d app requires v2 service</item>
+        <item quantity="other">%d apps require v2 service</item>
+    </plurals>
+    <string name="start_v2_service_summary_no_service">You can check if an app requires v2 service in Authorized apps</string>
 </resources>

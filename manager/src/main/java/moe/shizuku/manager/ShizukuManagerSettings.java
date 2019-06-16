@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
-import moe.shizuku.support.app.DayNightDelegate;
 import moe.shizuku.support.app.DayNightDelegate.NightMode;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -27,6 +26,7 @@ public class ShizukuManagerSettings {
     public static final String NAME = "settings";
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
+    public static final String NO_V2 = "dont_start_v2_service";
 
     private static SharedPreferences sPreferences;
 
@@ -81,15 +81,15 @@ public class ShizukuManagerSettings {
 
     @LaunchMethod
     public static int getLastLaunchMode() {
-        return sPreferences.getInt("mode", LaunchMethod.UNKNOWN);
+        return getPreferences().getInt("mode", LaunchMethod.UNKNOWN);
     }
 
     public static void setLastLaunchMode(@LaunchMethod int method) {
-        sPreferences.edit().putInt("mode", method).apply();
+        getPreferences().edit().putInt("mode", method).apply();
     }
 
     public static UUID getToken() {
-        final SharedPreferences preferences = sPreferences;
+        final SharedPreferences preferences = getPreferences();
         long mostSig = preferences.getLong("token_most", 0);
         long leastSig = preferences.getLong("token_least", 0);
         return new UUID(mostSig, leastSig);
@@ -107,7 +107,7 @@ public class ShizukuManagerSettings {
         long mostSig = token.getMostSignificantBits();
         long leastSig = token.getLeastSignificantBits();
 
-        SharedPreferences preferences = sPreferences;
+        SharedPreferences preferences = getPreferences();
         preferences.edit()
                 .putLong("token_most", mostSig)
                 .putLong("token_least", leastSig)
@@ -120,15 +120,18 @@ public class ShizukuManagerSettings {
 
     @NightMode
     public static int getNightMode() {
-        return sPreferences.getInt(NIGHT_MODE, NightMode.MODE_NIGHT_FOLLOW_SYSTEM);
+        return getPreferences().getInt(NIGHT_MODE, NightMode.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public static Locale getLocale() {
-        String tag = sPreferences.getString(LANGUAGE, null);
+        String tag = getPreferences().getString(LANGUAGE, null);
         if (TextUtils.isEmpty(tag) || "SYSTEM".equals(tag)) {
             return Locale.getDefault();
         }
         return Locale.forLanguageTag(tag);
     }
 
+    public static boolean isStartServiceV2() {
+        return !getPreferences().getBoolean(NO_V2, false);
+    }
 }

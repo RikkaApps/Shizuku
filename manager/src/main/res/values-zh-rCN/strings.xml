@@ -5,7 +5,7 @@
     <string name="permission_description">允许应用以更高权限使用系统 API。</string>
     <string name="server_running">服务 %1$s 正在运行（版本 %3$d，%2$s）</string>
     <string name="server_running_update">服务 %1$s 正在运行（版本 %3$d，%2$s，再次启动来升级到版本 %4$d）</string>
-    <string name="server_not_running">服务 %1$s 没有运行，轻触重新检查</string>
+    <string name="server_not_running">服务 %1$s 没有运行</string>
     <string name="server_not_running_tap_retry">服务 %1$s 没有运行，轻触重新检查</string>
     <string name="server_require_restart">服务 %1$s 需要重新启动</string>
     <string name="server_no_token">服务 %1$s 正在运行，但未正确接收令牌，点击请求令牌</string>
@@ -64,5 +64,11 @@
     <string name="settings_user_interface">界面外观</string>
     <string name="black_night_theme">黑色夜间主题</string>
     <string name="black_night_theme_summary">当夜间模式启用时使用纯黑色主题</string>
+    <string name="settings_startup">启动</string>
+    <string name="start_v2_service">不要启动 v2（旧式）服务</string>
+    <plurals name="start_v2_service_summary">
+        <item quantity="other">共有 %d 个应用需要 v2 服务</item>
+    </plurals>
+    <string name="start_v2_service_summary_no_service">你可以在已授权的应用中查看应用是否需要 v2 服务</string>
 
 </resources>

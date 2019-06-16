@@ -36,7 +36,7 @@ public class ServerLauncher {
         V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
     }
 
-    public static void init(Context context) {
+    public static void writeFiles(Context context) {
         try {
             copyDex(context);
             writeSH(context);
@@ -89,7 +89,7 @@ public class ServerLauncher {
         }
     }
 
-    private static void writeSH(Context context) throws IOException {
+    public static void writeSH(Context context) throws IOException {
         // adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh
         String target = "start.sh";
 
@@ -132,7 +132,8 @@ public class ServerLauncher {
     private static String getStarterParam(int i) {
         return "--path-legacy=" + DEX_LEGACY_PATH[i]
                 + " --path=" + DEX_PATH[i]
-                + " --token=" + UUID.randomUUID();
+                + " --token=" + UUID.randomUUID()
+                + (ShizukuManagerSettings.isStartServiceV2() ? "" : " --no-v2");
     }
 
     private static String getLibPath(Context context, String name) {

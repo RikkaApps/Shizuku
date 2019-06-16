@@ -1,18 +1,22 @@
 package moe.shizuku.manager;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.Locale;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+import java.util.Locale;
+
 import moe.shizuku.manager.app.ThemeHelper;
+import moe.shizuku.manager.viewmodel.AppsViewModel;
+import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
 import moe.shizuku.preference.ListPreference;
 import moe.shizuku.preference.Preference;
 import moe.shizuku.preference.PreferenceFragment;
@@ -28,10 +32,12 @@ public class SettingsFragment extends PreferenceFragment {
     public static final String KEY_LANGUAGE = ShizukuManagerSettings.LANGUAGE;
     public static final String KEY_NIGHT_MODE = ShizukuManagerSettings.NIGHT_MODE;
     public static final String KEY_BLACK_NIGHT_THEME = ThemeHelper.KEY_BLACK_NIGHT_THEME;
+    public static final String KEY_NO_V2 = ShizukuManagerSettings.NO_V2;
 
     private ListPreference languagePreference;
     private Preference nightModePreference;
     private SwitchPreference blackNightThemePreference;
+    private SwitchPreference noV2Preference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -44,6 +50,20 @@ public class SettingsFragment extends PreferenceFragment {
         languagePreference = (ListPreference) findPreference(KEY_LANGUAGE);
         nightModePreference = findPreference(KEY_NIGHT_MODE);
         blackNightThemePreference = (SwitchPreference) findPreference(KEY_BLACK_NIGHT_THEME);
+        noV2Preference = (SwitchPreference) findPreference(KEY_NO_V2);
+
+        AppsViewModel viewModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel.class);
+        viewModel.observe(this, object -> {
+            if (object != null && !(object instanceof Throwable)) {
+                if (object instanceof List) {
+                    //noinspection unchecked
+                    updateData((List<PackageInfo>) object);
+                }
+            }
+        });
+        if (viewModel.getData() != null) {
+            updateData(viewModel.getData());
+        }
 
         languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
             if (newValue instanceof String) {
@@ -114,5 +134,17 @@ public class SettingsFragment extends PreferenceFragment {
         if (getActivity() != null) {
             getActivity().recreate();
         }
+    }
+
+    private void updateData(List<PackageInfo> data) {
+        int count = 0;
+        for (PackageInfo pi : data) {
+            ApplicationInfo ai = pi.applicationInfo;
+            if (ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) {
+                count++;
+            }
+        }
+
+        noV2Preference.setSummary(requireContext().getResources().getQuantityString(R.plurals.start_v2_service_summary, count, count));
     }
 }

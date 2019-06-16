@@ -3,6 +3,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <moe.shizuku.preference.PreferenceCategory
+        android:key="startup"
+        android:title="@string/settings_startup">
+
+        <SwitchPreference
+            android:key="dont_start_v2_service"
+            android:title="@string/start_v2_service"
+            android:defaultValue="false"/>
+
+    </moe.shizuku.preference.PreferenceCategory>
+
+    <moe.shizuku.preference.PreferenceCategory
         android:key="user_interface"
         android:title="@string/settings_user_interface">
 

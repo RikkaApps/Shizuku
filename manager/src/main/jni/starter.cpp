@@ -49,7 +49,8 @@ static void logcat(time_t now) {
     printf("--- crash end ---\n");
     fflush(stdout);
     printf("--- shizuku start ---\n");
-    sprintf(command, "logcat -b main -t '%s' -d -s ShizukuServer ShizukuServerV3 ShizukuManager", time);
+    sprintf(command, "logcat -b main -t '%s' -d -s ShizukuServer ShizukuServerV3 ShizukuManager",
+            time);
     printf("[command] %s\n", command);
     fflush(stdout);
     system(command);
@@ -142,7 +143,7 @@ static int start_server(const char *path, const char *main_class, const char *to
     return EXIT_SUCCESS;
 }
 
-static void check_access(const char* path, const char *name) {
+static void check_access(const char *path, const char *name) {
     if (!path) {
         perrorf("fatal: %s not set.\n", name);
         exit(EXIT_FATAL_PATH_NOT_SET);
@@ -169,7 +170,7 @@ static int kill_proc_by_name(const char *name) {
     return 0;
 }
 
-static void copy_if_not_exist(const char* src, const char *dst) {
+static void copy_if_not_exist(const char *src, const char *dst) {
 #ifdef DEBUG
     remove(dst);
     copyfile(src, dst);
@@ -193,6 +194,7 @@ int main(int argc, char **argv) {
     char *token = nullptr;
     char *_path = nullptr;
     char *_path_legacy = nullptr;
+    int v2 = 1;
     int i;
     for (i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--token=", 8) == 0) {
@@ -201,6 +203,8 @@ int main(int argc, char **argv) {
             _path = strdup(argv[i] + 7);
         } else if (strncmp(argv[i], "--path-legacy=", 14) == 0) {
             _path_legacy = strdup(argv[i] + 14);
+        } else if (strncmp(argv[i], "--no-v2", 7) == 0) {
+            v2 = 0;
         }
     }
 
@@ -210,7 +214,7 @@ int main(int argc, char **argv) {
     }
 
     check_access(_path, "path");
-    check_access(_path_legacy, "path-legacy");
+    if (v2) check_access(_path_legacy, "path-legacy");
 
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
@@ -219,18 +223,15 @@ int main(int argc, char **argv) {
         setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
-    char *name = basename(_path);
-    char *name_legacy = basename(_path_legacy);
-
     char path[PATH_MAX], path_legacy[PATH_MAX];
     sprintf(path, "/data/local/tmp/shizuku/%s", basename(_path));
     sprintf(path_legacy, "/data/local/tmp/shizuku/%s", basename(_path_legacy));
 
     copy_if_not_exist(_path, path);
-    copy_if_not_exist(_path_legacy, path_legacy);
+    if (v2) copy_if_not_exist(_path_legacy, path_legacy);
 
     check_access(path, "path");
-    check_access(path_legacy, "path-legacy");
+    if (v2) check_access(path_legacy, "path-legacy");
 
     printf("info: starter begin\n");
     fflush(stdout);
@@ -246,9 +247,11 @@ int main(int argc, char **argv) {
     fflush(stdout);
     start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, true);
 
-    printf("info: starting server v2 (legacy)...\n");
-    fflush(stdout);
-    start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY, false);
+    if (v2) {
+        printf("info: starting server v2 (legacy)...\n");
+        fflush(stdout);
+        start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY, false);
+    }
 
     exit_with_logcat(EXIT_SUCCESS);
 }
