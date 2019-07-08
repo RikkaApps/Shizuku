@@ -1,6 +1,7 @@
 package moe.shizuku.manager.app;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -40,6 +41,8 @@ public abstract class BaseActivity extends FragmentActivity {
 
         getLocaleDelegate().onCreate(this);
         mTheme = ThemeHelper.getTheme(this);
+
+        resetTitle();
 
         super.onCreate(savedInstanceState);
 
@@ -123,5 +126,24 @@ public abstract class BaseActivity extends FragmentActivity {
             mDayNightDelegate = new DayNightDelegate(context.getApplicationContext(), DayNightDelegate.getDefaultNightMode());
         }
         return mDayNightDelegate;
+    }
+
+    /**
+     * Fix titles don't change when current locale is changed
+     */
+    private void resetTitle() {
+        try {
+            int label = getPackageManager().getActivityInfo(
+                    getComponentName(), PackageManager.GET_META_DATA).labelRes;
+            if (label == 0) {
+                label = getPackageManager().getApplicationInfo(
+                        getPackageName(), PackageManager.GET_META_DATA).labelRes;
+            }
+            if (label != 0) {
+                setTitle(label);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+
+        }
     }
 }
