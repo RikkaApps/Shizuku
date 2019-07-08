@@ -41,6 +41,7 @@
     <string name="open_manager">開啟 Shizuku Manager</string>
     <string name="action_about">關於</string>
     <string name="about_icon_credits"><![CDATA[感謝 <a href="https://twitter.com/xiaoya_er">小雅</a> 製作應用程式的圖示]]></string>
+    <string name="about_source_code"><![CDATA[在 <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b> 查看原始碼]]></string>
     <string name="action_settings">設定</string>
     <string name="start_root_choose_launch_method">選擇啟動模式</string>
     <string name="start_root_method_usual">普通模式</string>
@@ -64,4 +65,5 @@
     <string name="settings_user_interface">界面外觀</string>
     <string name="black_night_theme">黑色夜間主題</string>
     <string name="black_night_theme_summary">當夜間模式啟用時使用純黑色主題</string>
+    <string name="action_view_apps">取得更多</string>
 </resources>

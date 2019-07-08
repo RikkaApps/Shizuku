@@ -71,5 +71,6 @@
         <item quantity="other">共有 %d 个应用需要 v2 服务</item>
     </plurals>
     <string name="start_v2_service_summary_no_service">你可以在已授权的应用中查看应用是否需要 v2 服务</string>
+    <string name="action_view_apps">获取更多</string>
 
 </resources>

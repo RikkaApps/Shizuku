@@ -1,7 +1,9 @@
 package moe.shizuku.manager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -86,9 +88,21 @@ public class ManageAppsActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.apps, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            return true;
+        } else if (item.getItemId() == R.id.action_view_apps) {
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/RikkaApps/Shizuku/blob/master/APPS.md")));
+            } catch (Throwable ignored) {
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

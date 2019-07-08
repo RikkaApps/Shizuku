@@ -77,4 +77,5 @@
         <item quantity="other">%d apps require v2 service</item>
     </plurals>
     <string name="start_v2_service_summary_no_service">You can check if an app requires v2 service in Authorized apps</string>
+    <string name="action_view_apps">Get more</string>
 </resources>
