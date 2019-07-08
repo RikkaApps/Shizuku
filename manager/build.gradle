@@ -92,11 +92,11 @@ dependencies {
     implementation "androidx.fragment:fragment:$androidXLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
-    implementation 'com.github.topjohnwu.libsu:core:2.3.3'
+    implementation 'com.github.topjohnwu.libsu:core:2.5.0'
     implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation "moe.shizuku.support:design:3.1.7"
+    implementation "moe.shizuku.support:design:3.1.8"
     implementation 'moe.shizuku.support:support-utils:3.0.6'
     implementation 'moe.shizuku.support:recyclerview-utils:3.0.4'
     implementation "moe.shizuku.support:htmlcompat:2.0.0"
@@ -105,7 +105,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'moe.shizuku.privilege:api-base:12'
     implementation 'moe.shizuku.privilege:api:3.0.0-alpha10'
-    implementation 'me.weishu:free_reflection:2.0.0' // bypass hidden api restriction
+    implementation 'me.weishu:free_reflection:2.1.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')
