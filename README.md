@@ -70,7 +70,7 @@ If you are an app developer (or have obtained developer's consent), you can add 
 
 ## Usage
 
-**Please read the following content in conjunction with sample. **
+**Please read the following content in conjunction with sample.**
 
 1. Add dependency
 

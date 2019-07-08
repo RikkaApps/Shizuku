@@ -40,7 +40,8 @@
     <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
     <string name="open_manager">打开 Shizuku Manager</string>
     <string name="action_about">关于</string>
-    <string name="about_icon_credits"><![CDATA[感谢 <a href="http://weibo.com/528556720">小雅</a> 制作应用图标]]></string>
+    <string name="about_icon_credits"><![CDATA[感谢 <b><a href="http://weibo.com/528556720">小雅</a></b> 制作应用图标]]></string>
+    <string name="about_source_code"><![CDATA[在 <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b> 查看源码]]></string>
     <string name="action_settings">设置</string>
     <string name="start_root_choose_launch_method">选择启动方式</string>
     <string name="start_root_method_usual">通常方式</string>

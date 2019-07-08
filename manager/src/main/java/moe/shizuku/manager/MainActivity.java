@@ -148,6 +148,8 @@ public class MainActivity extends BaseActivity {
                         .setView(R.layout.dialog_about)
                         .show();
 
+                ((TextView) dialog.findViewById(R.id.source_code)).setMovementMethod(LinkMovementMethod.getInstance());
+
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setMovementMethod(LinkMovementMethod.getInstance());
                 ((TextView) dialog.findViewById(R.id.icon_credits)).setText(Html.fromHtml(getString(R.string.about_icon_credits)));
                 return true;
