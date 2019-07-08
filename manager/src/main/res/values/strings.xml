@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Shizuku Manager</string>
+    <string name="app_name" translatable="false">Shizuku</string>
     <string name="permission_group_label" translatable="false">Shizuku</string>
     <string name="permission_group_description">access Shizuku</string>
     <string name="permission_label">access system APIs with higher privileges</string>
