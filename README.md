@@ -2,7 +2,7 @@
 
 Help normal apps uses system APIs directly with adb/root privileges with a Java process started with app_process.
 
-The name Shizuku coms from [a charator](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=75586127).
+The name Shizuku coms from [a character](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=75586127).
 
 [中文说明](https://github.com/RikkaApps/Shizuku/blob/master/README.zh-CN.md)
 
