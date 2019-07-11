@@ -17,6 +17,8 @@ Switch Do Not Disturb mode (and disable pop notifications) automatically by curr
 
 NoPopping uses Shizuku to avoid using Accessibility Service.
 
+*NoPopping requires Shizuku running on root user.*
+
 Download: [Google Play](https://play.google.com/store/apps/details?id=rikka.nopeeking) / [Coolapk](https://coolapk.com/apk/rikka.nopeeking)
 
 ---
