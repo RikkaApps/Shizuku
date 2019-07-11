@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start_server_summary_adb"><![CDATA[
+    <string name="start_service_summary_adb"><![CDATA[
     由於系統行爲變化，在 Android 8.0 之後，請<b>不要關閉「USB 調試」</b>並保證 <b>USB 使用模式不變</b>，否則服務將被停止。
     此外，<b>如果出現來自系統的對話框，在拔下 USB 線前，請不要點選</b>。
     <p><b>以下步驟需要在每次重新啟動後進行。</b>

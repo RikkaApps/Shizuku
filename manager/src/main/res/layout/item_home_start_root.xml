@@ -32,7 +32,7 @@
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material.Body2"
             android:layout_marginStart="16dp"
-            app:htmlText="@string/start_server_title_root" />
+            app:htmlText="@string/start_service_title_root" />
 
     </LinearLayout>
 
@@ -46,18 +46,18 @@
         android:paddingEnd="16dp"
         android:textColor="?android:textColorSecondary"
         app:htmlFlags="trim_whitespace"
-        app:htmlText="@string/start_server_summary_root" />
+        app:htmlText="@string/start_service_summary_root" />
 
     <TextView
         android:id="@android:id/button1"
-        android:text="@string/server_start"
+        android:text="@string/service_start"
         android:drawableStart="@drawable/ic_server_start_24dp"
         style="@style/CardButton"
         android:enabled="false" />
 
     <TextView
         android:id="@android:id/button2"
-        android:text="@string/server_restart"
+        android:text="@string/service_restart"
         android:drawableStart="@drawable/ic_server_restart"
         style="@style/CardButton"
         android:enabled="false"

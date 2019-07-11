@@ -8,7 +8,8 @@
 
         <SwitchPreference
             android:key="dont_start_v2_service"
-            android:title="@string/start_v2_service"
+            android:title="@string/start_legacy_service"
+            android:summary="@string/start_legacy_service_summary_no_service"
             android:defaultValue="false"/>
 
     </moe.shizuku.preference.PreferenceCategory>

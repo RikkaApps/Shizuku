@@ -145,6 +145,6 @@ public class SettingsFragment extends PreferenceFragment {
             }
         }
 
-        noV2Preference.setSummary(requireContext().getResources().getQuantityString(R.plurals.start_v2_service_summary, count, count));
+        noV2Preference.setSummary(requireContext().getResources().getQuantityString(R.plurals.start_legacy_service_summary, count, count));
     }
 }

@@ -30,7 +30,7 @@ public final class AuthorizationActivityV23 extends AuthorizationActivity {
                 msg = R.string.auth_manager_no_token;
                 break;
             case ShizukuState.STATUS_UNAVAILABLE:
-                msg = R.string.auth_server_dead;
+                msg = R.string.auth_service_dead;
                 break;
             case ShizukuState.STATUS_UNKNOWN:
                 msg = R.string.auth_cannot_connect;

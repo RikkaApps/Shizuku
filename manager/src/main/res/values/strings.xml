@@ -4,22 +4,25 @@
     <string name="permission_group_description">access Shizuku</string>
     <string name="permission_label">access system APIs with higher privileges</string>
     <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
-    <string name="server_running">Service %1$s is running (version %3$d, %2$s)</string>
-    <string name="server_running_update">Service %1$s is running (version %3$d, %2$s, start again to update to version %4$d)</string>
-    <string name="server_not_running">Service %1$s not running</string>
-    <string name="server_not_running_tap_retry">Service %1$s not running, tap to check again</string>
-    <string name="server_require_restart">Service %1$s requires restart</string>
-    <string name="server_no_token">Service %1$s is running, but no correct token received, tap to request token</string>
-    <string name="server_start">Start</string>
-    <string name="server_restart">Restart</string>
-    <string name="start_server_title_root"><![CDATA[Start service with root permission]]></string>
-    <string name="start_server_title_adb"><![CDATA[Start / update service with adb]]></string>
-    <string name="start_server_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b>
+    <string name="service_name">Service</string>
+    <string name="service_legacy_name">Legacy service</string>
+    <string name="service_running">%1$s is running</string>
+    <string name="service_version">version %2$d, %1$s</string>
+    <string name="service_version_update">version %2$d, %1$s, start again to update to version %3$d</string>
+    <string name="service_not_running">%1$s not running</string>
+    <string name="service_not_running_tap_retry">%1$s not running, tap to check again</string>
+    <string name="service_legacy_require_restart">%1$s requires restart</string>
+    <string name="service_legacy_no_token">%1$s is running, but no correct token received, tap to request token</string>
+    <string name="service_start">Start</string>
+    <string name="service_restart">Restart</string>
+    <string name="start_service_title_root"><![CDATA[Start service with root permission]]></string>
+    <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
+    <string name="start_service_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b>
     <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
     <br>Type following content into computer\'s terminal and hit Enter
     <p><font face="monospace">%s</font>
     <p>The server running status will refresh if this operation succeed]]></string>
-    <string name="start_server_summary_root"><![CDATA[
+    <string name="start_service_summary_root"><![CDATA[
     If successful starts, Shizuku will automatically start after boot.
     <br>If Shizuku Manager can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
     <p>Almost all vendors except Google have their own background restriction mechanism (some vendors are vary crazy, such as OnePlus, which seriously affects the functionality of many apps).
@@ -30,7 +33,7 @@
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
     <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
-    <string name="auth_server_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
+    <string name="auth_service_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
     <string name="authorized_apps_manage">Authorized apps</string>
     <plurals name="authorized_apps_count">
@@ -62,21 +65,19 @@
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
-    <string name="no_v3_support">* requires Shizuku v2</string>
-    <string name="service_name_v3" translatable="false">v3</string>
-    <string name="service_name_v2">v2 (old)</string>
+    <string name="requires_legacy">* requires legacy Shizuku</string>
     <string name="settings_language">Language</string>
     <string name="settings_user_interface">Appearance</string>
     <string name="black_night_theme">Black night theme</string>
     <string name="black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
     <string name="settings_startup">Startup</string>
-    <string name="start_v2_service">Don\'t start v2 (legacy) service</string>
-    <plurals name="start_v2_service_summary">
-        <item quantity="zero">%d app requires v2 service</item>
-        <item quantity="one">%d app requires v2 service</item>
-        <item quantity="other">%d apps require v2 service</item>
+    <string name="start_legacy_service">Don\'t start legacy service</string>
+    <plurals name="start_legacy_service_summary">
+        <item quantity="zero">%d app requires legacy service</item>
+        <item quantity="one">%d app requires legacy service</item>
+        <item quantity="other">%d apps require legacy service</item>
     </plurals>
-    <string name="start_v2_service_summary_no_service">You can check if an app requires v2 service in Authorized apps</string>
+    <string name="start_legacy_service_summary_no_service">You can check if an app requires legacy service in Authorized apps</string>
     <string name="action_view_apps">Get more</string>
     <string name="adb_no_permission_title">The permission of adb is limited</string>
     <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>

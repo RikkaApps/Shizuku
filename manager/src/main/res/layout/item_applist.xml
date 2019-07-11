@@ -51,7 +51,7 @@
             android:layout_marginTop="2sp"
             android:textSize="12sp"
             android:textStyle="italic"
-            android:text="@string/no_v3_support"/>
+            android:text="@string/requires_legacy"/>
 
     </LinearLayout>
 

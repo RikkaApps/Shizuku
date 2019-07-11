@@ -43,6 +43,6 @@ public class StartAdbViewHolder extends BaseViewHolder<Object> {
     public void onBind() {
         Context context = itemView.getContext();
 
-        text.setHtmlText(context.getString(R.string.start_server_summary_adb, ServerLauncher.COMMAND_ADB));
+        text.setHtmlText(context.getString(R.string.start_service_summary_adb, ServerLauncher.COMMAND_ADB));
     }
 }

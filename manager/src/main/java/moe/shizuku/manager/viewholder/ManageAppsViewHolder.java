@@ -34,7 +34,7 @@ public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements Vie
 
         if (!ShizukuService.pingBinder()) {
             itemView.setEnabled(false);
-            summary.setHtmlText(context.getString(R.string.server_not_running, context.getString(R.string.service_name_v3)));
+            summary.setHtmlText(context.getString(R.string.service_not_running, context.getString(R.string.service_name)));
         } else {
             itemView.setEnabled(true);
             summary.setHtmlText(context.getString(R.string.view_authorized_apps));

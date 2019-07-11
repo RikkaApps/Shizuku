@@ -14,14 +14,31 @@
         android:importantForAccessibility="no"
         android:src="@drawable/ic_server_error_24dp" />
 
-    <moe.shizuku.support.widget.HtmlCompatTextView
-        android:id="@android:id/text1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:lineSpacingExtra="2dp"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="16sp"
-        tools:text="Running (version 10)" />
+        android:duplicateParentState="true"
+        android:orientation="vertical">
+
+        <moe.shizuku.support.widget.HtmlCompatTextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:lineSpacingExtra="2dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            tools:text="Running (version 10)" />
+
+        <moe.shizuku.support.widget.HtmlCompatTextView
+            android:id="@android:id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

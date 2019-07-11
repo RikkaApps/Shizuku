@@ -32,7 +32,7 @@
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material.Body2"
             android:layout_marginStart="16dp"
-            app:htmlText="@string/start_server_title_adb" />
+            app:htmlText="@string/start_service_title_adb" />
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:paddingEnd="16dp"
         android:textColor="?android:textColorSecondary"
         app:htmlFlags="trim_whitespace"
-        app:htmlText="@string/start_server_summary_adb" />
+        app:htmlText="@string/start_service_summary_adb" />
 
     <TextView
         android:id="@android:id/button1"
