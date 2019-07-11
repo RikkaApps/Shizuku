@@ -78,4 +78,7 @@
     </plurals>
     <string name="start_v2_service_summary_no_service">You can check if an app requires v2 service in Authorized apps</string>
     <string name="action_view_apps">Get more</string>
+    <string name="adb_no_permission_title">The permission of adb is limited</string>
+    <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
+
 </resources>

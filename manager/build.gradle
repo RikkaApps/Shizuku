@@ -51,7 +51,7 @@ android {
     }
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "shizuku-manager-${variant.versionCode}.apk"
+            outputFileName = "shizuku-${variant.versionCode}.apk"
 
             if (variant.getBuildType().isMinifyEnabled()) {
                 variant.assembleProvider.get().doLast {

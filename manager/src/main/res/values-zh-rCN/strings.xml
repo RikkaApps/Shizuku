@@ -72,5 +72,7 @@
     </plurals>
     <string name="start_v2_service_summary_no_service">你可以在已授权的应用中查看应用是否需要 v2 服务</string>
     <string name="action_view_apps">获取更多</string>
+    <string name="adb_no_permission_title">adb 权限受限</string>
+    <string name="adb_no_permission_message"><![CDATA[这通常是由您的设备供应商完成，我们无法解决。<br>请尝试在「开发者选项」中查找相关选项。例如，在 MIUI 中，选项是「USB 调试（安全设置）」。]]></string>
 
 </resources>

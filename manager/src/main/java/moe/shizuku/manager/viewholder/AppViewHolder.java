@@ -1,9 +1,11 @@
 package moe.shizuku.manager.viewholder;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -12,9 +14,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
+import moe.shizuku.support.text.HtmlCompat;
 
 public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.OnClickListener {
 
@@ -44,10 +49,30 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         final Context context = v.getContext();
         final PackageInfo pi = getData();
 
-        if (AuthorizationManager.granted(pi.packageName)) {
-            AuthorizationManager.revoke(pi.packageName);
-        } else {
-            AuthorizationManager.grant(pi.packageName);
+        try {
+            if (AuthorizationManager.granted(pi.packageName)) {
+                AuthorizationManager.revoke(pi.packageName);
+            } else {
+                AuthorizationManager.grant(pi.packageName);
+            }
+        } catch (SecurityException e) {
+            int uid;
+            try {
+                uid = ShizukuService.getUid();
+            } catch (Throwable ex) {
+                return;
+            }
+
+            if (uid != 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                        .setTitle(R.string.adb_no_permission_title)
+                        .setMessage(HtmlCompat.fromHtml(context.getString(R.string.adb_no_permission_message)))
+                        .setPositiveButton(android.R.string.ok, null);
+                try {
+                    builder.show();
+                } catch (Throwable ignored) {
+                }
+            }
         }
 
         getAdapter().notifyItemChanged(getAdapterPosition(), new Object());
@@ -65,7 +90,6 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         switch_widget.setChecked(AuthorizationManager.granted(ai.packageName));
 
         v3.setVisibility((ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) ? View.VISIBLE : View.GONE);
-        v3.setVisibility(View.GONE);
     }
 
     @Override

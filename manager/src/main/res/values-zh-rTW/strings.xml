@@ -66,4 +66,6 @@
     <string name="black_night_theme">黑色夜間主題</string>
     <string name="black_night_theme_summary">當夜間模式啟用時使用純黑色主題</string>
     <string name="action_view_apps">取得更多</string>
+    <string name="adb_no_permission_title">adb 權限受限</string>
+    <string name="adb_no_permission_message"><![CDATA[這通常是由您的裝置供應商完成，我們無法解決。<br>請嘗試在「開發者選項」中查詢相關選項。例如，在 MIUI 中，選項是「USB 除錯（安全設定）」。]]></string>
 </resources>

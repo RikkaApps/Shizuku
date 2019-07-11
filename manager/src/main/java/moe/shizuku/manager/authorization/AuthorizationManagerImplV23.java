@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
 import android.os.Process;
+import android.os.RemoteException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
                 return listSlice.getList();
             }
             return new ArrayList<>();
-        } catch (Throwable tr) {
+        } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
@@ -46,7 +47,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
         try {
             return getPackageManager().checkPermission(permName, pkgName, userId);
-        } catch (Throwable tr) {
+        } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
@@ -58,7 +59,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
         try {
             getPackageManager().grantRuntimePermission(packageName, permissionName, userId);
-        } catch (Throwable tr) {
+        } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
@@ -70,7 +71,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
         try {
             getPackageManager().revokeRuntimePermission(packageName, permissionName, userId);
-        } catch (Throwable tr) {
+        } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
