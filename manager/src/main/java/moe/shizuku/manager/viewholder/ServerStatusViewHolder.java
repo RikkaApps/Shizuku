@@ -2,10 +2,12 @@ package moe.shizuku.manager.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import moe.shizuku.ShizukuConstants;
 import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClientHelper;
@@ -134,8 +136,8 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
             mStatusText.setHtmlText(String.format("<font face=\"sans-serif-medium\">%1$s</font>", v3Title), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
             mStatusSummary.setHtmlText(String.format("%1$s", v3Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
         } else {
-            mStatusText.setHtmlText(String.format("<font face=\"sans-serif-medium\">%1$s (%2$s)</font>", v3Title, v3Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
-            mStatusSummary.setHtmlText(String.format("%1$s (%2$s)", v2Title, v2Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
+            mStatusText.setHtmlText(String.format(TextUtils.isEmpty(v3Summary) ? "<font face=\"sans-serif-medium\">%1$s</font>" : "<font face=\"sans-serif-medium\">%1$s (%2$s)</font>", v3Title, v3Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
+            mStatusSummary.setHtmlText(String.format(TextUtils.isEmpty(v2Summary) ? "%1$s" : "%1$s (%2$s)", v2Title, v2Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
         }
     }
 }
