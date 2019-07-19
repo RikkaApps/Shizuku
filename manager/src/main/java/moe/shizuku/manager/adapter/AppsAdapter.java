@@ -14,6 +14,12 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
         super();
 
         getCreatorPool().putRule(PackageInfo.class, AppViewHolder.CREATOR);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return getItemAt(position).hashCode();
     }
 
     @Override

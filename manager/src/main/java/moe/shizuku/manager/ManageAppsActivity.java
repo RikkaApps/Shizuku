@@ -7,11 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.List;
-import java.util.Objects;
-
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Objects;
+
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.AppsAdapter;
 import moe.shizuku.manager.app.BaseActivity;
@@ -44,26 +45,26 @@ public class ManageAppsActivity extends BaseActivity {
         mAdapter = new AppsAdapter();
 
         mModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel.class);
-        mModel.observe(this, object -> {
+        mModel.getPackages().observe(this, object -> {
             if (isFinishing())
                 return;
 
-            if (object instanceof List) {
-                mAdapter.updateData(mModel.getData());
-            } else if (object instanceof Throwable) {
+            if (object.error == null) {
+                mAdapter.updateData(object.data);
+            } else {
                 LocalBroadcastManager.getInstance(this)
                         .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
 
                 finish();
 
-                Throwable tr = (Throwable) object;
+                Throwable tr = object.error;
                 Toast.makeText(this, Objects.toString(tr, "unknown"), Toast.LENGTH_SHORT).show();
 
                 tr.printStackTrace();
             }
         });
-        if (mModel.getData() != null) {
-            mAdapter.updateData(mModel.getData());
+        if (mModel.getPackages().getValue() != null && mModel.getPackages().getValue().data != null) {
+            mAdapter.updateData(mModel.getPackages().getValue().data);
         } else {
             mModel.load(this);
         }
@@ -72,6 +73,15 @@ public class ManageAppsActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
 
         RecyclerViewHelper.fixOverScroll(recyclerView);
+
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
+                mModel.loadCount();
+            }
+
+        });
     }
 
     @Override

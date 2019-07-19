@@ -73,18 +73,14 @@ public class MainActivity extends BaseActivity {
                     ShizukuManagerSettings.setLastLaunchMode(mHomeModel.getServiceStatus().getUid() == 0
                             ? ShizukuManagerSettings.LaunchMethod.ROOT : ShizukuManagerSettings.LaunchMethod.ADB);
                 }
-            } else if (object != null) {
-
             }
         });
 
         mAppsModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel.class);
-        mAppsModel.observe(this, object -> {
-            if (object != null && !(object instanceof Throwable)) {
-                final Context context = this;
+        mAppsModel.getGrantedCount().observe(this, object -> {
+            final Context context = this;
+            if (object.data != null) {
                 mAdapter.updateData(context);
-            } else if (object != null) {
-
             }
         });
 

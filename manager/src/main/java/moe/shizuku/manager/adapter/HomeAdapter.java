@@ -45,7 +45,9 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
         clear();
         addItem(ServerStatusViewHolder.CREATOR, vm.getServiceStatus(), 0);
 
-        addItem(ManageAppsViewHolder.CREATOR, mAppsModel.getData() != null ? mAppsModel.getData().size() : 0, 1);
+        addItem(ManageAppsViewHolder.CREATOR,
+                (mAppsModel.getGrantedCount().getValue() != null && mAppsModel.getGrantedCount().getValue().data != null)
+                        ? mAppsModel.getGrantedCount().getValue().data : 0, 1);
 
         if (Process.myUid() / 100000 == 0) {
             boolean root = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT;

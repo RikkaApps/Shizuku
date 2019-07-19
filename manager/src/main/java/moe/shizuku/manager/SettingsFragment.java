@@ -54,16 +54,14 @@ public class SettingsFragment extends PreferenceFragment {
         noV2Preference = (SwitchPreference) findPreference(KEY_NO_V2);
 
         AppsViewModel viewModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel.class);
-        viewModel.observe(this, object -> {
-            if (object != null && !(object instanceof Throwable)) {
-                if (object instanceof List) {
-                    //noinspection unchecked
-                    updateData((List<PackageInfo>) object);
-                }
-            }
+        viewModel.getPackages().observe(this, object -> {
+            if (object.data != null)
+                updateData(object.data);
         });
-        if (viewModel.getData() != null) {
-            updateData(viewModel.getData());
+        if (viewModel.getPackages() != null
+                && viewModel.getPackages().getValue() != null
+                && viewModel.getPackages().getValue().data != null) {
+            updateData(viewModel.getPackages().getValue().data);
         }
 
         languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
