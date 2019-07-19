@@ -50,14 +50,8 @@
 
     <TextView
         android:id="@android:id/button1"
-        android:text="@string/copy_command"
-        android:drawableStart="@drawable/ic_content_copy_24dp"
-        style="@style/CardButton" />
-
-    <TextView
-        android:id="@android:id/button2"
-        android:text="@string/send_command"
-        android:drawableStart="@drawable/ic_send_24dp"
+        android:text="@string/view_detailed_online_help"
+        android:drawableStart="@drawable/ic_help_outline_24dp"
         style="@style/CardButton" />
 
 </LinearLayout>

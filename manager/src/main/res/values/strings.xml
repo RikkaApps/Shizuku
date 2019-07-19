@@ -17,11 +17,7 @@
     <string name="service_restart">Restart</string>
     <string name="start_service_title_root"><![CDATA[Start service with root permission]]></string>
     <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
-    <string name="start_service_summary_adb"><![CDATA[<b>You will have to re-execute following steps every time you reboot your device.</b>
-    <p>Enable \"USB debugging\" in \"Developer options\" and connect your device to computer.
-    <br>Type following content into computer\'s terminal and hit Enter
-    <p><font face="monospace">%s</font>
-    <p>The server running status will refresh if this operation succeed]]></string>
+    <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below.<br>Help will update at any time, includes solutions to problems.]]></string>
     <string name="start_service_summary_root"><![CDATA[
     If successful starts, Shizuku will automatically start after boot.
     <br>If Shizuku Manager can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
@@ -81,5 +77,8 @@
     <string name="action_view_apps">Get more</string>
     <string name="adb_no_permission_title">The permission of adb is limited</string>
     <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
+    <string name="view_detailed_online_help">Read detailed online help</string>
+    <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
+    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
 
 </resources>
