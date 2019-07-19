@@ -149,11 +149,11 @@ static void check_access(const char *path, const char *name) {
         exit(EXIT_FATAL_PATH_NOT_SET);
     }
 
+    printf("info: %s is %s\n", name, path);
+
     if (access(path, F_OK) != 0) {
-        perrorf("fatal: can't access %s, please open Shizuku Manager and try again.\n", path);
+        perrorf("fatal: can't access %s, please open Shizuku app and try again.\n", path);
         exit(EXIT_FATAL_CANNOT_ACCESS_PATH);
-    } else {
-        printf("info: %s is %s\n", name, path);
     }
 }
 
@@ -213,8 +213,8 @@ int main(int argc, char **argv) {
         exit(EXIT_FATAL_PATH_NOT_SET);
     }
 
-    check_access(_path, "path");
-    if (v2) check_access(_path_legacy, "path-legacy");
+    check_access(_path, "source dex path");
+    if (v2) check_access(_path_legacy, "source legacy dex path");
 
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
@@ -230,8 +230,8 @@ int main(int argc, char **argv) {
     copy_if_not_exist(_path, path);
     if (v2) copy_if_not_exist(_path_legacy, path_legacy);
 
-    check_access(path, "path");
-    if (v2) check_access(path_legacy, "path-legacy");
+    check_access(path, "dex path");
+    if (v2) check_access(path_legacy, "legacy dex path");
 
     printf("info: starter begin\n");
     fflush(stdout);

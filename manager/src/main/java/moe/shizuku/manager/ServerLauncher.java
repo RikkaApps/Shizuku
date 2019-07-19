@@ -23,9 +23,9 @@ import moe.shizuku.support.utils.IOUtils;
 public class ServerLauncher {
 
     public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
-    public static String COMMAND_ROOT[] = new String[2];
-    private static String DEX_PATH[] = new String[2];
-    private static String DEX_LEGACY_PATH[] = new String[2];
+    public static String[] COMMAND_ROOT = new String[2];
+    private static String[] DEX_PATH = new String[2];
+    private static String[] DEX_LEGACY_PATH = new String[2];
 
     private static final String V2_DEX_NAME;
     private static final String V3_DEX_NAME;
@@ -61,7 +61,7 @@ public class ServerLauncher {
         File external = context.getExternalFilesDir(null);
         File internal = getParent(context);
 
-        File files[] = new File[external == null ? 1 : 2];
+        File[] files = new File[external == null ? 1 : 2];
         files[0] = new File(internal, target);
         if (external != null) {
             files[1] = new File(external, target);
@@ -96,7 +96,7 @@ public class ServerLauncher {
         File external = context.getExternalFilesDir(null);
         File internal = getParent(context);
 
-        File files[] = new File[external == null ? 1 : 2];
+        File[] files = new File[external == null ? 1 : 2];
         files[0] = new File(internal, target);
 
         if (external != null) {
