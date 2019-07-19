@@ -74,5 +74,6 @@
     <string name="view_detailed_online_help">阅读详细在线帮助</string>
     <string name="dialog_cannot_open_browser_title">无法启动浏览器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被复制到剪贴板。]]></string>
+    <string name="get_more_summary">查看使用 Shizuku 的应用</string>
 
 </resources>

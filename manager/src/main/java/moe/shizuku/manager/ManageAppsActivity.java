@@ -16,6 +16,7 @@ import java.util.Objects;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.AppsAdapter;
 import moe.shizuku.manager.app.BaseActivity;
+import moe.shizuku.manager.utils.CustomTabsHelper;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
 import moe.shizuku.support.recyclerview.RecyclerViewHelper;
@@ -109,10 +110,7 @@ public class ManageAppsActivity extends BaseActivity {
             onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_view_apps) {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/RikkaApps/Shizuku/blob/master/APPS.md")));
-            } catch (Throwable ignored) {
-            }
+            CustomTabsHelper.launchUrlOrCopy(this, Helps.APPS.get());
             return true;
         }
         return super.onOptionsItemSelected(item);

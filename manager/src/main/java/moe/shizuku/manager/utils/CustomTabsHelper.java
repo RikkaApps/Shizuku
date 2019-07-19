@@ -1,6 +1,9 @@
 package moe.shizuku.manager.utils;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,6 +16,9 @@ import android.util.TypedValue;
 
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+
+import moe.shizuku.manager.R;
+import moe.shizuku.support.text.HtmlCompat;
 
 /**
  * Created by fytho on 2017/12/15.
@@ -77,6 +83,30 @@ public class CustomTabsHelper {
             return true;
         } catch (ActivityNotFoundException e) {
             return false;
+        }
+    }
+
+    public static void launchUrlOrCopy(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        if (!launchHelp(context, uri)) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(uri);
+
+            try {
+                context.startActivity(intent);
+            } catch (Throwable tr) {
+                try {
+                    ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE))
+                            .setPrimaryClip(new ClipData(ClipData.newPlainText("label", url)));
+
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.dialog_cannot_open_browser_title)
+                            .setMessage(HtmlCompat.fromHtml(context.getString(R.string.toast_copied_to_clipboard_with_text, url)))
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                } catch (Throwable ignored) {
+                }
+            }
         }
     }
 }
