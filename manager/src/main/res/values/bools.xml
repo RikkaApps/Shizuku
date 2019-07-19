@@ -2,4 +2,5 @@
 <resources>
     <bool name="auth_activity_enabled">true</bool>
     <bool name="auth_activity_v23_enabled">false</bool>
+    <bool name="is_tablet">false</bool>
 </resources>

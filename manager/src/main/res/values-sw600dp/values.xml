@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_layout_manager" translatable="false">androidx.recyclerview.widget.StaggeredGridLayoutManager</string>
+</resources>

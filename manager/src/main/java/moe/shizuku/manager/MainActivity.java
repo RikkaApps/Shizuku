@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.adapter.HomeAdapter;
@@ -96,13 +97,27 @@ public class MainActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(android.R.id.list);
         recyclerView.setAdapter(mAdapter);
 
-        recyclerView.setPaddingRelative(0, recyclerView.getPaddingTop() + recyclerView.getPaddingBottom(), 0, recyclerView.getPaddingBottom());
+        recyclerView.setPaddingRelative(recyclerView.getPaddingStart(), recyclerView.getPaddingTop() + recyclerView.getPaddingBottom(), recyclerView.getPaddingEnd(), recyclerView.getPaddingBottom());
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (lm != null)
-                    mToolbar.setRaised(lm.findFirstCompletelyVisibleItemPosition() != 0);
+                RecyclerView.LayoutManager _lm = recyclerView.getLayoutManager();
+                boolean raised = false;
+                if (_lm instanceof LinearLayoutManager) {
+                    LinearLayoutManager lm = (LinearLayoutManager) _lm;
+                    raised = lm.findFirstCompletelyVisibleItemPosition() != 0;
+                } else if (_lm instanceof StaggeredGridLayoutManager) {
+                    StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) _lm;
+                    int spans = lm.getSpanCount();
+                    int[] out = new int[spans];
+                    lm.findFirstCompletelyVisibleItemPositions(out);
+                    raised = false;
+                    for (int i = 0; i < spans; i++) {
+                        raised |= i != out[i];
+                    }
+                }
+                mToolbar.setRaised(raised);
+
             }
         });
 

@@ -8,6 +8,8 @@
     android:scrollbars="vertical"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
 </androidx.recyclerview.widget.RecyclerView>

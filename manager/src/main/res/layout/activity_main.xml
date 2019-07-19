@@ -3,25 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:clipChildren="false"
     android:clipToPadding="false"
-    android:clipChildren="false">
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/home_padding"
+        android:paddingEnd="@dimen/home_padding"
+        android:clipToPadding="false"
         android:paddingTop="?android:actionBarSize"
         android:paddingBottom="4dp"
-        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        android:scrollbarStyle="insideOverlay"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+        app:layoutManager="@string/main_layout_manager"
+        app:spanCount="2">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <moe.shizuku.support.design.RaisedToolbar
         android:id="@+id/toolbar"
+        style="?android:actionBarStyle"
+        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="?android:colorPrimary"

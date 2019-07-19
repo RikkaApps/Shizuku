@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -127,6 +128,11 @@ public class SettingsFragment extends PreferenceFragment {
 
         int padding = (int) (8 * recyclerView.getContext().getResources().getDisplayMetrics().density);
         recyclerView.setPaddingRelative(recyclerView.getPaddingStart(), padding, recyclerView.getPaddingEnd(), padding);
+        ViewGroup.LayoutParams _lp = recyclerView.getLayoutParams();
+        if (_lp instanceof FrameLayout.LayoutParams) {
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) _lp;
+            lp.leftMargin = lp.rightMargin = (int) recyclerView.getContext().getResources().getDimension(R.dimen.activity_horizontal_margin);
+        }
         return recyclerView;
     }
 

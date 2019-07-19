@@ -6,6 +6,7 @@
         <item name="android:colorAccent">@color/accent_color_light</item>
         <item name="android:colorBackground">@color/background_color_light</item>
         <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Light</item>
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
         <item name="appColorPrimary">@color/app_color_light</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="homeCardStyle">@style/Card.Light</item>
@@ -20,6 +21,7 @@
         <item name="android:colorAccent">@color/accent_color_dark</item>
         <item name="android:colorBackground">@color/background_color_dark</item>
         <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="homeCardStyle">@style/Card</item>
@@ -27,5 +29,7 @@
     </style>
 
     <style name="Theme" parent="BaseTheme" />
+
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Material.ActionBar.Solid"/>
 
 </resources>

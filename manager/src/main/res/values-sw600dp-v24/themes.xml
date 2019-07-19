@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Material.ActionBar.Solid">
+        <item name="android:contentInsetStart">@dimen/toolbar_content_padding_start</item>
+        <item name="android:paddingEnd">@dimen/toolbar_padding_end</item>
+        <item name="android:contentInsetStartWithNavigation">
+            @dimen/toolbar_content_padding_start_with_navigation
+        </item>
+    </style>
+</resources>

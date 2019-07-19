@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="list_padding">24dp</dimen>
+
+    <dimen name="activity_horizontal_margin">56dp</dimen>
+    <dimen name="toolbar_content_padding_start">80dp</dimen>
+    <dimen name="toolbar_content_padding_start_with_navigation">80dp</dimen>
+
+    <dimen name="home_padding">8dp</dimen>
+
 </resources>

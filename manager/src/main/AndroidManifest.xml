@@ -30,17 +30,17 @@
         android:protectionLevel="signature" />
     <permission
         android:name="moe.shizuku.manager.permission.API"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:description="@string/permission_description"
         android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_label"
+        android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:protectionLevel="normal" />
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:description="@string/permission_description"
         android:icon="@drawable/ic_permission_24dp"
         android:label="@string/permission_label"
+        android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:protectionLevel="dangerous" />
 
     <application
@@ -54,11 +54,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -100,10 +100,10 @@
         <provider
             android:name="moe.shizuku.api.ShizukuBinderReceiveProvider"
             android:authorities="${applicationId}.shizuku"
-            android:multiprocess="false"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
+            android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <!-- v2 components -->
@@ -149,15 +149,15 @@
 
         <provider
             android:name=".legacy.provider.TransferProvider"
-            android:directBootAware="true"
             android:authorities="moe.shizuku.manager.transferprovider"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
         <provider
             android:name=".legacy.provider.TokenProvider"
-            android:directBootAware="true"
             android:authorities="moe.shizuku.manager.tokenprovider"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
             android:permission="@string/permission" />
