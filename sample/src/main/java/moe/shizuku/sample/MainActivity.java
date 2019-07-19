@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mBinderReceiver, new IntentFilter(SampleApplication.ACTION_SEND_BINDER));
 
         if (!ShizukuClientHelper.isManagerV2Installed(this)) {
-            Log.d("ShizukuSample", "Shizuku Manager version is too low");
+            Log.d("ShizukuSample", "Shizuku version is too low");
             return;
         }
 
@@ -134,7 +134,7 @@ public class MainActivity extends Activity {
                 return;
             }
         } else if (!SampleApplication.isShizukuV3TokenValid()){
-            // on API pre-23, Shizuku v3 uses old token, get token from Shizuku Manager app
+            // on API pre-23, Shizuku v3 uses old token, get token from Shizuku app
             Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
             if (intent != null) {
                 try {

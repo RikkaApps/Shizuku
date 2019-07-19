@@ -35,7 +35,7 @@
             android:textSize="16sp"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:fontFamily="sans-serif-medium"
-            tools:text="Shizuku Manager"/>
+            tools:text="Shizuku"/>
 
         <TextView
             android:id="@android:id/summary"

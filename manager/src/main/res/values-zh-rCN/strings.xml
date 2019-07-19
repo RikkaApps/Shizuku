@@ -19,7 +19,7 @@
     <string name="start_service_summary_adb"><![CDATA[使用 adb 并不困难，请阅读下面的帮助。<br>帮助随时更新，并包含遇到问题的解决方案。]]></string>
     <string name="start_service_summary_root"><![CDATA[
     若启动成功，则 Shizuku 将在开机后自动启动。
-    <br>如果无法正常开机启动，请检查您的系统或是第三方工具是否限制了 Shizuku Manager。
+    <br>如果无法正常开机启动，请检查您的系统或是第三方工具是否限制了 Shizuku。
     <p>除 Google 外，几乎所有厂商都有自己的后台限制机制（部分厂商尤为疯狂，如 OnePlus，严重影响许多应用的功能）。
     <br>请参考 <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> 了解如何关闭限制。]]></string>
     <string name="copy_command">复制</string>
@@ -27,7 +27,7 @@
     <string name="auth_allow">总是允许</string>
     <string name="auth_deny">拒绝</string>
     <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 身份调用 API 吗？]]></string>
-    <string name="auth_manager_no_token">Shizuku Manager 未正确接收令牌，请尝试重新启动核心服务，或是使用主界面的获取令牌。</string>
+    <string name="auth_manager_no_token">Shizuku 未正确接收令牌，请尝试重新启动核心服务，或是使用主界面的获取令牌。</string>
     <string name="auth_service_dead">可能由于非正常重启等原因，核心服务需要重新启动。</string>
     <string name="auth_cannot_connect">无法连接至核心服务，请确认其正在运行。</string>
     <string name="authorized_apps_manage">已授权的应用</string>
@@ -36,7 +36,7 @@
     </plurals>
     <string name="view_authorized_apps"><![CDATA[轻触管理授权的应用]]></string>
     <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
-    <string name="open_manager">打开 Shizuku Manager</string>
+    <string name="open_manager">打开 Shizuku</string>
     <string name="action_about">关于</string>
     <string name="about_icon_credits"><![CDATA[感谢 <b><a href="http://weibo.com/528556720">小雅</a></b> 制作应用图标]]></string>
     <string name="about_source_code"><![CDATA[在 <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b> 查看源码]]></string>

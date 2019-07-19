@@ -20,7 +20,7 @@
     <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below.<br>Help will update at any time, includes solutions to problems.]]></string>
     <string name="start_service_summary_root"><![CDATA[
     If successful starts, Shizuku will automatically start after boot.
-    <br>If Shizuku Manager can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
+    <br>If Shizuku can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
     <p>Almost all vendors except Google have their own background restriction mechanism (some vendors are vary crazy, such as OnePlus, which seriously affects the functionality of many apps).
     <br>Please refer to <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> for instructions on how to turn off restrictions. ]]></string>
     <string name="copy_command">Copy</string>
@@ -28,7 +28,7 @@
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
-    <string name="auth_manager_no_token">Shizuku Manager haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
+    <string name="auth_manager_no_token">Shizuku haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
     <string name="auth_service_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
     <string name="authorized_apps_manage">Authorized apps</string>
@@ -39,7 +39,7 @@
     </plurals>
     <string name="view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
     <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
-    <string name="open_manager">Open Shizuku Manager</string>
+    <string name="open_manager">Open Shizuku</string>
     <string name="action_about">About</string>
     <string name="about_icon_credits"><![CDATA[Thanks <b><a href="https://twitter.com/xiaoya_er">小雅</a></b> for illustrating app icon]]></string>
     <string name="about_source_code"><![CDATA[View source code at <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b>]]></string>
