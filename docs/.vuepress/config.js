@@ -65,7 +65,7 @@ module.exports = {
       updatePopup: true
     },
     repo: 'https://github.com/RikkaApps/Shizuku',
-    docsRepo: 'docs',
+    docsDir: 'docs',
     editLinks: true
   }
 }
