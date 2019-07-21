@@ -1,6 +1,20 @@
 module.exports = {
   base: '/shizuku/',
   title: 'Shizuku',
+  head: [
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&display=swap'
+    }],
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,500,700&display=swap'
+    }],
+	['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,500,700&display=swap'
+    }]
+  ],
   locales: {
     '/': {
       lang: 'en',
