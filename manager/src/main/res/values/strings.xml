@@ -17,14 +17,14 @@
     <string name="service_restart">Restart</string>
     <string name="start_service_title_root"><![CDATA[Start service with root permission]]></string>
     <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
-    <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below.<br>Help will update at any time, includes solutions to problems.]]></string>
+    <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below. Help will update at any time, includes solutions to problems.]]></string>
     <string name="start_service_summary_root"><![CDATA[
     If successful starts, Shizuku will automatically start after boot.
     <br>If Shizuku can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
     <p>Almost all vendors except Google have their own background restriction mechanism (some vendors are vary crazy, such as OnePlus, which seriously affects the functionality of many apps).
     <br>Please refer to <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> for instructions on how to turn off restrictions. ]]></string>
-    <string name="copy_command">Copy</string>
-    <string name="send_command">Send</string>
+    <string name="copy_command">Copy command</string>
+    <string name="send_command">Send command</string>
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
