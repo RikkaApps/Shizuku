@@ -4,7 +4,7 @@ Shizuku can help normal apps uses system APIs directly with adb/root privileges 
 
 The name Shizuku coms from [a character](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=75586127).
 
-## Why is Shizuku born?
+## Why was Shizuku born?
 
 The birth of Shizuku has two main purposes.
 

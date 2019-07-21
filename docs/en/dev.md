@@ -1,7 +1,7 @@
 # How to use Shizuku (Developer)
 
 ::: tip
-Please read the following content in conjunction with sample.
+Please read the following content in conjunction with [sample](https://github.com/RikkaApps/Shizuku/tree/master/sample).
 :::
 
 1. Add dependency
@@ -10,13 +10,13 @@ Please read the following content in conjunction with sample.
    Implementation 'moe.shizuku.privilege:api:3.0.0-alpha10'
    ```
 
-   The version numbers can be found at https://bintray.com/rikkaw/Shizuku/.
+   The version numbers can be found at <https://bintray.com/rikkaw/Shizuku/>.
 
    The permission declarations that need to be used later are included in the dependency, so you do not need to be add them manually.
    
 2. Get the binder
 
-   Add to your AndroidManifest.xml
+   Add to your `AndroidManifest.xml`
 
    ```
    <provider
@@ -45,14 +45,16 @@ Please read the following content in conjunction with sample.
    The `ShizukuBinderWrapper` has been added since API `3.0.0-alpha8`. The approximate usage is as follows. For full usage and other references, please refer to sample.
 
    ```
-   IPackageManager pm = IPackageManager.Stub.asInterface(new ShizukuBinder(SystemServiceHelper.getSystemService("package")));
+   IPackageManager pm = IPackageManager.Stub.asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
    pm.getInstalledPackages(0, 0);
    ```
 
 5. Use: binder transact (use `transactRemote`, **not recommended**)
 
-   > This method is more cumbersome to use and more prone to problems (see  "Attention"), it is recommended to use the method above.
-
+   ::: warning
+   This method is more cumbersome to use and more prone to problems (see  "Attention"), it is recommended to use the method above.
+   :::
+   
    **See sample for complete usage and other references.**
 
 6. Use: execute command directly
