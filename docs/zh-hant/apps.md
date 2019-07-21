@@ -13,7 +13,7 @@
 ---
 <img src="https://lh3.googleusercontent.com/WVOkVE75b9rby23ADx509k-X5zADbv_LMQASrzrxySUkPLDGjumqT9vIm0PygYxavZo" title="AppOps" width="24" align="top"/> NoPopping
 
-根據當前應用自動切換勿擾模式（並關閉彈出通知）。
+根據目前程式自動切換勿擾模式（並關閉彈出通知）。
 
 NoPopping 使用 Shizuku 來避免使用無障礙服務。
 

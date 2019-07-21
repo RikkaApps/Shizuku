@@ -2,7 +2,7 @@
 
 ## 裝置已 root
 
-對於已 root 裝置，直接在 Shizuku 應用啟動即可。
+對於已 root 裝置，直接在 Shizuku 程式啟動即可。
 
 ## 裝置未 root
 
@@ -10,7 +10,7 @@
 
 ### 1. 什麼是 `adb`？
 
-Android 除錯橋 (`adb`) 是一個通用命令列工具，其允許您與模擬器例項或連線的 Android 裝置進行通訊。它可為各種裝置操作提供便利，如安裝和除錯應用，並提供對 Unix shell（可用來在模擬器或連線的裝置上執行各種命令）的訪問。
+Android 除錯橋 (`adb`) 是一個通用命令列工具，其允許您與模擬器例項或連線的 Android 裝置進行通訊。它可為各種裝置操作提供便利，如安裝和除錯程式，並提供對 Unix shell（可用來在模擬器或連線的裝置上執行各種命令）的存取。
 
 更多資訊請檢視 [Android Developer](https://developer.android.com/studio/command-line/adb)。
 
