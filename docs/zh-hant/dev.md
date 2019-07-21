@@ -14,7 +14,7 @@
 
    後面需要用到的許可權宣告包含在依賴中，不需要手動新增。
    
-2. 獲取 binder
+2. 取得 binder
 
    在你的 AndroidManifest.xml 中加入
 
@@ -28,7 +28,7 @@
         android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
    ```
 
-   當使用者應用程序啟動時，Shizuku v3 服務使用該 Provider 傳送 binder 給應用。
+   當使用者應用程序啟動時，Shizuku v3 服務使用該 Provider 傳送 binder 給程式。
 
    通常，當進入你自己的 Activity 時，該 provider 中的程式碼應該已被執行（即已經收到 binder），但還是建議你實現一個簡單的等待邏輯，詳細參考 sample。
 
@@ -36,9 +36,9 @@
 
    在使用收到的 binder 之前先需要確認自身許可權。
 
-   對 API 23 及以上，直接使用了[執行時許可權機制](https://developer.android.com/distribute/best-practices/develop/runtime-permissions)，只需要保證先獲取 `moe.shizuku.manager.permission.API_V23` 許可權即可。
+   對 API 23 及以上，直接使用了[執行時許可權機制](https://developer.android.com/distribute/best-practices/develop/runtime-permissions)，只需要保證先取得 `moe.shizuku.manager.permission.API_V23` 許可權即可。
 
-   對 API 23 以下，需要啟動 Shizuku app 獲取 token，具體流程請參考 sample。
+   對 API 23 以下，需要啟動 Shizuku app 取得 token，具體流程請參考 sample。
 
 4. 使用：binder transact（使用 `ShizukuBinderWrapper`）
 
@@ -77,9 +77,9 @@
 
    目前執行在 root 下的 Shizuku 會將 context 設為與 adb shell 相同（`u:r:shell:s0`）。
 
-4. 多程序應用
+4. 多程序程式
 
-   對於多程序的應用，請在使用 Shizuku 前執行 `ShizukuMultiProcessHelper#initialize` 來從 `ShizukuBinderReceiveProvider` 所在程序獲取 binder。另外由於 `ShizukuBinderReceiveProvider` 需要被其他程序啟動，建議將 `ShizukuBinderReceiveProvider` 所在程序（`android:process`）指定為與你的應用中最長時間執行的程序的相同。
+   對於多程序的程式，請在使用 Shizuku 前執行 `ShizukuMultiProcessHelper#initialize` 來從 `ShizukuBinderReceiveProvider` 所在程序取得 binder。另外由於 `ShizukuBinderReceiveProvider` 需要被其他程序啟動，建議將 `ShizukuBinderReceiveProvider` 所在程序（`android:process`）指定為與你的程式中最長時間執行的程序的相同。
 
 5. Android 8.0 & adb
 
@@ -91,4 +91,4 @@
 
    * 不同 Android 版本下 API 可能不同，請務必仔細檢查。此外，`android.app.IActivityManager` 在 API 26 及以後才存在 aidl 形式， `android.app.IActivityManager$Stub` 只在 API 26 以上存在。
 
-   * `SystemServiceHelper.getTransactionCode` 可能不能獲得正確的 transaction code，比如在 API 25 上不存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages` 而存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages_47`（這種情況已處理，但不排除還可能有其他情況）。使用 `ShizukuBinderWrapper` 方式不會遇到此問題。
+   * `SystemServiceHelper.getTransactionCode` 可能不能取得正確的 transaction code，比如在 API 25 上不存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages` 而存在 `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages_47`（這種情況已處理，但不排除還可能有其他情況）。使用 `ShizukuBinderWrapper` 方式不會遇到此問題。
