@@ -53,10 +53,17 @@ public class MainActivity extends BaseActivity {
 
     private HomeAdapter mAdapter;
 
+    private static boolean sWriteFilesCalled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (!sWriteFilesCalled) {
+            ServerLauncher.writeFiles(this, true);
+            sWriteFilesCalled = true;
+        }
 
         setActionBar(mToolbar = findViewById(R.id.toolbar));
 

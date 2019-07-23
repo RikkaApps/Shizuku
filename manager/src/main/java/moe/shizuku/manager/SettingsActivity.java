@@ -3,8 +3,6 @@ package moe.shizuku.manager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import java.io.IOException;
-
 import moe.shizuku.manager.app.BaseActivity;
 
 public class SettingsActivity extends BaseActivity {
@@ -41,11 +39,7 @@ public class SettingsActivity extends BaseActivity {
         super.onDestroy();
 
         if (ShizukuManagerSettings.isStartServiceV2() != isStartServiceV2) {
-            try {
-                ServerLauncher.writeSH(this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ServerLauncher.writeFiles(this, true);
         }
     }
 

@@ -7,6 +7,7 @@ import android.os.Process;
 import android.util.Log;
 
 import androidx.core.content.ContextCompat;
+
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import moe.shizuku.api.ShizukuClient;

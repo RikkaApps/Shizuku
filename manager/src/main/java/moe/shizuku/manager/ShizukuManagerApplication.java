@@ -57,7 +57,6 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
         LocaleDelegate.setDefaultLocale(ShizukuManagerSettings.getLocale());
         DayNightDelegate.setDefaultNightMode(ShizukuManagerSettings.getNightMode());
         AuthorizationManager.init(context);
-        ServerLauncher.writeFiles(context);
 
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             LOGGER.i("onBinderReceived");

@@ -1,7 +1,6 @@
 package moe.shizuku.manager;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 
 import java.io.BufferedReader;
@@ -14,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 import moe.shizuku.ShizukuConstants;
@@ -23,23 +23,31 @@ import moe.shizuku.support.utils.IOUtils;
 public class ServerLauncher {
 
     public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
-    public static String[] COMMAND_ROOT = new String[2];
-    private static String[] DEX_PATH = new String[2];
-    private static String[] DEX_LEGACY_PATH = new String[2];
+    public static final String[] COMMAND_ROOT = new String[2];
+    private static final String[] DEX_PATH = new String[2];
+    private static final String[] DEX_LEGACY_PATH = new String[2];
 
-    private static final String V2_DEX_NAME;
-    private static final String V3_DEX_NAME;
+    private static final String V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuConstants.SERVER_VERSION, Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT));
+    private static final String V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
 
-    static {
-        int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
-        V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuConstants.SERVER_VERSION, apiVersion);
-        V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
-    }
-
-    public static void writeFiles(Context context) {
+    public static void writeFiles(Context context, boolean external) {
         try {
-            copyDex(context);
-            writeSH(context);
+            File out;
+            if (external)
+                out = context.getExternalFilesDir(null);
+            else
+                out = getParent(context);
+
+            if (out == null)
+                return;
+
+            int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
+            String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
+            int i = external ? 1 : 0;
+
+            DEX_LEGACY_PATH[i] = copyDex(context, source, new File(out, V2_DEX_NAME));
+            DEX_PATH[i] = copyDex(context, "server.dex", new File(out, V3_DEX_NAME));
+            COMMAND_ROOT[i] = writeShellFile(context, new File(out, "start.sh"), DEX_LEGACY_PATH[i], DEX_PATH[i]);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,100 +57,57 @@ public class ServerLauncher {
         return ShizukuManagerApplication.getDeviceProtectedStorageContext(context).getFilesDir();
     }
 
-    private static void copyDex(Context context) throws IOException {
-        int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
-        String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
+    private static String copyDex(Context context, String source, File out) throws IOException {
+        if (out.exists() && !BuildConfig.DEBUG) {
+            return out.getAbsolutePath();
+        }
 
-        copyDex(context, source, V2_DEX_NAME, DEX_LEGACY_PATH);
-        copyDex(context, "server.dex", V3_DEX_NAME, DEX_PATH);
+        InputStream is = context.getAssets().open(source);
+        OutputStream os = new FileOutputStream(out);
+
+        IOUtils.copy(is, os);
+
+        os.flush();
+        os.close();
+        is.close();
+
+        return out.getAbsolutePath();
     }
 
-    private static void copyDex(Context context, String source, String target, String[] out) throws IOException {
-        File external = context.getExternalFilesDir(null);
-        File internal = getParent(context);
-
-        File[] files = new File[external == null ? 1 : 2];
-        files[0] = new File(internal, target);
-        if (external != null) {
-            files[1] = new File(external, target);
+    private static String writeShellFile(Context context, File out, String dexLegacy, String dex) throws IOException {
+        if (!out.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            out.createNewFile();
         }
 
-        int i = 0;
-        for (File file : files) {
-            out[i] = file.getAbsolutePath();
-
-            if (file.exists() && !BuildConfig.DEBUG) {
-                i++;
-                continue;
-            }
-
-            InputStream is = context.getAssets().open(source);
-            OutputStream os = new FileOutputStream(file);
-
-            IOUtils.copy(is, os);
-
-            os.flush();
-            os.close();
-            is.close();
-
-            i++;
+        BufferedReader is = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.start)));
+        PrintWriter os = new PrintWriter(new FileWriter(out));
+        String line;
+        while ((line = is.readLine()) != null) {
+            os.println(line
+                    .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
+                    .replace("%%%STARTER_PARAM%%%", getStarterParam(dexLegacy, dex))
+                    .replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
+            );
         }
+        os.flush();
+        os.close();
+
+        return "sh " + out.getAbsolutePath();
     }
 
-    public static void writeSH(Context context) throws IOException {
-        // adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh
-        String target = "start.sh";
+    private static String getStarterParam(String dexLegacy, String dex) {
+        Objects.requireNonNull(dexLegacy);
+        Objects.requireNonNull(dex);
 
-        File external = context.getExternalFilesDir(null);
-        File internal = getParent(context);
-
-        File[] files = new File[external == null ? 1 : 2];
-        files[0] = new File(internal, target);
-
-        if (external != null) {
-            files[1] = new File(external, target);
-        }
-
-        int i = 0;
-        for (File file : files) {
-            if (!file.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                file.createNewFile();
-            }
-
-            COMMAND_ROOT[i] = "sh " + file.getAbsolutePath();
-
-            BufferedReader is = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.start)));
-            PrintWriter os = new PrintWriter(new FileWriter(file));
-            String line;
-            while ((line = is.readLine()) != null) {
-                os.println(line
-                        .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
-                        .replace("%%%STARTER_PARAM%%%", getStarterParam(i))
-                        .replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
-                );
-            }
-            os.flush();
-            os.close();
-
-            i++;
-        }
-    }
-
-    private static String getStarterParam(int i) {
-        return "--path-legacy=" + DEX_LEGACY_PATH[i]
-                + " --path=" + DEX_PATH[i]
+        return "--path-legacy=" + dexLegacy
+                + " --path=" + dex
                 + " --token=" + UUID.randomUUID()
                 + (ShizukuManagerSettings.isStartServiceV2() ? "" : " --no-v2");
     }
 
     private static String getLibPath(Context context, String name) {
-        String path;
-        try {
-            path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).publicSourceDir;
-        } catch (PackageManager.NameNotFoundException ignored) {
-            throw new RuntimeException();
-        }
+        String path = context.getApplicationInfo().publicSourceDir;
 
         File sourceDir = new File(path);
         File libDir = new File(sourceDir.getParentFile(), "lib").listFiles()[0];
