@@ -1,5 +1,6 @@
 package moe.shizuku.manager.viewholder;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -9,8 +10,8 @@ import moe.shizuku.manager.Helps;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.utils.CustomTabsHelper;
-import moe.shizuku.manager.utils.MultiLocaleEntity;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
+import moe.shizuku.support.text.HtmlCompat;
 import moe.shizuku.support.utils.ClipboardUtils;
 
 public class StartAdbViewHolder extends BaseViewHolder<Object> {
@@ -24,18 +25,23 @@ public class StartAdbViewHolder extends BaseViewHolder<Object> {
 
         itemView.findViewById(android.R.id.button2).setOnClickListener(v -> {
             Context context = v.getContext();
-            if (ClipboardUtils.put(context, ServerLauncher.COMMAND_ADB)) {
-                Toast.makeText(context, context.getString(R.string.copied_to_clipboard, ServerLauncher.COMMAND_ADB), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        itemView.findViewById(android.R.id.button3).setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.COMMAND_ADB);
-            intent = Intent.createChooser(intent, context.getString(R.string.send_command));
-            context.startActivity(intent);
+            new AlertDialog.Builder(context)
+                    .setTitle(R.string.view_command)
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.view_command_message, ServerLauncher.COMMAND_ADB)))
+                    .setPositiveButton(R.string.copy_command, (dialog, which) -> {
+                        if (ClipboardUtils.put(context, ServerLauncher.COMMAND_ADB)) {
+                            Toast.makeText(context, context.getString(R.string.copied_to_clipboard, ServerLauncher.COMMAND_ADB), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setNeutralButton(R.string.send_command, (dialog, which) -> {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.COMMAND_ADB);
+                        intent = Intent.createChooser(intent, context.getString(R.string.send_command));
+                        context.startActivity(intent);
+                    })
+                    .show();
         });
     }
 }

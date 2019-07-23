@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:left="4dp"
+        android:right="4dp"
+        android:top="2dp"
+        android:bottom="2dp">
+
+        <aapt:attr name="android:drawable">
+            <ripple android:color="?android:colorControlHighlight">
+                <item android:id="@android:id/mask">
+                    <shape android:shape="rectangle">
+                        <solid android:color="?android:attr/windowBackground" />
+                        <corners android:radius="4dp" />
+                    </shape>
+                </item>
+            </ripple>
+        </aapt:attr>
+
+    </item>
+
+</layer-list>

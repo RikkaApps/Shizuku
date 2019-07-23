@@ -17,14 +17,16 @@
     <string name="service_restart">Restart</string>
     <string name="start_service_title_root"><![CDATA[Start service with root permission]]></string>
     <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
-    <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below. Help will update at any time, includes solutions to problems.]]></string>
+    <string name="start_service_summary_adb"><![CDATA[Using adb is not difficult, please read the help below. Help will update at any time, includes solutions to problems (such as Shizuku stops suddenly).]]></string>
     <string name="start_service_summary_root"><![CDATA[
     If successful starts, Shizuku will automatically start after boot.
     <br>If Shizuku can\'t start on boot properly, please check if your system or third-party tools have restricted Shizuku Manager.
     <p>Almost all vendors except Google have their own background restriction mechanism (some vendors are vary crazy, such as OnePlus, which seriously affects the functionality of many apps).
-    <br>Please refer to <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> for instructions on how to turn off restrictions. ]]></string>
-    <string name="copy_command">Copy command</string>
-    <string name="send_command">Send command</string>
+    <br>Please refer to <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> for instructions on how to turn off restrictions.]]></string>
+    <string name="copy_command">Copy</string>
+    <string name="send_command">Send</string>
+    <string name="view_command">View adb command</string>
+    <string name="view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
@@ -77,7 +79,7 @@
     <string name="action_view_apps">Get more</string>
     <string name="adb_no_permission_title">The permission of adb is limited</string>
     <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
-    <string name="view_detailed_online_help">Read detailed online help</string>
+    <string name="view_online_help">Read online help</string>
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
     <string name="get_more_summary">View apps using Shizuku</string>
