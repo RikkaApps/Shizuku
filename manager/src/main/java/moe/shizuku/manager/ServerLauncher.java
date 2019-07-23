@@ -23,7 +23,7 @@ import moe.shizuku.support.utils.IOUtils;
 public class ServerLauncher {
 
     public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
-    public static final String[] COMMAND_ROOT = new String[2];
+    public static String COMMAND_ROOT;
     private static final String[] DEX_PATH = new String[2];
     private static final String[] DEX_LEGACY_PATH = new String[2];
 
@@ -47,7 +47,11 @@ public class ServerLauncher {
 
             DEX_LEGACY_PATH[i] = copyDex(context, source, new File(out, V2_DEX_NAME));
             DEX_PATH[i] = copyDex(context, "server.dex", new File(out, V3_DEX_NAME));
-            COMMAND_ROOT[i] = writeShellFile(context, new File(out, "start.sh"), DEX_LEGACY_PATH[i], DEX_PATH[i]);
+
+            String command = writeShellFile(context, new File(out, "start.sh"), DEX_LEGACY_PATH[i], DEX_PATH[i]);
+            if (!external) {
+                COMMAND_ROOT = command;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
