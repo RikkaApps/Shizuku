@@ -1,45 +1,46 @@
-# 简介
+---
+home: true
+heroImage: /logo.png
+actionText: 快速上手 →
+actionLink: /zh-hans/guide/
+---
 
-Shizuku 可以帮助普通应用借助一个由 app_process 启动的 Java 进程直接以 adb 或 root 特权使用系统 API。
+<div style="text-align: center">
+  <Bit/>
+</div>
 
-> Shizuku 这个名字来自[这里](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=75586127)。
+<div class="features">
+  <div class="feature">
+    <h2>优雅地使用系统 API</h2>
+    <p>忘掉 root shell 吧，你可以直接「像系统应用一样」直接使用系统 API。此外，使用 Shizuku 要快得多。</p>
+  </div>
+  <div class="feature">
+    <h2>支持 adb 使用</h2>
+    <p>如果你的「需要 root 的应用」只需要 adb 权限，则可以使用 Shizuku 轻松地扩大用户群体。</p>
+  </div>
+  <div class="feature">
+    <h2>节省时间</h2>
+    <p>Shizuku 有详细的文档引导用户，你只需要让用户安装 Shizuku。</p>
+  </div>
+</div>
 
-## Shizuku 为何而生？
+### 就像是系统应用一样简单
 
-Shizuku 的诞生主要有两大目的：
+```java
+private static final IPackageManager PACKAGE_MANAGER = IPackageManager.Stub.asInterface(
+    new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
 
-1. 提供一个方便地使用系统 API 的方式
-2. 为部分只需要 adb 权限的应用开发提供便利
+public static void grantRuntimePermission(String packageName, String permissionName, int userId) {
+    try {
+        PACKAGE_MANAGER.grantRuntimePermission(packageName, permissionName, userId);
+    } catch (RemoteException tr) {
+        throw new RuntimeException(tr.getMessage(), tr);
+    }
+}
+```
 
-## Shizuku 与“传统”做法对比
+::: tip
+**注意**
 
-### “传统”做法
-
-以启用/禁用组件为例，一些需要 root 权限的应用直接在 `su` 中执行 `pm disable`。
-
-1. 执行 `su`
-2. 执行 `pm disable`
-3. (pre-Pie) 使用 app_process 启动 Java 进程（[参见此处](https://android.googlesource.com/platform/frameworks/base/+/oreo-release/cmds/pm/pm)）
-4. (Pie+) 执行原生程序 `cmd`（[参见此处](https://android.googlesource.com/platform/frameworks/native/+/pie-release/cmds/cmd/)）
-5. 处理参数，通过 binder 与 system server 交互，处理结果输出文字结果
-
-其中每个“执行”都意味着新进程建立，su 内部使用 socket 与 su daemon 交互，大量的时间和性能被消耗在这样的过程中。（部分设计不佳的应用甚至会每次执行指令都执行一次 `su`）
-
-此类做法的缺点在于：
-
-1. **极慢**
-2. 需要处理文本来获取结果
-3. 功能受制于可用的指令
-4. 即使 adb 有足够权限，应用也需要 root 权限才可使用
-
-### Shizuku 做法
-
-Shizuku app 会引导用户使用 root 或是 adb 方式运行一个进程（Shizuku 服务进程）。
-
-1. 应用进程启动时 Shizuku 服务进程发送 binder 至应用进程
-2. 应用通过该 binder 与 Shizuku 服务进程交互，Shizuku 服务进程通过 binder 与 system server 交互
-
-Shizuku 的优点在于：
-
-1. 极小额外时间及性能消耗
-2. 与直接调用 API 体验几乎一致（应用开发者只许添加少量代码）
+还有一些步骤要做，比如检查权限或 Shizuku 是否正在运行。
+:::
