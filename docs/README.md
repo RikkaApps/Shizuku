@@ -3,26 +3,15 @@ home: true
 heroImage: /logo.png
 actionText: Get Started →
 actionLink: /guide/
+features:
+- title: Use system APIs elegantly
+  details: Forget about root shell, you can use APIs directly "as a system app". Also, using Shizuku is significantly faster.
+- title: Support adb usage
+  details: If your "root required app" only needs adb permission, you can easily expand the audience by using Shizuku.
+- title: Save your time
+  details: Shizuku has detailed documentation to guide users. Only you have to do is let users install Shizuku.
+footer: Copyright © 2019 RikkaApps
 ---
-
-<div style="text-align: center">
-  <Bit/>
-</div>
-
-<div class="features">
-  <div class="feature">
-    <h2>Use system APIs elegantly</h2>
-    <p>Forget about root shell, you can use APIs directly "as a system app". Also, using Shizuku is significantly faster.</p>
-  </div>
-  <div class="feature">
-    <h2>Support adb usage</h2>
-    <p>If your "root required app" only needs adb permission, you can easily expand the audience by using Shizuku.</p>
-  </div>
-  <div class="feature">
-    <h2>Save your time</h2>
-    <p>Shizuku has detailed documentation to guide users. Only you have to do is let users install Shizuku.</p>
-  </div>
-</div>
 
 ### As Easy as you are a system app
 
