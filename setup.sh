@@ -41,25 +41,4 @@ function download() {
 
 # download android.jar with hidden api
 
-echo
-echo download android.jar from anggrayudi/android-hidden-api
-
-for api in {21..25}
-do
-    download "https://raw.githubusercontent.com/anggrayudi/android-hidden-api/master/android-$api/android.jar" "android-$api/android.jar"
-done
-
-echo
-echo download android.jar from Trumeet/android-hidden-api
-
-for api in {26..27}
-do
-    download "https://raw.githubusercontent.com/Trumeet/android-hidden-api/master/android-$api/android.jar" "android-$api/android.jar"
-done
-
-# generate codes and shizuku server dex
-
-echo
-echo generate codes and shizuku server dex
-
-./gradlew :generate
+download "https://raw.githubusercontent.com/anggrayudi/android-hidden-api/master/android-27/android.jar" "android-$api/android.jar"
