@@ -43,21 +43,11 @@
     <string name="about_icon_credits"><![CDATA[感謝 <a href="https://twitter.com/xiaoya_er">小雅</a> 製作應用程式的圖示]]></string>
     <string name="about_source_code"><![CDATA[在 <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b> 查看原始碼]]></string>
     <string name="action_settings">設定</string>
-    <string name="start_root_choose_launch_method">選擇啟動模式</string>
-    <string name="start_root_method_usual">普通模式</string>
-    <string name="start_root_method_usual_summary">應該在大部分裝置上運作</string>
-    <string name="start_root_method_alternative">替代模式</string>
-    <string name="start_root_method_alternative_summary">若普通模式無法正常運作，請嘗試這個。</string>
-    <string name="remember_choice">記住我的選擇</string>
-    <string name="settings_root_launch_method">啟動方式（root）</string>
-    <string name="settings_root_launch_ask_every_time">每次詢問</string>
     <string name="cannot_start_no_root">未授予 root 權限或是該裝置沒有 root，因此無法啟動服務。</string>
-    <string name="cannot_start_shell_failed">執行 shell 命令時發生問題。</string>
     <string name="channel_service_status">服務啟動狀態</string>
     <string name="notification_service_starting">Shizuku 服務正在啟動…</string>
     <string name="notification_service_start_failed">啟動 Shizuku 服務時失敗。</string>
     <string name="notification_service_start_no_root">請求 root 權限失敗。</string>
-    <string name="channel_work_status">工作狀態</string>
     <string name="notification_working">工作中…</string>
     <string name="requires_legacy">* 需要舊式 Shizuku</string>
     <string name="settings_language">語言</string>

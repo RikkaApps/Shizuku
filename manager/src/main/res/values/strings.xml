@@ -46,22 +46,12 @@
     <string name="about_icon_credits"><![CDATA[Thanks <b><a href="https://twitter.com/xiaoya_er">小雅</a></b> for illustrating app icon]]></string>
     <string name="about_source_code"><![CDATA[View source code at <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b>]]></string>
     <string name="action_settings">Settings</string>
-    <string name="start_root_choose_launch_method">Choose start method</string>
-    <string name="start_root_method_usual">The usual way</string>
-    <string name="start_root_method_usual_summary">Should work on most devices</string>
-    <string name="start_root_method_alternative">Alternative way</string>
-    <string name="start_root_method_alternative_summary">Try this if you have problem</string>
-    <string name="remember_choice">Remember my choice</string>
-    <string name="settings_root_launch_method">Start method (root)</string>
-    <string name="settings_root_launch_ask_every_time">Ask every time</string>
     <string name="starting_shell" translatable="false">Starting root shell…</string>
     <string name="cannot_start_no_root">Can\'t start service because root permission is not granted or this device is not rooted.</string>
-    <string name="cannot_start_shell_failed">There\'s something wrong when running shell command.</string>
     <string name="channel_service_status">Service start status</string>
     <string name="notification_service_starting">Shizuku service is starting…</string>
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
-    <string name="channel_work_status">Working status</string>
     <string name="notification_working">Working…</string>
     <string name="requires_legacy">* requires legacy Shizuku</string>
     <string name="settings_language">Language</string>

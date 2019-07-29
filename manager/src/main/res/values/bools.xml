@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedResources">
     <bool name="auth_activity_enabled">true</bool>
     <bool name="auth_activity_v23_enabled">false</bool>
     <bool name="is_tablet">false</bool>
