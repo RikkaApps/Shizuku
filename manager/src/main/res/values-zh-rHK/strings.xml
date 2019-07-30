@@ -67,5 +67,7 @@
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
     <string name="get_more_summary">檢視使用 Shizuku 的應用程式</string>
+    <string name="learn_more">瞭解 Shizuku</string>
+    <string name="learn_more_summary">瞭解如何使用 Shizuku 開發或檢視使用 Shizuku 的程式</string>
 
 </resources>

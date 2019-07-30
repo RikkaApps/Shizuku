@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
-import moe.shizuku.manager.viewholder.GetAppsViewHolder;
+import moe.shizuku.manager.viewholder.LearnMoreViewHolder;
 import moe.shizuku.manager.viewholder.ManageAppsViewHolder;
 import moe.shizuku.manager.viewholder.ServerStatusViewHolder;
 import moe.shizuku.manager.viewholder.StartAdbViewHolder;
@@ -71,7 +71,8 @@ public class HomeAdapter extends IdBasedRecyclerViewAdapter {
 
         }
 
-        addItem(GetAppsViewHolder.CREATOR, null, 4);
+        //addItem(GetAppsViewHolder.CREATOR, null, 4);
+        addItem(LearnMoreViewHolder.CREATOR, null, 5);
 
         notifyDataSetChanged();
     }
