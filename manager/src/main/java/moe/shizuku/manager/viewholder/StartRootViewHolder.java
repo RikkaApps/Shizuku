@@ -5,20 +5,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.Checkable;
 import android.widget.TextView;
 
 import androidx.core.app.ShareCompat;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
+import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.service.ShellService;
 import moe.shizuku.manager.utils.BindServiceHelper;
+import moe.shizuku.manager.widget.ExpandableLayout;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
 import moe.shizuku.support.utils.ContextUtils;
 import moe.shizuku.support.widget.HtmlCompatTextView;
 
-public class StartRootViewHolder extends BaseViewHolder<Boolean> {
+public class StartRootViewHolder extends BaseViewHolder<Boolean> implements View.OnClickListener, Checkable {
 
     public static final Creator<Boolean> CREATOR = (inflater, parent) -> new StartRootViewHolder(inflater.inflate(R.layout.item_home_start_root, parent, false));
+
+    private Checkable expandableButton;
+    private ExpandableLayout expandableLayout;
 
     private View start;
     private View restart;
@@ -29,6 +35,10 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
 
     public StartRootViewHolder(View itemView) {
         super(itemView);
+
+        expandableButton = itemView.findViewById(android.R.id.text2);
+        ((View) expandableButton).setOnClickListener(this);
+        expandableLayout = itemView.findViewById(R.id.expandable);
 
         mBindServiceHelper = new BindServiceHelper(itemView.getContext(), ShellService.class);
 
@@ -160,6 +170,8 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
             start.setVisibility(View.VISIBLE);
             restart.setVisibility(View.GONE);
         }
+
+        syncViewState();
     }
 
     @Override
@@ -167,5 +179,31 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> {
         super.onRecycle();
 
         mAlertDialog = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        setChecked(!isChecked());
+        syncViewState();
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        ShizukuManagerSettings.getPreferences().edit().putBoolean("root_help_expanded", checked).apply();
+    }
+
+    @Override
+    public boolean isChecked() {
+        return ShizukuManagerSettings.getPreferences().getBoolean("root_help_expanded", true);
+    }
+
+    @Override
+    public void toggle() {
+        setChecked(!isChecked());
+    }
+
+    private void syncViewState() {
+        expandableButton.setChecked(isChecked());
+        expandableLayout.setExpanded(isChecked());
     }
 }

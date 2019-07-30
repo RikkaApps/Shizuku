@@ -9,4 +9,8 @@
         <attr name="iconForegroundChroma" format="string"/>
         <attr name="iconColorName" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="ExpandableLayout">
+        <attr name="isExpanded" format="boolean"/>
+    </declare-styleable>
 </resources>

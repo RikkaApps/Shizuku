@@ -73,5 +73,4 @@
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
     <string name="get_more_summary">View apps using Shizuku</string>
-
 </resources>
