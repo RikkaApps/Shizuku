@@ -83,7 +83,7 @@
 
 5. Android 8.0 & adb
 
-   目前 Shizuku v3 服務獲取應用程序建立的方式是組合 `IActivityManager#registerProcessObserver` 與 `IActivityManager#registerUidObserver`（26 及以上），可以保證應用程序啟動時會被髮送 binder。但在 API 26 上，adb 缺少許可權無法使用 `registerUidObserver`，因此如果你需要在可能不是由 Activity 啟動的程序中使用 Shizuku，建議使用啟動透明 Activity 的方式觸發傳送 binder。
+   目前 Shizuku v3 服務獲取應用程序建立的方式是組合 `IActivityManager#registerProcessObserver` 與 `IActivityManager#registerUidObserver`（26 及以上），可以保證應用程序啟動時會被傳送 binder。但在 API 26 上，adb 缺少許可權無法使用 `registerUidObserver`，因此如果你需要在可能不是由 Activity 啟動的程序中使用 Shizuku，建議使用啟動透明 Activity 的方式觸發傳送 binder。
    
 5. 請勿濫用「直接執行指令」指令功能
 
