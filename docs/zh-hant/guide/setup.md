@@ -19,7 +19,7 @@ Android 除錯橋 (`adb`) 是一個通用命令列工具，其允許您與模擬
 #### 2.1. Windows
 
 1. 下載由 Google 提供的 [SDK Platform Tools](https://dl.google.com/android/repository/platform-tools-latest-windows.zip) 並解壓至任意資料夾
-2. 使用資源管理器開啟資料夾，按住 Shift 點選右鍵選擇「在此處開啟 PowerShell 視窗」（如果是 Windows 7 則是開啟 CMD）
+2. 使用資源管理器開啟資料夾，按住 Shift 點選右鍵選擇「在此處開啟 PowerShell 視窗」（如果是 Windows 7 則是「在此處開啟命令視窗」）
 3. 輸入 `adb` 如果可以看到一長串內容而不是提示找不到 adb 則表示成功
 
 ::: tip
