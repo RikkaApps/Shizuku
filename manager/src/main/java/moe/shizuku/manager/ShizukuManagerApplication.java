@@ -26,28 +26,9 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
         Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR);
     }
 
-    public static boolean isUserUnlocked(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            UserManager um = context.getSystemService(UserManager.class);
-            if (um != null && !um.isUserUnlocked()) {
-                return um.isUserUnlocked();
-            }
-        }
-        return true;
-    }
-
     public static Context getDeviceProtectedStorageContext(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return context.createDeviceProtectedStorageContext();
-        }
-        return context;
-    }
-
-    public static Context getDeviceProtectedStorageContextIfNeeded(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (!isUserUnlocked(context)) {
-                return context.createDeviceProtectedStorageContext();
-            }
         }
         return context;
     }
