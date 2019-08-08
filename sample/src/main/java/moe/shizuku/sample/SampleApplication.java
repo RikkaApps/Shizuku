@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import me.weishu.reflection.Reflection;
+import moe.shizuku.api.ShizukuClientHelperPre23;
 import moe.shizuku.api.ShizukuMultiProcessHelper;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.api.ShizukuService;
@@ -72,7 +73,7 @@ public class SampleApplication extends android.app.Application {
                     ShizukuService.pingBinder();
 
                     if (Build.VERSION.SDK_INT < 23) {
-                        String token = ShizukuClientHelper.loadPre23Token(base);
+                        String token = ShizukuClientHelperPre23.loadPre23Token(base);
                         v3TokenValid = ShizukuService.setCurrentProcessTokenPre23(token);
                     }
 
