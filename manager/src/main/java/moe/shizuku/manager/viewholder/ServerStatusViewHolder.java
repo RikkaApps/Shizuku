@@ -8,12 +8,11 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import moe.shizuku.ShizukuConstants;
-import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.manager.model.ServiceStatus;
 import moe.shizuku.manager.widget.MaterialCircleIconView;
 import moe.shizuku.support.recyclerview.BaseViewHolder;
@@ -55,7 +54,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
     public void onBind() {
         final Context context = itemView.getContext();
         final ServiceStatus status = getData();
-        final ShizukuState v2Status = getData().getV2Status();
+        final ShizukuLegacy.ShizukuState v2Status = getData().getV2Status();
 
         boolean startV2 = ShizukuManagerSettings.isStartServiceV2();
         boolean runningV2 = false;
@@ -65,15 +64,15 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
         int versionV2 = v2Status.getVersion(), versionV3 = status.getVersion();
 
         switch (v2Status.getCode()) {
-            case ShizukuState.STATUS_AUTHORIZED:
+            case ShizukuLegacy.ShizukuState.STATUS_AUTHORIZED:
                 runningV2 = true;
                 okV2 = true;
                 break;
-            case ShizukuState.STATUS_UNAVAILABLE:
-            case ShizukuState.STATUS_UNAUTHORIZED:
+            case ShizukuLegacy.ShizukuState.STATUS_UNAVAILABLE:
+            case ShizukuLegacy.ShizukuState.STATUS_UNAUTHORIZED:
                 runningV2 = true;
                 break;
-            case ShizukuState.STATUS_UNKNOWN:
+            case ShizukuLegacy.ShizukuState.STATUS_UNKNOWN:
                 break;
         }
 
@@ -102,12 +101,12 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
                 if (okV2) {
                     v2Title = context.getString(R.string.service_running, v2Name);
                     if (v2Status.versionUnmatched()) {
-                        v2Summary = context.getString(R.string.service_version_update, v2User, versionV2, ShizukuConstants.SERVER_VERSION);
+                        v2Summary = context.getString(R.string.service_version_update, v2User, versionV2, ShizukuLegacy.SERVER_VERSION);
                     } else {
                         v2Summary = context.getString(R.string.service_version, v2User, versionV2);
                     }
                 } else {
-                    if (v2Status.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
+                    if (v2Status.getCode() == ShizukuLegacy.ShizukuState.STATUS_UNAUTHORIZED) {
                         v2Title = context.getString(R.string.service_legacy_no_token, v2Name);
                     } else {
                         v2Title = context.getString(R.string.service_legacy_require_restart, v2Name);

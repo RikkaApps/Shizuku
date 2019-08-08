@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModel;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.api.ShizukuService;
-import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.manager.model.ServiceStatus;
 import moe.shizuku.server.IShizukuService;
 
@@ -34,8 +32,8 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void loadInternal() {
-        ShizukuState v2Status;
-        serviceStatus.setV2Status((v2Status = ShizukuClient.getState()));
+        ShizukuLegacy.ShizukuState v2Status;
+        serviceStatus.setV2Status((v2Status = ShizukuLegacy.ShizukuClient.getState()));
 
         if (ShizukuService.getBinder() != null) {
             if (ShizukuService.pingBinder()) {
@@ -43,11 +41,11 @@ public class HomeViewModel extends ViewModel {
                     serviceStatus.setUid(ShizukuService.getUid());
                     serviceStatus.setVersion(ShizukuService.getVersion());
 
-                    if (v2Status.getCode() == ShizukuState.STATUS_UNAUTHORIZED) {
+                    if (v2Status.getCode() == ShizukuLegacy.ShizukuState.STATUS_UNAUTHORIZED) {
                         String token = IShizukuService.Stub.asInterface(ShizukuService.getBinder()).getToken();
-                        ShizukuManagerSettings.putToken(UUID.fromString(token));
+                        ShizukuLegacy.putToken(UUID.fromString(token));
 
-                        serviceStatus.setV2Status(ShizukuClient.getState());
+                        serviceStatus.setV2Status(ShizukuLegacy.ShizukuClient.getState());
                     }
                 } catch (Throwable tr) {
                     LOGGER.w(tr, "");

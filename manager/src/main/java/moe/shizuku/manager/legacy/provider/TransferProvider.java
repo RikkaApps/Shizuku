@@ -17,17 +17,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.authorization.AuthorizationManager;
-
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_DATA;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_KEY_ID;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_GET;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_METHOD_PUT;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_BINDER;
-import static moe.shizuku.ShizukuConstants.TRANSFER_PROVIDER_TYPE_PARCELABLE;
-
 public class TransferProvider extends ContentProvider {
 
     private static final String TAG = "TransferProvider";
+
+    public static final Uri TRANSFER_PROVIDER_URI = Uri.parse("content://moe.shizuku.manager.transferprovider");
+    public static final String TRANSFER_PROVIDER_NAME = "moe.shizuku.manager.transferprovider";
+    public static final String TRANSFER_PROVIDER_METHOD_GET = "get";
+    public static final String TRANSFER_PROVIDER_METHOD_PUT = "put";
+    public static final String TRANSFER_PROVIDER_TYPE_PARCELABLE = "type_parcelable";
+    public static final String TRANSFER_PROVIDER_TYPE_BINDER = "type_binder";
+    public static final String TRANSFER_PROVIDER_KEY_ID = "id";
+    public static final String TRANSFER_PROVIDER_KEY_DATA = "data";
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {

@@ -16,7 +16,8 @@ public class ShizukuApiConstants {
     public static final String EXTRA_BINDER = MANAGER_APPLICATION_ID + ".intent.extra.BINDER";
 
     // for pre-23
-    static final String ACTION_REQUEST_AUTHORIZATION = MANAGER_APPLICATION_ID + ".intent.action.REQUEST_AUTHORIZATION";
-    static final String EXTRA_TOKEN_MOST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_MOST_SIG";
-    static final String EXTRA_TOKEN_LEAST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_LEAST_SIG";
+    public static final String ACTION_PRE_23_REQUEST_AUTHORIZATION = MANAGER_APPLICATION_ID + ".intent.action.REQUEST_AUTHORIZATION";
+    public static final String EXTRA_PRE_23_TOKEN_MOST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_MOST_SIG";
+    public static final String EXTRA_PRE_23_TOKEN_LEAST_SIG = MANAGER_APPLICATION_ID + ".intent.extra.TOKEN_LEAST_SIG";
+    public static final String EXTRA_PRE_23_IS_V3 = MANAGER_APPLICATION_ID + ".intent.extra.IS_V3";
 }

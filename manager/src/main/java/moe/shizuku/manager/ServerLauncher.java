@@ -16,8 +16,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
-import moe.shizuku.ShizukuConstants;
 import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.support.utils.IOUtils;
 
 public class ServerLauncher {
@@ -27,7 +27,7 @@ public class ServerLauncher {
     private static final String[] DEX_PATH = new String[2];
     private static final String[] DEX_LEGACY_PATH = new String[2];
 
-    private static final String V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuConstants.SERVER_VERSION, Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT));
+    private static final String V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuLegacy.SERVER_VERSION, Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT));
     private static final String V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
 
     public static void writeFiles(Context context, boolean external) {
@@ -41,7 +41,7 @@ public class ServerLauncher {
             if (out == null)
                 return;
 
-            int apiVersion = Math.min(ShizukuConstants.MAX_SDK, Build.VERSION.SDK_INT);
+            int apiVersion = Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT);
             String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
             int i = external ? 1 : 0;
 

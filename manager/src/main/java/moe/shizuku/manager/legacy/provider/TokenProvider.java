@@ -9,10 +9,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.ShizukuClient;
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.authorization.AuthorizationManager;
+import moe.shizuku.manager.legacy.ShizukuLegacy;
 
 /**
  * Created by rikka on 2017/10/28.
@@ -68,8 +67,8 @@ public class TokenProvider extends ContentProvider {
         }
 
         Bundle result = new Bundle();
-        result.putLong(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, ShizukuClient.getToken().getMostSignificantBits());
-        result.putLong(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, ShizukuClient.getToken().getLeastSignificantBits());
+        result.putLong(ShizukuLegacy.EXTRA_TOKEN_MOST_SIG, ShizukuLegacy.getToken().getMostSignificantBits());
+        result.putLong(ShizukuLegacy.EXTRA_TOKEN_LEAST_SIG, ShizukuLegacy.getToken().getLeastSignificantBits());
         return result;
     }
 }

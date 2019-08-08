@@ -1,22 +1,22 @@
 package moe.shizuku.manager.model;
 
-import moe.shizuku.ShizukuState;
 import moe.shizuku.api.ShizukuService;
+import moe.shizuku.manager.legacy.ShizukuLegacy;
 
 public class ServiceStatus {
 
-    private ShizukuState v2Status = ShizukuState.createUnknown();
+    private ShizukuLegacy.ShizukuState v2Status = ShizukuLegacy.ShizukuState.createUnknown();
     private int uid;
     private int version;
 
     public ServiceStatus() {
     }
 
-    public ShizukuState getV2Status() {
+    public ShizukuLegacy.ShizukuState getV2Status() {
         return v2Status;
     }
 
-    public void setV2Status(ShizukuState v2Status) {
+    public void setV2Status(ShizukuLegacy.ShizukuState v2Status) {
         this.v2Status = v2Status;
     }
 

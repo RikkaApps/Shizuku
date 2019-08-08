@@ -2,20 +2,16 @@ package moe.shizuku.manager;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
-
-import java.lang.annotation.Retention;
-import java.util.Locale;
-import java.util.UUID;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
-import moe.shizuku.ShizukuConstants;
-import moe.shizuku.api.ShizukuClient;
+
+import java.lang.annotation.Retention;
+import java.util.Locale;
+
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
 import moe.shizuku.support.app.DayNightDelegate.NightMode;
 
@@ -62,8 +58,6 @@ public class ShizukuManagerSettings {
         if (sPreferences == null) {
             sPreferences = getSettingsStorageContext(context)
                     .getSharedPreferences(NAME, Context.MODE_PRIVATE);
-
-            ShizukuClient.setToken(ShizukuManagerSettings.getToken());
         }
     }
 
@@ -86,36 +80,6 @@ public class ShizukuManagerSettings {
 
     public static void setLastLaunchMode(@LaunchMethod int method) {
         getPreferences().edit().putInt("mode", method).apply();
-    }
-
-    public static UUID getToken() {
-        final SharedPreferences preferences = getPreferences();
-        long mostSig = preferences.getLong("token_most", 0);
-        long leastSig = preferences.getLong("token_least", 0);
-        return new UUID(mostSig, leastSig);
-    }
-
-    public static void putToken(Intent intent) {
-        long mostSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_MOST_SIG, 0);
-        long leastSig = intent.getLongExtra(ShizukuConstants.EXTRA_TOKEN_LEAST_SIG, 0);
-
-        UUID token = new UUID(mostSig, leastSig);
-        putToken(token);
-    }
-
-    public static void putToken(UUID token) {
-        long mostSig = token.getMostSignificantBits();
-        long leastSig = token.getLeastSignificantBits();
-
-        SharedPreferences preferences = getPreferences();
-        preferences.edit()
-                .putLong("token_most", mostSig)
-                .putLong("token_least", leastSig)
-                .apply();
-
-        ShizukuClient.setToken(token);
-
-        Log.i(AppConstants.TAG, "token update: " + token);
     }
 
     @NightMode

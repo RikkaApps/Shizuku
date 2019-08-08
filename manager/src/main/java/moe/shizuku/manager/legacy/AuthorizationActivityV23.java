@@ -5,8 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 
-import moe.shizuku.ShizukuState;
-import moe.shizuku.api.ShizukuClient;
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
 
@@ -18,25 +17,31 @@ public final class AuthorizationActivityV23 extends AuthorizationActivity {
 
         ComponentName component = getCallingActivity();
         if (component == null) {
-            setResult(ShizukuClient.AUTH_RESULT_ERROR);
+            setResult(ShizukuLegacy.ShizukuClient.AUTH_RESULT_ERROR);
             finish();
             return;
         }
 
-        ShizukuState shizukuState = getServerState();
         int msg = 0;
-        switch (shizukuState.getCode()) {
-            case ShizukuState.STATUS_UNAUTHORIZED:
-                msg = R.string.auth_manager_no_token;
-                break;
-            case ShizukuState.STATUS_UNAVAILABLE:
-                msg = R.string.auth_service_dead;
-                break;
-            case ShizukuState.STATUS_UNKNOWN:
+        if (isV3()) {
+            if (!ShizukuService.pingBinder()) {
                 msg = R.string.auth_cannot_connect;
-                break;
-            case ShizukuState.STATUS_AUTHORIZED:
-                break;
+            }
+        } else {
+            ShizukuLegacy.ShizukuState shizukuState = getLegacyServerState();
+            switch (shizukuState.getCode()) {
+                case ShizukuLegacy.ShizukuState.STATUS_UNAUTHORIZED:
+                    msg = R.string.auth_manager_no_token;
+                    break;
+                case ShizukuLegacy.ShizukuState.STATUS_UNAVAILABLE:
+                    msg = R.string.auth_service_dead;
+                    break;
+                case ShizukuLegacy.ShizukuState.STATUS_UNKNOWN:
+                    msg = R.string.auth_cannot_connect;
+                    break;
+                case ShizukuLegacy.ShizukuState.STATUS_AUTHORIZED:
+                    break;
+            }
         }
 
         if (msg != 0) {
@@ -46,7 +51,7 @@ public final class AuthorizationActivityV23 extends AuthorizationActivity {
                     .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV23.this, MainActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)))
                     .setOnDismissListener(dialog -> {
-                        setResult(ShizukuClient.AUTH_RESULT_ERROR);
+                        setResult(ShizukuLegacy.ShizukuClient.AUTH_RESULT_ERROR);
                         finish();
                     })
                     .setCancelable(false)
