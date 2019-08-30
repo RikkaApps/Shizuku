@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuClientHelper;
+import moe.shizuku.api.ShizukuClientHelperPre23;
 import moe.shizuku.api.ShizukuService;
 
 public class MainActivity extends Activity {
@@ -89,7 +90,7 @@ public class MainActivity extends Activity {
             // only called in API pre-23
             case REQUEST_CODE_AUTHORIZATION_V3: {
                 if (resultCode == Activity.RESULT_OK) {
-                    String token = ShizukuClientHelper.setPre23Token(data, this);
+                    String token = ShizukuClientHelperPre23.setPre23Token(data, this);
                     if (ShizukuService.pingBinder()) {
                         try {
                             // each of your process need to call this
@@ -111,7 +112,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_PERMISSION_V3: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -127,7 +128,7 @@ public class MainActivity extends Activity {
     //private ITaskStackListener mTaskStackListener;
 
     private void runTestV3() {
-        if (!ShizukuClientHelper.isPreM()) {
+        if (!ShizukuClientHelperPre23.isPreM()) {
             // on API 23+, Shizuku v3 uses runtime permission
             if (ActivityCompat.checkSelfPermission(this, ShizukuApiConstants.PERMISSION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_PERMISSION_V3);
@@ -135,7 +136,7 @@ public class MainActivity extends Activity {
             }
         } else if (!SampleApplication.isShizukuV3TokenValid()){
             // on API pre-23, Shizuku v3 uses old token, get token from Shizuku app
-            Intent intent = ShizukuClientHelper.createPre23AuthorizationIntent(this);
+            Intent intent = ShizukuClientHelperPre23.createPre23AuthorizationIntent(this);
             if (intent != null) {
                 try {
                     startActivityForResult(intent, REQUEST_CODE_AUTHORIZATION_V3);
