@@ -22,6 +22,7 @@
 #define EXIT_FATAL_SET_CLASSPATH 3
 #define EXIT_FATAL_FORK 4
 #define EXIT_FATAL_APP_PROCESS 5
+#define EXIT_FATAL_UID 6
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
 
@@ -83,7 +84,9 @@ static int start_server(const char *path, const char *main_class, const char *to
             exit_with_logcat(EXIT_FATAL_FORK);
         } else {
             // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
-            if (change_context && getuid() == 0 && setcon) setcon("u:r:shell:s0");
+            if (change_context && getuid() == 0 && setcon) {
+                setcon("u:r:shell:s0");
+            }
 
             char buf[128], class_path[PATH_MAX];
             sprintf(buf, "--nice-name=%s", nice_name);
@@ -186,7 +189,24 @@ static void copy_if_not_exist(const char *src, const char *dst) {
     }
 }
 
+static int check_selinux(const char *s, const char *t, const char *c, const char *p) {
+    int res = selinux_check_access(s, t, c, p, nullptr);
+    if (res != 0) {
+        printf("info: selinux_check_access %s %s %s %s: %d\n", s, t, c, p, res);
+        fflush(stdout);
+    }
+    return res;
+}
+
+char *context = nullptr;
+
 int main(int argc, char **argv) {
+    int uid = getuid();
+    if (uid != 0 && uid != 2000) {
+        perrorf("fatal: run Shizuku from non root nor adb user (uid=%d).\n", uid);
+        exit(EXIT_FATAL_UID);
+    }
+
     selinux_init();
 
     clock_gettime(CLOCK_REALTIME, &ts);
@@ -196,6 +216,8 @@ int main(int argc, char **argv) {
     char *_path_legacy = nullptr;
     int v2 = 1;
     int i;
+    int use_shell_context = 0;
+
     for (i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--token=", 8) == 0) {
             token = strdup(argv[i] + 8);
@@ -205,6 +227,32 @@ int main(int argc, char **argv) {
             _path_legacy = strdup(argv[i] + 14);
         } else if (strncmp(argv[i], "--no-v2", 7) == 0) {
             v2 = 0;
+        } else if (strncmp(argv[i], "--use-shell-context", 19) == 0) {
+            use_shell_context = 1;
+        }
+    }
+
+    if (uid == 0) {
+        if (getcon(&context) == 0) {
+            int res = 0;
+
+            res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "call");
+            res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "transfer");
+
+            if (res == 0) {
+                if (use_shell_context) {
+                    printf("warn: context %s seems safe, but force use shell context from cmd.\n", context);
+                    fflush(stdout);
+                }
+            } else {
+                use_shell_context = 1;
+                printf("warn: can't to context %s, use shell context instead.\n", context);
+                fflush(stdout);
+
+                printf("info: %s.\n", "u:r:shell:s0");
+                fflush(stdout);
+            }
+            freecon(context);
         }
     }
 
@@ -218,7 +266,7 @@ int main(int argc, char **argv) {
 
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
-    if (getuid() == 0) {
+    if (uid == 0) {
         chown("/data/local/tmp/shizuku", 2000, 2000);
         setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
@@ -243,9 +291,14 @@ int main(int argc, char **argv) {
     kill_proc_by_name(SERVER_NAME);
     kill_proc_by_name(SERVER_NAME_LEGACY);
 
+    if (use_shell_context) {
+        printf("info: use %s for Shizuku v3.\n", "u:r:shell:s0");
+        fflush(stdout);
+    }
+
     printf("info: starting server v3...\n");
     fflush(stdout);
-    start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, true);
+    start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, use_shell_context);
 
     if (v2) {
         printf("info: starting server v2 (legacy)...\n");
