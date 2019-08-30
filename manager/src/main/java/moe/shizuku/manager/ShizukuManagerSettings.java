@@ -23,6 +23,7 @@ public class ShizukuManagerSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String NO_V2 = "dont_start_v2_service";
+    public static final String KEEP_SU_CONTEXT = "keep_su_context";
 
     private static SharedPreferences sPreferences;
 
@@ -97,5 +98,9 @@ public class ShizukuManagerSettings {
 
     public static boolean isStartServiceV2() {
         return !getPreferences().getBoolean(NO_V2, false);
+    }
+
+    public static boolean isKeepSuContext() {
+        return getPreferences().getBoolean(KEEP_SU_CONTEXT, true);
     }
 }

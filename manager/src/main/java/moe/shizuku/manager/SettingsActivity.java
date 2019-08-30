@@ -8,6 +8,7 @@ import moe.shizuku.manager.app.BaseActivity;
 public class SettingsActivity extends BaseActivity {
 
     private boolean isStartServiceV2;
+    private boolean isKeepSuContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,10 @@ public class SettingsActivity extends BaseActivity {
                     .commit();
 
             isStartServiceV2 = ShizukuManagerSettings.isStartServiceV2();
+            isKeepSuContext = ShizukuManagerSettings.isKeepSuContext();
         } else {
-            isStartServiceV2 = savedInstanceState.getBoolean("start_v2");
+            isStartServiceV2 = savedInstanceState.getBoolean("start_v2", false);
+            isKeepSuContext = savedInstanceState.getBoolean("keep_su_context", true);
         }
     }
 
@@ -32,14 +35,19 @@ public class SettingsActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("start_v2", isStartServiceV2);
+        outState.putBoolean("keep_su_context", isKeepSuContext);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (ShizukuManagerSettings.isStartServiceV2() != isStartServiceV2) {
+        if (ShizukuManagerSettings.isStartServiceV2() != isStartServiceV2
+                || ShizukuManagerSettings.isKeepSuContext() != isKeepSuContext) {
             ServerLauncher.writeFiles(this, true);
+            if (ServerLauncher.COMMAND_ROOT != null) {
+                ServerLauncher.writeFiles(this, false);
+            }
         }
     }
 

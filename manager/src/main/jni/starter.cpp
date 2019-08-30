@@ -84,8 +84,8 @@ static int start_server(const char *path, const char *main_class, const char *to
             exit_with_logcat(EXIT_FATAL_FORK);
         } else {
             // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
-            if (change_context && getuid() == 0 && setcon) {
-                setcon("u:r:shell:s0");
+            if (change_context && getuid() == 0) {
+                se::setcon("u:r:shell:s0");
             }
 
             char buf[128], class_path[PATH_MAX];
@@ -185,16 +185,20 @@ static void copy_if_not_exist(const char *src, const char *dst) {
     chmod(dst, 0707);
     if (getuid() == 0) {
         chown(dst, 2000, 2000);
-        setfilecon(dst, "u:object_r:shell_data_file:s0");
+        se::setfilecon(dst, "u:object_r:shell_data_file:s0");
     }
 }
 
 static int check_selinux(const char *s, const char *t, const char *c, const char *p) {
-    int res = selinux_check_access(s, t, c, p, nullptr);
+    int res = se::selinux_check_access(s, t, c, p, nullptr);
+#ifndef DEBUG
     if (res != 0) {
+#endif
         printf("info: selinux_check_access %s %s %s %s: %d\n", s, t, c, p, res);
         fflush(stdout);
+#ifndef DEBUG
     }
+#endif
     return res;
 }
 
@@ -207,7 +211,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FATAL_UID);
     }
 
-    selinux_init();
+    se::init();
 
     clock_gettime(CLOCK_REALTIME, &ts);
 
@@ -231,9 +235,14 @@ int main(int argc, char **argv) {
             use_shell_context = 1;
         }
     }
+#ifdef DEBUG
+    printf("debug: v2=%d\n", v2);
+    printf("debug: use_shell_context=%d\n", use_shell_context);
+    fflush(stdout);
+#endif
 
     if (uid == 0) {
-        if (getcon(&context) == 0) {
+        if (se::getcon(&context) == 0) {
             int res = 0;
 
             res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "call");
@@ -248,11 +257,8 @@ int main(int argc, char **argv) {
                 use_shell_context = 1;
                 printf("warn: can't to context %s, use shell context instead.\n", context);
                 fflush(stdout);
-
-                printf("info: %s.\n", "u:r:shell:s0");
-                fflush(stdout);
             }
-            freecon(context);
+            se::freecon(context);
         }
     }
 
@@ -268,7 +274,7 @@ int main(int argc, char **argv) {
     chmod("/data/local/tmp/shizuku", 0707);
     if (uid == 0) {
         chown("/data/local/tmp/shizuku", 2000, 2000);
-        setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
+        se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
     char path[PATH_MAX], path_legacy[PATH_MAX];

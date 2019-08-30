@@ -15,10 +15,10 @@
 static jint setcontext(JNIEnv *env, jobject thiz, jstring jName) {
     const char *name = env->GetStringUTFChars(jName, nullptr);
 
-    if (!setcon)
+    if (!se::setcon)
         return -1;
 
-    int res = setcon(name);
+    int res = se::setcon(name);
     if (res == -1) PLOGE("setcon %s", name);
 
     env->ReleaseStringUTFChars(jName, name);
@@ -60,7 +60,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     assert(env != nullptr);
 
-    selinux_init();
+    se::init();
 
     if (!registerNatives(env)) {
         LOGE("registerNatives NativeHelper");

@@ -12,6 +12,12 @@
             android:summary="@string/start_legacy_service_summary_no_service"
             android:defaultValue="false"/>
 
+        <SwitchPreference
+            android:key="keep_su_context"
+            android:title="@string/keep_su_context"
+            android:summary="@string/keep_su_context_summary"
+            android:defaultValue="true"/>
+
     </moe.shizuku.preference.PreferenceCategory>
 
     <moe.shizuku.preference.PreferenceCategory

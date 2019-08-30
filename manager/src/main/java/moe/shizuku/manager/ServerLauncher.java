@@ -107,7 +107,8 @@ public class ServerLauncher {
         return "--path-legacy=" + dexLegacy
                 + " --path=" + dex
                 + " --token=" + UUID.randomUUID()
-                + (ShizukuManagerSettings.isStartServiceV2() ? "" : " --no-v2");
+                + (ShizukuManagerSettings.isStartServiceV2() ? "" : " --no-v2")
+                + (ShizukuManagerSettings.isKeepSuContext() ? "" : " --use-shell-context");
     }
 
     private static String getLibPath(Context context, String name) {
