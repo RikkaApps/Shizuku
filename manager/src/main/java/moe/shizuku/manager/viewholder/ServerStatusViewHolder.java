@@ -93,6 +93,9 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
         String v3Name = context.getString(R.string.service_name);
         String v2User = isRootV2 ? "root" : "adb";
         String v3User = isRootV3 ? "root" : "adb";
+        if (isRootV3) {
+            v3User += status.getSEContext() != null ? (" (context=" + status.getSEContext() + ")") : "";
+        }
         if (startV2) {
             if (!runningV2) {
                 v2Title = context.getString(R.string.service_not_running_tap_retry, v2Name);

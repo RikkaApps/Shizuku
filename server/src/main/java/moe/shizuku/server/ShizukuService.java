@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.os.IUserManager;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.os.SELinux;
 import android.system.Os;
 
 import java.io.File;
@@ -182,6 +183,17 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         return new RemoteProcessHolder(process);
+    }
+
+    @Override
+    public String getSELinuxContext() throws RemoteException {
+        enforceCallingPermission("getSELinuxContext", true);
+
+        try {
+            return SELinux.getContext();
+        } catch (Throwable tr) {
+            throw new RemoteException(tr.getMessage());
+        }
     }
 
     @Override

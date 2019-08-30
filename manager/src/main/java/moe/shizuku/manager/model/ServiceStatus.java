@@ -8,6 +8,7 @@ public class ServiceStatus {
     private ShizukuLegacy.ShizukuState v2Status = ShizukuLegacy.ShizukuState.createUnknown();
     private int uid;
     private int version;
+    private String secontext;
 
     public ServiceStatus() {
     }
@@ -38,5 +39,13 @@ public class ServiceStatus {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public String getSEContext() {
+        return secontext;
+    }
+
+    public void setSEContext(String secontext) {
+        this.secontext = secontext;
     }
 }

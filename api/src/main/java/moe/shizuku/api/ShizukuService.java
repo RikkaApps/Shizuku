@@ -105,4 +105,22 @@ public class ShizukuService {
     public static boolean setCurrentProcessTokenPre23(String token) throws RemoteException {
         return requireService().setPidToken(token);
     }
+
+    /**
+     * Returns SELinux context of Shizuku server process.
+     *
+     * <p>This API is only meaningful for root app using {@link ShizukuService#newProcess(String[], String[], String)}.</p>
+     *
+     * <p>For adb, context should always be <code>u:r:shell:s0</code>.
+     * <br>For root, context depends on su the user uses. E.g., context of Magisk is <code>u:r:magisk:s0</code>.
+     * If the user's su does not allow binder calls between su and app, Shizuku will switch to context <code>u:r:shell:s0</code>.
+     * </p>
+     *
+     * @since added from version 6
+     * @return SELinux context
+     */
+    public static String getSELinuxContext() throws RemoteException {
+        return requireService().getSELinuxContext();
+    }
+
 }

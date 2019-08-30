@@ -42,6 +42,7 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             LOGGER.i("onBinderReceived");
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(AppConstants.ACTION_BINDER_RECEIVED));
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
         });
     }
 

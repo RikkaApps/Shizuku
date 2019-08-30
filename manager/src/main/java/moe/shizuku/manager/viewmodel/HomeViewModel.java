@@ -40,6 +40,13 @@ public class HomeViewModel extends ViewModel {
                 try {
                     serviceStatus.setUid(ShizukuService.getUid());
                     serviceStatus.setVersion(ShizukuService.getVersion());
+                    if (serviceStatus.getVersion() >= 6) {
+                        try {
+                            serviceStatus.setSEContext(ShizukuService.getSELinuxContext());
+                        } catch (Throwable tr) {
+                            LOGGER.w(tr, "getSELinuxContext");
+                        }
+                    }
 
                     if (v2Status.getCode() == ShizukuLegacy.ShizukuState.STATUS_UNAUTHORIZED) {
                         String token = IShizukuService.Stub.asInterface(ShizukuService.getBinder()).getToken();
