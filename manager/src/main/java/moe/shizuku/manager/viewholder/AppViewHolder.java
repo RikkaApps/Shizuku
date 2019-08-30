@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -30,6 +29,7 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
     private TextView pkg;
     private Switch switch_widget;
     private View v3;
+    private View root;
 
     public AppViewHolder(View itemView) {
         super(itemView);
@@ -38,7 +38,8 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         name = itemView.findViewById(android.R.id.title);
         pkg = itemView.findViewById(android.R.id.summary);
         switch_widget = itemView.findViewById(R.id.switch_widget);
-        v3 = itemView.findViewById(android.R.id.text1);
+        v3 = itemView.findViewById(R.id.requires_shizuku_v2);
+        root = itemView.findViewById(R.id.requires_root);
 
         itemView.setFilterTouchesWhenObscured(true);
         itemView.setOnClickListener(this);
@@ -90,6 +91,7 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         switch_widget.setChecked(AuthorizationManager.granted(ai.packageName));
 
         v3.setVisibility((ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) ? View.VISIBLE : View.GONE);
+        root.setVisibility((ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_REQUIRES_ROOT")) ? View.VISIBLE : View.GONE);
     }
 
     @Override

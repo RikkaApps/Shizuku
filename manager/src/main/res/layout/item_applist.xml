@@ -41,17 +41,25 @@
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
             android:textSize="14sp"
             tools:text="moe.shizuku.manager"/>
 
         <TextView
-            android:id="@android:id/text1"
+            android:id="@+id/requires_shizuku_v2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2sp"
             android:textSize="12sp"
             android:textStyle="italic"
             android:text="@string/requires_legacy"/>
+
+        <TextView
+            android:id="@+id/requires_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:text="@string/requires_root"/>
 
     </LinearLayout>
 

@@ -71,4 +71,5 @@
     <string name="learn_more_summary">了解如何使用 Shizuku 开发或查看使用 Shizuku 的应用</string>
     <string name="keep_su_context">使用完整 root（如果可用）</string>
     <string name="keep_su_context_summary">关闭此选项（或你的 su 不支持时）会使用 adb shell 的 secontext</string>
+    <string name="requires_root">* 需要以 root 执行的 Shizuku</string>
 </resources>

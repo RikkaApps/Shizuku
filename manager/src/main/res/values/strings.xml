@@ -77,4 +77,6 @@
     <string name="learn_more_summary">Learn how to develop with Shizuku or get apps using Shizuku</string>
     <string name="keep_su_context">Use full root if available</string>
     <string name="keep_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
+    <string name="requires_root">* requires Shizuku runs with root</string>
+
 </resources>
