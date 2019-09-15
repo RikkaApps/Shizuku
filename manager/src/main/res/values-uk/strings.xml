@@ -24,7 +24,7 @@
     <string name="learn_more">Вивчіть Shizuku</string>
     <string name="learn_more_summary">Дізнайтеся, як розвиватися за допомогою Shizuku або отримувати додатки за допомогою Shizuku</string>
     <string name="notification_service_start_failed">Помилка запуску служби Shizuku.</string>
-    <string name="notification_service_start_no_root">Помилка запиту на дозвыдroot.</string>
+    <string name="notification_service_start_no_root">Помилка запиту на root доступ.</string>
     <string name="notification_service_starting">Сервіс Shizuku запущено…</string>
     <string name="notification_working">Працює…</string>
     <string name="open_manager">Відкрити Shizuku</string>
