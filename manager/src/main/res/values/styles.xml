@@ -40,7 +40,7 @@
         <item name="android:paddingStart">28dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:drawablePadding">24dp</item>
+        <item name="android:drawablePadding">28dp</item>
         <item name="android:textColor">?appColorPrimary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
