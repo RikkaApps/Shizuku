@@ -2,9 +2,7 @@ package moe.shizuku.server;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.os.Process;
 import android.os.ServiceManager;
-import android.system.Os;
 
 import java.util.UUID;
 
@@ -14,16 +12,6 @@ import moe.shizuku.server.api.SystemService;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class Starter {
-
-    private static void fixFilesOwner() {
-        if (Process.myUid() == 0) {
-            try {
-                Os.chown("/data/local/tmp/shizuku_starter", 2000, 2000);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private static void waitSystemService(String name) {
         while (ServiceManager.getService(name) == null) {
@@ -58,18 +46,12 @@ public class Starter {
     }
 
     public static void main(String[] args) {
-        fixFilesOwner();
-
         waitSystemService("package");
         waitSystemService("activity");
         waitSystemService(Context.USER_SERVICE);
         waitSystemService(Context.APP_OPS_SERVICE);
 
         checkManagerApp();
-
-        /*if (Build.VERSION.SDK_INT >= 28) {
-            disableHiddenApiBlacklist();
-        }*/
 
         ShizukuService.main(getToken(args));
     }

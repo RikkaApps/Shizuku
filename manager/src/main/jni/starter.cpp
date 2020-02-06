@@ -213,6 +213,11 @@ int main(int argc, char **argv) {
 
     se::init();
 
+    if (uid == 0) {
+        chown("/data/local/tmp/shizuku_starter", 2000, 2000);
+        se::setfilecon("/data/local/tmp/shizuku_starter", "u:object_r:shell_data_file:s0");
+    }
+
     clock_gettime(CLOCK_REALTIME, &ts);
 
     char *token = nullptr;
