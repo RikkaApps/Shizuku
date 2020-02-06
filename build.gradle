@@ -33,6 +33,9 @@ allprojects {
         maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
         mavenLocal()
     }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
 }
 
 task clean(type: Delete) {

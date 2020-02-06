@@ -31,7 +31,7 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
         if (sSharedPreferences == null) {
             sSharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
             sPackages = new HashSet<>();
-            sPackages = fromPreference(context, sSharedPreferences.getStringSet(KEY, new HashSet<String>()));
+            sPackages = fromPreference(context, sSharedPreferences.getStringSet(KEY, new HashSet<>()));
         }
     }
 

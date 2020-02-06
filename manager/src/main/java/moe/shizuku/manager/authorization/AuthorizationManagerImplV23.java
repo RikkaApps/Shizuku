@@ -18,7 +18,18 @@ import moe.shizuku.manager.Manifest;
 @SuppressWarnings("SameParameterValue")
 public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
-    private static final IPackageManager PACKAGE_MANAGER = IPackageManager.Stub.asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
+    private static final IPackageManager PACKAGE_MANAGER;
+
+    static {
+        IPackageManager pm;
+        try {
+            pm = IPackageManager.Stub.asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
+        } catch (Throwable e) {
+            e.printStackTrace();
+            pm = null;
+        }
+        PACKAGE_MANAGER = pm;
+    }
 
     private static IPackageManager getPackageManager() {
         return PACKAGE_MANAGER;
@@ -30,6 +41,7 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         }
 
         try {
+            //noinspection unchecked
             ParceledListSlice<PackageInfo> listSlice = getPackageManager().getInstalledPackages(flags, userId);
             if (listSlice != null) {
                 return listSlice.getList();

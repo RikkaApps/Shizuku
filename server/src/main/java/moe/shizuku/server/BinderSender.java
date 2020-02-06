@@ -1,6 +1,5 @@
 package moe.shizuku.server;
 
-import android.app.ActivityManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -10,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import hidden.HiddenApiBridge;
+import hidden.ProcessObserverAdapter;
+import hidden.UidObserverAdapter;
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.server.api.Api;
+import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 
@@ -26,7 +28,7 @@ public class BinderSender {
 
     private static ShizukuService sShizukuService;
 
-    private static class ProcessObserver extends moe.shizuku.server.api.ProcessObserver {
+    private static class ProcessObserver extends ProcessObserverAdapter {
 
         @Override
         public void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities) throws RemoteException {
@@ -65,7 +67,7 @@ public class BinderSender {
         }
     }
 
-    private static class UidObserver extends moe.shizuku.server.api.UidObserver {
+    private static class UidObserver extends UidObserverAdapter {
 
         @Override
         public void onUidActive(int uid) throws RemoteException {
@@ -80,7 +82,7 @@ public class BinderSender {
     }
 
     private static void onActive(int uid, int pid) throws RemoteException {
-        String[] packages = Api.getPackagesForUid(uid);
+        String[] packages = SystemService.getPackagesForUid(uid);
         if (packages == null)
             return;
 
@@ -88,16 +90,16 @@ public class BinderSender {
 
         int userId = uid / 100000;
         for (String packageName : packages) {
-            PackageInfo pi = Api.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS, userId);
+            PackageInfo pi = SystemService.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS, userId);
             if (pi == null || pi.requestedPermissions == null)
                 continue;
 
             if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
                 boolean granted;
                 if (pid == -1)
-                    granted = Api.checkPermission(PERMISSION_MANAGER, uid) == PackageManager.PERMISSION_GRANTED;
+                    granted = SystemService.checkPermission(PERMISSION_MANAGER, uid) == PackageManager.PERMISSION_GRANTED;
                 else
-                    granted = Api.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED;
+                    granted = SystemService.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED;
 
                 if (granted) {
                     ShizukuService.sendBinderToManger(sShizukuService, userId);
@@ -114,16 +116,16 @@ public class BinderSender {
         sShizukuService = shizukuService;
 
         try {
-            Api.registerProcessObserver(new ProcessObserver());
+            SystemService.registerProcessObserver(new ProcessObserver());
         } catch (Throwable tr) {
             LOGGER.e(tr, "registerProcessObserver");
         }
 
         if (Build.VERSION.SDK_INT >= 26) {
             try {
-                Api.registerUidObserver(new UidObserver(),
-                        ActivityManager.UID_OBSERVER_ACTIVE,
-                        ActivityManager.PROCESS_STATE_UNKNOWN,
+                SystemService.registerUidObserver(new UidObserver(),
+                        HiddenApiBridge.ActivityManager_UID_OBSERVER_ACTIVE,
+                        HiddenApiBridge.ActivityManager_PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {
                 LOGGER.e(tr, "registerUidObserver");

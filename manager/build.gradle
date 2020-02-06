@@ -17,9 +17,6 @@ android {
             }
         }
     }
-    sourceSets.main {
-        java.srcDirs = ['src/main/java', project(':shared').file('src/main/java')]
-    }
     signingConfigs {
         sign
     }
@@ -51,12 +48,11 @@ android {
         exclude '/META-INF/*.kotlin_module'
         exclude '/kotlin/**'
     }
-
 }
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
-        outputFileName = "shizuku-${variant.versionCode}-${variant.name}.apk"
+        outputFileName = "shizuku-${variant.versionName}-${variant.name}.apk"
 
         variant.assembleProvider.get().doLast {
             def outDir = new File(rootDir, "out")
@@ -67,28 +63,15 @@ android.applicationVariants.all { variant ->
                 copy {
                     from variant.mappingFileProvider.get()
                     into mappingDir
-                    rename { String fileName ->
-                        "mapping-${variant.versionCode}.txt"
-                    }
+                    rename { String fileName -> "mapping-${variant.versionName}.txt" }
+                }
+                copy {
+                    from outputFile
+                    into apkDir
                 }
             }
-            copy {
-                from outputFile
-                into apkDir
-            }
         }
     }
-}
-
-android.applicationVariants.all { variant ->
-    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
-    String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
-    task "${taskName}" {
-        doLast {
-            delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
-        }
-    }
-    variant.processJavaResourcesProvider.get().dependsOn(taskName)
 }
 
 configurations.all {
@@ -105,6 +88,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+
+    compileOnly project(':hidden-api-common')
+    implementation project(':api')
+    implementation project(':shared')
 
     implementation 'androidx.browser:browser:1.2.0'
     implementation "androidx.core:core:1.2.0"
@@ -129,10 +116,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation project(':api')
+
     implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')
-
-preBuild.dependsOn ':server:dex'

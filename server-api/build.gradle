@@ -1,9 +1,0 @@
-apply plugin: 'java-library'
-
-dependencies {
-    compileOnly files("../android-27/android.jar")
-}
-
-project.afterEvaluate {
-    build.dependsOn ':server-api-aidl:compileReleaseAidl'
-}

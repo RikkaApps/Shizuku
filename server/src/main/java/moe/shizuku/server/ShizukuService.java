@@ -1,14 +1,13 @@
 package moe.shizuku.server;
 
 import android.content.IContentProvider;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.UserInfo;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
-import android.os.IUserManager;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.SELinux;
@@ -23,9 +22,8 @@ import java.util.UUID;
 
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.server.api.Api;
 import moe.shizuku.server.api.RemoteProcessHolder;
-import moe.shizuku.server.reflection.ContentProviderHolderHelper;
+import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.reflection.IContentProviderHelper;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
@@ -39,10 +37,23 @@ public class ShizukuService extends IShizukuService.Stub {
 
     private static final Map<Integer, String> PID_TOKEN = new HashMap<>();
 
+    private final Handler mMainHandler;
     private String mToken;
+
+    public static void main(UUID token) {
+        LOGGER.i("server v3");
+        Looper.prepare();
+        new ShizukuService(token);
+        Looper.loop();
+        LOGGER.i("server exit");
+        System.exit(0);
+    }
 
     ShizukuService(UUID token) {
         super();
+
+        //noinspection ConstantConditions
+        mMainHandler = new Handler(Looper.myLooper());
 
         if (token == null) {
             mToken = UUID.randomUUID().toString();
@@ -53,6 +64,11 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         BinderSender.register(this);
+
+        mMainHandler.post(() -> {
+            sendBinderToClient();
+            sendBinderToManager();
+        });
     }
 
     static Map<Integer, String> getPidToken() {
@@ -61,7 +77,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     private int checkCallingPermission(String permission) {
         try {
-            return Api.checkPermission(permission,
+            return SystemService.checkPermission(permission,
                     Binder.getCallingPid(),
                     Binder.getCallingUid());
         } catch (Throwable tr) {
@@ -148,7 +164,7 @@ public class ShizukuService extends IShizukuService.Stub {
     @Override
     public int checkPermission(String permission) throws RemoteException {
         enforceCallingPermission("checkPermission", true);
-        return Api.checkPermission(permission, Os.getuid());
+        return SystemService.checkPermission(permission, Os.getuid());
     }
 
     @Override
@@ -207,24 +223,15 @@ public class ShizukuService extends IShizukuService.Stub {
         return super.onTransact(code, data, reply, flags);
     }
 
-    void sendBinderToClients() {
-        try {
-            IUserManager um = Api.USER_MANAGER_SINGLETON.get();
-            if (um != null) {
-                for (UserInfo userInfo : um.getUsers(false)) {
-                    sendBinderToClients(this, userInfo.id);
-                }
-            }
-        } catch (Throwable tr) {
-            LOGGER.e("exception when call getUsers, try user 0", tr);
-
-            sendBinderToClients(this, 0);
+    void sendBinderToClient() {
+        for (int userId : SystemService.getUsersNoThrow()) {
+            sendBinderToClient(this, userId);
         }
     }
 
-    private static void sendBinderToClients(Binder binder, int userId) {
+    private static void sendBinderToClient(Binder binder, int userId) {
         try {
-            for (PackageInfo pi : Api.getInstalledPackages(PackageManager.GET_PERMISSIONS, userId)) {
+            for (PackageInfo pi : SystemService.getInstalledPackages(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
@@ -242,17 +249,8 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     private static void sendBinderToManger(Binder binder) {
-        try {
-            IUserManager um = Api.USER_MANAGER_SINGLETON.get();
-            if (um != null) {
-                for (UserInfo userInfo : um.getUsers(false)) {
-                    sendBinderToManger(binder, userInfo.id);
-                }
-            }
-        } catch (Throwable tr) {
-            LOGGER.e("exception when call getUsers, try user 0", tr);
-
-            sendBinderToManger(binder, 0);
+        for (int userId : SystemService.getUsersNoThrow()) {
+            sendBinderToManger(binder, userId);
         }
     }
 
@@ -277,13 +275,7 @@ public class ShizukuService extends IShizukuService.Stub {
         IBinder token = null;
 
         try {
-            Object holder = Api.getContentProviderExternal(name, userId, token);
-            if (holder == null) {
-                LOGGER.e("can't find provider %s in user %d", name, userId);
-                return;
-            }
-
-            provider = ContentProviderHolderHelper.getProvider(holder);
+            provider = SystemService.getContentProviderExternal(name, userId, token, name);
             if (provider == null) {
                 LOGGER.e("provider is null %s %d", name, userId);
                 return;
@@ -300,7 +292,7 @@ public class ShizukuService extends IShizukuService.Stub {
         } finally {
             if (provider != null) {
                 try {
-                    Api.removeContentProviderExternal(name, token);
+                    SystemService.removeContentProviderExternal(name, token);
                 } catch (Throwable tr) {
                     LOGGER.w(tr, "removeContentProviderExternal");
                 }

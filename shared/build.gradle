@@ -1,6 +1,13 @@
-apply plugin: 'java-library'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+}
 
 dependencies {
-    compileOnly files(rootProject.rootDir.absolutePath + '/android-27/android.jar')
-    compile project(':api-shared')
+    implementation "androidx.annotation:annotation:1.1.0"
 }
