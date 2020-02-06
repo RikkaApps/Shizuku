@@ -28,5 +28,3 @@
 -dontwarn android.**
 -keep class com.android.internal.** { *; }
 -dontwarn com.android.internal.**
-
--dontwarn moe.shizuku.support.design.AboutDialogHelper

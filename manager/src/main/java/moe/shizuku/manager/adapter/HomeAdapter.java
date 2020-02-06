@@ -15,8 +15,8 @@ import moe.shizuku.manager.viewholder.StartAdbViewHolder;
 import moe.shizuku.manager.viewholder.StartRootViewHolder;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.HomeViewModel;
-import moe.shizuku.support.recyclerview.IdBasedRecyclerViewAdapter;
-import moe.shizuku.support.recyclerview.IndexCreatorPool;
+import rikka.recyclerview.IdBasedRecyclerViewAdapter;
+import rikka.recyclerview.IndexCreatorPool;
 
 public class HomeAdapter extends IdBasedRecyclerViewAdapter {
 

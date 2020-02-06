@@ -15,9 +15,9 @@ import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.manager.model.ServiceStatus;
 import moe.shizuku.manager.widget.MaterialCircleIconView;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.text.HtmlCompat;
-import moe.shizuku.support.widget.HtmlCompatTextView;
+import rikka.html.text.HtmlCompat;
+import rikka.html.widget.HtmlCompatTextView;
+import rikka.recyclerview.BaseViewHolder;
 
 public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implements View.OnClickListener {
 

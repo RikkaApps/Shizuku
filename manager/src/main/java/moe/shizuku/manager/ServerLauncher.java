@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.manager.legacy.ShizukuLegacy;
-import moe.shizuku.support.utils.IOUtils;
+import rikka.core.util.IOUtils;
 
 public class ServerLauncher {
 

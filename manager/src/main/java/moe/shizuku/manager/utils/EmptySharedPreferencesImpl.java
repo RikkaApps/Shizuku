@@ -2,11 +2,11 @@ package moe.shizuku.manager.utils;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import androidx.annotation.Nullable;
 
 public class EmptySharedPreferencesImpl implements SharedPreferences {
 

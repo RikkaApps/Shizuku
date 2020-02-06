@@ -22,11 +22,11 @@ import moe.shizuku.preference.ListPreference;
 import moe.shizuku.preference.Preference;
 import moe.shizuku.preference.PreferenceFragment;
 import moe.shizuku.preference.SwitchPreference;
-import moe.shizuku.support.app.DayNightDelegate;
-import moe.shizuku.support.app.LocaleDelegate;
-import moe.shizuku.support.recyclerview.RecyclerViewHelper;
-import moe.shizuku.support.utils.HtmlUtils;
-import moe.shizuku.support.utils.ResourceUtils;
+import rikka.core.util.ResourceUtils;
+import rikka.html.text.HtmlCompat;
+import rikka.material.app.DayNightDelegate;
+import rikka.material.app.LocaleDelegate;
+import rikka.recyclerview.RecyclerViewHelper;
 
 public class SettingsFragment extends PreferenceFragment {
 
@@ -80,7 +80,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         for (int i = 1; i < languagePreference.getEntryValues().length; i++) {
             Locale locale = Locale.forLanguageTag(languagePreference.getEntryValues()[i].toString());
-            languagePreference.getEntries()[i] = HtmlUtils.fromHtml(
+            languagePreference.getEntries()[i] = HtmlCompat.fromHtml(
                     String.format(Locale.getDefault(), "%s<br><small>%s</small>",
                             locale.getDisplayName(locale),
                             locale.getDisplayName(ShizukuManagerSettings.getLocale())
@@ -92,7 +92,7 @@ public class SettingsFragment extends PreferenceFragment {
             Locale locale = Locale.forLanguageTag(tag);
             languagePreference.setSummary(locale.getDisplayLanguage(locale));
         } else {
-            languagePreference.setSummary(getString(R.string.night_mode_follow_system));
+            languagePreference.setSummary(getString(R.string.follow_system));
         }
 
         nightModePreference.setOnPreferenceChangeListener((preference, o) -> {
@@ -125,7 +125,7 @@ public class SettingsFragment extends PreferenceFragment {
         RecyclerViewHelper.fixOverScroll(recyclerView);
 
         int padding = (int) (8 * recyclerView.getContext().getResources().getDisplayMetrics().density);
-        recyclerView.setPaddingRelative(recyclerView.getPaddingStart(), padding, recyclerView.getPaddingEnd(), padding);
+        recyclerView.setPaddingRelative(recyclerView.getPaddingStart(), 0, recyclerView.getPaddingEnd(), padding);
         ViewGroup.LayoutParams _lp = recyclerView.getLayoutParams();
         if (_lp instanceof FrameLayout.LayoutParams) {
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) _lp;

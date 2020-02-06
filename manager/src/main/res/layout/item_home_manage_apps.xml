@@ -22,7 +22,7 @@
         android:duplicateParentState="true"
         android:orientation="vertical">
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textSize="16sp"
             tools:htmlText="@plurals/authorized_apps_count" />
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

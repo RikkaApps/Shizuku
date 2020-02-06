@@ -5,8 +5,8 @@ import android.content.pm.PackageInfo;
 import java.util.List;
 
 import moe.shizuku.manager.viewholder.AppViewHolder;
-import moe.shizuku.support.recyclerview.BaseRecyclerViewAdapter;
-import moe.shizuku.support.recyclerview.ClassCreatorPool;
+import rikka.recyclerview.BaseRecyclerViewAdapter;
+import rikka.recyclerview.ClassCreatorPool;
 
 public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
 

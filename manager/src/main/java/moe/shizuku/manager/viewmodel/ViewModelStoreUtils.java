@@ -1,12 +1,12 @@
 package moe.shizuku.manager.viewmodel;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelStore;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
-
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelStore;
 
 public class ViewModelStoreUtils {
 

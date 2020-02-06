@@ -1,6 +1,5 @@
 package moe.shizuku.manager.viewholder;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,15 +9,16 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import java.util.List;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.authorization.AuthorizationManager;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.text.HtmlCompat;
+import rikka.html.text.HtmlCompat;
+import rikka.recyclerview.BaseViewHolder;
 
 public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.OnClickListener {
 

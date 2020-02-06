@@ -5,7 +5,7 @@ import android.view.View;
 import moe.shizuku.manager.Helps;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.utils.CustomTabsHelper;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
+import rikka.recyclerview.BaseViewHolder;
 
 public class GetAppsViewHolder extends BaseViewHolder<Object> {
 

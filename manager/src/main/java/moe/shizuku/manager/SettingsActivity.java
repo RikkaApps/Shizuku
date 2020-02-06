@@ -3,6 +3,8 @@ package moe.shizuku.manager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+
 import moe.shizuku.manager.app.BaseActivity;
 
 public class SettingsActivity extends BaseActivity {
@@ -14,8 +16,8 @@ public class SettingsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (savedInstanceState == null) {
@@ -32,7 +34,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("start_v2", isStartServiceV2);
         outState.putBoolean("keep_su_context", isKeepSuContext);

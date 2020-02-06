@@ -26,7 +26,7 @@
             android:src="@drawable/ic_adb_24dp"
             app:iconColorName="teal" />
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -55,7 +55,7 @@
         android:layout_marginBottom="16dp"
         app:isExpanded="true">
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

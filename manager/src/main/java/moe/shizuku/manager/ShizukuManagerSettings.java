@@ -13,7 +13,8 @@ import java.lang.annotation.Retention;
 import java.util.Locale;
 
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
-import moe.shizuku.support.app.DayNightDelegate.NightMode;
+import rikka.material.app.DayNightDelegate;
+import rikka.material.app.DayNightDelegate.NightMode;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -85,7 +86,7 @@ public class ShizukuManagerSettings {
 
     @NightMode
     public static int getNightMode() {
-        return getPreferences().getInt(NIGHT_MODE, NightMode.MODE_NIGHT_FOLLOW_SYSTEM);
+        return getPreferences().getInt(NIGHT_MODE, DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public static Locale getLocale() {

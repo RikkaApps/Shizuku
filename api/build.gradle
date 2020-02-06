@@ -44,6 +44,6 @@ ext {
 apply from: project.rootProject.file('bintray.gradle')
 
 dependencies {
-    implementation "androidx.annotation:annotation:$androidXLibraryVersion"
+    implementation "androidx.annotation:annotation:1.1.0"
     //compile project(':api-shared')
 }

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme.Light.V23" parent="BaseTheme.Light">
-        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
-    </style>
-
-    <style name="Theme.Light" parent="Theme.Light.V23" />
-</resources>

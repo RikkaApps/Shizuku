@@ -1,7 +1,6 @@
 package moe.shizuku.manager;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,7 @@ import moe.shizuku.manager.app.BaseActivity;
 import moe.shizuku.manager.utils.CustomTabsHelper;
 import moe.shizuku.manager.viewmodel.AppsViewModel;
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders;
-import moe.shizuku.support.recyclerview.RecyclerViewHelper;
+import rikka.recyclerview.RecyclerViewHelper;
 
 public class ManageAppsActivity extends BaseActivity {
 
@@ -39,8 +38,8 @@ public class ManageAppsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apps);
 
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         mAdapter = new AppsAdapter();

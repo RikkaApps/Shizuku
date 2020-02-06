@@ -10,5 +10,5 @@
     <color name="accent_color_dark">@color/material_light_blue_100</color>
 
     <color name="app_color_light">#3F51B5</color>
-    <color name="app_color_dark">#9FA8DA</color>
+    <color name="app_color_dark">#B1B8DF</color>
 </resources>

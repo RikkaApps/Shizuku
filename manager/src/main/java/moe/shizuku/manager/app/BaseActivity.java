@@ -1,31 +1,22 @@
 package moe.shizuku.manager.app;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
-
-import java.util.Objects;
 
 import moe.shizuku.fontprovider.FontProviderClient;
-import moe.shizuku.manager.R;
-import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.support.app.DayNightDelegate;
-import moe.shizuku.support.app.LocaleDelegate;
-import moe.shizuku.support.utils.ResourceUtils;
+import rikka.core.util.ResourceUtils;
+import rikka.material.app.MaterialActivity;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends MaterialActivity {
 
     private static boolean sFontInitialized = false;
-
-    private LocaleDelegate mLocaleDelegate;
-    private DayNightDelegate mDayNightDelegate;
-    private String mTheme;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,111 +30,77 @@ public abstract class BaseActivity extends FragmentActivity {
             sFontInitialized = true;
         }
 
-        getLocaleDelegate().onCreate(this);
-        mTheme = ThemeHelper.getTheme(this);
-
-        resetTitle();
-
         super.onCreate(savedInstanceState);
+    }
 
-        if (getActionBar() != null) {
-            getActionBar().setElevation(0f);
-        }
+    @NonNull
+    @Override
+    public String computeUserThemeKey() {
+        return ThemeHelper.getTheme(this);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (getLocaleDelegate().isLocaleChanged()
-                || getDayNightDelegate().getNightMode() != DayNightDelegate.getDefaultNightMode()
-                || !Objects.equals(mTheme, ThemeHelper.getTheme(this))) {
-            recreate();
-        }
-    }
-
-    @Override
-    protected void onApplyThemeResource(Resources.Theme theme, int resid, boolean first) {
-        // apply real style and our custom style
-        if (getParent() == null) {
-            theme.applyStyle(resid, true);
-        } else {
-            try {
-                theme.setTo(getParent().getTheme());
-            } catch (Exception e) {
-                // Empty
-            }
-            theme.applyStyle(resid, false);
-        }
+    public void onApplyUserThemeResource(@NonNull Resources.Theme theme, boolean isDecorView) {
         theme.applyStyle(ThemeHelper.getThemeStyleRes(this), true);
-        // only pass theme style to super, so styled theme will not be overwritten
-        super.onApplyThemeResource(theme, R.style.ThemeOverlay, first);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        getDayNightDelegate().cleanup();
+    public boolean shouldApplyTranslucentSystemBars() {
+        return Build.VERSION.SDK_INT >= 23;
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        getDayNightDelegate().onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getDayNightDelegate().cleanup();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Configuration configuration = newBase.getResources().getConfiguration();
-        getLocaleDelegate().updateConfiguration(configuration);
-        getDayNightDelegate(newBase).updateConfiguration(configuration);
-
-        super.attachBaseContext(newBase.createConfigurationContext(configuration));
-    }
-
-    public LocaleDelegate getLocaleDelegate() {
-        if (mLocaleDelegate == null) {
-            mLocaleDelegate = new LocaleDelegate();
+    public void onApplyTranslucentSystemBars() {
+        final Window window = getWindow();
+        final View root = findViewById(android.R.id.content);
+        if (window == null || root == null) {
+            return;
         }
-        return mLocaleDelegate;
-    }
 
-    public DayNightDelegate getDayNightDelegate() {
-        if (mDayNightDelegate == null) {
-            mDayNightDelegate = new DayNightDelegate(this, DayNightDelegate.getDefaultNightMode());
-        }
-        return mDayNightDelegate;
-    }
+        int paddingTop = root.getPaddingTop();
+        int paddingLeft = root.getPaddingLeft();
+        int paddingRight = root.getPaddingRight();
+        int paddingBottom = root.getPaddingBottom();
 
-    private DayNightDelegate getDayNightDelegate(Context context) {
-        if (mDayNightDelegate == null) {
-            mDayNightDelegate = new DayNightDelegate(context.getApplicationContext(), DayNightDelegate.getDefaultNightMode());
-        }
-        return mDayNightDelegate;
-    }
+        root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        root.setOnApplyWindowInsetsListener((v, insets) -> {
+            View list = findViewById(android.R.id.list);
+            if (list != null) {
+                root.setPadding(paddingLeft + insets.getSystemWindowInsetLeft(),
+                        paddingTop + insets.getSystemWindowInsetTop(), paddingRight + insets.getSystemWindowInsetRight(), paddingBottom);
 
-    /**
-     * Fix titles don't change when current locale is changed
-     */
-    private void resetTitle() {
-        try {
-            int label = getPackageManager().getActivityInfo(
-                    getComponentName(), PackageManager.GET_META_DATA).labelRes;
-            if (label == 0) {
-                label = getPackageManager().getApplicationInfo(
-                        getPackageName(), PackageManager.GET_META_DATA).labelRes;
+                list.setPadding(list.getPaddingLeft(), list.getPaddingTop(), list.getPaddingRight(), insets.getSystemWindowInsetBottom());
+            } else {
+                root.setPadding(paddingLeft + insets.getSystemWindowInsetLeft(),
+                        paddingTop + insets.getSystemWindowInsetTop(),
+                        paddingRight + insets.getSystemWindowInsetRight(),
+                        paddingBottom + +insets.getStableInsetBottom());
             }
-            if (label != 0) {
-                setTitle(label);
-            }
-        } catch (PackageManager.NameNotFoundException ignored) {
 
+            if (insets.getSystemWindowInsetBottom() >= Resources.getSystem().getDisplayMetrics().density * 40) {
+                int alpha = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? 0xe0000000 : 0x60000000;
+                window.setNavigationBarColor(ResourceUtils.resolveColor(getTheme(), android.R.attr.navigationBarColor) & 0x00ffffff | alpha);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    window.setNavigationBarDividerColor(ResourceUtils.resolveColor(getTheme(), android.R.attr.navigationBarDividerColor));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        window.setNavigationBarContrastEnforced(true);
+                    }
+                }
+            }
+
+            return insets.consumeSystemWindowInsets();
+        });
+
+        //window.setStatusBarColor(ResourceUtils.resolveColor(getTheme(), R.attr.colorPrimaryVariant));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.setNavigationBarDividerColor(Color.TRANSPARENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.setNavigationBarContrastEnforced(true);
+            }
         }
     }
 }

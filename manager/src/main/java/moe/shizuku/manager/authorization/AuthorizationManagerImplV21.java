@@ -5,12 +5,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import androidx.core.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.core.util.Pair;
 import moe.shizuku.manager.Manifest;
 
 public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {

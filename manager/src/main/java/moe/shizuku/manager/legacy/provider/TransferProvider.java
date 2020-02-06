@@ -11,10 +11,11 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.util.SparseArray;
 
-import java.util.Random;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.util.Random;
+
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 public class TransferProvider extends ContentProvider {

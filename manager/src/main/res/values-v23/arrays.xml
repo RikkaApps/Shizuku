@@ -2,10 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string-array name="night_mode" tools:ignore="InconsistentArrays">
-        <item>@string/night_mode_off</item>
-        <item>@string/night_mode_on</item>
-        <item>@string/night_mode_auto</item>
-        <item>@string/night_mode_follow_system</item>
+        <item>@string/dark_theme_off</item>
+        <item>@string/dark_theme_on</item>
+        <item>@string/dark_theme_auto_time</item>
+        <item>@string/follow_system</item>
     </string-array>
 
     <integer-array name="night_mode_value" tools:ignore="InconsistentArrays">
