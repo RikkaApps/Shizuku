@@ -14,10 +14,9 @@
 
     <string-array name="language" translatable="false">
         <item>@string/follow_system</item>
-        <item>en-US</item>
-        <item>zh-CN</item>
-        <item>zh-HK</item>
-        <item>zh-TW</item>
+        <item>en</item>
+        <item>zh-Hans</item>
+        <item>zh-Hant</item>
     </string-array>
 
     <string-array name="language_value" translatable="false">
@@ -25,6 +24,5 @@
         <item>en-US</item>
         <item>zh-CN</item>
         <item>zh-HK</item>
-        <item>zh-TW</item>
     </string-array>
 </resources>

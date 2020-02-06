@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -78,21 +80,34 @@ public class SettingsFragment extends PreferenceFragment {
             return true;
         });
 
-        for (int i = 1; i < languagePreference.getEntryValues().length; i++) {
-            Locale locale = Locale.forLanguageTag(languagePreference.getEntryValues()[i].toString());
-            languagePreference.getEntries()[i] = HtmlCompat.fromHtml(
-                    String.format(Locale.getDefault(), "%s<br><small>%s</small>",
-                            locale.getDisplayName(locale),
-                            locale.getDisplayName(ShizukuManagerSettings.getLocale())
-                    ));
+        String tag = languagePreference.getValue();
+        int index = Arrays.asList(languagePreference.getEntryValues()).indexOf(tag);
+
+        List<String> localeName = new ArrayList<>();
+        List<String> localeNameUser = new ArrayList<>();
+        Locale userLocale = ShizukuManagerSettings.getLocale();
+        for (int i = 1; i < languagePreference.getEntries().length; i++) {
+            Locale locale = Locale.forLanguageTag(languagePreference.getEntries()[i].toString());
+            localeName.add(!TextUtils.isEmpty(locale.getScript()) ? locale.getDisplayScript(locale) : locale.getDisplayName(locale));
+            localeNameUser.add(!TextUtils.isEmpty(locale.getScript()) ? locale.getDisplayScript(userLocale) : locale.getDisplayName(userLocale));
+        }
+        for (int i = 1; i < languagePreference.getEntries().length; i++) {
+            if (index != i) {
+                languagePreference.getEntries()[i] = HtmlCompat.fromHtml(
+                        String.format("%s - %s",
+                                localeName.get(i - 1),
+                                localeNameUser.get(i - 1)
+                        ));
+            } else {
+                languagePreference.getEntries()[i] = localeNameUser.get(i - 1);
+            }
         }
 
-        String tag = languagePreference.getValue();
-        if (!TextUtils.isEmpty(tag) && !"SYSTEM".equals(tag)) {
-            Locale locale = Locale.forLanguageTag(tag);
-            languagePreference.setSummary(locale.getDisplayLanguage(locale));
-        } else {
+        if (TextUtils.isEmpty(tag) || "SYSTEM".equals(tag)) {
             languagePreference.setSummary(getString(R.string.follow_system));
+        } else if (index != -1) {
+            String name = localeNameUser.get(index - 1);
+            languagePreference.setSummary(name);
         }
 
         nightModePreference.setOnPreferenceChangeListener((preference, o) -> {
