@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import hidden.HiddenApiBridgeV23
 import moe.shizuku.server.utils.BuildUtils
+import moe.shizuku.server.utils.Logger.LOGGER
 import java.util.*
 
 object SystemService {
@@ -59,26 +60,25 @@ object SystemService {
 
     @JvmStatic
     @Throws(RemoteException::class)
-    fun getPackagesForUid(uid: Int): Array<String> {
+    fun getPackagesForUid(uid: Int): Array<String?>? {
         val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
         return pm.getPackagesForUid(uid)
     }
 
+    @JvmStatic
     @Throws(RemoteException::class)
-    fun getInstalledApplications(flags: Int, userId: Int): List<ApplicationInfo> {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+    fun getInstalledApplications(flags: Int, userId: Int): ParceledListSlice<ApplicationInfo>? {
+        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManager")
         @Suppress("UNCHECKED_CAST")
-        val list: ParceledListSlice<ApplicationInfo>? = pm.getInstalledApplications(flags, userId) as ParceledListSlice<ApplicationInfo>?
-        return if (list != null) list.list else ArrayList()
+        return pm.getInstalledApplications(flags, userId) as ParceledListSlice<ApplicationInfo>?
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
-    fun getInstalledPackages(flags: Int, userId: Int): List<PackageInfo> {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+    fun getInstalledPackages(flags: Int, userId: Int): ParceledListSlice<PackageInfo>? {
+        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManager")
         @Suppress("UNCHECKED_CAST")
-        val list: ParceledListSlice<PackageInfo>? = pm.getInstalledPackages(flags, userId) as ParceledListSlice<PackageInfo>?
-        return if (list != null) list.list else ArrayList()
+        return pm.getInstalledPackages(flags, userId) as ParceledListSlice<PackageInfo>?
     }
 
     @JvmStatic
@@ -113,6 +113,46 @@ object SystemService {
     }
 
     @JvmStatic
+    fun getInstalledPackagesNoThrow(flags: Int, userId: Int): List<PackageInfo> {
+        return try {
+            getInstalledPackages(flags, userId)?.list ?: emptyList()
+        } catch (tr: Throwable) {
+            LOGGER.w(tr, "getInstalledPackages failed: flags=%d, user=%d", flags, userId)
+            emptyList()
+        }
+    }
+
+    @JvmStatic
+    fun getInstalledApplicationsNoThrow(flags: Int, userId: Int): List<ApplicationInfo> {
+        return try {
+            getInstalledApplications(flags, userId)?.list ?: emptyList()
+        } catch (tr: Throwable) {
+            LOGGER.w(tr, "getInstalledApplications failed: flags=%d, user=%d", flags, userId)
+            emptyList()
+        }
+    }
+
+    @JvmStatic
+    fun getPackageInfoNoThrow(packageName: String?, flags: Int, userId: Int): PackageInfo? {
+        return try {
+            getPackageInfo(packageName, flags, userId)
+        } catch (tr: Throwable) {
+            LOGGER.w(tr, "getPackageInfo failed: packageName=%s, flags=%d, user=%d", packageName, flags, userId)
+            null
+        }
+    }
+
+    @JvmStatic
+    fun getApplicationInfoNoThrow(packageName: String?, flags: Int, userId: Int): ApplicationInfo? {
+        return try {
+            getApplicationInfo(packageName, flags, userId)
+        } catch (tr: Throwable) {
+            LOGGER.w(tr, "getApplicationInfo failed: packageName=%s, flags=%d, user=%d", packageName, flags, userId)
+            null
+        }
+    }
+
+    @JvmStatic
     fun getUsersNoThrow(): List<Int> {
         val users = ArrayList<Int>()
         try {
@@ -124,5 +164,24 @@ object SystemService {
             users.add(0)
         }
         return users
+    }
+
+    @JvmStatic
+    fun getPackagesForUidNoThrow(uid: Int): List<String> {
+        val packages = ArrayList<String>()
+        try {
+            packages.addAll(getPackagesForUid(uid)?.filterNotNull().orEmpty())
+        } catch (tr: Throwable) {
+        }
+        return packages
+    }
+
+    @JvmStatic
+    fun forceStopPackageNoThrow(packageName: String?, userId: Int) {
+        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        try {
+            am.forceStopPackage(packageName, userId)
+        } catch (e: Exception) {
+        }
     }
 }

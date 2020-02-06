@@ -88,9 +88,10 @@ public class TransferProvider extends ContentProvider {
 
     private boolean checkPermission() {
         String packageName = getCallingPackage();
+        int uid = Binder.getCallingUid();
 
         if (packageName != null
-                && !AuthorizationManager.granted(packageName)) {
+                && !AuthorizationManager.granted(packageName, uid)) {
             Log.w(TAG, "Package " + packageName + " try to call provider without permission.");
             return false;
         }

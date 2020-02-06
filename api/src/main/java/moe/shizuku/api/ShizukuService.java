@@ -6,8 +6,11 @@ import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
 
 import moe.shizuku.server.IShizukuService;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
 public class ShizukuService {
 
@@ -102,8 +105,8 @@ public class ShizukuService {
      * @return is token correct
      * @throws IllegalStateException call on API 23+
      */
-    public static boolean setCurrentProcessTokenPre23(String token) throws RemoteException {
-        return requireService().setPidToken(token);
+    public static boolean setTokenPre23(String token) throws RemoteException {
+        return requireService().setUidToken(token);
     }
 
     /**
@@ -116,11 +119,15 @@ public class ShizukuService {
      * If the user's su does not allow binder calls between su and app, Shizuku will switch to context <code>u:r:shell:s0</code>.
      * </p>
      *
-     * @since added from version 6
      * @return SELinux context
+     * @since added from version 6
      */
     public static String getSELinuxContext() throws RemoteException {
         return requireService().getSELinuxContext();
     }
 
+    @RestrictTo(LIBRARY_GROUP_PREFIX)
+    public static void setUidPermissionPre23(int uid, boolean granted) throws RemoteException {
+        requireService().setUidPermissionPre23(uid, granted);
+    }
 }

@@ -46,17 +46,14 @@ public class AppsViewModel extends SharedViewModel {
                 .fromCallable(() -> {
                     List<PackageInfo> list = new ArrayList<>();
                     List<String> packages = new ArrayList<>();
-                    for (String packageName : AuthorizationManager.getPackages()) {
-                        if (BuildConfig.APPLICATION_ID.equals(packageName))
+                    for (PackageInfo pi : AuthorizationManager.getPackages(PackageManager.GET_META_DATA)) {
+                        if (BuildConfig.APPLICATION_ID.equals(pi.packageName))
                             continue;
 
-                        try {
-                            list.add(context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA));
-                        } catch (PackageManager.NameNotFoundException ignored) {
-                        }
+                        list.add(pi);
 
-                        if (AuthorizationManager.granted(packageName))
-                            packages.add(packageName);
+                        if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid))
+                            packages.add(pi.packageName);
                     }
                     Collections.sort(list, new AppNameComparator(context).getPackageInfoComparator());
                     return new List[]{list, packages};
@@ -76,11 +73,11 @@ public class AppsViewModel extends SharedViewModel {
         mCountDisposable = Single
                 .fromCallable(() -> {
                     int count = 0;
-                    for (String packageName : AuthorizationManager.getPackages()) {
-                        if (BuildConfig.APPLICATION_ID.equals(packageName))
+                    for (PackageInfo pi : AuthorizationManager.getPackages(0)) {
+                        if (BuildConfig.APPLICATION_ID.equals(pi.packageName))
                             continue;
 
-                        count += AuthorizationManager.granted(packageName) ? 1 : 0;
+                        count += AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid) ? 1 : 0;
                     }
                     return count;
                 })

@@ -45,9 +45,13 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="GrantPermissions"
-           parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
+    <style name="GrantPermissions" parent="@style/AppTheme.NoActionBar">
+        <item name="android:colorBackground">?colorBackgroundFloating</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="Translucent" parent="android:Theme.Translucent.NoTitleBar">

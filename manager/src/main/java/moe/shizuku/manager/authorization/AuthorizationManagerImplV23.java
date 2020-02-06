@@ -89,16 +89,16 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     @Override
-    public List<String> getPackages() {
-        List<String> packages = new ArrayList<>();
+    public List<PackageInfo> getPackages(int pmFlags) {
+        List<PackageInfo> packages = new ArrayList<>();
 
-        for (PackageInfo pi : getInstalledPackages(PackageManager.GET_PERMISSIONS, Process.myUid() / 100000)) {
+        for (PackageInfo pi : getInstalledPackages(pmFlags | PackageManager.GET_PERMISSIONS, Process.myUid() / 100000)) {
             if (pi.requestedPermissions == null)
                 continue;
 
             for (String p : pi.requestedPermissions) {
                 if (Manifest.permission.API_V23.equals(p)) {
-                    packages.add(pi.packageName);
+                    packages.add(pi);
                     break;
                 }
             }
@@ -107,17 +107,17 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
     }
 
     @Override
-    public boolean granted(final String packageName) {
+    public boolean granted(final String packageName, int uid) {
         return checkPermission(Manifest.permission.API_V23, packageName, Process.myUid() / 100000) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
-    public void grant(final String packageName) {
+    public void grant(final String packageName, int uid) {
         grantRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
     }
 
     @Override
-    public void revoke(final String packageName) {
+    public void revoke(final String packageName, int uid) {
         revokeRuntimePermission(packageName, Manifest.permission.API_V23, Process.myUid() / 100000);
     }
 }

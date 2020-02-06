@@ -12,12 +12,13 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.SELinux;
 import android.system.Os;
+import android.util.ArraySet;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import moe.shizuku.api.BinderContainer;
@@ -27,15 +28,16 @@ import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.reflection.IContentProviderHelper;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
+import moe.shizuku.server.utils.UserHandleUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
-    private static final String PERMISSION = BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION;
+    private static final String PERMISSION = BuildUtils.atLeast23() ? ShizukuApiConstants.PERMISSION : ShizukuApiConstants.PERMISSION_PRE_23;
 
-    private static final Map<Integer, String> PID_TOKEN = new HashMap<>();
+    private static final Set<Integer> GRANTED_UID_PRE_23 = new HashSet<>();
 
     private final Handler mMainHandler;
     private String mToken;
@@ -71,10 +73,6 @@ public class ShizukuService extends IShizukuService.Stub {
         });
     }
 
-    static Map<Integer, String> getPidToken() {
-        return PID_TOKEN;
-    }
-
     private int checkCallingPermission(String permission) {
         try {
             return SystemService.checkPermission(permission,
@@ -86,18 +84,18 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private void enforceCallingPermission(String func, String permission) {
+    private void enforceManager(String func) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
         }
 
-        if (checkCallingPermission(permission) == PackageManager.PERMISSION_GRANTED)
+        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
             return;
 
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
                 + ", uid=" + Binder.getCallingUid()
-                + " requires " + permission;
+                + " requires " + PERMISSION_MANAGER;
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
@@ -110,18 +108,18 @@ public class ShizukuService extends IShizukuService.Stub {
         if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
             return;
 
-        enforceCallingPermission(func, PERMISSION);
+        if (checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+            if (BuildUtils.atLeast23() || !checkToken)
+                return;
 
-        if (!BuildUtils.isPreM() || !checkToken)
-            return;
-
-        String token = PID_TOKEN.get(Binder.getCallingPid());
-        if (mToken.equals(token))
-            return;
+            int uid = Binder.getCallingUid();
+            if (GRANTED_UID_PRE_23.contains(uid))
+                return;
+        }
 
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
-                + " requires a valid token, call setPidToken first";
+                + " requires a valid token, call setUidToken first";
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
@@ -169,20 +167,24 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public String getToken() {
-        enforceCallingPermission("getToken", PERMISSION_MANAGER);
+        enforceManager("getToken");
         return mToken;
     }
 
     @Override
-    public boolean setPidToken(String token) {
-        enforceCallingPermission("setPidToken", false);
+    public boolean setUidToken(String token) {
+        enforceCallingPermission("setUidToken", false);
 
-        if (!BuildUtils.isPreM()) {
+        if (BuildUtils.atLeast23()) {
             throw new IllegalStateException("calling setToken on API 23+");
         }
 
-        PID_TOKEN.put(Binder.getCallingPid(), token);
-        return mToken.equals(token);
+        if (mToken.equals(token)) {
+            GRANTED_UID_PRE_23.add(Binder.getCallingUid());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -213,6 +215,23 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     @Override
+    public void setUidPermissionPre23(int uid, boolean granted) {
+        enforceManager("setPre23AppPermission");
+
+        if (uid != -1) {
+            if (granted) {
+                GRANTED_UID_PRE_23.add(uid);
+            } else {
+                if (GRANTED_UID_PRE_23.remove(uid)) {
+                    for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
+                        SystemService.forceStopPackageNoThrow(packageName, UserHandleUtils.getUserId(uid));
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
         if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
@@ -231,7 +250,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     private static void sendBinderToClient(Binder binder, int userId) {
         try {
-            for (PackageInfo pi : SystemService.getInstalledPackages(PackageManager.GET_PERMISSIONS, userId)) {
+            for (PackageInfo pi : SystemService.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 

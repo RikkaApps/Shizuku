@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.RemoteException;
 
 import androidx.core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.Manifest;
 
 public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
@@ -36,50 +39,80 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
     }
 
     @Override
-    public boolean granted(String packageName) {
+    public boolean granted(String packageName, int uid) {
         if (packageName == null) {
             return false;
         }
         for (Pair<String, Long> p : sPackages) {
-            if (p.first.equals(packageName)) {
+            if (Objects.equals(p.first, packageName)) {
                 return true;
             }
         }
         return false;
     }
 
-    private void set(String packageName, long firstInstallTime, boolean grant) {
-        if (grant) {
-            grant(packageName, firstInstallTime);
-        } else {
-            revoke(packageName);
-        }
-    }
-
     private static void remove(String packageName) {
         for (Pair<String, Long> p : new HashSet<>(sPackages)) {
-            if (p.first.equals(packageName)) {
+            if (Objects.equals(p.first, packageName)) {
                 sPackages.remove(p);
             }
         }
     }
 
-    private static void grant(String packageName, long firstInstallTime) {
+    private static void grant(String packageName, int uid, long firstInstallTime) {
         remove(packageName);
 
         sPackages.add(new Pair<>(packageName, firstInstallTime));
         sSharedPreferences.edit()
                 .putStringSet(KEY, toPreference(sPackages))
                 .apply();
+
+        try {
+            ShizukuService.setUidPermissionPre23(uid, true);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void revoke(String packageName) {
+    public void revoke(String packageName, int uid) {
         remove(packageName);
 
         sSharedPreferences.edit()
                 .putStringSet(KEY, toPreference(sPackages))
                 .apply();
+
+        try {
+            ShizukuService.setUidPermissionPre23(uid, false);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void grant(String packageName, int uid) {
+        try {
+            grant(packageName, uid, mContext.getPackageManager().getPackageInfo(packageName, 0).firstInstallTime);
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+    }
+
+    @Override
+    public List<PackageInfo> getPackages(int pmFlags) {
+        List<PackageInfo> packages = new ArrayList<>();
+
+        for (PackageInfo pi : mContext.getPackageManager().getInstalledPackages(pmFlags | PackageManager.GET_PERMISSIONS)) {
+            if (pi.requestedPermissions == null)
+                continue;
+
+            for (String p : pi.requestedPermissions) {
+                if (Manifest.permission.API.equals(p)) {
+                    packages.add(pi);
+                    break;
+                }
+            }
+        }
+        return packages;
     }
 
     private static Set<Pair<String, Long>> fromPreference(Context context, Set<String> from) {
@@ -122,32 +155,5 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
             to.add(p.first + "|" + p.second);
         }
         return to;
-    }
-
-    @Override
-    public List<String> getPackages() {
-        List<String> packages = new ArrayList<>();
-
-        for (PackageInfo pi : mContext.getPackageManager().getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
-            if (pi.requestedPermissions == null)
-                continue;
-
-            for (String p : pi.requestedPermissions) {
-                if (Manifest.permission.API.equals(p)) {
-                    packages.add(pi.packageName);
-                    break;
-                }
-            }
-        }
-        return packages;
-    }
-
-
-    @Override
-    public void grant(String packageName) {
-        try {
-            grant(packageName, mContext.getPackageManager().getPackageInfo(packageName, 0).firstInstallTime);
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
     }
 }

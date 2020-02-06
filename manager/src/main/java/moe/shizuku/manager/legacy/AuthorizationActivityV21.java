@@ -90,7 +90,7 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
             return;
         }
 
-        if (AuthorizationManager.granted(packageName)) {
+        if (AuthorizationManager.granted(packageName, pi.applicationInfo.uid)) {
             setResult(true, packageName);
             finish();
             return;
@@ -103,12 +103,12 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
         Dialog dialog = new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton(R.string.auth_allow, (d, which) -> {
-                    AuthorizationManager.grant(packageName);
+                    AuthorizationManager.grant(packageName, pi.applicationInfo.uid);
 
                     setResult(true, packageName);
                 })
                 .setNegativeButton(R.string.auth_deny, (d, which) -> {
-                    AuthorizationManager.revoke(packageName);
+                    AuthorizationManager.revoke(packageName, pi.applicationInfo.uid);
 
                     setResult(false, packageName);
                 })

@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -60,10 +61,11 @@ public class TokenProvider extends ContentProvider {
     @Override
     public Bundle call(@NonNull String method, @Nullable String arg, @Nullable Bundle extras) {
         String packageName = getCallingPackage();
+        int uid = Binder.getCallingUid();
 
         if (packageName != null
                 && Build.VERSION.SDK_INT < 23 // system will help us check on 23+
-                && !AuthorizationManager.granted(packageName)) {
+                && !AuthorizationManager.granted(packageName, uid)) {
             return null;
         }
 

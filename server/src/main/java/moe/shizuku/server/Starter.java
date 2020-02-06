@@ -25,14 +25,9 @@ public class Starter {
     }
 
     private static void checkManagerApp() {
-        try {
-            ApplicationInfo ai = SystemService.getApplicationInfo(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
-            if (ai == null)
-                System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
-        } catch (Throwable tr) {
-            LOGGER.e(tr, "checkManagerApp");
+        ApplicationInfo ai = SystemService.getApplicationInfoNoThrow(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
+        if (ai == null)
             System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
-        }
     }
 
     private static UUID getToken(String[] args) {

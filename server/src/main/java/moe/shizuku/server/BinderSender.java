@@ -4,9 +4,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import hidden.HiddenApiBridge;
@@ -22,7 +22,7 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 public class BinderSender {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
-    private static final String PERMISSION = BuildUtils.isPreM() ? ShizukuApiConstants.PERMISSION_PRE_23 : ShizukuApiConstants.PERMISSION;
+    private static final String PERMISSION = BuildUtils.atLeast23() ? ShizukuApiConstants.PERMISSION : ShizukuApiConstants.PERMISSION_PRE_23;
 
     private static final List<Integer> PID_LIST = new ArrayList<>();
 
@@ -49,8 +49,6 @@ public class BinderSender {
             int index = PID_LIST.indexOf(pid);
             if (index != -1) {
                 PID_LIST.remove(index);
-
-                ShizukuService.getPidToken().remove(pid);
             }
         }
 
@@ -82,15 +80,15 @@ public class BinderSender {
     }
 
     private static void onActive(int uid, int pid) throws RemoteException {
-        String[] packages = SystemService.getPackagesForUid(uid);
-        if (packages == null)
+        List<String> packages = SystemService.getPackagesForUidNoThrow(uid);
+        if (packages.isEmpty())
             return;
 
-        LOGGER.d("onActive: uid=%d, packages=%s", uid, Arrays.toString(packages));
+        LOGGER.d("onActive: uid=%d, packages=%s", uid, TextUtils.join(", ", packages));
 
         int userId = uid / 100000;
         for (String packageName : packages) {
-            PackageInfo pi = SystemService.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS, userId);
+            PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
             if (pi == null || pi.requestedPermissions == null)
                 continue;
 
