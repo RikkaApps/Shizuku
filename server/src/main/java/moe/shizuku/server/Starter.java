@@ -2,6 +2,7 @@ package moe.shizuku.server;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.ddm.DdmHandleAppName;
 import android.os.ServiceManager;
 
 import java.util.UUID;
@@ -30,17 +31,18 @@ public class Starter {
             System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
     }
 
-    private static UUID getToken(String[] args) {
+    public static void main(String[] args) {
+        UUID token = null;
         if (args.length > 0) {
-            try {
-                return UUID.fromString(args[0]);
-            } catch (IllegalArgumentException ignored) {
+            for (String arg : args) {
+                if (arg.startsWith("--token=")) {
+                    token = UUID.fromString(arg.replace("--token=", ""));
+                } else if (arg.equals("--debug")) {
+                    DdmHandleAppName.setAppName("shizuku_server", 0);
+                }
             }
         }
-        return null;
-    }
 
-    public static void main(String[] args) {
         waitSystemService("package");
         waitSystemService("activity");
         waitSystemService(Context.USER_SERVICE);
@@ -48,6 +50,6 @@ public class Starter {
 
         checkManagerApp();
 
-        ShizukuService.main(getToken(args));
+        ShizukuService.main(token);
     }
 }
