@@ -6,7 +6,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName '3.1.0-alpha1'
+        versionName '3.1.0-alpha2'
         manifestPlaceholders = [versionName: versionName]
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -18,18 +18,22 @@ android {
     }
 }
 
-ext {
-    libraryName = 'Shizuku V3'
-    libraryDescription = 'Shizuku V3'
-    libraryVersion = android.defaultConfig.versionName
-    artifact = "api"
-    bintrayName = "api"
-}
-
-apply from: project.rootProject.file('bintray.gradle')
-
 dependencies {
     implementation "androidx.annotation:annotation:1.1.0"
     implementation project(':shared')
     compileOnly project(':hidden-api-common')
 }
+
+group = 'rikka.annotation'
+version = android.defaultConfig.versionName
+
+project.ext {
+    mavProjectName = 'api'
+    mavLibraryDescription = 'Shizuku V3'
+}
+
+group = 'moe.shizuku.privilege'
+version = android.defaultConfig.versionName
+
+
+apply from: rootProject.file('publish.gradle')

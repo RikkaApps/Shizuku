@@ -1,0 +1,3 @@
+[submodule "gradle-maven-plugin"]
+	path = gradle-maven-plugin
+	url = https://github.com/sky-uk/gradle-maven-plugin/
