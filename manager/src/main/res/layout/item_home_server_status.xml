@@ -23,21 +23,19 @@
 
         <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text1"
+            style="@style/CardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:lineSpacingExtra="2dp"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="16sp"
             tools:text="Running (version 10)" />
 
         <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text2"
+            style="@style/CardSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:duplicateParentState="true"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="14sp" />
+            android:duplicateParentState="true" />
 
     </LinearLayout>
 

@@ -16,7 +16,7 @@
         <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
 
         <item name="appColorPrimary">@color/app_color_light</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card.Light</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
 
@@ -39,7 +39,7 @@
         <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
 
         <item name="appColorPrimary">@color/app_color_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
 
@@ -47,6 +47,13 @@
     </style>
 
     <style name="Theme" parent="Base.AppTheme" />
+
+    <style name="ThemeOverlay.Preference" parent="PreferenceThemeOverlay">
+        <item name="simpleMenuPreferenceStyle">@style/Preference.SimpleMenuPreference</item>
+        <item name="preferenceTitleTextAppearance">?textAppearanceSubtitle1</item>
+        <item name="preferenceSummaryTextAppearance">?textAppearanceBody2</item>
+        <item name="preferenceCategoryTextAppearance">?textAppearanceSubtitle2</item>
+    </style>
 
     <style name="Widget.AppBar" parent="">
         <item name="android:background">?toolbarColor</item>

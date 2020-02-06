@@ -45,6 +45,18 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="CardTitle">
+        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CardSummary">
+        <item name="android:textAppearance">?textAppearanceBody2</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="GrantPermissions" parent="@style/AppTheme.NoActionBar">
         <item name="android:colorBackground">?colorBackgroundFloating</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

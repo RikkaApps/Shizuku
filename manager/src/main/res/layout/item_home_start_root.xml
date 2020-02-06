@@ -27,12 +27,11 @@
             app:iconColorName="orange" />
 
         <rikka.html.widget.HtmlCompatTextView
+            style="@style/CardTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:textAppearance="@android:style/TextAppearance.Material.Body2"
-            android:textSize="16sp"
             app:htmlText="@string/start_service_title_root" />
 
         <moe.shizuku.manager.widget.CheckedImageView
@@ -57,12 +56,12 @@
 
         <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text1"
+            style="@style/CardSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textColor="?android:textColorSecondary"
             app:htmlFlags="trim_whitespace"
             app:htmlText="@string/start_service_summary_root" />
 
