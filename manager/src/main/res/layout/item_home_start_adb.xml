@@ -59,9 +59,9 @@
             style="@style/CardSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_marginEnd="16dp"
             app:htmlFlags="trim_whitespace"
             app:htmlText="@string/start_service_summary_adb" />
 
