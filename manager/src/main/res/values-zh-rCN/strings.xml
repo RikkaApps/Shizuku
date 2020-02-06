@@ -16,12 +16,15 @@
     <string name="service_restart">重新启动</string>
     <string name="start_service_title_root"><![CDATA[通过 root 权限启动服务]]></string>
     <string name="start_service_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
-    <string name="start_service_summary_adb"><![CDATA[使用 adb 并不困难，请阅读下面的帮助。帮助随时更新，并包含遇到问题的解决方案（如 Shizuku 突然停止）。]]></string>
+    <string name="start_service_summary_adb"><![CDATA[
+    <b>如何使用 adb？</b>
+    <br>使用 adb 并不困难，请阅读帮助。
+    <p><b>Shizuku 随机停止？</b>
+    <br>请阅读帮助的最后一部分。]]></string>
     <string name="start_service_summary_root"><![CDATA[
-    若启动成功，则 Shizuku 将在开机后自动启动。
-    <br>如果无法正常开机启动，请检查您的系统或是第三方工具是否限制了 Shizuku。
-    <p>除 Google 外，几乎所有厂商都有自己的后台限制机制（部分厂商尤为疯狂，如 OnePlus，严重影响许多应用的功能）。
-    <br>请参考 <b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> 了解如何关闭限制。]]></string>
+    <b>无法开机启动？</b>
+    <br>请检查您的系统或是第三方工具是否限制了 Shizuku。
+    <br>你可以参考 <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>。]]></string>
     <string name="copy_command">复制</string>
     <string name="send_command">发送</string>
     <string name="view_command">查看 adb 指令</string>

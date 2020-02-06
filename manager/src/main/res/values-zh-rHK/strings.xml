@@ -16,7 +16,11 @@
     <string name="service_restart">重新啟動</string>
     <string name="start_service_title_root"><![CDATA[透過 root 權限啟動服務]]></string>
     <string name="start_service_title_adb"><![CDATA[透過 adb 啟動或升級服務]]></string>
-    <string name="start_service_summary_adb"><![CDATA[使用 adb 並不困難，請閱讀下面的幫助。幫助隨時更新，幷包含遇到問題的解決方案（如 Shizuku 突然停止）。]]></string>
+    <string name="start_service_summary_adb"><![CDATA[
+    <b>如何使用 adb？</b>
+    <br>使用 adb 並不困難，請閱讀幫助。
+    <p><b>Shizuku 隨機停止？</b>
+    <br>請閱讀幫助的最後一部分。]]></string>
     <string name="start_service_summary_root"><![CDATA[
     若啓動成功，則 Shizuku 將在開機後自動啓動。
     <br>如果無法正常開機啓動，請檢查您的系統或是第三方工具是否限制了 Shizuku。
