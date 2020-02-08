@@ -5,9 +5,21 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.apiVersionName
     }
 }
 
 dependencies {
     implementation "androidx.annotation:annotation:1.1.0"
 }
+
+project.ext {
+    mavProjectName = 'shared'
+    mavLibraryDescription = 'Shizuku V3'
+}
+
+group = 'moe.shizuku.privilege'
+version = android.defaultConfig.versionName
+
+apply from: rootProject.file('publish.gradle')
