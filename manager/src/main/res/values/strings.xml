@@ -10,7 +10,7 @@
     <string name="service_version">version %2$d, %1$s</string>
     <string name="service_version_update">version %2$d, %1$s, start again to update to version %3$d</string>
     <string name="service_not_running">%1$s not running</string>
-    <string name="service_not_running_tap_retry">%1$s not running, tap to check again</string>
+    <string name="service_not_running_tap_retry">%1$s not running</string>
     <string name="service_legacy_require_restart">%1$s requires restart</string>
     <string name="service_legacy_no_token">%1$s is running, but no correct token received, tap to request token</string>
     <string name="service_start">Start</string>

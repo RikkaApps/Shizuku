@@ -7,12 +7,12 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.app.ThemeHelper
 import moe.shizuku.manager.viewmodel.AppsViewModel
-import moe.shizuku.manager.viewmodel.DataWrapper
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
+import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
@@ -52,10 +52,14 @@ class SettingsFragment : PreferenceFragment() {
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
         noV2Preference = findPreference(KEY_NO_V2) as SwitchPreference
 
-        val viewModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel::class.java)
-        viewModel.packages.observe(this, Observer { `object`: DataWrapper<List<PackageInfo>?> -> if (`object`.data != null) updateData(`object`.data) })
-        if (viewModel.packages != null && viewModel.packages.value != null && viewModel.packages.value!!.data != null) {
-            updateData(viewModel.packages.value!!.data)
+        val viewModel = SharedViewModelProviders.of(this).get(AppsViewModel::class.java)
+        viewModel.packages.observe(this) {
+            if (it?.status == Status.SUCCESS) {
+                updateData(it.data)
+            }
+        }
+        if (viewModel.packages.value == null) {
+            viewModel.load()
         }
 
         languagePreference!!.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->

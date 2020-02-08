@@ -116,9 +116,6 @@ dependencies {
     implementation "rikka.recyclerview:recyclerview-utils:1.0.1"
 
     implementation 'moe.shizuku.fontprovider:api:10'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
 
     implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 }

@@ -126,7 +126,7 @@ public class AuthorizationManagerImplV21 implements AuthorizationManagerImpl {
                 long firstInstallTime = Long.parseLong(temp[1]);
 
                 try {
-                    PackageInfo pi = pm.getPackageInfo(packageName, 0);
+                    PackageInfo pi = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 
                     boolean permission = false;
                     if (pi.requestedPermissions != null) {

@@ -14,14 +14,15 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.adapter.HomeAdapter
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.viewmodel.AppsViewModel
-import moe.shizuku.manager.viewmodel.DataWrapper
 import moe.shizuku.manager.viewmodel.HomeViewModel
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
+import moe.shizuku.manager.viewmodel.Status
 import rikka.html.text.HtmlCompat
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
@@ -31,10 +32,11 @@ class MainActivity : AppBarActivity() {
 
     private val mBinderReceivedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            appsModel!!.load(context)
-            adapter!!.updateData(context)
+            appsModel.load()
+            adapter.updateData()
         }
     }
+
     private val mRequestRefreshReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             checkServerStatus()
@@ -42,8 +44,8 @@ class MainActivity : AppBarActivity() {
     }
 
     private val homeModel by viewModels<HomeViewModel>()
-    private var appsModel: AppsViewModel? = null
-    private var adapter: HomeAdapter? = null
+    private val appsModel by lazy { SharedViewModelProviders.of(this).get(AppsViewModel::class.java) }
+    private val adapter: HomeAdapter by lazy { HomeAdapter(homeModel, appsModel) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,27 +54,24 @@ class MainActivity : AppBarActivity() {
             ServerLauncher.writeFiles(this, true)
             writeFilesCalled = true
         }
-        homeModel.observe(this, Observer {
-            if (isFinishing) return@Observer
-            if (it != null && it !is Throwable) {
-                val context: Context = this
-                adapter!!.updateData(context)
-                if (homeModel.serviceStatus.isV3Running) {
-                    ShizukuManagerSettings.setLastLaunchMode(if (homeModel.serviceStatus.uid == 0) ShizukuManagerSettings.LaunchMethod.ROOT else ShizukuManagerSettings.LaunchMethod.ADB)
-                }
+
+        homeModel.serviceStatus.observe(this) {
+            if (it.status == Status.SUCCESS) {
+                val status = homeModel.serviceStatus.value?.data ?: return@observe
+                adapter.updateData()
+                ShizukuManagerSettings.setLastLaunchMode(if (status.uid == 0) ShizukuManagerSettings.LaunchMethod.ROOT else ShizukuManagerSettings.LaunchMethod.ADB)
             }
-        })
-        appsModel = SharedViewModelProviders.of(this).get("apps", AppsViewModel::class.java)
-        appsModel!!.grantedCount.observe(this, Observer { `object`: DataWrapper<Int?> ->
-            val context: Context = this
-            if (`object`.data != null) {
-                adapter!!.updateData(context)
-            }
-        })
-        if (ShizukuService.pingBinder()) {
-            appsModel!!.load(this)
         }
-        adapter = HomeAdapter(this, homeModel, appsModel)
+        appsModel.grantedCount.observe(this) {
+            if (it.status == Status.SUCCESS) {
+                adapter.updateData()
+            }
+        }
+
+        if (ShizukuService.pingBinder()) {
+            appsModel.load()
+        }
+
         val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
         recyclerView.adapter = adapter
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
@@ -98,7 +97,7 @@ class MainActivity : AppBarActivity() {
     }
 
     private fun checkServerStatus() {
-        homeModel.load()
+        homeModel.reload()
     }
 
     override fun onDestroy() {

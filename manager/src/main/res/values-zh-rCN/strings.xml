@@ -9,7 +9,7 @@
     <string name="service_version">版本 %2$d，%1$s</string>
     <string name="service_version_update">版本 %2$d，%1$s，再次启动来升级到版本 %3$d</string>
     <string name="service_not_running">%1$s没有运行</string>
-    <string name="service_not_running_tap_retry">%1$s没有运行，轻触重新检查</string>
+    <string name="service_not_running_tap_retry">%1$s没有运行</string>
     <string name="service_legacy_require_restart">%1$s需要重新启动</string>
     <string name="service_legacy_no_token">%1$s正在运行，但未正确接收令牌，点击请求令牌</string>
     <string name="service_start">启动</string>

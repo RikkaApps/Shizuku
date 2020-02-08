@@ -41,13 +41,6 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
     public void onClick(View v) {
         LocalBroadcastManager.getInstance(v.getContext())
                 .sendBroadcast(new Intent(AppConstants.ACTION_REQUEST_REFRESH));
-        /*if (mCheckToRequest) {
-            WorkService.startRequestTokenV2(v.getContext());
-        } else {
-            //WorkService.startAuthV2(v.getContext());
-        }
-
-        WorkService.startRequestBinder(v.getContext());*/
     }
 
     @Override
@@ -98,7 +91,7 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
         }
         if (startV2) {
             if (!runningV2) {
-                v2Title = context.getString(R.string.service_not_running_tap_retry, v2Name);
+                v2Title = okV3 ? context.getString(R.string.service_not_running_tap_retry, v2Name) : "";
                 v2Summary = "";
             } else {
                 if (okV2) {
@@ -140,6 +133,12 @@ public class ServerStatusViewHolder extends BaseViewHolder<ServiceStatus> implem
         } else {
             mStatusText.setHtmlText(String.format(TextUtils.isEmpty(v3Summary) ? "<font face=\"sans-serif-medium\">%1$s</font>" : "<font face=\"sans-serif-medium\">%1$s (%2$s)</font>", v3Title, v3Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
             mStatusSummary.setHtmlText(String.format(TextUtils.isEmpty(v2Summary) ? "%1$s" : "%1$s (%2$s)", v2Title, v2Summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE);
+        }
+
+        if (TextUtils.isEmpty(mStatusSummary.getText())) {
+            mStatusSummary.setVisibility(View.GONE);
+        }  else {
+            mStatusSummary.setVisibility(View.VISIBLE);
         }
     }
 }
