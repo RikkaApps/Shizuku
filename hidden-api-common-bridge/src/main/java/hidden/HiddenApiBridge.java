@@ -18,9 +18,13 @@ import java.util.List;
 
 public class HiddenApiBridge {
 
-    public static final int ActivityManager_UID_OBSERVER_ACTIVE = ActivityManager.UID_OBSERVER_ACTIVE;
+    public static int getActivityManager_UID_OBSERVER_ACTIVE() {
+        return ActivityManager.UID_OBSERVER_ACTIVE;
+    }
 
-    public static final int ActivityManager_PROCESS_STATE_UNKNOWN = ActivityManager.PROCESS_STATE_UNKNOWN;
+    public static int getActivityManager_PROCESS_STATE_UNKNOWN() {
+        return ActivityManager.PROCESS_STATE_UNKNOWN;
+    }
 
     public static UserHandle createUserHandle(int userId) {
         return new UserHandle(userId);

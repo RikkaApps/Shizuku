@@ -122,8 +122,8 @@ public class BinderSender {
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 SystemService.registerUidObserver(new UidObserver(),
-                        HiddenApiBridge.ActivityManager_UID_OBSERVER_ACTIVE,
-                        HiddenApiBridge.ActivityManager_PROCESS_STATE_UNKNOWN,
+                        HiddenApiBridge.getActivityManager_UID_OBSERVER_ACTIVE(),
+                        HiddenApiBridge.getActivityManager_PROCESS_STATE_UNKNOWN(),
                         null);
             } catch (Throwable tr) {
                 LOGGER.e(tr, "registerUidObserver");
