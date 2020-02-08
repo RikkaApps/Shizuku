@@ -11,7 +11,7 @@
         <item name="colorSecondaryVariant">@color/app_color_light</item>
         <item name="colorOnSecondary">@android:color/white</item>
 
-        <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Surface</item>
+        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
         <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
         <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
 
@@ -21,6 +21,11 @@
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
 
         <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
@@ -34,7 +39,7 @@
         <item name="colorSecondaryVariant">@color/app_color_dark</item>
         <item name="colorOnSecondary">@android:color/black</item>
 
-        <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Surface</item>
+        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
         <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
         <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
 
@@ -44,6 +49,11 @@
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
 
         <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme" parent="Base.AppTheme" />
@@ -68,8 +78,8 @@
 
     <style name="Widget.AppBar.Solid">
         <item name="android:background">?android:colorBackground</item>
-        <item name="android:stateListAnimator">@animator/appbar_animator</item>
-        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@animator/alpha_animator</item>
+        <item name="android:elevation">@dimen/app_bar_elevation</item>
     </style>
 
     <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">

@@ -1,16 +1,12 @@
 package moe.shizuku.manager.app
 
-import android.content.res.Resources
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.annotation.RequiresApi
+import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import moe.shizuku.manager.R
-import rikka.core.res.resolveColor
 import rikka.material.widget.AppBarLayout
 
 abstract class AppBarActivity : BaseActivity() {
@@ -29,9 +25,14 @@ abstract class AppBarActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.setContentView(R.layout.appbar_activity)
+        super.setContentView(getLayoutId())
 
         setAppBar(toolbarContainer, toolbar)
+    }
+
+    @LayoutRes
+    open fun getLayoutId(): Int {
+        return R.layout.appbar_activity
     }
 
     override fun setContentView(layoutResID: Int) {
@@ -46,36 +47,11 @@ abstract class AppBarActivity : BaseActivity() {
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         rootView.addView(view, 0, params)
     }
+}
 
-    override fun shouldApplyTranslucentSystemBars(): Boolean {
-        return Build.VERSION.SDK_INT >= 23
-    }
+abstract class AppBarFragmentActivity : AppBarActivity() {
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onApplyTranslucentSystemBars() {
-        val window = window
-        val theme = theme
-
-        window?.statusBarColor = Color.TRANSPARENT
-
-        window?.decorView?.post {
-            if (window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0 >= Resources.getSystem().displayMetrics.density * 40) {
-                val alpha = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) -0x20000000 else 0x60000000
-                window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or alpha
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    window.navigationBarDividerColor = theme.resolveColor(android.R.attr.navigationBarDividerColor)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        window.isNavigationBarContrastEnforced = false
-                    }
-                }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    window.navigationBarColor = Color.TRANSPARENT
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    window.isNavigationBarContrastEnforced = true
-                }
-            }
-        }
+    override fun getLayoutId(): Int {
+        return R.layout.appbar_fragment_activity
     }
 }

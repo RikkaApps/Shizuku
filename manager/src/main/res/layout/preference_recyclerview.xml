@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:paddingStart="@dimen/rd_activity_horizontal_margin"
+    android:fadeScrollbars="true"
     android:paddingTop="?actionBarSize"
-    android:paddingEnd="@dimen/rd_activity_horizontal_margin"
+    android:paddingBottom="8dp"
     android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical"
     app:borderBottomStyle="never"
     app:borderTopDrawable="@null"
     app:borderTopStyle="whenTop"
-    app:fitSystemWindowsInsets="bottom|top"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    app:fitSystemWindowsInsets="bottom|top" />

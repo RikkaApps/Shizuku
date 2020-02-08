@@ -1,15 +1,14 @@
 package moe.shizuku.manager.authorization;
 
-import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ParceledListSlice;
 import android.os.Process;
 import android.os.RemoteException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import hidden.HiddenApiBridge;
 import moe.shizuku.api.ShizukuBinderWrapper;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.SystemServiceHelper;
@@ -18,20 +17,11 @@ import moe.shizuku.manager.Manifest;
 @SuppressWarnings("SameParameterValue")
 public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
 
-    private static final IPackageManager PACKAGE_MANAGER;
+    // If manager depends on hideen-api-common, kotlin & R8 use classes from it. Use HiddenApiBridge to avoid this problem.
 
-    static {
-        IPackageManager pm;
-        try {
-            pm = IPackageManager.Stub.asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
-        } catch (Throwable e) {
-            e.printStackTrace();
-            pm = null;
-        }
-        PACKAGE_MANAGER = pm;
-    }
+    private static final Object PACKAGE_MANAGER = HiddenApiBridge.IPackageManager_Stub_asInterface(new ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")));
 
-    private static IPackageManager getPackageManager() {
+    private static Object getPackageManager() {
         return PACKAGE_MANAGER;
     }
 
@@ -41,48 +31,43 @@ public class AuthorizationManagerImplV23 implements AuthorizationManagerImpl {
         }
 
         try {
-            //noinspection unchecked
-            ParceledListSlice<PackageInfo> listSlice = getPackageManager().getInstalledPackages(flags, userId);
-            if (listSlice != null) {
-                return listSlice.getList();
-            }
-            return new ArrayList<>();
+            return HiddenApiBridge.IPackageManager_getInstalledPackages(getPackageManager(), flags, userId);
         } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
 
-    private static int checkPermission(String permName, String pkgName, int userId) throws RuntimeException {
+    private static int checkPermission(String permName, String pkgName, int userId) {
         if (!ShizukuService.pingBinder()) {
             return PackageManager.PERMISSION_DENIED;
         }
 
         try {
-            return getPackageManager().checkPermission(permName, pkgName, userId);
+            return HiddenApiBridge.IPackageManager_checkPermission(getPackageManager(), permName, pkgName, userId);
         } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
 
-    private static void grantRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
+    private static void grantRuntimePermission(String packageName, String permissionName, int userId) {
         if (!ShizukuService.pingBinder()) {
             return;
         }
 
         try {
-            getPackageManager().grantRuntimePermission(packageName, permissionName, userId);
+            HiddenApiBridge.IPackageManager_grantRuntimePermission(getPackageManager(), packageName, permissionName, userId);
         } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }
     }
 
-    private static void revokeRuntimePermission(String packageName, String permissionName, int userId) throws RuntimeException {
+    private static void revokeRuntimePermission(String packageName, String permissionName, int userId) {
         if (!ShizukuService.pingBinder()) {
             return;
         }
 
         try {
-            getPackageManager().revokeRuntimePermission(packageName, permissionName, userId);
+            HiddenApiBridge.IPackageManager_revokeRuntimePermission(getPackageManager(), packageName, permissionName, userId);
         } catch (RemoteException tr) {
             throw new RuntimeException(tr.getMessage(), tr);
         }

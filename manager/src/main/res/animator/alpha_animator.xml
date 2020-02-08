@@ -5,12 +5,6 @@
         <set>
             <objectAnimator
                 android:duration="@android:integer/config_mediumAnimTime"
-                android:interpolator="@android:interpolator/fast_out_slow_in"
-                android:propertyName="translationZ"
-                android:valueTo="4dp"
-                android:valueType="floatType" />
-            <objectAnimator
-                android:duration="@android:integer/config_mediumAnimTime"
                 android:propertyName="alpha"
                 android:valueTo="0.9"
                 android:valueType="floatType" />
@@ -18,12 +12,6 @@
     </item>
     <item>
         <set>
-            <objectAnimator
-                android:duration="@android:integer/config_mediumAnimTime"
-                android:interpolator="@android:interpolator/fast_out_slow_in"
-                android:propertyName="translationZ"
-                android:valueTo="4dp"
-                android:valueType="floatType" />
             <objectAnimator
                 android:duration="@android:integer/config_mediumAnimTime"
                 android:propertyName="alpha"

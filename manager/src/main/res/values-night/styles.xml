@@ -2,8 +2,4 @@
 <resources>
     <style name="AppTheme" parent="Theme"/>
 
-    <style name="AppTheme.Apps" parent="AppTheme">
-        <item name="android:windowBackground">?android:colorBackground</item>
-    </style>
-
 </resources>

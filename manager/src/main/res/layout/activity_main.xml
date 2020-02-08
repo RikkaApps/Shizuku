@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<rikka.material.widget.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
+    android:layout_marginStart="@dimen/rd_activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/rd_activity_horizontal_margin"
     android:clipToPadding="false"
-    android:orientation="vertical">
-
-    <rikka.material.widget.BorderRecyclerView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:paddingStart="@dimen/home_padding"
-        android:paddingTop="?actionBarSize"
-        android:paddingEnd="@dimen/home_padding"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
-        app:borderBottomStyle="never"
-        app:borderTopDrawable="@null"
-        app:borderTopStyle="whenTop"
-        app:layoutManager="@string/main_layout_manager"
-        app:spanCount="2">
-
-    </rikka.material.widget.BorderRecyclerView>
-
-</FrameLayout>
+    android:fitsSystemWindows="true"
+    android:paddingStart="@dimen/home_padding"
+    android:paddingTop="?actionBarSize"
+    android:paddingEnd="@dimen/home_padding"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbars="vertical"
+    app:borderBottomStyle="never"
+    app:borderTopDrawable="@null"
+    app:borderTopStyle="whenTop"
+    app:fitSystemWindowsInsets="bottom|top"
+    app:layoutManager="@string/main_layout_manager"
+    app:spanCount="2" />

@@ -2,7 +2,10 @@ package hidden;
 
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
+import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.ParceledListSlice;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.UserHandle;
 
@@ -10,6 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.android.internal.app.IAppOpsService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HiddenApiBridge {
@@ -57,4 +61,28 @@ public class HiddenApiBridge {
         return packageInfo.overlayTarget;
     }
 
+    public static Object IPackageManager_Stub_asInterface(IBinder binder) {
+        return IPackageManager.Stub.asInterface(binder);
+    }
+
+    public static List<PackageInfo> IPackageManager_getInstalledPackages(Object pm, int flags, int userId) throws RemoteException {
+        //noinspection unchecked
+        ParceledListSlice<PackageInfo> listSlice = ((IPackageManager) pm).getInstalledPackages(flags, userId);
+        if (listSlice != null) {
+            return listSlice.getList();
+        }
+        return new ArrayList<>();
+    }
+
+    public static int IPackageManager_checkPermission(Object pm, String permName, String pkgName, int userId) throws RemoteException {
+        return ((IPackageManager) pm).checkPermission(permName, pkgName, userId);
+    }
+
+    public static void IPackageManager_grantRuntimePermission(Object pm, String packageName, String permissionName, int userId) throws RemoteException {
+        ((IPackageManager) pm).grantRuntimePermission(packageName, permissionName, userId);
+    }
+
+    public static void IPackageManager_revokeRuntimePermission(Object pm, String packageName, String permissionName, int userId) throws RemoteException {
+        ((IPackageManager) pm).revokeRuntimePermission(packageName, permissionName, userId);
+    }
 }
