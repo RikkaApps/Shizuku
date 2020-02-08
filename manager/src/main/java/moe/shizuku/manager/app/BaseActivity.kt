@@ -49,8 +49,10 @@ abstract class BaseActivity : MaterialActivity() {
 
         window?.decorView?.post {
             if (window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0 >= Resources.getSystem().displayMetrics.density * 40) {
-                val alpha = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) -0x20000000 else 0x60000000
-                window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or alpha
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val alpha = -0x20000000
+                    window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or alpha
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     window.navigationBarDividerColor = theme.resolveColor(android.R.attr.navigationBarDividerColor)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

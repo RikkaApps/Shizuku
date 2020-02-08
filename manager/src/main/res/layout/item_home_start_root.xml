@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_play_arrow_outline_24dp"
+            android:src="@drawable/ic_root_24dp"
             app:iconColorName="orange" />
 
         <rikka.html.widget.HtmlCompatTextView

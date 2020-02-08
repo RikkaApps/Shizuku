@@ -15,16 +15,18 @@
     <string name="service_legacy_no_token">%1$s is running, but no correct token received, tap to request token</string>
     <string name="service_start">Start</string>
     <string name="service_restart">Restart</string>
-    <string name="start_service_title_root"><![CDATA[Start service with root permission]]></string>
+    <string name="start_service_title_root"><![CDATA[Start service with root]]></string>
     <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
     <string name="start_service_summary_adb"><![CDATA[
-    <b>How to use adb?</b>
+    <b>If your device is not rooted, you need to start service with adb.</b>
+    <p><b>How to use adb?</b>
     <br>Using adb is not difficult, please follow the help.
     <p><b>Shizuku stops randomly?</b>
     <br>Please read the last part of the help.
     ]]></string>
     <string name="start_service_summary_root"><![CDATA[
-    <b>Can\'t start on boot?</b>
+    <b>If your device is rooted, you can use this method.</b>
+    <p><b>Can\'t start on boot?</b>
     <br>Please check if your system or third-party tools have restricted Shizuku.
     <br>You can refer to <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>.]]></string>
     <string name="copy_command">Copy</string>
@@ -37,7 +39,7 @@
     <string name="auth_manager_no_token">Shizuku haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
     <string name="auth_service_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
-    <string name="authorized_apps_manage">Authorized apps</string>
+    <string name="authorized_apps_manage">Application management</string>
     <plurals name="authorized_apps_count">
         <item quantity="zero"><![CDATA[Authorized %d application]]></item>
         <item quantity="one"><![CDATA[Authorized %d application]]></item>
@@ -73,7 +75,7 @@
     <string name="action_view_apps">Get more</string>
     <string name="adb_no_permission_title">The permission of adb is limited</string>
     <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
-    <string name="view_online_help">Read online help</string>
+    <string name="view_online_help">Read help</string>
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
     <string name="get_more_summary">View apps using Shizuku</string>

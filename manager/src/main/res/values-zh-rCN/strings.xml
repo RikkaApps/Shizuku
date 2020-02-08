@@ -14,15 +14,17 @@
     <string name="service_legacy_no_token">%1$s正在运行，但未正确接收令牌，点击请求令牌</string>
     <string name="service_start">启动</string>
     <string name="service_restart">重新启动</string>
-    <string name="start_service_title_root"><![CDATA[通过 root 权限启动服务]]></string>
+    <string name="start_service_title_root"><![CDATA[通过 root 启动服务]]></string>
     <string name="start_service_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
     <string name="start_service_summary_adb"><![CDATA[
-    <b>如何使用 adb？</b>
+    <b>如果您的设备没有 root，您需要借助 adb 启动服务。</b>
+    <p><b>如何使用 adb？</b>
     <br>使用 adb 并不困难，请阅读帮助。
     <p><b>Shizuku 随机停止？</b>
     <br>请阅读帮助的最后一部分。]]></string>
     <string name="start_service_summary_root"><![CDATA[
-    <b>无法开机启动？</b>
+    <b>如果您的设备已经 root，您可以使用此方式。</b>
+    <p><b>无法开机启动？</b>
     <br>请检查您的系统或是第三方工具是否限制了 Shizuku。
     <br>你可以参考 <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>。]]></string>
     <string name="copy_command">复制</string>
@@ -35,7 +37,7 @@
     <string name="auth_manager_no_token">Shizuku 未正确接收令牌，请尝试重新启动核心服务，或是使用主界面的获取令牌。</string>
     <string name="auth_service_dead">可能由于非正常重启等原因，核心服务需要重新启动。</string>
     <string name="auth_cannot_connect">无法连接至核心服务，请确认其正在运行。</string>
-    <string name="authorized_apps_manage">已授权的应用</string>
+    <string name="authorized_apps_manage">应用管理</string>
     <plurals name="authorized_apps_count">
         <item quantity="other"><![CDATA[已授权 %d 个应用]]></item>
     </plurals>
@@ -66,7 +68,7 @@
     <string name="action_view_apps">获取更多</string>
     <string name="adb_no_permission_title">adb 权限受限</string>
     <string name="adb_no_permission_message"><![CDATA[这通常是由您的设备供应商完成，我们无法解决。<br>请尝试在「开发者选项」中查找相关选项。例如，在 MIUI 中，选项是「USB 调试（安全设置）」。]]></string>
-    <string name="view_online_help">阅读在线帮助</string>
+    <string name="view_online_help">阅读帮助</string>
     <string name="dialog_cannot_open_browser_title">无法启动浏览器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被复制到剪贴板。]]></string>
     <string name="get_more_summary">查看使用 Shizuku 的应用</string>

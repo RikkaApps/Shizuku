@@ -14,15 +14,17 @@
     <string name="service_legacy_no_token">%1$s正在运行，但未正確接收憑證，點擊請求憑證</string>
     <string name="service_start">啟動</string>
     <string name="service_restart">重新啟動</string>
-    <string name="start_service_title_root"><![CDATA[透過 root 權限啟動服務]]></string>
-    <string name="start_service_title_adb"><![CDATA[透過 adb 啟動或升級服務]]></string>
+    <string name="start_service_title_root"><![CDATA[通過 root 啟動服務]]></string>
+    <string name="start_service_title_adb"><![CDATA[通過 adb 啟動或升級服務]]></string>
     <string name="start_service_summary_adb"><![CDATA[
-    <b>如何使用 adb？</b>
+    <b>如果您的裝置沒有 root，您需要藉助 adb 啟動服務。</b>
+    <p><b>如何使用 adb？</b>
     <br>使用 adb 並不困難，請閱讀幫助。
     <p><b>Shizuku 隨機停止？</b>
     <br>請閱讀幫助的最後一部分。]]></string>
     <string name="start_service_summary_root"><![CDATA[
-    <b>無法開機啟動？</b>
+    <b>如果您的裝置已經 root，您可以使用此方式。</b>
+    <p><b>無法開機啟動？</b>
     <br>請檢查您的系統或是第三方工具是否限制了 Shizuku。
     <br>你可以參考 <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>。]]></string>
     <string name="copy_command">複製</string>
@@ -35,7 +37,7 @@
     <string name="auth_manager_no_token">Shizuku 未正確接收憑證，請嘗試重新啟動核心服務，或是使用主介面的取得憑證。</string>
     <string name="auth_service_dead">可能由於非正常重新啟動等原因，核心服務需要重新啟動。</string>
     <string name="auth_cannot_connect">無法連線至核心服務，請確認其正在執行。</string>
-    <string name="authorized_apps_manage">已授權的應用程式</string>
+    <string name="authorized_apps_manage">應用程式管理</string>
     <plurals name="authorized_apps_count">
         <item quantity="other"><![CDATA[已授權 %d 個程式]]></item>
     </plurals>
@@ -66,7 +68,7 @@
     <string name="action_view_apps">取得更多</string>
     <string name="adb_no_permission_title">adb 權限受限</string>
     <string name="adb_no_permission_message"><![CDATA[這通常是由您的裝置供應商完成，我們無法解決。<br>請嘗試在「開發者選項」中查詢相關選項。例如，在 MIUI 中，選項是「USB 除錯（安全設定）」。]]></string>
-    <string name="view_online_help">閱讀線上幫助</string>
+    <string name="view_online_help">閱讀幫助</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
     <string name="get_more_summary">檢視使用 Shizuku 的應用程式</string>
