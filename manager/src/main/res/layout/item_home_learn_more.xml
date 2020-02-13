@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="?homeCardStyle"
     android:gravity="center_vertical"
     android:orientation="horizontal">
@@ -22,22 +21,20 @@
         android:duplicateParentState="true"
         android:orientation="vertical">
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text1"
+            style="@style/CardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:textAppearance="@android:style/TextAppearance.Material.Body2"
-            android:textSize="16sp"
             app:htmlText="@string/learn_more" />
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text2"
+            style="@style/CardSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="14sp"
             app:htmlText="@string/learn_more_summary" />
 
     </LinearLayout>

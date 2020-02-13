@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="UnusedResources">
-    <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="request_dialog_text_size">18sp</dimen>
@@ -13,4 +12,9 @@
     <dimen name="toolbar_padding_end">0dp</dimen>
 
     <dimen name="home_padding">0dp</dimen>
+
+    <dimen name="home_margin">4dp</dimen>
+
+    <dimen name="list_vertical_padding">8dp</dimen>
+
 </resources>

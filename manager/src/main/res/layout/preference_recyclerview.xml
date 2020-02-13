@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rikka.material.widget.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@android:id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fadeScrollbars="true"
+    android:paddingTop="?actionBarSize"
+    android:paddingBottom="8dp"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbars="vertical"
+    app:borderBottomStyle="never"
+    app:borderTopDrawable="@null"
+    app:borderTopStyle="whenTop"
+    app:fitSystemWindowsInsets="bottom|top" />

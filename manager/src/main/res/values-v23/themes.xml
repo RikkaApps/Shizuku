@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Light.V23" parent="BaseTheme.Light">
-        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
+    <style name="Base.AppTheme.Light.V23" parent="Base.AppTheme.Light">
+        <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
-    <style name="Theme.Light" parent="Theme.Light.V23" />
+    <style name="Theme.Light" parent="Base.AppTheme.Light.V23" />
+
 </resources>

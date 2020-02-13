@@ -1,6 +1,7 @@
 package moe.shizuku.manager.authorization;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.Build;
 
 import java.util.ArrayList;
@@ -22,27 +23,27 @@ public class AuthorizationManager {
         IMPL.init(context);
     }
 
-    public static boolean granted(String packageName) {
-        return IMPL.granted(packageName);
+    public static boolean granted(String packageName, int uid) {
+        return IMPL.granted(packageName, uid);
     }
 
-    public static void revoke(String packageName) {
-        IMPL.revoke(packageName);
+    public static void revoke(String packageName, int uid) {
+        IMPL.revoke(packageName, uid);
     }
 
-    public static void grant(String packageName) {
-        IMPL.grant(packageName);
+    public static void grant(String packageName, int uid) {
+        IMPL.grant(packageName, uid);
     }
 
-    public static List<String> getPackages() {
-        return IMPL.getPackages();
+    public static List<PackageInfo> getPackages(int pmFlags) {
+        return IMPL.getPackages(pmFlags);
     }
 
-    public static List<String> getGrantedPackages() {
-        List<String> packages = new ArrayList<>();
-        for (String packageName : IMPL.getPackages()) {
-            if (granted(packageName)) {
-                packages.add(packageName);
+    public static List<PackageInfo> getGrantedPackages(int pmFlags) {
+        List<PackageInfo> packages = new ArrayList<>();
+        for (PackageInfo pi : IMPL.getPackages(pmFlags)) {
+            if (granted(pi.packageName, pi.applicationInfo.uid)) {
+                packages.add(pi);
             }
         }
         return packages;

@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:minHeight="64dp"
-              android:background="?android:attr/selectableItemBackground"
-              android:paddingStart="@dimen/list_padding"
-              android:paddingEnd="@dimen/list_padding"
-              android:paddingTop="16dp"
-              android:paddingBottom="16dp"
-              android:gravity="center_vertical"
-              tools:ignore="UseCompoundDrawables">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/list_padding"
+    android:paddingTop="16dp"
+    android:paddingEnd="@dimen/list_padding"
+    android:paddingBottom="16dp"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        tools:src="@drawable/ic_launcher"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null"
+        tools:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textAppearance="@android:style/TextAppearance.Material"
             android:fontFamily="sans-serif-medium"
-            tools:text="Shizuku"/>
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textSize="16sp"
+            tools:text="Shizuku" />
 
         <TextView
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4sp"
             android:textSize="14sp"
-            tools:text="moe.shizuku.manager"/>
+            tools:text="moe.shizuku.manager" />
 
-        <TextView
-            android:id="@+id/requires_shizuku_v2"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            android:text="@string/requires_legacy"/>
+            android:layout_marginTop="4sp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/requires_root"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            android:text="@string/requires_root"/>
+            <TextView
+                android:id="@+id/requires_shizuku_v2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/requires_legacy"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/requires_root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/requires_root"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -69,6 +76,6 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false" />
 
 </LinearLayout>

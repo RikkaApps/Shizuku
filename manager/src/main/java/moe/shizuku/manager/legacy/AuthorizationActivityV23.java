@@ -1,9 +1,10 @@
 package moe.shizuku.manager.legacy;
 
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.MainActivity;

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,17 +35,14 @@ public class TokenReceiveActivity extends Activity {
             intent.setAction(ShizukuLegacy.ACTION_UPDATE_TOKEN);
             intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
 
-            for (String packageName : AuthorizationManager.getGrantedPackages()) {
+            for (PackageInfo pi : AuthorizationManager.getGrantedPackages(PackageManager.GET_META_DATA)) {
                 // send token only to v2 apps only
-                try {
-                    ApplicationInfo ai = getPackageManager().getApplicationInfo(packageName, 0);
-                    if (ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) {
-                        continue;
-                    }
-                } catch (Throwable ignored) {
+                ApplicationInfo ai = pi.applicationInfo;
+                if (ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) {
+                    continue;
                 }
 
-                context.sendBroadcast(intent.setPackage(packageName), Manifest.permission.API);
+                context.sendBroadcast(intent.setPackage(pi.packageName), Manifest.permission.API);
             }
         }
 

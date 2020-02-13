@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import moe.shizuku.api.RemoteProcess;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuClientHelper;
@@ -94,8 +95,13 @@ public class MainActivity extends Activity {
                     if (ShizukuService.pingBinder()) {
                         try {
                             // each of your process need to call this
-                            boolean valid = ShizukuService.setCurrentProcessTokenPre23(token);
+                            boolean valid = ShizukuService.setTokenPre23(token);
+                            SampleApplication.setShizukuV3TokenValid(valid);
                         } catch (RemoteException e) {
+                        }
+
+                        if (SampleApplication.isShizukuV3TokenValid()) {
+                            runTestV3();
                         }
                     } else {
                         // server dead?

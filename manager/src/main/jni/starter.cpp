@@ -11,6 +11,7 @@
 #include <cstring>
 #include <libgen.h>
 #include <sys/stat.h>
+#include <sys/system_properties.h>
 #include "misc.h"
 #include "selinux.h"
 
@@ -75,7 +76,7 @@ static void setClasspathEnv(const char *path) {
 }
 
 static int start_server(const char *path, const char *main_class, const char *token,
-                        const char *nice_name, int change_context) {
+                        const char *process_name, int change_context) {
     pid_t pid = fork();
     if (pid == 0) {
         pid = daemon(FALSE, FALSE);
@@ -88,23 +89,89 @@ static int start_server(const char *path, const char *main_class, const char *to
                 se::setcon("u:r:shell:s0");
             }
 
-            char buf[128], class_path[PATH_MAX];
-            sprintf(buf, "--nice-name=%s", nice_name);
+            char nice_name[128], class_path[PATH_MAX], java_token[128];
+            sprintf(java_token, "--token=%s", token);
+            sprintf(nice_name, "--nice-name=%s", process_name);
             setClasspathEnv(path);
             snprintf(class_path, PATH_MAX, "-Djava.class.path=%s", path);
 
+#ifdef DEBUG
+            int sdkLevel = -1;
+            char sdk[PROP_VALUE_MAX + 1];
+            if (__system_property_get("ro.build.version.sdk", sdk) > 0)
+                sdkLevel = atoi(sdk);
+
+            if (sdkLevel == -1) {
+                printf("fatal: can't read ro.build.version.sdk");
+                exit_with_logcat(127);
+            }
+
+            if (sdkLevel >= 28) {
+                const char *appProcessArgs[] = {
+                        "/system/bin/app_process",
+
+                        // vm params
+                        class_path,
+                        "-Xcompiler-option", "--debuggable",
+                        "-XjdwpProvider:internal",
+                        "-XjdwpOptions:transport=dt_android_adb,suspend=n,server=y",
+                        "/system/bin",
+
+                        // extra params
+                        nice_name,
+
+                        // class
+                        main_class,
+
+                        // Java params
+                        java_token,
+                        "--debug",
+                        nullptr
+                };
+                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
+                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
+                }
+            } else {
+                const char *appProcessArgs[] = {
+                        "/system/bin/app_process",
+
+                        // vm params
+                        class_path,
+                        "-Xcompiler-option", "--debuggable",
+                        "-agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y",
+
+                        "/system/bin",
+
+                        // extra params
+                        nice_name,
+
+                        // class
+                        main_class,
+
+                        // Java params
+                        java_token,
+                        "--debug",
+                        nullptr
+                };
+                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
+                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
+                }
+            }
+#else
             char *appProcessArgs[] = {
                     const_cast<char *>("/system/bin/app_process"),
                     class_path,
                     const_cast<char *>("/system/bin"),
-                    const_cast<char *>(buf),
+                    const_cast<char *>(nice_name),
                     const_cast<char *>(main_class),
-                    const_cast<char *>(token),
+                    const_cast<char *>(java_token),
                     nullptr
             };
+
             if (execvp(appProcessArgs[0], appProcessArgs)) {
                 exit_with_logcat(EXIT_FATAL_APP_PROCESS);
             }
+#endif
         }
         return 0;
     } else if (pid == -1) {
@@ -115,32 +182,32 @@ static int start_server(const char *path, const char *main_class, const char *to
         signal(SIGHUP, SIG_IGN);
         printf("info: process forked, pid=%d\n", pid);
         fflush(stdout);
-        printf("info: checking %s start...\n", nice_name);
+        printf("info: checking %s start...\n", process_name);
         fflush(stdout);
         int count = 0;
-        while (get_pids_by_name(nice_name).empty()) {
+        while (get_pids_by_name(process_name).empty()) {
             fflush(stdout);
             usleep(200 * 1000);
             count++;
             if (count >= 50) {
-                perrorf("warn: timeout but can't get pid of %s.\n", nice_name);
+                perrorf("warn: timeout but can't get pid of %s.\n", process_name);
                 exit_with_logcat(EXIT_WARN_START_TIMEOUT);
             }
         }
         count = 0;
-        while (!get_pids_by_name(nice_name).empty()) {
-            printf("info: checking %s stability...\n", nice_name);
+        while (!get_pids_by_name(process_name).empty()) {
+            printf("info: checking %s stability...\n", process_name);
             fflush(stdout);
             usleep(1000 * 500);
             count++;
             if (count >= 3) {
-                printf("info: %s started.\n", nice_name);
+                printf("info: %s started.\n", process_name);
                 fflush(stdout);
                 return EXIT_SUCCESS;
             }
         }
 
-        perrorf("warn: %s stopped after started.\n", nice_name);
+        perrorf("warn: %s stopped after started.\n", process_name);
         return EXIT_WARN_SERVER_STOP;
     }
     return EXIT_SUCCESS;
@@ -194,8 +261,8 @@ static int check_selinux(const char *s, const char *t, const char *c, const char
 #ifndef DEBUG
     if (res != 0) {
 #endif
-        printf("info: selinux_check_access %s %s %s %s: %d\n", s, t, c, p, res);
-        fflush(stdout);
+    printf("info: selinux_check_access %s %s %s %s: %d\n", s, t, c, p, res);
+    fflush(stdout);
 #ifndef DEBUG
     }
 #endif
@@ -212,6 +279,11 @@ int main(int argc, char **argv) {
     }
 
     se::init();
+
+    if (uid == 0) {
+        chown("/data/local/tmp/shizuku_starter", 2000, 2000);
+        se::setfilecon("/data/local/tmp/shizuku_starter", "u:object_r:shell_data_file:s0");
+    }
 
     clock_gettime(CLOCK_REALTIME, &ts);
 

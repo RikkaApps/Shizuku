@@ -48,11 +48,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation "androidx.annotation:annotation:$androidXLibraryVersion"
-    implementation "androidx.fragment:fragment:$androidXLibraryVersion"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.fragment:fragment:1.2.0"
     implementation project(':api') // shizuku v3
 
-    implementation 'me.weishu:free_reflection:2.0.0' // bypass hidden api restriction
+    implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')

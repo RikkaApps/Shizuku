@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="activity_horizontal_margin">120dp</dimen>
-
-    <dimen name="toolbar_content_padding_start">144dp</dimen>
-    <dimen name="toolbar_content_padding_start_with_navigation">144dp</dimen>
-    <dimen name="toolbar_padding_end">128dp</dimen>
-
-</resources>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="night_mode" tools:ignore="InconsistentArrays">
-        <item>@string/night_mode_off</item>
-        <item>@string/night_mode_on</item>
-        <item>@string/night_mode_auto</item>
+        <item>@string/dark_theme_off</item>
+        <item>@string/dark_theme_on</item>
+        <item>@string/dark_theme_auto_time</item>
     </string-array>
 
     <integer-array name="night_mode_value" tools:ignore="InconsistentArrays">
@@ -13,20 +13,18 @@
     </integer-array>
 
     <string-array name="language" translatable="false">
-        <item>@string/night_mode_follow_system</item>
-        <item>en-US</item>
+        <item>@string/follow_system</item>
+        <item>en</item>
         <item>uk</item>
-        <item>zh-CN</item>
-        <item>zh-HK</item>
-        <item>zh-TW</item>
+        <item>zh-Hans</item>
+        <item>zh-Hant</item>
     </string-array>
 
     <string-array name="language_value" translatable="false">
         <item>SYSTEM</item>
-        <item>uk</item>
         <item>en-US</item>
+        <item>uk</item>
         <item>zh-CN</item>
         <item>zh-HK</item>
-        <item>zh-TW</item>
     </string-array>
 </resources>

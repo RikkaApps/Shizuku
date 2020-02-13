@@ -1,7 +1,6 @@
 package moe.shizuku.server.utils;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManagerNative;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,12 +34,18 @@ public class Utils {
         }
     }
 
-    public static boolean isServerDead() {
+    public static void disableHiddenApiBlacklist() {
         try {
-            //noinspection deprecation
-            return !ActivityManagerNative.isSystemReady();
-        } catch (Exception e) {
-            return true;
+            java.lang.Process process = new ProcessBuilder("settings", "put", "global", "hidden_api_blacklist_exemptions", "*").start();
+
+            int res;
+            if ((res = process.waitFor()) == 0) {
+                LOGGER.i("disabled hidden api blacklist");
+            } else {
+                LOGGER.w("failed to disable hidden api blacklist, res=" + res);
+            }
+        } catch (Throwable tr) {
+            LOGGER.w("failed to disable hidden api blacklist", tr);
         }
     }
 }

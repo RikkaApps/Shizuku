@@ -7,8 +7,8 @@ import android.view.View;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.ManageAppsActivity;
 import moe.shizuku.manager.R;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.widget.HtmlCompatTextView;
+import rikka.html.widget.HtmlCompatTextView;
+import rikka.recyclerview.BaseViewHolder;
 
 public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements View.OnClickListener {
 

@@ -1,6 +1,5 @@
 package moe.shizuku.manager.viewholder;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,15 +9,16 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import java.util.List;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.authorization.AuthorizationManager;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.text.HtmlCompat;
+import rikka.html.text.HtmlCompat;
+import rikka.recyclerview.BaseViewHolder;
 
 public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.OnClickListener {
 
@@ -45,16 +45,23 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         itemView.setOnClickListener(this);
     }
 
+    private String getPackageName() {
+        return getData().packageName;
+    }
+
+    private int getUid() {
+        return getData().applicationInfo.uid;
+    }
+
     @Override
     public void onClick(View v) {
         final Context context = v.getContext();
-        final PackageInfo pi = getData();
 
         try {
-            if (AuthorizationManager.granted(pi.packageName)) {
-                AuthorizationManager.revoke(pi.packageName);
+            if (AuthorizationManager.granted(getPackageName(), getUid())) {
+                AuthorizationManager.revoke(getPackageName(), getUid());
             } else {
-                AuthorizationManager.grant(pi.packageName);
+                AuthorizationManager.grant(getPackageName(), getUid());
             }
         } catch (SecurityException e) {
             int uid;
@@ -88,7 +95,7 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         icon.setImageDrawable(ai.loadIcon(pm));
         name.setText(ai.loadLabel(pm));
         pkg.setText(ai.packageName);
-        switch_widget.setChecked(AuthorizationManager.granted(ai.packageName));
+        switch_widget.setChecked(AuthorizationManager.granted(getPackageName(), getUid()));
 
         v3.setVisibility((ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) ? View.VISIBLE : View.GONE);
         root.setVisibility((ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_REQUIRES_ROOT")) ? View.VISIBLE : View.GONE);
@@ -99,6 +106,6 @@ public class AppViewHolder extends BaseViewHolder<PackageInfo> implements View.O
         Context context = itemView.getContext();
         ApplicationInfo ai = getData().applicationInfo;
 
-        switch_widget.setChecked(AuthorizationManager.granted(ai.packageName));
+        switch_widget.setChecked(AuthorizationManager.granted(getPackageName(), getUid()));
     }
 }

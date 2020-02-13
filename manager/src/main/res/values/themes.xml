@@ -1,35 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BaseTheme.Light" parent="Theme.Design.Light.LightStatusBar">
-        <item name="android:colorPrimary">@color/background_color_light</item>
-        <item name="android:colorAccent">@color/accent_color_light</item>
-        <item name="android:colorBackground">@color/background_color_light</item>
-        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Light</item>
-        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+    <style name="Base.AppTheme.Light" parent="Theme.Material.Light.LightStatusBar">
+        <item name="android:statusBarColor">#9E9E9E</item>
+        <item name="android:colorPrimary">?android:colorBackground</item>
+
+        <item name="colorPrimary">@color/app_color_light</item>
+        <item name="colorPrimaryVariant">@color/app_color_light</item>
+        <item name="colorSecondary">@color/app_color_light</item>
+        <item name="colorSecondaryVariant">@color/app_color_light</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
+        <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
+
         <item name="appColorPrimary">@color/app_color_light</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card.Light</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
+
+        <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Light" parent="BaseTheme.Light" />
+    <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
-    <style name="BaseTheme" parent="Theme.Design">
-        <item name="android:colorPrimary">@color/background_color_dark</item>
-        <item name="android:colorPrimaryDark">?android:colorPrimary</item>
-        <item name="android:colorAccent">@color/accent_color_dark</item>
-        <item name="android:colorBackground">@color/background_color_dark</item>
-        <item name="android:popupTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
-        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+    <style name="Base.AppTheme" parent="Theme.Material">
+        <item name="android:colorPrimary">?android:colorBackground</item>
+
+        <item name="colorPrimary">@color/app_color_dark</item>
+        <item name="colorPrimaryVariant">@color/app_color_dark</item>
+        <item name="colorSecondary">@color/app_color_dark</item>
+        <item name="colorSecondaryVariant">@color/app_color_dark</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+
+        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
+        <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
+
         <item name="appColorPrimary">@color/app_color_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
+
+        <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme" parent="BaseTheme" />
+    <style name="Theme" parent="Base.AppTheme" />
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Material.ActionBar.Solid"/>
+    <style name="ThemeOverlay.Preference" parent="PreferenceThemeOverlay">
+        <item name="simpleMenuPreferenceStyle">@style/Preference.SimpleMenuPreference</item>
+        <item name="preferenceTitleTextAppearance">?textAppearanceSubtitle1</item>
+        <item name="preferenceSummaryTextAppearance">?textAppearanceBody2</item>
+        <item name="preferenceCategoryTextAppearance">?textAppearanceSubtitle2</item>
+    </style>
+
+    <style name="Widget.AppBar" parent="">
+        <item name="android:background">?toolbarColor</item>
+        <item name="android:theme">?actionBarTheme</item>
+        <item name="android:stateListAnimator">@animator/raise_animator</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="Widget.Material.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">?android:colorBackground</item>
+    </style>
+
+    <style name="Widget.AppBar.Solid">
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:stateListAnimator">@animator/alpha_animator</item>
+        <item name="android:elevation">@dimen/app_bar_elevation</item>
+    </style>
+
+    <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="elevation">0dp</item>
+        <item name="titleTextAppearance">@android:style/TextAppearance.Material.Widget.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle</item>
+    </style>
+
 
 </resources>

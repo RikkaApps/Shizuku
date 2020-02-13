@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -9,21 +10,11 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         resValue "string", "versionName", "${rootProject.ext.versionName}"
-
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=c++_static'
             }
-        }
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-        }
-    }
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java', project(':shared').file('src/main/java')]
         }
     }
     signingConfigs {
@@ -46,41 +37,47 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "shizuku-${variant.versionCode}.apk"
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    packagingOptions {
+        exclude '/META-INF/*.version'
+        exclude '/META-INF/*.kotlin_module'
+        exclude '/kotlin/**'
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "shizuku-${variant.versionName}-${variant.name}.apk"
+
+        variant.assembleProvider.get().doLast {
+            def outDir = new File(rootDir, "out")
+            def mappingDir = new File(outDir, "mapping").absolutePath
+            def apkDir = new File(outDir, "apk").absolutePath
 
             if (variant.getBuildType().isMinifyEnabled()) {
-                variant.assembleProvider.get().doLast {
-                    copy {
-                        from variant.mappingFile
-                        into "${rootDir}/${project.name}/release"
-                        rename { String fileName ->
-                            "mapping-${variant.versionCode}.txt"
-                        }
-                    }
-                    copy {
-                        from variant.outputs*.outputFile
-                        into "${rootDir}/${project.name}/release"
-                    }
+                copy {
+                    from variant.mappingFileProvider.get()
+                    into mappingDir
+                    rename { String fileName -> "mapping-${variant.versionName}.txt" }
+                }
+                copy {
+                    from outputFile
+                    into apkDir
                 }
             }
         }
     }
 }
 
-android.applicationVariants.all { variant ->
-    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
-    String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
-    task "${taskName}" {
-        doLast {
-            delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
-        }
-    }
-    variant.processJavaResourcesProvider.get().dependsOn(taskName)
+configurations.all {
+    exclude group: 'androidx.appcompat', module: 'appcompat'
+    exclude group: 'moe.shizuku.preference', module: 'preference-android'
+    exclude group: 'moe.shizuku.preference', module: 'preference-simplemenu-android'
 }
 
 dependencies {
@@ -88,26 +85,39 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.browser:browser:1.0.0'
-    implementation "androidx.core:core:1.0.2"
-    implementation "androidx.fragment:fragment:$androidXLibraryVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidXLibraryVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
-    implementation 'com.github.topjohnwu.libsu:core:2.5.0'
-    implementation "moe.shizuku.preference:preference:$preferenceLibraryVersion"
-    implementation "moe.shizuku.preference:preference-dialog-android:$preferenceLibraryVersion"
-    implementation "moe.shizuku.preference:preference-simplemenu:$preferenceLibraryVersion"
-    implementation "moe.shizuku.support:design:3.1.8"
-    implementation 'moe.shizuku.support:support-utils:3.0.6'
-    implementation 'moe.shizuku.support:recyclerview-utils:3.0.4'
-    implementation "moe.shizuku.support:htmlcompat:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+
+    //compileOnly project(':hidden-api-common')
+    implementation project(':hidden-api-common-bridge')
+    implementation project(':api')
+    implementation project(':shared')
+
+    implementation 'androidx.browser:browser:1.2.0'
+    implementation "androidx.core:core:1.2.0"
+    implementation "androidx.fragment:fragment:1.2.1"
+    implementation "androidx.fragment:fragment-ktx:1.2.1"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+
+    implementation 'com.github.topjohnwu.libsu:core:2.5.1'
+
+    def preferenceLibraryVersion = '4.2.0'
+    implementation "moe.shizuku.preference:preference-appcompat:$preferenceLibraryVersion"
+    implementation "moe.shizuku.preference:preference-simplemenu-appcompat:$preferenceLibraryVersion"
+
+    implementation "rikka.appcompat:appcompat:1.2.0-alpha02"
+    implementation "rikka.core:core:1.1.0"
+    implementation "rikka.material:material:1.2.0"
+    implementation "rikka.html:html:1.0.0"
+    implementation "rikka.recyclerview:recyclerview-utils:1.0.1"
+
     implementation 'moe.shizuku.fontprovider:api:10'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation  project(':api')
-    implementation 'me.weishu:free_reflection:2.1.0' // bypass hidden api restriction
+
+    implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 }
 
 apply from: rootProject.file('signing.gradle')
-
-preBuild.dependsOn ':server:dex'

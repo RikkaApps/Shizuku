@@ -1,6 +1,5 @@
 package moe.shizuku.manager.legacy;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -12,6 +11,8 @@ import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.AppConstants;
@@ -89,7 +90,7 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
             return;
         }
 
-        if (AuthorizationManager.granted(packageName)) {
+        if (AuthorizationManager.granted(packageName, pi.applicationInfo.uid)) {
             setResult(true, packageName);
             finish();
             return;
@@ -102,12 +103,12 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
         Dialog dialog = new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton(R.string.auth_allow, (d, which) -> {
-                    AuthorizationManager.grant(packageName);
+                    AuthorizationManager.grant(packageName, pi.applicationInfo.uid);
 
                     setResult(true, packageName);
                 })
                 .setNegativeButton(R.string.auth_deny, (d, which) -> {
-                    AuthorizationManager.revoke(packageName);
+                    AuthorizationManager.revoke(packageName, pi.applicationInfo.uid);
 
                     setResult(false, packageName);
                 })

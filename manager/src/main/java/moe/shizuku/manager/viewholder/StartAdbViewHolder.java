@@ -1,11 +1,12 @@
 package moe.shizuku.manager.viewholder;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.manager.Helps;
 import moe.shizuku.manager.R;
@@ -13,9 +14,9 @@ import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.utils.CustomTabsHelper;
 import moe.shizuku.manager.widget.ExpandableLayout;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.text.HtmlCompat;
-import moe.shizuku.support.utils.ClipboardUtils;
+import rikka.core.util.ClipboardUtils;
+import rikka.html.text.HtmlCompat;
+import rikka.recyclerview.BaseViewHolder;
 
 public class StartAdbViewHolder extends BaseViewHolder<Object> implements View.OnClickListener, Checkable {
 

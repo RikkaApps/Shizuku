@@ -34,7 +34,7 @@
 
         <moe.shizuku.manager.preference.IntegerSimpleMenuPreference
             android:key="night_mode"
-            android:title="@string/settings_night_mode"
+            android:title="@string/dark_theme"
             android:summary="%s"
             android:entries="@array/night_mode"
             android:entryValues="@array/night_mode_value"

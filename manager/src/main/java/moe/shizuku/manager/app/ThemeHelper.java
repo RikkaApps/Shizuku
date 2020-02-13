@@ -6,7 +6,7 @@ import androidx.annotation.StyleRes;
 
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.support.utils.ResourceUtils;
+import rikka.core.util.ResourceUtils;
 
 public class ThemeHelper {
 

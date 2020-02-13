@@ -20,7 +20,6 @@ public class ContentProviderHolderHelper {
             else
                 cls = Class.forName("android.app.IActivityManager$ContentProviderHolder");
 
-            //noinspection JavaReflectionMemberAccess
             field_provider = cls.getDeclaredField("provider");
             field_provider.setAccessible(true);
         } catch (Throwable tr) {

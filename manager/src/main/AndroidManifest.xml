@@ -55,7 +55,7 @@
         tools:targetApi="n">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.RaiseOnlyAppBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -63,12 +63,10 @@
         </activity>
         <activity
             android:name=".ManageAppsActivity"
-            android:label="@string/authorized_apps_manage"
-            android:theme="@style/AppTheme.Apps" />
+            android:label="@string/authorized_apps_manage" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/action_settings"
-            android:theme="@style/AppTheme.Apps" />
+            android:label="@string/action_settings" />
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"

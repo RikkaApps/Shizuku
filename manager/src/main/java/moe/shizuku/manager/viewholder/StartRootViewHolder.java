@@ -1,23 +1,24 @@
 package moe.shizuku.manager.viewholder;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ShareCompat;
+
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.service.ShellService;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.widget.ExpandableLayout;
-import moe.shizuku.support.recyclerview.BaseViewHolder;
-import moe.shizuku.support.utils.ContextUtils;
-import moe.shizuku.support.widget.HtmlCompatTextView;
+import rikka.core.util.ContextUtils;
+import rikka.html.widget.HtmlCompatTextView;
+import rikka.recyclerview.BaseViewHolder;
 
 public class StartRootViewHolder extends BaseViewHolder<Boolean> implements View.OnClickListener, Checkable {
 

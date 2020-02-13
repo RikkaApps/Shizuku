@@ -2,13 +2,13 @@
 <resources>
     <style name="AppTheme" parent="Theme.Light"/>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+    <style name="AppTheme.RaiseOnlyAppBar">
+        <item name="appBarStyle">@style/Widget.AppBar.Solid.RaiseOnly</item>
     </style>
 
-    <style name="AppTheme.Apps" parent="AppTheme">
-        <item name="android:windowBackground">?android:colorBackground</item>
+    <style name="Widget.AppBar.Solid.RaiseOnly">
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@animator/raise_animator</item>
     </style>
 
     <style name="Card">
@@ -16,8 +16,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
         <item name="android:foreground">@drawable/material_button_outline_foreground</item>
         <item name="android:background">@drawable/material_button_outline_background_dark</item>
         <item name="android:paddingStart">16dp</item>
@@ -38,14 +38,30 @@
         <item name="android:paddingStart">28dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:drawablePadding">24dp</item>
+        <item name="android:drawablePadding">28dp</item>
         <item name="android:textColor">?appColorPrimary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="GrantPermissions"
-           parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
+    <style name="CardTitle">
+        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CardSummary">
+        <item name="android:textAppearance">?textAppearanceBody2</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GrantPermissions" parent="@style/AppTheme">
+        <item name="android:colorBackground">?colorBackgroundFloating</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="Translucent" parent="android:Theme.Translucent.NoTitleBar">

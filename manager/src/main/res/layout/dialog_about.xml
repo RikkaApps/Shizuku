@@ -32,7 +32,7 @@
             android:text="@string/versionName"
             android:textSize="14sp" />
 
-        <moe.shizuku.support.widget.HtmlCompatTextView
+        <rikka.html.widget.HtmlCompatTextView
             android:id="@+id/source_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

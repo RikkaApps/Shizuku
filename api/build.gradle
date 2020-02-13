@@ -6,44 +6,24 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName '3.1.0-alpha1'
+        versionName rootProject.ext.apiVersionName
         manifestPlaceholders = [versionName: versionName]
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            consumerProguardFiles 'proguard-rules.pro'
-        }
-    }
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java', project(':api-shared').file('src/main/java'), project(':server-api').file('src/main/java')]
-        }
+        consumerProguardFiles 'consumer-rules.pro'
     }
 }
-
-android.libraryVariants.all { variant ->
-    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
-    task "${taskName}" {
-        doLast {
-            delete "${buildDir}/intermediates/javac/${variant.name}/compile${variant.name}JavaWithJavac/classes/android"
-        }
-    }
-    variant.processJavaResourcesProvider.get().dependsOn(taskName)
-}
-
-ext {
-    libraryName = 'Shizuku V3'
-    libraryDescription = 'Shizuku V3'
-    libraryVersion = android.defaultConfig.versionName
-    artifact = "api"
-    bintrayName = "api"
-}
-
-apply from: project.rootProject.file('bintray.gradle')
 
 dependencies {
-    implementation "androidx.annotation:annotation:$androidXLibraryVersion"
-    //compile project(':api-shared')
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "moe.shizuku.privilege:shared:$apiVersionName"
+    compileOnly project(':hidden-api-common')
 }
+
+project.ext {
+    mavProjectName = 'api'
+    mavLibraryDescription = 'Shizuku V3'
+}
+
+group = 'moe.shizuku.privilege'
+version = android.defaultConfig.versionName
+
+apply from: rootProject.file('publish.gradle')

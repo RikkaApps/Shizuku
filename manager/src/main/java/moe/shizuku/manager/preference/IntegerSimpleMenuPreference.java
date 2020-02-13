@@ -6,16 +6,18 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleableRes;
 import androidx.core.content.res.TypedArrayUtils;
+
 import moe.shizuku.manager.R;
 import moe.shizuku.preference.Preference;
 import moe.shizuku.preference.PreferenceViewHolder;
-import moe.shizuku.preference.widget.SimpleMenuPopupWindow;
+import moe.shizuku.preference.simplemenu.SimpleMenuPopupWindow;
 
 /**
  * a {@link moe.shizuku.preference.SimpleMenuPreference} to implement night mode in user interface settings.
@@ -65,15 +67,23 @@ public class IntegerSimpleMenuPreference extends Preference {
         a = context.obtainStyledAttributes(
                 attrs, R.styleable.SimpleMenuPreference, defStyleAttr, defStyleRes);
 
-        int popupStyle = a.getResourceId(R.styleable.SimpleMenuPreference_popupStyle, R.style.Preference_SimpleMenuPreference_Popup);
-
-        mPopupWindow = new SimpleMenuPopupWindow(context, attrs, R.styleable.SimpleMenuPreference_popupStyle, popupStyle);
+        int popupStyle = a.getResourceId(R.styleable.SimpleMenuPreference_android_popupMenuStyle, R.style.Widget_Preference_SimpleMenuPreference_PopupMenu);
+        int popupTheme = a.getResourceId(R.styleable.SimpleMenuPreference_android_popupTheme,R.style.ThemeOverlay_Preference_SimpleMenuPreference_PopupMenu);
+        Context popupContext;
+        if (popupTheme != 0) {
+            popupContext = new ContextThemeWrapper(context, popupTheme);
+        } else {
+            popupContext = context;
+        }
+        mPopupWindow = new SimpleMenuPopupWindow(popupContext, attrs, R.styleable.SimpleMenuPreference_android_popupMenuStyle, popupStyle);
         mPopupWindow.setOnItemClickListener(i -> {
             int value = getEntryValues()[i];
             if (callChangeListener(value)) {
                 setValue(value);
             }
         });
+
+        a.recycle();
     }
 
     public IntegerSimpleMenuPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -290,8 +300,11 @@ public class IntegerSimpleMenuPreference extends Preference {
     }
 
     @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setValue(restoreValue ? getPersistedInt(mValue) : (Integer) defaultValue);
+    protected void onSetInitialValue(Object defaultValue) {
+        if (defaultValue == null) {
+            defaultValue = 0;
+        }
+        setValue(getPersistedInt((Integer) defaultValue));
     }
 
     @Override

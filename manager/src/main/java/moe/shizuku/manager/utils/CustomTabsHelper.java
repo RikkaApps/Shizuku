@@ -1,6 +1,5 @@
 package moe.shizuku.manager.utils;
 
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -10,15 +9,16 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
-import androidx.annotation.AttrRes;
-import androidx.annotation.ColorInt;
 import android.util.TypedValue;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
+import androidx.appcompat.app.AlertDialog;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
 import moe.shizuku.manager.R;
-import moe.shizuku.support.text.HtmlCompat;
+import rikka.html.text.HtmlCompat;
 
 /**
  * Created by fytho on 2017/12/15.

@@ -4,19 +4,19 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.UserManager;
-
-import com.topjohnwu.superuser.Shell;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.topjohnwu.superuser.Shell;
+
 import me.weishu.reflection.Reflection;
 import moe.shizuku.api.ShizukuClientHelper;
 import moe.shizuku.manager.authorization.AuthorizationManager;
-import moe.shizuku.support.app.DayNightDelegate;
-import moe.shizuku.support.app.LocaleDelegate;
+import rikka.material.app.DayNightDelegate;
+import rikka.material.app.LocaleDelegate;
 
 import static moe.shizuku.manager.utils.Logger.LOGGER;
 

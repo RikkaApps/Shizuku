@@ -1,6 +1,25 @@
-apply plugin: 'java-library'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.apiVersionName
+    }
+}
 
 dependencies {
-    compileOnly files(rootProject.rootDir.absolutePath + '/android-27/android.jar')
-    compile project(':api-shared')
+    implementation "androidx.annotation:annotation:1.1.0"
 }
+
+project.ext {
+    mavProjectName = 'shared'
+    mavLibraryDescription = 'Shizuku V3'
+}
+
+group = 'moe.shizuku.privilege'
+version = android.defaultConfig.versionName
+
+apply from: rootProject.file('publish.gradle')

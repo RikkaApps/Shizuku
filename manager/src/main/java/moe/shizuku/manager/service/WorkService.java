@@ -9,10 +9,11 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.utils.NotificationHelper;
-import moe.shizuku.support.app.ForegroundIntentService;
+import rikka.core.app.ForegroundIntentService;
 
 import static moe.shizuku.manager.AppConstants.NOTIFICATION_CHANNEL_WORK;
 

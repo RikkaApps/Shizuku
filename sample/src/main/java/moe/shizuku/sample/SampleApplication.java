@@ -53,11 +53,15 @@ public class SampleApplication extends android.app.Application {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d("ShizukuSample", "initialize " + ShizukuMultiProcessHelper.initialize(this, !getProcessName().endsWith(":test")));
+    }
+
+    @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         Reflection.unseal(base);
-
-        Log.d("ShizukuSample", "initialize " + ShizukuMultiProcessHelper.initialize(this, !getProcessName().endsWith(":test")));
 
         ShizukuClientHelper.setBinderReceivedListener(() -> {
             Log.d("ShizukuSample", "onBinderReceived");
@@ -74,7 +78,7 @@ public class SampleApplication extends android.app.Application {
 
                     if (Build.VERSION.SDK_INT < 23) {
                         String token = ShizukuClientHelperPre23.loadPre23Token(base);
-                        v3TokenValid = ShizukuService.setCurrentProcessTokenPre23(token);
+                        setShizukuV3TokenValid(ShizukuService.setTokenPre23(token));
                     }
 
                     LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ACTION_SEND_BINDER));
