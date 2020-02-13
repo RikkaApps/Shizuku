@@ -38,7 +38,7 @@
             android:summary="%s"
             android:entries="@array/night_mode"
             android:entryValues="@array/night_mode_value"
-            android:defaultValue="1" />
+            android:defaultValue="-1" />
 
         <SwitchPreference
             android:key="black_night_theme"
