@@ -11,9 +11,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuService
@@ -49,6 +49,11 @@ class MainActivity : AppBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (resources.getBoolean(R.bool.translation_outdated)) {
+            Toast.makeText(this, getString(R.string.toast_translation_outdated), Toast.LENGTH_LONG).show()
+        }
+
         setContentView(R.layout.activity_main)
         if (!writeFilesCalled) {
             ServerLauncher.writeFiles(this, true)

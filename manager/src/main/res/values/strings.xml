@@ -84,5 +84,5 @@
     <string name="keep_su_context">Use full root if available</string>
     <string name="keep_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
     <string name="requires_root">* requires Shizuku runs with root</string>
-
+    <string name="toast_translation_outdated" translatable="false">The translation of current language is outdated.\nYou can create help us by creating pull requests at GitHub.</string>
 </resources>

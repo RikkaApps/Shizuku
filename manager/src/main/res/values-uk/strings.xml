@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Shizuku</string>
     <string name="action_about">Про додаток</string>
     <string name="view_command">Переглянути adb команду</string>
     <string name="view_online_help">Прочитати онлайн довідку</string>

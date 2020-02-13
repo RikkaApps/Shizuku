@@ -17,4 +17,6 @@
 
     <dimen name="list_vertical_padding">8dp</dimen>
 
+    <bool name="translation_outdated">false</bool>
+
 </resources>
