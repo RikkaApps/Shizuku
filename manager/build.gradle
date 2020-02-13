@@ -96,8 +96,8 @@ dependencies {
 
     implementation 'androidx.browser:browser:1.2.0'
     implementation "androidx.core:core:1.2.0"
-    implementation "androidx.fragment:fragment:1.2.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.0"
+    implementation "androidx.fragment:fragment:1.2.1"
+    implementation "androidx.fragment:fragment-ktx:1.2.1"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
@@ -111,7 +111,7 @@ dependencies {
 
     implementation "rikka.appcompat:appcompat:1.2.0-alpha02"
     implementation "rikka.core:core:1.1.0"
-    implementation "rikka.material:material:1.1.0"
+    implementation "rikka.material:material:1.2.0"
     implementation "rikka.html:html:1.0.0"
     implementation "rikka.recyclerview:recyclerview-utils:1.0.1"
 
