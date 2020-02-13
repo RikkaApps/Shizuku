@@ -36,6 +36,7 @@ public class ShizukuManagerApplication extends Application implements ViewModelS
     public static void init(Context context) {
         ShizukuManagerSettings.initialize(context);
         LocaleDelegate.setDefaultLocale(ShizukuManagerSettings.getLocale());
+        DayNightDelegate.setApplicationContext(context);
         DayNightDelegate.setDefaultNightMode(ShizukuManagerSettings.getNightMode());
         AuthorizationManager.init(context);
 
