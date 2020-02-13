@@ -80,6 +80,10 @@ configurations.all {
     exclude group: 'moe.shizuku.preference', module: 'preference-simplemenu-android'
 }
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

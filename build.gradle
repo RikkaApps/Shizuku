@@ -31,7 +31,6 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
         maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
-        mavenLocal()
     }
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
@@ -53,5 +52,5 @@ ext {
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
     kotlinCoroutinesVersion = '1.3.3'
 
-    apiVersionName = '3.1.0-alpha2'
+    apiVersionName = '3.1.0-alpha3'
 }

@@ -14,7 +14,7 @@ android {
 
 dependencies {
     implementation "androidx.annotation:annotation:1.1.0"
-    implementation "moe.shizuku.privilege:shared:$apiVersionName"
+    api "moe.shizuku.privilege:shared:$apiVersionName"
     compileOnly project(':hidden-api-common')
 }
 
