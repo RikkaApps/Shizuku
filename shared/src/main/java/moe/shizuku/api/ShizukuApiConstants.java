@@ -3,7 +3,7 @@ package moe.shizuku.api;
 public class ShizukuApiConstants {
 
     public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";
-    public static final int SERVER_VERSION = 6;
+    public static final int SERVER_VERSION = 7;
 
     public static final String PERMISSION_PRE_23 = "moe.shizuku.manager.permission.API";
     public static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";

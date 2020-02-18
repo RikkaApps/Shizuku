@@ -51,8 +51,8 @@ public class ParcelFileDescriptorUtil {
             try {
                 while ((len = mIn.read(buf)) > 0) {
                     mOut.write(buf, 0, len);
+                    mOut.flush();
                 }
-                mOut.flush();
             } catch (IOException e) {
                 LOGGER.e(e, "TransferThread");
             } finally {
