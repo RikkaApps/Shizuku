@@ -10,6 +10,7 @@ import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.legacy.ShizukuLegacy
 import moe.shizuku.manager.legacy.ShizukuLegacy.ShizukuState
 import moe.shizuku.manager.model.ServiceStatus
+import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.manager.utils.Logger
 import moe.shizuku.server.IShizukuService
 import java.util.*
@@ -19,9 +20,11 @@ class HomeViewModel : ViewModel() {
     val serviceStatus = MutableLiveData<Resource<ServiceStatus>>()
 
     private fun load(): ServiceStatus {
-        var v2Status: ShizukuState
+        var v2Status: ShizukuState = ShizukuState.createUnknown()
         val status = ServiceStatus()
-        status.v2Status = ShizukuLegacy.ShizukuClient.getState().also { v2Status = it }
+        if (!BuildUtils.atLeastR()) {
+            status.v2Status = ShizukuLegacy.ShizukuClient.getState().also { v2Status = it }
+        }
         if (ShizukuService.getBinder() == null)
             return status
 

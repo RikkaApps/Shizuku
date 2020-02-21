@@ -10,6 +10,7 @@ import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.app.BaseActivity
+import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.server.IShizukuService
 import java.util.*
 
@@ -23,6 +24,10 @@ abstract class AuthorizationActivity : BaseActivity() {
         get() = intent.getBooleanExtra(ShizukuApiConstants.EXTRA_PRE_23_IS_V3, false)
 
     fun getLegacyServerState(): ShizukuLegacy.ShizukuState {
+        if (BuildUtils.atLeastR()) {
+            return ShizukuLegacy.ShizukuState.createUnknown()
+        }
+
         var state: ShizukuLegacy.ShizukuState? = null
         runBlocking {
             lifecycleScope.launch(Dispatchers.IO) {

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import java.lang.annotation.Retention;
 import java.util.Locale;
 
+import moe.shizuku.manager.utils.BuildUtils;
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
 import rikka.material.app.DayNightDelegate;
 import rikka.material.app.DayNightDelegate.NightMode;
@@ -98,7 +99,7 @@ public class ShizukuManagerSettings {
     }
 
     public static boolean isStartServiceV2() {
-        return !getPreferences().getBoolean(NO_V2, false);
+        return !BuildUtils.atLeastR() && !getPreferences().getBoolean(NO_V2, false);
     }
 
     public static boolean isKeepSuContext() {

@@ -1,5 +1,6 @@
 package moe.shizuku.server.api
 
+import android.annotation.SuppressLint
 import android.app.IActivityManager
 import android.content.pm.ILauncherApps
 import android.content.pm.IPackageManager
@@ -7,6 +8,7 @@ import android.os.IBinder
 import android.os.IInterface
 import android.os.IUserManager
 import android.os.ServiceManager
+import android.permission.IPermissionManager
 import android.util.ArrayMap
 import com.android.internal.app.IAppOpsService
 import hidden.HiddenApiBridgeV23
@@ -77,5 +79,11 @@ object SystemServiceProvider {
     val launcherApps
         get() = getServiceInterface<ILauncherApps>("launcherapps") {
             ILauncherApps.Stub.asInterface(it)
+        }
+
+    val permissionManager
+        @SuppressLint("NewApi")
+        get() = getServiceInterface<IPermissionManager>("permissionmgr") {
+            IPermissionManager.Stub.asInterface(it)
         }
 }

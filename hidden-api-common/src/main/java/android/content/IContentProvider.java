@@ -23,6 +23,17 @@ public interface IContentProvider {
                  @Nullable Bundle queryArgs, @Nullable ICancellationSignal cancellationSignal)
             throws RemoteException;
 
+    Bundle call(String callingPkg, String method, @Nullable String arg, @Nullable Bundle extras)
+            throws RemoteException;
+
+    @RequiresApi(28)
+    Bundle call(String callingPkg, String authority, String method, @Nullable String arg, @Nullable Bundle extras)
+            throws RemoteException;
+
+    @RequiresApi(30)
+    Bundle call(String callingPkg, String featureId, String authority, String method, @Nullable String arg, @Nullable Bundle extras)
+            throws RemoteException;
+
     AssetFileDescriptor openAssetFile(
             String callingPkg, Uri url, String mode, ICancellationSignal signal)
             throws RemoteException, FileNotFoundException;

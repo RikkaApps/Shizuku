@@ -12,7 +12,6 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.SELinux;
 import android.system.Os;
-import android.util.ArraySet;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
-import moe.shizuku.server.reflection.IContentProviderHelper;
+import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.BuildUtils;
 import moe.shizuku.server.utils.UserHandleUtils;
@@ -303,7 +302,7 @@ public class ShizukuService extends IShizukuService.Stub {
             Bundle extra = new Bundle();
             extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
 
-            Bundle reply = IContentProviderHelper.call(provider, null, name, "sendBinder", null, extra);
+            Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendBinder", null, extra);
 
             LOGGER.i("send binder to user app %s in user %d", packageName, userId);
         } catch (Throwable tr) {

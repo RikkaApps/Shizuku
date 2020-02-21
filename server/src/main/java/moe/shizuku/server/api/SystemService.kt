@@ -40,8 +40,13 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun checkPermission(permName: String?, uid: Int): Int {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
-        return pm.checkUidPermission(permName, uid)
+        return if (BuildUtils.atLeast30()) {
+            val permmgr = SystemServiceProvider.permissionManager ?: throw RemoteException("can't get IPermission")
+            permmgr.checkUidPermission(permName, uid)
+        } else {
+            val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+            pm.checkUidPermission(permName, uid)
+        }
     }
 
     @JvmStatic
@@ -107,9 +112,13 @@ object SystemService {
 
     @JvmStatic
     @Throws(RemoteException::class)
-    fun getUsers(excludeDying: Boolean): List<UserInfo> {
+    fun getUsers(): List<UserInfo> {
         val um = SystemServiceProvider.userManager ?: throw RemoteException("can't get IUserManger")
-        return um.getUsers(excludeDying)
+        return if (BuildUtils.atLeast30()) {
+            um.getUsers(true, true, true)
+        } else {
+            um.getUsers(true)
+        }
     }
 
     @JvmStatic
@@ -156,7 +165,7 @@ object SystemService {
     fun getUsersNoThrow(): List<Int> {
         val users = ArrayList<Int>()
         try {
-            for (ui in getUsers(true)) {
+            for (ui in getUsers()) {
                 users.add(ui.id)
             }
         } catch (tr: Throwable) {
