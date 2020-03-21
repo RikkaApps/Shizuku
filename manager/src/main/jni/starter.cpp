@@ -96,17 +96,45 @@ static int start_server(const char *path, const char *main_class, const char *to
             snprintf(class_path, PATH_MAX, "-Djava.class.path=%s", path);
 
 #ifdef DEBUG
-            int sdkLevel = -1;
-            char sdk[PROP_VALUE_MAX + 1];
-            if (__system_property_get("ro.build.version.sdk", sdk) > 0)
-                sdkLevel = atoi(sdk);
+            int sdkLevel = -1, previewSdkLevel = -1;
+            char buf[PROP_VALUE_MAX + 1];
+            if (__system_property_get("ro.build.version.sdk", buf) > 0)
+                sdkLevel = atoi(buf);
+
+            if (__system_property_get("ro.build.version.preview_sdk", buf) > 0)
+                previewSdkLevel = atoi(buf);
 
             if (sdkLevel == -1) {
                 printf("fatal: can't read ro.build.version.sdk");
                 exit_with_logcat(127);
             }
 
-            if (sdkLevel >= 28) {
+            if (sdkLevel >= 30 || (sdkLevel == 29 && previewSdkLevel > 0)) {
+                const char *appProcessArgs[] = {
+                        "/system/bin/app_process",
+
+                        // vm params
+                        class_path,
+                        "-Xcompiler-option", "--debuggable",
+                        "-XjdwpProvider:adbconnection",
+                        "-XjdwpOptions:suspend=n,server=y",
+                        "/system/bin",
+
+                        // extra params
+                        nice_name,
+
+                        // class
+                        main_class,
+
+                        // Java params
+                        java_token,
+                        "--debug",
+                        nullptr
+                };
+                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
+                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
+                }
+            } else if (sdkLevel >= 28) {
                 const char *appProcessArgs[] = {
                         "/system/bin/app_process",
 
