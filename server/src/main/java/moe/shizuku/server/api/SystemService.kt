@@ -112,12 +112,16 @@ object SystemService {
 
     @JvmStatic
     @Throws(RemoteException::class)
-    fun getUsers(): List<UserInfo> {
+    fun getUsers(excludePartial: Boolean, excludeDying: Boolean, excludePreCreated: Boolean): List<UserInfo> {
         val um = SystemServiceProvider.userManager ?: throw RemoteException("can't get IUserManger")
         return if (BuildUtils.atLeast30()) {
-            um.getUsers(true, true, true)
+            um.getUsers(excludePartial, excludeDying, excludePreCreated)
         } else {
-            um.getUsers(true)
+            try {
+                um.getUsers(excludeDying)
+            } catch (e: NoSuchMethodError) {
+                um.getUsers(excludePartial, excludeDying, excludePreCreated)
+            }
         }
     }
 
@@ -162,10 +166,10 @@ object SystemService {
     }
 
     @JvmStatic
-    fun getUsersNoThrow(): List<Int> {
+    fun getUserIdsNoThrow(): List<Int> {
         val users = ArrayList<Int>()
         try {
-            for (ui in getUsers()) {
+            for (ui in getUsers(excludePartial = true, excludeDying = true, excludePreCreated = true)) {
                 users.add(ui.id)
             }
         } catch (tr: Throwable) {

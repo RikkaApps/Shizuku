@@ -242,7 +242,7 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     void sendBinderToClient() {
-        for (int userId : SystemService.getUsersNoThrow()) {
+        for (int userId : SystemService.getUserIdsNoThrow()) {
             sendBinderToClient(this, userId);
         }
     }
@@ -267,7 +267,7 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     private static void sendBinderToManger(Binder binder) {
-        for (int userId : SystemService.getUsersNoThrow()) {
+        for (int userId : SystemService.getUserIdsNoThrow()) {
             sendBinderToManger(binder, userId);
         }
     }
