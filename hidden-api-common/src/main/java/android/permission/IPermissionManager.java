@@ -19,9 +19,6 @@ public interface IPermissionManager extends IInterface {
     int getPermissionFlags(String permissionName, String packageName, int userId)
             throws RemoteException;
 
-    void updatePermissionFlags(String permissionName, String packageName, int flagMask, int flagValues, int userId)
-            throws RemoteException;
-
     void updatePermissionFlags(String permissionName, String packageName, int flagMask, int flagValues, boolean checkAdjustPolicyFlagPermission, int userId)
             throws RemoteException;
 
