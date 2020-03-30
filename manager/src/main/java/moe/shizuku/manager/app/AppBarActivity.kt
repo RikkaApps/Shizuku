@@ -1,15 +1,18 @@
 package moe.shizuku.manager.app
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import moe.shizuku.manager.R
 import rikka.material.widget.AppBarLayout
 
-abstract class AppBarActivity : BaseActivity() {
+abstract class AppBarActivity : AppActivity() {
 
     private val rootView: ViewGroup by lazy {
         findViewById<ViewGroup>(R.id.root)
@@ -46,6 +49,12 @@ abstract class AppBarActivity : BaseActivity() {
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         rootView.addView(view, 0, params)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onApplyTranslucentSystemBars() {
+        super.onApplyTranslucentSystemBars()
+        window?.statusBarColor = Color.TRANSPARENT
     }
 }
 

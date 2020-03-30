@@ -1,7 +1,6 @@
 package moe.shizuku.manager.legacy
 
 import android.content.Intent
-import androidx.annotation.Keep
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,12 +8,12 @@ import kotlinx.coroutines.runBlocking
 import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.BuildConfig
-import moe.shizuku.manager.app.BaseActivity
+import moe.shizuku.manager.app.AppActivity
 import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.server.IShizukuService
 import java.util.*
 
-abstract class AuthorizationActivity : BaseActivity() {
+abstract class AuthorizationActivity : AppActivity() {
 
     companion object {
         private const val ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT"

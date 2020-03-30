@@ -11,7 +11,7 @@ import moe.shizuku.fontprovider.FontProviderClient
 import rikka.core.res.resolveColor
 import rikka.material.app.MaterialActivity
 
-abstract class BaseActivity : MaterialActivity() {
+abstract class AppActivity : MaterialActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!sFontInitialized && Build.VERSION.SDK_INT < 28) {
@@ -42,29 +42,23 @@ abstract class BaseActivity : MaterialActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onApplyTranslucentSystemBars() {
+        super.onApplyTranslucentSystemBars()
+
         val window = window
         val theme = theme
 
-        window?.statusBarColor = Color.TRANSPARENT
-
-        window?.decorView?.post {
-            if (window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0 >= Resources.getSystem().displayMetrics.density * 40) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val alpha = -0x20000000
-                    window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or alpha
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    window.navigationBarDividerColor = theme.resolveColor(android.R.attr.navigationBarDividerColor)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window?.decorView?.post {
+                if (window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0 >= Resources.getSystem().displayMetrics.density * 40) {
+                    window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or -0x20000000
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         window.isNavigationBarContrastEnforced = false
                     }
-                }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                } else {
                     window.navigationBarColor = Color.TRANSPARENT
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    window.isNavigationBarContrastEnforced = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        window.isNavigationBarContrastEnforced = true
+                    }
                 }
             }
         }
