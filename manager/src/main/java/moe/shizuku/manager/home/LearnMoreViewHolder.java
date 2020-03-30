@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewholder;
+package moe.shizuku.manager.home;
 
 import android.view.View;
 

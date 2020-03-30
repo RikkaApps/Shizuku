@@ -11,7 +11,7 @@ import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
-import moe.shizuku.manager.ktx.toHtml
+import moe.shizuku.manager.utils.ktx.toHtml
 import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.server.IShizukuService
 import rikka.html.text.HtmlCompat

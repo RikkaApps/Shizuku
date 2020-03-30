@@ -62,14 +62,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ManageAppsActivity"
+            android:name=".management.ApplicationManagementActivity"
             android:label="@string/authorized_apps_manage" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/action_settings" />
 
         <receiver
-            android:name=".receiver.BootCompleteReceiver"
+            android:name=".starter.BootCompleteReceiver"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true">
@@ -86,11 +86,11 @@
             android:directBootAware="true"
             android:exported="false" />
         <service
-            android:name=".service.ShellService"
+            android:name=".starter.ShellService"
             android:directBootAware="true"
             android:exported="false" />
         <service
-            android:name=".service.BootCompleteService"
+            android:name=".starter.BootCompleteService"
             android:directBootAware="true"
             android:exported="false" />
 

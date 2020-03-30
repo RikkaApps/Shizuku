@@ -1,12 +1,11 @@
-package moe.shizuku.manager.adapter
+package moe.shizuku.manager.home
 
 import android.os.Process
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod
-import moe.shizuku.manager.viewholder.*
-import moe.shizuku.manager.viewmodel.AppsViewModel
-import moe.shizuku.manager.viewmodel.HomeViewModel
+import moe.shizuku.manager.home.*
+import moe.shizuku.manager.management.AppsViewModel
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
 import java.util.*

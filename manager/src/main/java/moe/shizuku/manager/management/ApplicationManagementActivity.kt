@@ -1,4 +1,4 @@
-package moe.shizuku.manager
+package moe.shizuku.manager.management
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,17 +9,18 @@ import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.adapter.AppsAdapter
+import moe.shizuku.manager.AppConstants
+import moe.shizuku.manager.Helps
+import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.utils.CustomTabsHelper
-import moe.shizuku.manager.viewmodel.AppsViewModel
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import rikka.material.widget.*
 import rikka.recyclerview.RecyclerViewHelper
 import java.util.*
 
-class ManageAppsActivity : AppBarActivity() {
+class ApplicationManagementActivity : AppBarActivity() {
 
     private val viewModel: AppsViewModel by lazy { SharedViewModelProviders.of(this).get(AppsViewModel::class.java) }
     private val adapter: AppsAdapter = AppsAdapter()

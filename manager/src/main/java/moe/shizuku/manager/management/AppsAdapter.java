@@ -1,10 +1,10 @@
-package moe.shizuku.manager.adapter;
+package moe.shizuku.manager.management;
 
 import android.content.pm.PackageInfo;
 
 import java.util.List;
 
-import moe.shizuku.manager.viewholder.AppViewHolder;
+import moe.shizuku.manager.management.AppViewHolder;
 import rikka.recyclerview.BaseRecyclerViewAdapter;
 import rikka.recyclerview.ClassCreatorPool;
 

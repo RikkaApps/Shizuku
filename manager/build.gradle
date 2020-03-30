@@ -109,7 +109,7 @@ dependencies {
 
     implementation 'com.github.topjohnwu.libsu:core:2.5.1'
 
-    def preferenceLibraryVersion = '4.2.0'
+    def preferenceLibraryVersion = '4.2.0-alpha02'
     implementation "moe.shizuku.preference:preference-appcompat:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu-appcompat:$preferenceLibraryVersion"
 

@@ -1,4 +1,4 @@
-package moe.shizuku.manager
+package moe.shizuku.manager.home
 
 import android.app.Dialog
 import android.content.BroadcastReceiver
@@ -17,10 +17,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.adapter.HomeAdapter
+import moe.shizuku.manager.*
 import moe.shizuku.manager.app.AppBarActivity
-import moe.shizuku.manager.viewmodel.AppsViewModel
-import moe.shizuku.manager.viewmodel.HomeViewModel
+import moe.shizuku.manager.management.AppsViewModel
+import moe.shizuku.manager.settings.SettingsActivity
+import moe.shizuku.manager.starter.ServerLauncher
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import rikka.html.text.HtmlCompat
@@ -28,7 +29,7 @@ import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.RecyclerViewHelper
 
-class MainActivity : AppBarActivity() {
+abstract class HomeActivity : AppBarActivity() {
 
     private val mBinderReceivedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

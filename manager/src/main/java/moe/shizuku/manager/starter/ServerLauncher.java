@@ -1,4 +1,4 @@
-package moe.shizuku.manager;
+package moe.shizuku.manager.starter;
 
 import android.content.Context;
 import android.os.Build;
@@ -17,6 +17,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 import moe.shizuku.api.ShizukuApiConstants;
+import moe.shizuku.manager.BuildConfig;
+import moe.shizuku.manager.R;
+import moe.shizuku.manager.ShizukuManagerApplication;
+import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.legacy.ShizukuLegacy;
 import rikka.core.util.IOUtils;
 

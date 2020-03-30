@@ -1,4 +1,4 @@
-package moe.shizuku.manager.preference;
+package moe.shizuku.manager.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

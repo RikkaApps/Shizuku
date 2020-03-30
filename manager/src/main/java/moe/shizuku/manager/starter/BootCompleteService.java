@@ -1,4 +1,4 @@
-package moe.shizuku.manager.service;
+package moe.shizuku.manager.starter;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ServerLauncher;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.utils.NotificationHelper;
 

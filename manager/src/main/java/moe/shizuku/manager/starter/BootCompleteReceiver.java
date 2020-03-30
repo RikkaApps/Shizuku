@@ -1,4 +1,4 @@
-package moe.shizuku.manager.receiver;
+package moe.shizuku.manager.starter;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,7 +12,7 @@ import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.AppConstants;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
-import moe.shizuku.manager.service.BootCompleteService;
+import moe.shizuku.manager.starter.BootCompleteService;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
 

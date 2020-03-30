@@ -32,7 +32,7 @@
             android:entryValues="@array/language_value"
             android:defaultValue="SYSTEM"/>
 
-        <moe.shizuku.manager.preference.IntegerSimpleMenuPreference
+        <moe.shizuku.manager.settings.IntegerSimpleMenuPreference
             android:key="night_mode"
             android:title="@string/dark_theme"
             android:summary="%s"

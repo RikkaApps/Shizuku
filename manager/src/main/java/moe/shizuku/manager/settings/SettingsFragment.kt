@@ -1,4 +1,4 @@
-package moe.shizuku.manager
+package moe.shizuku.manager.settings
 
 import android.content.Context
 import android.content.pm.PackageInfo
@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
+import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.utils.BuildUtils
-import moe.shizuku.manager.viewmodel.AppsViewModel
+import moe.shizuku.manager.management.AppsViewModel
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.preference.*

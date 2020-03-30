@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewmodel
+package moe.shizuku.manager.management
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.utils.BuildUtils
+import moe.shizuku.manager.viewmodel.Resource
+import moe.shizuku.manager.viewmodel.SharedViewModel
 import java.util.*
 
 class AppsViewModel : SharedViewModel() {

@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewholder;
+package moe.shizuku.manager.management;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

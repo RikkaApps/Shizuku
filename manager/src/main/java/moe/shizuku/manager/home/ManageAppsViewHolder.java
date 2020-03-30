@@ -1,11 +1,11 @@
-package moe.shizuku.manager.viewholder;
+package moe.shizuku.manager.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
 import moe.shizuku.api.ShizukuService;
-import moe.shizuku.manager.ManageAppsActivity;
+import moe.shizuku.manager.management.ApplicationManagementActivity;
 import moe.shizuku.manager.R;
 import rikka.html.widget.HtmlCompatTextView;
 import rikka.recyclerview.BaseViewHolder;
@@ -43,6 +43,6 @@ public class ManageAppsViewHolder extends BaseViewHolder<Integer> implements Vie
 
     @Override
     public void onClick(View v) {
-        v.getContext().startActivity(new Intent(v.getContext(), ManageAppsActivity.class));
+        v.getContext().startActivity(new Intent(v.getContext(), ApplicationManagementActivity.class));
     }
 }

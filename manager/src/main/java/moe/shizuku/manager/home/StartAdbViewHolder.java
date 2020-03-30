@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewholder;
+package moe.shizuku.manager.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.manager.Helps;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ServerLauncher;
+import moe.shizuku.manager.starter.ServerLauncher;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.utils.CustomTabsHelper;
 import moe.shizuku.manager.widget.ExpandableLayout;

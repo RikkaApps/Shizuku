@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewmodel
+package moe.shizuku.manager.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +12,7 @@ import moe.shizuku.manager.legacy.ShizukuLegacy.ShizukuState
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.manager.utils.Logger
+import moe.shizuku.manager.viewmodel.Resource
 import moe.shizuku.server.IShizukuService
 import java.util.*
 

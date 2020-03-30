@@ -1,4 +1,4 @@
-package moe.shizuku.manager.viewholder;
+package moe.shizuku.manager.home;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +11,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ShareCompat;
 
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ServerLauncher;
+import moe.shizuku.manager.starter.ServerLauncher;
 import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.service.ShellService;
+import moe.shizuku.manager.starter.ShellService;
 import moe.shizuku.manager.utils.BindServiceHelper;
 import moe.shizuku.manager.widget.ExpandableLayout;
 import rikka.core.util.ContextUtils;

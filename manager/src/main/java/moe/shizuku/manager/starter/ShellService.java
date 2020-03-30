@@ -1,4 +1,4 @@
-package moe.shizuku.manager.service;
+package moe.shizuku.manager.starter;
 
 import android.app.Service;
 import android.content.Intent;

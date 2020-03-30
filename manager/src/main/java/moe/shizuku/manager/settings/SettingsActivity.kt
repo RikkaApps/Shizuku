@@ -1,7 +1,10 @@
-package moe.shizuku.manager
+package moe.shizuku.manager.settings
 
 import android.os.Bundle
 import android.view.MenuItem
+import moe.shizuku.manager.R
+import moe.shizuku.manager.starter.ServerLauncher
+import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.AppBarFragmentActivity
 
 class SettingsActivity : AppBarFragmentActivity() {
