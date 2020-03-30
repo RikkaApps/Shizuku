@@ -11,7 +11,7 @@ fun IContentProvider.callCompat(callingPkg: String?, featureId: String?, authori
         BuildUtils.atLeast30() -> {
             call(callingPkg, featureId, authority, method, arg, extras)
         }
-        BuildUtils.atLeast28() -> {
+        BuildUtils.atLeast29() -> {
             call(callingPkg, authority, method, arg, extras)
         }
         else -> {
