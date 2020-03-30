@@ -28,7 +28,7 @@ abstract class AuthorizationActivity : AppActivity() {
     }
 
     fun getLegacyServerState(): ShizukuLegacy.ShizukuState {
-        if (BuildUtils.atLeastR()) {
+        if (BuildUtils.atLeastQ()) {
             return ShizukuLegacy.ShizukuState.createUnknown()
         }
 
@@ -42,7 +42,7 @@ abstract class AuthorizationActivity : AppActivity() {
     }
 
     fun checkNotLegacyOnApi30(): Boolean {
-        if (!isV3 && BuildUtils.atLeastR()) {
+        if (!isV3 && BuildUtils.atLeastQ()) {
             val componentName = callingActivity ?: return false
             val label = try {
                 packageManager.getApplicationInfo(componentName.packageName, 0).loadLabel(packageManager)

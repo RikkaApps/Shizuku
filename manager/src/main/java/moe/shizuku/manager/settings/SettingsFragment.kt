@@ -57,9 +57,9 @@ class SettingsFragment : PreferenceFragment() {
         keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
         startupPreference = findPreference("startup") as PreferenceCategory
 
-        noV2Preference.isVisible = !BuildUtils.atLeastR()
+        noV2Preference.isVisible = !BuildUtils.atLeastQ()
         keepSuContextPreference.isVisible = false
-        startupPreference.isVisible = !BuildUtils.atLeastR()
+        startupPreference.isVisible = !BuildUtils.atLeastQ()
 
         val viewModel = SharedViewModelProviders.of(this).get(AppsViewModel::class.java)
         viewModel.packages.observe(this) {

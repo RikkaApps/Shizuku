@@ -39,7 +39,7 @@
     <string name="auth_cannot_connect">無法連線至核心服務，請確認其正在執行。</string>
     <string name="auth_legacy_not_support_title">%1$s 不支援現代 Shizuku</string>
     <string name="auth_legacy_not_support_message"><![CDATA[
-    舊式 Shizuku 已於 2019 年 3 月被棄用。此外，它無法在 Android 11 及更高版本執行。<p>請要求 <b>%1$s</b> 的開發者進行更新。
+    舊式 Shizuku 已於 2019 年 3 月被棄用。此外，它無法在 Android 10 及更高版本執行。<p>請要求 <b>%1$s</b> 的開發者進行更新。
     ]]></string>
     <string name="authorized_apps_manage">應用程式管理</string>
     <plurals name="authorized_apps_count">

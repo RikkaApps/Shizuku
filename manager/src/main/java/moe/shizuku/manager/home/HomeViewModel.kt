@@ -23,7 +23,7 @@ class HomeViewModel : ViewModel() {
     private fun load(): ServiceStatus {
         var v2Status: ShizukuState = ShizukuState.createUnknown()
         val status = ServiceStatus()
-        if (!BuildUtils.atLeastR()) {
+        if (!BuildUtils.atLeastQ()) {
             status.v2Status = ShizukuLegacy.ShizukuClient.getState().also { v2Status = it }
         }
         if (ShizukuService.getBinder() == null)
