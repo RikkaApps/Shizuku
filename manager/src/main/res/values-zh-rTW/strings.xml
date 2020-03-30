@@ -58,7 +58,7 @@
     <string name="notification_service_start_failed">啟動 Shizuku 服務時失敗。</string>
     <string name="notification_service_start_no_root">請求 root 權限失敗。</string>
     <string name="notification_working">工作中…</string>
-    <string name="requires_legacy">* 需要舊式 Shizuku</string>
+    <string name="requires_legacy">* 需要舊式 Shizuku（已棄用）</string>
     <string name="settings_language">語言</string>
     <string name="settings_user_interface">界面外觀</string>
     <string name="black_night_theme">黑色夜間主題</string>

@@ -63,7 +63,7 @@
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="notification_working">Working…</string>
-    <string name="requires_legacy">* requires legacy Shizuku</string>
+    <string name="requires_legacy">* requires legacy Shizuku (deprecated)</string>
     <string name="settings_language">Language</string>
     <string name="settings_user_interface">Appearance</string>
     <string name="black_night_theme">Black night theme</string>
