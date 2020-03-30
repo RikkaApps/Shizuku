@@ -39,6 +39,10 @@
     <string name="auth_manager_no_token">Shizuku haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
     <string name="auth_service_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
+    <string name="auth_legacy_not_support_title">%1$s does not support modern Shizuku</string>
+    <string name="auth_legacy_not_support_message"><![CDATA[
+    Legacy Shizuku has been deprecated since March 2019. Also, it won\'t run on Android 11 and above.<p>Please ask the developer of <b>%1$s</b> to update.
+    ]]></string>
     <string name="authorized_apps_manage">Application management</string>
     <plurals name="authorized_apps_count">
         <item quantity="zero"><![CDATA[Authorized %d application]]></item>

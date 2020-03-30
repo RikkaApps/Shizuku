@@ -23,6 +23,10 @@ public final class AuthorizationActivityV23 extends AuthorizationActivity {
             return;
         }
 
+        if (!checkNotLegacyOnApi30()) {
+            return;
+        }
+
         int msg = 0;
         if (isV3()) {
             if (!ShizukuService.pingBinder()) {

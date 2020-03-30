@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.authorization.AuthorizationManager
+import moe.shizuku.manager.utils.BuildUtils
 import java.util.*
 
 class AppsViewModel : SharedViewModel() {
@@ -22,6 +23,7 @@ class AppsViewModel : SharedViewModel() {
                 var count = 0
                 for (pi in AuthorizationManager.getPackages(PackageManager.GET_META_DATA)) {
                     if (BuildConfig.APPLICATION_ID == pi.packageName) continue
+                    if (BuildUtils.atLeastR() && pi?.applicationInfo?.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") != true) continue
                     list.add(pi)
                     if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid)) count++
                 }

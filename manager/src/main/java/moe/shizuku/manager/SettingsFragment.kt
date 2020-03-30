@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
+import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.manager.viewmodel.AppsViewModel
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
@@ -39,6 +40,7 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var blackNightThemePreference: SwitchPreference
     private lateinit var noV2Preference: SwitchPreference
     private lateinit var keepSuContextPreference: SwitchPreference
+    private lateinit var startupPreference: PreferenceCategory
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.setStorageDeviceProtected()
@@ -51,8 +53,11 @@ class SettingsFragment : PreferenceFragment() {
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
         noV2Preference = findPreference(KEY_NO_V2) as SwitchPreference
         keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
+        startupPreference = findPreference("startup") as PreferenceCategory
 
+        noV2Preference.isVisible = !BuildUtils.atLeastR()
         keepSuContextPreference.isVisible = false
+        startupPreference.isVisible = !BuildUtils.atLeastR()
 
         val viewModel = SharedViewModelProviders.of(this).get(AppsViewModel::class.java)
         viewModel.packages.observe(this) {

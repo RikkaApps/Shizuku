@@ -33,6 +33,10 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
             return;
         }
 
+        if (!checkNotLegacyOnApi30()) {
+            return;
+        }
+
         final String packageName = component.getPackageName();
 
         String mode = "unknown";
