@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.api.ShizukuService;
-import moe.shizuku.manager.home.HomeActivity;
+import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
 
 public final class AuthorizationActivityV23 extends AuthorizationActivity {
@@ -53,7 +53,7 @@ public final class AuthorizationActivityV23 extends AuthorizationActivity {
             new AlertDialog.Builder(this)
                     .setMessage(msg)
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV23.this, HomeActivity.class)
+                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV23.this, MainActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)))
                     .setOnDismissListener(dialog -> {
                         setResult(ShizukuLegacy.ShizukuClient.AUTH_RESULT_ERROR);

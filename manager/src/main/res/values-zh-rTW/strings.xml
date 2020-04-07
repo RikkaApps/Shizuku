@@ -41,6 +41,10 @@
     <string name="auth_legacy_not_support_message"><![CDATA[
     舊式 Shizuku 已於 2019 年 3 月被棄用。此外，它無法在 Android 10 及更高版本執行。<p>請要求 <b>%1$s</b> 的開發者進行更新。
     ]]></string>
+    <string name="auth_requesting_legacy_title">%1$s 正在請求舊式 Shizuku</string>
+    <string name="auth_requesting_legacy_message"><![CDATA[
+    <b>%1$s</b> 支援現代 Shizuku，但它正在請求舊式 Shizuku。這可能是因為 Shizuku 沒有執行，請在 Shizuku 程式內檢查。<p>注意，舊式 Shizuku 已於 2019 年 3 月被棄用且無法在 Android 10 及更高版本執行。
+    ]]></string>
     <string name="authorized_apps_manage">應用程式管理</string>
     <plurals name="authorized_apps_count">
         <item quantity="other"><![CDATA[已授權 %d 個程式]]></item>

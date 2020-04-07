@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.AppConstants;
-import moe.shizuku.manager.home.HomeActivity;
+import moe.shizuku.manager.MainActivity;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.authorization.AuthorizationManager;
 
@@ -72,7 +72,7 @@ public final class AuthorizationActivityV21 extends AuthorizationActivity {
             new AlertDialog.Builder(this)
                     .setMessage(msg)
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV21.this, HomeActivity.class)
+                    .setNeutralButton(R.string.open_manager, (dialog, which) -> startActivity(new Intent(AuthorizationActivityV21.this, MainActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)))
                     .setOnDismissListener(dialog -> {
                         setResult(ShizukuLegacy.ShizukuClient.AUTH_RESULT_ERROR);

@@ -43,6 +43,10 @@
     <string name="auth_legacy_not_support_message"><![CDATA[
     Legacy Shizuku has been deprecated since March 2019. Also, it won\'t run on Android 10 and above.<p>Please ask the developer of <b>%1$s</b> to update.
     ]]></string>
+    <string name="auth_requesting_legacy_title">%1$s is requesting legacy Shizuku</string>
+    <string name="auth_requesting_legacy_message"><![CDATA[
+    <b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check this in Shizuku app.<p>Note legacy Shizuku has been deprecated since March 2019 and it won\'t run on Android 10 and above.
+    ]]></string>
     <string name="authorized_apps_manage">Application management</string>
     <plurals name="authorized_apps_count">
         <item quantity="zero"><![CDATA[Authorized %d application]]></item>
