@@ -14,6 +14,7 @@
 #include <sys/system_properties.h>
 #include "misc.h"
 #include "selinux.h"
+#include "cgroup.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -297,6 +298,36 @@ static int check_selinux(const char *s, const char *t, const char *c, const char
     return res;
 }
 
+static int switch_cgroup() {
+    int s_cuid, s_cpid;
+    int spid = getpid();
+
+    if (cgroup::get_cgroup(spid, &s_cuid, &s_cpid) != 0) {
+        printf("warn: can't read cgroup\n");
+        fflush(stdout);
+        return -1;
+    }
+
+    printf("info: cgroup is /uid_%d/pid_%d\n", s_cuid, s_cpid);
+    fflush(stdout);
+
+    if (cgroup::switch_cgroup(spid, -1, -1) != 0) {
+        printf("warn: can't switch cgroup\n");
+        fflush(stdout);
+        return -1;
+    }
+
+    if (cgroup::get_cgroup(spid, &s_cuid, &s_cpid) != 0) {
+        printf("info: switch cgroup succeeded\n");
+        fflush(stdout);
+        return 0;
+    }
+
+    printf("warn: can't switch self, current cgroup is /uid_%d/pid_%d\n", s_cuid, s_cpid);
+    fflush(stdout);
+    return -1;
+}
+
 char *context = nullptr;
 
 int main(int argc, char **argv) {
@@ -311,6 +342,7 @@ int main(int argc, char **argv) {
     if (uid == 0) {
         chown("/data/local/tmp/shizuku_starter", 2000, 2000);
         se::setfilecon("/data/local/tmp/shizuku_starter", "u:object_r:shell_data_file:s0");
+        switch_cgroup();
     }
 
     clock_gettime(CLOCK_REALTIME, &ts);
@@ -355,7 +387,7 @@ int main(int argc, char **argv) {
                 }
             } else {
                 use_shell_context = 1;
-                printf("warn: can't to context %s, use shell context instead.\n", context);
+                printf("warn: app context can't connect to context %s, use shell context instead.\n", context);
                 fflush(stdout);
             }
             se::freecon(context);

@@ -5,14 +5,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../../build/starter/${ANDROID_ABI})
 
-if (CMAKE_BUILD_TYPE STREQUAL Debug)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif ()
 
 find_library(log-lib log)
 
 add_executable(libshizuku.so
-        starter.cpp misc.cpp selinux.cpp)
+        starter.cpp misc.cpp selinux.cpp cgroup.cpp)
 
 target_link_libraries(libshizuku.so ${log-lib})
 
