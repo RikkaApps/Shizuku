@@ -153,10 +153,10 @@ public class StartRootViewHolder extends BaseViewHolder<Boolean> implements View
         start.setEnabled(false);
         restart.setEnabled(false);
 
-        if (ServerLauncher.COMMAND_ROOT == null) {
-            ServerLauncher.writeFiles(context, false);
+        if (ServerLauncher.getCommand() == null) {
+            ServerLauncher.writeFiles(context);
         }
-        startShell(context, ServerLauncher.COMMAND_ROOT);
+        startShell(context, ServerLauncher.getCommand());
     }
 
     @Override

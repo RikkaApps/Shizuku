@@ -38,17 +38,17 @@ public class StartAdbViewHolder extends BaseViewHolder<Object> implements View.O
             Context context = v.getContext();
             new AlertDialog.Builder(context)
                     .setTitle(R.string.view_command)
-                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.view_command_message, ServerLauncher.COMMAND_ADB)))
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.view_command_message, ServerLauncher.getCommandAdb())))
                     .setPositiveButton(R.string.copy_command, (dialog, which) -> {
-                        if (ClipboardUtils.put(context, ServerLauncher.COMMAND_ADB)) {
-                            Toast.makeText(context, context.getString(R.string.copied_to_clipboard, ServerLauncher.COMMAND_ADB), Toast.LENGTH_SHORT).show();
+                        if (ClipboardUtils.put(context, ServerLauncher.getCommandAdb())) {
+                            Toast.makeText(context, context.getString(R.string.copied_to_clipboard, ServerLauncher.getCommandAdb()), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .setNeutralButton(R.string.send_command, (dialog, which) -> {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.COMMAND_ADB);
+                        intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.getCommandAdb());
                         intent = Intent.createChooser(intent, context.getString(R.string.send_command));
                         context.startActivity(intent);
                     })

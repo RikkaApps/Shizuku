@@ -37,7 +37,7 @@ object ShizukuSystemApis {
         return if (!ShizukuService.pingBinder()) {
             PackageManager.PERMISSION_DENIED
         } else try {
-            if (BuildUtils.atLeastR()) {
+            if (BuildUtils.atLeast30()) {
                 HiddenApiBridge.IPermissionManager_checkPermission(permissionManager, permName, pkgName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
@@ -52,7 +52,7 @@ object ShizukuSystemApis {
             return
         }
         try {
-            if (BuildUtils.atLeastR()) {
+            if (BuildUtils.atLeast30()) {
                 HiddenApiBridge.IPermissionManager_grantRuntimePermission(permissionManager, packageName, permissionName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_grantRuntimePermission(packageManager, packageName, permissionName, userId)
@@ -67,7 +67,7 @@ object ShizukuSystemApis {
             return
         }
         try {
-            if (BuildUtils.atLeastR()) {
+            if (BuildUtils.atLeast30()) {
                 HiddenApiBridge.IPermissionManager_revokeRuntimePermission(permissionManager, packageName, permissionName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_revokeRuntimePermission(packageManager, packageName, permissionName, userId)

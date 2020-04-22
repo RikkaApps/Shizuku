@@ -2,6 +2,9 @@ package moe.shizuku.manager.starter;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.UserManager;
+import android.system.ErrnoException;
+import android.system.Os;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,47 +25,49 @@ import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.legacy.ShizukuLegacy;
+import moe.shizuku.manager.utils.BuildUtils;
 import rikka.core.util.IOUtils;
 
 public class ServerLauncher {
 
-    public static final String COMMAND_ADB = "adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh";
-    public static String COMMAND_ROOT;
-    private static final String[] DEX_PATH = new String[2];
-    private static final String[] DEX_LEGACY_PATH = new String[2];
+    private static String COMMAND;
 
     private static final String V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuLegacy.SERVER_VERSION, Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT));
     private static final String V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
 
-    public static void writeFiles(Context context, boolean external) {
-        try {
-            File out;
-            if (external)
-                out = context.getExternalFilesDir(null);
-            else
-                out = getParent(context);
+    public static String getCommandAdb() {
+        return "adb shell " + getCommand();
+    }
 
-            if (out == null)
-                return;
+    public static String getCommand() {
+        return COMMAND;
+    }
+
+    public static void writeFiles(Context context) {
+        try {
+            File out = getRoot(context);
+            try {
+                Os.chmod(out.getAbsolutePath(), 0711);
+            } catch (ErrnoException e) {
+                e.printStackTrace();
+            }
 
             int apiVersion = Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT);
             String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
-            int i = external ? 1 : 0;
 
-            DEX_LEGACY_PATH[i] = copyDex(context, source, new File(out, V2_DEX_NAME));
-            DEX_PATH[i] = copyDex(context, "server.dex", new File(out, V3_DEX_NAME));
+            String dexLegacyPath = ShizukuManagerSettings.isStartServiceV2() ? "null" : copyDex(context, source, new File(out, V2_DEX_NAME));
+            String dexPath = copyDex(context, "server.dex", new File(out, V3_DEX_NAME));
 
-            String command = writeShellFile(context, new File(out, "start.sh"), DEX_LEGACY_PATH[i], DEX_PATH[i]);
-            if (!external) {
-                COMMAND_ROOT = command;
-            }
+            COMMAND = "sh " + writeShellFile(context, new File(out, "start.sh"), dexLegacyPath, dexPath);
+
+            writeLegacyCompatAdbShellFile(context);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static File getParent(Context context) {
-        return ShizukuManagerApplication.getDeviceProtectedStorageContext(context).getFilesDir();
+    private static File getRoot(Context context) {
+        return ShizukuManagerApplication.getDeviceProtectedStorageContext(context).getFilesDir().getParentFile();
     }
 
     private static String copyDex(Context context, String source, File out) throws IOException {
@@ -78,6 +83,12 @@ public class ServerLauncher {
         os.flush();
         os.close();
         is.close();
+
+        try {
+            Os.chmod(out.getAbsolutePath(), 0644);
+        } catch (ErrnoException e) {
+            e.printStackTrace();
+        }
 
         return out.getAbsolutePath();
     }
@@ -101,7 +112,35 @@ public class ServerLauncher {
         os.flush();
         os.close();
 
-        return "sh " + out.getAbsolutePath();
+        try {
+            Os.chmod(out.getAbsolutePath(), 0644);
+        } catch (ErrnoException e) {
+            e.printStackTrace();
+        }
+
+        return out.getAbsolutePath();
+    }
+
+    private static void writeLegacyCompatAdbShellFile(Context context) throws IOException {
+        UserManager um = (UserManager)context.getSystemService(Context.USER_SERVICE);
+        if (um == null || !BuildUtils.atLeast24() || !um.isUserUnlocked()) {
+            return;
+        }
+        File parent = context.getExternalFilesDir(null);
+        if (parent == null) {
+            return;
+        }
+        File out = new File(parent, "start.sh");
+        PrintWriter os = new PrintWriter(new FileWriter(out));
+        os.println("#!/system/bin/sh");
+        os.println("echo \"↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ PLEASE READ ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\"");
+        os.println("echo \"The start script has been moved to /data, this compatibility script will be eventually removed.\"");
+        os.println("echo \"Open Shizuku app to view the new command.\"");
+        os.println("echo \"↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ PLEASE READ ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\"");
+        os.println("sleep 10");
+        os.println(getCommand());
+        os.flush();
+        os.close();
     }
 
     private static String getStarterParam(String dexLegacy, String dex) {

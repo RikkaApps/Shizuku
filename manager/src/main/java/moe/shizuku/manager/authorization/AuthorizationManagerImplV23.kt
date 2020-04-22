@@ -3,13 +3,7 @@ package moe.shizuku.manager.authorization
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Process
-import android.os.RemoteException
-import hidden.HiddenApiBridge
-import moe.shizuku.api.ShizukuBinderWrapper
-import moe.shizuku.api.ShizukuService
-import moe.shizuku.api.SystemServiceHelper
 import moe.shizuku.manager.Manifest
-import moe.shizuku.manager.utils.BuildUtils.atLeastR
 import moe.shizuku.manager.utils.ShizukuSystemApis
 import java.util.*
 

@@ -99,7 +99,7 @@ public class ShizukuManagerSettings {
     }
 
     public static boolean isStartServiceV2() {
-        return !BuildUtils.atLeastQ() && !getPreferences().getBoolean(NO_V2, false);
+        return !BuildUtils.atLeast29() && !getPreferences().getBoolean(NO_V2, false);
     }
 
     public static boolean isKeepSuContext() {

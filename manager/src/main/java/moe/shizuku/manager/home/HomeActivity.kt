@@ -57,7 +57,7 @@ abstract class HomeActivity : AppBarActivity() {
 
         setContentView(R.layout.activity_main)
         if (!writeFilesCalled) {
-            ServerLauncher.writeFiles(this, true)
+            ServerLauncher.writeFiles(this)
             writeFilesCalled = true
         }
 

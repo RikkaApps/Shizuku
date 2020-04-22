@@ -39,10 +39,7 @@ class SettingsActivity : AppBarFragmentActivity() {
         super.onDestroy()
         if (ShizukuManagerSettings.isStartServiceV2() != isStartServiceV2
                 || ShizukuManagerSettings.isKeepSuContext() != isKeepSuContext) {
-            ServerLauncher.writeFiles(this, true)
-            if (ServerLauncher.COMMAND_ROOT != null) {
-                ServerLauncher.writeFiles(this, false)
-            }
+            ServerLauncher.writeFiles(this)
         }
     }
 

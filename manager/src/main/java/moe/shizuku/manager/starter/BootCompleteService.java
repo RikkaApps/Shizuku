@@ -82,10 +82,10 @@ public class BootCompleteService extends Service {
                 }
             };
 
-            if (ServerLauncher.COMMAND_ROOT == null) {
-                ServerLauncher.writeFiles(context, false);
+            if (ServerLauncher.getCommand() == null) {
+                ServerLauncher.writeFiles(context);
             }
-            service.run(new String[]{ServerLauncher.COMMAND_ROOT}, listener);
+            service.run(new String[]{ServerLauncher.getCommand()}, listener);
         });
         return START_STICKY;
     }
