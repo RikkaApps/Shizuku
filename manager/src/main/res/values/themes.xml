@@ -2,8 +2,7 @@
 <resources>
 
     <style name="Base.AppTheme.Light" parent="Theme.Material.Light.LightStatusBar">
-        <item name="android:statusBarColor">#9E9E9E</item>
-        <item name="android:colorPrimary">?android:colorBackground</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
 
         <item name="colorPrimary">@color/app_color_light</item>
         <item name="colorPrimaryVariant">@color/app_color_light</item>
@@ -31,8 +30,6 @@
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
     <style name="Base.AppTheme" parent="Theme.Material">
-        <item name="android:colorPrimary">?android:colorBackground</item>
-
         <item name="colorPrimary">@color/app_color_dark</item>
         <item name="colorPrimaryVariant">@color/app_color_dark</item>
         <item name="colorSecondary">@color/app_color_dark</item>

@@ -27,7 +27,7 @@ import moe.shizuku.manager.viewmodel.Status
 import rikka.html.text.HtmlCompat
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
-import rikka.recyclerview.RecyclerViewHelper
+import rikka.recyclerview.fixEdgeEffect
 
 abstract class HomeActivity : AppBarActivity() {
 
@@ -81,7 +81,7 @@ abstract class HomeActivity : AppBarActivity() {
         val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
         recyclerView.adapter = adapter
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
-        RecyclerViewHelper.fixOverScroll(recyclerView)
+        recyclerView.fixEdgeEffect()
 
         val margin = resources.getDimension(R.dimen.home_margin).toInt()
         recyclerView.setInitialPadding(

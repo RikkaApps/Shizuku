@@ -17,7 +17,7 @@ import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import rikka.material.widget.*
-import rikka.recyclerview.RecyclerViewHelper
+import rikka.recyclerview.fixEdgeEffect
 import java.util.*
 
 class ApplicationManagementActivity : AppBarActivity() {
@@ -62,7 +62,7 @@ class ApplicationManagementActivity : AppBarActivity() {
 
         val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
         recyclerView.adapter = adapter
-        RecyclerViewHelper.fixOverScroll(recyclerView)
+        recyclerView.fixEdgeEffect()
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar?.setRaised(!top) }
 
         val padding = resources.getDimension(R.dimen.list_vertical_padding).toInt()

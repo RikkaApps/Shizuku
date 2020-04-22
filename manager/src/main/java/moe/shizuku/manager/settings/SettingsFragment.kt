@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
-import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.manager.management.AppsViewModel
+import moe.shizuku.manager.utils.BuildUtils
 import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.preference.*
@@ -22,7 +22,7 @@ import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.material.widget.*
-import rikka.recyclerview.RecyclerViewHelper
+import rikka.recyclerview.fixEdgeEffect
 import java.util.*
 import moe.shizuku.manager.ShizukuManagerSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
 import moe.shizuku.manager.ShizukuManagerSettings.LANGUAGE as KEY_LANGUAGE
@@ -133,7 +133,7 @@ class SettingsFragment : PreferenceFragment() {
 
     override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState) as BorderRecyclerView
-        RecyclerViewHelper.fixOverScroll(recyclerView)
+        recyclerView.fixEdgeEffect()
         val padding = (8 * recyclerView.context.resources.displayMetrics.density).toInt()
         recyclerView.setPaddingRelative(recyclerView.paddingStart, 0, recyclerView.paddingEnd, padding)
         val lp = recyclerView.layoutParams
