@@ -12,6 +12,8 @@ import moe.shizuku.server.utils.ParcelFileDescriptorUtil;
 public class RemoteProcessHolder extends IRemoteProcess.Stub {
 
     private Process process;
+    private ParcelFileDescriptor in;
+    private ParcelFileDescriptor out;
 
     public RemoteProcessHolder(Process process) {
         this.process = process;
@@ -19,20 +21,26 @@ public class RemoteProcessHolder extends IRemoteProcess.Stub {
 
     @Override
     public ParcelFileDescriptor getOutputStream() {
-        try {
-            return ParcelFileDescriptorUtil.pipeTo(process.getOutputStream());
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        if (out == null) {
+            try {
+                out = ParcelFileDescriptorUtil.pipeTo(process.getOutputStream());
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
         }
+        return out;
     }
 
     @Override
     public ParcelFileDescriptor getInputStream() {
-        try {
-            return ParcelFileDescriptorUtil.pipeFrom(process.getInputStream());
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        if (in == null) {
+            try {
+                in = ParcelFileDescriptorUtil.pipeFrom(process.getInputStream());
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
         }
+        return in;
     }
 
     @Override
@@ -83,7 +91,7 @@ public class RemoteProcessHolder extends IRemoteProcess.Stub {
             try {
                 exitValue();
                 return true;
-            } catch(IllegalThreadStateException ex) {
+            } catch (IllegalThreadStateException ex) {
                 if (rem > 0) {
                     try {
                         Thread.sleep(
