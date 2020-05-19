@@ -26,7 +26,7 @@ public interface IContentProvider {
     Bundle call(String callingPkg, String method, @Nullable String arg, @Nullable Bundle extras)
             throws RemoteException;
 
-    @RequiresApi(28)
+    @RequiresApi(29)
     Bundle call(String callingPkg, String authority, String method, @Nullable String arg, @Nullable Bundle extras)
             throws RemoteException;
 
