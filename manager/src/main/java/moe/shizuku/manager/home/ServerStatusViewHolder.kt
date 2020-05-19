@@ -10,6 +10,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuClientHelper
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
+import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.widget.MaterialCircleIconView
 import rikka.html.text.HtmlCompat
@@ -17,15 +18,15 @@ import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
-class ServerStatusViewHolder(itemView: View) : BaseViewHolder<ServiceStatus?>(itemView), View.OnClickListener {
+class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : BaseViewHolder<ServiceStatus>(binding.root), View.OnClickListener {
 
     companion object {
-        val CREATOR = Creator<ServiceStatus> { inflater: LayoutInflater, parent: ViewGroup? -> ServerStatusViewHolder(inflater.inflate(R.layout.item_home_server_status, parent, false)) }
+        val CREATOR = Creator<ServiceStatus> { inflater: LayoutInflater, parent: ViewGroup? -> ServerStatusViewHolder(HomeServerStatusBinding.inflate(inflater, parent, false)) }
     }
 
-    private val textView: HtmlCompatTextView = itemView.findViewById(android.R.id.text1)
-    private val summaryView: HtmlCompatTextView = itemView.findViewById(android.R.id.text2)
-    private val iconView: MaterialCircleIconView = itemView.findViewById(android.R.id.icon)
+    private inline val textView: HtmlCompatTextView get() = binding.text1
+    private inline val summaryView: HtmlCompatTextView get() = binding.text2
+    private inline val iconView: MaterialCircleIconView get() = binding.icon
 
     init {
         itemView.setOnClickListener(this)
@@ -39,7 +40,7 @@ class ServerStatusViewHolder(itemView: View) : BaseViewHolder<ServiceStatus?>(it
     override fun onBind() {
         val context = itemView.context
         val status = data
-        val ok = status!!.isRunning
+        val ok = status.isRunning
         val isRoot = status.uid == 0
         val version = status.version
         if (ok) {

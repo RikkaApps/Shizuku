@@ -57,7 +57,6 @@
     <string name="notification_service_start_failed">啟動 Shizuku 服務時失敗。</string>
     <string name="notification_service_start_no_root">請求 root 權限失敗。</string>
     <string name="notification_working">工作中…</string>
-    <string name="requires_legacy">* 需要舊式 Shizuku（已棄用）</string>
     <string name="settings_language">語言</string>
     <string name="settings_user_interface">界面外觀</string>
     <string name="black_night_theme">黑色夜間主題</string>
@@ -69,7 +68,6 @@
     <string name="view_online_help">閱讀幫助</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
-    <string name="get_more_summary">檢視使用 Shizuku 的應用程式</string>
     <string name="learn_more">瞭解 Shizuku</string>
     <string name="learn_more_summary">瞭解如何使用 Shizuku 開發或檢視使用 Shizuku 的程式</string>
     <string name="keep_su_context">使用完整 root（如果可用）</string>

@@ -62,7 +62,6 @@
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="notification_working">Working…</string>
-    <string name="requires_legacy">* requires legacy Shizuku (deprecated)</string>
     <string name="settings_language">Language</string>
     <string name="settings_user_interface">Appearance</string>
     <string name="black_night_theme">Black night theme</string>
@@ -74,7 +73,6 @@
     <string name="view_online_help">Read help</string>
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
-    <string name="get_more_summary">View apps using Shizuku</string>
     <string name="learn_more">Learn Shizuku</string>
     <string name="learn_more_summary">Learn how to develop with Shizuku or get apps using Shizuku</string>
     <string name="keep_su_context">Use full root if available</string>

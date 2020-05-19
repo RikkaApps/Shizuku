@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,6 +21,8 @@ import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.AppBarActivity
+import moe.shizuku.manager.databinding.AboutDialogBinding
+import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
@@ -58,7 +61,8 @@ abstract class HomeActivity : AppBarActivity() {
             Toast.makeText(this, getString(R.string.toast_translation_outdated), Toast.LENGTH_LONG).show()
         }
 
-        setContentView(R.layout.activity_main)
+        val binding = HomeActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (!writeFilesCalled) {
             ServerLauncher.writeFiles(this)
             writeFilesCalled = true
@@ -81,7 +85,7 @@ abstract class HomeActivity : AppBarActivity() {
             appsModel.load()
         }
 
-        val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
+        val recyclerView = binding.list
         recyclerView.adapter = adapter
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
         recyclerView.fixEdgeEffect(alwaysClipToPadding = false)
@@ -131,12 +135,13 @@ abstract class HomeActivity : AppBarActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_about -> {
+                val binding = AboutDialogBinding.inflate(LayoutInflater.from(this), null, false)
                 val dialog: Dialog = AlertDialog.Builder(this)
-                        .setView(R.layout.dialog_about)
+                        .setView(binding.root)
                         .show()
-                (dialog.findViewById<View>(R.id.source_code) as TextView).movementMethod = LinkMovementMethod.getInstance()
-                (dialog.findViewById<View>(R.id.icon_credits) as TextView).movementMethod = LinkMovementMethod.getInstance()
-                (dialog.findViewById<View>(R.id.icon_credits) as TextView).text = HtmlCompat.fromHtml(getString(R.string.about_icon_credits))
+                binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
+                binding.iconCredits.movementMethod = LinkMovementMethod.getInstance()
+                binding.iconCredits.text = HtmlCompat.fromHtml(getString(R.string.about_icon_credits))
                 true
             }
             R.id.action_settings -> {

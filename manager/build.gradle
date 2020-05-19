@@ -18,6 +18,9 @@ android {
             }
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
     signingConfigs {
         sign
     }

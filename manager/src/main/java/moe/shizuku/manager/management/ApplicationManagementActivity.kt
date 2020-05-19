@@ -13,9 +13,9 @@ import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
+import moe.shizuku.manager.databinding.AppsActivityBinding
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.manager.viewmodel.Status
-import rikka.material.widget.BorderRecyclerView
 import rikka.material.widget.BorderView
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
@@ -35,12 +35,14 @@ class ApplicationManagementActivity : AppBarActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_apps)
+
+        val binding = AppsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         appBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.packages.observe(this) {
-            when (it?.status) {
+            when (it.status) {
                 Status.SUCCESS -> {
                     adapter.updateData(it.data)
                 }
@@ -61,7 +63,7 @@ class ApplicationManagementActivity : AppBarActivity() {
             viewModel.load()
         }
 
-        val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
+        val recyclerView = binding.list
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
         recyclerView.addVerticalPadding()

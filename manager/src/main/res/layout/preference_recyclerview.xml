@@ -2,7 +2,6 @@
 <rikka.material.widget.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UnusedResources"
     android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,4 +14,6 @@
     app:borderBottomStyle="never"
     app:borderTopDrawable="@null"
     app:borderTopStyle="whenTop"
-    app:fitSystemWindowsInsets="bottom|top" />
+    app:fitSystemWindowsInsets="bottom|top"
+    tools:ignore="UnusedResources"
+    tools:viewBindingIgnore="true" />
