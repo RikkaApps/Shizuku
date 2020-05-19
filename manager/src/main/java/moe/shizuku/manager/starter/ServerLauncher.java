@@ -1,7 +1,6 @@
 package moe.shizuku.manager.starter;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.UserManager;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -24,7 +23,6 @@ import moe.shizuku.manager.BuildConfig;
 import moe.shizuku.manager.R;
 import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.manager.utils.BuildUtils;
 import rikka.core.os.FileUtils;
 
@@ -32,8 +30,7 @@ public class ServerLauncher {
 
     private static String COMMAND;
 
-    private static final String V2_DEX_NAME = String.format(Locale.ENGLISH, "server-legacy-v%d-api%d.dex", ShizukuLegacy.SERVER_VERSION, Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT));
-    private static final String V3_DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
+    private static final String DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION);
 
     public static String getCommandAdb() {
         return "adb shell " + getCommand();
@@ -52,13 +49,9 @@ public class ServerLauncher {
                 e.printStackTrace();
             }
 
-            int apiVersion = Math.min(ShizukuLegacy.MAX_SDK, Build.VERSION.SDK_INT);
-            String source = String.format(Locale.ENGLISH, "server-v2-%d.dex", apiVersion);
+            String dexPath = copyDex(context, "server.dex", new File(out, DEX_NAME));
 
-            String dexLegacyPath = ShizukuManagerSettings.isStartServiceV2() ? "null" : copyDex(context, source, new File(out, V2_DEX_NAME));
-            String dexPath = copyDex(context, "server.dex", new File(out, V3_DEX_NAME));
-
-            COMMAND = "sh " + writeShellFile(context, new File(out, "start.sh"), dexLegacyPath, dexPath);
+            COMMAND = "sh " + writeShellFile(context, new File(out, "start.sh"), dexPath);
 
             writeLegacyCompatAdbShellFile(context);
         } catch (IOException e) {
@@ -93,7 +86,7 @@ public class ServerLauncher {
         return out.getAbsolutePath();
     }
 
-    private static String writeShellFile(Context context, File out, String dexLegacy, String dex) throws IOException {
+    private static String writeShellFile(Context context, File out, String dex) throws IOException {
         if (!out.exists()) {
             //noinspection ResultOfMethodCallIgnored
             out.createNewFile();
@@ -105,7 +98,7 @@ public class ServerLauncher {
         while ((line = is.readLine()) != null) {
             os.println(line
                     .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
-                    .replace("%%%STARTER_PARAM%%%", getStarterParam(dexLegacy, dex))
+                    .replace("%%%STARTER_PARAM%%%", getStarterParam(dex))
                     .replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
             );
         }
@@ -143,14 +136,11 @@ public class ServerLauncher {
         os.close();
     }
 
-    private static String getStarterParam(String dexLegacy, String dex) {
-        Objects.requireNonNull(dexLegacy);
+    private static String getStarterParam(String dex) {
         Objects.requireNonNull(dex);
 
-        return "--path-legacy=" + dexLegacy
-                + " --path=" + dex
+        return "--path=" + dex
                 + " --token=" + UUID.randomUUID()
-                + (ShizukuManagerSettings.isStartServiceV2() ? "" : " --no-v2")
                 + (ShizukuManagerSettings.isKeepSuContext() ? "" : " --use-shell-context");
     }
 

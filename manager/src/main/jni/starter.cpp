@@ -350,7 +350,6 @@ int main(int argc, char **argv) {
     char *token = nullptr;
     char *_path = nullptr;
     char *_path_legacy = nullptr;
-    int v2 = 1;
     int i;
     int use_shell_context = 0;
 
@@ -361,14 +360,11 @@ int main(int argc, char **argv) {
             _path = strdup(argv[i] + 7);
         } else if (strncmp(argv[i], "--path-legacy=", 14) == 0) {
             _path_legacy = strdup(argv[i] + 14);
-        } else if (strncmp(argv[i], "--no-v2", 7) == 0) {
-            v2 = 0;
         } else if (strncmp(argv[i], "--use-shell-context", 19) == 0) {
             use_shell_context = 1;
         }
     }
 #ifdef DEBUG
-    printf("debug: v2=%d\n", v2);
     printf("debug: use_shell_context=%d\n", use_shell_context);
     fflush(stdout);
 #endif
@@ -400,7 +396,6 @@ int main(int argc, char **argv) {
     }
 
     check_access(_path, "source dex path");
-    if (v2) check_access(_path_legacy, "source legacy dex path");
 
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
@@ -414,10 +409,8 @@ int main(int argc, char **argv) {
     sprintf(path_legacy, "/data/local/tmp/shizuku/%s", basename(_path_legacy));
 
     copy_if_not_exist(_path, path);
-    if (v2) copy_if_not_exist(_path_legacy, path_legacy);
 
     check_access(path, "dex path");
-    if (v2) check_access(path_legacy, "legacy dex path");
 
     printf("info: starter begin\n");
     fflush(stdout);
@@ -430,19 +423,13 @@ int main(int argc, char **argv) {
     kill_proc_by_name(SERVER_NAME_LEGACY);
 
     if (use_shell_context) {
-        printf("info: use %s for Shizuku v3.\n", "u:r:shell:s0");
+        printf("info: use %s for Shizuku.\n", "u:r:shell:s0");
         fflush(stdout);
     }
 
-    printf("info: starting server v3...\n");
+    printf("info: starting server...\n");
     fflush(stdout);
     start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, use_shell_context);
-
-    if (v2) {
-        printf("info: starting server v2 (legacy)...\n");
-        fflush(stdout);
-        start_server(path_legacy, SERVER_CLASS_PATH_LEGACY, token, SERVER_NAME_LEGACY, false);
-    }
 
     exit_with_logcat(EXIT_SUCCESS);
 }

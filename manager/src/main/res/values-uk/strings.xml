@@ -38,7 +38,7 @@
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
     <string name="start_legacy_service_summary_no_service">Ви можете перевірити, чи потрібний сервіс застарілим додаткам в авторизованих додатках</string>
-    <string name="service_version_update">версія %2$d, %1$s, почніть оновлюватися до версії %3$d</string>
+    <string name="service_version_update">версія %2$d, %1$s\nпочніть оновлюватися до версії %3$d</string>
     <string name="start_legacy_service">Не запускайте застарілу службу</string>
     <string name="permission_group_description">доступ до Shizuku</string>
     <string name="permission_label">доступ до системних API з більш високими привілеями</string>

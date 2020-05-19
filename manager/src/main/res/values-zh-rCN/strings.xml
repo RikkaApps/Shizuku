@@ -7,7 +7,7 @@
     <string name="service_legacy_name">旧式服务</string>
     <string name="service_running">%1$s正在运行</string>
     <string name="service_version">版本 %2$d，%1$s</string>
-    <string name="service_version_update">版本 %2$d，%1$s，再次启动来升级到版本 %3$d</string>
+    <string name="service_version_update">版本 %2$d，%1$s\n再次启动来升级到版本 %3$d</string>
     <string name="service_not_running">%1$s没有运行</string>
     <string name="service_not_running_tap_retry">%1$s没有运行</string>
     <string name="service_legacy_require_restart">%1$s需要重新启动</string>
@@ -39,11 +39,11 @@
     <string name="auth_cannot_connect">无法连接至核心服务，请确认其正在运行。</string>
     <string name="auth_legacy_not_support_title">%1$s 不支持现代 Shizuku</string>
     <string name="auth_legacy_not_support_message"><![CDATA[
-    旧式 Shizuku 已于 2019 年 3 月被弃用。此外，它无法在 Android 10 及更高版本运行。<p>请要求 <b>%1$s</b> 的开发者进行更新。
+    旧式 Shizuku 已于 2019 年 3 月被弃用。此外，旧式 Shizuku 无法在较新版本的 Android 系统上工作。<p>请要求 <b>%1$s</b> 的开发者进行更新。
     ]]></string>
     <string name="auth_requesting_legacy_title">%1$s 正在请求旧式 Shizuku</string>
     <string name="auth_requesting_legacy_message"><![CDATA[
-    <b>%1$s</b> 支持现代 Shizuku，但它正在请求旧式 Shizuku。这可能是因为 Shizuku 没有运行，请在 Shizuku 应用内检查。<p>注意，旧式 Shizuku 已于 2019 年 3 月被弃用且无法在 Android 10 及更高版本运行。
+    <b>%1$s</b> 支持现代 Shizuku，但它正在请求旧式 Shizuku。这可能是因为 Shizuku 没有运行，请在 Shizuku 应用内检查。<p>旧式 Shizuku 已于 2019 年 3 月被弃用。
     ]]></string>
     <string name="authorized_apps_manage">应用管理</string>
     <plurals name="authorized_apps_count">

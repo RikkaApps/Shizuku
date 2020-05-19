@@ -8,7 +8,7 @@
     <string name="service_legacy_name">Legacy service</string>
     <string name="service_running">%1$s is running</string>
     <string name="service_version">version %2$d, %1$s</string>
-    <string name="service_version_update">version %2$d, %1$s, start again to update to version %3$d</string>
+    <string name="service_version_update">version %2$d, %1$s\nStart again to update to version %3$d</string>
     <string name="service_not_running">%1$s not running</string>
     <string name="service_not_running_tap_retry">%1$s not running</string>
     <string name="service_legacy_require_restart">%1$s requires restart</string>
@@ -41,11 +41,11 @@
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
     <string name="auth_legacy_not_support_title">%1$s does not support modern Shizuku</string>
     <string name="auth_legacy_not_support_message"><![CDATA[
-    Legacy Shizuku has been deprecated since March 2019. Also, it won\'t run on Android 10 and above.<p>Please ask the developer of <b>%1$s</b> to update.
+    Legacy Shizuku has been deprecated since March 2019. Also, legacy Shizuku does not work on newer Android systems.<p>Please ask the developer of <b>%1$s</b> to update.
     ]]></string>
     <string name="auth_requesting_legacy_title">%1$s is requesting legacy Shizuku</string>
     <string name="auth_requesting_legacy_message"><![CDATA[
-    <b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check this in Shizuku app.<p>Note legacy Shizuku has been deprecated since March 2019 and it won\'t run on Android 10 and above.
+    <b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check this in Shizuku app.<p>Legacy Shizuku has been deprecated since March 2019.
     ]]></string>
     <string name="authorized_apps_manage">Application management</string>
     <plurals name="authorized_apps_count">

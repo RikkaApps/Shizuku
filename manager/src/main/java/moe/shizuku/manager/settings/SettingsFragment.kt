@@ -1,21 +1,16 @@
 package moe.shizuku.manager.settings
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
-import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
-import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.utils.BuildUtils
-import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
@@ -29,7 +24,6 @@ import java.util.*
 import moe.shizuku.manager.ShizukuManagerSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
 import moe.shizuku.manager.ShizukuManagerSettings.LANGUAGE as KEY_LANGUAGE
 import moe.shizuku.manager.ShizukuManagerSettings.NIGHT_MODE as KEY_NIGHT_MODE
-import moe.shizuku.manager.ShizukuManagerSettings.NO_V2 as KEY_NO_V2
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -39,12 +33,9 @@ class SettingsFragment : PreferenceFragment() {
         }
     }
 
-    private val appsModel by appsViewModel()
-
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: Preference
     private lateinit var blackNightThemePreference: SwitchPreference
-    private lateinit var noV2Preference: SwitchPreference
     private lateinit var keepSuContextPreference: SwitchPreference
     private lateinit var startupPreference: PreferenceCategory
 
@@ -57,22 +48,11 @@ class SettingsFragment : PreferenceFragment() {
         languagePreference = findPreference(KEY_LANGUAGE) as ListPreference
         nightModePreference = findPreference(KEY_NIGHT_MODE)
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
-        noV2Preference = findPreference(KEY_NO_V2) as SwitchPreference
         keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
         startupPreference = findPreference("startup") as PreferenceCategory
 
-        noV2Preference.isVisible = !BuildUtils.atLeast29()
         keepSuContextPreference.isVisible = false
-        startupPreference.isVisible = !BuildUtils.atLeast29()
-
-        appsModel.packages.observe(this) {
-            if (it?.status == Status.SUCCESS) {
-                updateData(it.data)
-            }
-        }
-        if (appsModel.packages.value == null) {
-            appsModel.load()
-        }
+        startupPreference.isVisible = false
 
         languagePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
             if (newValue is String) {
@@ -147,18 +127,5 @@ class SettingsFragment : PreferenceFragment() {
 
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> (activity as SettingsActivity?)?.appBar?.setRaised(!top) }
         return recyclerView
-    }
-
-    private fun updateData(data: List<PackageInfo>?) {
-        var count = 0
-        if (data != null) {
-            for (pi in data) {
-                val ai = pi.applicationInfo
-                if (ai.metaData == null || !ai.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT")) {
-                    count++
-                }
-            }
-        }
-        noV2Preference.summary = requireContext().resources.getQuantityString(R.plurals.start_legacy_service_summary, count, count)
     }
 }

@@ -7,12 +7,6 @@
         android:title="@string/settings_startup">
 
         <SwitchPreference
-            android:key="dont_start_v2_service"
-            android:title="@string/start_legacy_service"
-            android:summary="@string/start_legacy_service_summary_no_service"
-            android:defaultValue="false"/>
-
-        <SwitchPreference
             android:key="keep_su_context"
             android:title="@string/keep_su_context"
             android:summary="@string/keep_su_context_summary"

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="auth_activity_enabled">false</bool>
-    <bool name="auth_activity_v23_enabled">true</bool>
 </resources>

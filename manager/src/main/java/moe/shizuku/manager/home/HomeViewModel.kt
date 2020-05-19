@@ -8,14 +8,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.legacy.ShizukuLegacy
-import moe.shizuku.manager.legacy.ShizukuLegacy.ShizukuState
 import moe.shizuku.manager.model.ServiceStatus
-import moe.shizuku.manager.utils.BuildUtils
-import moe.shizuku.manager.utils.Logger
+import moe.shizuku.manager.utils.Logger.LOGGER
 import moe.shizuku.manager.viewmodel.Resource
-import moe.shizuku.server.IShizukuService
-import java.util.*
 
 class HomeViewModel : ViewModel() {
 
@@ -23,11 +18,7 @@ class HomeViewModel : ViewModel() {
     val serviceStatus = _serviceStatus as LiveData<Resource<ServiceStatus>>
 
     private fun load(): ServiceStatus {
-        var v2Status: ShizukuState = ShizukuState.createUnknown()
         val status = ServiceStatus()
-        if (!BuildUtils.atLeast29()) {
-            status.v2Status = ShizukuLegacy.ShizukuClient.getState().also { v2Status = it }
-        }
         if (ShizukuService.getBinder() == null)
             return status
 
@@ -42,13 +33,8 @@ class HomeViewModel : ViewModel() {
             try {
                 status.seContext = ShizukuService.getSELinuxContext()
             } catch (tr: Throwable) {
-                Logger.LOGGER.w(tr, "getSELinuxContext")
+                LOGGER.w(tr, "getSELinuxContext")
             }
-        }
-        if (v2Status.code == ShizukuState.STATUS_UNAUTHORIZED) {
-            val token = IShizukuService.Stub.asInterface(ShizukuService.getBinder()).token
-            ShizukuLegacy.putToken(UUID.fromString(token))
-            status.v2Status = ShizukuLegacy.ShizukuClient.getState()
         }
         return status
     }

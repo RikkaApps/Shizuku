@@ -3,13 +3,12 @@ package moe.shizuku.manager.settings
 import android.os.Bundle
 import android.view.MenuItem
 import moe.shizuku.manager.R
-import moe.shizuku.manager.starter.ServerLauncher
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.AppBarFragmentActivity
+import moe.shizuku.manager.starter.ServerLauncher
 
 class SettingsActivity : AppBarFragmentActivity() {
 
-    private var isStartServiceV2 = false
     private var isKeepSuContext = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,24 +20,20 @@ class SettingsActivity : AppBarFragmentActivity() {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SettingsFragment())
                     .commit()
-            isStartServiceV2 = ShizukuManagerSettings.isStartServiceV2()
             isKeepSuContext = ShizukuManagerSettings.isKeepSuContext()
         } else {
-            isStartServiceV2 = savedInstanceState.getBoolean("start_v2", false)
             isKeepSuContext = savedInstanceState.getBoolean("keep_su_context", true)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("start_v2", isStartServiceV2)
         outState.putBoolean("keep_su_context", isKeepSuContext)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (ShizukuManagerSettings.isStartServiceV2() != isStartServiceV2
-                || ShizukuManagerSettings.isKeepSuContext() != isKeepSuContext) {
+        if (ShizukuManagerSettings.isKeepSuContext() != isKeepSuContext) {
             ServerLauncher.writeFiles(this)
         }
     }

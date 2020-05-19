@@ -1,11 +1,9 @@
 package moe.shizuku.manager.model;
 
 import moe.shizuku.api.ShizukuService;
-import moe.shizuku.manager.legacy.ShizukuLegacy;
 
 public class ServiceStatus {
 
-    private ShizukuLegacy.ShizukuState v2Status = ShizukuLegacy.ShizukuState.createUnknown();
     private int uid;
     private int version;
     private String secontext;
@@ -13,15 +11,7 @@ public class ServiceStatus {
     public ServiceStatus() {
     }
 
-    public ShizukuLegacy.ShizukuState getV2Status() {
-        return v2Status;
-    }
-
-    public void setV2Status(ShizukuLegacy.ShizukuState v2Status) {
-        this.v2Status = v2Status;
-    }
-
-    public boolean isV3Running() {
+    public boolean isRunning() {
         return ShizukuService.pingBinder();
     }
 

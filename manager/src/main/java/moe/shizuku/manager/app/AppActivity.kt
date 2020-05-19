@@ -31,15 +31,6 @@ abstract class AppActivity : MaterialActivity() {
         theme.applyStyle(ThemeHelper.getThemeStyleRes(this), true)
     }
 
-    override fun shouldApplyTranslucentSystemBars(): Boolean {
-        return Build.VERSION.SDK_INT >= 23
-    }
-
-
-    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration?) {
-        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
-    }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onApplyTranslucentSystemBars() {
         super.onApplyTranslucentSystemBars()
