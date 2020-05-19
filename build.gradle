@@ -43,7 +43,7 @@ task clean(type: Delete) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '3.6.1'
+def baseVersionName = '3.6.2'
 
 ext {
     minSdkVersion = 21
@@ -53,5 +53,5 @@ ext {
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
     kotlinCoroutinesVersion = '1.3.5'
 
-    apiVersionName = '3.1.0'
+    apiVersionName = '3.2.0'
 }

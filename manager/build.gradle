@@ -104,8 +104,8 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
 
     implementation 'com.github.topjohnwu.libsu:core:2.5.1'
 

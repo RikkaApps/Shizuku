@@ -15,8 +15,6 @@
 
     <dimen name="home_margin">4dp</dimen>
 
-    <dimen name="list_vertical_padding">8dp</dimen>
-
     <bool name="translation_outdated">false</bool>
 
 </resources>

@@ -12,18 +12,21 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.*
+import moe.shizuku.manager.AppConstants
+import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.AppBarActivity
-import moe.shizuku.manager.management.AppsViewModel
+import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
+import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
 import moe.shizuku.manager.starter.ServerLauncher
-import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
+import moe.shizuku.manager.viewmodel.viewModels
+import rikka.core.ktx.unsafeLazy
 import rikka.html.text.HtmlCompat
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
@@ -44,9 +47,9 @@ abstract class HomeActivity : AppBarActivity() {
         }
     }
 
-    private val homeModel by viewModels<HomeViewModel>()
-    private val appsModel by lazy { SharedViewModelProviders.of(this).get(AppsViewModel::class.java) }
-    private val adapter: HomeAdapter by lazy { HomeAdapter(homeModel, appsModel) }
+    private val homeModel by viewModels { HomeViewModel() }
+    private val appsModel by appsViewModel()
+    private val adapter by unsafeLazy { HomeAdapter(homeModel, appsModel) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +84,7 @@ abstract class HomeActivity : AppBarActivity() {
         val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
         recyclerView.adapter = adapter
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
-        recyclerView.fixEdgeEffect()
+        recyclerView.fixEdgeEffect(alwaysClipToPadding = false)
 
         val margin = resources.getDimension(R.dimen.home_margin).toInt()
         recyclerView.setInitialPadding(
@@ -90,6 +93,14 @@ abstract class HomeActivity : AppBarActivity() {
                 recyclerView.initialPaddingRight + margin,
                 recyclerView.initialPaddingBottom + margin
         )
+
+        recyclerView.post {
+            recyclerView.edgeEffectFactory = FixedAlwaysClipToPaddingEdgeEffectFactory(
+                    recyclerView.paddingLeft - margin,
+                    recyclerView.paddingTop - margin,
+                    recyclerView.paddingRight - margin,
+                    recyclerView.paddingBottom - margin)
+        }
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mBinderReceivedReceiver, IntentFilter(AppConstants.ACTION_BINDER_RECEIVED))

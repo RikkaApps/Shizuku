@@ -8,17 +8,18 @@ import hidden.HiddenApiBridge
 import moe.shizuku.api.ShizukuBinderWrapper
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.api.SystemServiceHelper
+import rikka.core.ktx.unsafeLazy
 import java.util.*
 
 object ShizukuSystemApis {
 
-    private val packageManager by lazy {
+    private val packageManager by unsafeLazy {
         // If manager depends on hideen-api-common, kotlin & R8 use classes from it. Use HiddenApiBridge to avoid this problem.
         HiddenApiBridge.IPackageManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")))
     }
 
     @delegate:SuppressLint("NewApi")
-    private val permissionManager by lazy {
+    private val permissionManager by unsafeLazy {
         // If manager depends on hideen-api-common, kotlin & R8 use classes from it. Use HiddenApiBridge to avoid this problem.
         HiddenApiBridge.IPermissionManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
     }

@@ -1,5 +1,6 @@
 package moe.shizuku.manager.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,8 @@ import java.util.*
 
 class HomeViewModel : ViewModel() {
 
-    val serviceStatus = MutableLiveData<Resource<ServiceStatus>>()
+    private val _serviceStatus = MutableLiveData<Resource<ServiceStatus>>()
+    val serviceStatus = _serviceStatus as LiveData<Resource<ServiceStatus>>
 
     private fun load(): ServiceStatus {
         var v2Status: ShizukuState = ShizukuState.createUnknown()
@@ -55,11 +57,11 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val status = load()
-                serviceStatus.postValue(Resource.success(status))
+                _serviceStatus.postValue(Resource.success(status))
             } catch (e: CancellationException) {
 
             } catch (e: Throwable) {
-                serviceStatus.postValue(Resource.error(e))
+                _serviceStatus.postValue(Resource.error(e))
             }
         }
     }

@@ -14,8 +14,9 @@ import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
 import moe.shizuku.manager.utils.BuildUtils
-import moe.shizuku.manager.utils.ktx.toHtml
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.server.IShizukuService
+import rikka.core.ktx.unsafeLazy
 import rikka.html.text.HtmlCompat
 import java.util.*
 
@@ -25,7 +26,7 @@ abstract class AuthorizationActivity : AppActivity() {
         private const val ACTION_AUTHORIZATION = BuildConfig.APPLICATION_ID + ".intent.action.AUTHORIZATION_RESULT"
     }
 
-    val isV3: Boolean by lazy {
+    val isV3: Boolean by unsafeLazy {
         intent.getBooleanExtra(ShizukuApiConstants.EXTRA_PRE_23_IS_V3, false)
     }
 

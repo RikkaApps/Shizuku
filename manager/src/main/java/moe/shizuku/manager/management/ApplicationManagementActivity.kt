@@ -14,16 +14,17 @@ import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.utils.CustomTabsHelper
-import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
-import rikka.material.widget.*
+import rikka.material.widget.BorderRecyclerView
+import rikka.material.widget.BorderView
+import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import java.util.*
 
 class ApplicationManagementActivity : AppBarActivity() {
 
-    private val viewModel: AppsViewModel by lazy { SharedViewModelProviders.of(this).get(AppsViewModel::class.java) }
-    private val adapter: AppsAdapter = AppsAdapter()
+    private val viewModel by appsViewModel()
+    private val adapter = AppsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!ShizukuService.pingBinder() && !isFinishing) {
@@ -63,15 +64,8 @@ class ApplicationManagementActivity : AppBarActivity() {
         val recyclerView = findViewById<BorderRecyclerView>(android.R.id.list)
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
+        recyclerView.addVerticalPadding()
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar?.setRaised(!top) }
-
-        val padding = resources.getDimension(R.dimen.list_vertical_padding).toInt()
-        recyclerView.setInitialPadding(
-                recyclerView.initialPaddingLeft,
-                recyclerView.initialPaddingTop + padding,
-                recyclerView.initialPaddingRight,
-                recyclerView.initialPaddingBottom + padding
-        )
 
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {

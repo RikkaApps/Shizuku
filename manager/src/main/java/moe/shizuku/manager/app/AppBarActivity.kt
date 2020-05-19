@@ -10,19 +10,20 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import moe.shizuku.manager.R
+import rikka.core.ktx.unsafeLazy
 import rikka.material.widget.AppBarLayout
 
 abstract class AppBarActivity : AppActivity() {
 
-    private val rootView: ViewGroup by lazy {
+    private val rootView: ViewGroup by unsafeLazy {
         findViewById<ViewGroup>(R.id.root)
     }
 
-    private val toolbarContainer: AppBarLayout by lazy {
+    private val toolbarContainer: AppBarLayout by unsafeLazy {
         findViewById<AppBarLayout>(R.id.toolbar_container)
     }
 
-    private val toolbar: Toolbar by lazy {
+    private val toolbar: Toolbar by unsafeLazy {
         findViewById<Toolbar>(R.id.toolbar)
     }
 

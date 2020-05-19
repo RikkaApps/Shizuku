@@ -12,16 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
-import moe.shizuku.manager.management.AppsViewModel
+import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
+import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.utils.BuildUtils
-import moe.shizuku.manager.viewmodel.SharedViewModelProviders
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
-import rikka.material.widget.*
+import rikka.material.widget.BorderRecyclerView
+import rikka.material.widget.BorderView
+import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import java.util.*
 import moe.shizuku.manager.ShizukuManagerSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
@@ -36,6 +38,8 @@ class SettingsFragment : PreferenceFragment() {
             SimpleMenuPreference.setLightFixEnabled(true)
         }
     }
+
+    private val appsModel by appsViewModel()
 
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: Preference
@@ -61,14 +65,13 @@ class SettingsFragment : PreferenceFragment() {
         keepSuContextPreference.isVisible = false
         startupPreference.isVisible = !BuildUtils.atLeast29()
 
-        val viewModel = SharedViewModelProviders.of(this).get(AppsViewModel::class.java)
-        viewModel.packages.observe(this) {
+        appsModel.packages.observe(this) {
             if (it?.status == Status.SUCCESS) {
                 updateData(it.data)
             }
         }
-        if (viewModel.packages.value == null) {
-            viewModel.load()
+        if (appsModel.packages.value == null) {
+            appsModel.load()
         }
 
         languagePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
@@ -134,20 +137,14 @@ class SettingsFragment : PreferenceFragment() {
     override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState) as BorderRecyclerView
         recyclerView.fixEdgeEffect()
-        val padding = (8 * recyclerView.context.resources.displayMetrics.density).toInt()
-        recyclerView.setPaddingRelative(recyclerView.paddingStart, 0, recyclerView.paddingEnd, padding)
+        recyclerView.addVerticalPadding(0, 8)
+
         val lp = recyclerView.layoutParams
         if (lp is FrameLayout.LayoutParams) {
             lp.rightMargin = recyclerView.context.resources.getDimension(R.dimen.rd_activity_horizontal_margin).toInt()
             lp.leftMargin = lp.rightMargin
         }
-        val verticalPadding = resources.getDimension(R.dimen.list_vertical_padding).toInt()
-        recyclerView.setInitialPadding(
-                recyclerView.initialPaddingLeft,
-                recyclerView.initialPaddingTop,
-                recyclerView.initialPaddingRight,
-                recyclerView.initialPaddingBottom + verticalPadding
-        )
+
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> (activity as SettingsActivity?)?.appBar?.setRaised(!top) }
         return recyclerView
     }

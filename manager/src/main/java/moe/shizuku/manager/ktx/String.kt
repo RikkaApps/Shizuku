@@ -1,4 +1,4 @@
-package moe.shizuku.manager.utils.ktx
+package moe.shizuku.manager.ktx
 
 import android.text.Spanned
 import rikka.html.text.HtmlCompat
