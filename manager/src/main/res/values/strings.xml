@@ -5,14 +5,11 @@
     <string name="permission_label">access system APIs with higher privileges</string>
     <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
     <string name="service_name">Service</string>
-    <string name="service_legacy_name">Legacy service</string>
     <string name="service_running">%1$s is running</string>
     <string name="service_version">version %2$d, %1$s</string>
     <string name="service_version_update">version %2$d, %1$s\nStart again to update to version %3$d</string>
     <string name="service_not_running">%1$s not running</string>
     <string name="service_not_running_tap_retry">%1$s not running</string>
-    <string name="service_legacy_require_restart">%1$s requires restart</string>
-    <string name="service_legacy_no_token">%1$s is running, but no correct token received, tap to request token</string>
     <string name="service_start">Start</string>
     <string name="service_restart">Restart</string>
     <string name="start_service_title_root"><![CDATA[Start service with root]]></string>
@@ -36,8 +33,6 @@
     <string name="auth_allow">Always allow</string>
     <string name="auth_deny">Deny</string>
     <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
-    <string name="auth_manager_no_token">Shizuku haven\'t received token correctly, please try restart core service or use \"get token\" in the manager.</string>
-    <string name="auth_service_dead">Due to some reason such as abnormal reboot, restart core service is required.</string>
     <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
     <string name="auth_legacy_not_support_title">%1$s does not support modern Shizuku</string>
     <string name="auth_legacy_not_support_message"><![CDATA[
@@ -73,13 +68,6 @@
     <string name="black_night_theme">Black night theme</string>
     <string name="black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
     <string name="settings_startup">Startup</string>
-    <string name="start_legacy_service">Don\'t start legacy service</string>
-    <plurals name="start_legacy_service_summary">
-        <item quantity="zero">%d app requires legacy service</item>
-        <item quantity="one">%d app requires legacy service</item>
-        <item quantity="other">%d apps require legacy service</item>
-    </plurals>
-    <string name="start_legacy_service_summary_no_service">You can check if an app requires legacy service in Authorized apps</string>
     <string name="action_view_apps">Get more</string>
     <string name="adb_no_permission_title">The permission of adb is limited</string>
     <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>

@@ -3,12 +3,6 @@
     <color name="notification">#3F51B5</color>
     <color name="icon_background">#ff3f51b5</color>
 
-    <color name="background_color_light">#fafafa</color>
-    <color name="accent_color_light">#1a73e8</color>
-
-    <color name="background_color_dark">@color/material_grey_800</color>
-    <color name="accent_color_dark">@color/material_light_blue_100</color>
-
     <color name="app_color_light">#3F51B5</color>
     <color name="app_color_dark">#B1B8DF</color>
 </resources>

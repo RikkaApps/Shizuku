@@ -64,11 +64,6 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="Translucent" parent="android:Theme.Translucent.NoTitleBar">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
     <style name="MaterialCircleIconViewLight">
         <item name="iconForegroundChroma">600</item>
         <item name="iconBackgroundChroma">50</item>

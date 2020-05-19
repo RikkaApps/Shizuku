@@ -8,8 +8,6 @@
     <string name="adb_no_permission_title">Дозвіл на adb обмежений</string>
     <string name="auth_cannot_connect">Неможливо підключитися до основної служби, перевірте, чи працює вона.</string>
     <string name="auth_deny">Відхилити</string>
-    <string name="auth_manager_no_token">" Shizuku неправильно отримав токен, спробуйте перезапустити основну службу або отримайте токен у менеджері."</string>
-    <string name="auth_service_dead">З якоїсь причини, наприклад, ненормальне перезавантаження, потрібно перезапустити основну службу.</string>
     <string name="authorized_apps_manage">Авторизовані додатки</string>
     <string name="black_night_theme">Чорна темна тема</string>
     <string name="black_night_theme_summary">Використовуйте чорну тему тему, якщо включений нічний режим</string>
@@ -37,16 +35,11 @@
     <string name="service_version">версія %2$d, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
-    <string name="start_legacy_service_summary_no_service">Ви можете перевірити, чи потрібний сервіс застарілим додаткам в авторизованих додатках</string>
     <string name="service_version_update">версія %2$d, %1$s\nпочніть оновлюватися до версії %3$d</string>
-    <string name="start_legacy_service">Не запускайте застарілу службу</string>
     <string name="permission_group_description">доступ до Shizuku</string>
     <string name="permission_label">доступ до системних API з більш високими привілеями</string>
     <string name="requires_legacy">* потрібний страріший Shizuku</string>
     <string name="requires_root">* потрібен root, щоб запускався Shizuku</string>
-    <string name="service_legacy_name">Старий сервіс</string>
-    <string name="service_legacy_no_token">%1$s запущено, але коректний токен не отримано, натисніть, щоб отримати токен заново</string>
-    <string name="service_legacy_require_restart">%1$s потребує перезавантаження</string>
     <string name="service_not_running">%1$s не працює</string>
     <string name="service_not_running_tap_retry">%1$s не працює, натисніть, щоб перевірити ще раз</string>
     <string name="about_source_code"><![CDATA[Переглянути вихідний код на <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b>]]></string>
