@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -112,9 +113,9 @@ dependencies {
     implementation "moe.shizuku.preference:preference-appcompat:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu-appcompat:$preferenceLibraryVersion"
 
-    implementation "rikka.appcompat:appcompat:1.2.0-alpha02"
-    implementation "rikka.core:core:1.1.0"
-    implementation "rikka.material:material:1.3.2"
+    implementation "rikka.appcompat:appcompat:1.2.0-rc01"
+    implementation "rikka.core:core:1.2.1"
+    implementation "rikka.material:material:1.4.1"
     implementation "rikka.html:html:1.0.0"
     implementation "rikka.recyclerview:recyclerview-utils:1.1.0"
 

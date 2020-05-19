@@ -26,7 +26,7 @@ import moe.shizuku.manager.ShizukuManagerApplication;
 import moe.shizuku.manager.ShizukuManagerSettings;
 import moe.shizuku.manager.legacy.ShizukuLegacy;
 import moe.shizuku.manager.utils.BuildUtils;
-import rikka.core.util.IOUtils;
+import rikka.core.os.FileUtils;
 
 public class ServerLauncher {
 
@@ -78,7 +78,7 @@ public class ServerLauncher {
         InputStream is = context.getAssets().open(source);
         OutputStream os = new FileOutputStream(out);
 
-        IOUtils.copy(is, os);
+        FileUtils.copy(is, os);
 
         os.flush();
         os.close();
@@ -122,7 +122,7 @@ public class ServerLauncher {
     }
 
     private static void writeLegacyCompatAdbShellFile(Context context) throws IOException {
-        UserManager um = (UserManager)context.getSystemService(Context.USER_SERVICE);
+        UserManager um = (UserManager) context.getSystemService(Context.USER_SERVICE);
         if (um == null || !BuildUtils.atLeast24() || !um.isUserUnlocked()) {
             return;
         }
