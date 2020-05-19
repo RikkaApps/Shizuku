@@ -41,7 +41,7 @@ class AppsViewModel : ViewModel() {
                 var count = 0
                 for (pi in AuthorizationManager.getPackages(PackageManager.GET_META_DATA)) {
                     if (BuildConfig.APPLICATION_ID == pi.packageName) continue
-                    if (BuildUtils.atLeast29() && pi?.applicationInfo?.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") != true) continue
+                    if (pi?.applicationInfo?.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") != true) continue
                     list.add(pi)
                     if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid)) count++
                 }
