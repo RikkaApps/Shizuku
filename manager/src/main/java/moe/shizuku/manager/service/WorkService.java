@@ -43,7 +43,7 @@ public class WorkService extends ForegroundIntentService {
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     public void onCreateNotificationChannel(@NonNull NotificationManager notificationManager) {
-        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_WORK, getString(R.string.channel_service_status), NotificationManager.IMPORTANCE_MIN);
+        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_WORK, getString(R.string.notification_channel_service_status), NotificationManager.IMPORTANCE_MIN);
         channel.setSound(null, null);
         channel.setShowBadge(false);
         notificationManager.createNotificationChannel(channel);

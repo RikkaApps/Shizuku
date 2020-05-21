@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_view_apps"
-        android:title="@string/action_view_apps"
+        android:title="@string/app_management_menu_get_more"
         android:showAsAction="always"/>
 
 </menu>

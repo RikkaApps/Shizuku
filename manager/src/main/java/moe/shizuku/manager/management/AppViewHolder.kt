@@ -51,8 +51,8 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
             }
             if (uid != 0) {
                 val builder = AlertDialog.Builder(context)
-                        .setTitle(R.string.adb_no_permission_title)
-                        .setMessage(HtmlCompat.fromHtml(context.getString(R.string.adb_no_permission_message)))
+                        .setTitle(R.string.app_management_dialog_adb_is_limited_title)
+                        .setMessage(HtmlCompat.fromHtml(context.getString(R.string.app_management_dialog_adb_is_limited_message)))
                         .setPositiveButton(android.R.string.ok, null)
                 try {
                     builder.show()

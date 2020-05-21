@@ -52,10 +52,10 @@ class LegacyIsNotSupportedActivity : AppActivity() {
         val v3Support = ai.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") == true
         if (v3Support) {
             AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.auth_requesting_legacy_title, label))
-                    .setMessage(getString(R.string.auth_requesting_legacy_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
+                    .setTitle(getString(R.string.dialog_requesting_legacy_title, label))
+                    .setMessage(getString(R.string.dialog_requesting_legacy_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.open_manager) { _, _ ->
+                    .setNeutralButton(R.string.dialog_requesting_legacy_button_open_shizuku) { _, _ ->
                         startActivity(Intent(this, MainActivity::class.java)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                     }
@@ -67,8 +67,8 @@ class LegacyIsNotSupportedActivity : AppActivity() {
                     .show()
         } else {
             AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.auth_legacy_not_support_title, label))
-                    .setMessage(getString(R.string.auth_legacy_not_support_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
+                    .setTitle(getString(R.string.dialog_legacy_not_support_title, label))
+                    .setMessage(getString(R.string.dialog_legacy_not_support_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                     .setPositiveButton(android.R.string.ok, null)
                     .setOnDismissListener {
                         setResult(RESULT_ERROR)

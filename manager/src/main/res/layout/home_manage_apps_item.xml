@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            app:htmlText="@string/view_authorized_apps" />
+            app:htmlText="@string/home_app_management_view_authorized_apps" />
 
     </LinearLayout>
 

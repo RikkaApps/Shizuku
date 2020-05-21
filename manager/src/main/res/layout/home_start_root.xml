@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="?homeCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            app:htmlText="@string/start_service_title_root" />
+            app:htmlText="@string/home_root_title" />
 
         <moe.shizuku.manager.widget.CheckedImageView
             android:id="@android:id/text2"
@@ -54,7 +55,7 @@
         android:layout_marginBottom="16dp"
         app:isExpanded="true">
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@android:id/text1"
             style="@style/CardSummary"
             android:layout_width="match_parent"
@@ -62,8 +63,7 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:htmlFlags="trim_whitespace"
-            app:htmlText="@string/start_service_summary_root" />
+            tools:text="@string/home_root_description" />
 
     </moe.shizuku.manager.widget.ExpandableLayout>
 
@@ -72,14 +72,14 @@
         style="@style/CardButton"
         android:drawableStart="@drawable/ic_server_start_24dp"
         android:enabled="false"
-        android:text="@string/service_start" />
+        android:text="@string/home_root_button_start" />
 
     <TextView
         android:id="@android:id/button2"
         style="@style/CardButton"
         android:drawableStart="@drawable/ic_server_restart"
         android:enabled="false"
-        android:text="@string/service_restart"
+        android:text="@string/home_root_button_restart"
         android:visibility="gone" />
 
 </LinearLayout>

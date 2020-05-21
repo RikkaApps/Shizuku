@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            app:htmlText="@string/learn_more" />
+            app:htmlText="@string/home_learn_more_title" />
 
         <rikka.html.widget.HtmlCompatTextView
             android:id="@android:id/text2"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            app:htmlText="@string/learn_more_summary" />
+            app:htmlText="@string/home_learn_more_description" />
 
     </LinearLayout>
 

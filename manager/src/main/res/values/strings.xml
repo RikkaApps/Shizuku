@@ -1,82 +1,89 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku</string>
-    <string name="permission_group_label" translatable="false">Shizuku</string>
-    <string name="permission_group_description">access Shizuku</string>
-    <string name="permission_label">access system APIs with higher privileges</string>
-    <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
-    <string name="service_name">Service</string>
-    <string name="service_running">%1$s is running</string>
-    <string name="service_version">version %2$d, %1$s</string>
-    <string name="service_version_update">version %2$d, %1$s\nStart again to update to version %3$d</string>
-    <string name="service_not_running">%1$s not running</string>
-    <string name="service_not_running_tap_retry">%1$s not running</string>
-    <string name="service_start">Start</string>
-    <string name="service_restart">Restart</string>
-    <string name="start_service_title_root"><![CDATA[Start service with root]]></string>
-    <string name="start_service_title_adb"><![CDATA[Start / update service with adb]]></string>
-    <string name="start_service_summary_adb"><![CDATA[
-    <b>If your device is not rooted, you need to start service with adb.</b>
-    <p><b>How to use adb?</b>
-    <br>Using adb is not difficult, please follow the help.
-    <p><b>Shizuku stops randomly?</b>
-    <br>Please read the last part of the help.
-    ]]></string>
-    <string name="start_service_summary_root"><![CDATA[
-    <b>If your device is rooted, you can use this method.</b>
-    <p><b>Can\'t start on boot?</b>
-    <br>Please check if your system or third-party tools have restricted Shizuku.
-    <br>You can refer to <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>.]]></string>
-    <string name="copy_command">Copy</string>
-    <string name="send_command">Send</string>
-    <string name="view_command">View adb command</string>
-    <string name="view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
-    <string name="auth_allow">Always allow</string>
-    <string name="auth_deny">Deny</string>
-    <string name="auth_message"><![CDATA[Allow <b>%1$s</b> use APIs with the identity of <b>%2$s</b>?]]></string>
-    <string name="auth_cannot_connect">Can\'t connect to core service, please check if it is running.</string>
-    <string name="auth_legacy_not_support_title">%1$s does not support modern Shizuku</string>
-    <string name="auth_legacy_not_support_message"><![CDATA[
-    Legacy Shizuku has been deprecated since March 2019. Also, legacy Shizuku does not work on newer Android systems.<p>Please ask the developer of <b>%1$s</b> to update.
-    ]]></string>
-    <string name="auth_requesting_legacy_title">%1$s is requesting legacy Shizuku</string>
-    <string name="auth_requesting_legacy_message"><![CDATA[
-    <b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check this in Shizuku app.<p>Legacy Shizuku has been deprecated since March 2019.
-    ]]></string>
-    <string name="authorized_apps_manage">Application management</string>
-    <plurals name="authorized_apps_count">
+
+    <!-- Home - Status -->
+    <string name="home_status_service_is_running">%1$s is running</string>
+    <string name="home_status_service_not_running">%1$s not running</string>
+    <string name="home_status_service_version">version %2$d, %1$s</string>
+    <string name="home_status_service_version_update">version %2$d, %1$s\nStart again to update to version %3$d</string>
+
+    <!-- Home - Adb -->
+    <string name="home_adb_title"><![CDATA[Start / upgrade service with adb]]></string>
+    <string name="home_adb_description"><![CDATA[<b>If your device is not rooted, you need to start service with adb.</b><p><b>How to use adb?</b><br>Using adb is not difficult, please follow the help.<p><b>Shizuku stops randomly?</b><br>Please read the last part of the help.]]></string>
+    <string name="home_adb_button_view_help">Read help</string>
+    <string name="home_adb_button_view_command">View adb command</string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
+    <string name="home_adb_dialog_view_command_copy_button">Copy</string>
+    <string name="home_adb_dialog_view_command_button_send">Send</string>
+
+    <!-- Home - Root -->
+    <string name="home_root_title"><![CDATA[Start service with root]]></string>
+    <string name="home_root_description"><![CDATA[<b>If your device is rooted, you can use this method.</b><p><b>Can\'t start on boot?</b><br>Please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
+    <string name="home_root_button_start">Start</string>
+    <string name="home_root_button_restart">Restart</string>
+
+    <!-- Home - Application management -->
+    <string name="home_app_management_title">Application management</string>
+    <plurals name="home_app_management_authorized_apps_count">
         <item quantity="zero"><![CDATA[Authorized %d application]]></item>
         <item quantity="one"><![CDATA[Authorized %d application]]></item>
         <item quantity="other"><![CDATA[Authorized %d applications]]></item>
     </plurals>
-    <string name="view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
-    <string name="copied_to_clipboard">%s\nhas been copied to clipboard.</string>
-    <string name="open_manager">Open Shizuku</string>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
+
+    <!-- Home - Learn more -->
+    <string name="home_learn_more_title">Learn Shizuku</string>
+    <string name="home_learn_more_description">Learn how to develop with Shizuku or get apps using Shizuku</string>
+
+    <!-- Application management -->
+    <string name="app_management_menu_get_more">Get more</string>
+    <string name="app_management_dialog_adb_is_limited_title">The permission of adb is limited</string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
+    <string name="app_management_item_summary_requires_root">* requires Shizuku runs with root</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_user_interface">Appearance</string>
+    <string name="settings_black_night_theme">Black night theme</string>
+    <string name="settings_black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
+    <string name="settings_startup">Startup</string>
+    <string name="settings_prefer_su_context">Use full root if available</string>
+    <string name="settings_prefer_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
+
+    <!-- About -->
     <string name="action_about">About</string>
-    <string name="about_icon_credits"><![CDATA[Thanks <b><a href="https://twitter.com/xiaoya_er">小雅</a></b> for illustrating app icon]]></string>
-    <string name="about_source_code"><![CDATA[View source code at <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b>]]></string>
-    <string name="action_settings">Settings</string>
-    <string name="starting_shell" translatable="false">Starting root shell…</string>
-    <string name="cannot_start_no_root">Can\'t start service because root permission is not granted or this device is not rooted.</string>
-    <string name="channel_service_status">Service start status</string>
+    <string name="about_icon_credits"><![CDATA[Thanks %s for illustrating app icon]]></string>
+    <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
+
+    <!-- Notification -->
+    <string name="notification_channel_service_status">Service start status</string>
     <string name="notification_service_starting">Shizuku service is starting…</string>
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="notification_working">Working…</string>
-    <string name="settings_language">Language</string>
-    <string name="settings_user_interface">Appearance</string>
-    <string name="black_night_theme">Black night theme</string>
-    <string name="black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
-    <string name="settings_startup">Startup</string>
-    <string name="action_view_apps">Get more</string>
-    <string name="adb_no_permission_title">The permission of adb is limited</string>
-    <string name="adb_no_permission_message"><![CDATA[This is usually done by your device vendor which couldn\'t be solved by us.<br>Please try looking for options related in \"Developer options\". For example, for MIUI the option is \"USB debugging (security options)\".]]></string>
-    <string name="view_online_help">Read help</string>
+
+    <!-- Permission related, appears in system permission UI -->
+    <string name="permission_group_label" translatable="false">Shizuku</string>
+    <string name="permission_group_description">access Shizuku</string>
+    <string name="permission_label">access system APIs with higher privileges</string>
+    <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
+
+    <!-- Start with root -->
+    <string name="starting_shell" translatable="false">Starting root shell…</string>
+    <string name="start_with_root_failed">Can\'t start service because root permission is not granted or this device is not rooted.</string>
+
+    <!-- Misc -->
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
+    <string name="toast_copied_to_clipboard">%s\nhas been copied to clipboard.</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
-    <string name="learn_more">Learn Shizuku</string>
-    <string name="learn_more_summary">Learn how to develop with Shizuku or get apps using Shizuku</string>
-    <string name="keep_su_context">Use full root if available</string>
-    <string name="keep_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
-    <string name="requires_root">* requires Shizuku runs with root</string>
     <string name="toast_translation_outdated" translatable="false">The translation of current language is outdated.\nYou can help us by creating pull requests at GitHub.</string>
+
+    <!-- Messages for legacy -->
+    <string name="dialog_legacy_not_support_title">%1$s does not support modern Shizuku</string>
+    <string name="dialog_legacy_not_support_message"><![CDATA[Legacy Shizuku has been deprecated since March 2019. Also, legacy Shizuku does not work on newer Android systems.<p>Please ask the developer of <b>%1$s</b> to update.]]></string>
+    <string name="dialog_requesting_legacy_title">%1$s is requesting legacy Shizuku</string>
+    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check in Shizuku app.<p>Legacy Shizuku has been deprecated since March 2019.]]></string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Open Shizuku</string>
+
 </resources>

@@ -3,74 +3,55 @@
     <string name="permission_group_description">使用 Shizuku</string>
     <string name="permission_label">以更高权限使用系统 API</string>
     <string name="permission_description">允许应用以更高权限使用系统 API。</string>
-    <string name="service_name">服务</string>
-    <string name="service_running">%1$s正在运行</string>
-    <string name="service_version">版本 %2$d，%1$s</string>
-    <string name="service_version_update">版本 %2$d，%1$s\n再次启动来升级到版本 %3$d</string>
-    <string name="service_not_running">%1$s没有运行</string>
-    <string name="service_not_running_tap_retry">%1$s没有运行</string>
-    <string name="service_start">启动</string>
-    <string name="service_restart">重新启动</string>
-    <string name="start_service_title_root"><![CDATA[通过 root 启动服务]]></string>
-    <string name="start_service_title_adb"><![CDATA[通过 adb 启动或升级服务]]></string>
-    <string name="start_service_summary_adb"><![CDATA[
-    <b>如果您的设备没有 root，您需要借助 adb 启动服务。</b>
-    <p><b>如何使用 adb？</b>
-    <br>使用 adb 并不困难，请阅读帮助。
-    <p><b>Shizuku 随机停止？</b>
-    <br>请阅读帮助的最后一部分。]]></string>
-    <string name="start_service_summary_root"><![CDATA[
-    <b>如果您的设备已经 root，您可以使用此方式。</b>
-    <p><b>无法开机启动？</b>
-    <br>请检查您的系统或是第三方工具是否限制了 Shizuku。
-    <br>你可以参考 <b><a href="https://dontkillmyapp.com/">Don\'t kill my app!</a></b>。]]></string>
-    <string name="copy_command">复制</string>
-    <string name="send_command">发送</string>
-    <string name="view_command">查看 adb 指令</string>
-    <string name="view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 还有一些其他注意事项，请确认你已阅读帮助。]]></string>
-    <string name="auth_allow">总是允许</string>
-    <string name="auth_deny">拒绝</string>
-    <string name="auth_message"><![CDATA[要允许 <b>%1$s</b> 以 <b>%2$s</b> 身份调用 API 吗？]]></string>
-    <string name="auth_cannot_connect">无法连接至核心服务，请确认其正在运行。</string>
-    <string name="auth_legacy_not_support_title">%1$s 不支持现代 Shizuku</string>
-    <string name="auth_legacy_not_support_message"><![CDATA[
-    旧式 Shizuku 已于 2019 年 3 月被弃用。此外，旧式 Shizuku 无法在较新版本的 Android 系统上工作。<p>请要求 <b>%1$s</b> 的开发者进行更新。
-    ]]></string>
-    <string name="auth_requesting_legacy_title">%1$s 正在请求旧式 Shizuku</string>
-    <string name="auth_requesting_legacy_message"><![CDATA[
-    <b>%1$s</b> 支持现代 Shizuku，但它正在请求旧式 Shizuku。这可能是因为 Shizuku 没有运行，请在 Shizuku 应用内检查。<p>旧式 Shizuku 已于 2019 年 3 月被弃用。
-    ]]></string>
-    <string name="authorized_apps_manage">应用管理</string>
-    <plurals name="authorized_apps_count">
+    <string name="home_status_service_is_running">%1$s正在运行</string>
+    <string name="home_status_service_version">版本 %2$d，%1$s</string>
+    <string name="home_status_service_version_update">版本 %2$d，%1$s\n再次启动来升级到版本 %3$d</string>
+    <string name="home_status_service_not_running">%1$s没有运行</string>
+    <string name="home_root_button_start">启动</string>
+    <string name="home_root_button_restart">重新启动</string>
+    <string name="home_root_title"><![CDATA[通过 root 启动服务]]></string>
+    <string name="home_adb_title"><![CDATA[通过 adb 启动或升级服务]]></string>
+    <string name="home_adb_description"><![CDATA[<b>如果您的设备没有 root，您需要借助 adb 启动服务。</b><p><b>如何使用 adb？</b><br>使用 adb 并不困难，请阅读帮助。<p><b>Shizuku 随机停止？</b><br>请阅读帮助的最后一部分。]]></string>
+    <string name="home_root_description"><![CDATA[<b>如果您的设备已经 root，您可以使用此方式。</b><p><b>无法开机启动？</b><br>请检查您的系统或是第三方工具是否限制了 Shizuku。<br>你可以参考 %s。]]></string>
+    <string name="home_adb_dialog_view_command_copy_button">复制</string>
+    <string name="home_adb_dialog_view_command_button_send">发送</string>
+    <string name="home_adb_button_view_command">查看 adb 指令</string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 还有一些其他注意事项，请确认你已阅读帮助。]]></string>
+    <string name="dialog_legacy_not_support_title">%1$s 不支持现代 Shizuku</string>
+    <string name="dialog_legacy_not_support_message"><![CDATA[旧式 Shizuku 已于 2019 年 3 月被弃用。此外，旧式 Shizuku 无法在较新版本的 Android 系统上工作。<p>请要求 <b>%1$s</b> 的开发者进行更新。]]></string>
+    <string name="dialog_requesting_legacy_title">%1$s 正在请求旧式 Shizuku</string>
+    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> 支持现代 Shizuku，但它正在请求旧式 Shizuku。这可能是因为 Shizuku 没有运行，请在 Shizuku 应用内检查。<p>旧式 Shizuku 已于 2019 年 3 月被弃用。]]></string>
+    <string name="home_app_management_title">应用管理</string>
+    <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other"><![CDATA[已授权 %d 个应用]]></item>
     </plurals>
-    <string name="view_authorized_apps"><![CDATA[轻触管理授权的应用]]></string>
-    <string name="copied_to_clipboard">%s\n已被复制到剪贴板。</string>
-    <string name="open_manager">打开 Shizuku</string>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[轻触管理授权的应用]]></string>
+    <string name="toast_copied_to_clipboard">%s\n已被复制到剪贴板。</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">打开 Shizuku</string>
     <string name="action_about">关于</string>
-    <string name="about_icon_credits"><![CDATA[感谢 <b><a href="http://weibo.com/528556720">小雅</a></b> 制作应用图标]]></string>
-    <string name="about_source_code"><![CDATA[在 <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b> 查看源码]]></string>
-    <string name="action_settings">设置</string>
-    <string name="cannot_start_no_root">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
-    <string name="channel_service_status">服务启动状态</string>
+    <string name="about_icon_credits"><![CDATA[感谢 %s 制作应用图标]]></string>
+    <string name="about_view_source_code"><![CDATA[在 %s 查看源码]]></string>
+    <string name="settings_title">设置</string>
+    <string name="start_with_root_failed">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="notification_channel_service_status">服务启动状态</string>
     <string name="notification_service_starting">Shizuku 服务正在启动…</string>
     <string name="notification_service_start_failed">启动 Shizuku 服务失败。</string>
     <string name="notification_service_start_no_root">请求 root 权限失败。</string>
     <string name="notification_working">工作中…</string>
     <string name="settings_language">语言</string>
     <string name="settings_user_interface">界面外观</string>
-    <string name="black_night_theme">黑色夜间主题</string>
-    <string name="black_night_theme_summary">当夜间模式启用时使用纯黑色主题</string>
+    <string name="settings_black_night_theme">黑色夜间主题</string>
+    <string name="settings_black_night_theme_summary">当夜间模式启用时使用纯黑色主题</string>
     <string name="settings_startup">启动</string>
-    <string name="action_view_apps">获取更多</string>
-    <string name="adb_no_permission_title">adb 权限受限</string>
-    <string name="adb_no_permission_message"><![CDATA[这通常是由您的设备供应商完成，我们无法解决。<br>请尝试在「开发者选项」中查找相关选项。例如，在 MIUI 中，选项是「USB 调试（安全设置）」。]]></string>
-    <string name="view_online_help">阅读帮助</string>
+    <string name="app_management_menu_get_more">获取更多</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb 权限受限</string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[这通常是由您的设备供应商完成，我们无法解决。<br>请尝试在「开发者选项」中查找相关选项。例如，在 MIUI 中，选项是「USB 调试（安全设置）」。]]></string>
+    <string name="home_adb_button_view_help">阅读帮助</string>
     <string name="dialog_cannot_open_browser_title">无法启动浏览器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被复制到剪贴板。]]></string>
-    <string name="learn_more">了解 Shizuku</string>
-    <string name="learn_more_summary">了解如何使用 Shizuku 开发或查看使用 Shizuku 的应用</string>
-    <string name="keep_su_context">使用完整 root（如果可用）</string>
-    <string name="keep_su_context_summary">关闭此选项（或你的 su 不支持时）会使用 adb shell 的 secontext</string>
-    <string name="requires_root">* 需要以 root 执行的 Shizuku</string>
+    <string name="home_learn_more_title">了解 Shizuku</string>
+    <string name="home_learn_more_description">了解如何使用 Shizuku 开发或查看使用 Shizuku 的应用</string>
+    <string name="settings_prefer_su_context">使用完整 root（如果可用）</string>
+    <string name="settings_prefer_su_context_summary">关闭此选项（或你的 su 不支持时）会使用 adb shell 的 secontext</string>
+    <string name="app_management_item_summary_requires_root">* 需要以 root 执行的 Shizuku</string>
 </resources>

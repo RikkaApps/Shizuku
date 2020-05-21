@@ -10,8 +10,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
@@ -24,13 +22,13 @@ import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AboutDialogBinding
 import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
 import moe.shizuku.manager.starter.ServerLauncher
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.core.ktx.unsafeLazy
-import rikka.html.text.HtmlCompat
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.fixEdgeEffect
@@ -136,12 +134,14 @@ abstract class HomeActivity : AppBarActivity() {
         return when (item.itemId) {
             R.id.action_about -> {
                 val binding = AboutDialogBinding.inflate(LayoutInflater.from(this), null, false)
-                val dialog: Dialog = AlertDialog.Builder(this)
+                binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
+                binding.sourceCode.text = getString(R.string.about_view_source_code, "<b><a href=\"https://github.com/RikkaApps/Shizuku\">GitHub</a></b>").toHtml()
+                binding.iconCredits.movementMethod = LinkMovementMethod.getInstance()
+                binding.iconCredits.text = getString(R.string.about_icon_credits, "<b><a href=\"%2\$s\">%1\$s</a></b>".format(getString(R.string.icon_illustrator), getString(R.string.icon_illustrator_url))).toHtml()
+
+                AlertDialog.Builder(this)
                         .setView(binding.root)
                         .show()
-                binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
-                binding.iconCredits.movementMethod = LinkMovementMethod.getInstance()
-                binding.iconCredits.text = HtmlCompat.fromHtml(getString(R.string.about_icon_credits))
                 true
             }
             R.id.action_settings -> {

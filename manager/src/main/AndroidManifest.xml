@@ -63,10 +63,10 @@
         </activity>
         <activity
             android:name=".management.ApplicationManagementActivity"
-            android:label="@string/authorized_apps_manage" />
+            android:label="@string/home_app_management_title" />
         <activity
             android:name=".settings.SettingsActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/settings_title" />
 
         <activity
             android:name=".legacy.LegacyIsNotSupportedActivity"

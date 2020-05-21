@@ -26,13 +26,13 @@ class ManageAppsViewHolder(private val binding: HomeManageAppsItemBinding) : Bas
 
     override fun onBind() {
         val context = itemView.context
-        title.setHtmlText(context.resources.getQuantityString(R.plurals.authorized_apps_count, data!!, data))
+        title.setHtmlText(context.resources.getQuantityString(R.plurals.home_app_management_authorized_apps_count, data!!, data))
         if (!ShizukuService.pingBinder()) {
             itemView.isEnabled = false
-            summary.setHtmlText(context.getString(R.string.service_not_running, context.getString(R.string.service_name)))
+            summary.setHtmlText(context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name)))
         } else {
             itemView.isEnabled = true
-            summary.setHtmlText(context.getString(R.string.view_authorized_apps))
+            summary.setHtmlText(context.getString(R.string.home_app_management_view_authorized_apps))
         }
     }
 

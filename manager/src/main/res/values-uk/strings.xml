@@ -1,55 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_about">Про додаток</string>
-    <string name="view_command">Переглянути adb команду</string>
-    <string name="view_online_help">Прочитати онлайн довідку</string>
-    <string name="action_view_apps">Отримати більше</string>
-    <string name="auth_allow">Завжди дозволяти</string>
-    <string name="adb_no_permission_title">Дозвіл на adb обмежений</string>
-    <string name="auth_cannot_connect">Неможливо підключитися до основної служби, перевірте, чи працює вона.</string>
-    <string name="auth_deny">Відхилити</string>
-    <string name="authorized_apps_manage">Авторизовані додатки</string>
-    <string name="black_night_theme">Чорна темна тема</string>
-    <string name="black_night_theme_summary">Використовуйте чорну тему тему, якщо включений нічний режим</string>
-    <string name="cannot_start_no_root">Неможливо запустити службу, оскільки не надано дозвіл root або цей пристрій не рутовано.</string>
-    <string name="channel_service_status">Статус запуску серав</string>
-    <string name="copy_command">Копіювати</string>
+    <string name="home_adb_button_view_command">Переглянути adb команду</string>
+    <string name="home_adb_button_view_help">Прочитати онлайн довідку</string>
+    <string name="app_management_menu_get_more">Отримати більше</string>
+    <string name="app_management_dialog_adb_is_limited_title">Дозвіл на adb обмежений</string>
+    <string name="home_app_management_title">Авторизовані додатки</string>
+    <string name="settings_black_night_theme">Чорна темна тема</string>
+    <string name="settings_black_night_theme_summary">Використовуйте чорну тему тему, якщо включений нічний режим</string>
+    <string name="start_with_root_failed">Неможливо запустити службу, оскільки не надано дозвіл root або цей пристрій не рутовано.</string>
+    <string name="notification_channel_service_status">Статус запуску серав</string>
+    <string name="home_adb_dialog_view_command_copy_button">Копіювати</string>
     <string name="dialog_cannot_open_browser_title">Не вдається запустити браузер</string>
-    <string name="keep_su_context">Використовуйте повний рут доступ, якщо він є</string>
-    <string name="keep_su_context_summary">Якщо вимкнути цю опцію (або не підтримується вашим su), буде використано контекст adb shell</string>
-    <string name="learn_more">Вивчіть Shizuku</string>
-    <string name="learn_more_summary">Дізнайтеся, як розвиватися за допомогою Shizuku або отримувати додатки за допомогою Shizuku</string>
+    <string name="settings_prefer_su_context">Використовуйте повний рут доступ, якщо він є</string>
+    <string name="settings_prefer_su_context_summary">Якщо вимкнути цю опцію (або не підтримується вашим su), буде використано контекст adb shell</string>
+    <string name="home_learn_more_title">Вивчіть Shizuku</string>
+    <string name="home_learn_more_description">Дізнайтеся, як розвиватися за допомогою Shizuku або отримувати додатки за допомогою Shizuku</string>
     <string name="notification_service_start_failed">Помилка запуску служби Shizuku.</string>
     <string name="notification_service_start_no_root">Помилка запиту на root доступ.</string>
     <string name="notification_service_starting">Сервіс Shizuku запущено…</string>
     <string name="notification_working">Працює…</string>
-    <string name="open_manager">Відкрити Shizuku</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Відкрити Shizuku</string>
     <string name="permission_description">Дозвольте додатку використовувати системні API з більш високими привілеями.</string>
-    <string name="service_name">Сервіс</string>
-    <string name="service_restart">Перезапуск</string>
-    <string name="service_running">%1$s працює</string>
-    <string name="send_command">Відправити</string>
+    <string name="home_root_button_restart">Перезапуск</string>
+    <string name="home_status_service_is_running">%1$s працює</string>
+    <string name="home_adb_dialog_view_command_button_send">Відправити</string>
     <string name="settings_language">Мова</string>
-    <string name="service_start">Заупск</string>
-    <string name="service_version">версія %2$d, %1$s</string>
+    <string name="home_root_button_start">Заупск</string>
+    <string name="home_status_service_version">версія %2$d, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
-    <string name="service_version_update">версія %2$d, %1$s\nпочніть оновлюватися до версії %3$d</string>
+    <string name="home_status_service_version_update">версія %2$d, %1$s\nпочніть оновлюватися до версії %3$d</string>
     <string name="permission_group_description">доступ до Shizuku</string>
     <string name="permission_label">доступ до системних API з більш високими привілеями</string>
-    <string name="requires_root">* потрібен root, щоб запускався Shizuku</string>
-    <string name="service_not_running">%1$s не працює</string>
-    <string name="service_not_running_tap_retry">%1$s не працює, натисніть, щоб перевірити ще раз</string>
-    <string name="about_source_code"><![CDATA[Переглянути вихідний код на <b><a href="https://github.com/RikkaApps/Shizuku">GitHub</a></b>]]></string>
-    <string name="about_icon_credits"><![CDATA[Дякую <b><a href="https://twitter.com/xiaoya_er">小雅</a></b> за стоверння іконки для додатку]]></string>
-    <string name="adb_no_permission_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
-    <string name="auth_message"><![CDATA[Дозволити <b>%1$s</b> використовувати API для індифікації<b>%2$s</b>?]]></string>
-    <string name="start_service_summary_adb"><![CDATA[Використовувати adb не складно, прочитайте довідку нижче. Довідка буде оновлена ​​в будь-який час, включаючи вирішення проблем (наприклад, Shizuku зупиняється раптово).]]></string>
-    <string name="start_service_title_adb"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
-    <string name="start_service_title_root"><![CDATA[Запустіть службу з root доступом]]></string>
+    <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>
+    <string name="home_status_service_not_running">%1$s не працює</string>
+    <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
+    <string name="about_icon_credits"><![CDATA[Дякую %s за стоверння іконки для додатку]]></string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
+    <string name="home_adb_description"><![CDATA[Використовувати adb не складно, прочитайте довідку нижче. Довідка буде оновлена ​​в будь-який час, включаючи вирішення проблем (наприклад, Shizuku зупиняється раптово).]]></string>
+    <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
+    <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
-    <string name="view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
-    <string name="view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>
-    <string name="start_service_summary_root"><![CDATA[     У разі успішного запуску, Shizuku автоматично запуститься після завантаження.<br>Якщо Shizuku не може запуститися після завантаження належним чином, перевірте, чи ваша система чи сторонні інструменти обмежили фоновий режим Shizuku.<p>Майже у всіх постачальників, окрім Google, є свій механізм обмеження фонового режиму (деякі постачальники неоднакові, наприклад, OnePlus, що серйозно впливає на функціональність багатьох додатків).<br>Будь ласка, зверніться до<b><a href="https://dontkillmyapp.com/">dontkillmyapp.com</a></b> для інструкцій щодо вимкнення обмежень.]]></string>
-    <string name="copied_to_clipboard">%s скопійовано в буфер обміну.</string>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>
+    <string name="home_root_description"><![CDATA[     У разі успішного запуску, Shizuku автоматично запуститься після завантаження.<br>Якщо Shizuku не може запуститися після завантаження належним чином, перевірте, чи ваша система чи сторонні інструменти обмежили фоновий режим Shizuku.<p>Майже у всіх постачальників, окрім Google, є свій механізм обмеження фонового режиму (деякі постачальники неоднакові, наприклад, OnePlus, що серйозно впливає на функціональність багатьох додатків).<br>Будь ласка, зверніться до %s для інструкцій щодо вимкнення обмежень.]]></string>
+    <string name="toast_copied_to_clipboard">%s скопійовано в буфер обміну.</string>
 </resources>

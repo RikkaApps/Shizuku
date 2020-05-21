@@ -54,7 +54,7 @@
                 android:id="@+id/requires_root"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/requires_root"
+                android:text="@string/app_management_item_summary_requires_root"
                 android:textSize="12sp"
                 android:textStyle="italic" />
 

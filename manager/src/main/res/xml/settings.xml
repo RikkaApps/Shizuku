@@ -8,8 +8,8 @@
 
         <SwitchPreference
             android:key="keep_su_context"
-            android:title="@string/keep_su_context"
-            android:summary="@string/keep_su_context_summary"
+            android:title="@string/settings_prefer_su_context"
+            android:summary="@string/settings_prefer_su_context_summary"
             android:defaultValue="true"/>
 
     </moe.shizuku.preference.PreferenceCategory>
@@ -36,8 +36,8 @@
 
         <SwitchPreference
             android:key="black_night_theme"
-            android:title="@string/black_night_theme"
-            android:summary="@string/black_night_theme_summary"
+            android:title="@string/settings_black_night_theme"
+            android:summary="@string/settings_black_night_theme_summary"
             android:defaultValue="false"/>
 
     </moe.shizuku.preference.PreferenceCategory>

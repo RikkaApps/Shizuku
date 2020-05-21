@@ -33,19 +33,19 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
         binding.button2.setOnClickListener { v: View ->
             val context = v.context
             AlertDialog.Builder(context)
-                    .setTitle(R.string.view_command)
-                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.view_command_message, ServerLauncher.getCommandAdb())))
-                    .setPositiveButton(R.string.copy_command) { _, _ ->
+                    .setTitle(R.string.home_adb_button_view_command)
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, ServerLauncher.getCommandAdb())))
+                    .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
                         if (ClipboardUtils.put(context, ServerLauncher.getCommandAdb())) {
-                            Toast.makeText(context, context.getString(R.string.copied_to_clipboard, ServerLauncher.getCommandAdb()), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, ServerLauncher.getCommandAdb()), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .setNegativeButton(android.R.string.cancel, null)
-                    .setNeutralButton(R.string.send_command) { _, _ ->
+                    .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { _, _ ->
                         var intent = Intent(Intent.ACTION_SEND)
                         intent.type = "text/plain"
                         intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.getCommandAdb())
-                        intent = Intent.createChooser(intent, context.getString(R.string.send_command))
+                        intent = Intent.createChooser(intent, context.getString(R.string.home_adb_dialog_view_command_button_send))
                         context.startActivity(intent)
                     }
                     .show()

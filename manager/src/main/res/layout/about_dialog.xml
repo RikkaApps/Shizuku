@@ -32,14 +32,14 @@
             android:text="@string/versionName"
             android:textSize="14sp" />
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@+id/source_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="?android:textColorSecondary"
             android:textSize="14sp"
-            app:htmlText="@string/about_source_code" />
+            tools:text="@string/about_view_source_code" />
 
         <TextView
             android:id="@+id/icon_credits"

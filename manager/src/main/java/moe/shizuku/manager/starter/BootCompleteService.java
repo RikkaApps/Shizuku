@@ -34,7 +34,7 @@ public class BootCompleteService extends Service {
 
         if (notificationManager != null
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_STATUS, getString(R.string.channel_service_status), NotificationManager.IMPORTANCE_MIN);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_STATUS, getString(R.string.notification_channel_service_status), NotificationManager.IMPORTANCE_MIN);
             channel.setSound(null, null);
             channel.setShowBadge(false);
 

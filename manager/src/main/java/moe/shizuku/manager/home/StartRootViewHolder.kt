@@ -9,18 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Checkable
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.databinding.HomeStartRootBinding
 import moe.shizuku.manager.databinding.ShellDialogBinding
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.ServerLauncher
 import moe.shizuku.manager.starter.ShellService
 import moe.shizuku.manager.starter.ShellService.ShellServiceBinder
 import moe.shizuku.manager.utils.BindServiceHelper
 import rikka.core.util.ContextUtils
+import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
@@ -45,6 +46,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
         start.setOnClickListener(listener)
         restart.setOnClickListener(listener)
         binding.text1.movementMethod = LinkMovementMethod.getInstance()
+        binding.text1.text = binding.text1.context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\\'t kill my app!</a></b>").toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
     }
 
     private fun onStartClicked(v: View) {
@@ -60,12 +62,12 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
                 .setView(binding.root)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, null)
-                .setNeutralButton(R.string.send_command) { dialog: DialogInterface?, which: Int ->
+                .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { dialog: DialogInterface?, which: Int ->
                     val activity = ContextUtils.getActivity<Activity>(context) ?: return@setNeutralButton
                     ShareCompat.IntentBuilder.from(activity)
                             .setText(sb.toString())
                             .setType("text/plain")
-                            .setChooserTitle(R.string.send_command)
+                            .setChooserTitle(R.string.home_adb_dialog_view_command_button_send)
                             .startChooser()
                 }
                 .show()
@@ -88,7 +90,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
                     start.isEnabled = true
                     restart.isEnabled = true
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
-                    textView.setText(R.string.cannot_start_no_root)
+                    textView.setText(R.string.start_with_root_failed)
                 }
 
                 override fun onCommandResult(exitCode: Int) {
