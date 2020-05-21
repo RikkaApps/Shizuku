@@ -52,6 +52,12 @@ android {
         exclude '/META-INF/*.kotlin_module'
         exclude '/kotlin/**'
     }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    dependenciesInfo {
+        includeInApk false
+    }
 }
 
 android.applicationVariants.all { variant ->

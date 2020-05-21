@@ -2,7 +2,6 @@ package moe.shizuku.manager.authorization;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +11,7 @@ public class AuthorizationManager {
     private static final AuthorizationManagerImpl IMPL;
 
     static {
-        if (Build.VERSION.SDK_INT >= 23) {
-            IMPL = new AuthorizationManagerImplV23();
-        } else {
-            IMPL = new AuthorizationManagerImplV21();
-        }
+        IMPL = new AuthorizationManagerImplV23();
     }
 
     public static void init(Context context) {

@@ -69,8 +69,7 @@
             android:label="@string/action_settings" />
 
         <activity
-            android:name=".authorization.Pre23AuthorizationActivity"
-            android:enabled="@bool/auth_activity_enabled"
+            android:name=".legacy.LegacyIsNotSupportedActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:permission="@string/permission"

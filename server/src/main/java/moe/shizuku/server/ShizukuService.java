@@ -16,8 +16,6 @@ import android.system.Os;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import moe.shizuku.api.BinderContainer;
@@ -26,17 +24,13 @@ import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.ArrayUtils;
-import moe.shizuku.server.utils.BuildUtils;
-import moe.shizuku.server.utils.UserHandleUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
-    private static final String PERMISSION = BuildUtils.atLeast23() ? ShizukuApiConstants.PERMISSION : ShizukuApiConstants.PERMISSION_PRE_23;
-
-    private static final Set<Integer> GRANTED_UID_PRE_23 = new HashSet<>();
+    private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
     private final Handler mMainHandler;
     private String mToken;
@@ -99,35 +93,27 @@ public class ShizukuService extends IShizukuService.Stub {
         throw new SecurityException(msg);
     }
 
-    private void enforceCallingPermission(String func, boolean checkToken) {
+    private void enforceCallingPermission(String func) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
         }
 
-        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
+        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED
+                || checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
             return;
-
-        if (checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED) {
-            if (BuildUtils.atLeast23() || !checkToken)
-                return;
-
-            int uid = Binder.getCallingUid();
-            if (GRANTED_UID_PRE_23.contains(uid))
-                return;
-        }
 
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
-                + " requires a valid token, call setUidToken first";
+                + " requires " + PERMISSION;
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
 
     private void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
+        enforceCallingPermission("transactRemote");
+
         IBinder targetBinder = data.readStrongBinder();
         int targetCode = data.readInt();
-
-        enforceCallingPermission("transactRemote", true);
 
         LOGGER.d("transact: uid=%d, descriptor=%s, code=%d", Binder.getCallingUid(), targetBinder.getInterfaceDescriptor(), targetCode);
         Parcel newData = Parcel.obtain();
@@ -148,47 +134,25 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public int getVersion() {
-        enforceCallingPermission("getVersion", true);
+        enforceCallingPermission("getVersion");
         return ShizukuApiConstants.SERVER_VERSION;
     }
 
     @Override
     public int getUid() {
-        enforceCallingPermission("getUid", true);
+        enforceCallingPermission("getUid");
         return Os.getuid();
     }
 
     @Override
     public int checkPermission(String permission) throws RemoteException {
-        enforceCallingPermission("checkPermission", true);
+        enforceCallingPermission("checkPermission");
         return SystemService.checkPermission(permission, Os.getuid());
     }
 
     @Override
-    public String getToken() {
-        enforceManager("getToken");
-        return mToken;
-    }
-
-    @Override
-    public boolean setUidToken(String token) {
-        enforceCallingPermission("setUidToken", false);
-
-        if (BuildUtils.atLeast23()) {
-            throw new IllegalStateException("calling setToken on API 23+");
-        }
-
-        if (mToken.equals(token)) {
-            GRANTED_UID_PRE_23.add(Binder.getCallingUid());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
     public IRemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
-        enforceCallingPermission("newProcess", true);
+        enforceCallingPermission("newProcess");
 
         LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
 
@@ -204,29 +168,12 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public String getSELinuxContext() throws RemoteException {
-        enforceCallingPermission("getSELinuxContext", true);
+        enforceCallingPermission("getSELinuxContext");
 
         try {
             return SELinux.getContext();
         } catch (Throwable tr) {
             throw new RemoteException(tr.getMessage());
-        }
-    }
-
-    @Override
-    public void setUidPermissionPre23(int uid, boolean granted) {
-        enforceManager("setPre23AppPermission");
-
-        if (uid != -1) {
-            if (granted) {
-                GRANTED_UID_PRE_23.add(uid);
-            } else {
-                if (GRANTED_UID_PRE_23.remove(uid)) {
-                    for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
-                        SystemService.forceStopPackageNoThrow(packageName, UserHandleUtils.getUserId(uid));
-                    }
-                }
-            }
         }
     }
 

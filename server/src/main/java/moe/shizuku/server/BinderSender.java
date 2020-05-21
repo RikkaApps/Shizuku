@@ -22,7 +22,7 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 public class BinderSender {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
-    private static final String PERMISSION = BuildUtils.atLeast23() ? ShizukuApiConstants.PERMISSION : ShizukuApiConstants.PERMISSION_PRE_23;
+    private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
     private static final List<Integer> PID_LIST = new ArrayList<>();
 
