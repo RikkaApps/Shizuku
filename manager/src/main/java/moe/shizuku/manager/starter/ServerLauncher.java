@@ -140,7 +140,6 @@ public class ServerLauncher {
         Objects.requireNonNull(dex);
 
         return "--path=" + dex
-                + " --token=" + UUID.randomUUID()
                 + (ShizukuManagerSettings.isKeepSuContext() ? "" : " --use-shell-context");
     }
 

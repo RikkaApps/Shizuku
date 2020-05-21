@@ -32,31 +32,20 @@ public class ShizukuService extends IShizukuService.Stub {
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
-    private final Handler mMainHandler;
-    private String mToken;
+    @SuppressWarnings({"ConstantConditions", "FieldCanBeLocal"})
+    private final Handler mMainHandler = new Handler(Looper.myLooper());
 
-    public static void main(UUID token) {
+    public static void main() {
         LOGGER.i("server v3");
         Looper.prepare();
-        new ShizukuService(token);
+        new ShizukuService();
         Looper.loop();
         LOGGER.i("server exit");
         System.exit(0);
     }
 
-    ShizukuService(UUID token) {
+    ShizukuService() {
         super();
-
-        //noinspection ConstantConditions
-        mMainHandler = new Handler(Looper.myLooper());
-
-        if (token == null) {
-            mToken = UUID.randomUUID().toString();
-        } else {
-            LOGGER.i("using token from arg");
-
-            mToken = token.toString();
-        }
 
         BinderSender.register(this);
 

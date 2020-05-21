@@ -76,8 +76,7 @@ static void setClasspathEnv(const char *path) {
     fflush(stdout);
 }
 
-static int start_server(const char *path, const char *main_class, const char *token,
-                        const char *process_name, int change_context) {
+static int start_server(const char *path, const char *main_class,const char *process_name, int change_context) {
     pid_t pid = fork();
     if (pid == 0) {
         pid = daemon(FALSE, FALSE);
@@ -90,8 +89,7 @@ static int start_server(const char *path, const char *main_class, const char *to
                 se::setcon("u:r:shell:s0");
             }
 
-            char nice_name[128], class_path[PATH_MAX], java_token[128];
-            sprintf(java_token, "--token=%s", token);
+            char nice_name[128], class_path[PATH_MAX];
             sprintf(nice_name, "--nice-name=%s", process_name);
             setClasspathEnv(path);
             snprintf(class_path, PATH_MAX, "-Djava.class.path=%s", path);
@@ -128,7 +126,6 @@ static int start_server(const char *path, const char *main_class, const char *to
                         main_class,
 
                         // Java params
-                        java_token,
                         "--debug",
                         nullptr
                 };
@@ -153,7 +150,6 @@ static int start_server(const char *path, const char *main_class, const char *to
                         main_class,
 
                         // Java params
-                        java_token,
                         "--debug",
                         nullptr
                 };
@@ -178,7 +174,6 @@ static int start_server(const char *path, const char *main_class, const char *to
                         main_class,
 
                         // Java params
-                        java_token,
                         "--debug",
                         nullptr
                 };
@@ -193,7 +188,6 @@ static int start_server(const char *path, const char *main_class, const char *to
                     const_cast<char *>("/system/bin"),
                     const_cast<char *>(nice_name),
                     const_cast<char *>(main_class),
-                    const_cast<char *>(java_token),
                     nullptr
             };
 
@@ -347,16 +341,13 @@ int main(int argc, char **argv) {
 
     clock_gettime(CLOCK_REALTIME, &ts);
 
-    char *token = nullptr;
     char *_path = nullptr;
     char *_path_legacy = nullptr;
     int i;
     int use_shell_context = 0;
 
     for (i = 0; i < argc; ++i) {
-        if (strncmp(argv[i], "--token=", 8) == 0) {
-            token = strdup(argv[i] + 8);
-        } else if (strncmp(argv[i], "--path=", 7) == 0) {
+        if (strncmp(argv[i], "--path=", 7) == 0) {
             _path = strdup(argv[i] + 7);
         } else if (strncmp(argv[i], "--path-legacy=", 14) == 0) {
             _path_legacy = strdup(argv[i] + 14);
@@ -388,11 +379,6 @@ int main(int argc, char **argv) {
             }
             se::freecon(context);
         }
-    }
-
-    if (!token) {
-        perrorf("fatal: token not set.\n");
-        exit(EXIT_FATAL_PATH_NOT_SET);
     }
 
     check_access(_path, "source dex path");
@@ -429,7 +415,7 @@ int main(int argc, char **argv) {
 
     printf("info: starting server...\n");
     fflush(stdout);
-    start_server(path, SERVER_CLASS_PATH, token, SERVER_NAME, use_shell_context);
+    start_server(path, SERVER_CLASS_PATH, SERVER_NAME, use_shell_context);
 
     exit_with_logcat(EXIT_SUCCESS);
 }

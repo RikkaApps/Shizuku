@@ -32,12 +32,9 @@ public class Starter {
     }
 
     public static void main(String[] args) {
-        UUID token = null;
         if (args.length > 0) {
             for (String arg : args) {
-                if (arg.startsWith("--token=")) {
-                    token = UUID.fromString(arg.replace("--token=", ""));
-                } else if (arg.equals("--debug")) {
+                if (arg.equals("--debug")) {
                     DdmHandleAppName.setAppName("shizuku_server", 0);
                 }
             }
@@ -50,6 +47,6 @@ public class Starter {
 
         checkManagerApp();
 
-        ShizukuService.main(token);
+        ShizukuService.main();
     }
 }
