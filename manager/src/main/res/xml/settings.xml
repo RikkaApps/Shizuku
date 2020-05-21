@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidElementNotAllowed -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <moe.shizuku.preference.PreferenceCategory
@@ -7,10 +6,31 @@
         android:title="@string/settings_startup">
 
         <SwitchPreference
+            android:defaultValue="true"
             android:key="keep_su_context"
-            android:title="@string/settings_prefer_su_context"
             android:summary="@string/settings_prefer_su_context_summary"
-            android:defaultValue="true"/>
+            android:title="@string/settings_prefer_su_context" />
+
+    </moe.shizuku.preference.PreferenceCategory>
+
+    <moe.shizuku.preference.PreferenceCategory android:title="@string/settings_language">
+
+        <SimpleMenuPreference
+            android:defaultValue="SYSTEM"
+            android:entries="@array/language"
+            android:entryValues="@array/language_value"
+            android:key="language"
+            android:summary="%s"
+            android:title="@string/settings_language" />
+
+        <Preference
+            android:key="translation"
+            android:title="@string/settings_translation" />
+
+        <Preference
+            style="?preferenceInformationStyle"
+            android:key="translation_contributors"
+            android:title="@string/settings_translation_contributors" />
 
     </moe.shizuku.preference.PreferenceCategory>
 
@@ -18,27 +38,19 @@
         android:key="user_interface"
         android:title="@string/settings_user_interface">
 
-        <SimpleMenuPreference
-            android:key="language"
-            android:title="@string/settings_language"
-            android:summary="%s"
-            android:entries="@array/language"
-            android:entryValues="@array/language_value"
-            android:defaultValue="SYSTEM"/>
-
         <moe.shizuku.manager.settings.IntegerSimpleMenuPreference
-            android:key="night_mode"
-            android:title="@string/dark_theme"
-            android:summary="%s"
+            android:defaultValue="-1"
             android:entries="@array/night_mode"
             android:entryValues="@array/night_mode_value"
-            android:defaultValue="-1" />
+            android:key="night_mode"
+            android:summary="%s"
+            android:title="@string/dark_theme" />
 
         <SwitchPreference
+            android:defaultValue="false"
             android:key="black_night_theme"
-            android:title="@string/settings_black_night_theme"
             android:summary="@string/settings_black_night_theme_summary"
-            android:defaultValue="false"/>
+            android:title="@string/settings_black_night_theme" />
 
     </moe.shizuku.preference.PreferenceCategory>
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuManagerSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
-import moe.shizuku.manager.utils.BuildUtils
+import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
@@ -38,8 +38,12 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var blackNightThemePreference: SwitchPreference
     private lateinit var keepSuContextPreference: SwitchPreference
     private lateinit var startupPreference: PreferenceCategory
+    private lateinit var translationPreference: Preference
+    private lateinit var translationContributorsPreference: Preference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        val context = requireContext()
+
         preferenceManager.setStorageDeviceProtected()
         preferenceManager.sharedPreferencesName = ShizukuManagerSettings.NAME
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
@@ -50,6 +54,8 @@ class SettingsFragment : PreferenceFragment() {
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
         keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
         startupPreference = findPreference("startup") as PreferenceCategory
+        translationPreference = findPreference("translation")
+        translationContributorsPreference = findPreference("translation_contributors")
 
         keepSuContextPreference.isVisible = false
         startupPreference.isVisible = false
@@ -107,6 +113,18 @@ class SettingsFragment : PreferenceFragment() {
         blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
             if (ResourceUtils.isNightMode(requireContext().resources.configuration)) activity?.recreate()
             true
+        }
+
+        translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
+        translationPreference.setOnPreferenceClickListener {
+            CustomTabsHelper.launchUrlOrCopy(context, context.getString(R.string.translation_url))
+            true
+        }
+
+        if (context.resources.getBoolean(R.bool.show_translation_contributors)) {
+            translationContributorsPreference.summary = context.getString(R.string.translation_contributors)
+        } else {
+            translationContributorsPreference.isVisible = false
         }
     }
 

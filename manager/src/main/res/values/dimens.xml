@@ -15,6 +15,4 @@
 
     <dimen name="home_margin">4dp</dimen>
 
-    <bool name="translation_outdated">false</bool>
-
 </resources>

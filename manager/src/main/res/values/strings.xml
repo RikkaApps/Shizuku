@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku</string>
 
+    <string name="translation_contributors" />
+
     <!-- Home - Status -->
     <string name="home_status_service_is_running">%1$s is running</string>
     <string name="home_status_service_not_running">%1$s not running</string>
@@ -50,6 +52,9 @@
     <string name="settings_startup">Startup</string>
     <string name="settings_prefer_su_context">Use full root if available</string>
     <string name="settings_prefer_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
+    <string name="settings_translation_contributors">Translation contributors</string>
+    <string name="settings_translation">Translation</string>
+    <string name="settings_translation_summary">Help us translate %s into your language</string>
 
     <!-- About -->
     <string name="action_about">About</string>
@@ -77,7 +82,7 @@
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard">%s\nhas been copied to clipboard.</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
-    <string name="toast_translation_outdated" translatable="false">The translation of current language is outdated.\nYou can help us by creating pull requests at GitHub.</string>
+    <string name="toast_translation_unfinished" translatable="false">The translation of current language is unfinished.\nYou can learn how to contribute translation in settings.</string>
 
     <!-- Messages for legacy -->
     <string name="dialog_legacy_not_support_title">%1$s does not support modern Shizuku</string>

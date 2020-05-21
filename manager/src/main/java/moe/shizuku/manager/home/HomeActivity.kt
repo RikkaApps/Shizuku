@@ -1,6 +1,5 @@
 package moe.shizuku.manager.home
 
-import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -55,8 +54,8 @@ abstract class HomeActivity : AppBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (resources.getBoolean(R.bool.translation_outdated)) {
-            Toast.makeText(this, getString(R.string.toast_translation_outdated), Toast.LENGTH_LONG).show()
+        if (resources.getBoolean(R.bool.is_translation_unfinished)) {
+            Toast.makeText(this, getString(R.string.toast_translation_unfinished), Toast.LENGTH_LONG).show()
         }
 
         val binding = HomeActivityBinding.inflate(layoutInflater)
