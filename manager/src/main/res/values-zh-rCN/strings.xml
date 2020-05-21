@@ -56,6 +56,6 @@
     <string name="app_management_item_summary_requires_root">* 需要以 root 执行的 Shizuku</string>
     <string name="settings_translation_contributors">翻译贡献者</string>
     <string name="translation_contributors" />
-    <string name="settings_translation">翻译</string>
+    <string name="settings_translation">参与翻译</string>
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
 </resources>

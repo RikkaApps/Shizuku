@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku</string>
 
+    <!-- To translators: you can leave your here -->
     <string name="translation_contributors" />
 
     <!-- Home - Status -->
@@ -53,7 +54,7 @@
     <string name="settings_prefer_su_context">Use full root if available</string>
     <string name="settings_prefer_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
     <string name="settings_translation_contributors">Translation contributors</string>
-    <string name="settings_translation">Translation</string>
+    <string name="settings_translation">Participate in translation</string>
     <string name="settings_translation_summary">Help us translate %s into your language</string>
 
     <!-- About -->
