@@ -19,7 +19,7 @@
         <item name="homeCardStyle">@style/Card.Light</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
 
-        <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+        <item name="appBarStyle">@style/Widget.AppBar.Surface.Raisable</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -45,7 +45,7 @@
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
 
-        <item name="appBarStyle">@style/Widget.AppBar.Solid</item>
+        <item name="appBarStyle">@style/Widget.AppBar.Surface.Raisable</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -73,10 +73,15 @@
         <item name="android:background">?android:colorBackground</item>
     </style>
 
-    <style name="Widget.AppBar.Solid">
+    <style name="Widget.AppBar.Surface">
         <item name="android:background">?android:colorBackground</item>
         <item name="android:stateListAnimator">@animator/alpha_animator</item>
         <item name="android:elevation">@dimen/app_bar_elevation</item>
+    </style>
+
+    <style name="Widget.AppBar.Surface.Raisable">
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@animator/raise_animator</item>
     </style>
 
     <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">

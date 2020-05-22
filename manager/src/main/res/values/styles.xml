@@ -2,15 +2,6 @@
 <resources>
     <style name="AppTheme" parent="Theme.Light"/>
 
-    <style name="AppTheme.RaiseOnlyAppBar">
-        <item name="appBarStyle">@style/Widget.AppBar.Solid.RaiseOnly</item>
-    </style>
-
-    <style name="Widget.AppBar.Solid.RaiseOnly">
-        <item name="android:elevation">0dp</item>
-        <item name="android:stateListAnimator">@animator/raise_animator</item>
-    </style>
-
     <style name="Card">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

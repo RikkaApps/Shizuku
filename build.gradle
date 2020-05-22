@@ -43,7 +43,7 @@ task clean(type: Delete) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = '3.7.0'
+def baseVersionName = '4.0.0'
 
 ext {
     minSdkVersion = 23
