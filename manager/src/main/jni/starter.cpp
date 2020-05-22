@@ -342,15 +342,12 @@ int main(int argc, char **argv) {
     clock_gettime(CLOCK_REALTIME, &ts);
 
     char *_path = nullptr;
-    char *_path_legacy = nullptr;
     int i;
     int use_shell_context = 0;
 
     for (i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--path=", 7) == 0) {
             _path = strdup(argv[i] + 7);
-        } else if (strncmp(argv[i], "--path-legacy=", 14) == 0) {
-            _path_legacy = strdup(argv[i] + 14);
         } else if (strncmp(argv[i], "--use-shell-context", 19) == 0) {
             use_shell_context = 1;
         }
@@ -390,9 +387,8 @@ int main(int argc, char **argv) {
         se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
-    char path[PATH_MAX], path_legacy[PATH_MAX];
+    char path[PATH_MAX];
     sprintf(path, "/data/local/tmp/shizuku/%s", basename(_path));
-    sprintf(path_legacy, "/data/local/tmp/shizuku/%s", basename(_path_legacy));
 
     copy_if_not_exist(_path, path);
 

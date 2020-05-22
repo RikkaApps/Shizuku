@@ -14,5 +14,9 @@
     public static *** d(...);
 }
 
+-assumenosideeffects class moe.shizuku.manager.utils.Logger {
+    public *** d(...);
+}
+
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception

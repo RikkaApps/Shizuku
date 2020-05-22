@@ -16,7 +16,6 @@ import android.system.Os;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.UUID;
 
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
