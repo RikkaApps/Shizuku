@@ -46,7 +46,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
         start.setOnClickListener(listener)
         restart.setOnClickListener(listener)
         binding.text1.movementMethod = LinkMovementMethod.getInstance()
-        binding.text1.text = binding.text1.context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\\'t kill my app!</a></b>").toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+        binding.text1.text = binding.text1.context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\'t kill my app!</a></b>").toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
     }
 
     private fun onStartClicked(v: View) {
