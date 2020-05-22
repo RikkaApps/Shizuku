@@ -4,9 +4,7 @@
     package="moe.shizuku.manager">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
 
     <permission-group
@@ -17,9 +15,6 @@
 
     <permission
         android:name="moe.shizuku.manager.permission.MANAGER"
-        android:protectionLevel="signature" />
-    <permission
-        android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED"
         android:protectionLevel="signature" />
     <permission
         android:name="moe.shizuku.manager.permission.API"
