@@ -10,5 +10,9 @@
 	public static void checkParameterIsNotNull(...);
 }
 
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+}
+
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception

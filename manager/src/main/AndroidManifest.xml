@@ -8,13 +8,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="${applicationId}.permission.RECEIVE_SERVER_STARTED" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
-    <uses-permission
-        android:name="moe.shizuku.manager.permission.API"
-        tools:node="remove" />
-
-    <uses-permission-sdk-23
-        android:name="moe.shizuku.manager.permission.API_V23"
-        tools:node="remove" />
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"

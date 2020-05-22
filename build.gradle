@@ -53,5 +53,5 @@ ext {
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
     kotlinCoroutinesVersion = '1.3.5'
 
-    apiVersionName = '3.2.0'
+    apiVersionName = '4.0.0'
 }
