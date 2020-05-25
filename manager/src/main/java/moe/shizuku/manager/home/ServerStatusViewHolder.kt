@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import moe.shizuku.api.ShizukuClientHelper
+import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
@@ -56,10 +56,14 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
         if (isRoot) {
             user += if (status.seContext != null) " (context=" + status.seContext + ")" else ""
         }
-        title = context.getString(R.string.home_status_service_is_running, context.getString(R.string.app_name))
+        title = if (ok) {
+            context.getString(R.string.home_status_service_is_running, context.getString(R.string.app_name))
+        } else {
+            context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name))
+        }
         summary = if (ok) {
-            if (status.version != ShizukuClientHelper.getLatestVersion()) {
-                context.getString(R.string.home_status_service_version_update, user, version, ShizukuClientHelper.getLatestVersion())
+            if (status.version != ShizukuService.getLatestServiceVersion()) {
+                context.getString(R.string.home_status_service_version_update, user, version, ShizukuService.getLatestServiceVersion())
             } else {
                 context.getString(R.string.home_status_service_version, user, version)
             }

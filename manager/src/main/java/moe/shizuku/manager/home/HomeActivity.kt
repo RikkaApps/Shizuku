@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
@@ -34,14 +35,13 @@ import rikka.recyclerview.fixEdgeEffect
 
 abstract class HomeActivity : AppBarActivity() {
 
-    private val mBinderReceivedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            appsModel.load()
-            adapter.updateData()
-        }
+    private val binderReceivedListener = ShizukuProvider.OnBinderReceivedListener {
+        checkServerStatus()
+        appsModel.load()
+        adapter.updateData()
     }
 
-    private val mRequestRefreshReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val requestRefreshReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             checkServerStatus()
         }
@@ -103,10 +103,10 @@ abstract class HomeActivity : AppBarActivity() {
                     recyclerView.paddingBottom - margin)
         }
 
+        ShizukuProvider.addBinderReceivedListenerSticky(binderReceivedListener)
+
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mBinderReceivedReceiver, IntentFilter(AppConstants.ACTION_BINDER_RECEIVED))
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mRequestRefreshReceiver, IntentFilter(AppConstants.ACTION_REQUEST_REFRESH))
+                .registerReceiver(requestRefreshReceiver, IntentFilter(AppConstants.ACTION_REQUEST_REFRESH))
     }
 
     override fun onResume() {
@@ -120,8 +120,8 @@ abstract class HomeActivity : AppBarActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBinderReceivedReceiver)
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRequestRefreshReceiver)
+        ShizukuProvider.removeBinderReceivedListener(binderReceivedListener)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(requestRefreshReceiver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

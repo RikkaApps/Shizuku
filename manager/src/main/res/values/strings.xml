@@ -7,8 +7,8 @@
     <!-- Home - Status -->
     <string name="home_status_service_is_running">%1$s is running</string>
     <string name="home_status_service_not_running">%1$s not running</string>
-    <string name="home_status_service_version">version %2$d, %1$s</string>
-    <string name="home_status_service_version_update">version %2$d, %1$s\nStart again to update to version %3$d</string>
+    <string name="home_status_service_version">Version %2$d, %1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[version %2$d, %1$s<br>Start again to update to version %3$d]]></string>
 
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[Start / upgrade service with adb]]></string>

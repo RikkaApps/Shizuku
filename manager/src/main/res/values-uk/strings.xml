@@ -30,7 +30,7 @@
     <string name="home_status_service_version">версія %2$d, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
-    <string name="home_status_service_version_update">версія %2$d, %1$s\nпочніть оновлюватися до версії %3$d</string>
+    <string name="home_status_service_version_update"><![CDATA[версія %2$d, %1$s<br>почніть оновлюватися до версії %3$d]]></string>
     <string name="permission_group_description">доступ до Shizuku</string>
     <string name="permission_label">доступ до системних API з більш високими привілеями</string>
     <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>

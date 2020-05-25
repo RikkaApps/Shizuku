@@ -17,13 +17,6 @@
         android:name="moe.shizuku.manager.permission.MANAGER"
         android:protectionLevel="signature" />
     <permission
-        android:name="moe.shizuku.manager.permission.API"
-        android:description="@string/permission_description"
-        android:icon="@drawable/ic_permission_24dp"
-        android:label="@string/permission_label"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
-        android:protectionLevel="normal" />
-    <permission
         android:name="moe.shizuku.manager.permission.API_V23"
         android:description="@string/permission_description"
         android:icon="@drawable/ic_permission_24dp"
@@ -95,7 +88,7 @@
             android:exported="false" />
 
         <provider
-            android:name="moe.shizuku.api.ShizukuBinderReceiveProvider"
+            android:name="moe.shizuku.api.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
             android:directBootAware="true"
             android:enabled="true"

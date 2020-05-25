@@ -11,13 +11,6 @@ public class AppConstants {
 
     private static final String PACKAGE = "moe.shizuku.manager";
 
-    // extras
-    public static final String EXTRA_RESULT = PACKAGE + ".intent.action.RESULT";
-    public static final String ACTION_BINDER_RECEIVED = PACKAGE + ".intent.action.BINDER_RECEIVED";
-
     // local broadcast actions
     public static final String ACTION_REQUEST_REFRESH = PACKAGE + ".service.action.REQUEST_REFRESH";
-
-    // intent service actions
-    public static final String ACTION_AUTH_V2 = PACKAGE + ".service.action.AUTH_V2";
 }
