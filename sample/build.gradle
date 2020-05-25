@@ -11,6 +11,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildFeatures {
+        viewBinding = true
+    }
     signingConfigs {
         sign
     }
@@ -30,9 +33,9 @@ android {
     }
 }
 
-// task to remove all .class generated from stub class, or app will crash if proguarded
-// if you use other plugin, you must find where the plugin generate file and delete them
 android.applicationVariants.all { variant ->
+    // This task removes remove all ".class" files from stub classes. If we don't do this, app will crash when ProGuard is enabled.
+    // It's better to split stub classes to a stand-alone module and use them by compileOnly.
     String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
     String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
     task "${taskName}" {
@@ -45,15 +48,17 @@ android.applicationVariants.all { variant ->
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
     implementation "androidx.annotation:annotation:1.1.0"
-    implementation "androidx.fragment:fragment:1.2.0"
-    implementation 'moe.shizuku.privilege:api:3.1.0-alpha3' // shizuku v3
+    implementation "androidx.fragment:fragment:1.2.4"
+    //implementation 'moe.shizuku.privilege:api:3.3.0' // shizuku v3
+    implementation project(':api')
+    implementation project(':shared')
 
-    implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
+    implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction, https://github.com/tiann/FreeReflection
 }
 
 apply from: rootProject.file('signing.gradle')

@@ -3,43 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.sample">
 
-    <uses-permission
-        android:name="moe.shizuku.manager.permission.API"
-        android:maxSdkVersion="23" />
-
-    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.API_V23" />
-    <uses-permission-sdk-23 android:name="moe.shizuku.manager.permission.EXEC_COMMAND" />
+    <!--<uses-permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        tools:node="remove" />-->
 
     <application
-        android:allowBackup="false"
         android:name=".SampleApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Shizuku Sample"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@android:style/Theme.DeviceDefault.Light"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MultiProcessTestReceiver"
-            android:exported="false"
+        <activity android:name=".AnotherProcessActivity"
+            android:label="Shizuku Sample (:test)"
             android:process=":test">
             <intent-filter>
-                <action android:name="moe.shizuku.sample.TEST"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
+        </activity>
+
         <provider
-            android:name="moe.shizuku.api.ShizukuBinderReceiveProvider"
+            android:name=".ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
-            android:multiprocess="false"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:process=":test" />
     </application>
 
 </manifest>
