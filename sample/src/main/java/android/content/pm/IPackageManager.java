@@ -7,7 +7,11 @@ import android.os.RemoteException;
 
 public interface IPackageManager extends IInterface {
 
-    ParceledListSlice<PackageInfo> getInstalledPackages(int flags, int userId) throws RemoteException;
+    IPackageInstaller getPackageInstaller()
+            throws RemoteException;
+
+    ParceledListSlice<PackageInfo> getInstalledPackages(int flags, int userId)
+            throws RemoteException;
 
     abstract class Stub extends Binder implements IPackageManager {
 

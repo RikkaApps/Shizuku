@@ -19,6 +19,7 @@ public class SampleApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         Reflection.unseal(this); // bypass hidden api restriction, https://github.com/tiann/FreeReflection
+        ApplicationUtils.setApplication(this);
 
         Log.d("ShizukuSample", getClass().getSimpleName() + " attachBaseContext | Process=" + ApplicationUtils.getProcessName());
 

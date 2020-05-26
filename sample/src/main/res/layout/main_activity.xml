@@ -33,6 +33,28 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="-12dp"
         android:textAllCaps="false"
-        android:text="test IUserManager#getUsers"/>
+        android:text="IUserManager#getUsers"/>
+
+    <Button
+        android:id="@android:id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:borderlessButtonStyle"
+        android:textColor="?android:colorAccent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="-12dp"
+        android:textAllCaps="false"
+        android:text="Install apk(s)"/>
+
+    <Button
+        android:id="@android:id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:borderlessButtonStyle"
+        android:textColor="?android:colorAccent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="-12dp"
+        android:textAllCaps="false"
+        android:text="Abandon all my sessions"/>
 
 </LinearLayout>
