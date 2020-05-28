@@ -1,4 +1,4 @@
-package moe.shizuku.sample;
+package moe.shizuku.sample.util;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -26,6 +26,7 @@ public class ApplicationUtils {
             try {
                 @SuppressLint("PrivateApi")
                 Class<?> activityThread = Class.forName("android.app.ActivityThread");
+                @SuppressLint("DiscouragedPrivateApi")
                 Method method = activityThread.getDeclaredMethod("currentProcessName");
                 return (String) method.invoke(null);
             } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {

@@ -1,4 +1,4 @@
-package moe.shizuku.sample;
+package moe.shizuku.sample.util;
 
 import android.content.IIntentReceiver;
 import android.content.IIntentSender;

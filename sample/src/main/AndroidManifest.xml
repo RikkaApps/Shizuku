@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="moe.shizuku.sample">
 
-    <!--<uses-permission
-        android:name="moe.shizuku.manager.permission.API_V23"
-        tools:node="remove" />-->
-
     <application
         android:name=".SampleApplication"
         android:allowBackup="false"
@@ -16,14 +12,13 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".AnotherProcessActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AnotherProcessActivity"
-            android:label="Shizuku Sample (:test)"
+        <activity android:name=".SampleActivity"
             android:process=":test">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

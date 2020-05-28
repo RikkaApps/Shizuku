@@ -1,4 +1,4 @@
-package moe.shizuku.sample;
+package moe.shizuku.sample.util;
 
 import android.content.Context;
 import android.content.pm.IPackageInstaller;
@@ -6,8 +6,6 @@ import android.content.pm.IPackageInstallerSession;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.os.Build;
-
-import androidx.annotation.NonNull;
 
 import java.lang.reflect.InvocationTargetException;
 

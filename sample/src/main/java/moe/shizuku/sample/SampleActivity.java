@@ -1,5 +1,6 @@
 package moe.shizuku.sample;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -10,7 +11,6 @@ import android.content.pm.IPackageInstallerSession;
 import android.content.pm.PackageInstaller;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.util.Log;
 
@@ -27,10 +27,19 @@ import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuBinderWrapper;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.sample.databinding.MainActivityBinding;
+import moe.shizuku.sample.util.ApplicationUtils;
+import moe.shizuku.sample.util.IIntentSenderAdaptor;
+import moe.shizuku.sample.util.IntentSenderUtils;
+import moe.shizuku.sample.util.PackageInstallerUtils;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class MainActivity extends Activity {
+/**
+ * The sample of Shizuku.
+ * The implementation is very simplified, don't use them directly in your app.
+ */
+@SuppressLint("SetTextI18n")
+public class SampleActivity extends Activity {
 
     private static final int REQUEST_CODE_BUTTON1 = 1;
     private static final int REQUEST_CODE_BUTTON2 = 2;
@@ -38,6 +47,7 @@ public class MainActivity extends Activity {
     private static final int REQUEST_CODE_PICK_APKS = 10;
 
     private MainActivityBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +58,11 @@ public class MainActivity extends Activity {
         binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        boolean isProviderProcess = ApplicationUtils.getProcessName().endsWith(":test");
+
+        binding.text2.setText("This Activity is running in " + (isProviderProcess ? "the same process" : "a process different") + " of ShizukuProvider.");
+
         binding.text1.setText("Waiting for binder");
-        binding.text2.setText("This Activity is running in process \"" + ApplicationUtils.getProcessName() + "\"");
         binding.button1.setOnClickListener((v) -> {
             if (checkPermission()) getUsers();
         });
@@ -122,8 +135,9 @@ public class MainActivity extends Activity {
     private void getUsers() {
         String res;
         try {
-            res = ShizukuApi.UserManager_getUsers(true).toString();
+            res = ShizukuSystemServerApi.UserManager_getUsers(true, true, true).toString();
         } catch (Throwable tr) {
+            tr.printStackTrace();
             res = tr.getMessage();
         }
         binding.text3.setText(res);
@@ -148,9 +162,10 @@ public class MainActivity extends Activity {
         boolean isRoot;
 
         try {
-            IPackageInstaller _packageInstaller = ShizukuApi.PackageManager_getPackageInstaller();
+            IPackageInstaller _packageInstaller = ShizukuSystemServerApi.PackageManager_getPackageInstaller();
             isRoot = ShizukuService.getUid() == 0;
 
+            // the reason for use "com.android.shell" as installer package under adb is that getMySessions will check installer package's owner
             installerPackageName = isRoot ? getPackageName() : "com.android.shell";
             userId = isRoot ? Process.myUserHandle().hashCode() : 0;
             packageInstaller = PackageInstallerUtils.createPackageInstaller(_packageInstaller, installerPackageName, userId);
@@ -248,7 +263,7 @@ public class MainActivity extends Activity {
         IPackageInstaller packageInstaller;
 
         try {
-            packageInstaller = ShizukuApi.PackageManager_getPackageInstaller();
+            packageInstaller = ShizukuSystemServerApi.PackageManager_getPackageInstaller();
             isRoot = ShizukuService.getUid() == 0;
 
             installer = isRoot ? getPackageName() : "com.android.shell";
@@ -263,6 +278,7 @@ public class MainActivity extends Activity {
                 res.append(" (abandoned)\n");
             }
         } catch (Throwable tr) {
+            tr.printStackTrace();
             res.append(tr);
         }
 

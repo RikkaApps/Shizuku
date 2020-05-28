@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import me.weishu.reflection.Reflection;
+import moe.shizuku.sample.util.ApplicationUtils;
 
 public class SampleApplication extends Application {
 
