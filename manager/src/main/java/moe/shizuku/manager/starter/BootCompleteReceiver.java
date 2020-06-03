@@ -10,9 +10,8 @@ import androidx.core.content.ContextCompat;
 
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.manager.AppConstants;
-import moe.shizuku.manager.ShizukuManagerSettings;
-import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod;
-import moe.shizuku.manager.starter.BootCompleteService;
+import moe.shizuku.manager.ShizukuSettings;
+import moe.shizuku.manager.ShizukuSettings.LaunchMethod;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
 
@@ -27,7 +26,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
+        if (ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(AppConstants.TAG, "start on boot, action=" + intent.getAction());
 
             if (ShizukuService.pingBinder()) {

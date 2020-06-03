@@ -16,13 +16,12 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.manager.BuildConfig;
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ShizukuManagerApplication;
-import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.ShizukuSettings;
+import moe.shizuku.manager.ktx.ContextKt;
 import moe.shizuku.manager.utils.BuildUtils;
 import rikka.core.os.FileUtils;
 
@@ -60,7 +59,7 @@ public class ServerLauncher {
     }
 
     private static File getRoot(Context context) {
-        return ShizukuManagerApplication.getDeviceProtectedStorageContext(context).getFilesDir().getParentFile();
+        return ContextKt.createDeviceProtectedStorageContextCompat(context).getFilesDir().getParentFile();
     }
 
     private static String copyDex(Context context, String source, File out) throws IOException {
@@ -140,7 +139,7 @@ public class ServerLauncher {
         Objects.requireNonNull(dex);
 
         return "--path=" + dex
-                + (ShizukuManagerSettings.isKeepSuContext() ? "" : " --use-shell-context");
+                + (ShizukuSettings.isKeepSuContext() ? "" : " --use-shell-context");
     }
 
     private static String getLibPath(Context context, String name) {

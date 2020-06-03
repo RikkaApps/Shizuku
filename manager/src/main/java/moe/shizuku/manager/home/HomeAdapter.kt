@@ -2,9 +2,8 @@ package moe.shizuku.manager.home
 
 import android.os.Process
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.ShizukuManagerSettings
-import moe.shizuku.manager.ShizukuManagerSettings.LaunchMethod
-import moe.shizuku.manager.home.*
+import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.management.AppsViewModel
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
@@ -25,7 +24,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         addItem(ServerStatusViewHolder.CREATOR, status, 0)
         addItem(ManageAppsViewHolder.CREATOR, grantedCount, 1)
         if (Process.myUid() / 100000 == 0) {
-            val root = ShizukuManagerSettings.getLastLaunchMode() == LaunchMethod.ROOT
+            val root = ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT
             var rootRestart = status.uid == 0
             if (v3) {
                 try {

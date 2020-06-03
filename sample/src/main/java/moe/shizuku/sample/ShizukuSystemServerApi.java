@@ -1,11 +1,11 @@
 package moe.shizuku.sample;
 
 import android.content.Context;
-import android.os.IUserManager;
 import android.content.pm.IPackageInstaller;
 import android.content.pm.IPackageManager;
 import android.content.pm.UserInfo;
 import android.os.Build;
+import android.os.IUserManager;
 import android.os.RemoteException;
 
 import java.util.List;

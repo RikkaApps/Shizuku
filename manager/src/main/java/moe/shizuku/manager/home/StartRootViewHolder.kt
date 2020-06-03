@@ -12,7 +12,7 @@ import android.widget.Checkable
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuManagerSettings
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartRootBinding
 import moe.shizuku.manager.databinding.ShellDialogBinding
 import moe.shizuku.manager.ktx.toHtml
@@ -154,11 +154,11 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
     }
 
     override fun setChecked(checked: Boolean) {
-        ShizukuManagerSettings.getPreferences().edit().putBoolean("root_help_expanded", checked).apply()
+        ShizukuSettings.getPreferences().edit().putBoolean("root_help_expanded", checked).apply()
     }
 
     override fun isChecked(): Boolean {
-        return ShizukuManagerSettings.getPreferences().getBoolean("root_help_expanded", true)
+        return ShizukuSettings.getPreferences().getBoolean("root_help_expanded", true)
     }
 
     override fun toggle() {

@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuManagerSettings
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartAdbBinding
 import moe.shizuku.manager.starter.ServerLauncher
 import moe.shizuku.manager.utils.CustomTabsHelper
@@ -62,11 +62,11 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
     }
 
     override fun setChecked(checked: Boolean) {
-        ShizukuManagerSettings.getPreferences().edit().putBoolean("adb_help_expanded", checked).apply()
+        ShizukuSettings.getPreferences().edit().putBoolean("adb_help_expanded", checked).apply()
     }
 
     override fun isChecked(): Boolean {
-        return ShizukuManagerSettings.getPreferences().getBoolean("adb_help_expanded", true)
+        return ShizukuSettings.getPreferences().getBoolean("adb_help_expanded", true)
     }
 
     override fun toggle() {

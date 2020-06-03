@@ -17,7 +17,7 @@ import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuManagerSettings
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AboutDialogBinding
 import moe.shizuku.manager.databinding.HomeActivityBinding
@@ -69,7 +69,7 @@ abstract class HomeActivity : AppBarActivity() {
             if (it.status == Status.SUCCESS) {
                 val status = homeModel.serviceStatus.value?.data ?: return@observe
                 adapter.updateData()
-                ShizukuManagerSettings.setLastLaunchMode(if (status.uid == 0) ShizukuManagerSettings.LaunchMethod.ROOT else ShizukuManagerSettings.LaunchMethod.ADB)
+                ShizukuSettings.setLastLaunchMode(if (status.uid == 0) ShizukuSettings.LaunchMethod.ROOT else ShizukuSettings.LaunchMethod.ADB)
             }
         }
         appsModel.grantedCount.observe(this) {

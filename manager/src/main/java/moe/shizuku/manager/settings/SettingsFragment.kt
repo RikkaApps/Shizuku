@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuManagerSettings
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.preference.*
@@ -18,12 +18,11 @@ import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.material.widget.BorderRecyclerView
 import rikka.material.widget.BorderView
-import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import java.util.*
-import moe.shizuku.manager.ShizukuManagerSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
-import moe.shizuku.manager.ShizukuManagerSettings.LANGUAGE as KEY_LANGUAGE
-import moe.shizuku.manager.ShizukuManagerSettings.NIGHT_MODE as KEY_NIGHT_MODE
+import moe.shizuku.manager.ShizukuSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
+import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
+import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
 
 class SettingsFragment : PreferenceFragment() {
 
@@ -45,7 +44,7 @@ class SettingsFragment : PreferenceFragment() {
         val context = requireContext()
 
         preferenceManager.setStorageDeviceProtected()
-        preferenceManager.sharedPreferencesName = ShizukuManagerSettings.NAME
+        preferenceManager.sharedPreferencesName = ShizukuSettings.NAME
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
         setPreferencesFromResource(R.xml.settings, null)
 
@@ -77,7 +76,7 @@ class SettingsFragment : PreferenceFragment() {
         val index = listOf(*languagePreference.entryValues).indexOf(tag)
         val localeName: MutableList<String> = ArrayList()
         val localeNameUser: MutableList<String> = ArrayList()
-        val userLocale = ShizukuManagerSettings.getLocale()
+        val userLocale = ShizukuSettings.getLocale()
         for (i in 1 until languagePreference.entries.size) {
             val locale = Locale.forLanguageTag(languagePreference.entries[i].toString())
             localeName.add(if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(locale) else locale.getDisplayName(locale))
@@ -103,7 +102,7 @@ class SettingsFragment : PreferenceFragment() {
         }
         nightModePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
             if (value is Int) {
-                if (ShizukuManagerSettings.getNightMode() != value) {
+                if (ShizukuSettings.getNightMode() != value) {
                     DayNightDelegate.setDefaultNightMode(value)
                     activity?.recreate()
                 }

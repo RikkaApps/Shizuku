@@ -19,7 +19,7 @@ import rikka.material.app.DayNightDelegate.NightMode;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-public class ShizukuManagerSettings {
+public class ShizukuSettings {
 
     public static final String NAME = "settings";
     public static final String NIGHT_MODE = "night_mode";

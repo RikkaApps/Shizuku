@@ -1,4 +1,4 @@
-package moe.shizuku.redirectstorage.viewmodel
+package moe.shizuku.manager.viewmodel
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.MainThread

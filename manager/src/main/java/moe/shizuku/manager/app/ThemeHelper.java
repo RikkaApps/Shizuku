@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.StyleRes;
 
 import moe.shizuku.manager.R;
-import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.ShizukuSettings;
 import rikka.core.util.ResourceUtils;
 
 public class ThemeHelper {
@@ -17,7 +17,7 @@ public class ThemeHelper {
     public static final String KEY_BLACK_NIGHT_THEME = "black_night_theme";
 
     public static boolean isBlackNightTheme() {
-        return ShizukuManagerSettings.getPreferences().getBoolean(KEY_BLACK_NIGHT_THEME, false);
+        return ShizukuSettings.getPreferences().getBoolean(KEY_BLACK_NIGHT_THEME, false);
     }
 
     public static String getTheme(Context context) {
@@ -25,7 +25,7 @@ public class ThemeHelper {
                 && ResourceUtils.isNightMode(context.getResources().getConfiguration()))
             return THEME_BLACK;
 
-        return ShizukuManagerSettings.getPreferences().getString(KEY_LIGHT_THEME, THEME_DEFAULT);
+        return ShizukuSettings.getPreferences().getString(KEY_LIGHT_THEME, THEME_DEFAULT);
     }
     @StyleRes
     public static int getThemeStyleRes(Context context) {

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
-import moe.shizuku.manager.ShizukuManagerSettings;
+import moe.shizuku.manager.ShizukuSettings;
 
 public class MultiLocaleEntity extends LinkedHashMap<String, String> {
 
@@ -16,7 +16,7 @@ public class MultiLocaleEntity extends LinkedHashMap<String, String> {
     public static final LocaleProvider DEFAULT_LOCAL_PROVIDER = new LocaleProvider() {
         @Override
         public Locale get() {
-            return ShizukuManagerSettings.getLocale();
+            return ShizukuSettings.getLocale();
         }
     };
 

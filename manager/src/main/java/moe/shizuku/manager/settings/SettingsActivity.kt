@@ -3,7 +3,7 @@ package moe.shizuku.manager.settings
 import android.os.Bundle
 import android.view.MenuItem
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuManagerSettings
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarFragmentActivity
 import moe.shizuku.manager.starter.ServerLauncher
 
@@ -20,7 +20,7 @@ class SettingsActivity : AppBarFragmentActivity() {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SettingsFragment())
                     .commit()
-            isKeepSuContext = ShizukuManagerSettings.isKeepSuContext()
+            isKeepSuContext = ShizukuSettings.isKeepSuContext()
         } else {
             isKeepSuContext = savedInstanceState.getBoolean("keep_su_context", true)
         }
@@ -33,7 +33,7 @@ class SettingsActivity : AppBarFragmentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (ShizukuManagerSettings.isKeepSuContext() != isKeepSuContext) {
+        if (ShizukuSettings.isKeepSuContext() != isKeepSuContext) {
             ServerLauncher.writeFiles(this)
         }
     }

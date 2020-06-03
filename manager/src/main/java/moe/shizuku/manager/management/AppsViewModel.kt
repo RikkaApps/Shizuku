@@ -15,8 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.viewmodel.Resource
-import moe.shizuku.redirectstorage.viewmodel.activitySharedViewModels
-import moe.shizuku.redirectstorage.viewmodel.sharedViewModels
+import moe.shizuku.manager.viewmodel.activitySharedViewModels
+import moe.shizuku.manager.viewmodel.sharedViewModels
 import java.util.*
 
 @MainThread
