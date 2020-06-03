@@ -11,17 +11,28 @@
     <string name="home_status_service_version_update"><![CDATA[version %2$d, %1$s<br>Start again to update to version %3$d]]></string>
 
     <!-- Home - Adb -->
-    <string name="home_adb_title"><![CDATA[Start / upgrade service with adb]]></string>
-    <string name="home_adb_description"><![CDATA[<b>If your device is not rooted, you need to start service with adb.</b><p><b>How to use adb?</b><br>Using adb is not difficult, please follow the help.<p><b>Shizuku stops randomly?</b><br>Please read the last part of the help.]]></string>
+    <string name="home_adb_title"><![CDATA[Start with adb]]></string>
+    <string name="home_adb_description"><![CDATA[For devices without root, you need to use adb to start Shizuku (requires computer connection). This process needs to be repeated every time the device is restarted. Please <b><a href=\"%1$s\">read the help</a></b>.<p>If your device runs Android 11, computer connection is not required, please refer to <b><a href=\"%2$s\">this help document</a></b>.]]></string>
     <string name="home_adb_button_view_help">Read help</string>
-    <string name="home_adb_button_view_command">View adb command</string>
+    <string name="home_adb_button_view_command">View command (for USB adb)</string>
+    <string name="home_adb_button_wireless">Wireless adb</string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
     <string name="home_adb_dialog_view_command_copy_button">Copy</string>
     <string name="home_adb_dialog_view_command_button_send">Send</string>
 
+    <!-- Adb -->
+    <string name="dialog_adb_title" translatable="false">@string/home_adb_button_wireless</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Port is an integer ranging from 1 to 65535.</string>
+
+    <!-- Adb pairing-->
+    <string name="adb_pairing">Pairing</string>
+    <string name="dialog_adb_pairing_title">Pairing with device</string>
+    <string name="dialog_adb_pairing_paring_code">Pairing code</string>
+
     <!-- Home - Root -->
-    <string name="home_root_title"><![CDATA[Start service with root]]></string>
-    <string name="home_root_description"><![CDATA[<b>If your device is rooted, you can use this method.</b><p><b>Can\'t start on boot?</b><br>Please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
+    <string name="home_root_title"><![CDATA[Start %s with root]]></string>
+    <string name="home_root_description"><![CDATA[For rooted devices, Shizuku can be started directly.</b><p>In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
     <string name="home_root_button_start">Start</string>
     <string name="home_root_button_restart">Restart</string>
 
@@ -75,15 +86,16 @@
     <string name="permission_label">access system APIs with higher privileges</string>
     <string name="permission_description">Allow the app to use system APIs with higher privileges.</string>
 
-    <!-- Start with root -->
-    <string name="starting_shell" translatable="false">Starting root shell…</string>
+    <!-- Starter -->
+    <string name="starter">Starter</string>
+    <string name="starting_root_shell" translatable="false">Starting root shell…</string>
     <string name="start_with_root_failed">Can\'t start service because root permission is not granted or this device is not rooted.</string>
 
     <!-- Misc -->
     <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
     <string name="toast_copied_to_clipboard">%s\nhas been copied to clipboard.</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
-    <string name="toast_translation_unfinished" translatable="false">The translation of current language is unfinished.\nYou can learn how to contribute translation in settings.</string>
+    <string name="toast_translation_unfinished" translatable="false">The translation of current language is outdated.\nYou can learn how to contribute translation in settings.</string>
 
     <!-- Messages for legacy -->
     <string name="dialog_legacy_not_support_title">%1$s does not support modern Shizuku</string>

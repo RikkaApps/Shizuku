@@ -13,7 +13,8 @@ inline fun <reified VM : ViewModel> ComponentActivity.viewModels(
         noinline viewModelProducer: () -> VM
 ) = ViewModelLazy(
         { viewModelStore },
-        viewModelProducer
+        viewModelProducer,
+        VM::class.java
 )
 
 inline fun <reified VM : ViewModel> Fragment.activityViewModels(
@@ -26,13 +27,16 @@ inline fun <reified VM : ViewModel> Fragment.viewModels(
         noinline viewModelProducer: () -> VM
 ) = ViewModelLazy(
         { ownerProducer().viewModelStore },
-        viewModelProducer
+        viewModelProducer,
+        VM::class.java
 )
 
 class ViewModelLazy<VM : ViewModel>(
         private val storeProducer: () -> ViewModelStore,
-        private val viewModelProducer: () -> VM
+        private val viewModelProducer: () -> VM,
+        private val clazz: Class<out ViewModel>
 ) : Lazy<VM> {
+
     private var cached: VM? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -46,7 +50,7 @@ class ViewModelLazy<VM : ViewModel>(
                         return viewModelProducer() as T
                     }
 
-                }).get(ViewModel::class.java).also {
+                }).get(clazz).also {
                     cached = it as VM
                 }
             } else {

@@ -10,6 +10,7 @@ public class AppConstants {
     public static final int NOTIFICATION_ID_WORK = 2;
 
     private static final String PACKAGE = "moe.shizuku.manager";
+    public static final String EXTRA = PACKAGE + ".extra";
 
     // local broadcast actions
     public static final String ACTION_REQUEST_REFRESH = PACKAGE + ".service.action.REQUEST_REFRESH";

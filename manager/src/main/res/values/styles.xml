@@ -32,6 +32,8 @@
         <item name="android:drawablePadding">28dp</item>
         <item name="android:textColor">?appColorPrimary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:drawableTint">?appColorPrimary</item>
+        <item name="android:drawableTintMode">src_in</item>
     </style>
 
     <style name="CardTitle">

@@ -9,13 +9,13 @@
     <string name="home_status_service_not_running">%1$s 沒有執行</string>
     <string name="home_root_button_start">啟動</string>
     <string name="home_root_button_restart">重新啟動</string>
-    <string name="home_root_title"><![CDATA[通過 root 啟動服務]]></string>
-    <string name="home_adb_title"><![CDATA[通過 adb 啟動或升級服務]]></string>
-    <string name="home_adb_description"><![CDATA[<b>如果您的裝置沒有 root，您需要藉助 adb 啟動服務。</b><p><b>如何使用 adb？</b><br>使用 adb 並不困難，請閱讀幫助。<p><b>Shizuku 隨機停止？</b><br>請閱讀幫助的最後一部分。]]></string>
-    <string name="home_root_description"><![CDATA[<b>如果您的裝置已經 root，您可以使用此方式。</b><p><b>無法開機啟動？</b><br>請檢查您的系統或是第三方工具是否限制了 Shizuku。<br>你可以參考 %s。]]></string>
+    <string name="home_root_title"><![CDATA[通過 root 啟動]]></string>
+    <string name="home_adb_title"><![CDATA[通過 adb 啟動]]></string>
+    <string name="home_adb_description"><![CDATA[對於沒有 root 的裝置需要藉助 adb 來啟動 Shizuku（需要連線電腦）。這個過程每次裝置重新啟動後需要重新進行。請<b><a href=\"%1$s\">閱讀幫助</a></b>。<p>如果您的裝置執行 Android 11，則無需連線電腦，請參考<b><a href=\"%2$s\">此幫助文件</a></b>。]]></string>
+    <string name="home_root_description"><![CDATA[對於有 root 的裝置 Shizuku 可直接啟動。</b><p>另外，Shizuku 可以在開機時自動啟動。如果沒有，請檢查您的系統或是第三方工具是否限制了 Shizuku。<br>你可以參考 %s。]]></string>
     <string name="home_adb_dialog_view_command_copy_button">複製</string>
     <string name="home_adb_dialog_view_command_button_send">傳送</string>
-    <string name="home_adb_button_view_command">檢視 adb 指令</string>
+    <string name="home_adb_button_view_command">檢視指令（用於 USB adb）</string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 還有一些其他注意事項，請確認你已閱讀幫助。]]></string>
     <string name="dialog_legacy_not_support_title">%1$s 不支援現代 Shizuku</string>
     <string name="dialog_legacy_not_support_message"><![CDATA[舊式 Shizuku 已於 2019 年 3 月被棄用。此外，舊式 Shizuku 無法在較新版本的 Android 系統上工作。<p>請要求 <b>%1$s</b> 的開發者進行更新。]]></string>
@@ -58,5 +58,11 @@
     <string name="translation_contributors" />
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
-
+    <string name="home_adb_button_wireless">無線 adb</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="adb_pairing">配對</string>
+    <string name="dialog_adb_pairing_title">與裝置配對</string>
+    <string name="dialog_adb_pairing_paring_code">配對碼</string>
+    <string name="starter">啟動程式</string>
+    <string name="dialog_adb_invalid_port">Port 是一個 1 至 65535 的整數。</string>
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <rikka.material.widget.BorderScrollView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="?actionBarSize"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        app:borderBottomStyle="never"
+        app:borderTopDrawable="@null"
+        app:borderTopStyle="whenTop"
+        app:fitSystemWindowsInsets="top|bottom">
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingStart="@dimen/list_item_padding"
+            android:paddingTop="16dp"
+            android:paddingEnd="@dimen/list_item_padding"
+            android:paddingBottom="16dp"
+            android:textColor="?android:textColorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+
+    </rikka.material.widget.BorderScrollView>
+
+</FrameLayout>

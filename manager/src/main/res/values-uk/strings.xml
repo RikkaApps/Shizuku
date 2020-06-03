@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_about">Про додаток</string>
-    <string name="home_adb_button_view_command">Переглянути adb команду</string>
     <string name="home_adb_button_view_help">Прочитати онлайн довідку</string>
     <string name="app_management_menu_get_more">Отримати більше</string>
     <string name="app_management_dialog_adb_is_limited_title">Дозвіл на adb обмежений</string>
@@ -38,9 +37,6 @@
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
     <string name="about_icon_credits"><![CDATA[Дякую %s за стоверння іконки для додатку]]></string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
-    <string name="home_adb_description"><![CDATA[Використовувати adb не складно, прочитайте довідку нижче. Довідка буде оновлена ​​в будь-який час, включаючи вирішення проблем (наприклад, Shizuku зупиняється раптово).]]></string>
-    <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
-    <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>

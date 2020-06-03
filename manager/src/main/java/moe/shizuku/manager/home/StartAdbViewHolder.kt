@@ -1,18 +1,20 @@
 package moe.shizuku.manager.home
 
 import android.content.Intent
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Checkable
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartAdbBinding
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.ServerLauncher
-import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.core.util.ClipboardUtils
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
@@ -29,8 +31,7 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
 
     init {
         expandableButton.setOnClickListener(this)
-        binding.button1.setOnClickListener { v: View -> CustomTabsHelper.launchUrlOrCopy(v.context, Helps.ADB.get()) }
-        binding.button2.setOnClickListener { v: View ->
+        binding.button1.setOnClickListener { v: View ->
             val context = v.context
             AlertDialog.Builder(context)
                     .setTitle(R.string.home_adb_button_view_command)
@@ -50,6 +51,11 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
                     }
                     .show()
         }
+        binding.button2.setOnClickListener { v: View ->
+            AdbDialogFragment().show((v.context as FragmentActivity).supportFragmentManager)
+        }
+        binding.text1.movementMethod = LinkMovementMethod.getInstance()
+        binding.text1.text = context.getString(R.string.home_adb_description, Helps.ADB.get(), Helps.ADB_ANDROID11.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
     }
 
     override fun onClick(v: View) {

@@ -27,13 +27,14 @@
             android:src="@drawable/ic_root_24dp"
             app:iconColorName="orange" />
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
+            android:id="@android:id/title"
             style="@style/CardTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            app:htmlText="@string/home_root_title" />
+            android:text="@string/home_root_title" />
 
         <moe.shizuku.manager.widget.CheckedImageView
             android:id="@android:id/text2"

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
@@ -47,6 +48,9 @@
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/settings_title" />
+        <activity
+            android:name=".starter.StarterActivity"
+            android:label="@string/starter" />
 
         <activity
             android:name=".legacy.LegacyIsNotSupportedActivity"

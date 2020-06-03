@@ -7,7 +7,6 @@
     android:layout_marginStart="@dimen/rd_activity_horizontal_margin"
     android:layout_marginEnd="@dimen/rd_activity_horizontal_margin"
     android:clipToPadding="false"
-    android:fitsSystemWindows="true"
     android:paddingStart="@dimen/home_padding"
     android:paddingTop="?actionBarSize"
     android:paddingEnd="@dimen/home_padding"
