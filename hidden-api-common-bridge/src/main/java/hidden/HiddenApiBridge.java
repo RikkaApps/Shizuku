@@ -13,9 +13,13 @@ import android.permission.IPermissionManager;
 import androidx.annotation.RequiresApi;
 
 import com.android.internal.app.IAppOpsService;
+import com.android.org.conscrypt.Conscrypt;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSocket;
 
 public class HiddenApiBridge {
 
@@ -109,5 +113,10 @@ public class HiddenApiBridge {
     @RequiresApi(30)
     public static void IPermissionManager_revokeRuntimePermission(Object permissionmgr, String packageName, String permissionName, int userId) throws RemoteException {
         ((IPermissionManager) permissionmgr).revokeRuntimePermission(packageName, permissionName, userId);
+    }
+
+    @RequiresApi(29)
+    public static byte[] Conscrypt_exportKeyingMaterial(SSLSocket socket, String label, byte[] context, int length) throws SSLException {
+        return Conscrypt.exportKeyingMaterial(socket, label, context, length);
     }
 }

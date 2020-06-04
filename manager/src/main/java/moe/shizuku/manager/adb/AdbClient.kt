@@ -83,7 +83,7 @@ class AdbClient(private val host: String, private val port: Int) : Closeable {
             sslContext.init(arrayOf(AdbKeyManager), arrayOf(AdbTrustManager), SecureRandom())
             tlsSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
             tlsSocket.startHandshake()
-            Log.d(TAG, "handshake ok")
+            Log.d(TAG, "Handshake succeeded.")
 
             tlsInputStream = DataInputStream(tlsSocket.inputStream)
             tlsOutputStream = DataOutputStream(tlsSocket.outputStream)

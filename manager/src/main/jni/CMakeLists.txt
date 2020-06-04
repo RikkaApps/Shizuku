@@ -20,3 +20,8 @@ add_library(helper SHARED
         helper.cpp selinux.cpp)
 
 target_link_libraries(helper ${log-lib})
+
+add_library(adb_pairing SHARED
+        adb_pairing.cpp)
+
+target_link_libraries(adb_pairing ${log-lib})

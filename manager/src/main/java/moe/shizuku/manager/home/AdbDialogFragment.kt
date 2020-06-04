@@ -36,6 +36,7 @@ class AdbDialogFragment : DialogFragment() {
             }
         }
         val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
         dialog.setOnShowListener { onDialogShow(dialog) }
         return dialog
     }
@@ -47,8 +48,12 @@ class AdbDialogFragment : DialogFragment() {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val context = it.context
-            val port = binding.port.editText!!.text.toString().toInt()
-            if (port > 65535) {
+            val port = try {
+                binding.port.editText!!.text.toString().toInt()
+            } catch (e: Exception) {
+                -1
+            }
+            if (port > 65535 || port < 1) {
                 binding.port.error = context.getString(R.string.dialog_adb_invalid_port)
                 return@setOnClickListener
             }
