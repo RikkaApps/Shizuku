@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_adb_24dp"
-            app:iconColorName="teal" />
+            android:src="@drawable/ic_wadb_24"
+            app:iconColorName="cyan" />
 
         <TextView
             style="@style/CardTitle"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="@string/home_adb_title" />
+            android:text="@string/home_wireless_adb_title" />
 
         <moe.shizuku.manager.widget.CheckedImageView
             android:id="@android:id/text2"
@@ -63,13 +63,14 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            tools:htmlText="@string/home_adb_description" />
+            tools:text="@string/home_adb_description" />
 
     </moe.shizuku.manager.widget.ExpandableLayout>
 
     <TextView
         android:id="@android:id/button1"
         style="@style/CardButton"
-        android:drawableStart="@drawable/ic_code_24dp"
-        android:text="@string/home_adb_button_view_command" />
+        android:drawableStart="@drawable/ic_server_start_24dp"
+        android:text="@string/home_root_button_start" />
+
 </LinearLayout>

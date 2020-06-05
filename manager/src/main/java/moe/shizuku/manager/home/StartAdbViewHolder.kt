@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Checkable
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
@@ -30,6 +31,7 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
     private inline val expandableLayout get() = binding.expandable
 
     init {
+        expandableButton.isVisible = false
         expandableButton.setOnClickListener(this)
         binding.button1.setOnClickListener { v: View ->
             val context = v.context
@@ -51,9 +53,6 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
                     }
                     .show()
         }
-        binding.button2.setOnClickListener { v: View ->
-            AdbDialogFragment().show((v.context as FragmentActivity).supportFragmentManager)
-        }
         binding.text1.movementMethod = LinkMovementMethod.getInstance()
         binding.text1.text = context.getString(R.string.home_adb_description, Helps.ADB.get(), Helps.ADB_ANDROID11.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
     }
@@ -72,7 +71,7 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
     }
 
     override fun isChecked(): Boolean {
-        return ShizukuSettings.getPreferences().getBoolean("adb_help_expanded", true)
+        return true//ShizukuSettings.getPreferences().getBoolean("adb_help_expanded", true)
     }
 
     override fun toggle() {

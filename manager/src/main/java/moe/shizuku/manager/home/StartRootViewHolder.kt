@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Checkable
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartRootBinding
@@ -30,6 +31,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
     private var alertDialog: AlertDialog? = null
 
     init {
+        expandableButton.isVisible = false
         expandableButton.setOnClickListener(this)
         val listener = View.OnClickListener { v: View -> onStartClicked(v) }
         start.setOnClickListener(listener)
@@ -74,7 +76,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
     }
 
     override fun isChecked(): Boolean {
-        return ShizukuSettings.getPreferences().getBoolean("root_help_expanded", true)
+        return true//ShizukuSettings.getPreferences().getBoolean("root_help_expanded", true)
     }
 
     override fun toggle() {

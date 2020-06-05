@@ -5,6 +5,7 @@ import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.management.AppsViewModel
+import rikka.core.util.BuildUtils
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
 import java.util.*
@@ -32,15 +33,25 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
                 } catch (ignored: Throwable) {
                 }
             }
-            if (root) {
-                addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
-                addItem(StartAdbViewHolder.CREATOR, null, 2)
-            } else {
-                addItem(StartAdbViewHolder.CREATOR, null, 2)
-                addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+            when {
+                root -> {
+                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+                    addItem(StartAdbViewHolder.CREATOR, null, 2)
+                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
+                }
+                BuildUtils.atLeast30 -> {
+                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
+                    addItem(StartAdbViewHolder.CREATOR, null, 2)
+                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+                }
+                else -> {
+                    addItem(StartAdbViewHolder.CREATOR, null, 2)
+                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
+                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+                }
             }
         }
-        addItem(LearnMoreViewHolder.CREATOR, null, 5)
+        addItem(LearnMoreViewHolder.CREATOR, null, 100)
         notifyDataSetChanged()
     }
 

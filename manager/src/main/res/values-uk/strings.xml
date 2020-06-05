@@ -40,7 +40,6 @@
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>
-    <string name="home_root_description"><![CDATA[     У разі успішного запуску, Shizuku автоматично запуститься після завантаження.<br>Якщо Shizuku не може запуститися після завантаження належним чином, перевірте, чи ваша система чи сторонні інструменти обмежили фоновий режим Shizuku.<p>Майже у всіх постачальників, окрім Google, є свій механізм обмеження фонового режиму (деякі постачальники неоднакові, наприклад, OnePlus, що серйозно впливає на функціональність багатьох додатків).<br>Будь ласка, зверніться до %s для інструкцій щодо вимкнення обмежень.]]></string>
     <string name="toast_copied_to_clipboard">%s скопійовано в буфер обміну.</string>
     <string name="translation_contributors">MrIkso</string>
 </resources>

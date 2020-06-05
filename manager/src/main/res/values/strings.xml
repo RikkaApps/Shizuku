@@ -11,14 +11,18 @@
     <string name="home_status_service_version_update"><![CDATA[version %2$d, %1$s<br>Start again to update to version %3$d]]></string>
 
     <!-- Home - Adb -->
-    <string name="home_adb_title"><![CDATA[Start with adb]]></string>
-    <string name="home_adb_description"><![CDATA[For devices without root, you need to use adb to start Shizuku (requires computer connection). This process needs to be repeated every time the device is restarted. Please <b><a href=\"%1$s\">read the help</a></b>.<p>If your device runs Android 11, computer connection is not required, please refer to <b><a href=\"%2$s\">this help document</a></b>.]]></string>
+    <string name="home_adb_title"><![CDATA[Start by connecting to a computer]]></string>
+    <string name="home_adb_description"><![CDATA[For devices without root, you need to use adb to start Shizuku (requires computer connection). This process needs to be repeated every time the device is restarted. Please <b><a href=\"%1$s\">read the help</a></b>.]]></string>
     <string name="home_adb_button_view_help">Read help</string>
-    <string name="home_adb_button_view_command">View command (for USB adb)</string>
+    <string name="home_adb_button_view_command">View command</string>
     <string name="home_adb_button_wireless">Wireless adb</string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
     <string name="home_adb_dialog_view_command_copy_button">Copy</string>
     <string name="home_adb_dialog_view_command_button_send">Send</string>
+
+    <!-- Home - Wireless Adb -->
+    <string name="home_wireless_adb_title"><![CDATA[Start with Wireless debugging]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[For device runs Android 11, Wireless debugging can be found in Developer options.<p>This process does not requires computer connection. Please refer to <b><a href=\"%1$s\">this help document</a></b>.]]></string>
 
     <!-- Adb -->
     <string name="dialog_adb_title" translatable="false">@string/home_adb_button_wireless</string>
@@ -27,11 +31,11 @@
 
     <!-- Adb pairing-->
     <string name="adb_pairing">Pairing</string>
-    <string name="dialog_adb_pairing_title">Pairing with device</string>
+    <string name="dialog_adb_pairing_title">Pair with device</string>
     <string name="dialog_adb_pairing_paring_code">Pairing code</string>
 
     <!-- Home - Root -->
-    <string name="home_root_title"><![CDATA[Start %s with root]]></string>
+    <string name="home_root_title"><![CDATA[Start directly (rooted devices)]]></string>
     <string name="home_root_description"><![CDATA[For rooted devices, Shizuku can be started directly.</b><p>In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
     <string name="home_root_button_start">Start</string>
     <string name="home_root_button_restart">Restart</string>
