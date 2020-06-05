@@ -45,7 +45,7 @@
     <string name="settings_startup">啟動</string>
     <string name="app_management_menu_get_more">取得更多</string>
     <string name="app_management_dialog_adb_is_limited_title">adb 權限受限</string>
-    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[這通常是由您的裝置供應商完成，我們無法解決。<br>請嘗試在「開發者選項」中查詢相關選項。例如，在 MIUI 中，選項是「USB 除錯（安全設定）」。]]></string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[這通常是由您的裝置供應商完成，我們無法解決。<br>請嘗試在「開發人員選項」中查詢相關選項。例如，在 MIUI 中，選項是「USB 除錯（安全設定）」。]]></string>
     <string name="home_adb_button_view_help">閱讀幫助</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
@@ -59,12 +59,12 @@
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
     <string name="home_adb_button_wireless">無線 adb</string>
-    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_port">通訊埠</string>
     <string name="adb_pairing">配對</string>
     <string name="dialog_adb_pairing_title">與裝置配對</string>
     <string name="dialog_adb_pairing_paring_code">配對碼</string>
     <string name="starter">啟動程式</string>
-    <string name="dialog_adb_invalid_port">Port 是一個 1 至 65535 的整數。</string>
-    <string name="home_wireless_adb_title"><![CDATA[通過無線除錯啟動]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[對於執行 Android 11 的裝置，可以在開發者選項中找到無線除錯。<p>此過程無需連線電腦。請參考<b><a href=\"%1$s\">此幫助文件</a></b>。]]></string>
+    <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
+    <string name="home_wireless_adb_title"><![CDATA[通過無線偵錯啟動]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[對於執行 Android 11 的裝置，可以在開發人員選項中找到無線偵錯。<p>此過程無需連線電腦。請參考<b><a href=\"%1$s\">此幫助文件</a></b>。]]></string>
 </resources>
