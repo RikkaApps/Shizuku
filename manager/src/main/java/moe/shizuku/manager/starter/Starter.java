@@ -25,7 +25,7 @@ import moe.shizuku.manager.ktx.ContextKt;
 import moe.shizuku.manager.utils.BuildUtils;
 import rikka.core.os.FileUtils;
 
-public class ServerLauncher {
+public class Starter {
 
     private static String COMMAND;
 

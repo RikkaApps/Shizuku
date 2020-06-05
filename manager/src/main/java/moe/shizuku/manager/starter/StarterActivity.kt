@@ -75,8 +75,8 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         if (root) {
             startRoot()
 
-            if (ServerLauncher.getCommand() == null) {
-                ServerLauncher.writeFiles(context)
+            if (Starter.getCommand() == null) {
+                Starter.writeFiles(context)
             }
         } else {
             startAdb(host!!, port)
@@ -94,7 +94,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
             return
         }
 
-        Shell.su(ServerLauncher.getCommand()).to(object : CallbackList<String?>() {
+        Shell.su(Starter.getCommand()).to(object : CallbackList<String?>() {
             override fun onAddElement(s: String?) {
                 _output.value!!.append(s).append('\n')
                 notifyOutput()
@@ -111,7 +111,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         GlobalScope.launch(Dispatchers.IO) {
             AdbClient(host, port).runCatching {
                 connect()
-                shellCommand(ServerLauncher.getCommand()) {
+                shellCommand(Starter.getCommand()) {
                     sb.append(String(it))
                     notifyOutput()
                 }

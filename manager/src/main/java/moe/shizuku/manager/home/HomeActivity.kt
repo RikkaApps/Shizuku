@@ -25,7 +25,7 @@ import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
-import moe.shizuku.manager.starter.ServerLauncher
+import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.core.ktx.unsafeLazy
@@ -61,7 +61,7 @@ abstract class HomeActivity : AppBarActivity() {
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (!writeFilesCalled) {
-            ServerLauncher.writeFiles(this)
+            Starter.writeFiles(this)
             writeFilesCalled = true
         }
 

@@ -5,7 +5,7 @@ import android.view.MenuItem
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarFragmentActivity
-import moe.shizuku.manager.starter.ServerLauncher
+import moe.shizuku.manager.starter.Starter
 
 class SettingsActivity : AppBarFragmentActivity() {
 
@@ -34,7 +34,7 @@ class SettingsActivity : AppBarFragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (ShizukuSettings.isKeepSuContext() != isKeepSuContext) {
-            ServerLauncher.writeFiles(this)
+            Starter.writeFiles(this)
         }
     }
 

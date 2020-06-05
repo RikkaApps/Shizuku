@@ -79,14 +79,6 @@
         </receiver>
 
         <service
-            android:name=".service.WorkService"
-            android:directBootAware="true"
-            android:exported="false" />
-        <service
-            android:name=".starter.ShellService"
-            android:directBootAware="true"
-            android:exported="false" />
-        <service
             android:name=".starter.BootCompleteService"
             android:directBootAware="true"
             android:exported="false" />

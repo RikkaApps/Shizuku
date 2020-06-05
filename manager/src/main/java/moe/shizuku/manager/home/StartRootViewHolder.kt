@@ -11,9 +11,7 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartRootBinding
 import moe.shizuku.manager.ktx.toHtml
-import moe.shizuku.manager.starter.ShellService
 import moe.shizuku.manager.starter.StarterActivity
-import moe.shizuku.manager.utils.BindServiceHelper
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
@@ -30,11 +28,9 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
     private inline val restart get() = binding.button2
 
     private var alertDialog: AlertDialog? = null
-    private val bindServiceHelper: BindServiceHelper
 
     init {
         expandableButton.setOnClickListener(this)
-        bindServiceHelper = BindServiceHelper(itemView.context, ShellService::class.java)
         val listener = View.OnClickListener { v: View -> onStartClicked(v) }
         start.setOnClickListener(listener)
         restart.setOnClickListener(listener)

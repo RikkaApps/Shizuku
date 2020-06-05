@@ -14,7 +14,7 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartAdbBinding
 import moe.shizuku.manager.ktx.toHtml
-import moe.shizuku.manager.starter.ServerLauncher
+import moe.shizuku.manager.starter.Starter
 import rikka.core.util.ClipboardUtils
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
@@ -35,17 +35,17 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
             val context = v.context
             AlertDialog.Builder(context)
                     .setTitle(R.string.home_adb_button_view_command)
-                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, ServerLauncher.getCommandAdb())))
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, Starter.getCommandAdb())))
                     .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
-                        if (ClipboardUtils.put(context, ServerLauncher.getCommandAdb())) {
-                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, ServerLauncher.getCommandAdb()), Toast.LENGTH_SHORT).show()
+                        if (ClipboardUtils.put(context, Starter.getCommandAdb())) {
+                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, Starter.getCommandAdb()), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { _, _ ->
                         var intent = Intent(Intent.ACTION_SEND)
                         intent.type = "text/plain"
-                        intent.putExtra(Intent.EXTRA_TEXT, ServerLauncher.getCommandAdb())
+                        intent.putExtra(Intent.EXTRA_TEXT, Starter.getCommandAdb())
                         intent = Intent.createChooser(intent, context.getString(R.string.home_adb_dialog_view_command_button_send))
                         context.startActivity(intent)
                     }
