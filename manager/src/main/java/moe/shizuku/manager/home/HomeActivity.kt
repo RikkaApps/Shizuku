@@ -1,10 +1,8 @@
 package moe.shizuku.manager.home
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Bundle
+import android.os.Parcel
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.AppConstants
@@ -140,6 +139,31 @@ abstract class HomeActivity : AppBarActivity() {
 
                 AlertDialog.Builder(this)
                         .setView(binding.root)
+                        .show()
+                true
+            }
+            R.id.action_stop -> {
+                if (!ShizukuService.pingBinder()) {
+                    return true
+                }
+                AlertDialog.Builder(this)
+                        .setMessage(R.string.dialog_stop_message)
+                        .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
+                            val data = Parcel.obtain()
+                            val reply = Parcel.obtain()
+                            try {
+                                data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR)
+                                ShizukuService.getBinder()?.transact(101, data, reply, 0)
+                                reply.readException()
+                            } catch (ignored: Throwable) {
+                            } finally {
+                                data.recycle()
+                                reply.recycle()
+                            }
+                            LocalBroadcastManager.getInstance(this)
+                                    .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
                         .show()
                 true
             }

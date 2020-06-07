@@ -34,7 +34,12 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
                 }
             }
             when {
-                root -> {
+                root && BuildUtils.atLeast30 -> {
+                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
+                    addItem(StartAdbViewHolder.CREATOR, null, 2)
+                }
+                root && !BuildUtils.atLeast30 -> {
                     addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
                     addItem(StartAdbViewHolder.CREATOR, null, 2)
                     addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)

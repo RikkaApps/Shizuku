@@ -65,6 +65,22 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
+    private void enforceManager(String func) {
+        if (Binder.getCallingPid() == Os.getpid()) {
+            return;
+        }
+
+        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        String msg = "Permission Denial: " + func + " from pid="
+                + Binder.getCallingPid()
+                + " requires " + PERMISSION_MANAGER;
+        LOGGER.w(msg);
+        throw new SecurityException(msg);
+    }
+
+
     private void enforceCallingPermission(String func) {
         if (Binder.getCallingPid() == Os.getpid()) {
             return;
@@ -102,6 +118,13 @@ public class ShizukuService extends IShizukuService.Stub {
         } finally {
             newData.recycle();
         }
+    }
+
+    @Override
+    public void exit() {
+        enforceManager("exit");
+        LOGGER.i("exit");
+        System.exit(0);
     }
 
     @Override

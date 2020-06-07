@@ -67,4 +67,6 @@
     <string name="dialog_adb_invalid_port">端口号是一个 1 至 65535 的整数。</string>
     <string name="home_wireless_adb_title"><![CDATA[通过无线调试启动]]></string>
     <string name="home_wireless_adb_description"><![CDATA[对于运行 Android 11 的设备，可以在开发者选项中找到无线调试。<p>此过程无需连接电脑。请参考<b><a href=\"%1$s\">此帮助文档</a></b>。]]></string>
+    <string name="action_stop">停止 Shizuku</string>
+    <string name="dialog_stop_message">Shizuku 服务将被停止。</string>
 </resources>

@@ -8,9 +8,13 @@
         android:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/action_stop"
+        android:title="@string/action_stop"
+        android:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_about"
-        android:icon="@drawable/ic_action_about_24dp"
         android:title="@string/action_about"
-        android:showAsAction="ifRoom"/>
+        android:showAsAction="never"/>
 
 </menu>

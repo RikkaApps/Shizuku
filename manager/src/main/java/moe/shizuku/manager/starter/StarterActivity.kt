@@ -45,7 +45,11 @@ class StarterActivity : AppBarActivity() {
         }
 
         viewModel.output.observe(this) {
-            binding.text1.text = it.trim()
+            val output = it.trim()
+            binding.text1.text = output
+            if (output.endsWith("info: shizuku_starter exit with 0")) {
+                finish()
+            }
         }
     }
 

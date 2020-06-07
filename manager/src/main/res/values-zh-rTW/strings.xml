@@ -3,10 +3,10 @@
     <string name="permission_group_description">使用 Shizuku</string>
     <string name="permission_label">以更高許可權使用系統 API</string>
     <string name="permission_description">允許應用程式以更高許可權使用系統 API。</string>
-    <string name="home_status_service_is_running">%1$s 正在執行</string>
+    <string name="home_status_service_is_running">%1$s 正在運作</string>
     <string name="home_status_service_version">版本 %2$d，%1$s</string>
     <string name="home_status_service_version_update"><![CDATA[版本 %2$d，%1$s<br>再次啟動來升級到版本 %3$d]]></string>
-    <string name="home_status_service_not_running">%1$s 沒有執行</string>
+    <string name="home_status_service_not_running">%1$s 沒有運作</string>
     <string name="home_root_button_start">啟動</string>
     <string name="home_root_button_restart">重新啟動</string>
     <string name="home_root_title"><![CDATA[直接啟動（已 root 裝置）]]></string>
@@ -20,7 +20,7 @@
     <string name="dialog_legacy_not_support_title">%1$s 不支援現代 Shizuku</string>
     <string name="dialog_legacy_not_support_message"><![CDATA[舊式 Shizuku 已於 2019 年 3 月被棄用。此外，舊式 Shizuku 無法在較新版本的 Android 系統上工作。<p>請要求 <b>%1$s</b> 的開發者進行更新。]]></string>
     <string name="dialog_requesting_legacy_title">%1$s 正在請求舊式 Shizuku</string>
-    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> 支援現代 Shizuku，但它正在請求舊式 Shizuku。這可能是因為 Shizuku 沒有執行，請在 Shizuku 程式內檢查。<p>舊式 Shizuku 已於 2019 年 3 月被棄用。]]></string>
+    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> 支援現代 Shizuku，但它正在請求舊式 Shizuku。這可能是因為 Shizuku 沒有運作，請在 Shizuku 程式內檢查。<p>舊式 Shizuku 已於 2019 年 3 月被棄用。]]></string>
     <string name="home_app_management_title">應用程式管理</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other"><![CDATA[已授權 %d 個程式]]></item>
@@ -53,7 +53,7 @@
     <string name="home_learn_more_description">瞭解如何使用 Shizuku 開發或檢視使用 Shizuku 的程式</string>
     <string name="settings_prefer_su_context">使用完整 root（如果可用）</string>
     <string name="settings_prefer_su_context_summary">關閉此選項（或你的 su 不支援時）會使用 adb shell 的 secontext</string>
-    <string name="app_management_item_summary_requires_root">* 需要以 root 執行的 Shizuku</string>
+    <string name="app_management_item_summary_requires_root">* 需要以 root 運作的 Shizuku</string>
     <string name="settings_translation_contributors">翻譯貢獻者</string>
     <string name="translation_contributors" />
     <string name="settings_translation">參與翻譯</string>
@@ -66,5 +66,6 @@
     <string name="starter">啟動程式</string>
     <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
     <string name="home_wireless_adb_title"><![CDATA[通過無線偵錯啟動]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[對於執行 Android 11 的裝置，可以在開發人員選項中找到無線偵錯。<p>此過程無需連線電腦。請參考<b><a href=\"%1$s\">此幫助文件</a></b>。]]></string>
-</resources>
+    <string name="home_wireless_adb_description"><![CDATA[對於運作 Android 11 的裝置，可以在開發人員選項中找到無線偵錯。<p>此過程無需連線電腦。請參考<b><a href=\"%1$s\">此幫助文件</a></b>。]]></string>
+    <string name="action_stop">停止 Shizuku</string>
+    <string name="dialog_stop_message">Shizuku 服務將被停止。</string></resources>

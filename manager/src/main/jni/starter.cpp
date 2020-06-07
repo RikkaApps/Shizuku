@@ -27,6 +27,7 @@
 #define EXIT_FATAL_UID 6
 #define EXIT_WARN_START_TIMEOUT 7
 #define EXIT_WARN_SERVER_STOP 8
+#define EXIT_FATAL_KILL 9
 
 #define SERVER_NAME_LEGACY "shizuku_server_legacy"
 #define SERVER_NAME "shizuku_server"
@@ -76,7 +77,7 @@ static void setClasspathEnv(const char *path) {
     fflush(stdout);
 }
 
-static int start_server(const char *path, const char *main_class,const char *process_name, int change_context) {
+static int start_server(const char *path, const char *main_class, const char *process_name, int change_context) {
     pid_t pid = fork();
     if (pid == 0) {
         pid = daemon(FALSE, FALSE);
@@ -250,7 +251,7 @@ static void check_access(const char *path, const char *name) {
     }
 }
 
-static int kill_proc_by_name(const char *name) {
+static void kill_proc_by_name(const char *name) {
     for (auto pid : get_pids_by_name(name)) {
         if (pid == getpid())
             continue;
@@ -260,7 +261,14 @@ static int kill_proc_by_name(const char *name) {
         else
             printf("warn: failed to kill %d (%s)\n", pid, name);
     }
-    return 0;
+
+    for (auto pid : get_pids_by_name(name)) {
+        if (pid == getpid())
+            continue;
+
+        perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
+        exit(EXIT_FATAL_KILL);
+    }
 }
 
 static void copy_if_not_exist(const char *src, const char *dst) {

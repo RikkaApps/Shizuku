@@ -1,6 +1,5 @@
 package moe.shizuku.manager.app
 
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.graphics.Color
