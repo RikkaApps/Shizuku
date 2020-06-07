@@ -21,7 +21,7 @@ add_library(helper SHARED
 
 target_link_libraries(helper ${log-lib})
 
-add_library(adb_pairing SHARED
+add_library(adb SHARED
         adb_pairing.cpp)
 
-target_link_libraries(adb_pairing ${log-lib})
+target_link_libraries(adb ${log-lib})

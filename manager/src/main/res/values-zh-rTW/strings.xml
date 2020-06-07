@@ -58,7 +58,7 @@
     <string name="translation_contributors" />
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
-    <string name="home_adb_button_wireless">無線 adb</string>
+    <string name="dialog_adb_title">無線 adb</string>
     <string name="dialog_adb_port">通訊埠</string>
     <string name="adb_pairing">配對</string>
     <string name="dialog_adb_pairing_title">與裝置配對</string>
@@ -68,4 +68,7 @@
     <string name="home_wireless_adb_title"><![CDATA[通過無線偵錯啟動]]></string>
     <string name="home_wireless_adb_description"><![CDATA[對於運作 Android 11 的裝置，可以在開發人員選項中找到無線偵錯。<p>此過程無需連線電腦。請參考<b><a href=\"%1$s\">此幫助文件</a></b>。]]></string>
     <string name="action_stop">停止 Shizuku</string>
-    <string name="dialog_stop_message">Shizuku 服務將被停止。</string></resources>
+    <string name="dialog_stop_message">Shizuku 服務將被停止。</string>
+    <string name="paring_code_is_wrong">配對碼錯誤。</string>
+    <string name="cannot_connect_port">無法連線至此通訊埠。</string>
+</resources>

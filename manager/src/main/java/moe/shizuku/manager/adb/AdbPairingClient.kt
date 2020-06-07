@@ -274,7 +274,7 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
         val theirMessage = ByteArray(theirHeader.payload)
         inputStream.readFully(theirMessage)
 
-        val decrypted = pairingContext.decrypt(theirMessage) ?: return false
+        val decrypted = pairingContext.decrypt(theirMessage) ?: throw AdbWrongPairingCodeException()
         if (decrypted.size != kMaxPeerInfoSize) {
             Log.e(TAG, "Got size=${decrypted.size} PeerInfo.size=$kMaxPeerInfoSize")
             return false
@@ -306,7 +306,7 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
     companion object {
 
         init {
-            System.loadLibrary("adb_pairing")
+            System.loadLibrary("adb")
         }
 
         @JvmStatic
