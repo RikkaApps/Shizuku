@@ -15,7 +15,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbPairingClient
+import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.databinding.AdbPairDialogBinding
 import moe.shizuku.manager.viewmodel.activityViewModels
 import java.net.Inet4Address
@@ -91,7 +94,9 @@ private class ViewModel : androidx.lifecycle.ViewModel() {
 
     fun run(host: String, port: Int, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            AdbPairingClient(host, port, password).runCatching {
+            val key = AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+
+            AdbPairingClient(host, port, password, key).runCatching {
                 start()
             }.onFailure {
                 it.printStackTrace()

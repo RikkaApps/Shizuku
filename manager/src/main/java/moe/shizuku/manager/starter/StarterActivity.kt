@@ -13,7 +13,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.AppConstants.EXTRA
 import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
+import moe.shizuku.manager.adb.AdbKey
+import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.StarterActivityBinding
 import moe.shizuku.manager.viewmodel.viewModels
@@ -109,7 +112,8 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
     private fun startAdb(host: String, port: Int) {
         GlobalScope.launch(Dispatchers.IO) {
-            AdbClient(host, port).runCatching {
+            val key = AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            AdbClient(host, port, key).runCatching {
                 connect()
                 shellCommand(Starter.getCommand()) {
                     sb.append(String(it))

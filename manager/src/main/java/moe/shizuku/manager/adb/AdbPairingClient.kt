@@ -9,8 +9,6 @@ import java.io.DataOutputStream
 import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.security.SecureRandom
-import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocket
 
 private const val TAG = "AdbPairClient"
@@ -163,7 +161,7 @@ private class PairingContext private constructor(private val nativePtr: Long) {
 }
 
 @RequiresApi(29)
-class AdbPairingClient(private val host: String, private val port: Int, private val pairCode: String) : Closeable {
+class AdbPairingClient(private val host: String, private val port: Int, private val pairCode: String, private val key: AdbKey) : Closeable {
 
     private enum class State {
         Ready,
@@ -176,7 +174,7 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
     private lateinit var inputStream: DataInputStream
     private lateinit var outputStream: DataOutputStream
 
-    private val peerInfo: PeerInfo = PeerInfo(PeerInfo.Type.ADB_RSA_PUB_KEY.value, adbPublicKeyBase64Bytes)
+    private val peerInfo: PeerInfo = PeerInfo(PeerInfo.Type.ADB_RSA_PUB_KEY.value, key.adbPublicKey)
     private lateinit var pairingContext: PairingContext
     private var state: State = State.Ready
 
@@ -205,8 +203,7 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
         socket = Socket(host, port)
         socket.tcpNoDelay = true
 
-        val sslContext = SSLContext.getInstance("TLSv1.3")
-        sslContext.init(arrayOf(AdbKeyManager), arrayOf(AdbTrustManager), SecureRandom())
+        val sslContext = key.sslContext
         val sslSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
         sslSocket.startHandshake()
         Log.d(TAG, "Handshake succeeded.")

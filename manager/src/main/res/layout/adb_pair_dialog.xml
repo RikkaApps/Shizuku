@@ -30,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:maxLines="1"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
+                android:textSize="22sp"
                 tools:text="123456" />
 
         </com.google.android.material.textfield.TextInputLayout>

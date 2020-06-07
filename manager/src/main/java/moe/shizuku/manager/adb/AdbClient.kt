@@ -21,35 +21,11 @@ import java.io.DataOutputStream
 import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.security.SecureRandom
-import javax.crypto.Cipher
-import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocket
 
 private const val TAG = "AdbClient"
 
-private val PADDING = byteArrayOf(
-        0x00, 0x01, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0x00,
-        0x30, 0x21, 0x30, 0x09, 0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a, 0x05, 0x00,
-        0x04, 0x14)
-
-class AdbClient(private val host: String, private val port: Int) : Closeable {
+class AdbClient(private val host: String, private val port: Int, private val key: AdbKey) : Closeable {
 
     private lateinit var socket: Socket
     private lateinit var plainInputStream: DataInputStream
@@ -70,7 +46,7 @@ class AdbClient(private val host: String, private val port: Int) : Closeable {
         plainInputStream = DataInputStream(socket.getInputStream())
         plainOutputStream = DataOutputStream(socket.getOutputStream())
 
-        write(A_CNXN, A_VERSION, A_MAXDATA, "host::shizuku")
+        write(A_CNXN, A_VERSION, A_MAXDATA, "host::")
 
         var message = read()
         if (message.command == A_STLS) {
@@ -79,8 +55,7 @@ class AdbClient(private val host: String, private val port: Int) : Closeable {
             }
             write(A_STLS, A_STLS_VERSION, 0)
 
-            val sslContext = SSLContext.getInstance("TLSv1.3")
-            sslContext.init(arrayOf(AdbKeyManager), arrayOf(AdbTrustManager), SecureRandom())
+            val sslContext = key.sslContext
             tlsSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
             tlsSocket.startHandshake()
             Log.d(TAG, "Handshake succeeded.")
@@ -92,17 +67,11 @@ class AdbClient(private val host: String, private val port: Int) : Closeable {
             message = read()
         } else if (message.command == A_AUTH) {
             if (message.command != A_AUTH && message.arg0 != ADB_AUTH_TOKEN) error("not A_AUTH ADB_AUTH_TOKEN")
-
-            val cipher = Cipher.getInstance("RSA/ECB/NoPadding")
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey)
-            cipher.update(PADDING)
-            val signed = cipher.doFinal(message.data)
-
-            write(A_AUTH, ADB_AUTH_SIGNATURE, 0, signed)
+            write(A_AUTH, ADB_AUTH_SIGNATURE, 0, key.sign(message.data))
 
             message = read()
             if (message.command != A_CNXN) {
-                write(A_AUTH, ADB_AUTH_RSAPUBLICKEY, 0, adbPublicKeyBase64Bytes)
+                write(A_AUTH, ADB_AUTH_RSAPUBLICKEY, 0, key.adbPublicKey)
                 message = read()
             }
         }
