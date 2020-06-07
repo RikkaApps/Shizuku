@@ -4,6 +4,7 @@
 #include <cstring>
 #include <dlfcn.h>
 #include <cstdlib>
+#include <inttypes.h>
 #include "adb_pairing.h"
 
 #define LOG_TAG "AdbPairClient"
@@ -243,7 +244,7 @@ static jbyteArray PairingContext_Encrypt(JNIEnv *env, jobject obj, jlong ptr, jb
     env->ReleaseByteArrayElements(jIn, in, 0);
 
     if (!status) {
-        LOGE("Failed to encrypt (in_len=%d, out_len=%d, out_len_needed=%d)", in_size, out_size, in_size);
+        LOGE("Failed to encrypt (in_len=%d, out_len=%" PRIuPTR", out_len_needed=%d)", in_size, out_size, in_size);
         return nullptr;
     }
     ++ctx->enc_sequence;
@@ -274,7 +275,7 @@ static jbyteArray PairingContext_Decrypt(JNIEnv *env, jobject obj, jlong ptr, jb
     env->ReleaseByteArrayElements(jIn, in, 0);
 
     if (!status) {
-        LOGE("Failed to decrypt (in_len=%d, out_len=%d, out_len_needed=%d)", in_size, out_size, in_size);
+        LOGE("Failed to decrypt (in_len=%d, out_len=%" PRIuPTR", out_len_needed=%d)", in_size, out_size, in_size);
         return nullptr;
     }
     ++ctx->dec_sequence;
