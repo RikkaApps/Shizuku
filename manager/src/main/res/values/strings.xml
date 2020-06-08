@@ -21,7 +21,7 @@
 
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[For device runs Android 11, Wireless debugging can be found in Developer options.<p>This process does not requires computer connection. Please refer to <b><a href=\"%1$s\">this help document</a></b>.]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[To Android 11, Wireless debugging is a built-in feature. Please refer to <b><a href=\"%1$s\">this help document</a></b>.<p>This works for all system versions. But before Android 11, wireless debugging cannot be directly enabled.]]></string>
 
     <!-- Adb -->
     <string name="dialog_adb_title">Wireless adb</string>
@@ -35,8 +35,8 @@
     <string name="adb_pairing_requires_multi_window">The pairing process requires system\'s pairing dialog is always visible, please enable system\'s split-screen (multi-window) mode.</string>
 
     <!-- Home - Root -->
-    <string name="home_root_title"><![CDATA[Start directly (rooted devices)]]></string>
-    <string name="home_root_description"><![CDATA[For rooted devices, Shizuku can be started directly.</b><p>In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
+    <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
+    <string name="home_root_description"><![CDATA[In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
     <string name="home_root_button_start">Start</string>
     <string name="home_root_button_restart">Restart</string>
 
