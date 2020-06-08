@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -13,6 +14,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import moe.shizuku.manager.R
+import moe.shizuku.manager.adb.AdbPairingClient
 import moe.shizuku.manager.databinding.AdbDialogBinding
 import moe.shizuku.manager.starter.StarterActivity
 import rikka.core.util.BuildUtils
@@ -76,7 +78,11 @@ class AdbDialogFragment : DialogFragment() {
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            AdbPairDialogFragment().show(childFragmentManager)
+            if (AdbPairingClient.available()) {
+                AdbPairDialogFragment().show(childFragmentManager)
+            } else {
+                Toast.makeText(it.context, "Paring is not available on this device.", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

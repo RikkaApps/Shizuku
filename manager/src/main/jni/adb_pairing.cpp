@@ -306,8 +306,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK)
         return -1;
 
-    assert(env != nullptr);
-
     JNINativeMethod methods_AdbPairingClient[] = {
             {"available", "()Z", (void *) AdbPairingClient_Available},
     };
@@ -321,11 +319,11 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
             {"nativeDestroy",     "(J)V",    (void *) PairingContext_Destroy},
     };
 
-    assert(0 == env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/AdbPairingClient"), methods_AdbPairingClient,
-                                     sizeof(methods_AdbPairingClient) / sizeof(JNINativeMethod)));
+    env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/AdbPairingClient"), methods_AdbPairingClient,
+                         sizeof(methods_AdbPairingClient) / sizeof(JNINativeMethod));
 
-    assert(0 == env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/PairingContext"), methods_PairingContext,
-                                     sizeof(methods_PairingContext) / sizeof(JNINativeMethod)));
+    env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/PairingContext"), methods_PairingContext,
+                         sizeof(methods_PairingContext) / sizeof(JNINativeMethod));
 
     findFunctions();
     LOGI(available ? "available" : "not available");
