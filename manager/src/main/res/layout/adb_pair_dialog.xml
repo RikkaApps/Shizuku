@@ -18,6 +18,18 @@
         android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/adb_pairing_requires_multi_window"
+            android:textColor="?colorWarning"
+            android:drawableStart="@drawable/ic_warning_24"
+            android:drawableTintMode="src_in"
+            android:drawableTint="?colorWarning"
+            android:drawablePadding="16dp"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pairing_code"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -30,11 +42,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:maxLines="1"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 tools:text="123456" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/port"

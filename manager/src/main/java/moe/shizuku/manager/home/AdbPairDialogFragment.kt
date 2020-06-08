@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -26,6 +28,7 @@ import moe.shizuku.manager.viewmodel.viewModels
 import java.net.ConnectException
 import java.net.Inet4Address
 
+@RequiresApi(29)
 class AdbPairDialogFragment : DialogFragment() {
 
     private lateinit var binding: AdbPairDialogBinding
@@ -86,6 +89,8 @@ class AdbPairDialogFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val context = requireContext()
+
+        binding.text1.isVisible = !requireActivity().isInMultiWindowMode
 
         viewModel.result.observe(this) {
             if (it == null) {

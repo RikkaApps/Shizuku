@@ -71,4 +71,5 @@
     <string name="dialog_stop_message">Shizuku 服務將被停止。</string>
     <string name="paring_code_is_wrong">配對碼錯誤。</string>
     <string name="cannot_connect_port">無法連線至此通訊埠。</string>
+    <string name="adb_pairing_requires_multi_window">配對過程要求系統的配對對話方塊一直可見，請啟用系統的「分割畫面」（多視窗）模式。</string>
 </resources>

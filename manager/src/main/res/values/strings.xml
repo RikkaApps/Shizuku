@@ -32,6 +32,7 @@
     <string name="dialog_adb_pairing_paring_code">Pairing code</string>
     <string name="paring_code_is_wrong">Pairing code is wrong.</string>
     <string name="cannot_connect_port">Can\'t connect to this port.</string>
+    <string name="adb_pairing_requires_multi_window">The pairing process requires system\'s pairing dialog is always visible, please enable system\'s split-screen (multi-window) mode.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start directly (rooted devices)]]></string>
