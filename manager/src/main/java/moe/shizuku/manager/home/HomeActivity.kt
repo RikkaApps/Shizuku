@@ -134,8 +134,6 @@ abstract class HomeActivity : AppBarActivity() {
                 val binding = AboutDialogBinding.inflate(LayoutInflater.from(this), null, false)
                 binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
                 binding.sourceCode.text = getString(R.string.about_view_source_code, "<b><a href=\"https://github.com/RikkaApps/Shizuku\">GitHub</a></b>").toHtml()
-                binding.iconCredits.movementMethod = LinkMovementMethod.getInstance()
-                binding.iconCredits.text = getString(R.string.about_icon_credits, "<b><a href=\"%2\$s\">%1\$s</a></b>".format(getString(R.string.icon_illustrator), getString(R.string.icon_illustrator_url))).toHtml()
 
                 AlertDialog.Builder(this)
                         .setView(binding.root)
