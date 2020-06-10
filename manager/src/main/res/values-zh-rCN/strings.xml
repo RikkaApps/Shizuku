@@ -25,7 +25,7 @@
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other"><![CDATA[已授权 %d 个应用]]></item>
     </plurals>
-    <string name="home_app_management_view_authorized_apps"><![CDATA[轻触管理授权的应用]]></string>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[点按以管理授权的应用]]></string>
     <string name="toast_copied_to_clipboard">%s\n已被复制到剪贴板。</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">打开 Shizuku</string>
     <string name="action_about">关于</string>
