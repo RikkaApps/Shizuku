@@ -68,6 +68,12 @@
     </moe.shizuku.manager.widget.ExpandableLayout>
 
     <TextView
+        android:id="@android:id/button2"
+        style="@style/CardButton"
+        android:drawableStart="@drawable/ic_baseline_link_24"
+        android:text="@string/adb_pairing" />
+
+    <TextView
         android:id="@android:id/button1"
         style="@style/CardButton"
         android:drawableStart="@drawable/ic_server_start_24dp"

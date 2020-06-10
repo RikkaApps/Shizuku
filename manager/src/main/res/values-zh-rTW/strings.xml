@@ -29,7 +29,6 @@
     <string name="toast_copied_to_clipboard">%s\n已被複製到剪貼簿。</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">開啟 Shizuku</string>
     <string name="action_about">關於</string>
-    <string name="about_icon_credits"><![CDATA[感謝 %s 製作應用程式的圖示]]></string>
     <string name="about_view_source_code"><![CDATA[在 %s 查看原始碼]]></string>
     <string name="settings_title">設定</string>
     <string name="start_with_root_failed">未授予 root 權限或是該裝置沒有 root，因此無法啟動服務。</string>
@@ -58,7 +57,7 @@
     <string name="translation_contributors" />
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
-    <string name="dialog_adb_title">無線 adb</string>
+    <string name="dialog_adb_title">無線偵錯</string>
     <string name="dialog_adb_port">通訊埠</string>
     <string name="adb_pairing">配對</string>
     <string name="dialog_adb_pairing_title">與裝置配對</string>
@@ -72,4 +71,6 @@
     <string name="paring_code_is_wrong">配對碼錯誤。</string>
     <string name="cannot_connect_port">無法連線至此通訊埠。</string>
     <string name="adb_pairing_requires_multi_window">配對過程要求系統的配對對話方塊一直可見，請啟用系統的「分割畫面」（多視窗）模式。</string>
+    <string name="adb_error_key_store">無法為無線偵錯生成金鑰。\n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
+    <string name="adb_pair_required">請先進行配對步驟。</string>
 </resources>

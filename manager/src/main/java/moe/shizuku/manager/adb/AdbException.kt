@@ -11,4 +11,6 @@ open class AdbException : Exception {
     constructor()
 }
 
-class AdbWrongPairingCodeException : AdbException()
+class AdbInvalidPairingCodeException : AdbException()
+
+class AdbKeyException(cause: Throwable) : AdbException(cause)

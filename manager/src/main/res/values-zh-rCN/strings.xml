@@ -29,7 +29,6 @@
     <string name="toast_copied_to_clipboard">%s\n已被复制到剪贴板。</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">打开 Shizuku</string>
     <string name="action_about">关于</string>
-    <string name="about_icon_credits"><![CDATA[感谢 %s 制作应用图标]]></string>
     <string name="about_view_source_code"><![CDATA[在 %s 查看源码]]></string>
     <string name="settings_title">设置</string>
     <string name="start_with_root_failed">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
@@ -58,7 +57,7 @@
     <string name="translation_contributors" />
     <string name="settings_translation">参与翻译</string>
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
-    <string name="dialog_adb_title">无线 adb</string>
+    <string name="dialog_adb_title">无线调试</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">配对</string>
     <string name="dialog_adb_pairing_title">与设备配对</string>
@@ -72,4 +71,6 @@
     <string name="paring_code_is_wrong">配对码错误。</string>
     <string name="cannot_connect_port">无法连接至此端口。</string>
     <string name="adb_pairing_requires_multi_window">配对过程要求系统的配对对话框一直可见，请启用系统的分屏（多窗口）模式。</string>
+    <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
+    <string name="adb_pair_required">请先进行配对步骤。</string>
 </resources>

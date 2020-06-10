@@ -3,6 +3,7 @@ package moe.shizuku.manager.starter
 import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
@@ -16,11 +17,18 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
+import moe.shizuku.manager.adb.AdbKeyException
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.StarterActivityBinding
+import moe.shizuku.manager.viewmodel.Resource
+import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.material.widget.BorderView
+import java.net.ConnectException
+import javax.net.ssl.SSLProtocolException
+
+private class NotRootedException : Exception()
 
 class StarterActivity : AppBarActivity() {
 
@@ -45,10 +53,33 @@ class StarterActivity : AppBarActivity() {
         }
 
         viewModel.output.observe(this) {
-            val output = it.trim()
+            val output = it.data!!.trim()
             binding.text1.text = output
             if (output.endsWith("info: shizuku_starter exit with 0")) {
                 finish()
+            } else if (it.status == Status.ERROR) {
+                var message = 0
+                when (it.error) {
+                    is AdbKeyException -> {
+                        message = R.string.adb_error_key_store
+                    }
+                    is NotRootedException -> {
+                        message = R.string.start_with_root_failed
+                    }
+                    is ConnectException -> {
+                        message = R.string.cannot_connect_port
+                    }
+                    is SSLProtocolException -> {
+                        message = R.string.adb_pair_required
+                    }
+                }
+
+                if (message != 0) {
+                    AlertDialog.Builder(this)
+                            .setMessage(message)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                }
             }
         }
     }
@@ -72,11 +103,9 @@ class StarterActivity : AppBarActivity() {
 private class ViewModel(context: Context, root: Boolean, host: String?, port: Int) : androidx.lifecycle.ViewModel() {
 
     private val sb = StringBuilder()
-    private val _output = MutableLiveData(sb)
+    private val _output = MutableLiveData<Resource<StringBuilder>>()
 
-    private val rootFailedText = context.getString(R.string.start_with_root_failed)
-
-    val output = _output as LiveData<StringBuilder>
+    val output = _output as LiveData<Resource<StringBuilder>>
 
     init {
         if (root) {
@@ -90,46 +119,61 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         }
     }
 
-    private fun notifyOutput() {
-        _output.postValue(sb)
+    private fun postResult(throwable: Throwable? = null) {
+        if (throwable == null)
+            _output.postValue(Resource.success(sb))
+        else
+            _output.postValue(Resource.error(throwable, sb))
     }
 
     private fun startRoot() {
-        if (!Shell.rootAccess()) {
-            sb.append(rootFailedText)
+        sb.append("Starting with root...").append('\n').append('\n')
+        postResult()
 
+        if (!Shell.rootAccess()) {
+            sb.append("Can't start root shell.")
             return
         }
 
         Shell.su(Starter.getCommand()).to(object : CallbackList<String?>() {
             override fun onAddElement(s: String?) {
-                _output.value!!.append(s).append('\n')
-                notifyOutput()
+                sb.append(s).append('\n')
+                postResult()
             }
         }).submit {
             if (it.code != 0) {
                 sb.append('\n').append("Send this to developer may help solve the problem.")
-                notifyOutput()
+                postResult()
             }
         }
     }
 
     private fun startAdb(host: String, port: Int) {
+        sb.append("Starting with wireless adb...").append('\n').append('\n')
+
         GlobalScope.launch(Dispatchers.IO) {
-            val key = AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            val key = try {
+                AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                sb.append('\n').append(e.toString())
+
+                postResult(AdbKeyException(e))
+                return@launch
+            }
+
             AdbClient(host, port, key).runCatching {
                 connect()
                 shellCommand(Starter.getCommand()) {
                     sb.append(String(it))
-                    notifyOutput()
+                    postResult()
                 }
                 close()
             }.onFailure {
-                sb.append('\n')
-                        .append(it.toString())
-                /*.append("\n\n")
-                .append("Send this to developer may help solve the problem.")*/
-                notifyOutput()
+                it.printStackTrace()
+
+                sb.append('\n').append(it.toString())
+                postResult(it)
             }
         }
     }

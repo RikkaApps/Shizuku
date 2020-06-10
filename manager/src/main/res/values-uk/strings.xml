@@ -35,7 +35,6 @@
     <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
-    <string name="about_icon_credits"><![CDATA[Дякую %s за стоверння іконки для додатку]]></string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>

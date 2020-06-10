@@ -14,6 +14,7 @@ import org.bouncycastle.cert.X509v3CertificateBuilder
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder
 import rikka.core.ktx.unsafeLazy
 import java.io.ByteArrayInputStream
+import java.lang.RuntimeException
 import java.math.BigInteger
 import java.net.Socket
 import java.nio.ByteBuffer

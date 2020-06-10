@@ -21,10 +21,10 @@
 
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[To Android 11, Wireless debugging is a built-in feature. Please refer to <b><a href=\"%1$s\">this help document</a></b>.<p>This works for all system versions. But before Android 11, wireless debugging cannot be directly enabled.]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[In Android 11, Wireless debugging is a built-in feature. Please refer to <b><a href=\"%1$s\">this help document</a></b>.<p>This works for all system versions. But before Android 11, wireless debugging cannot be directly enabled.]]></string>
 
     <!-- Adb -->
-    <string name="dialog_adb_title">Wireless adb</string>
+    <string name="dialog_adb_title">Wireless debugging</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_adb_invalid_port">Port is an integer ranging from 1 to 65535.</string>
     <string name="adb_pairing">Pairing</string>
@@ -33,6 +33,8 @@
     <string name="paring_code_is_wrong">Pairing code is wrong.</string>
     <string name="cannot_connect_port">Can\'t connect to this port.</string>
     <string name="adb_pairing_requires_multi_window">The pairing process requires system\'s pairing dialog is always visible, please enable system\'s split-screen (multi-window) mode.</string>
+    <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
+    <string name="adb_pair_required">Please go through the pairing step first.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
@@ -74,7 +76,6 @@
 
     <!-- About -->
     <string name="action_about">About</string>
-    <string name="about_icon_credits"><![CDATA[Thanks %s for illustrating app icon]]></string>
     <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
 
     <!-- Stop -->

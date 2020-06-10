@@ -3,7 +3,9 @@ package moe.shizuku.manager.home
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -19,10 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
-import moe.shizuku.manager.adb.AdbKey
-import moe.shizuku.manager.adb.AdbPairingClient
-import moe.shizuku.manager.adb.AdbWrongPairingCodeException
-import moe.shizuku.manager.adb.PreferenceAdbKeyStore
+import moe.shizuku.manager.adb.*
 import moe.shizuku.manager.databinding.AdbPairDialogBinding
 import moe.shizuku.manager.viewmodel.viewModels
 import java.net.ConnectException
@@ -96,10 +95,16 @@ class AdbPairDialogFragment : DialogFragment() {
             if (it == null) {
                 dismissAllowingStateLoss()
             } else {
-                if (it is ConnectException) {
-                    binding.port.error = context.getString(R.string.cannot_connect_port)
-                } else if (it is AdbWrongPairingCodeException) {
-                    binding.pairingCode.error = context.getString(R.string.paring_code_is_wrong)
+                when (it) {
+                    is ConnectException -> {
+                        binding.port.error = context.getString(R.string.cannot_connect_port)
+                    }
+                    is AdbInvalidPairingCodeException -> {
+                        binding.pairingCode.error = context.getString(R.string.paring_code_is_wrong)
+                    }
+                    is AdbKeyException -> {
+                        Toast.makeText(context, context.getString(R.string.adb_error_key_store), Toast.LENGTH_LONG).apply { setGravity(Gravity.CENTER, 0, 0) }.show()
+                    }
                 }
             }
         }
@@ -120,7 +125,13 @@ private class ViewModel : androidx.lifecycle.ViewModel() {
 
     fun run(host: String, port: Int, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            val key = AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            val key = try {
+                AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                _result.postValue(AdbKeyException(e))
+                return@launch
+            }
 
             AdbPairingClient(host, port, password, key).runCatching {
                 start()
