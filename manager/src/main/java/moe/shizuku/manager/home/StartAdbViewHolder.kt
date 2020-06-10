@@ -37,24 +37,24 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
             val context = v.context
             AlertDialog.Builder(context)
                     .setTitle(R.string.home_adb_button_view_command)
-                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, Starter.getCommandAdb())))
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, Starter.commandAdb)))
                     .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
-                        if (ClipboardUtils.put(context, Starter.getCommandAdb())) {
-                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, Starter.getCommandAdb()), Toast.LENGTH_SHORT).show()
+                        if (ClipboardUtils.put(context, Starter.commandAdb)) {
+                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, Starter.commandAdb), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { _, _ ->
                         var intent = Intent(Intent.ACTION_SEND)
                         intent.type = "text/plain"
-                        intent.putExtra(Intent.EXTRA_TEXT, Starter.getCommandAdb())
+                        intent.putExtra(Intent.EXTRA_TEXT, Starter.commandAdb)
                         intent = Intent.createChooser(intent, context.getString(R.string.home_adb_dialog_view_command_button_send))
                         context.startActivity(intent)
                     }
                     .show()
         }
         binding.text1.movementMethod = LinkMovementMethod.getInstance()
-        binding.text1.text = context.getString(R.string.home_adb_description, Helps.ADB.get(), Helps.ADB_ANDROID11.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+        binding.text1.text = context.getString(R.string.home_adb_description, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
     }
 
     override fun onClick(v: View) {

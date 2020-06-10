@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import kotlinx.coroutines.Job
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.R
 import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.databinding.AppListItemBinding
+import moe.shizuku.manager.utils.AppIconCache
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
@@ -33,7 +35,10 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
     }
 
     private inline val packageName get() = data.packageName
-    private inline val uid get() = data.applicationInfo.uid
+    private inline val ai get() = data.applicationInfo
+    private inline val uid get() = ai.uid
+
+    private var loadIconJob: Job? = null
 
     override fun onClick(v: View) {
         val context = v.context
@@ -65,15 +70,22 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
 
     override fun onBind() {
         val pm = itemView.context.packageManager
-        val ai = data!!.applicationInfo
         icon.setImageDrawable(ai.loadIcon(pm))
         name.text = ai.loadLabel(pm)
         pkg.text = ai.packageName
         switchWidget.isChecked = AuthorizationManager.granted(packageName, uid)
         root.visibility = if (ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_REQUIRES_ROOT")) View.VISIBLE else View.GONE
+
+        loadIconJob = AppIconCache.loadIconBitmapAsync(context, ai, ai.uid / 100000, icon)
     }
 
     override fun onBind(payloads: List<Any>) {
         switchWidget.isChecked = AuthorizationManager.granted(packageName, uid)
+    }
+
+    override fun onRecycle() {
+        if (loadIconJob?.isActive == true) {
+            loadIconJob?.cancel()
+        }
     }
 }

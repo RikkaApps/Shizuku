@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import java.lang.annotation.Retention;
 import java.util.Locale;
 
-import moe.shizuku.manager.utils.BuildUtils;
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
 import rikka.material.app.DayNightDelegate;
 import rikka.material.app.DayNightDelegate.NightMode;

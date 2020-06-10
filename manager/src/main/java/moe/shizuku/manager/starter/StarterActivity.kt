@@ -111,7 +111,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         if (root) {
             startRoot()
 
-            if (Starter.getCommand() == null) {
+            if (Starter.command == null) {
                 Starter.writeFiles(context)
             }
         } else {
@@ -135,7 +135,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
             return
         }
 
-        Shell.su(Starter.getCommand()).to(object : CallbackList<String?>() {
+        Shell.su(Starter.command).to(object : CallbackList<String?>() {
             override fun onAddElement(s: String?) {
                 sb.append(s).append('\n')
                 postResult()
@@ -164,7 +164,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
             AdbClient(host, port, key).runCatching {
                 connect()
-                shellCommand(Starter.getCommand()) {
+                shellCommand(Starter.command) {
                     sb.append(String(it))
                     postResult()
                 }

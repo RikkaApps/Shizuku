@@ -15,4 +15,6 @@
 
     <dimen name="home_margin">4dp</dimen>
 
+    <dimen name="default_app_icon_size">40dp</dimen>
+
 </resources>

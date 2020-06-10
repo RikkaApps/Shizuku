@@ -3,6 +3,8 @@ package moe.shizuku.manager.home
 import android.content.*
 import android.os.Bundle
 import android.os.Parcel
+import android.os.Process
+import android.os.UserHandle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.Menu
@@ -25,6 +27,7 @@ import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
 import moe.shizuku.manager.starter.Starter
+import moe.shizuku.manager.utils.AppIconCache
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.core.ktx.unsafeLazy
@@ -134,7 +137,7 @@ abstract class HomeActivity : AppBarActivity() {
                 val binding = AboutDialogBinding.inflate(LayoutInflater.from(this), null, false)
                 binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
                 binding.sourceCode.text = getString(R.string.about_view_source_code, "<b><a href=\"https://github.com/RikkaApps/Shizuku\">GitHub</a></b>").toHtml()
-
+                binding.icon.setImageBitmap(AppIconCache.getOrLoadBitmap(this, applicationInfo, Process.myUid() / 100000, resources.getDimensionPixelOffset(R.dimen.default_app_icon_size)))
                 AlertDialog.Builder(this)
                         .setView(binding.root)
                         .show()

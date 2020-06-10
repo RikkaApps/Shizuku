@@ -9,6 +9,7 @@ import moe.shizuku.api.ShizukuBinderWrapper
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.api.SystemServiceHelper
 import rikka.core.ktx.unsafeLazy
+import rikka.core.util.BuildUtils
 import java.util.*
 
 object ShizukuSystemApis {
@@ -38,7 +39,7 @@ object ShizukuSystemApis {
         return if (!ShizukuService.pingBinder()) {
             PackageManager.PERMISSION_DENIED
         } else try {
-            if (BuildUtils.atLeast30()) {
+            if (BuildUtils.atLeast30) {
                 HiddenApiBridge.IPermissionManager_checkPermission(permissionManager, permName, pkgName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
@@ -53,7 +54,7 @@ object ShizukuSystemApis {
             return
         }
         try {
-            if (BuildUtils.atLeast30()) {
+            if (BuildUtils.atLeast30) {
                 HiddenApiBridge.IPermissionManager_grantRuntimePermission(permissionManager, packageName, permissionName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_grantRuntimePermission(packageManager, packageName, permissionName, userId)
@@ -68,7 +69,7 @@ object ShizukuSystemApis {
             return
         }
         try {
-            if (BuildUtils.atLeast30()) {
+            if (BuildUtils.atLeast30) {
                 HiddenApiBridge.IPermissionManager_revokeRuntimePermission(permissionManager, packageName, permissionName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_revokeRuntimePermission(packageManager, packageName, permissionName, userId)

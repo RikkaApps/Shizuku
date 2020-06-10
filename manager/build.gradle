@@ -116,6 +116,7 @@ dependencies {
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
+
     implementation 'com.github.topjohnwu.libsu:core:2.5.1'
 
     def preferenceLibraryVersion = '4.2.0-alpha02'
@@ -133,6 +134,8 @@ dependencies {
     implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.65'
+
+    implementation 'me.zhanghai.android.appiconloader:appiconloader:1.2.0'
 }
 
 apply from: rootProject.file('signing.gradle')
