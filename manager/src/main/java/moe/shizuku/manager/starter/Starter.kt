@@ -26,7 +26,11 @@ object Starter {
     val commandAdb: String
         get() = "adb shell $command"
 
-    fun writeFiles(context: Context) {
+    fun writeFiles(context: Context, force: Boolean = false) {
+        if (!force && _command != null) {
+            return
+        }
+
         try {
             val out = getRoot(context)
             try {

@@ -62,10 +62,8 @@ abstract class HomeActivity : AppBarActivity() {
 
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (!writeFilesCalled) {
-            Starter.writeFiles(this)
-            writeFilesCalled = true
-        }
+
+        Starter.writeFiles(this)
 
         homeModel.serviceStatus.observe(this) {
             if (it.status == Status.SUCCESS) {
@@ -174,9 +172,5 @@ abstract class HomeActivity : AppBarActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    companion object {
-        private var writeFilesCalled = false
     }
 }
