@@ -17,22 +17,18 @@ import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
-class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewHolder<Boolean>(binding.root), View.OnClickListener, Checkable {
+class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewHolder<Boolean>(binding.root) {
 
     companion object {
         val CREATOR = Creator<Boolean> { inflater: LayoutInflater, parent: ViewGroup? -> StartRootViewHolder(HomeStartRootBinding.inflate(inflater, parent, false)) }
     }
 
-    private inline val expandableButton get() = binding.text2
-    private inline val expandableLayout get() = binding.expandable
     private inline val start get() = binding.button1
     private inline val restart get() = binding.button2
 
     private var alertDialog: AlertDialog? = null
 
     init {
-        expandableButton.isVisible = false
-        expandableButton.setOnClickListener(this)
         val listener = View.OnClickListener { v: View -> onStartClicked(v) }
         start.setOnClickListener(listener)
         restart.setOnClickListener(listener)
@@ -58,33 +54,10 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
             start.visibility = View.VISIBLE
             restart.visibility = View.GONE
         }
-        syncViewState()
     }
 
     override fun onRecycle() {
         super.onRecycle()
         alertDialog = null
-    }
-
-    override fun onClick(v: View) {
-        isChecked = !isChecked
-        syncViewState()
-    }
-
-    override fun setChecked(checked: Boolean) {
-        ShizukuSettings.getPreferences().edit().putBoolean("root_help_expanded", checked).apply()
-    }
-
-    override fun isChecked(): Boolean {
-        return true//ShizukuSettings.getPreferences().getBoolean("root_help_expanded", true)
-    }
-
-    override fun toggle() {
-        isChecked = !isChecked
-    }
-
-    private fun syncViewState() {
-        expandableButton.isChecked = isChecked
-        expandableLayout.isExpanded = isChecked
     }
 }

@@ -36,37 +36,18 @@
             android:layout_weight="1"
             android:text="@string/home_root_title" />
 
-        <moe.shizuku.manager.widget.CheckedImageView
-            android:id="@android:id/text2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_expand_material_anim_24dp"
-            android:tint="?android:textColorSecondary"
-            android:tintMode="src_in" />
-
     </LinearLayout>
 
-    <moe.shizuku.manager.widget.ExpandableLayout
-        android:id="@+id/expandable"
+    <TextView
+        android:id="@android:id/text1"
+        style="@style/CardSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:isExpanded="true">
-
-        <TextView
-            android:id="@android:id/text1"
-            style="@style/CardSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            tools:text="@string/home_root_description" />
-
-    </moe.shizuku.manager.widget.ExpandableLayout>
+        tools:text="@string/home_root_description" />
 
     <TextView
         android:id="@android:id/button1"

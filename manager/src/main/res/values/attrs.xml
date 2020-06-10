@@ -3,14 +3,10 @@
     <attr name="homeCardStyle" format="reference" />
     <attr name="appColorPrimary" format="reference" />
     <attr name="materialCircleIconViewStyle" format="reference" />
-    
-    <declare-styleable name="MaterialCircleIconView">
-        <attr name="iconBackgroundChroma" format="string"/>
-        <attr name="iconForegroundChroma" format="string"/>
-        <attr name="iconColorName" format="string"/>
-    </declare-styleable>
 
-    <declare-styleable name="ExpandableLayout">
-        <attr name="isExpanded" format="boolean"/>
+    <declare-styleable name="MaterialCircleIconView">
+        <attr name="iconBackgroundChroma" format="string" />
+        <attr name="iconForegroundChroma" format="string" />
+        <attr name="iconColorName" format="string" />
     </declare-styleable>
 </resources>

@@ -5,14 +5,10 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Checkable
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.HomeStartAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.Starter
@@ -21,18 +17,13 @@ import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
-class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHolder<Any?>(binding.root), View.OnClickListener, Checkable {
+class StartAdbViewHolder(binding: HomeStartAdbBinding) : BaseViewHolder<Any?>(binding.root) {
 
     companion object {
         val CREATOR = Creator<Any> { inflater: LayoutInflater, parent: ViewGroup? -> StartAdbViewHolder(HomeStartAdbBinding.inflate(inflater, parent, false)) }
     }
 
-    private inline val expandableButton get() = binding.text2
-    private inline val expandableLayout get() = binding.expandable
-
     init {
-        expandableButton.isVisible = false
-        expandableButton.setOnClickListener(this)
         binding.button1.setOnClickListener { v: View ->
             val context = v.context
             AlertDialog.Builder(context)
@@ -55,31 +46,5 @@ class StartAdbViewHolder(private val binding: HomeStartAdbBinding) : BaseViewHol
         }
         binding.text1.movementMethod = LinkMovementMethod.getInstance()
         binding.text1.text = context.getString(R.string.home_adb_description, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
-    }
-
-    override fun onClick(v: View) {
-        isChecked = !isChecked
-        syncViewState()
-    }
-
-    override fun onBind() {
-        syncViewState()
-    }
-
-    override fun setChecked(checked: Boolean) {
-        ShizukuSettings.getPreferences().edit().putBoolean("adb_help_expanded", checked).apply()
-    }
-
-    override fun isChecked(): Boolean {
-        return true//ShizukuSettings.getPreferences().getBoolean("adb_help_expanded", true)
-    }
-
-    override fun toggle() {
-        isChecked = !isChecked
-    }
-
-    private fun syncViewState() {
-        expandableButton.isChecked = isChecked
-        expandableLayout.isExpanded = isChecked
     }
 }
