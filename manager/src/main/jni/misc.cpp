@@ -152,3 +152,16 @@ int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const cha
 int copyfile(const char *src_path, const char *dst_path) {
     return copyfileat(0, src_path, 0, dst_path);
 }
+
+uintptr_t memsearch(const uintptr_t start, const uintptr_t end, const void *value, size_t size) {
+    uintptr_t _start = start;
+    while (true) {
+        if (_start + size >= end)
+            return 0;
+
+        if (memcmp((const void *) _start, value, size) == 0)
+            return _start;
+
+        _start += 1;
+    }
+}

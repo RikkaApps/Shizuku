@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import me.weishu.reflection.Reflection
 import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService

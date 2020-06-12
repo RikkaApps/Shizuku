@@ -4,7 +4,7 @@
 #include <cstring>
 #include <dlfcn.h>
 #include <cstdlib>
-#include <inttypes.h>
+#include <cinttypes>
 #include "adb_pairing.h"
 
 #define LOG_TAG "AdbPairClient"

@@ -7,6 +7,7 @@ import me.weishu.reflection.Reflection
 import moe.shizuku.manager.adb.AdbPairingClient.Companion.available
 import moe.shizuku.manager.authorization.AuthorizationManager
 import rikka.core.util.BuildUtils.atLeast29
+import rikka.core.util.BuildUtils.atLeast30
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 
@@ -18,6 +19,9 @@ class ShizukuApplication : Application() {
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
             if (BuildConfig.DEBUG && atLeast29) {
                 available()
+            }
+            if (atLeast30) {
+                System.loadLibrary("bypass")
             }
         }
     }
@@ -37,6 +41,8 @@ class ShizukuApplication : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        Reflection.unseal(base)
+        if (!atLeast30) {
+            Reflection.unseal(base)
+        }
     }
 }
