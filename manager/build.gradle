@@ -92,7 +92,7 @@ configurations.all {
 }
 
 repositories {
-    mavenLocal()
+    //mavenLocal()
 }
 
 dependencies {
