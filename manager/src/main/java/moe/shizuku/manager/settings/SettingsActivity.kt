@@ -34,7 +34,7 @@ class SettingsActivity : AppBarFragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (ShizukuSettings.isKeepSuContext() != isKeepSuContext) {
-            Starter.writeFiles(this, true)
+            Starter.writeFilesAsync(this, true)
         }
     }
 

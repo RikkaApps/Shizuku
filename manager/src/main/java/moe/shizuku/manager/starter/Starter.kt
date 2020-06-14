@@ -5,11 +5,15 @@ import android.content.Context
 import android.os.UserManager
 import android.system.ErrnoException
 import android.system.Os
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ktx.createDeviceProtectedStorageContextCompat
+import moe.shizuku.manager.ktx.logd
 import rikka.core.os.FileUtils
 import rikka.core.util.BuildUtils
 import java.io.*
@@ -26,8 +30,13 @@ object Starter {
     val commandAdb: String
         get() = "adb shell $command"
 
+    fun writeFilesAsync(context: Context, force: Boolean = false) {
+        GlobalScope.launch(Dispatchers.IO) { writeFiles(context.applicationContext, force) }
+    }
+
     fun writeFiles(context: Context, force: Boolean = false) {
         if (!force && _command != null) {
+            logd("already written")
             return
         }
 
@@ -41,6 +50,7 @@ object Starter {
             val dexPath = copyDex(context, "server.dex", File(out, DEX_NAME))
             _command = "sh " + writeShellFile(context, File(out, "start.sh"), dexPath)
             writeLegacyCompatAdbShellFile(context)
+            logd(_command!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }

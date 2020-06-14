@@ -109,7 +109,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
     init {
         if (root) {
-            Starter.writeFiles(context)
+            //Starter.writeFiles(context)
             startRoot()
         } else {
             startAdb(host!!, port)

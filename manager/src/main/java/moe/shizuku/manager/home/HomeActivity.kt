@@ -4,7 +4,6 @@ import android.content.*
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Process
-import android.os.UserHandle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import me.weishu.reflection.Reflection
 import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
@@ -24,6 +22,7 @@ import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AboutDialogBinding
 import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.FixedAlwaysClipToPaddingEdgeEffectFactory
+import moe.shizuku.manager.ktx.logd
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
@@ -64,7 +63,7 @@ abstract class HomeActivity : AppBarActivity() {
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Starter.writeFiles(this)
+        Starter.writeFilesAsync(this)
 
         homeModel.serviceStatus.observe(this) {
             if (it.status == Status.SUCCESS) {
@@ -108,6 +107,8 @@ abstract class HomeActivity : AppBarActivity() {
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(requestRefreshReceiver, IntentFilter(AppConstants.ACTION_REQUEST_REFRESH))
+
+        logd("onCreate")
     }
 
     override fun onResume() {
