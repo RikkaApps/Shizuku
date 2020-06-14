@@ -57,10 +57,11 @@
     <string name="translation_contributors" />
     <string name="settings_translation">参与翻译</string>
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
-    <string name="dialog_adb_title">无线调试</string>
+    <string name="dialog_adb_discovery">正在搜索无线调试服务</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">配对</string>
     <string name="dialog_adb_pairing_title">与设备配对</string>
+    <string name="dialog_adb_pairing_discovery">正在搜索配对服务</string>
     <string name="dialog_adb_pairing_paring_code">配对码</string>
     <string name="starter">启动程序</string>
     <string name="dialog_adb_invalid_port">端口号是一个 1 至 65535 的整数。</string>
@@ -73,4 +74,6 @@
     <string name="adb_pairing_requires_multi_window">配对过程要求系统的配对对话框一直可见，请启用系统的分屏（多窗口）模式。</string>
     <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
     <string name="adb_pair_required">请先进行配对步骤。</string>
+    <string name="development_settings">开发者选项</string>
+    <string name="dialog_adb_discovery_message">请在 “开发者选项” 中启用 “无线调试” 功能。\n\n注意：切换或关闭 WiFi 后无线调试自动关闭，请同时开启 “USB 调试” 保证服务能够一直运行。</string>
 </resources>

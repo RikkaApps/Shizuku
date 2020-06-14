@@ -57,10 +57,11 @@
     <string name="translation_contributors" />
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
-    <string name="dialog_adb_title">無線偵錯</string>
+    <string name="dialog_adb_discovery">正在搜索無線偵錯服務</string>
     <string name="dialog_adb_port">通訊埠</string>
     <string name="adb_pairing">配對</string>
     <string name="dialog_adb_pairing_title">與裝置配對</string>
+    <string name="dialog_adb_pairing_discovery">正在搜索配對服務</string>
     <string name="dialog_adb_pairing_paring_code">配對碼</string>
     <string name="starter">啟動程式</string>
     <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
@@ -73,4 +74,6 @@
     <string name="adb_pairing_requires_multi_window">配對過程要求系統的配對對話方塊一直可見，請啟用系統的「分割畫面」（多視窗）模式。</string>
     <string name="adb_error_key_store">無法為無線偵錯生成金鑰。\n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
     <string name="adb_pair_required">請先進行配對步驟。</string>
+    <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。\n\n注意：切換或關閉WiFi後無線偵錯自動關閉，請同時開啟「USB 偵錯」保證服務能夠一直運行。</string>
+    <string name="development_settings">開發人員選項</string>
 </resources>
