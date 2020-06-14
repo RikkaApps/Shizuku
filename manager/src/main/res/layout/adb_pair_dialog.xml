@@ -23,19 +23,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/adb_pairing_requires_multi_window"
-            android:textColor="?colorWarning"
-            android:drawableStart="@drawable/ic_warning_24"
-            android:drawableTintMode="src_in"
-            android:drawableTint="?colorWarning"
-            android:drawablePadding="16dp"/>
+            android:text="@string/adb_pairing_requires_multi_window" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pairing_code"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/dialog_adb_pairing_paring_code">
+            android:hint="@string/dialog_adb_pairing_paring_code"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -53,7 +50,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/dialog_adb_port">
+            android:hint="@string/dialog_adb_port"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

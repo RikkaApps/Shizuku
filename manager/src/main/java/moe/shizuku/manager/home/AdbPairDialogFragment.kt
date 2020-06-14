@@ -2,7 +2,11 @@ package moe.shizuku.manager.home
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -31,18 +35,22 @@ import java.net.Inet4Address
 class AdbPairDialogFragment : DialogFragment() {
 
     private lateinit var binding: AdbPairDialogBinding
+    private lateinit var adbMdns: AdbMdns
 
+    private val port = MutableLiveData<Int>()
     private val viewModel by viewModels { ViewModel() }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
         binding = AdbPairDialogBinding.inflate(LayoutInflater.from(context))
+        adbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING, port)
 
         val builder = AlertDialog.Builder(context).apply {
-            setTitle(R.string.dialog_adb_pairing_title)
+            setTitle(R.string.dialog_adb_pairing_discovery)
             setView(binding.root)
             setNegativeButton(android.R.string.cancel, null)
             setPositiveButton(android.R.string.ok, null)
+            setNeutralButton(R.string.development_settings, null)
         }
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
@@ -50,13 +58,27 @@ class AdbPairDialogFragment : DialogFragment() {
         return dialog
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        adbMdns.stop()
+    }
+
     private fun onDialogShow(dialog: AlertDialog) {
+        adbMdns.start()
+
         binding.pairingCode.editText!!.doAfterTextChanged {
             binding.pairingCode.error = null
         }
 
-        binding.port.editText!!.doAfterTextChanged {
-            binding.port.error = null
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            try {
+                it.context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+            }
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -67,6 +89,7 @@ class AdbPairDialogFragment : DialogFragment() {
                 -1
             }
             if (port > 65535 || port < 1) {
+                binding.port.isVisible = true
                 binding.port.error = context.getString(R.string.dialog_adb_invalid_port)
                 return@setOnClickListener
             }
@@ -82,14 +105,28 @@ class AdbPairDialogFragment : DialogFragment() {
 
             viewModel.run(hostName!!, port, password)
         }
+
+        port.observe(this) {
+            if (it == -1) {
+                dialog.setTitle(R.string.dialog_adb_pairing_discovery)
+                binding.text1.isVisible = true
+                binding.pairingCode.isVisible = false
+                binding.port.editText!!.setText(it.toString())
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+            } else {
+                dialog.setTitle(R.string.dialog_adb_pairing_title)
+                binding.text1.isVisible = false
+                binding.pairingCode.isVisible = true
+                binding.port.editText!!.setText(it.toString())
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         val context = requireContext()
-
-        binding.text1.isVisible = !requireActivity().isInMultiWindowMode
 
         viewModel.result.observe(this) {
             if (it == null) {
