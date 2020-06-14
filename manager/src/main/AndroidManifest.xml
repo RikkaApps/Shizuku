@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        tools:node="remove" />
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
