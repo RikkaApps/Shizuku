@@ -1,5 +1,6 @@
 package moe.shizuku.manager.adb
 
+import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import hidden.HiddenApiBridge.Conscrypt_exportKeyingMaterial
@@ -160,7 +161,7 @@ private class PairingContext private constructor(private val nativePtr: Long) {
     }
 }
 
-@RequiresApi(29)
+@RequiresApi(Build.VERSION_CODES.R)
 class AdbPairingClient(private val host: String, private val port: Int, private val pairCode: String, private val key: AdbKey) : Closeable {
 
     private enum class State {

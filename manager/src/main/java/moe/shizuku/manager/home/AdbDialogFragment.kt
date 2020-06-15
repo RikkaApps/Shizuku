@@ -4,9 +4,11 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -18,6 +20,7 @@ import moe.shizuku.manager.databinding.AdbDialogBinding
 import moe.shizuku.manager.starter.StarterActivity
 import java.net.InetAddress
 
+@RequiresApi(Build.VERSION_CODES.R)
 class AdbDialogFragment : DialogFragment() {
 
     private lateinit var binding: AdbDialogBinding

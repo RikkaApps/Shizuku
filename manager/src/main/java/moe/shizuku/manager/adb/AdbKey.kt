@@ -2,6 +2,7 @@ package moe.shizuku.manager.adb
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
@@ -14,7 +15,6 @@ import org.bouncycastle.cert.X509v3CertificateBuilder
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder
 import rikka.core.ktx.unsafeLazy
 import java.io.ByteArrayInputStream
-import java.lang.RuntimeException
 import java.math.BigInteger
 import java.net.Socket
 import java.nio.ByteBuffer
@@ -242,7 +242,7 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
                 }
             }
 
-    @delegate:RequiresApi(29)
+    @delegate:RequiresApi(Build.VERSION_CODES.R)
     val sslContext: SSLContext by unsafeLazy {
         val sslContext = SSLContext.getInstance("TLSv1.3")
         sslContext.init(arrayOf(keyManager), arrayOf(trustManager), SecureRandom())
