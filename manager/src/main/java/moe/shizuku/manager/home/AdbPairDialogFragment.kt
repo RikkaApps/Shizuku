@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
@@ -31,7 +32,7 @@ import moe.shizuku.manager.viewmodel.viewModels
 import java.net.ConnectException
 import java.net.Inet4Address
 
-@RequiresApi(29)
+@RequiresApi(VERSION_CODES.R)
 class AdbPairDialogFragment : DialogFragment() {
 
     private lateinit var binding: AdbPairDialogBinding
