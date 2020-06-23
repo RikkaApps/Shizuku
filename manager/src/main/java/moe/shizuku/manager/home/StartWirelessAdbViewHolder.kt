@@ -3,7 +3,6 @@ package moe.shizuku.manager.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.SystemProperties
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
+import hidden.HiddenApiBridge
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbPairingClient
@@ -26,16 +26,11 @@ import java.net.InetAddress
 
 class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseViewHolder<Any?>(binding.root) {
 
-    private var port = -1
-
     companion object {
         val CREATOR = Creator<Any> { inflater: LayoutInflater, parent: ViewGroup? -> StartWirelessAdbViewHolder(HomeStartWirelessAdbBinding.inflate(inflater, parent, false)) }
     }
 
     init {
-        port = SystemProperties.getInt("service.adb.tcp.port", -1)
-        if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
-
         binding.button1.setOnClickListener { v: View ->
             onAdbClicked(v.context)
         }
@@ -47,22 +42,30 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
             }
         } else {
             binding.button2.isVisible = false
-            if (port == -1) binding.button1.isEnabled = false
         }
     }
 
     @SuppressLint("NewApi")
     private fun onAdbClicked(context: Context) {
-        if (port > 0) {
-            val host = InetAddress.getLoopbackAddress().hostName
-            val intent = Intent(context, StarterActivity::class.java).apply {
-                putExtra(StarterActivity.EXTRA_IS_ROOT, false)
-                putExtra(StarterActivity.EXTRA_HOST, host)
-                putExtra(StarterActivity.EXTRA_PORT, port)
+        var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
+        if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
+
+        when {
+            port > 0 -> {
+                val host = InetAddress.getLoopbackAddress().hostName
+                val intent = Intent(context, StarterActivity::class.java).apply {
+                    putExtra(StarterActivity.EXTRA_IS_ROOT, false)
+                    putExtra(StarterActivity.EXTRA_HOST, host)
+                    putExtra(StarterActivity.EXTRA_PORT, port)
+                }
+                context.startActivity(intent)
             }
-            context.startActivity(intent)
-        } else {
-            AdbDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+            BuildUtils.atLeast30 -> {
+                AdbDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+            }
+            else -> {
+                WadbNotEnabledDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+            }
         }
     }
 

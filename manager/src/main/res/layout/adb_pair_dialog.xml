@@ -22,8 +22,31 @@
             android:id="@android:id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/adb_pairing_requires_multi_window" />
+            android:lineSpacingExtra="2sp"
+            android:text="@string/dialog_adb_pairing_message" />
+
+        <LinearLayout
+            android:id="@android:id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTint="?colorSafe"
+                android:drawableTintMode="src_in"
+                android:text="@string/adb_pairing_requires_multi_window"
+                android:textColor="?colorSafe" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/adb_pairing_requires_multi_window_reason" />
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pairing_code"

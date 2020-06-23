@@ -3,13 +3,15 @@ package moe.shizuku.manager.home
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -23,7 +25,6 @@ import androidx.lifecycle.observe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.*
@@ -36,18 +37,15 @@ import java.net.Inet4Address
 class AdbPairDialogFragment : DialogFragment() {
 
     private lateinit var binding: AdbPairDialogBinding
-    private lateinit var adbMdns: AdbMdns
 
-    private val port = MutableLiveData<Int>()
-    private val viewModel by viewModels { ViewModel() }
+    private val viewModel by viewModels { ViewModel(requireContext()) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
         binding = AdbPairDialogBinding.inflate(LayoutInflater.from(context))
-        adbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING, port)
 
         val builder = AlertDialog.Builder(context).apply {
-            setTitle(R.string.dialog_adb_pairing_discovery)
+            setTitle(R.string.dialog_adb_pairing_title)
             setView(binding.root)
             setNegativeButton(android.R.string.cancel, null)
             setPositiveButton(android.R.string.ok, null)
@@ -59,19 +57,14 @@ class AdbPairDialogFragment : DialogFragment() {
         return dialog
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        adbMdns.stop()
-    }
-
     private fun onDialogShow(dialog: AlertDialog) {
-        adbMdns.start()
-
         binding.pairingCode.editText!!.doAfterTextChanged {
             binding.pairingCode.error = null
         }
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+        binding.pairingCode.error = null
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isVisible = false
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
@@ -97,29 +90,24 @@ class AdbPairDialogFragment : DialogFragment() {
 
             val password = binding.pairingCode.editText!!.text.toString()
 
-            var hostName: String? = null
-            runBlocking {
-                GlobalScope.launch(Dispatchers.IO) {
-                    hostName = Inet4Address.getLoopbackAddress().hostName
-                }.join()
-            }
-
-            viewModel.run(hostName!!, port, password)
+            viewModel.run(port, password)
         }
 
-        port.observe(this) {
+        viewModel.port.observe(this) {
             if (it == -1) {
                 dialog.setTitle(R.string.dialog_adb_pairing_discovery)
                 binding.text1.isVisible = true
                 binding.pairingCode.isVisible = false
                 binding.port.editText!!.setText(it.toString())
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isVisible = false
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).isVisible = true
             } else {
                 dialog.setTitle(R.string.dialog_adb_pairing_title)
                 binding.text1.isVisible = false
                 binding.pairingCode.isVisible = true
                 binding.port.editText!!.setText(it.toString())
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isVisible = true
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).isVisible = false
             }
         }
     }
@@ -128,6 +116,16 @@ class AdbPairDialogFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val context = requireContext()
+        val inMultiScreen = requireActivity().isInMultiWindowMode
+
+        binding.text1.isVisible = inMultiScreen
+        binding.text2.isVisible = !inMultiScreen
+
+        if (inMultiScreen) {
+            dialog?.setTitle(R.string.dialog_adb_pairing_discovery)
+        } else {
+            dialog?.setTitle(R.string.dialog_adb_pairing_title)
+        }
 
         viewModel.result.observe(this) {
             if (it == null) {
@@ -152,17 +150,31 @@ class AdbPairDialogFragment : DialogFragment() {
         if (fragmentManager.isStateSaved) return
         show(fragmentManager, javaClass.simpleName)
     }
+
+    override fun getDialog(): AlertDialog? {
+        return super.getDialog() as AlertDialog?
+    }
 }
 
 @SuppressLint("NewApi")
-private class ViewModel : androidx.lifecycle.ViewModel() {
+private class ViewModel(context: Context) : androidx.lifecycle.ViewModel() {
 
     private val _result = MutableLiveData<Throwable?>()
-
     val result = _result as LiveData<Throwable?>
 
-    fun run(host: String, port: Int, password: String) {
+    private val _port = MutableLiveData<Int>()
+    val port = _port as LiveData<Int>
+
+    private val adbMdns: AdbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING, _port)
+
+    init {
+        adbMdns.start()
+    }
+
+    fun run(port: Int, password: String) {
         GlobalScope.launch(Dispatchers.IO) {
+            val host = Inet4Address.getLoopbackAddress().hostName
+
             val key = try {
                 AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
             } catch (e: Throwable) {
@@ -182,5 +194,10 @@ private class ViewModel : androidx.lifecycle.ViewModel() {
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        adbMdns.stop()
     }
 }

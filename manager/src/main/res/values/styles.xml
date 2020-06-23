@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.Light"/>
+    <style name="AppTheme" parent="Theme.Light" />
 
     <style name="Card">
         <item name="android:layout_width">match_parent</item>
@@ -40,12 +40,14 @@
         <item name="android:textAppearance">?textAppearanceSubtitle1</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
     <style name="CardSummary">
         <item name="android:textAppearance">?textAppearanceBody2</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
     <style name="GrantPermissions" parent="@style/AppTheme">

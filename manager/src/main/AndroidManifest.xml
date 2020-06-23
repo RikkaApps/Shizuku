@@ -31,6 +31,7 @@
     <application
         android:name=".ShizukuApplication"
         android:allowBackup="false"
+        android:autoRevokePermissions="allowed"
         android:directBootAware="true"
         android:extractNativeLibs="false"
         android:icon="@drawable/ic_launcher"
@@ -38,7 +39,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="n">
+        tools:targetApi="r">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

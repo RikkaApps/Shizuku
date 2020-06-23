@@ -70,10 +70,14 @@
     <string name="action_stop">停止 Shizuku</string>
     <string name="dialog_stop_message">Shizuku 服务将被停止。</string>
     <string name="paring_code_is_wrong">配对码错误。</string>
-    <string name="cannot_connect_port">无法连接至此端口。</string>
-    <string name="adb_pairing_requires_multi_window">配对过程要求系统的配对对话框一直可见，请启用系统的分屏（多窗口）模式。</string>
+    <string name="cannot_connect_port">无法连接至无线调试服务。</string>
+    <string name="dialog_adb_pairing_message">请跟随下面的步骤开始配对：“开发者选项” - “无线调试” - “使用配对码配对设备”。\n\n配对过程开始后，您将能够输入配对码。</string>
+    <string name="adb_pairing_requires_multi_window">请先进入分屏（多窗口）模式。</string>
     <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
     <string name="adb_pair_required">请先进行配对步骤。</string>
     <string name="development_settings">开发者选项</string>
     <string name="dialog_adb_discovery_message">请在 “开发者选项” 中启用 “无线调试” 功能。\n\n注意：切换或关闭 WiFi 后无线调试自动关闭，请同时开启 “USB 调试” 保证服务能够一直运行。</string>
+    <string name="dialog_wireless_adb_not_enabled">无线调试未启用。\n请注意，在 Android 11 之前，要启用无线调试必须连接电脑。</string>
+    <string name="adb_pairing_requires_multi_window_reason">系统要求配对对话框始终可见，使用分屏模式是使此应用和系统对话框同时可见的唯一方法。</string>
+
 </resources>

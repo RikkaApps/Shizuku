@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ParceledListSlice;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.permission.IPermissionManager;
 
@@ -118,5 +119,9 @@ public class HiddenApiBridge {
     @RequiresApi(29)
     public static byte[] Conscrypt_exportKeyingMaterial(SSLSocket socket, String label, byte[] context, int length) throws SSLException {
         return Conscrypt.exportKeyingMaterial(socket, label, context, length);
+    }
+
+    public static int SystemProperties_getInt(String key, int defaultValue) {
+        return SystemProperties.getInt(key, defaultValue);
     }
 }

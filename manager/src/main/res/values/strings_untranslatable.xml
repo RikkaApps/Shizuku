@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="icon_illustrator" translatable="false">小雅</string>
-    <string name="icon_illustrator_url" translatable="false">https://twitter.com/xiaoya_er</string>
-
     <string name="toast_translation_unfinished" translatable="false">The translation of current language is outdated.\nYou can learn how to contribute translation in settings.</string>
     <string name="translation_url" translatable="false">http://rikka.app/contribute_translation.html</string>
 </resources>
