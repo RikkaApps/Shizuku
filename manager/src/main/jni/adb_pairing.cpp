@@ -112,13 +112,13 @@ static const uint8_t kServerName[] = "adb pair server";
 static constexpr size_t kHkdfKeyLength = 16;
 
 struct PairingContextNative {
-    SPAKE2_CTX *spake2_ctx = nullptr;
-    uint8_t key[SPAKE2_MAX_MSG_SIZE]{0};
-    size_t key_size = 0;
+    SPAKE2_CTX *spake2_ctx;
+    uint8_t key[SPAKE2_MAX_MSG_SIZE];
+    size_t key_size;
 
-    EVP_AEAD_CTX *aes_ctx = nullptr;
-    uint64_t dec_sequence = 0;
-    uint64_t enc_sequence = 0;
+    EVP_AEAD_CTX *aes_ctx;
+    uint64_t dec_sequence;
+    uint64_t enc_sequence;
 };
 
 static jlong PairingContext_Constructor(JNIEnv *env, jclass clazz, jboolean isClient, jbyteArray jPassword) {
@@ -164,6 +164,7 @@ static jlong PairingContext_Constructor(JNIEnv *env, jclass clazz, jboolean isCl
     env->ReleaseByteArrayElements(jPassword, pswd, 0);
 
     auto ctx = (PairingContextNative *) malloc(sizeof(PairingContextNative));
+    memset(ctx, 0, sizeof(PairingContextNative));
     ctx->spake2_ctx = spake2_ctx;
     memcpy(ctx->key, key, SPAKE2_MAX_MSG_SIZE);
     ctx->key_size = key_size;
