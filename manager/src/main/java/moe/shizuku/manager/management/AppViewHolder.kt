@@ -1,15 +1,19 @@
 package moe.shizuku.manager.management
 
 import android.content.pm.PackageInfo
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import kotlinx.coroutines.Job
 import moe.shizuku.api.ShizukuService
+import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.databinding.AppListItemBinding
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.utils.AppIconCache
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
@@ -55,12 +59,16 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
                 return
             }
             if (uid != 0) {
-                val builder = AlertDialog.Builder(context)
+                val dialog = AlertDialog.Builder(context)
                         .setTitle(R.string.app_management_dialog_adb_is_limited_title)
-                        .setMessage(HtmlCompat.fromHtml(context.getString(R.string.app_management_dialog_adb_is_limited_message)))
+                        .setMessage(context.getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                         .setPositiveButton(android.R.string.ok, null)
+                        .create()
+                dialog.setOnShowListener {
+                    (it as AlertDialog).findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+                }
                 try {
-                    builder.show()
+                    dialog.show()
                 } catch (ignored: Throwable) {
                 }
             }

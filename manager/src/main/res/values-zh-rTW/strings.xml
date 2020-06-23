@@ -44,7 +44,7 @@
     <string name="settings_startup">啟動</string>
     <string name="app_management_menu_get_more">取得更多</string>
     <string name="app_management_dialog_adb_is_limited_title">adb 權限受限</string>
-    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[這通常是由您的裝置供應商完成，我們無法解決。<br>請嘗試在「開發人員選項」中查詢相關選項。例如，在 MIUI 中，選項是「USB 除錯（安全設定）」。]]></string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[你的設備製造商或是第三方設備管理程序限制了 adb 的權限。<p><b><a href=\"%1$s\">此文件</a></b>中可能有針對你的系統的解決方案。]]></string>
     <string name="home_adb_button_view_help">閱讀幫助</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
