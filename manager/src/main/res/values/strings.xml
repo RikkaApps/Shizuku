@@ -25,7 +25,7 @@
 
     <!-- Adb -->
     <string name="dialog_adb_discovery">Searching for wireless debugging service</string>
-    <string name="dialog_adb_discovery_message">Please enable "Wireless debugging" in the "Developer Options".\n\nNote: The wireless debugging is auto turned off after switching or turning off WiFi. Please also turn on "USB debugging" to ensure that the service can run all the time.</string>
+    <string name="dialog_adb_discovery_message">Please enable \"Wireless debugging\" in \"Developer options\". \"Wireless debugging\" is automatically disabled when network changes.\n\nNote, do not disable \"Developer options\" or \"USB debugging\", or Shizuku will be stopped.</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_adb_invalid_port">Port is an integer ranging from 1 to 65535.</string>
     <string name="adb_pairing">Pairing</string>

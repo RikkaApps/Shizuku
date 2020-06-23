@@ -75,7 +75,7 @@
     <string name="adb_pairing_requires_multi_window">請先進入「分割畫面」（多視窗）模式。</string>
     <string name="adb_error_key_store">無法為無線偵錯生成金鑰。\n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
     <string name="adb_pair_required">請先進行配對步驟。</string>
-    <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。\n\n注意：切換或關閉WiFi後無線偵錯自動關閉，請同時開啟「USB 偵錯」保證服務能夠一直運行。</string>
+    <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。當網路變化時“無線偵錯”會被自動禁用。\n\n注意：請不要禁用「開發人員選項」或「USB 偵錯」，否則 Shizuku 會被停止。</string>
     <string name="development_settings">開發人員選項</string>
     <string name="dialog_wireless_adb_not_enabled">無線偵錯未啟用。\n請注意，在 Android 11 之前，要啟用無線偵錯必須連線電腦。</string>
     <string name="adb_pairing_requires_multi_window_reason">系統要求配對對話方塊始終可見，使用「分割畫面」模式是使此應用程式和系統對話方塊同時可見的唯一方法。</string>
