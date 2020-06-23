@@ -209,7 +209,9 @@ static int start_server(const char *path, const char *main_class, const char *pr
         printf("info: checking %s start...\n", process_name);
         fflush(stdout);
         int count = 0;
-        while (get_pids_by_name(process_name).empty()) {
+        size_t size = 0;
+        pid_t *res;
+        while (!get_pids_by_name(process_name, size)) {
             fflush(stdout);
             usleep(200 * 1000);
             count++;
@@ -218,8 +220,10 @@ static int start_server(const char *path, const char *main_class, const char *pr
                 exit_with_logcat(EXIT_WARN_START_TIMEOUT);
             }
         }
+        free(res);
         count = 0;
-        while (!get_pids_by_name(process_name).empty()) {
+        while ((res = get_pids_by_name(process_name, size))) {
+            free(res);
             printf("info: checking %s stability...\n", process_name);
             fflush(stdout);
             usleep(1000 * 500);
@@ -252,7 +256,13 @@ static void check_access(const char *path, const char *name) {
 }
 
 static void kill_proc_by_name(const char *name) {
-    for (auto pid : get_pids_by_name(name)) {
+    pid_t pid;
+    size_t size = 0;
+
+    auto pids = get_pids_by_name(name, size);
+    for (int i = 0; i < size; ++i) {
+        pid = pids[i];
+
         if (pid == getpid())
             continue;
 
@@ -261,13 +271,22 @@ static void kill_proc_by_name(const char *name) {
         else
             printf("warn: failed to kill %d (%s)\n", pid, name);
     }
+    if (pids) {
+        free(pids);
+    }
 
-    for (auto pid : get_pids_by_name(name)) {
+    pids = get_pids_by_name(name, size);
+    for (int i = 0; i < size; ++i) {
+        pid = pids[i];
+
         if (pid == getpid())
             continue;
 
         perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
         exit(EXIT_FATAL_KILL);
+    }
+    if (pids) {
+        free(pids);
     }
 }
 

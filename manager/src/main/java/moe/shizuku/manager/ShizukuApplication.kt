@@ -4,8 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.topjohnwu.superuser.Shell
 import me.weishu.reflection.Reflection
-import moe.shizuku.manager.adb.AdbPairingClient.Companion.available
+import moe.shizuku.manager.adb.AdbPairingClient
 import moe.shizuku.manager.authorization.AuthorizationManager
+import moe.shizuku.manager.ktx.logd
 import rikka.core.util.BuildUtils.atLeast29
 import rikka.core.util.BuildUtils.atLeast30
 import rikka.material.app.DayNightDelegate
@@ -16,12 +17,14 @@ class ShizukuApplication : Application() {
     companion object {
 
         init {
+            logd("ShizukuApplication", "init")
+
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
             if (BuildConfig.DEBUG && atLeast29) {
-                available()
+                AdbPairingClient.available()
             }
             if (atLeast30) {
-                System.loadLibrary("bypass")
+                System.loadLibrary("adb")
             }
         }
     }

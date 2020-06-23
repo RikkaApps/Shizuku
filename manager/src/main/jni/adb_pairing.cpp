@@ -1,15 +1,16 @@
 #include <jni.h>
 #include <dirent.h>
-#include <cassert>
 #include <cstring>
 #include <dlfcn.h>
 #include <cstdlib>
 #include <cinttypes>
+#include <sys/system_properties.h>
 #include "adb_pairing.h"
 
 #define LOG_TAG "AdbPairClient"
 
 #include "logging.h"
+#include "bypass.h"
 
 // ---------------------------------------------------------
 
@@ -162,7 +163,7 @@ static jlong PairingContext_Constructor(JNIEnv *env, jclass clazz, jboolean isCl
     }
     env->ReleaseByteArrayElements(jPassword, pswd, 0);
 
-    auto ctx = new PairingContextNative();
+    auto ctx = (PairingContextNative *) malloc(sizeof(PairingContextNative));
     ctx->spake2_ctx = spake2_ctx;
     memcpy(ctx->key, key, SPAKE2_MAX_MSG_SIZE);
     ctx->key_size = key_size;
@@ -289,7 +290,7 @@ static void PairingContext_Destroy(JNIEnv *env, jobject obj, jlong ptr) {
     auto ctx = (PairingContextNative *) ptr;
     SPAKE2_CTX_free(ctx->spake2_ctx);
     if (ctx->aes_ctx) EVP_AEAD_CTX_free(ctx->aes_ctx);
-    delete ctx;
+    free(ctx);
 }
 
 // ---------------------------------------------------------
@@ -327,6 +328,18 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     findFunctions();
     LOGI(available ? "available" : "not available");
+
+    int sdkLevel = -1, previewSdkLevel = -1;
+    char buf[PROP_VALUE_MAX + 1];
+    if (__system_property_get("ro.build.version.sdk", buf) > 0)
+        sdkLevel = atoi(buf);
+
+    if (__system_property_get("ro.build.version.preview_sdk", buf) > 0)
+        previewSdkLevel = atoi(buf);
+
+    if (sdkLevel >= 30 || (sdkLevel == 29 && previewSdkLevel > 0)) {
+        bypass::Bypass(env);
+    }
 
     return JNI_VERSION_1_6;
 }

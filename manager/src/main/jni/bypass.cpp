@@ -1,9 +1,6 @@
-
 #include <jni.h>
 #include <utility>
-#include <elf.h>
 #include <fcntl.h>
-#include <vector>
 #include <cinttypes>
 #include "misc.h"
 
@@ -27,13 +24,17 @@ static uintptr_t search_string(uintptr_t start, uintptr_t end, const char *str) 
     return 0;
 }
 
-static JNINativeMethod *search_jni_method(const std::vector<std::pair<uintptr_t, uintptr_t>> &addresses, const char *name, const char *signature) {
+static JNINativeMethod *search_jni_method(
+        procmaps_struct **addresses, size_t size, const char *name, const char *signature) {
     uintptr_t name_addr, signature_addr, method_addr;
 
     // Step 1: search strings
-    for (auto address : addresses) {
-        name_addr = search_string(address.first, address.second, name);
-        signature_addr = search_string(address.first, address.second, signature);
+    for (int i = 0; i < size; ++i) {
+        auto start = (uintptr_t) addresses[i]->addr_start;
+        auto end = (uintptr_t) addresses[i]->addr_end;
+
+        name_addr = search_string(start, end, name);
+        signature_addr = search_string(start, end, signature);
         if (name_addr != 0 && signature_addr != 0) {
             break;
         }
@@ -45,22 +46,25 @@ static JNINativeMethod *search_jni_method(const std::vector<std::pair<uintptr_t,
     // Step 2: search JNINativeMethod
     auto char_ptr_size = sizeof(const char *);
     JNINativeMethod *res = nullptr;
-    JNINativeMethod method = JNINativeMethod{(const char *) name_addr, (const char *) signature_addr, nullptr};
+    auto method = JNINativeMethod{(const char *) name_addr, (const char *) signature_addr, nullptr};
 
-    for (auto address : addresses) {
-        method_addr = memsearch(address.first, address.second, &method, char_ptr_size * 2);
+    for (int i = 0; i < size; ++i) {
+        auto start = (uintptr_t) addresses[i]->addr_start;
+        auto end = (uintptr_t) addresses[i]->addr_end;
+
+        method_addr = memsearch(start, end, &method, char_ptr_size * 2);
         if (method_addr != 0) {
             res = (JNINativeMethod *) method_addr;
             LOGI("found {\"%s\", \"%s\", %p} at 0x%" PRIxPTR".", res->name, res->signature, res->fnPtr, method_addr);
             break;
         } else {
-            LOGD("JNINativeMethod struct not found between %" PRIxPTR"-%" PRIxPTR".", address.first, address.second);
+            LOGD("JNINativeMethod struct not found between %" PRIxPTR"-%" PRIxPTR".", start, end);
         }
     }
     return res;
 }
 
-bool strend(char const *str, char const *suffix) {
+static bool strend(char const *str, char const *suffix) {
     if (!str && !suffix) return true;
     if (!str || !suffix) return false;
     auto str_len = strlen(str);
@@ -76,19 +80,34 @@ static bool doBypass(JNIEnv *env) {
         return false;
     }
 
-    std::vector<std::pair<uintptr_t, uintptr_t>> addresses;
+    procmaps_struct **addresses = nullptr;
+    size_t size = 0;
     procmaps_struct *maps_tmp;
     while ((maps_tmp = pmparser_next(maps)) != nullptr) {
         if (strend(maps_tmp->pathname, "/libart.so")) {
             auto start = (uintptr_t) maps_tmp->addr_start;
             auto end = (uintptr_t) maps_tmp->addr_end;
-            addresses.emplace_back(start, end);
+            if (maps_tmp->is_r) {
+                if (addresses) {
+                    addresses = (procmaps_struct **) realloc(addresses, sizeof(procmaps_struct*) * (size + 1));
+                } else {
+                    addresses = (procmaps_struct **) malloc(sizeof(procmaps_struct*));
+                }
+                addresses[size] = maps_tmp;
+                size += 1;
+            }
             LOGD("%" PRIxPTR"-%" PRIxPTR" %s %ld %s", start, end, maps_tmp->perm, maps_tmp->offset, maps_tmp->pathname);
         }
     }
-    pmparser_free(maps);
 
-    auto method = search_jni_method(addresses, "setHiddenApiExemptions", "([Ljava/lang/String;)V");
+    for (int i = 0; i < size; ++i) {
+        maps_tmp = addresses[i];
+        auto start = (uintptr_t) maps_tmp->addr_start;
+        auto end = (uintptr_t) maps_tmp->addr_end;
+        LOGD("%" PRIxPTR"-%" PRIxPTR" %s %ld %s", start, end, maps_tmp->perm, maps_tmp->offset, maps_tmp->pathname);
+    }
+
+    auto method = search_jni_method(addresses, size, "setHiddenApiExemptions", "([Ljava/lang/String;)V");
     if (!method) {
         LOGE("unable to find setHiddenApiExemptions.");
     } else {
@@ -106,6 +125,8 @@ static bool doBypass(JNIEnv *env) {
     }
     LOGD("succeeded");
 
+    pmparser_free(maps);
+
     return true;
 }
 
@@ -114,16 +135,4 @@ namespace bypass {
     bool Bypass(JNIEnv *env) {
         return doBypass(env);
     }
-}
-
-// ---------------------------------------------------------
-
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-    JNIEnv *env = nullptr;
-
-    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK)
-        return -1;
-
-    bypass::Bypass(env);
-    return JNI_VERSION_1_6;
 }

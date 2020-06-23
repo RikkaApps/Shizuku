@@ -22,11 +22,6 @@ add_library(helper SHARED
 target_link_libraries(helper ${log-lib})
 
 add_library(adb SHARED
-        adb_pairing.cpp)
+        adb_pairing.cpp bypass.cpp misc.cpp pmparser.c)
 
 target_link_libraries(adb ${log-lib})
-
-add_library(bypass SHARED
-        bypass.cpp misc.cpp pmparser.c)
-
-target_link_libraries(bypass ${log-lib})

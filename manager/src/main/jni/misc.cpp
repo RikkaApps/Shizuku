@@ -2,9 +2,11 @@
 #include <sys/sendfile.h>
 #include <sys/stat.h>
 #include <zconf.h>
-#include <vector>
 #include <dirent.h>
 #include <fcntl.h>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
 
 ssize_t fdgets(char *buf, const size_t size, int fd) {
     ssize_t len = 0;
@@ -80,8 +82,9 @@ int is_num(const char *s) {
     return 1;
 }
 
-std::vector<pid_t> get_pids_by_name(const char *name) {
-    std::vector<pid_t> res;
+pid_t *get_pids_by_name(const char *name, size_t &size) {
+    pid_t *res = nullptr;
+    size = 0;
 
     DIR *dir;
     struct dirent *entry;
@@ -93,10 +96,16 @@ std::vector<pid_t> get_pids_by_name(const char *name) {
         if (entry->d_type == DT_DIR) {
             if (is_num(entry->d_name)) {
                 pid_t pid = atoi(entry->d_name);
-                if (is_proc_name_equals(pid, name))
-                    res.push_back(pid);
+                if (is_proc_name_equals(pid, name)) {
+                    if (!res) {
+                        res = (pid_t *) malloc(sizeof(pid_t));
+                    } else {
+                        res = (pid_t *) realloc(res, sizeof(pid_t) * (size + 1));
+                    }
+                    res[size] = pid;
+                    size++;
+                }
             }
-
         }
     }
 
