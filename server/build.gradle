@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
         minSdkVersion rootProject.ext.minSdkVersion
