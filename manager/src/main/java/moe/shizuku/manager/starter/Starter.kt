@@ -2,13 +2,13 @@ package moe.shizuku.manager.starter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.UserManager
 import android.system.ErrnoException
 import android.system.Os
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
@@ -18,14 +18,17 @@ import rikka.core.os.FileUtils
 import rikka.core.util.BuildUtils
 import java.io.*
 import java.util.*
+import java.util.zip.ZipInputStream
+import moe.shizuku.api.ShizukuApiConstants.SERVER_VERSION as serverVersion
 
 object Starter {
 
-    private val DEX_NAME = String.format(Locale.ENGLISH, "server-v%d.dex", ShizukuApiConstants.SERVER_VERSION)
+    private const val DEX_NAME = "server-v$serverVersion.dex"
+    private const val STARTER_NAME = "starter-v$serverVersion"
 
-    private var _command: String? = null
+    private var commandInternal: String? = null
 
-    val command get() = _command!!
+    val command get() = commandInternal!!
 
     val commandAdb: String
         get() = "adb shell $command"
@@ -35,7 +38,7 @@ object Starter {
     }
 
     fun writeFiles(context: Context, force: Boolean = false) {
-        if (!force && _command != null) {
+        if (!force && commandInternal != null) {
             logd("already written")
             return
         }
@@ -47,10 +50,13 @@ object Starter {
             } catch (e: ErrnoException) {
                 e.printStackTrace()
             }
-            val dexPath = copyDex(context, "server.dex", File(out, DEX_NAME))
-            _command = "sh " + writeShellFile(context, File(out, "start.sh"), dexPath)
-            writeLegacyCompatAdbShellFile(context)
-            logd(_command!!)
+            val dexPath = copyDex(context, File(out, DEX_NAME))
+            val starterPath = copyStarter(context, File(out, STARTER_NAME))
+            val scriptPath = writeScript(context, File(out, "start.sh"), dexPath, starterPath)
+            commandInternal = "sh $scriptPath"
+
+            writeLegacyAdbScript(context)
+            logd(commandInternal!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -61,11 +67,11 @@ object Starter {
     }
 
     @Throws(IOException::class)
-    private fun copyDex(context: Context, source: String, out: File): String {
+    private fun copyDex(context: Context, out: File): String {
         if (out.exists() && !BuildConfig.DEBUG) {
             return out.absolutePath
         }
-        val `is` = context.assets.open(source)
+        val `is` = context.assets.open("server.dex")
         val os: OutputStream = FileOutputStream(out)
         FileUtils.copy(`is`, os)
         os.flush()
@@ -79,8 +85,37 @@ object Starter {
         return out.absolutePath
     }
 
+    private fun copyStarter(context: Context, out: File): String {
+        if (out.exists() && !BuildConfig.DEBUG) {
+            return out.absolutePath
+        }
+
+        val so = "lib/${Build.SUPPORTED_ABIS[0]}/libshizuku.so"
+        val ai = context.applicationInfo
+
+        val fis = FileInputStream(ai.sourceDir)
+        val fos = FileOutputStream(out)
+        val apk = ZipInputStream(fis)
+        while (true) {
+            val entry = apk.nextEntry ?: break
+            if (entry.name != so) continue
+
+            val buf = ByteArray(entry.size.toInt())
+            val dis = DataInputStream(apk)
+            dis.readFully(buf)
+            FileUtils.copy(ByteArrayInputStream(buf), fos)
+            break
+        }
+        try {
+            Os.chmod(out.absolutePath, 420)
+        } catch (e: ErrnoException) {
+            e.printStackTrace()
+        }
+        return out.absolutePath
+    }
+
     @Throws(IOException::class)
-    private fun writeShellFile(context: Context, out: File, dex: String): String {
+    private fun writeScript(context: Context, out: File, dex: String, starter: String): String {
         if (!out.exists()) {
             out.createNewFile()
         }
@@ -89,7 +124,7 @@ object Starter {
         var line: String?
         while (`is`.readLine().also { line = it } != null) {
             os.println(line!!
-                    .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
+                    .replace("%%%STARTER_PATH%%%", starter)
                     .replace("%%%STARTER_PARAM%%%", getStarterParam(dex))
                     //.replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
             )
@@ -106,7 +141,7 @@ object Starter {
 
     @SuppressLint("NewApi")
     @Throws(IOException::class)
-    private fun writeLegacyCompatAdbShellFile(context: Context) {
+    private fun writeLegacyAdbScript(context: Context) {
         val um = context.getSystemService(UserManager::class.java)
         if (um == null || !BuildUtils.atLeast24 || !um.isUserUnlocked) {
             return
@@ -129,13 +164,5 @@ object Starter {
         Objects.requireNonNull(dex)
         return ("--path=" + dex
                 + if (ShizukuSettings.isKeepSuContext()) "" else " --use-shell-context")
-    }
-
-    private fun getLibPath(context: Context, name: String): String {
-        val path = context.applicationInfo.publicSourceDir
-        val sourceDir = File(path)
-        val libDir = File(sourceDir.parentFile, "lib").listFiles()!![0]
-        val starter = File(libDir, name)
-        return starter.absolutePath
     }
 }

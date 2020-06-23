@@ -5,7 +5,7 @@ STARTER_PARAM="%%%STARTER_PARAM%%%"
 LIBRARY_PATH="%%%LIBRARY_PATH%%%"
 
 echo "info: start.sh begin"
-
+echo "info: starter is $STARTER_PATH"
 if [ -f "$STARTER_PATH" ]; then
     rm -f /data/local/tmp/shizuku_starter
     cp "$STARTER_PATH" /data/local/tmp/shizuku_starter

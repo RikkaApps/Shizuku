@@ -32,7 +32,7 @@
         android:name=".ShizukuApplication"
         android:allowBackup="false"
         android:directBootAware="true"
-        android:extractNativeLibs="true"
+        android:extractNativeLibs="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
