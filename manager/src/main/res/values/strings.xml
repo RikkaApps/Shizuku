@@ -64,7 +64,7 @@
     <!-- Application management -->
     <string name="app_management_menu_get_more">Get more</string>
     <string name="app_management_dialog_adb_is_limited_title">The permission of adb is limited</string>
-    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Your device manufacturer or third-party device management app limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[It\'s highly possible that your device manufacturer limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>
     <string name="app_management_item_summary_requires_root">* requires Shizuku runs with root</string>
 
     <!-- Settings -->
