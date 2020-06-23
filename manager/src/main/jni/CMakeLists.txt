@@ -16,10 +16,10 @@ add_executable(libshizuku.so
 
 target_link_libraries(libshizuku.so ${log-lib})
 
-add_library(helper SHARED
-        helper.cpp selinux.cpp)
-
-target_link_libraries(helper ${log-lib})
+#add_library(helper SHARED
+#        helper.cpp selinux.cpp)
+#
+#target_link_libraries(helper ${log-lib})
 
 add_library(adb SHARED
         adb_pairing.cpp bypass.cpp misc.cpp pmparser.c)

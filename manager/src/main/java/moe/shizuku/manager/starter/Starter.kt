@@ -91,7 +91,7 @@ object Starter {
             os.println(line!!
                     .replace("%%%STARTER_PATH%%%", getLibPath(context, "libshizuku.so"))
                     .replace("%%%STARTER_PARAM%%%", getStarterParam(dex))
-                    .replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
+                    //.replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
             )
         }
         os.flush()
