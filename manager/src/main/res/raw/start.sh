@@ -2,7 +2,6 @@
 
 STARTER_PATH="%%%STARTER_PATH%%%"
 STARTER_PARAM="%%%STARTER_PARAM%%%"
-LIBRARY_PATH="%%%LIBRARY_PATH%%%"
 
 echo "info: start.sh begin"
 echo "info: starter is $STARTER_PATH"
