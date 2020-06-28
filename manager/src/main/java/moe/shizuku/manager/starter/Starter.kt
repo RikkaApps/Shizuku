@@ -18,7 +18,7 @@ import rikka.core.os.FileUtils
 import rikka.core.util.BuildUtils
 import java.io.*
 import java.util.*
-import java.util.zip.ZipInputStream
+import java.util.zip.ZipFile
 import moe.shizuku.api.ShizukuApiConstants.SERVER_VERSION as serverVersion
 
 object Starter {
@@ -86,22 +86,22 @@ object Starter {
     }
 
     private fun copyStarter(context: Context, out: File): String {
-        if (out.exists() && !BuildConfig.DEBUG) {
+        if (out.exists() && out.length() > 0 && !BuildConfig.DEBUG) {
             return out.absolutePath
         }
 
         val so = "lib/${Build.SUPPORTED_ABIS[0]}/libshizuku.so"
         val ai = context.applicationInfo
 
-        val fis = FileInputStream(ai.sourceDir)
         val fos = FileOutputStream(out)
-        val apk = ZipInputStream(fis)
-        while (true) {
-            val entry = apk.nextEntry ?: break
+        val apk = ZipFile(ai.sourceDir)
+        val entries = apk.entries()
+        while (entries.hasMoreElements()) {
+            val entry = entries.nextElement() ?: break
             if (entry.name != so) continue
 
             val buf = ByteArray(entry.size.toInt())
-            val dis = DataInputStream(apk)
+            val dis = DataInputStream(apk.getInputStream(entry))
             dis.readFully(buf)
             FileUtils.copy(ByteArrayInputStream(buf), fos)
             break
