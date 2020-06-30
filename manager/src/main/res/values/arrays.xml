@@ -16,6 +16,7 @@
     <string-array name="language" translatable="false">
         <item>@string/follow_system</item>
         <item>en</item>
+        <item>ru</item>
         <item>uk</item>
         <item>zh-Hans</item>
         <item>zh-Hant</item>
@@ -24,6 +25,7 @@
     <string-array name="language_value" translatable="false">
         <item>SYSTEM</item>
         <item>en-US</item>
+        <item>ru-RU</item>
         <item>uk</item>
         <item>zh-CN</item>
         <item>zh-HK</item>
