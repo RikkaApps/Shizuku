@@ -1,0 +1,119 @@
+<resources>
+    <!-- To translators: you can leave your here -->
+    <string name="translation_contributors" />
+
+    <!-- Home - Status -->
+    <string name="home_status_service_is_running">%1$s запущен</string>
+    <string name="home_status_service_not_running">%1$s не запущен</string>
+    <string name="home_status_service_version">Версия %2$d, %1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[версия %2$d, %1$s<br>Попробуйте снова, обновив до версии %3$d]]></string>
+
+    <!-- Home - Adb -->
+    <string name="home_adb_title"><![CDATA[Запуск через подключение к компьютеру]]></string>
+    <string name="home_adb_description"><![CDATA[Для устройств с правами суперпользователя необходимо использовать adb для запуска Shizuku (требуется подключение к компьютеру). Этот процесс необходимо повторять каждый раз при перезапуске устройства. Пожалуйста, <b><a href=\"%1$s\">прочтите справку</a></b>.]]></string>
+    <string name="home_adb_button_view_help">Читать справку</string>
+    <string name="home_adb_button_view_command">Смотреть команды</string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Есть другие способы. Пожалуйста, убедитесь, что вы прочитали справку.]]></string>
+    <string name="home_adb_dialog_view_command_copy_button">Копировать</string>
+    <string name="home_adb_dialog_view_command_button_send">Отправить</string>
+
+    <!-- Home - Wireless Adb -->
+    <string name="home_wireless_adb_title"><![CDATA[Запуск через беспроводную отладку]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[В Android 11, беспроводная отладка встроенная функция. Пожалуйста, ознакомтесь с <b><a href=\"%1$s\">этой справкой</a></b>.<p>Это работает на всех версиях системы. Но до Android 11 беспроводная отладка не может быть включена напрямую.]]></string>
+
+    <!-- Adb -->
+    <string name="dialog_adb_discovery">Поиск службы беспроводной отладки</string>
+    <string name="dialog_adb_discovery_message">Please enable \"Беспроводная отладка\" в \"Настройки для разработчиков\". \"Беспроводная отладка\" автоматически отключается при изменении сети.\n\nПримечание, не отключайте \"Настройки для разработчиков\" или \"Отладка по USB\", иначе Shizuku будет остановлен.</string>
+    <string name="dialog_adb_port">Порт</string>
+    <string name="dialog_adb_invalid_port">Порт - это число от 1 до 65535.</string>
+    <string name="adb_pairing">Сопряжение</string>
+    <string name="dialog_adb_pairing_title">Сопряжение с устройством</string>
+    <string name="dialog_adb_pairing_discovery">Поиск службы сопряжения</string>
+    <string name="dialog_adb_pairing_paring_code">Код сопряжения</string>
+    <string name="paring_code_is_wrong">Неправильный код сопряжения.</string>
+    <string name="cannot_connect_port">Не удается подключить службу беспроводной отладки.</string>
+    <string name="dialog_wireless_adb_not_enabled">Беспроводная отладка не включена.\nОбратите внимание, что до Android 11, чтобы включить беспроводную отладку, необходимо подключение к компьютеру.</string>
+    <string name="dialog_adb_pairing_message">Пожалуйста, для подключения выполните следующие шаги: \"Настройки для разработчиков\" - \"Беспроводная отладка\" - \"Подключение устройства используя код\".\n\nПосле запуска процесса сопряжения вы сможете ввести код сопряжения.</string>
+    <string name="adb_pairing_requires_multi_window">Пожалуйста, сначала войдите в режим разделения экрана (многооконный).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Система требует, чтобы диалог сопряжения всегда был виден, использование режима разделения экрана - это единственный способ сделать это приложение и системный диалог видимыми одновременно.</string>
+    <string name="adb_error_key_store">Невозможно сгенерировать ключ для беспроводной отладки.\nЭто может быть связано с тем, что механизм хранилища ключей этого устройства сломан.</string>
+    <string name="adb_pair_required">Пожалуйста, сначала выполните шаг сопряжения.</string>
+    <string name="development_settings">Настройки для разработчиков</string>
+
+    <!-- Home - Root -->
+    <string name="home_root_title"><![CDATA[Запуск (требуются права суперпользователя)]]></string>
+    <string name="home_root_description"><![CDATA[Кроме того, Shizuku может быть запущена автоматически при загрузке. Если нет, пожалуйста проверьте ограничивают ли система или сторонние инструменты Shizuku.<br>Вы можете обратиться к %s.]]></string>
+    <string name="home_root_button_start">Запуск</string>
+    <string name="home_root_button_restart">Перезапуск</string>
+
+    <!-- Home - Application management -->
+    <string name="home_app_management_title">Управление приложениями</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="zero"><![CDATA[Авторизовано приложений: %d]]></item>
+        <item quantity="one"><![CDATA[Авторизовано приложений: %d]]></item>
+        <item quantity="other"><![CDATA[Авторизовано приложений: %d]]></item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[Нажмите, чтобы управлять авторизованными приложениями]]></string>
+
+    <!-- Home - Learn more -->
+    <string name="home_learn_more_title">Изучить Shizuku</string>
+    <string name="home_learn_more_description">Изучите как разрабатывать с Shizuku или посмотрите приложения, использующие Shizuku</string>
+
+    <!-- Application management -->
+    <string name="app_management_menu_get_more">Ещё</string>
+    <string name="app_management_dialog_adb_is_limited_title">Доступ к adb ограничен</string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Возможно, что производитель вашего устройства ограничивает разрешение adb.<p>Решение для вашей системы может быть <b><a href=\"%1$s\">здесь</a></b>.]]></string>
+    <string name="app_management_item_summary_requires_root">* требуется Shizuku, запущенный с правами суперпользователя</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_user_interface">Внешний вид</string>
+    <string name="settings_black_night_theme">Чёрная тема</string>
+    <string name="settings_black_night_theme_summary">Используйте черную тему, если включен ночной режим</string>
+    <string name="settings_startup">Запуск</string>
+    <string name="settings_prefer_su_context">Используйте полный корень, если он доступен</string>
+    <string name="settings_prefer_su_context_summary">Отключение этой опции будет использовать контекст оболочки adb</string>
+    <string name="settings_translation_contributors">Авторы перевода</string>
+    <string name="settings_translation">Участвуйте в переводе</string>
+    <string name="settings_translation_summary">Помогите перевести %s на ваш язык</string>
+
+    <!-- About -->
+    <string name="action_about">О приложении</string>
+    <string name="about_view_source_code"><![CDATA[Исходный код %s]]></string>
+
+    <!-- Stop -->
+    <string name="action_stop">Остановить Shizuku</string>
+    <string name="dialog_stop_message">Сервис Shizuku был остановлен.</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_service_status">Статус запуска службы</string>
+    <string name="notification_service_starting">Сервис Shizuku запускается…</string>
+    <string name="notification_service_start_failed">Не удалось запустить Shizuku.</string>
+    <string name="notification_service_start_no_root">Не удалось запросить права суперпользователя.</string>
+    <string name="notification_working">Работает…</string>
+
+    <!-- Permission related, appears in system permission UI -->
+    <string name="permission_group_label">Shizuku</string>
+    <string name="permission_group_description">доступ Shizuku</string>
+    <string name="permission_label">доступ к системным API с более высокими привилегиями</string>
+    <string name="permission_description">Разрешить приложению использовать системные API с более высокими привилегиями.</string>
+
+    <!-- Starter -->
+    <string name="starter">Запуск</string>
+    <string name="starting_root_shell">Starting root shell…</string>
+    <string name="start_with_root_failed">Невозможно запустить сервис. Права суперпользователя не предоставлены или устройство не имеет прав суперпользователя.</string>
+
+    <!-- Misc -->
+    <string name="dialog_cannot_open_browser_title">Не удается запустить браузер</string>
+    <string name="toast_copied_to_clipboard">%s\nбыло скопировано в буфер обмена.</string>
+    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> было скопировано в буфер обмена.]]></string>
+
+    <!-- Messages for legacy -->
+    <string name="dialog_legacy_not_support_title">%1$s не поддерживает новую версию Shizuku</string>
+    <string name="dialog_legacy_not_support_message"><![CDATA[Старая версия Shizuku была обьявлена устаревшей в марте 2019. Кроме того, старая версия Shizuku не работает на новых системах Android.<p>Пожалуйста, попросите разработчика <b>%1$s</b> обновить версию.]]></string>
+    <string name="dialog_requesting_legacy_title">%1$s запрашивает старую версию Shizuku</string>
+    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> имеет поддержку современного Shizuku, но он запрашивает старую версию Shizuku. Это может быть потому, что Shizuku не работает, пожалуйста, проверьте в приложении Shizuku.<p>Старая версия Shizuku была обьявлена устаревшей в марте 2019.]]></string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Открыть Shizuku</string>
+
+</resources>
