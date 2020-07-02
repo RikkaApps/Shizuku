@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.SELinux;
+import android.os.SystemProperties;
 import android.system.Os;
 
 import java.io.File;
@@ -167,6 +168,28 @@ public class ShizukuService extends IShizukuService.Stub {
 
         try {
             return SELinux.getContext();
+        } catch (Throwable tr) {
+            throw new RemoteException(tr.getMessage());
+        }
+    }
+
+    @Override
+    public String getSystemProperty(String name, String defaultValue) throws RemoteException {
+        enforceCallingPermission("getSystemProperty");
+
+        try {
+            return SystemProperties.get(name, defaultValue);
+        } catch (Throwable tr) {
+            throw new RemoteException(tr.getMessage());
+        }
+    }
+
+    @Override
+    public void setSystemProperty(String name, String value) throws RemoteException {
+        enforceCallingPermission("setSystemProperty");
+
+        try {
+            SystemProperties.set(name, value);
         } catch (Throwable tr) {
             throw new RemoteException(tr.getMessage());
         }

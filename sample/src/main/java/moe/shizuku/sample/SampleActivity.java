@@ -12,6 +12,7 @@ import android.content.pm.PackageInstaller;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import java.util.concurrent.CountDownLatch;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.api.ShizukuBinderWrapper;
 import moe.shizuku.api.ShizukuService;
+import moe.shizuku.api.ShizukuSystemProperties;
 import moe.shizuku.sample.databinding.MainActivityBinding;
 import moe.shizuku.sample.util.ApplicationUtils;
 import moe.shizuku.sample.util.IIntentSenderAdaptor;
@@ -71,6 +73,9 @@ public class SampleActivity extends Activity {
         });
         binding.button3.setOnClickListener((v) -> {
             if (checkPermission()) abandonMySessions();
+        });
+        binding.button4.setOnClickListener((v) -> {
+            if (checkPermission()) getSystemProperty();
         });
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
@@ -282,6 +287,22 @@ public class SampleActivity extends Activity {
             res.append(tr);
         }
 
+        binding.text3.setText(res.toString().trim());
+    }
+
+    private void getSystemProperty() {
+        StringBuilder res = new StringBuilder();
+        try {
+            if (ShizukuService.getVersion() < 9) {
+                res.append("requires Shizuku v4.2.0+ (Service version 9)");
+            } else {
+                res.append("ro.build.fingerprint=").append(ShizukuSystemProperties.get("ro.build.fingerprint")).append('\n');
+                res.append("ro.build.version.sdk=").append(ShizukuSystemProperties.getInt("ro.build.version.sdk", -1)).append('\n');
+            }
+        } catch (Throwable tr) {
+            tr.printStackTrace();
+            res.append(tr.toString());
+        }
         binding.text3.setText(res.toString().trim());
     }
 }

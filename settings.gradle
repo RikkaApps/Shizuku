@@ -1,21 +1,5 @@
-def file = file('local.properties')
-def props = new Properties()
-def apiDir = null
-if (file.canRead()) {
-    props.load(new FileInputStream(file))
-
-    if (props != null) {
-        apiDir = props["shizuku.apiDir"]
-    }
-}
-
-if (apiDir != null) {
-    include ':shared'
-    project(':shared').projectDir = new File(apiDir + File.separator + "shared")
-    include ':api'
-    project(':api').projectDir = new File(apiDir + File.separator + "api")
-}
-
+include ':shared'
+include ':api'
 include ':hidden-api-common', ':hidden-api-common-bridge', ':hidden-api-21', ':hidden-api-21-bridge', ':hidden-api-26', ':hidden-api-26-bridge'
 include ':server'
 include ':manager'
