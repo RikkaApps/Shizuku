@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="moe.shizuku.api">
+
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+
+    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <meta-data
+            android:name="moe.shizuku.client.V3_SUPPORT"
+            android:value="true" />
+        <meta-data
+            android:name="moe.shizuku.client.V3_API_VERSION"
+            android:value="${versionName}" />
+    </application>
+
+</manifest>
