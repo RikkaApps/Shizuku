@@ -210,7 +210,6 @@ static int start_server(const char *path, const char *main_class, const char *pr
         fflush(stdout);
         int count = 0;
         size_t size = 0;
-        pid_t *res;
         while (!get_pids_by_name(process_name, size)) {
             fflush(stdout);
             usleep(200 * 1000);
@@ -220,8 +219,8 @@ static int start_server(const char *path, const char *main_class, const char *pr
                 exit_with_logcat(EXIT_WARN_START_TIMEOUT);
             }
         }
-        free(res);
         count = 0;
+        pid_t *res;
         while ((res = get_pids_by_name(process_name, size))) {
             free(res);
             printf("info: checking %s stability...\n", process_name);
