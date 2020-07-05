@@ -6,7 +6,7 @@
     <string name="home_status_service_is_running">%1$s запущен</string>
     <string name="home_status_service_not_running">%1$s не запущен</string>
     <string name="home_status_service_version">Версия %2$d, %1$s</string>
-    <string name="home_status_service_version_update"><![CDATA[версия %2$d, %1$s<br>Попробуйте снова, обновив до версии %3$d]]></string>
+    <string name="home_status_service_version_update"><![CDATA[Версия %2$d, %1$s<br>Попробуйте снова, обновив до версии %3$d]]></string>
 
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[Запуск через подключение к компьютеру]]></string>
