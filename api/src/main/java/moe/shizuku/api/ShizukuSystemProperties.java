@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 
 import moe.shizuku.server.IShizukuService;
 
+/**
+ * @since added from version 9
+ */
 public class ShizukuSystemProperties {
 
     @NonNull

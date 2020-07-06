@@ -1,5 +1,6 @@
 package moe.shizuku.manager.settings
 
+import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,7 +10,11 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
+import moe.shizuku.manager.ktx.isComponentEnabled
+import moe.shizuku.manager.ktx.setComponentEnabled
+import moe.shizuku.manager.starter.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
@@ -36,6 +41,7 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var nightModePreference: Preference
     private lateinit var blackNightThemePreference: SwitchPreference
     private lateinit var keepSuContextPreference: SwitchPreference
+    private lateinit var startOnBootPreference: SwitchPreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
@@ -52,13 +58,22 @@ class SettingsFragment : PreferenceFragment() {
         nightModePreference = findPreference(KEY_NIGHT_MODE)
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
         keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
+        startOnBootPreference = findPreference(KEEP_START_ON_BOOT) as SwitchPreference
         startupPreference = findPreference("startup") as PreferenceCategory
         translationPreference = findPreference("translation")
         translationContributorsPreference = findPreference("translation_contributors")
 
         keepSuContextPreference.isVisible = false
-        startupPreference.isVisible = false
 
+        val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
+
+        startOnBootPreference.isChecked = context.packageManager.isComponentEnabled(componentName)
+        startOnBootPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+            if (newValue is Boolean) {
+                context.packageManager.setComponentEnabled(componentName, newValue)
+                context.packageManager.isComponentEnabled(componentName) == newValue
+            } else false
+        }
         languagePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
             if (newValue is String) {
                 val locale: Locale = if ("SYSTEM" == newValue) {

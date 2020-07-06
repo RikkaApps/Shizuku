@@ -2,6 +2,7 @@ apply plugin: 'idea'
 
 idea.module {
     excludeDirs += file('out')
+    resourceDirs += file('magisk-shizuku-starter')
 }
 
 buildscript {

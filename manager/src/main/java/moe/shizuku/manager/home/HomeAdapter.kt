@@ -19,20 +19,14 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
     fun updateData() {
         val status = homeModel.serviceStatus.value?.data ?: return
         val grantedCount = appsModel.grantedCount.value?.data ?: 0
-        val v3 = ShizukuService.pingBinder()
+        val running = ShizukuService.pingBinder()
 
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, 0)
         addItem(ManageAppsViewHolder.CREATOR, grantedCount, 1)
         if (Process.myUid() / 100000 == 0) {
             val root = ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT
-            var rootRestart = status.uid == 0
-            if (v3) {
-                try {
-                    rootRestart = rootRestart || ShizukuService.getUid() == 0
-                } catch (ignored: Throwable) {
-                }
-            }
+            val rootRestart = running && status.uid == 0
             when {
                 root && BuildUtils.atLeast30 -> {
                     addItem(StartRootViewHolder.CREATOR, rootRestart, 3)

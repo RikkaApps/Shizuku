@@ -6,6 +6,11 @@
         android:title="@string/settings_startup">
 
         <SwitchPreference
+            android:key="start_on_boot"
+            android:summary="@string/settings_start_on_boot_summary"
+            android:title="@string/settings_start_on_boot" />
+
+        <SwitchPreference
             android:defaultValue="true"
             android:key="keep_su_context"
             android:summary="@string/settings_prefer_su_context_summary"

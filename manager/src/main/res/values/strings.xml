@@ -45,6 +45,8 @@
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
     <string name="home_root_description"><![CDATA[In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
+    <string name="home_root_description_magisk"><![CDATA[If still can\'t let your system to allow Shizuku to start on boot, you can try to use %s.]]></string>
+    <string name="magisk_module">the Magisk module</string>
     <string name="home_root_button_start">Start</string>
     <string name="home_root_button_restart">Restart</string>
 
@@ -79,6 +81,8 @@
     <string name="settings_translation_contributors">Translation contributors</string>
     <string name="settings_translation">Participate in translation</string>
     <string name="settings_translation_summary">Help us translate %s into your language</string>
+    <string name="settings_start_on_boot">Start on boot (root)</string>
+    <string name="settings_start_on_boot_summary">For rooted devices, Shizuku is able to start automatically on boot</string>
 
     <!-- About -->
     <string name="action_about">About</string>

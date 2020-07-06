@@ -8,6 +8,7 @@ public class Helps {
     public static final MultiLocaleEntity ADB_ANDROID11 = new MultiLocaleEntity();
     public static final MultiLocaleEntity APPS = new MultiLocaleEntity();
     public static final MultiLocaleEntity HOME = new MultiLocaleEntity();
+    public static final MultiLocaleEntity DOWNLOAD = new MultiLocaleEntity();
 
     static {
         ADB.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup.html");
@@ -25,5 +26,9 @@ public class Helps {
         HOME.put("zh-CN", "https://shizuku.rikka.app/zh-hans/");
         HOME.put("zh-TW", "https://shizuku.rikka.app/zh-hant/");
         HOME.put("en", "https://shizuku.rikka.app/");
+
+        DOWNLOAD.put("zh-CN", "https://shizuku.rikka.app/zh-hans/download.html");
+        DOWNLOAD.put("zh-TW", "https://shizuku.rikka.app/zh-hant/download.html");
+        DOWNLOAD.put("en", "https://shizuku.rikka.app/download.html");
     }
 }

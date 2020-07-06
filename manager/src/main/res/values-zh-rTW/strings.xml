@@ -13,6 +13,8 @@
     <string name="home_adb_title"><![CDATA[透過連線電腦啟動（使用 adb）]]></string>
     <string name="home_adb_description"><![CDATA[對於沒有 root 的裝置需要藉助 adb 來啟動 Shizuku（需要連線電腦）。這個過程每次裝置重新啟動後需要重新進行。請<b><a href=\"%1$s\">閱讀幫助</a></b>。]]></string>
     <string name="home_root_description"><![CDATA[另外，Shizuku 可以在開機時自動啟動。如果沒有，請檢查您的系統或是第三方工具是否限制了 Shizuku。<br>你可以參考 %s。]]></string>
+    <string name="home_root_description_magisk"><![CDATA[如果您還是無法讓您的系統允許 Shizuku 開機啟動，您可以嘗試使用 %s。]]></string>
+    <string name="magisk_module">Magisk 模組</string>
     <string name="home_adb_dialog_view_command_copy_button">複製</string>
     <string name="home_adb_dialog_view_command_button_send">傳送</string>
     <string name="home_adb_button_view_command">檢視指令</string>
@@ -79,4 +81,6 @@
     <string name="development_settings">開發人員選項</string>
     <string name="dialog_wireless_adb_not_enabled">無線偵錯未啟用。\n請注意，在 Android 11 之前，要啟用無線偵錯必須連線電腦。</string>
     <string name="adb_pairing_requires_multi_window_reason">系統要求配對對話方塊始終可見，使用「分割畫面」模式是使此應用程式和系統對話方塊同時可見的唯一方法。</string>
+    <string name="settings_start_on_boot">開機啟動（root）</string>
+    <string name="settings_start_on_boot_summary">對於已 root 裝置，Shizuku 可以開機啟動</string>
 </resources>
