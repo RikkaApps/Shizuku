@@ -49,9 +49,7 @@
     <!-- Home - Application management -->
     <string name="home_app_management_title">Управление приложениями</string>
     <plurals name="home_app_management_authorized_apps_count">
-        <item quantity="zero"><![CDATA[Авторизовано %d приложений]]></item>
         <item quantity="one"><![CDATA[Авторизовано %d приложениe]]></item>
-        <item quantity="two"><![CDATA[Авторизовано %d приложения]]></item>
         <item quantity="few"><![CDATA[Авторизовано %d приложения]]></item>
         <item quantity="many"><![CDATA[Авторизовано %d приложений]]></item>
         <item quantity="other"><![CDATA[Авторизовано %d приложений]]></item>  
