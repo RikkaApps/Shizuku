@@ -108,11 +108,15 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
     val output = _output as LiveData<Resource<StringBuilder>>
 
     init {
-        if (root) {
-            //Starter.writeFiles(context)
-            startRoot()
-        } else {
-            startAdb(host!!, port)
+        try {
+            if (root) {
+                //Starter.writeFiles(context)
+                startRoot()
+            } else {
+                startAdb(host!!, port)
+            }
+        } catch (e: Throwable) {
+            postResult(e)
         }
     }
 
@@ -127,20 +131,29 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         sb.append("Starting with root...").append('\n').append('\n')
         postResult()
 
-        if (!Shell.rootAccess()) {
-            sb.append("Can't start root shell.")
-            return
-        }
+        GlobalScope.launch(Dispatchers.IO) {
+            if (!Shell.rootAccess()) {
+                Shell.getCachedShell()?.close()
+                sb.append('\n').append("Can't open root shell, try again...").append('\n')
 
-        Shell.su(Starter.command).to(object : CallbackList<String?>() {
-            override fun onAddElement(s: String?) {
-                sb.append(s).append('\n')
                 postResult()
+                if (!Shell.rootAccess()) {
+                    sb.append('\n').append("Still not :(").append('\n')
+                    postResult(NotRootedException())
+                    return@launch
+                }
             }
-        }).submit {
-            if (it.code != 0) {
-                sb.append('\n').append("Send this to developer may help solve the problem.")
-                postResult()
+
+            Shell.su(Starter.command).to(object : CallbackList<String?>() {
+                override fun onAddElement(s: String?) {
+                    sb.append(s).append('\n')
+                    postResult()
+                }
+            }).submit {
+                if (it.code != 0) {
+                    sb.append('\n').append("Send this to developer may help solve the problem.")
+                    postResult()
+                }
             }
         }
     }
