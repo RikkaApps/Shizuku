@@ -8,12 +8,17 @@ import moe.shizuku.manager.management.AppsViewModel
 import rikka.core.util.BuildUtils
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
+import java.io.File
 import java.util.*
 
 class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: AppsViewModel) : IdBasedRecyclerViewAdapter(ArrayList()) {
 
     override fun onCreateCreatorPool(): IndexCreatorPool {
         return IndexCreatorPool()
+    }
+
+    private fun isRooted(): Boolean {
+        return System.getenv("PATH")?.split(File.pathSeparatorChar)?.find { File("$it/su").exists() } != null
     }
 
     fun updateData() {
@@ -25,7 +30,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         addItem(ServerStatusViewHolder.CREATOR, status, 0)
         addItem(ManageAppsViewHolder.CREATOR, grantedCount, 1)
         if (Process.myUid() / 100000 == 0) {
-            val root = ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT
+            val root = ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT || isRooted()
             val rootRestart = running && status.uid == 0
             when {
                 root && BuildUtils.atLeast30 -> {
