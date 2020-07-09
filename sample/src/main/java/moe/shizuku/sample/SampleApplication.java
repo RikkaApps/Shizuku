@@ -9,11 +9,18 @@ import moe.shizuku.sample.util.ApplicationUtils;
 
 public class SampleApplication extends Application {
 
+    static {
+        boolean isProviderProcess = ApplicationUtils.getProcessName().endsWith(":test");
+        ShizukuProvider.enableMultiProcessSupport(isProviderProcess);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         Log.d("ShizukuSample", getClass().getSimpleName() + " onCreate | Process=" + ApplicationUtils.getProcessName());
+
+        ShizukuProvider.requestBinderForNonProviderProcess(this);
     }
 
     @Override
@@ -23,8 +30,5 @@ public class SampleApplication extends Application {
         ApplicationUtils.setApplication(this);
 
         Log.d("ShizukuSample", getClass().getSimpleName() + " attachBaseContext | Process=" + ApplicationUtils.getProcessName());
-
-        boolean isProviderProcess = ApplicationUtils.getProcessName().endsWith(":test");
-        ShizukuProvider.enableMultiProcessSupport(this, isProviderProcess);
     }
 }

@@ -89,6 +89,7 @@ public class ShizukuProvider extends ContentProvider {
      * <li>The listener could be called multiply times. For example, user restarts Shizuku when app is running.</li>
      * </ul>
      * <p>
+     *
      * @param listener OnBinderReceivedListener
      */
     public static void addBinderReceivedListener(@NonNull OnBinderReceivedListener listener) {
@@ -145,52 +146,66 @@ public class ShizukuProvider extends ContentProvider {
 
     private static boolean enableMultiProcess = false;
 
+    private static boolean isProviderProcess = false;
+
+    public static void setIsProviderProcess(boolean isProviderProcess) {
+        ShizukuProvider.isProviderProcess = isProviderProcess;
+    }
+
     /**
      * Enables built-in multi-process support.
      * <p>
-     * This method MUST be called in {@link android.app.Application#attachBaseContext(Context)}.
-     * </p>
+     * This method MUST be called as early as possible (e.g., static block in Application).
+     */
+    public static void enableMultiProcessSupport(boolean isProviderProcess) {
+        Log.d(TAG, "enable built-in multi-process support (from " + (isProviderProcess ? "provider process" : "non-provider process") + ")");
+
+        ShizukuProvider.isProviderProcess = isProviderProcess;
+        ShizukuProvider.enableMultiProcess = true;
+    }
+
+    /**
+     * Require binder for non-provider process, should have {@link #enableMultiProcessSupport(boolean)} called first.
      *
      * @param context Context
-     * @param isProviderProcess If the current process is the process run the provider.
      */
-    public static void enableMultiProcessSupport(@NonNull Context context, boolean isProviderProcess) {
-        Log.d(TAG, "enable built-in multi-process support");
+    public static void requestBinderForNonProviderProcess(@NonNull Context context) {
+        if (isProviderProcess) {
+            return;
+        }
 
-        ShizukuProvider.enableMultiProcess = true;
+        Log.d(TAG, "request binder in non-provider process");
 
-        if (!isProviderProcess) {
-            context.registerReceiver(new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    BinderContainer container = intent.getParcelableExtra(ShizukuApiConstants.EXTRA_BINDER);
-                    if (container != null && container.binder != null) {
-                        Log.i(TAG, "binder received from broadcast");
-                        ShizukuService.setBinder(container.binder);
-
-                        postBinderReceivedListeners();
-                    }
-                }
-            }, new IntentFilter(ACTION_BINDER_RECEIVED));
-
-            Bundle reply;
-            try {
-                reply = context.getContentResolver().call(Uri.parse("content://" + context.getPackageName() + ".shizuku"),
-                        ShizukuProvider.METHOD_GET_BINDER, null, new Bundle());
-            } catch (Throwable tr) {
-                reply = null;
-            }
-
-            if (reply != null) {
-                reply.setClassLoader(BinderContainer.class.getClassLoader());
-
-                BinderContainer container = reply.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                BinderContainer container = intent.getParcelableExtra(ShizukuApiConstants.EXTRA_BINDER);
                 if (container != null && container.binder != null) {
-                    Log.i(TAG, "binder received from other process");
+                    Log.i(TAG, "binder received from broadcast");
                     ShizukuService.setBinder(container.binder);
 
                     postBinderReceivedListeners();
                 }
+            }
+        }, new IntentFilter(ACTION_BINDER_RECEIVED));
+
+        Bundle reply;
+        try {
+            reply = context.getContentResolver().call(Uri.parse("content://" + context.getPackageName() + ".shizuku"),
+                    ShizukuProvider.METHOD_GET_BINDER, null, new Bundle());
+        } catch (Throwable tr) {
+            reply = null;
+        }
+
+        if (reply != null) {
+            reply.setClassLoader(BinderContainer.class.getClassLoader());
+
+            BinderContainer container = reply.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
+            if (container != null && container.binder != null) {
+                Log.i(TAG, "binder received from other process");
+                ShizukuService.setBinder(container.binder);
+
+                postBinderReceivedListeners();
             }
         }
     }
@@ -218,6 +233,8 @@ public class ShizukuProvider extends ContentProvider {
 
         if (!info.exported)
             throw new IllegalStateException("android:exported must be true");
+
+        isProviderProcess = true;
     }
 
     @Override
