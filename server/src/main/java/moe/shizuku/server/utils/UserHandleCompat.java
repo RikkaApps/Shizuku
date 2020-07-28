@@ -1,6 +1,6 @@
 package moe.shizuku.server.utils;
 
-public class UserHandleUtils {
+public class UserHandleCompat {
 
     public static final int PER_USER_RANGE = 100000;
 

@@ -6,9 +6,9 @@ import java.util.Locale;
 
 public class Logger {
 
-    public static final Logger LOGGER = new Logger("ShizukuServerV3");
+    public static final Logger LOGGER = new Logger("ShizukuServer");
 
-    private String TAG;
+    private final String TAG;
 
     public Logger(String TAG) {
         this.TAG = TAG;

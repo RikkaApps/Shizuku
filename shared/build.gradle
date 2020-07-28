@@ -15,6 +15,7 @@ android {
 
 dependencies {
     implementation "androidx.annotation:annotation:1.1.0"
+    compileOnly project(':hidden-api-common')
 }
 
 project.ext {

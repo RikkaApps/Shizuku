@@ -3,10 +3,7 @@ package moe.shizuku.server.api
 import android.app.IProcessObserver
 import android.app.IUidObserver
 import android.content.IContentProvider
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
-import android.content.pm.ParceledListSlice
-import android.content.pm.UserInfo
+import android.content.pm.*
 import android.os.IBinder
 import android.os.RemoteException
 import hidden.HiddenApiBridgeV23
@@ -195,6 +192,17 @@ object SystemService {
         try {
             am.forceStopPackage(packageName, userId)
         } catch (e: Exception) {
+        }
+    }
+
+    @JvmStatic
+    @Throws(RemoteException::class)
+    fun addOnAppsChangedListener(callingPackage: String?, listener: IOnAppsChangedListener?) {
+        val la = SystemServiceProvider.launcherApps ?: throw RemoteException("can't get ILauncherApps")
+        if (BuildUtils.atLeast24()) {
+            la.addOnAppsChangedListener(callingPackage, listener)
+        } else {
+            la.addOnAppsChangedListener(listener)
         }
     }
 }

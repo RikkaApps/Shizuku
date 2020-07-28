@@ -15,6 +15,7 @@ import hidden.HiddenApiBridgeV23
 import moe.shizuku.server.utils.BuildUtils
 import moe.shizuku.server.utils.Logger.LOGGER
 
+@SuppressLint("NewApi")
 object SystemServiceProvider {
 
     interface Listener {
@@ -51,39 +52,45 @@ object SystemServiceProvider {
         }
     }
 
-    @JvmStatic
-    val activityManager
-        get() = getServiceInterface<IActivityManager>("activity") {
+    private fun <T> unsafeLazy(initializer: () -> T): Lazy<T> = kotlin.lazy(LazyThreadSafetyMode.NONE, initializer)
+
+    val activityManager by unsafeLazy {
+        getServiceInterface<IActivityManager>("activity") {
             if (BuildUtils.atLeast26()) {
                 IActivityManager.Stub.asInterface(it)
             } else {
                 HiddenApiBridgeV23.ActivityManagerNative_asInterface(it)
             }
         }
+    }
 
-    val packageManager
-        get() = getServiceInterface<IPackageManager>("package") {
+    val packageManager by unsafeLazy {
+        getServiceInterface<IPackageManager>("package") {
             IPackageManager.Stub.asInterface(it)
         }
+    }
 
-    val userManager
-        get() = getServiceInterface<IUserManager>("user") {
+    val userManager by unsafeLazy {
+        getServiceInterface<IUserManager>("user") {
             IUserManager.Stub.asInterface(it)
         }
+    }
 
-    val appOpsService
-        get() = getServiceInterface<IAppOpsService>("appops") {
+    val appOpsService by unsafeLazy {
+        getServiceInterface<IAppOpsService>("appops") {
             IAppOpsService.Stub.asInterface(it)
         }
+    }
 
-    val launcherApps
-        get() = getServiceInterface<ILauncherApps>("launcherapps") {
+    val launcherApps by unsafeLazy {
+        getServiceInterface<ILauncherApps>("launcherapps") {
             ILauncherApps.Stub.asInterface(it)
         }
+    }
 
-    val permissionManager
-        @SuppressLint("NewApi")
-        get() = getServiceInterface<IPermissionManager>("permissionmgr") {
+    val permissionManager by unsafeLazy {
+        getServiceInterface<IPermissionManager>("permissionmgr") {
             IPermissionManager.Stub.asInterface(it)
         }
+    }
 }

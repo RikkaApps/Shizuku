@@ -16,7 +16,10 @@ interface IShizukuService {
 
     String getSELinuxContext() = 8;
 
-    String getSystemProperty(String name, String defaultValue) = 9;
+    String getSystemProperty(in String name, in String defaultValue) = 9;
 
-    void setSystemProperty(String name, String value) = 10;
+    void setSystemProperty(in String name, in String value) = 10;
+
+    IBinder requestUserService(in Bundle options) = 11;
+
 }

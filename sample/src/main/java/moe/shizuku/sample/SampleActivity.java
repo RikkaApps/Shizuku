@@ -11,8 +11,8 @@ import android.content.pm.IPackageInstallerSession;
 import android.content.pm.PackageInstaller;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Process;
-import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -76,6 +76,9 @@ public class SampleActivity extends Activity {
         });
         binding.button4.setOnClickListener((v) -> {
             if (checkPermission()) getSystemProperty();
+        });
+        binding.button5.setOnClickListener((v) -> {
+            if (checkPermission()) requestUserService();
         });
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
@@ -298,6 +301,35 @@ public class SampleActivity extends Activity {
             } else {
                 res.append("ro.build.fingerprint=").append(ShizukuSystemProperties.get("ro.build.fingerprint")).append('\n');
                 res.append("ro.build.version.sdk=").append(ShizukuSystemProperties.getInt("ro.build.version.sdk", -1)).append('\n');
+            }
+        } catch (Throwable tr) {
+            tr.printStackTrace();
+            res.append(tr.toString());
+        }
+        binding.text3.setText(res.toString().trim());
+    }
+
+    private void requestUserService() {
+        StringBuilder res = new StringBuilder();
+        try {
+            if (ShizukuService.getVersion() < 10) {
+                res.append("requires Shizuku v5.0.0+ (Service version 10)");
+            } else {
+                Bundle options = new Bundle();
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, getPackageName());
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, UserService.class.getName());
+                options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, BuildConfig.VERSION_CODE);
+                //options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE, true);
+
+                IBinder binder = ShizukuService.requestUserService(options);
+                if (binder != null && binder.pingBinder()) {
+                    IUserService service = IUserService.Stub.asInterface(binder);
+                    int pid = service.getPid();
+                    res.append("pid=").append(pid);
+                    service.exit();
+                } else {
+                    res.append("failed");
+                }
             }
         } catch (Throwable tr) {
             tr.printStackTrace();

@@ -53,7 +53,7 @@ static void logcat(time_t now) {
     printf("--- crash end ---\n");
     fflush(stdout);
     printf("--- shizuku start ---\n");
-    sprintf(command, "logcat -b main -t '%s' -d -s ShizukuServer ShizukuServerV3 ShizukuManager",
+    sprintf(command, "logcat -b main -t '%s' -d -s ShizukuServer ShizukuManager",
             time);
     printf("[command] %s\n", command);
     fflush(stdout);

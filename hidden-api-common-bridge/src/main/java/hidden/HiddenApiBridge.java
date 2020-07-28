@@ -1,9 +1,12 @@
 package hidden;
 
 import android.app.ActivityManager;
+import android.app.ActivityThread;
 import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -34,6 +37,10 @@ public class HiddenApiBridge {
 
     public static UserHandle createUserHandle(int userId) {
         return new UserHandle(userId);
+    }
+
+    public static Context getSystemContext() {
+        return ActivityThread.systemMain().getSystemContext();
     }
 
     public static int UserHandle_getIdentifier(UserHandle userHandle) {
@@ -123,5 +130,10 @@ public class HiddenApiBridge {
 
     public static int SystemProperties_getInt(String key, int defaultValue) {
         return SystemProperties.getInt(key, defaultValue);
+    }
+
+    public static Context Context_createPackageContextAsUser(Context context, String packageName, int flags, UserHandle user)
+            throws PackageManager.NameNotFoundException {
+        return context.createPackageContextAsUser(packageName, flags, user);
     }
 }

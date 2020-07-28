@@ -1,5 +1,6 @@
 package moe.shizuku.api;
 
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
@@ -129,5 +130,13 @@ public class ShizukuService {
      */
     public static String getSELinuxContext() throws RemoteException {
         return requireService().getSELinuxContext();
+    }
+
+    /**
+     * @return IBinder user service binder
+     * @since added from version 10
+     */
+    public static IBinder requestUserService(@NonNull Bundle options) throws RemoteException {
+        return requireService().requestUserService(options);
     }
 }

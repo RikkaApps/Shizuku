@@ -8,7 +8,7 @@
 #include <cstring>
 #include "selinux.h"
 
-#define LOG_TAG "ShizukuServerV3"
+#define LOG_TAG "ShizukuServer"
 
 #include "logging.h"
 

@@ -1,10 +1,12 @@
 package moe.shizuku.server;
 
 import android.content.IContentProvider;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -13,18 +15,29 @@ import android.os.RemoteException;
 import android.os.SELinux;
 import android.os.SystemProperties;
 import android.system.Os;
+import android.util.ArrayMap;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
 
+import dalvik.system.DexClassLoader;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.ArrayUtils;
+import moe.shizuku.server.utils.UserHandleCompat;
 
+import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE;
+import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME;
+import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME;
+import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
@@ -32,11 +45,8 @@ public class ShizukuService extends IShizukuService.Stub {
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
-    @SuppressWarnings({"ConstantConditions", "FieldCanBeLocal"})
-    private final Handler mMainHandler = new Handler(Looper.myLooper());
-
     public static void main() {
-        LOGGER.i("server v3");
+        LOGGER.i("server");
         Looper.prepare();
         new ShizukuService();
         Looper.loop();
@@ -44,12 +54,15 @@ public class ShizukuService extends IShizukuService.Stub {
         System.exit(0);
     }
 
+    @SuppressWarnings({"FieldCanBeLocal"})
+    private final Handler mainHandler = new Handler(Looper.myLooper());
+
     ShizukuService() {
         super();
 
         BinderSender.register(this);
 
-        mMainHandler.post(() -> {
+        mainHandler.post(() -> {
             sendBinderToClient();
             sendBinderToManager();
         });
@@ -80,7 +93,6 @@ public class ShizukuService extends IShizukuService.Stub {
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
-
 
     private void enforceCallingPermission(String func) {
         if (Binder.getCallingPid() == Os.getpid()) {
@@ -195,6 +207,112 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
+    private final Map<String, UserServiceHolder> mUserServiceCache = new ArrayMap<>();
+
+    private static class UserServiceHolder {
+
+        public final IBinder service;
+        public final int versionCode;
+        public final Method destroyMethod;
+
+        public UserServiceHolder(IBinder service, int versionCode, Method destroyMethod) {
+            this.service = service;
+            this.versionCode = versionCode;
+            this.destroyMethod = destroyMethod;
+        }
+
+        public void destroy() {
+            Parcel data = Parcel.obtain();
+            Parcel reply = Parcel.obtain();
+            try {
+                data.writeInterfaceToken(service.getInterfaceDescriptor());
+                service.transact(16777115, data, reply, Binder.FLAG_ONEWAY);
+            } catch (Throwable e) {
+                LOGGER.w(e, "failed to cleanup %s", service.getClass().getName());
+            } finally {
+                data.recycle();
+                reply.recycle();
+            }
+        }
+    }
+
+    @Override
+    public IBinder requestUserService(Bundle options) {
+        enforceCallingPermission("bindService");
+
+        Objects.requireNonNull(options, "options is null");
+
+        int uid = Binder.getCallingUid();
+        int appId = UserHandleCompat.getAppId(uid);
+        int userId = UserHandleCompat.getUserId(uid);
+
+        String packageName = options.getString(USER_SERVICE_ARG_PACKAGE_NAME);
+        PackageInfo packageInfo = SystemService.getPackageInfoNoThrow(packageName, 0x00002000 /*PackageManager.MATCH_UNINSTALLED_PACKAGES*/, userId);
+        if (packageInfo == null || packageInfo.applicationInfo == null) {
+            throw new SecurityException("unable to find package " + packageName);
+        }
+        if (UserHandleCompat.getAppId(packageInfo.applicationInfo.uid) != appId) {
+            throw new SecurityException("package " + packageName + " is not owned by " + appId);
+        }
+        ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+
+        String classname = options.getString(USER_SERVICE_ARG_CLASSNAME);
+        int versionCode = options.getInt(USER_SERVICE_ARG_VERSION_CODE, 1);
+        boolean alwaysRecreate = options.getBoolean(USER_SERVICE_ARG_ALWAYS_RECREATE, false);
+
+        Objects.requireNonNull(classname, "classname is null");
+
+        String key = appId + ":" + classname;
+
+        synchronized (this) {
+            UserServiceHolder holder = mUserServiceCache.get(key);
+            if (holder != null) {
+                if (holder.versionCode != versionCode) {
+                    LOGGER.v("recreate %s because version code unmatched", key);
+                } else if (alwaysRecreate) {
+                    LOGGER.v("recreate %s because always recreate", key);
+                } else {
+                    LOGGER.v("found existing %s", key);
+                    return holder.service;
+                }
+
+                holder.destroy();
+                mUserServiceCache.remove(key);
+            }
+
+            LOGGER.v("no existing %s, creating new...", key);
+
+            IBinder service;
+            Method destroyMethod = null;
+
+            try {
+                DexClassLoader classLoader = new DexClassLoader(applicationInfo.sourceDir, "/data/local/shizuku/user/" + key, applicationInfo.nativeLibraryDir, ClassLoader.getSystemClassLoader());
+                Class<?> serviceClass = classLoader.loadClass(classname);
+                Constructor<?> constructor = serviceClass.getConstructor(CancellationSignal.class);
+
+                CancellationSignal cancellationSignal = new CancellationSignal();
+                cancellationSignal.setOnCancelListener(() -> {
+                    UserServiceHolder h = mUserServiceCache.get(key);
+                    if (h != null) {
+                        h.destroy();
+                        mUserServiceCache.remove(key);
+                        LOGGER.v("remove %s by user", key);
+                    }
+                });
+                service = (IBinder) constructor.newInstance(cancellationSignal);
+            } catch (Throwable tr) {
+                LOGGER.w(tr, "unable to create service %s", key);
+                return null;
+            }
+
+            LOGGER.v("%s created, version %d", key, versionCode);
+
+            holder = new UserServiceHolder(service, versionCode, destroyMethod);
+            mUserServiceCache.put(key, holder);
+            return holder.service;
+        }
+    }
+
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
@@ -268,8 +386,11 @@ public class ShizukuService extends IShizukuService.Stub {
             extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
 
             Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendBinder", null, extra);
-
-            LOGGER.i("send binder to user app %s in user %d", packageName, userId);
+            if (reply != null) {
+                LOGGER.i("send binder to user app %s in user %d", packageName, userId);
+            } else {
+                LOGGER.w("failed to send binder to user app %s in user %d", packageName, userId);
+            }
         } catch (Throwable tr) {
             LOGGER.e(tr, "failed send binder to user app %s in user %d", packageName, userId);
         } finally {

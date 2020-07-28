@@ -60,9 +60,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * </ol>
  * <p>
  * If your app run in multiply processes, this provider also provides the functionality of sharing
- * the binder across processes. See {@link #enableMultiProcessSupport(Context, boolean)}.
+ * the binder across processes. See {@link #enableMultiProcessSupport(boolean)}.
  * </p>
  */
+@SuppressWarnings("unused")
 public class ShizukuProvider extends ContentProvider {
 
     private static final String TAG = "ShizukuProvider";
@@ -281,7 +282,6 @@ public class ShizukuProvider extends ContentProvider {
             if (enableMultiProcess) {
                 Log.d(TAG, "broadcast binder");
 
-                //noinspection ConstantConditions
                 Intent intent = new Intent(ACTION_BINDER_RECEIVED)
                         .putExtra(ShizukuApiConstants.EXTRA_BINDER, container)
                         .setPackage(getContext().getPackageName());

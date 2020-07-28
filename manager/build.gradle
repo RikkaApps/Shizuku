@@ -101,8 +101,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
 
     //compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
@@ -123,6 +123,7 @@ dependencies {
     implementation "moe.shizuku.preference:preference-appcompat:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu-appcompat:$preferenceLibraryVersion"
 
+    implementation "rikka.annotation:annotation:1.0.0"
     implementation "rikka.appcompat:appcompat:1.2.0-rc01"
     implementation "rikka.core:core:1.2.1"
     implementation "rikka.material:material:1.4.1"
