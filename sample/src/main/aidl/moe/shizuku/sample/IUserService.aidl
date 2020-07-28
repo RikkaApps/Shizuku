@@ -2,7 +2,7 @@ package moe.shizuku.sample;
 
 interface IUserService {
 
-    void cleanup() = 16777114; // Reserved cleanup method
+    void destroy() = 16777114; // Reserved destroy method
 
     void exit() = 1;
 

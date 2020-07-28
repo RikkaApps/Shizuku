@@ -22,4 +22,5 @@ interface IShizukuService {
 
     IBinder requestUserService(in Bundle options) = 11;
 
+    void sendUserService(in IBinder binder, in Bundle options) = 12;
 }

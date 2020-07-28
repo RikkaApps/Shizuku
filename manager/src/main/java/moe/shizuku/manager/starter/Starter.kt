@@ -23,7 +23,8 @@ import moe.shizuku.api.ShizukuApiConstants.SERVER_VERSION as serverVersion
 
 object Starter {
 
-    private const val DEX_NAME = "server-v$serverVersion.dex"
+    private const val SERVER_DEX_NAME = "server-v$serverVersion.dex"
+    private const val STARTER_DEX_NAME = "starter-v$serverVersion.dex"
     private const val STARTER_NAME = "starter-v$serverVersion"
 
     private var commandInternal: String? = null
@@ -50,9 +51,10 @@ object Starter {
             } catch (e: ErrnoException) {
                 e.printStackTrace()
             }
-            val dexPath = copyDex(context, File(out, DEX_NAME))
+            val serverDexPath = copyDex(context, "server.dex", File(out, SERVER_DEX_NAME))
+            val starterDexPath = copyDex(context, "starter.dex", File(out, STARTER_DEX_NAME))
             val starterPath = copyStarter(context, File(out, STARTER_NAME))
-            val scriptPath = writeScript(context, File(out, "start.sh"), dexPath, starterPath)
+            val scriptPath = writeScript(context, File(out, "start.sh"), starterPath, serverDexPath, starterDexPath)
             commandInternal = "sh $scriptPath"
 
             writeLegacyAdbScript(context)
@@ -67,11 +69,11 @@ object Starter {
     }
 
     @Throws(IOException::class)
-    private fun copyDex(context: Context, out: File): String {
+    private fun copyDex(context: Context, name: String, out: File): String {
         if (out.exists() && !BuildConfig.DEBUG) {
             return out.absolutePath
         }
-        val `is` = context.assets.open("server.dex")
+        val `is` = context.assets.open(name)
         val os: OutputStream = FileOutputStream(out)
         FileUtils.copy(`is`, os)
         os.flush()
@@ -115,7 +117,7 @@ object Starter {
     }
 
     @Throws(IOException::class)
-    private fun writeScript(context: Context, out: File, dex: String, starter: String): String {
+    private fun writeScript(context: Context, out: File, starter: String, serverDex: String, starterDex: String): String {
         if (!out.exists()) {
             out.createNewFile()
         }
@@ -125,7 +127,7 @@ object Starter {
         while (`is`.readLine().also { line = it } != null) {
             os.println(line!!
                     .replace("%%%STARTER_PATH%%%", starter)
-                    .replace("%%%STARTER_PARAM%%%", getStarterParam(dex))
+                    .replace("%%%STARTER_PARAM%%%", getStarterParam(serverDex, starterDex))
                     //.replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
             )
         }
@@ -160,9 +162,10 @@ object Starter {
         os.close()
     }
 
-    private fun getStarterParam(dex: String): String {
-        Objects.requireNonNull(dex)
-        return ("--path=" + dex
+    private fun getStarterParam(server: String, starter: String): String {
+        Objects.requireNonNull(server)
+        return ("--server-dex=" + server
+                + " --starter-dex=" + starter
                 + if (ShizukuSettings.isKeepSuContext()) "" else " --use-shell-context")
     }
 }

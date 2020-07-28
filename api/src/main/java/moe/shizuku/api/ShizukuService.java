@@ -1,14 +1,21 @@
 package moe.shizuku.api;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
+
+import java.util.Objects;
 
 import moe.shizuku.server.IShizukuService;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
 public class ShizukuService {
 
@@ -132,11 +139,92 @@ public class ShizukuService {
         return requireService().getSELinuxContext();
     }
 
+    public static class UserServiceOptionsBuilder {
+
+        private String packageName;
+        private String className;
+        private Integer versionCode;
+        private Boolean alwaysRecreate;
+        private boolean useMainProcess = false;
+        private String processNameSuffix;
+
+        @RestrictTo(LIBRARY_GROUP_PREFIX)
+        public UserServiceOptionsBuilder() {
+        }
+
+        public UserServiceOptionsBuilder(@NonNull Context context) {
+            this();
+            packageName = context.getPackageName();
+        }
+
+        @RestrictTo(LIBRARY_GROUP_PREFIX)
+        public void setPackageName(String packageName) {
+            this.packageName = packageName;
+        }
+
+        public UserServiceOptionsBuilder setClassName(String className) {
+            this.className = className;
+            return this;
+        }
+
+        public UserServiceOptionsBuilder setVersionCode(int versionCode) {
+            this.versionCode = versionCode;
+            return this;
+        }
+
+        public UserServiceOptionsBuilder setAlwaysRecreate(boolean alwaysRecreate) {
+            this.alwaysRecreate = alwaysRecreate;
+            return this;
+        }
+
+        public UserServiceOptionsBuilder useMainProcess() {
+            this.useMainProcess = true;
+            return this;
+        }
+
+        public UserServiceOptionsBuilder useStandaloneProcess(String processNameSuffix) {
+            this.useMainProcess = false;
+            this.processNameSuffix = processNameSuffix;
+            return this;
+        }
+
+        public Bundle build() {
+            Objects.requireNonNull(className, "Classname must not be null.");
+            if (!useMainProcess) {
+                Objects.requireNonNull(processNameSuffix, "Process name suffix must not be null.");
+            }
+
+            Bundle options = new Bundle();
+            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, packageName);
+            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, className);
+            if (versionCode != null) {
+                options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, versionCode);
+            }
+            if (alwaysRecreate != null) {
+                options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE, alwaysRecreate);
+            }
+            if (!useMainProcess && !TextUtils.isEmpty(processNameSuffix)) {
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME, processNameSuffix);
+            }
+            return options;
+        }
+    }
+
     /**
+     * Run service class from user apk in Shizuku server process.
+     *
      * @return IBinder user service binder
      * @since added from version 10
      */
     public static IBinder requestUserService(@NonNull Bundle options) throws RemoteException {
         return requireService().requestUserService(options);
+    }
+
+    /**
+     * Used by manager only
+     */
+    @RestrictTo(LIBRARY_GROUP_PREFIX)
+    public static void sendUserService(@NonNull IBinder binder, @NonNull Bundle options) throws RemoteException {
+        requireService().sendUserService(binder, options);
     }
 }

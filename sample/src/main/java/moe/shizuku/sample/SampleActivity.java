@@ -315,13 +315,12 @@ public class SampleActivity extends Activity {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                Bundle options = new Bundle();
-                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, getPackageName());
-                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, UserService.class.getName());
-                options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, BuildConfig.VERSION_CODE);
-                //options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE, true);
+                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder(this)
+                        .setClassName(UserService.class.getName())
+                        .useStandaloneProcess("shizuku")
+                        .setVersionCode(BuildConfig.VERSION_CODE);
 
-                IBinder binder = ShizukuService.requestUserService(options);
+                IBinder binder = ShizukuService.requestUserService(optionsBuilder.build());
                 if (binder != null && binder.pingBinder()) {
                     IUserService service = IUserService.Stub.asInterface(binder);
                     int pid = service.getPid();

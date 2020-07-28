@@ -367,13 +367,15 @@ int main(int argc, char **argv) {
 
     clock_gettime(CLOCK_REALTIME, &ts);
 
-    char *_path = nullptr;
+    char *_server_dex_path = nullptr, *_starter_dex_path = nullptr;
     int i;
     int use_shell_context = 0;
 
     for (i = 0; i < argc; ++i) {
-        if (strncmp(argv[i], "--path=", 7) == 0) {
-            _path = strdup(argv[i] + 7);
+        if (strncmp(argv[i], "--server-dex=", 13) == 0) {
+            _server_dex_path = argv[i] + 13;
+        } else if (strncmp(argv[i], "--starter-dex=", 14) == 0) {
+            _starter_dex_path = argv[i] + 14;
         } else if (strncmp(argv[i], "--use-shell-context", 19) == 0) {
             use_shell_context = 1;
         }
@@ -404,7 +406,8 @@ int main(int argc, char **argv) {
         }
     }
 
-    check_access(_path, "source dex path");
+    check_access(_server_dex_path, "server dex path");
+    check_access(_starter_dex_path, "starter dex path");
 
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
@@ -413,12 +416,15 @@ int main(int argc, char **argv) {
         se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
-    char path[PATH_MAX];
-    sprintf(path, "/data/local/tmp/shizuku/%s", basename(_path));
+    char server_dex_path[PATH_MAX], starter_dex_path[PATH_MAX];
+    sprintf(server_dex_path, "/data/local/tmp/shizuku/%s", basename(_server_dex_path));
+    sprintf(starter_dex_path, "/data/local/tmp/shizuku/%s", basename(_starter_dex_path));
 
-    copy_if_not_exist(_path, path);
+    copy_if_not_exist(_server_dex_path, server_dex_path);
+    copy_if_not_exist(_starter_dex_path, starter_dex_path);
 
-    check_access(path, "dex path");
+    check_access(server_dex_path, "server dex path");
+    check_access(starter_dex_path, "starter dex path");
 
     printf("info: starter begin\n");
     fflush(stdout);
@@ -437,7 +443,7 @@ int main(int argc, char **argv) {
 
     printf("info: starting server...\n");
     fflush(stdout);
-    start_server(path, SERVER_CLASS_PATH, SERVER_NAME, use_shell_context);
+    start_server(server_dex_path, SERVER_CLASS_PATH, SERVER_NAME, use_shell_context);
 
     exit_with_logcat(EXIT_SUCCESS);
 }

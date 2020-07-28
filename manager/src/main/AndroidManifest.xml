@@ -88,7 +88,7 @@
             android:exported="false" />
 
         <provider
-            android:name="moe.shizuku.api.ShizukuProvider"
+            android:name=".ShizukuManagerProvider"
             android:authorities="${applicationId}.shizuku"
             android:directBootAware="true"
             android:enabled="true"

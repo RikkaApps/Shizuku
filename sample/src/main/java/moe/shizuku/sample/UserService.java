@@ -6,9 +6,19 @@ import android.util.Log;
 
 public class UserService extends IUserService.Stub {
 
-    private final CancellationSignal mRemoveFromServerSignal;
+    private CancellationSignal mRemoveFromServerSignal;
 
+    /**
+     * Constructor required in stand-alone process mode.
+     */
+    public UserService() {
+    }
+
+    /**
+     * Constructor required in main process mode.
+     */
     public UserService(CancellationSignal removeFromServerSignal) {
+        this();
         this.mRemoveFromServerSignal = removeFromServerSignal;
     }
 
@@ -16,8 +26,8 @@ public class UserService extends IUserService.Stub {
      * Reserved cleanup method
      */
     @Override
-    public void cleanup() {
-        Log.i("UserService", "cleanup");
+    public void destroy() {
+        Log.i("UserService", "destroy");
     }
 
     @Override
