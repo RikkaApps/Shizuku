@@ -2,9 +2,9 @@ package moe.shizuku.sample;
 
 interface IUserService {
 
-    void destroy() = 16777114; // Reserved destroy method
+    void destroy() = 16777114; // Destroy method defined by Shizuku server
 
-    void exit() = 1;
+    void exit() = 1; // Exit method defined by user
 
-    int getPid() = 2;
+    String doSomething() = 2;
 }

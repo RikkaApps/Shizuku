@@ -147,17 +147,7 @@ abstract class HomeActivity : AppBarActivity() {
                 AlertDialog.Builder(this)
                         .setMessage(R.string.dialog_stop_message)
                         .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                            val data = Parcel.obtain()
-                            val reply = Parcel.obtain()
-                            try {
-                                data.writeInterfaceToken(ShizukuApiConstants.BINDER_DESCRIPTOR)
-                                ShizukuService.getBinder()?.transact(101, data, reply, 0)
-                                reply.readException()
-                            } catch (ignored: Throwable) {
-                            } finally {
-                                data.recycle()
-                                reply.recycle()
-                            }
+                            ShizukuService.exit()
                             LocalBroadcastManager.getInstance(this)
                                     .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
                         }

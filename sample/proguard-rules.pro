@@ -1,3 +1,7 @@
--keepclassmembers class moe.shizuku.sample.UserService {
+-keepclassmembers class moe.shizuku.sample.service.MainProcessUserService {
+    public <init>(...);
+}
+
+-keepclassmembers class moe.shizuku.sample.service.StandaloneProcessUserService {
     public <init>(...);
 }

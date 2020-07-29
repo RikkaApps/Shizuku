@@ -53,6 +53,22 @@ public class ShizukuService {
     }
 
     /**
+     * Used by manager only
+     */
+    @RestrictTo(LIBRARY_GROUP_PREFIX)
+    public static void exit() throws RemoteException {
+        requireService().exit();
+    }
+
+    /**
+     * Used by manager only
+     */
+    @RestrictTo(LIBRARY_GROUP_PREFIX)
+    public static void sendUserService(@NonNull IBinder binder, @NonNull Bundle options) throws RemoteException {
+        requireService().sendUserService(binder, options);
+    }
+
+    /**
      * Call {@link IBinder#transact(int, Parcel, Parcel, int)} at remote service.
      *
      * <p>How to construct the data parcel:
@@ -141,6 +157,7 @@ public class ShizukuService {
 
     public static class UserServiceOptionsBuilder {
 
+        private final String id;
         private String packageName;
         private String className;
         private Integer versionCode;
@@ -148,13 +165,9 @@ public class ShizukuService {
         private boolean useMainProcess = false;
         private String processNameSuffix;
 
-        @RestrictTo(LIBRARY_GROUP_PREFIX)
-        public UserServiceOptionsBuilder() {
-        }
-
-        public UserServiceOptionsBuilder(@NonNull Context context) {
-            this();
-            packageName = context.getPackageName();
+        public UserServiceOptionsBuilder(@NonNull Context context, String id) {
+            this.id = id;
+            this.packageName = context.getPackageName();
         }
 
         @RestrictTo(LIBRARY_GROUP_PREFIX)
@@ -189,14 +202,14 @@ public class ShizukuService {
         }
 
         public Bundle build() {
-            Objects.requireNonNull(className, "Classname must not be null.");
             if (!useMainProcess) {
                 Objects.requireNonNull(processNameSuffix, "Process name suffix must not be null.");
             }
 
             Bundle options = new Bundle();
+            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, packageName);
-            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, className);
+            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, Objects.requireNonNull(className, "classname must not be null"));
             if (versionCode != null) {
                 options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, versionCode);
             }
@@ -216,15 +229,19 @@ public class ShizukuService {
      * @return IBinder user service binder
      * @since added from version 10
      */
-    public static IBinder requestUserService(@NonNull Bundle options) throws RemoteException {
-        return requireService().requestUserService(options);
+    public static IBinder addUserService(@NonNull Bundle options) throws RemoteException {
+        return requireService().addUserService(options);
     }
 
     /**
-     * Used by manager only
+     * Remove user class.
+     *
+     * @param id id
+     * @return removed
      */
-    @RestrictTo(LIBRARY_GROUP_PREFIX)
-    public static void sendUserService(@NonNull IBinder binder, @NonNull Bundle options) throws RemoteException {
-        requireService().sendUserService(binder, options);
+    public static boolean removeUserService(@NonNull String id) throws RemoteException {
+        Bundle options = new Bundle();
+        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
+        return requireService().removeUserService(options);
     }
 }

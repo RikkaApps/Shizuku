@@ -5,8 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.ddm.DdmHandleAppName;
 import android.os.ServiceManager;
 
-import java.util.UUID;
-
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.SystemService;
 
@@ -47,6 +45,6 @@ public class Starter {
 
         checkManagerApp();
 
-        ShizukuService.main();
+        ShizukuService.main(args);
     }
 }
