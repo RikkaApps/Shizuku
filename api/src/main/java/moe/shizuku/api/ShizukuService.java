@@ -158,7 +158,6 @@ public class ShizukuService {
     public static class UserServiceOptionsBuilder {
 
         private final String id;
-        private String packageName;
         private String className;
         private Integer versionCode;
         private Boolean alwaysRecreate;
@@ -166,14 +165,8 @@ public class ShizukuService {
         private String processNameSuffix;
         private boolean debuggable = false;
 
-        public UserServiceOptionsBuilder(@NonNull Context context, String id) {
+        public UserServiceOptionsBuilder(@NonNull String id) {
             this.id = id;
-            this.packageName = context.getPackageName();
-        }
-
-        @RestrictTo(LIBRARY_GROUP_PREFIX)
-        public void setPackageName(String packageName) {
-            this.packageName = packageName;
         }
 
         public UserServiceOptionsBuilder setClassName(String className) {
@@ -205,12 +198,11 @@ public class ShizukuService {
 
         public Bundle build() {
             if (!useMainProcess) {
-                Objects.requireNonNull(processNameSuffix, "Process name suffix must not be null.");
+                Objects.requireNonNull(processNameSuffix, "process name suffix must not be null");
             }
 
             Bundle options = new Bundle();
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
-            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, packageName);
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, Objects.requireNonNull(className, "classname must not be null"));
             options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE, debuggable);
             if (versionCode != null) {
@@ -232,7 +224,8 @@ public class ShizukuService {
      * @return IBinder user service binder
      * @since added from version 10
      */
-    public static IBinder addUserService(@NonNull Bundle options) throws RemoteException {
+    public static IBinder addUserService(@NonNull Context context, @NonNull Bundle options) throws RemoteException {
+        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, context.getPackageName());
         return requireService().addUserService(options);
     }
 
@@ -242,9 +235,10 @@ public class ShizukuService {
      * @param id id
      * @return removed
      */
-    public static boolean removeUserService(@NonNull String id) throws RemoteException {
+    public static boolean removeUserService(@NonNull Context context, @NonNull String id) throws RemoteException {
         Bundle options = new Bundle();
         options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
+        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, context.getPackageName());
         return requireService().removeUserService(options);
     }
 }

@@ -147,7 +147,10 @@ abstract class HomeActivity : AppBarActivity() {
                 AlertDialog.Builder(this)
                         .setMessage(R.string.dialog_stop_message)
                         .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                            ShizukuService.exit()
+                            try {
+                                ShizukuService.exit()
+                            } catch (e: Throwable) {
+                            }
                             LocalBroadcastManager.getInstance(this)
                                     .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
                         }

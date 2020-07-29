@@ -240,29 +240,32 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private class UserServiceRecord implements DeathRecipient {
+    private class UserServiceRecord implements DeathRecipient, ApkChangedListener {
 
         public boolean standalone;
         public int versionCode;
         public String token;
         public CountDownLatch latch;
         public IBinder service;
+        public ApkChangedObserver apkChangedObserver;
 
-        public UserServiceRecord(IBinder service, int versionCode) {
+        public UserServiceRecord(IBinder service, int versionCode, String apkPath) {
             this.standalone = false;
             this.service = service;
             this.versionCode = versionCode;
             this.token = generateTokenForUserService();
+            this.apkChangedObserver = ApkChangedObservers.start(apkPath, this);
         }
 
-        public UserServiceRecord(int versionCode) {
+        public UserServiceRecord(int versionCode, String apkPath) {
             this.standalone = true;
             this.versionCode = versionCode;
             this.token = generateTokenForUserService();
             this.latch = new CountDownLatch(1);
+            this.apkChangedObserver = ApkChangedObservers.start(apkPath, this);
         }
 
-        public void receivedBinder(IBinder binder) {
+        public void onBinderReceived(IBinder binder) {
             this.service = binder;
             try {
                 binder.linkToDeath(this, 0);
@@ -270,56 +273,42 @@ public class ShizukuService extends IShizukuService.Stub {
                 LOGGER.w(tr, "linkToDeath " + token);
             }
             this.latch.countDown();
+            this.apkChangedObserver.startWatching();
         }
 
         @Override
         public void binderDied() {
-            unlinkToDeath(this, 0);
-
             LOGGER.i("%s is dead", token);
-            removeUserServiceImpl(this, false);
-        }
-    }
-
-    @Override
-    public boolean removeUserService(Bundle options) {
-        enforceCallingPermission("removeUserService");
-
-        int uid = Binder.getCallingUid();
-        int appId = UserHandleCompat.getAppId(uid);
-        String id = Objects.requireNonNull(options.getString(USER_SERVICE_ARG_ID), "id is null");
-        String key = appId + ":" + id;
-
-        UserServiceRecord record = userServiceRecords.get(key);
-        if (record == null) return false;
-        return removeUserServiceImpl(record, true);
-    }
-
-    private boolean removeUserServiceImpl(UserServiceRecord record, boolean doDestroy) {
-        boolean res = userServiceRecords.values().remove(record);
-
-        if (!doDestroy || record.service == null || !record.service.pingBinder()) return res;
-
-        Parcel data = Parcel.obtain();
-        Parcel reply = Parcel.obtain();
-        try {
-            data.writeInterfaceToken(record.service.getInterfaceDescriptor());
-            record.service.transact(USER_SERVICE_TRANSACTION_destroy, data, reply, Binder.FLAG_ONEWAY);
-        } catch (Throwable e) {
-            LOGGER.w(e, "failed to destroy");
-        } finally {
-            data.recycle();
-            reply.recycle();
+            removeUserServiceImpl(this);
         }
 
-        return res;
-    }
+        @Override
+        public void onApkChanged() {
+            LOGGER.i("remove %s because apk changed", token);
+            removeUserServiceImpl(this);
+        }
 
-    @Override
-    public IBinder addUserService(Bundle options) {
-        enforceCallingPermission("addUserService");
+        public void cleanup() {
+            if (standalone) {
+                unlinkToDeath(this, 0);
+            }
 
-        return addUserServiceImpl(options);
+            ApkChangedObservers.stop(apkChangedObserver);
+
+            if (service != null && service.pingBinder()) {
+                Parcel data = Parcel.obtain();
+                Parcel reply = Parcel.obtain();
+                try {
+                    data.writeInterfaceToken(service.getInterfaceDescriptor());
+                    service.transact(USER_SERVICE_TRANSACTION_destroy, data, reply, Binder.FLAG_ONEWAY);
+                } catch (Throwable e) {
+                    LOGGER.w(e, "failed to destroy");
+                } finally {
+                    data.recycle();
+                    reply.recycle();
+                }
+            }
+        }
     }
 
     private PackageInfo ensureCallingPackageForUserService(String packageName, int appId, int userId) {
@@ -331,6 +320,40 @@ public class ShizukuService extends IShizukuService.Stub {
             throw new SecurityException("package " + packageName + " is not owned by " + appId);
         }
         return packageInfo;
+    }
+
+    @Override
+    public boolean removeUserService(Bundle options) {
+        enforceCallingPermission("removeUserService");
+
+        int uid = Binder.getCallingUid();
+        int appId = UserHandleCompat.getAppId(uid);
+        int userId = UserHandleCompat.getUserId(uid);
+
+        String packageName = options.getString(USER_SERVICE_ARG_PACKAGE_NAME);
+        String id = Objects.requireNonNull(options.getString(USER_SERVICE_ARG_ID), "id is null");
+        String key = packageName + ":" + id;
+
+        ensureCallingPackageForUserService(packageName, appId, userId);
+
+        UserServiceRecord record = userServiceRecords.get(key);
+        if (record == null) return false;
+        return removeUserServiceImpl(record);
+    }
+
+    private boolean removeUserServiceImpl(UserServiceRecord record) {
+        boolean res = userServiceRecords.values().remove(record);
+        if (res) {
+            record.cleanup();
+        }
+        return res;
+    }
+
+    @Override
+    public IBinder addUserService(Bundle options) {
+        enforceCallingPermission("addUserService");
+
+        return addUserServiceImpl(options);
     }
 
     private IBinder addUserServiceImpl(Bundle options) {
@@ -355,7 +378,6 @@ public class ShizukuService extends IShizukuService.Stub {
 
         UserServiceRecord record = userServiceRecords.get(key);
         if (record != null) {
-            boolean doDestroy = true;
             if (record.versionCode != versionCode) {
                 LOGGER.v("destroy %s because version code not matched (old=%d, new=%d)", key, record.versionCode, versionCode);
             } else if (record.standalone != standalone) {
@@ -363,14 +385,13 @@ public class ShizukuService extends IShizukuService.Stub {
             } else if (alwaysRecreate) {
                 LOGGER.v("destroy %s because always recreate", key);
             } else if (record.service == null || !record.service.pingBinder()) {
-                doDestroy = false;
                 LOGGER.v("%s is dead", key);
             } else {
                 LOGGER.v("found existing %s", key);
                 return record.service;
             }
 
-            removeUserServiceImpl(record, doDestroy);
+            removeUserServiceImpl(record);
         }
 
         LOGGER.v("creating new %s...", key);
@@ -378,7 +399,7 @@ public class ShizukuService extends IShizukuService.Stub {
         if (!standalone) {
             return startUserServiceLocalProcess(packageName, classname, key, versionCode, applicationInfo);
         } else {
-            return startUserServiceNewProcess(packageName, processNameSuffix, uid, classname, key, versionCode, debug);
+            return startUserServiceNewProcess(packageName, processNameSuffix, uid, classname, key, versionCode, applicationInfo, debug);
         }
     }
 
@@ -408,7 +429,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 cancellationSignal.setOnCancelListener(() -> {
                     UserServiceRecord record = userServiceRecords.get(key);
                     if (record != null) {
-                        removeUserServiceImpl(record, true);
+                        removeUserServiceImpl(record);
                         LOGGER.v("remove %s by user", key);
                     }
                 });
@@ -423,7 +444,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return null;
         }
 
-        UserServiceRecord record = new UserServiceRecord(service, versionCode);
+        UserServiceRecord record = new UserServiceRecord(service, versionCode, applicationInfo.sourceDir);
         userServiceRecords.put(key, record);
 
         LOGGER.v("created %s: version=%d, token=%s", key, versionCode, record.token);
@@ -434,8 +455,8 @@ public class ShizukuService extends IShizukuService.Stub {
             "--nice-name=%s %s " +
             "--token=%s --package=%s --class=%s --uid=%d%s)&";
 
-    private IBinder startUserServiceNewProcess(String packageName, String processNameSuffix, int callingUid, String classname, String key, int versionCode, boolean debug) {
-        UserServiceRecord record = new UserServiceRecord(versionCode);
+    private IBinder startUserServiceNewProcess(String packageName, String processNameSuffix, int callingUid, String classname, String key, int versionCode, ApplicationInfo applicationInfo, boolean debug) {
+        UserServiceRecord record = new UserServiceRecord(versionCode, applicationInfo.sourceDir);
         userServiceRecords.put(key, record);
 
         String processName = String.format("%s:%s", packageName, processNameSuffix);
@@ -498,7 +519,7 @@ public class ShizukuService extends IShizukuService.Stub {
         LOGGER.v("received %s", token);
 
         UserServiceRecord record = entry.getValue();
-        record.receivedBinder(binder);
+        record.onBinderReceived(binder);
     }
 
     @Override

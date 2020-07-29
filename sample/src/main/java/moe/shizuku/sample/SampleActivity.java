@@ -48,7 +48,12 @@ public class SampleActivity extends Activity {
     private static final int REQUEST_CODE_BUTTON1 = 1;
     private static final int REQUEST_CODE_BUTTON2 = 2;
     private static final int REQUEST_CODE_BUTTON3 = 3;
-    private static final int REQUEST_CODE_PICK_APKS = 10;
+    private static final int REQUEST_CODE_BUTTON4 = 4;
+    private static final int REQUEST_CODE_BUTTON5 = 5;
+    private static final int REQUEST_CODE_BUTTON6 = 6;
+    private static final int REQUEST_CODE_BUTTON7 = 7;
+    private static final int REQUEST_CODE_BUTTON8 = 8;
+    private static final int REQUEST_CODE_PICK_APKS = 1000;
 
     private MainActivityBinding binding;
 
@@ -68,28 +73,28 @@ public class SampleActivity extends Activity {
 
         binding.text1.setText("Waiting for binder");
         binding.button1.setOnClickListener((v) -> {
-            if (checkPermission()) getUsers();
+            if (checkPermission(REQUEST_CODE_BUTTON1)) getUsers();
         });
         binding.button2.setOnClickListener((v) -> {
-            if (checkPermission()) installApks();
+            if (checkPermission(REQUEST_CODE_BUTTON2)) installApks();
         });
         binding.button3.setOnClickListener((v) -> {
-            if (checkPermission()) abandonMySessions();
+            if (checkPermission(REQUEST_CODE_BUTTON3)) abandonMySessions();
         });
         binding.button4.setOnClickListener((v) -> {
-            if (checkPermission()) getSystemProperty();
+            if (checkPermission(REQUEST_CODE_BUTTON4)) getSystemProperty();
         });
         binding.button5.setOnClickListener((v) -> {
-            if (checkPermission()) addUserServiceMainProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON5)) addUserServiceMainProcess();
         });
         binding.button6.setOnClickListener((v) -> {
-            if (checkPermission()) removeUserServiceMainProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON6)) removeUserServiceMainProcess();
         });
         binding.button7.setOnClickListener((v) -> {
-            if (checkPermission()) addUserServiceStandaloneProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON7)) addUserServiceStandaloneProcess();
         });
         binding.button8.setOnClickListener((v) -> {
-            if (checkPermission()) removeUserServiceStandaloneProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON8)) removeUserServiceStandaloneProcess();
         });
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
@@ -111,6 +116,27 @@ public class SampleActivity extends Activity {
                     abandonMySessions();
                     break;
                 }
+                case REQUEST_CODE_BUTTON4: {
+                    getSystemProperty();
+                    break;
+                }
+                case REQUEST_CODE_BUTTON5: {
+                    addUserServiceMainProcess();
+                    break;
+                }
+                case REQUEST_CODE_BUTTON6: {
+                    removeUserServiceMainProcess();
+                    break;
+                }
+                case REQUEST_CODE_BUTTON7: {
+                    addUserServiceStandaloneProcess();
+                    break;
+                }
+                case REQUEST_CODE_BUTTON8: {
+                    removeUserServiceStandaloneProcess();
+                    break;
+                }
+
             }
         } else {
             binding.text1.setText("User denied permission");
@@ -138,7 +164,7 @@ public class SampleActivity extends Activity {
         }
     }
 
-    private boolean checkPermission() {
+    private boolean checkPermission(int code) {
         // Shizuku uses runtime permission, learn more https://developer.android.com/training/permissions/requesting
         if (checkSelfPermission(ShizukuApiConstants.PERMISSION) == PERMISSION_GRANTED) {
             return true;
@@ -146,7 +172,7 @@ public class SampleActivity extends Activity {
             binding.text3.setText("User denied permission (shouldShowRequestPermissionRationale=true)");
             return false;
         } else {
-            requestPermissions(new String[]{ShizukuApiConstants.PERMISSION}, REQUEST_CODE_BUTTON1);
+            requestPermissions(new String[]{ShizukuApiConstants.PERMISSION}, code);
             return false;
         }
     }
@@ -326,12 +352,12 @@ public class SampleActivity extends Activity {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder(this, "UserServiceMainProcess")
+                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder("UserServiceMainProcess")
                         .useMainProcess()
                         .setClassName(MainProcessUserService.class.getName())
                         .setVersionCode(BuildConfig.VERSION_CODE);
 
-                IBinder binder = ShizukuService.addUserService(optionsBuilder.build());
+                IBinder binder = ShizukuService.addUserService(this, optionsBuilder.build());
                 if (binder != null && binder.pingBinder()) {
                     IUserService service = IUserService.Stub.asInterface(binder);
                     res.append(service.doSomething());
@@ -352,7 +378,7 @@ public class SampleActivity extends Activity {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                res.append(ShizukuService.removeUserService("UserServiceMainProcess"));
+                res.append(ShizukuService.removeUserService(this, "UserServiceMainProcess"));
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
@@ -367,12 +393,12 @@ public class SampleActivity extends Activity {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder(this, "UserServiceStandaloneProcess")
+                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder("UserServiceStandaloneProcess")
                         .useStandaloneProcess("service", BuildConfig.DEBUG)
                         .setClassName(StandaloneProcessUserService.class.getName())
                         .setVersionCode(BuildConfig.VERSION_CODE);
 
-                IBinder binder = ShizukuService.addUserService(optionsBuilder.build());
+                IBinder binder = ShizukuService.addUserService(this, optionsBuilder.build());
                 if (binder != null && binder.pingBinder()) {
                     IUserService service = IUserService.Stub.asInterface(binder);
                     res.append(service.doSomething());
@@ -391,9 +417,9 @@ public class SampleActivity extends Activity {
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
-                res.append("requires Shizuku v5.0.0+ (Service version 10)");
+                res.append("requires Shizuku v5.0.0+ (Service version 102)");
             } else {
-                res.append(ShizukuService.removeUserService("UserServiceStandaloneProcess"));
+                res.append(ShizukuService.removeUserService(this, "UserServiceStandaloneProcess"));
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
