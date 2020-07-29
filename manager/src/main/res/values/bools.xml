@@ -2,7 +2,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="UnusedResources">
     <bool name="is_tablet">false</bool>
-
-    <bool name="is_translation_unfinished">false</bool>
-    <bool name="show_translation_contributors">false</bool>
 </resources>

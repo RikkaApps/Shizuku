@@ -34,6 +34,7 @@ import rikka.core.ktx.unsafeLazy
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.fixEdgeEffect
+import java.util.*
 
 abstract class HomeActivity : AppBarActivity() {
 
@@ -55,10 +56,6 @@ abstract class HomeActivity : AppBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (resources.getBoolean(R.bool.is_translation_unfinished)) {
-            Toast.makeText(this, getString(R.string.toast_translation_unfinished), Toast.LENGTH_LONG).show()
-        }
 
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

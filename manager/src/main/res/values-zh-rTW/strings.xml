@@ -5,16 +5,14 @@
     <string name="permission_description">允許應用程式以更高許可權使用系統 API。</string>
     <string name="home_status_service_is_running">%1$s 正在運作</string>
     <string name="home_status_service_version">版本 %2$d，%1$s</string>
-    <string name="home_status_service_version_update"><![CDATA[版本 %2$d，%1$s<br>再次啟動來升級到版本 %3$d]]></string>
+    <string name="home_status_service_version_update">版本 %2$d，%1$s&lt;br&gt;再次啟動來升級到版本 %3$d</string>
     <string name="home_status_service_not_running">%1$s 沒有運作</string>
     <string name="home_root_button_start">啟動</string>
     <string name="home_root_button_restart">重新啟動</string>
-    <string name="home_root_title"><![CDATA[啟動（針對已 root 裝置）]]></string>
-    <string name="home_adb_title"><![CDATA[透過連線電腦啟動（使用 adb）]]></string>
-    <string name="home_adb_description"><![CDATA[對於沒有 root 的裝置需要藉助 adb 來啟動 Shizuku（需要連線電腦）。這個過程每次裝置重新啟動後需要重新進行。請<b><a href=\"%1$s\">閱讀幫助</a></b>。]]></string>
-    <string name="home_root_description"><![CDATA[另外，Shizuku 可以在開機時自動啟動。如果沒有，請檢查您的系統或是第三方工具是否限制了 Shizuku。<br>你可以參考 %s。]]></string>
-    <string name="home_root_description_magisk"><![CDATA[如果您還是無法讓您的系統允許 Shizuku 開機啟動，您可以嘗試使用 %s。]]></string>
-    <string name="magisk_module">Magisk 模組</string>
+    <string name="home_root_title">啟動（針對已 root 裝置）</string>
+    <string name="home_adb_title">透過連線電腦啟動（使用 adb）</string>
+    <string name="home_adb_description">對於沒有 root 的裝置需要藉助 adb 來啟動 Shizuku（需要連線電腦）。這個過程每次裝置重新啟動後需要重新進行。請<b><a href="%1$s">閱讀幫助</a></b>。</string>
+    <string name="home_root_description">另外，Shizuku 可以在開機時自動啟動。如果沒有，請檢查您的系統或是第三方工具是否限制了 Shizuku。&lt;br&gt;你可以參考 %s。</string>
     <string name="home_adb_dialog_view_command_copy_button">複製</string>
     <string name="home_adb_dialog_view_command_button_send">傳送</string>
     <string name="home_adb_button_view_command">檢視指令</string>
@@ -22,12 +20,12 @@
     <string name="dialog_legacy_not_support_title">%1$s 不支援現代 Shizuku</string>
     <string name="dialog_legacy_not_support_message"><![CDATA[舊式 Shizuku 已於 2019 年 3 月被棄用。此外，舊式 Shizuku 無法在較新版本的 Android 系統上工作。<p>請要求 <b>%1$s</b> 的開發者進行更新。]]></string>
     <string name="dialog_requesting_legacy_title">%1$s 正在請求舊式 Shizuku</string>
-    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> 支援現代 Shizuku，但它正在請求舊式 Shizuku。這可能是因為 Shizuku 沒有運作，請在 Shizuku 程式內檢查。<p>舊式 Shizuku 已於 2019 年 3 月被棄用。]]></string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; 支援現代 Shizuku，但它正在請求舊式 Shizuku。這可能是因為 Shizuku 沒有運作，請在 Shizuku 程式內檢查。&lt;p&gt;舊式 Shizuku 已於 2019 年 3 月被棄用。</string>
     <string name="home_app_management_title">應用程式管理</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other"><![CDATA[已授權 %d 個程式]]></item>
     </plurals>
-    <string name="home_app_management_view_authorized_apps"><![CDATA[輕觸以管理授權的程式]]></string>
+    <string name="home_app_management_view_authorized_apps">輕觸以管理授權的程式</string>
     <string name="toast_copied_to_clipboard">%s\n已被複製到剪貼簿。</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">開啟 Shizuku</string>
     <string name="action_about">關於</string>
@@ -46,7 +44,7 @@
     <string name="settings_startup">啟動</string>
     <string name="app_management_menu_get_more">取得更多</string>
     <string name="app_management_dialog_adb_is_limited_title">adb 權限受限</string>
-    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[這極有可能是你的設備製造商限制了 adb 的權限。<p><b><a href=\"%1$s\">此文件</a></b>中可能有針對你的系統的解決方案。]]></string>
+    <string name="app_management_dialog_adb_is_limited_message">這極有可能是你的設備製造商限制了 adb 的權限。&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;此文件&lt;/a&gt;&lt;/b&gt;中可能有針對你的系統的解決方案。</string>
     <string name="home_adb_button_view_help">閱讀幫助</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
@@ -56,31 +54,39 @@
     <string name="settings_prefer_su_context_summary">關閉此選項（或你的 su 不支援時）會使用 adb shell 的 secontext</string>
     <string name="app_management_item_summary_requires_root">* 需要以 root 運作的 Shizuku</string>
     <string name="settings_translation_contributors">翻譯貢獻者</string>
-    <string name="translation_contributors" />
+    <string name="translation_contributors"/>
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">幫助我們將 %s 翻譯至您的語言</string>
-    <string name="dialog_adb_discovery">正在搜索無線偵錯服務</string>
-    <string name="dialog_adb_port">通訊埠</string>
-    <string name="adb_pairing">配對</string>
-    <string name="dialog_adb_pairing_title">與裝置配對</string>
-    <string name="dialog_adb_pairing_discovery">正在搜索配對服務</string>
-    <string name="dialog_adb_pairing_paring_code">配對碼</string>
-    <string name="starter">啟動程式</string>
-    <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
-    <string name="home_wireless_adb_title"><![CDATA[通過無線偵錯啟動]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[對於 Android 11，無線偵錯是一個內建功能請參考<b><a href=\"%1$s\">此幫助文件</a></b>。<p>此功能可在所有系統版本上工作。但在 Android 11 以前，無線偵錯無法直接啟用。]]></string>
-    <string name="action_stop">停止 Shizuku</string>
     <string name="dialog_stop_message">Shizuku 服務將被停止。</string>
+    <string name="dialog_adb_port">通訊埠</string>
+    <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
+    <string name="dialog_adb_pairing_paring_code">配對碼</string>
+    <string name="home_wireless_adb_title">通過無線偵錯啟動</string>
+    <string name="home_wireless_adb_description">對於 Android 11，無線偵錯是一個內建功能請參考&lt;b&gt;&lt;a href=\"%1$s\"&gt;此幫助文件&lt;/a&gt;&lt;/b&gt;。&lt;p&gt;此功能可在所有系統版本上工作。但在 Android 11 以前，無線偵錯無法直接啟用。</string>
+    <string name="dialog_adb_pairing_title">與裝置配對</string>
     <string name="paring_code_is_wrong">配對碼錯誤。</string>
     <string name="cannot_connect_port">無法連線至無線除錯服務。</string>
-    <string name="dialog_adb_pairing_message">請跟隨下面的步驟開始配對：「開發人員選項」 - 「無線偵錯」- 「使用配對碼配對裝置」。\n\n配對過程開始後，您將能夠輸入配對碼。</string>
     <string name="adb_pairing_requires_multi_window">請先進入「分割畫面」（多視窗）模式。</string>
-    <string name="adb_error_key_store">無法為無線偵錯生成金鑰。\n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
+    <string name="adb_error_key_store">無法為無線偵錯生成金鑰。
+\n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
     <string name="adb_pair_required">請先進行配對步驟。</string>
-    <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。當網路變化時“無線偵錯”會被自動禁用。\n\n注意：請不要禁用「開發人員選項」或「USB 偵錯」，否則 Shizuku 會被停止。</string>
-    <string name="development_settings">開發人員選項</string>
-    <string name="dialog_wireless_adb_not_enabled">無線偵錯未啟用。\n請注意，在 Android 11 之前，要啟用無線偵錯必須連線電腦。</string>
+    <string name="action_stop">停止 Shizuku</string>
+    <string name="adb_pairing">配對</string>
+    <string name="starter">啟動程式</string>
+    <string name="dialog_adb_discovery">正在搜索無線偵錯服務</string>
+    <string name="dialog_adb_pairing_discovery">正在搜索配對服務</string>
+    <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。當網路變化時“無線偵錯”會被自動禁用。
+\n
+\n注意：請不要禁用「開發人員選項」或「USB 偵錯」，否則 Shizuku 會被停止。</string>
+    <string name="dialog_wireless_adb_not_enabled">無線偵錯未啟用。
+\n請注意，在 Android 11 之前，要啟用無線偵錯必須連線電腦。</string>
+    <string name="dialog_adb_pairing_message">請跟隨下面的步驟開始配對：「開發人員選項」 - 「無線偵錯」- 「使用配對碼配對裝置」。
+\n
+\n配對過程開始後，您將能夠輸入配對碼。</string>
     <string name="adb_pairing_requires_multi_window_reason">系統要求配對對話方塊始終可見，使用「分割畫面」模式是使此應用程式和系統對話方塊同時可見的唯一方法。</string>
-    <string name="settings_start_on_boot">開機啟動（root）</string>
+    <string name="development_settings">開發人員選項</string>
+    <string name="magisk_module">Magisk 模組</string>
+    <string name="home_root_description_magisk">如果您還是無法讓您的系統允許 Shizuku 開機啟動，您可以嘗試使用 %s。</string>
     <string name="settings_start_on_boot_summary">對於已 root 裝置，Shizuku 可以開機啟動</string>
+    <string name="settings_start_on_boot">開機啟動（root）</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_about">Про додаток</string>
+    <string name="home_adb_button_view_command">Переглянути adb команду</string>
     <string name="home_adb_button_view_help">Прочитати онлайн довідку</string>
     <string name="app_management_menu_get_more">Отримати більше</string>
     <string name="app_management_dialog_adb_is_limited_title">Дозвіл на adb обмежений</string>
@@ -29,15 +30,20 @@
     <string name="home_status_service_version">версія %2$d, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
-    <string name="home_status_service_version_update"><![CDATA[версія %2$d, %1$s<br>почніть оновлюватися до версії %3$d]]></string>
+    <string name="home_status_service_version_update">версія %2$d, %1$s&lt;br&gt;почніть оновлюватися до версії %3$d</string>
     <string name="permission_group_description">доступ до Shizuku</string>
     <string name="permission_label">доступ до системних API з більш високими привілеями</string>
     <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
+    <string name="home_adb_description"><![CDATA[Використовувати adb не складно, прочитайте довідку нижче. Довідка буде оновлена ​​в будь-який час, включаючи вирішення проблем (наприклад, Shizuku зупиняється раптово).]]></string>
+    <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
+    <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>
+    <string name="home_root_description"><![CDATA[     У разі успішного запуску, Shizuku автоматично запуститься після завантаження.<br>Якщо Shizuku не може запуститися після завантаження належним чином, перевірте, чи ваша система чи сторонні інструменти обмежили фоновий режим Shizuku.<p>Майже у всіх постачальників, окрім Google, є свій механізм обмеження фонового режиму (деякі постачальники неоднакові, наприклад, OnePlus, що серйозно впливає на функціональність багатьох додатків).<br>Будь ласка, зверніться до %s для інструкцій щодо вимкнення обмежень.]]></string>
     <string name="toast_copied_to_clipboard">%s скопійовано в буфер обміну.</string>
     <string name="translation_contributors">MrIkso</string>
 </resources>

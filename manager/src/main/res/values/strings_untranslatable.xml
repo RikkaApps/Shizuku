@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="toast_translation_unfinished" translatable="false">The translation of current language is outdated.\nYou can learn how to contribute translation in settings.</string>
-    <string name="translation_url" translatable="false">http://rikka.app/contribute_translation.html</string>
+    <string name="translation_url" translatable="false">https://rikka.app/contribute_translation.html</string>
 </resources>

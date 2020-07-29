@@ -24,6 +24,7 @@ import rikka.material.app.LocaleDelegate
 import rikka.material.widget.BorderRecyclerView
 import rikka.material.widget.BorderView
 import rikka.recyclerview.fixEdgeEffect
+import java.text.NumberFormat
 import java.util.*
 import moe.shizuku.manager.ShizukuSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
@@ -135,11 +136,23 @@ class SettingsFragment : PreferenceFragment() {
             true
         }
 
-        if (context.resources.getBoolean(R.bool.show_translation_contributors)) {
-            translationContributorsPreference.summary = context.getString(R.string.translation_contributors)
+        val contributors = context.getString(R.string.translation_contributors)
+        if (context.resources.getBoolean(R.bool.translation_show_contributors) && contributors.isNotBlank()) {
+            translationContributorsPreference.summary = contributors
         } else {
             translationContributorsPreference.isVisible = false
         }
+
+        translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name)) +
+                if (resources.getBoolean(R.bool.translation_unfinished)) {
+                    val percent = resources.getInteger(R.integer.translation_percentage).toFloat() / 100
+                    val percentFormatter = NumberFormat.getPercentInstance(ShizukuSettings.getLocale())
+                    val percentOut = percentFormatter.format(percent)
+
+                    context.getString(R.string.settings_translation_summary_percentage, percentOut)
+                } else {
+                    ""
+                }
     }
 
     override fun onCreateItemDecoration(): DividerDecoration? {

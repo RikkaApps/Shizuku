@@ -13,8 +13,6 @@
     <string name="home_adb_title"><![CDATA[通过连接电脑启动（使用 adb）]]></string>
     <string name="home_adb_description"><![CDATA[对于没有 root 的设备需要借助 adb 来启动 Shizuku（需要连接电脑）。这个过程每次设备重新启动后需要重新进行。请<b><a href=\"%1$s\">阅读帮助</a></b>。]]></string>
     <string name="home_root_description"><![CDATA[另外，Shizuku 可以在开机时自动启动。如果没有，请检查您的系统或是第三方工具是否限制了 Shizuku。<br>你可以参考 %s。]]></string>
-    <string name="home_root_description_magisk"><![CDATA[如果您还是无法让您的系统允许 Shizuku 开机启动，您可以尝试使用 %s。]]></string>
-    <string name="magisk_module">Magisk 模块</string>
     <string name="home_adb_dialog_view_command_copy_button">复制</string>
     <string name="home_adb_dialog_view_command_button_send">发送</string>
     <string name="home_adb_button_view_command">查看指令</string>
@@ -27,7 +25,7 @@
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other"><![CDATA[已授权 %d 个应用]]></item>
     </plurals>
-    <string name="home_app_management_view_authorized_apps"><![CDATA[点按以管理授权的应用]]></string>
+    <string name="home_app_management_view_authorized_apps">点按以管理授权的应用</string>
     <string name="toast_copied_to_clipboard">%s\n已被复制到剪贴板。</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">打开 Shizuku</string>
     <string name="action_about">关于</string>
@@ -46,7 +44,7 @@
     <string name="settings_startup">启动</string>
     <string name="app_management_menu_get_more">获取更多</string>
     <string name="app_management_dialog_adb_is_limited_title">adb 权限受限</string>
-    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[这极有可能是你的设备制造商限制了 adb 的权限。<p><b><a href=\"%1$s\">此文档</a></b>中可能有针对你的系统的解决方案。]]></string>
+    <string name="app_management_dialog_adb_is_limited_message">这极有可能是你的设备制造商限制了 adb 的权限。&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;此文档&lt;/a&gt;&lt;/b&gt;中可能有针对你的系统的解决方案。</string>
     <string name="home_adb_button_view_help">阅读帮助</string>
     <string name="dialog_cannot_open_browser_title">无法启动浏览器</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被复制到剪贴板。]]></string>
@@ -56,14 +54,12 @@
     <string name="settings_prefer_su_context_summary">关闭此选项（或你的 su 不支持时）会使用 adb shell 的 secontext</string>
     <string name="app_management_item_summary_requires_root">* 需要以 root 执行的 Shizuku</string>
     <string name="settings_translation_contributors">翻译贡献者</string>
-    <string name="translation_contributors" />
+    <string name="translation_contributors"/>
     <string name="settings_translation">参与翻译</string>
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
-    <string name="dialog_adb_discovery">正在搜索无线调试服务</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">配对</string>
     <string name="dialog_adb_pairing_title">与设备配对</string>
-    <string name="dialog_adb_pairing_discovery">正在搜索配对服务</string>
     <string name="dialog_adb_pairing_paring_code">配对码</string>
     <string name="starter">启动程序</string>
     <string name="dialog_adb_invalid_port">端口号是一个 1 至 65535 的整数。</string>
@@ -73,14 +69,23 @@
     <string name="dialog_stop_message">Shizuku 服务将被停止。</string>
     <string name="paring_code_is_wrong">配对码错误。</string>
     <string name="cannot_connect_port">无法连接至无线调试服务。</string>
-    <string name="dialog_adb_pairing_message">请跟随下面的步骤开始配对：“开发者选项” - “无线调试” - “使用配对码配对设备”。\n\n配对过程开始后，您将能够输入配对码。</string>
     <string name="adb_pairing_requires_multi_window">请先进入分屏（多窗口）模式。</string>
     <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
     <string name="adb_pair_required">请先进行配对步骤。</string>
-    <string name="development_settings">开发者选项</string>
-    <string name="dialog_adb_discovery_message">请在“开发者选项”中启用“无线调试”功能。当网络变化时“无线调试”会被自动禁用。\n\n注意：请不要禁用“开发者选项”或“USB 调试”，否则 Shizuku 会被停止。</string>
-    <string name="dialog_wireless_adb_not_enabled">无线调试未启用。\n请注意，在 Android 11 之前，要启用无线调试必须连接电脑。</string>
     <string name="adb_pairing_requires_multi_window_reason">系统要求配对对话框始终可见，使用分屏模式是使此应用和系统对话框同时可见的唯一方法。</string>
-    <string name="settings_start_on_boot">开机启动（root）</string>
+    <string name="dialog_adb_discovery">正在搜索无线调试服务</string>
+    <string name="dialog_adb_discovery_message">请在“开发者选项”中启用“无线调试”功能。当网络变化时“无线调试”会被自动禁用。
+\n
+\n注意：请不要禁用“开发者选项”或“USB 调试”，否则 Shizuku 会被停止。</string>
+    <string name="dialog_adb_pairing_discovery">正在搜索配对服务</string>
+    <string name="dialog_wireless_adb_not_enabled">无线调试未启用。
+\n请注意，在 Android 11 之前，要启用无线调试必须连接电脑。</string>
+    <string name="dialog_adb_pairing_message">请跟随下面的步骤开始配对：“开发者选项” - “无线调试” - “使用配对码配对设备”。
+\n
+\n配对过程开始后，您将能够输入配对码。</string>
+    <string name="development_settings">开发者选项</string>
+    <string name="magisk_module">Magisk 模块</string>
+    <string name="home_root_description_magisk">如果您还是无法让您的系统允许 Shizuku 开机启动，您可以尝试使用 %s。</string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
+    <string name="settings_start_on_boot">开机启动（root）</string>
 </resources>
