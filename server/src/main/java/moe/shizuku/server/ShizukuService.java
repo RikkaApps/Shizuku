@@ -88,6 +88,7 @@ public class ShizukuService extends IShizukuService.Stub {
     @SuppressWarnings({"FieldCanBeLocal"})
     private final Handler mainHandler = new Handler(Looper.myLooper());
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
+    private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
 
     ShizukuService() {
         super();
@@ -239,9 +240,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
-
-    private static class UserServiceRecord {
+    private class UserServiceRecord implements DeathRecipient {
 
         public boolean standalone;
         public int versionCode;
@@ -249,25 +248,36 @@ public class ShizukuService extends IShizukuService.Stub {
         public CountDownLatch latch;
         public IBinder service;
 
-        private UserServiceRecord() {
+        public UserServiceRecord(IBinder service, int versionCode) {
+            this.standalone = false;
+            this.service = service;
+            this.versionCode = versionCode;
+            this.token = generateTokenForUserService();
         }
 
-        public static UserServiceRecord mainProcess(IBinder service, int versionCode, String token) {
-            UserServiceRecord record = new UserServiceRecord();
-            record.standalone = false;
-            record.service = service;
-            record.versionCode = versionCode;
-            record.token = token;
-            return record;
+        public UserServiceRecord(int versionCode) {
+            this.standalone = true;
+            this.versionCode = versionCode;
+            this.token = generateTokenForUserService();
+            this.latch = new CountDownLatch(1);
         }
 
-        public static UserServiceRecord standaloneProcess(int versionCode, String token) {
-            UserServiceRecord record = new UserServiceRecord();
-            record.standalone = true;
-            record.versionCode = versionCode;
-            record.token = token;
-            record.latch = new CountDownLatch(1);
-            return record;
+        public void receivedBinder(IBinder binder) {
+            this.service = binder;
+            try {
+                binder.linkToDeath(this, 0);
+            } catch (Throwable tr) {
+                LOGGER.w(tr, "linkToDeath " + token);
+            }
+            this.latch.countDown();
+        }
+
+        @Override
+        public void binderDied() {
+            unlinkToDeath(this, 0);
+
+            LOGGER.i("%s is dead", token);
+            removeUserServiceImpl(this, false);
         }
     }
 
@@ -347,14 +357,14 @@ public class ShizukuService extends IShizukuService.Stub {
         if (record != null) {
             boolean doDestroy = true;
             if (record.versionCode != versionCode) {
-                LOGGER.v("recreate %s because version code not matched", key);
+                LOGGER.v("destroy %s because version code not matched (old=%d, new=%d)", key, record.versionCode, versionCode);
             } else if (record.standalone != standalone) {
-                LOGGER.v("recreate %s because standalone not matched", key);
+                LOGGER.v("destroy %s because standalone not matched (old=%s, new=%s)", key, Boolean.toString(record.standalone), Boolean.toString(standalone));
             } else if (alwaysRecreate) {
-                LOGGER.v("recreate %s because always recreate", key);
+                LOGGER.v("destroy %s because always recreate", key);
             } else if (record.service == null || !record.service.pingBinder()) {
                 doDestroy = false;
-                LOGGER.v("recreate %s because service is dead", key);
+                LOGGER.v("%s is dead", key);
             } else {
                 LOGGER.v("found existing %s", key);
                 return record.service;
@@ -363,7 +373,7 @@ public class ShizukuService extends IShizukuService.Stub {
             removeUserServiceImpl(record, doDestroy);
         }
 
-        LOGGER.v("no existing %s, creating new...", key);
+        LOGGER.v("creating new %s...", key);
 
         if (!standalone) {
             return startUserServiceLocalProcess(packageName, classname, key, versionCode, applicationInfo);
@@ -413,11 +423,10 @@ public class ShizukuService extends IShizukuService.Stub {
             return null;
         }
 
-        String token = generateTokenForUserService();
-        UserServiceRecord record = UserServiceRecord.mainProcess(service, versionCode, token);
+        UserServiceRecord record = new UserServiceRecord(service, versionCode);
         userServiceRecords.put(key, record);
 
-        LOGGER.v("%s created: version=%d, token=", key, versionCode, token);
+        LOGGER.v("created %s: version=%d, token=%s", key, versionCode, record.token);
         return record.service;
     }
 
@@ -426,15 +435,14 @@ public class ShizukuService extends IShizukuService.Stub {
             "--token=%s --package=%s --class=%s --uid=%d%s)&";
 
     private IBinder startUserServiceNewProcess(String packageName, String processNameSuffix, int callingUid, String classname, String key, int versionCode, boolean debug) {
-        String token = generateTokenForUserService();
-        UserServiceRecord record = UserServiceRecord.standaloneProcess(versionCode, token);
+        UserServiceRecord record = new UserServiceRecord(versionCode);
         userServiceRecords.put(key, record);
 
         String processName = String.format("%s:%s", packageName, processNameSuffix);
         String cmd = String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
                 ShizukuApiConstants.SERVER_VERSION, debug ? (" " + USER_SERVICE_CMD_DEBUG) : "",
                 processName, "moe.shizuku.starter.ServiceStarter",
-                token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
+                record.token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
 
         java.lang.Process process;
         int exitCode;
@@ -490,16 +498,7 @@ public class ShizukuService extends IShizukuService.Stub {
         LOGGER.v("received %s", token);
 
         UserServiceRecord record = entry.getValue();
-        record.service = binder;
-        record.latch.countDown();
-        try {
-            record.service.linkToDeath(() -> {
-                LOGGER.i("%s is dead", token);
-                removeUserServiceImpl(record, false);
-            }, 0);
-        } catch (Throwable tr) {
-            LOGGER.w(tr, "unable to linkToDeath %s", token);
-        }
+        record.receivedBinder(binder);
     }
 
     @Override
