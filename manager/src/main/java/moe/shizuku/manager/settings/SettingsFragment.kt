@@ -137,15 +137,16 @@ class SettingsFragment : PreferenceFragment() {
         }
 
         val contributors = context.getString(R.string.translation_contributors)
-        if (context.resources.getBoolean(R.bool.translation_show_contributors) && contributors.isNotBlank()) {
+        if (contributors.isNotBlank()) {
             translationContributorsPreference.summary = contributors
         } else {
             translationContributorsPreference.isVisible = false
         }
 
+        val translationPercentage = resources.getInteger(R.integer.translation_percentage)
         translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name)) +
-                if (resources.getBoolean(R.bool.translation_unfinished)) {
-                    val percent = resources.getInteger(R.integer.translation_percentage).toFloat() / 100
+                if (translationPercentage != 100) {
+                    val percent = translationPercentage.toFloat() / 100
                     val percentFormatter = NumberFormat.getPercentInstance(ShizukuSettings.getLocale())
                     val percentOut = percentFormatter.format(percent)
 

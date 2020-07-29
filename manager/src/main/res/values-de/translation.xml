@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="translation_percentage">20</integer>
-    <bool name="translation_unfinished">true</bool>
-    <bool name="translation_show_contributors">true</bool>
 </resources>
