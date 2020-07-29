@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Handler;
@@ -41,6 +42,7 @@ import moe.shizuku.server.utils.UserHandleCompat;
 
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME;
+import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_ID;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME;
@@ -63,6 +65,24 @@ public class ShizukuService extends IShizukuService.Stub {
 
         LOGGER.i("server exited");
         System.exit(0);
+    }
+
+    private static final String USER_SERVICE_CMD_DEBUG;
+
+    static {
+        int sdk = Build.VERSION.SDK_INT;
+        if (sdk >= 30) {
+            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
+                    " -XjdwpProvider:adbconnection" +
+                    " -XjdwpOptions:suspend=n,server=y";
+        } else if (sdk >= 28) {
+            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + "--debuggable" +
+                    " -XjdwpProvider:internal" +
+                    " -XjdwpOptions:transport=dt_android_adb,suspend=n,server=y";
+        } else {
+            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
+                    " -agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y";
+        }
     }
 
     @SuppressWarnings({"FieldCanBeLocal"})
@@ -316,8 +336,9 @@ public class ShizukuService extends IShizukuService.Stub {
         int versionCode = options.getInt(USER_SERVICE_ARG_VERSION_CODE, 1);
         boolean alwaysRecreate = options.getBoolean(USER_SERVICE_ARG_ALWAYS_RECREATE, false);
         String processNameSuffix = options.getString(USER_SERVICE_ARG_PROCESS_NAME);
+        boolean debug = options.getBoolean(USER_SERVICE_ARG_DEBUGGABLE, false);
         boolean standalone = processNameSuffix != null;
-        String key = appId + ":" + id;
+        String key = packageName + ":" + id;
 
         PackageInfo packageInfo = ensureCallingPackageForUserService(packageName, appId, userId);
         ApplicationInfo applicationInfo = packageInfo.applicationInfo;
@@ -347,7 +368,7 @@ public class ShizukuService extends IShizukuService.Stub {
         if (!standalone) {
             return startUserServiceLocalProcess(packageName, classname, key, versionCode, applicationInfo);
         } else {
-            return startUserServiceNewProcess(packageName, processNameSuffix, uid, classname, key, versionCode);
+            return startUserServiceNewProcess(packageName, processNameSuffix, uid, classname, key, versionCode, debug);
         }
     }
 
@@ -400,22 +421,20 @@ public class ShizukuService extends IShizukuService.Stub {
         return record.service;
     }
 
-    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH=/data/local/tmp/shizuku/starter-v%d.dex /system/bin/app_process /system/bin " +
-            "--nice-name=%s:%s %s " +
-            "%s %s %s %d)&";
+    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH=/data/local/tmp/shizuku/starter-v%d.dex /system/bin/app_process%s /system/bin " +
+            "--nice-name=%s %s " +
+            "--token=%s --package=%s --class=%s --uid=%d%s)&";
 
-    private IBinder startUserServiceNewProcess(String packageName, String processNameSuffix, int callingUid, String classname, String key, int versionCode) {
+    private IBinder startUserServiceNewProcess(String packageName, String processNameSuffix, int callingUid, String classname, String key, int versionCode, boolean debug) {
         String token = generateTokenForUserService();
         UserServiceRecord record = UserServiceRecord.standaloneProcess(versionCode, token);
         userServiceRecords.put(key, record);
 
+        String processName = String.format("%s:%s", packageName, processNameSuffix);
         String cmd = String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
-                ShizukuApiConstants.SERVER_VERSION,
-
-                packageName, processNameSuffix,
-                "moe.shizuku.starter.ServiceStarter",
-
-                token, packageName, classname, callingUid);
+                ShizukuApiConstants.SERVER_VERSION, debug ? (" " + USER_SERVICE_CMD_DEBUG) : "",
+                processName, "moe.shizuku.starter.ServiceStarter",
+                token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
 
         java.lang.Process process;
         int exitCode;

@@ -368,7 +368,7 @@ public class SampleActivity extends Activity {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
                 ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder(this, "UserServiceStandaloneProcess")
-                        .useStandaloneProcess("service")
+                        .useStandaloneProcess("service", BuildConfig.DEBUG)
                         .setClassName(StandaloneProcessUserService.class.getName())
                         .setVersionCode(BuildConfig.VERSION_CODE);
 

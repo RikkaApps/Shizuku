@@ -2,11 +2,11 @@ package moe.shizuku.starter;
 
 import android.content.Context;
 import android.content.IContentProvider;
+import android.ddm.DdmHandleAppName;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.UserHandle;
-import android.system.Os;
 import android.util.Log;
 
 import hidden.HiddenApiBridge;
@@ -20,27 +20,46 @@ public class ServiceStarter {
     private static final String TAG = "ShizukuServiceStarter";
 
     public static void main(String[] args) {
-        String token = args[0];
-        String packageName = args[1];
-        String classname = args[2];
-        int uid = Integer.parseInt(args[3]);
+        String name = null;
+        String token = null;
+        String pkg = null;
+        String cls = null;
+        int uid = -1;
+
+        for (String arg : args) {
+            if (arg.startsWith("--debug-name=")) {
+                name = arg.substring(13);
+            } else if (arg.startsWith("--token=")) {
+                token = arg.substring(8);
+            } else if (arg.startsWith("--package=")) {
+                pkg = arg.substring(10);
+            } else if (arg.startsWith("--class=")) {
+                cls = arg.substring(8);
+            } else if (arg.startsWith("--uid=")) {
+                uid = Integer.parseInt(arg.substring(6));
+            }
+        }
+
         int appId = uid % 100000;
         int userId = uid / 100000;
 
-        Log.i(TAG, String.format("starting service %s/%s...", packageName, classname));
+        Log.i(TAG, String.format("starting service %s/%s...", pkg, cls));
 
         Looper.prepare();
 
         IBinder service = null;
         Context systemContext = HiddenApiBridge.getSystemContext();
+
+        DdmHandleAppName.setAppName(name != null ? name : "shizuku_user_service", 0);
+
         try {
             UserHandle userHandle = HiddenApiBridge.createUserHandle(userId);
-            Context context = HiddenApiBridge.Context_createPackageContextAsUser(systemContext, packageName, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
+            Context context = HiddenApiBridge.Context_createPackageContextAsUser(systemContext, pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
             ClassLoader classLoader = context.getClassLoader();
-            Class<?> serviceClass = classLoader.loadClass(classname);
+            Class<?> serviceClass = classLoader.loadClass(cls);
             service = (IBinder) serviceClass.newInstance();
         } catch (Throwable tr) {
-            Log.w(TAG, String.format("unable to start service %s/%s...", packageName, classname), tr);
+            Log.w(TAG, String.format("unable to start service %s/%s...", pkg, cls), tr);
             System.exit(1);
         }
 
@@ -51,7 +70,7 @@ public class ServiceStarter {
         Looper.loop();
         System.exit(0);
 
-        Log.i(TAG, String.format("service %s/%s exited", packageName, classname));
+        Log.i(TAG, String.format("service %s/%s exited", pkg, cls));
     }
 
     private static boolean sendBinder(IBinder binder, String token) {

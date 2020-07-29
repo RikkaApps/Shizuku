@@ -121,8 +121,8 @@ public class ShizukuService {
     /**
      * Return latest service version when this library was released.
      *
-     * @see ShizukuService#getVersion()
      * @return Latest service version
+     * @see ShizukuService#getVersion()
      */
     public static int getLatestServiceVersion() {
         return ShizukuApiConstants.SERVER_VERSION;
@@ -164,6 +164,7 @@ public class ShizukuService {
         private Boolean alwaysRecreate;
         private boolean useMainProcess = false;
         private String processNameSuffix;
+        private boolean debuggable = false;
 
         public UserServiceOptionsBuilder(@NonNull Context context, String id) {
             this.id = id;
@@ -195,8 +196,9 @@ public class ShizukuService {
             return this;
         }
 
-        public UserServiceOptionsBuilder useStandaloneProcess(String processNameSuffix) {
+        public UserServiceOptionsBuilder useStandaloneProcess(String processNameSuffix, boolean debuggable) {
             this.useMainProcess = false;
+            this.debuggable = debuggable;
             this.processNameSuffix = processNameSuffix;
             return this;
         }
@@ -210,6 +212,7 @@ public class ShizukuService {
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, packageName);
             options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, Objects.requireNonNull(className, "classname must not be null"));
+            options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE, debuggable);
             if (versionCode != null) {
                 options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, versionCode);
             }
