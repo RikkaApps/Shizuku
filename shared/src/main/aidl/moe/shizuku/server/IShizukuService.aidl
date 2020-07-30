@@ -1,6 +1,7 @@
 package moe.shizuku.server;
 
 import moe.shizuku.server.IRemoteProcess;
+import moe.shizuku.server.IShizukuServiceConnection;
 
 interface IShizukuService {
 
@@ -22,7 +23,7 @@ interface IShizukuService {
 
     void setSystemProperty(in String name, in String value) = 10;
 
-    IBinder addUserService(in Bundle options) = 11;
+    int addUserService(in IShizukuServiceConnection conn, in Bundle args) = 11;
 
-    boolean removeUserService(in Bundle options) = 12;
+    int removeUserService(in IShizukuServiceConnection conn, in Bundle args) = 12;
 }

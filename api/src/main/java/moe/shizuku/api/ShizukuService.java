@@ -1,19 +1,25 @@
 package moe.shizuku.api;
 
-import android.content.Context;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import moe.shizuku.server.IShizukuService;
+import moe.shizuku.server.IShizukuServiceConnection;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
@@ -40,7 +46,7 @@ public class ShizukuService {
     }
 
     @NonNull
-    private static IShizukuService requireService() {
+    protected static IShizukuService requireService() {
         if (service == null) {
             throw new IllegalStateException("binder haven't been received");
         }
@@ -96,8 +102,7 @@ public class ShizukuService {
      * </p>
      *
      * @return RemoteProcess holds the binder of remote process
-     * @deprecated This method is super easy to be abused, it may be removed in the future.
-     * Currently the only known use is install packages, but use binder in much more easier (see sample).
+     * @deprecated If transactRemote is not enough for you, use UserService.
      */
     @Deprecated
     public static RemoteProcess newProcess(@NonNull String[] cmd, @Nullable String[] env, @Nullable String dir) throws RemoteException {
@@ -159,90 +164,126 @@ public class ShizukuService {
         return requireService().getSELinuxContext();
     }
 
-    public static class UserServiceOptionsBuilder {
+    public static class UserServiceArgs {
 
-        private final String id;
-        private String className;
-        private Integer versionCode;
-        private Boolean alwaysRecreate;
-        private boolean useMainProcess = false;
-        private String processNameSuffix;
+        private final ComponentName componentName;
+        private ServiceConnection connection;
+        private int versionCode = 1;
+        private boolean standalone = true;
+        private String processName;
+        private String tag;
         private boolean debuggable = false;
 
-        public UserServiceOptionsBuilder(@NonNull String id) {
-            this.id = id;
+        public UserServiceArgs(@NonNull ComponentName componentName) {
+            this.componentName = componentName;
         }
 
-        public UserServiceOptionsBuilder setClassName(String className) {
-            this.className = className;
+        public UserServiceArgs tag(@NonNull String tag) {
+            this.tag = tag;
             return this;
         }
 
-        public UserServiceOptionsBuilder setVersionCode(int versionCode) {
+        public UserServiceArgs connection(ServiceConnection connection) {
+            this.connection = connection;
+            return this;
+        }
+
+        public UserServiceArgs version(int versionCode) {
             this.versionCode = versionCode;
             return this;
         }
 
-        public UserServiceOptionsBuilder setAlwaysRecreate(boolean alwaysRecreate) {
-            this.alwaysRecreate = alwaysRecreate;
+        public UserServiceArgs useShizukuServerProcess() {
+            this.standalone = false;
+            this.debuggable = false;
+            this.processName = null;
             return this;
         }
 
-        public UserServiceOptionsBuilder useMainProcess() {
-            this.useMainProcess = true;
-            return this;
-        }
-
-        public UserServiceOptionsBuilder useStandaloneProcess(String processNameSuffix, boolean debuggable) {
-            this.useMainProcess = false;
+        public UserServiceArgs useStandaloneProcess(String processNameSuffix, boolean debuggable) {
+            this.standalone = true;
             this.debuggable = debuggable;
-            this.processNameSuffix = processNameSuffix;
+            this.processName = processNameSuffix;
             return this;
         }
 
-        public Bundle build() {
-            if (!useMainProcess) {
-                Objects.requireNonNull(processNameSuffix, "process name suffix must not be null");
-            }
-
+        private Bundle forAdd() {
             Bundle options = new Bundle();
-            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
-            options.putString(ShizukuApiConstants.USER_SERVICE_ARG_CLASSNAME, Objects.requireNonNull(className, "classname must not be null"));
+            options.putParcelable(ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT, componentName);
             options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE, debuggable);
-            if (versionCode != null) {
-                options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, versionCode);
+            options.putInt(ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE, versionCode);
+            if (standalone) {
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME,
+                        Objects.requireNonNull(processName, "process name suffix must not be null when using standalone process mode"));
             }
-            if (alwaysRecreate != null) {
-                options.putBoolean(ShizukuApiConstants.USER_SERVICE_ARG_ALWAYS_RECREATE, alwaysRecreate);
+            if (tag != null) {
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_TAG, tag);
             }
-            if (!useMainProcess && !TextUtils.isEmpty(processNameSuffix)) {
-                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME, processNameSuffix);
+            return options;
+        }
+
+        private Bundle forRemove() {
+            Bundle options = new Bundle();
+            options.putParcelable(ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT, componentName);
+            if (tag != null) {
+                options.putString(ShizukuApiConstants.USER_SERVICE_ARG_TAG, tag);
             }
             return options;
         }
     }
 
-    /**
-     * Run service class from user apk in Shizuku server process.
-     *
-     * @return IBinder user service binder
-     * @since added from version 10
-     */
-    public static IBinder addUserService(@NonNull Context context, @NonNull Bundle options) throws RemoteException {
-        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, context.getPackageName());
-        return requireService().addUserService(options);
+    private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
+    private static final Map<String, IShizukuServiceConnection> CONNECTION_CACHE = Collections.synchronizedMap(new HashMap<>());
+
+    private static IShizukuServiceConnection getOrCreateServiceConnection(UserServiceArgs args) {
+        String key = args.tag != null ? args.tag : args.componentName.getClassName();
+        IShizukuServiceConnection connection = CONNECTION_CACHE.get(key);
+
+        if (connection == null) {
+            connection = new IShizukuServiceConnection.Stub() {
+
+                private boolean dead = false;
+
+                @Override
+                public void connected(IBinder binder) {
+                    MAIN_HANDLER.post(() -> args.connection.onServiceConnected(args.componentName, binder));
+
+                    if (args.standalone) {
+                        try {
+                            binder.linkToDeath(this::dead, 0);
+                        } catch (RemoteException ignored) {
+                        }
+                    }
+                }
+
+                @Override
+                public void dead() {
+                    if (dead) return;
+                    dead = true;
+
+                    MAIN_HANDLER.post(() -> args.connection.onServiceDisconnected(args.componentName));
+
+                    CONNECTION_CACHE.remove(key);
+                }
+            };
+            CONNECTION_CACHE.put(key, connection);
+        }
+        return connection;
     }
 
     /**
-     * Remove user class.
+     * Run service class from the apk of current app.
      *
-     * @param id id
-     * @return removed
+     * @since added from version 10
      */
-    public static boolean removeUserService(@NonNull Context context, @NonNull String id) throws RemoteException {
-        Bundle options = new Bundle();
-        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_ID, Objects.requireNonNull(id, "id must not be null"));
-        options.putString(ShizukuApiConstants.USER_SERVICE_ARG_PACKAGE_NAME, context.getPackageName());
-        return requireService().removeUserService(options);
+    public static void addUserService(@NonNull UserServiceArgs args) throws RemoteException {
+        requireService().addUserService(getOrCreateServiceConnection(args), args.forAdd());
+    }
+
+    /**
+     * Remove user service.
+     */
+    public static void removeUserService(@NonNull UserServiceArgs args) throws RemoteException {
+        requireService().removeUserService(getOrCreateServiceConnection(args), args.forRemove());
     }
 }

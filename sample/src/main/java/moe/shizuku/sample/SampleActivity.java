@@ -3,9 +3,11 @@ package moe.shizuku.sample;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.pm.IPackageInstaller;
 import android.content.pm.IPackageInstallerSession;
 import android.content.pm.PackageInstaller;
@@ -13,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -346,24 +349,44 @@ public class SampleActivity extends Activity {
         binding.text3.setText(res.toString().trim());
     }
 
+    private final ServiceConnection userServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder binder) {
+            StringBuilder res = new StringBuilder();
+            res.append("onServiceConnected: ").append(componentName.getClassName()).append('\n');
+            if (binder != null && binder.pingBinder()) {
+                IUserService service = IUserService.Stub.asInterface(binder);
+                try {
+                    res.append(service.doSomething());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                    res.append(Log.getStackTraceString(e));
+                }
+            } else {
+                res.append("invalid binder for ").append(componentName).append(" received");
+            }
+            binding.text3.setText(res.toString().trim());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            binding.text3.setText("onServiceDisconnected: " + '\n' + componentName.getClassName());
+        }
+    };
+
     private void addUserServiceMainProcess() {
+        ComponentName componentName = new ComponentName(this, MainProcessUserService.class);
+        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
+                .useShizukuServerProcess()
+                .version(BuildConfig.VERSION_CODE)
+                .connection(userServiceConnection);
+
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder("UserServiceMainProcess")
-                        .useMainProcess()
-                        .setClassName(MainProcessUserService.class.getName())
-                        .setVersionCode(BuildConfig.VERSION_CODE);
-
-                IBinder binder = ShizukuService.addUserService(this, optionsBuilder.build());
-                if (binder != null && binder.pingBinder()) {
-                    IUserService service = IUserService.Stub.asInterface(binder);
-                    res.append(service.doSomething());
-                } else {
-                    res.append("failed");
-                }
+                ShizukuService.addUserService(args);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
@@ -373,12 +396,16 @@ public class SampleActivity extends Activity {
     }
 
     private void removeUserServiceMainProcess() {
+        ComponentName componentName = new ComponentName(this, MainProcessUserService.class);
+        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
+                .connection(userServiceConnection);
+
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                res.append(ShizukuService.removeUserService(this, "UserServiceMainProcess"));
+                ShizukuService.removeUserService(args);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
@@ -388,23 +415,18 @@ public class SampleActivity extends Activity {
     }
 
     private void addUserServiceStandaloneProcess() {
+        ComponentName componentName = new ComponentName(this, StandaloneProcessUserService.class);
+        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
+                .useStandaloneProcess("service", BuildConfig.DEBUG)
+                .version(BuildConfig.VERSION_CODE)
+                .connection(userServiceConnection);
+
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.UserServiceOptionsBuilder optionsBuilder = new ShizukuService.UserServiceOptionsBuilder("UserServiceStandaloneProcess")
-                        .useStandaloneProcess("service", BuildConfig.DEBUG)
-                        .setClassName(StandaloneProcessUserService.class.getName())
-                        .setVersionCode(BuildConfig.VERSION_CODE);
-
-                IBinder binder = ShizukuService.addUserService(this, optionsBuilder.build());
-                if (binder != null && binder.pingBinder()) {
-                    IUserService service = IUserService.Stub.asInterface(binder);
-                    res.append(service.doSomething());
-                } else {
-                    res.append("failed");
-                }
+                ShizukuService.addUserService(args);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
@@ -414,12 +436,16 @@ public class SampleActivity extends Activity {
     }
 
     private void removeUserServiceStandaloneProcess() {
+        ComponentName componentName = new ComponentName(this, StandaloneProcessUserService.class);
+        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
+                .connection(userServiceConnection);
+
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
-                res.append("requires Shizuku v5.0.0+ (Service version 102)");
+                res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                res.append(ShizukuService.removeUserService(this, "UserServiceStandaloneProcess"));
+                ShizukuService.removeUserService(args);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();

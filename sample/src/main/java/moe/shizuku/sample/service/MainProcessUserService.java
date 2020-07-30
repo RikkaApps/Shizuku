@@ -35,6 +35,6 @@ public class MainProcessUserService extends IUserService.Stub {
 
     @Override
     public String doSomething() throws RemoteException {
-        return getClass().getName() + ": pid=" + Os.getpid() + ", uid=" + Os.getuid();
+        return "pid=" + Os.getpid() + ", uid=" + Os.getuid();
     }
 }

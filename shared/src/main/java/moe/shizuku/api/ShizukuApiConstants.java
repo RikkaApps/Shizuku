@@ -22,12 +22,10 @@ public class ShizukuApiConstants {
     @RestrictTo(LIBRARY_GROUP_PREFIX)
     public static final int USER_SERVICE_TRANSACTION_destroy = 16777115;
 
-    public static final String USER_SERVICE_ARG_ID = "shizuku:user-service-arg-id";
+    public static final String USER_SERVICE_ARG_TAG = "shizuku:user-service-arg-tag";
+    public static final String USER_SERVICE_ARG_COMPONENT = "shizuku:user-service-arg-component";
     public static final String USER_SERVICE_ARG_DEBUGGABLE = "shizuku:user-service-arg-debuggable";
-    public static final String USER_SERVICE_ARG_CLASSNAME = "shizuku:user-service-arg-classname";
-    public static final String USER_SERVICE_ARG_PACKAGE_NAME = "shizuku:user-service-arg-package-name";
     public static final String USER_SERVICE_ARG_VERSION_CODE = "shizuku:user-service-arg-version-code";
-    public static final String USER_SERVICE_ARG_ALWAYS_RECREATE = "shizuku:user-service-arg-always-recreate";
     public static final String USER_SERVICE_ARG_PROCESS_NAME = "shizuku:user-service-arg-process-name";
 
     @RestrictTo(LIBRARY_GROUP_PREFIX)

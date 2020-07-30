@@ -24,7 +24,8 @@ android {
         }
         release {
             signingConfig signingConfigs.sign
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -58,7 +59,7 @@ dependencies {
     implementation project(':api')
     implementation project(':shared')
 
-    implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction, https://github.com/tiann/FreeReflection
+    implementation 'me.weishu:free_reflection:3.0.1' // bypass hidden api restriction, https://github.com/tiann/FreeReflection
 }
 
 apply from: rootProject.file('signing.gradle')
