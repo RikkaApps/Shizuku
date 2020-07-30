@@ -1,21 +1,17 @@
 package moe.shizuku.manager.home
 
-import android.content.*
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
 import android.os.Process
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import moe.shizuku.api.ShizukuApiConstants
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarActivity
@@ -34,20 +30,16 @@ import rikka.core.ktx.unsafeLazy
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.fixEdgeEffect
-import java.util.*
 
 abstract class HomeActivity : AppBarActivity() {
 
     private val binderReceivedListener = ShizukuProvider.OnBinderReceivedListener {
         checkServerStatus()
         appsModel.load()
-        adapter.updateData()
     }
 
-    private val requestRefreshReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            checkServerStatus()
-        }
+    private val binderDeadListener = ShizukuProvider.OnBinderDeadListener {
+        checkServerStatus()
     }
 
     private val homeModel by viewModels { HomeViewModel() }
@@ -75,10 +67,6 @@ abstract class HomeActivity : AppBarActivity() {
             }
         }
 
-        if (ShizukuService.pingBinder()) {
-            appsModel.load()
-        }
-
         val recyclerView = binding.list
         recyclerView.adapter = adapter
         recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
@@ -101,9 +89,7 @@ abstract class HomeActivity : AppBarActivity() {
         }
 
         ShizukuProvider.addBinderReceivedListenerSticky(binderReceivedListener)
-
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(requestRefreshReceiver, IntentFilter(AppConstants.ACTION_REQUEST_REFRESH))
+        ShizukuProvider.addBinderDeadListener(binderDeadListener)
 
         logd("onCreate")
     }
@@ -120,7 +106,7 @@ abstract class HomeActivity : AppBarActivity() {
     override fun onDestroy() {
         super.onDestroy()
         ShizukuProvider.removeBinderReceivedListener(binderReceivedListener)
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(requestRefreshReceiver)
+        ShizukuProvider.removeBinderDeadListener(binderDeadListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -151,8 +137,6 @@ abstract class HomeActivity : AppBarActivity() {
                                 ShizukuService.exit()
                             } catch (e: Throwable) {
                             }
-                            LocalBroadcastManager.getInstance(this)
-                                    .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .show()

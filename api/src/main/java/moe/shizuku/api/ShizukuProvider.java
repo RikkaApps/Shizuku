@@ -76,11 +76,22 @@ public class ShizukuProvider extends ContentProvider {
 
     public static final String ACTION_BINDER_RECEIVED = "moe.shizuku.api.action.BINDER_RECEIVED";
 
+    protected static final IBinder.DeathRecipient DEATH_RECIPIENT = ()-> {
+        ShizukuService.setBinder(null);
+        ShizukuProvider.postBinderDeadListeners();
+    };
+
     public interface OnBinderReceivedListener {
         void onBinderReceived();
     }
 
-    private static final List<OnBinderReceivedListener> LISTENERS = new CopyOnWriteArrayList<>();
+    public interface OnBinderDeadListener {
+        void onBinderDead();
+    }
+
+    private static final List<OnBinderReceivedListener> RECEIVED_LISTENERS = new CopyOnWriteArrayList<>();
+    private static final List<OnBinderDeadListener> DEAD_LISTENERS = new CopyOnWriteArrayList<>();
+    private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
     /**
      * Add a listener that will be called when binder is received.
@@ -112,10 +123,10 @@ public class ShizukuProvider extends ContentProvider {
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 listener.onBinderReceived();
             } else {
-                mainHandler.post(listener::onBinderReceived);
+                MAIN_HANDLER.post(listener::onBinderReceived);
             }
         }
-        LISTENERS.add(listener);
+        RECEIVED_LISTENERS.add(listener);
     }
 
     /**
@@ -126,22 +137,58 @@ public class ShizukuProvider extends ContentProvider {
      * @return If the listener is removed.
      */
     public static boolean removeBinderReceivedListener(@NonNull OnBinderReceivedListener listener) {
-        return LISTENERS.remove(listener);
+        return RECEIVED_LISTENERS.remove(listener);
     }
-
-    private static final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     static void postBinderReceivedListeners() {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             callBinderReceivedListeners();
         } else {
-            mainHandler.post(ShizukuProvider::callBinderReceivedListeners);
+            MAIN_HANDLER.post(ShizukuProvider::callBinderReceivedListeners);
         }
     }
 
     static void callBinderReceivedListeners() {
-        for (OnBinderReceivedListener listener : LISTENERS) {
+        for (OnBinderReceivedListener listener : RECEIVED_LISTENERS) {
             listener.onBinderReceived();
+        }
+    }
+
+    /**
+     * Add a listener that will be called when binder is dead.
+     * <p>Note:</p>
+     * <ul>
+     * <li>The listener will be called in main thread.</li>
+     * </ul>
+     * <p>
+     *
+     * @param listener OnBinderReceivedListener
+     */
+    public static void addBinderDeadListener(@NonNull OnBinderDeadListener listener) {
+        DEAD_LISTENERS.add(listener);
+    }
+
+    /**
+     * Remove the listener added by {@link #addBinderDeadListener(OnBinderDeadListener)}.
+     *
+     * @param listener OnBinderDeadListener
+     * @return If the listener is removed.
+     */
+    public static boolean removeBinderDeadListener(@NonNull OnBinderDeadListener listener) {
+        return DEAD_LISTENERS.remove(listener);
+    }
+
+    static void postBinderDeadListeners() {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            callBinderDeadListeners();
+        } else {
+            MAIN_HANDLER.post(ShizukuProvider::callBinderDeadListeners);
+        }
+    }
+
+    static void callBinderDeadListeners() {
+        for (OnBinderDeadListener listener : DEAD_LISTENERS) {
+            listener.onBinderDead();
         }
     }
 

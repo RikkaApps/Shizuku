@@ -1,15 +1,13 @@
 package moe.shizuku.manager.management
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.observe
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
@@ -26,15 +24,19 @@ class ApplicationManagementActivity : AppBarActivity() {
     private val viewModel by appsViewModel()
     private val adapter = AppsAdapter()
 
+    private val binderDeadListener = ShizukuProvider.OnBinderDeadListener {
+        if (!isFinishing) {
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (!ShizukuService.pingBinder() && !isFinishing) {
-            LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
+        super.onCreate(savedInstanceState)
+
+        if (!ShizukuService.pingBinder()) {
             finish()
             return
         }
-
-        super.onCreate(savedInstanceState)
 
         val binding = AppsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -47,8 +49,6 @@ class ApplicationManagementActivity : AppBarActivity() {
                     adapter.updateData(it.data)
                 }
                 Status.ERROR -> {
-                    LocalBroadcastManager.getInstance(this)
-                            .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
                     finish()
                     val tr = it.error
                     Toast.makeText(this, Objects.toString(tr, "unknown"), Toast.LENGTH_SHORT).show()
@@ -74,15 +74,18 @@ class ApplicationManagementActivity : AppBarActivity() {
                 viewModel.loadCount()
             }
         })
+
+        ShizukuProvider.addBinderDeadListener(binderDeadListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        ShizukuProvider.removeBinderDeadListener(binderDeadListener)
     }
 
     override fun onResume() {
         super.onResume()
-        if (!ShizukuService.pingBinder() && !isFinishing) {
-            LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
-            finish()
-        }
         adapter.notifyDataSetChanged()
     }
 

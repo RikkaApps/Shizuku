@@ -11,7 +11,4 @@ public class AppConstants {
 
     private static final String PACKAGE = "moe.shizuku.manager";
     public static final String EXTRA = PACKAGE + ".extra";
-
-    // local broadcast actions
-    public static final String ACTION_REQUEST_REFRESH = PACKAGE + ".service.action.REQUEST_REFRESH";
 }

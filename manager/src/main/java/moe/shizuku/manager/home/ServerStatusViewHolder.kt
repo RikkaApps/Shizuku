@@ -1,14 +1,11 @@
 package moe.shizuku.manager.home
 
-import android.content.Intent
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import moe.shizuku.api.ShizukuService
-import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
@@ -18,7 +15,7 @@ import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
-class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : BaseViewHolder<ServiceStatus>(binding.root), View.OnClickListener {
+class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : BaseViewHolder<ServiceStatus>(binding.root) {
 
     companion object {
         val CREATOR = Creator<ServiceStatus> { inflater: LayoutInflater, parent: ViewGroup? -> ServerStatusViewHolder(HomeServerStatusBinding.inflate(inflater, parent, false)) }
@@ -27,15 +24,6 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
     private inline val textView: HtmlCompatTextView get() = binding.text1
     private inline val summaryView: HtmlCompatTextView get() = binding.text2
     private inline val iconView: MaterialCircleIconView get() = binding.icon
-
-    init {
-        itemView.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        LocalBroadcastManager.getInstance(v.context)
-                .sendBroadcast(Intent(AppConstants.ACTION_REQUEST_REFRESH))
-    }
 
     override fun onBind() {
         val context = itemView.context

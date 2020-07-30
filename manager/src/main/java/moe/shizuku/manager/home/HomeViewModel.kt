@@ -20,11 +20,7 @@ class HomeViewModel : ViewModel() {
 
     private fun load(): ServiceStatus {
         val status = ServiceStatus()
-        if (ShizukuService.getBinder() == null)
-            return status
-
         if (!ShizukuService.pingBinder()) {
-            ShizukuService.setBinder(null)
             return status
         }
 

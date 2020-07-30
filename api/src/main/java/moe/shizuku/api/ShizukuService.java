@@ -19,36 +19,40 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
 public class ShizukuService {
 
-    static IShizukuService sService;
+    private static IBinder binder;
+    private static IShizukuService service;
 
-    public static void setBinder(@Nullable IBinder binder) {
-        sService = IShizukuService.Stub.asInterface(binder);
+    protected static void setBinder(@Nullable IBinder binder) {
+        if (ShizukuService.binder == binder) return;
+
+        if (binder == null) {
+            ShizukuService.binder = null;
+            ShizukuService.service = null;
+        } else {
+            ShizukuService.binder = binder;
+            ShizukuService.service = IShizukuService.Stub.asInterface(binder);
+
+            try {
+                ShizukuService.binder.linkToDeath(ShizukuProvider.DEATH_RECIPIENT, 0);
+            } catch (Throwable ignored) {
+            }
+        }
     }
 
     @NonNull
     private static IShizukuService requireService() {
-        if (getService() == null) {
-            throw new IllegalStateException("Binder haven't been received, check Shizuku and your code.");
+        if (service == null) {
+            throw new IllegalStateException("binder haven't been received");
         }
-        return getService();
-    }
-
-    @Nullable
-    private static IShizukuService getService() {
-        return sService;
+        return service;
     }
 
     @Nullable
     public static IBinder getBinder() {
-        IShizukuService service = getService();
-        return service != null ? service.asBinder() : null;
+        return binder;
     }
 
     public static boolean pingBinder() {
-        if (getBinder() == null)
-            return false;
-
-        IBinder binder = getBinder();
         return binder != null && binder.pingBinder();
     }
 
