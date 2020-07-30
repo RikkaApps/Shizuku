@@ -101,6 +101,7 @@ public class SampleActivity extends Activity {
         });
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
+        ShizukuProvider.addBinderDeadListener(() -> binding.text1.setText("Waiting for binder"));
     }
 
     @Override

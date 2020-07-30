@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light"
+        android:extractNativeLibs="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".AnotherProcessActivity">
             <intent-filter>

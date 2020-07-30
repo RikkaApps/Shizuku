@@ -5,6 +5,7 @@ import android.os.RemoteException;
 import android.system.Os;
 import android.util.Log;
 
+import moe.shizuku.sample.HelloJni;
 import moe.shizuku.sample.IUserService;
 
 public class MainProcessUserService extends IUserService.Stub {

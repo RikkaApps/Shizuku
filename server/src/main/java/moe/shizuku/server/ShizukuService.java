@@ -2,7 +2,6 @@ package moe.shizuku.server;
 
 import android.content.ComponentName;
 import android.content.IContentProvider;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
@@ -433,7 +432,7 @@ public class ShizukuService extends IShizukuService.Stub {
                             }
                         });
 
-                        startUserServiceLocalProcess(key, record.token, packageName, className, sourceDir, nativeLibraryDir, cancellationSignal);
+                        startUserServiceLocalProcess(key, record.token, packageName, className, sourceDir, cancellationSignal);
                     };
                 }
                 executor.execute(runnable);
@@ -469,11 +468,11 @@ public class ShizukuService extends IShizukuService.Stub {
         return record;
     }
 
-    private void startUserServiceLocalProcess(String key, String token, String packageName, String className, String sourceDir, String nativeLibraryDir, CancellationSignal cancellationSignal) {
+    private void startUserServiceLocalProcess(String key, String token, String packageName, String className, String sourceDir, CancellationSignal cancellationSignal) {
         IBinder service;
         try {
             ClassLoader classLoader;
-            classLoader = new DexClassLoader(sourceDir, "/data/local/shizuku/user/" + key, nativeLibraryDir, ClassLoader.getSystemClassLoader());
+            classLoader = new DexClassLoader(sourceDir, "/data/local/shizuku/user/" + key, null, ClassLoader.getSystemClassLoader());
 
             // createPackageContext gets old apk path after reinstall
             /*UserHandle userHandle = HiddenApiBridge.createUserHandle(UserHandleCompat.getUserId(applicationInfo.uid));

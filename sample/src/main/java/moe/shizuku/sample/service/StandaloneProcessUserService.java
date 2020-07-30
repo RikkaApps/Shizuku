@@ -4,6 +4,7 @@ import android.os.RemoteException;
 import android.system.Os;
 import android.util.Log;
 
+import moe.shizuku.sample.HelloJni;
 import moe.shizuku.sample.IUserService;
 
 public class StandaloneProcessUserService extends IUserService.Stub {
@@ -30,6 +31,6 @@ public class StandaloneProcessUserService extends IUserService.Stub {
 
     @Override
     public String doSomething() throws RemoteException {
-        return "pid=" + Os.getpid() + ", uid=" + Os.getuid();
+        return "pid=" + Os.getpid() + ", uid=" + Os.getuid() + ", " + HelloJni.stringFromJNI();
     }
 }
