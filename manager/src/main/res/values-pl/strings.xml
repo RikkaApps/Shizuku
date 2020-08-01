@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_adb_title">Uruchom poprzez podłączenie do komputera</string>
+    <string name="home_status_service_version_update">Wersja %2$d, %1$s&lt;br&gt;Uruchom ponownie aby uaktualnić do wersji %3$d</string>
+    <string name="home_status_service_version">Wersja %2$d, %1$s</string>
+    <string name="home_status_service_not_running">%1$s nie działa</string>
+    <string name="home_status_service_is_running">%1$s działa</string>
+    <string name="home_adb_button_view_command">Zobacz komendę</string>
+    <string name="home_adb_description">Dla urządzeń bez roota musisz użyć adb aby uruchomić Shizuku (wymaga podłączenia do komputera). Ten proces musi być powtarzany za każdym razem kiedy urządzenie jest uruchamiane ponownie. <b><a href="%1$s">Przeczytaj o tym artykuł</a></b>.</string>
+</resources>
