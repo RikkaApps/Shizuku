@@ -2,6 +2,7 @@ package moe.shizuku.server;
 
 import android.content.ComponentName;
 import android.content.IContentProvider;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
@@ -54,12 +55,21 @@ public class ShizukuService extends IShizukuService.Stub {
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
-    public static void main(String[] args) {
+    private static ApplicationInfo getManagerApplicationInfo() {
+        return SystemService.getApplicationInfoNoThrow(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
+    }
+
+    public static void main() {
+        ApplicationInfo ai = getManagerApplicationInfo();
+        if (ai == null) {
+            System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
+            return;
+        }
+
         LOGGER.i("starting server...");
 
         Looper.prepare();
-        new ShizukuService();
-        //DdmHandleAppName.setAppName("shizuku_server", 0);
+        new ShizukuService(ai);
         Looper.loop();
 
         LOGGER.i("server exited");
@@ -90,8 +100,15 @@ public class ShizukuService extends IShizukuService.Stub {
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
 
-    ShizukuService() {
+    ShizukuService(ApplicationInfo ai) {
         super();
+
+        ApkChangedObservers.start(ai.sourceDir, () -> {
+            if (getManagerApplicationInfo() == null) {
+                LOGGER.w("manager app is uninstalled in user 0, exiting...");
+                System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
+            }
+        });
 
         BinderSender.register(this);
 

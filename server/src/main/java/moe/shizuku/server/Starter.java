@@ -23,12 +23,6 @@ public class Starter {
         }
     }
 
-    private static void checkManagerApp() {
-        ApplicationInfo ai = SystemService.getApplicationInfoNoThrow(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
-        if (ai == null)
-            System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
-    }
-
     public static void main(String[] args) {
         if (args.length > 0) {
             for (String arg : args) {
@@ -43,8 +37,6 @@ public class Starter {
         waitSystemService(Context.USER_SERVICE);
         waitSystemService(Context.APP_OPS_SERVICE);
 
-        checkManagerApp();
-
-        ShizukuService.main(args);
+        ShizukuService.main();
     }
 }
