@@ -28,11 +28,11 @@ public interface IPackageInstaller extends IInterface {
     IPackageInstallerSession openSession(int sessionId)
             throws RemoteException;
 
-    PackageInstaller.SessionInfo getSessionInfo(int sessionId)
+    /*PackageInstaller.SessionInfo getSessionInfo(int sessionId)
             throws RemoteException;
 
     ParceledListSlice<PackageInstaller.SessionInfo> getAllSessions(int userId)
-            throws RemoteException;
+            throws RemoteException;*/
 
     ParceledListSlice<PackageInstaller.SessionInfo> getMySessions(String installerPackageName, int userId)
             throws RemoteException;

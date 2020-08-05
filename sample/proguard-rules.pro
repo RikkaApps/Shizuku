@@ -5,3 +5,5 @@
 -keepclassmembers class moe.shizuku.sample.service.StandaloneProcessUserService {
     public <init>(...);
 }
+
+-keep class me.weishu.reflection.BootstrapClass { *; }

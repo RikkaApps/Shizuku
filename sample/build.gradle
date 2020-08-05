@@ -46,25 +46,13 @@ android {
     }
 }
 
-android.applicationVariants.all { variant ->
-    // This task removes remove all ".class" files from stub classes. If we don't do this, app will crash when ProGuard is enabled.
-    // It's better to split stub classes to a stand-alone module and use them by compileOnly.
-    String taskName = String.format("remove%sStubClasses", variant.name.capitalize())
-    String compileJavaTaskName = String.format("compile%sJavaWithJavac", variant.name.capitalize())
-    task "${taskName}" {
-        doLast {
-            delete "${buildDir}/intermediates/javac/${variant.name}/${compileJavaTaskName}/classes/android"
-        }
-    }
-    variant.processJavaResourcesProvider.get().dependsOn(taskName)
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+    compileOnly project(':hidden-api-common')
+    implementation project(':hidden-api-common-bridge')
     implementation "androidx.annotation:annotation:1.1.0"
     //implementation 'moe.shizuku.privilege:api:3.3.0' // shizuku v3
     implementation project(':api')
