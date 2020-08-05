@@ -193,12 +193,12 @@ public class ShizukuService {
             return this;
         }
 
-        public UserServiceArgs useShizukuServerProcess() {
+        /*public UserServiceArgs useShizukuServerProcess() {
             this.standalone = false;
             this.debuggable = false;
             this.processName = null;
             return this;
-        }
+        }*/
 
         public UserServiceArgs useStandaloneProcess(String processNameSuffix, boolean debuggable) {
             this.standalone = true;

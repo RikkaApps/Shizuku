@@ -87,12 +87,12 @@ public class SampleActivity extends Activity {
         binding.button4.setOnClickListener((v) -> {
             if (checkPermission(REQUEST_CODE_BUTTON4)) getSystemProperty();
         });
-        binding.button5.setOnClickListener((v) -> {
+        /*binding.button5.setOnClickListener((v) -> {
             if (checkPermission(REQUEST_CODE_BUTTON5)) addUserServiceMainProcess();
         });
         binding.button6.setOnClickListener((v) -> {
             if (checkPermission(REQUEST_CODE_BUTTON6)) removeUserServiceMainProcess();
-        });
+        });*/
         binding.button7.setOnClickListener((v) -> {
             if (checkPermission(REQUEST_CODE_BUTTON7)) addUserServiceStandaloneProcess();
         });
@@ -124,14 +124,14 @@ public class SampleActivity extends Activity {
                     getSystemProperty();
                     break;
                 }
-                case REQUEST_CODE_BUTTON5: {
+                /*case REQUEST_CODE_BUTTON5: {
                     addUserServiceMainProcess();
                     break;
                 }
                 case REQUEST_CODE_BUTTON6: {
                     removeUserServiceMainProcess();
                     break;
-                }
+                }*/
                 case REQUEST_CODE_BUTTON7: {
                     addUserServiceStandaloneProcess();
                     break;
@@ -375,7 +375,7 @@ public class SampleActivity extends Activity {
         }
     };
 
-    private void addUserServiceMainProcess() {
+    /*private void addUserServiceMainProcess() {
         ComponentName componentName = new ComponentName(this, MainProcessUserService.class);
         ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
                 .useShizukuServerProcess()
@@ -413,7 +413,7 @@ public class SampleActivity extends Activity {
             res.append(tr.toString());
         }
         binding.text3.setText(res.toString().trim());
-    }
+    }*/
 
     private void addUserServiceStandaloneProcess() {
         ComponentName componentName = new ComponentName(this, StandaloneProcessUserService.class);

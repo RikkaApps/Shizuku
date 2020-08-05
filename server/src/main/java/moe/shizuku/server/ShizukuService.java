@@ -33,7 +33,7 @@ import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import dalvik.system.DexClassLoader;
+import dalvik.system.PathClassLoader;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
@@ -438,7 +438,7 @@ public class ShizukuService extends IShizukuService.Stub {
                     runnable = () -> startUserServiceNewProcess(key, record.token, packageName, className, processNameSuffix, uid, debug);
                 } else {
                     runnable = () -> {
-                        CancellationSignal cancellationSignal = new CancellationSignal();
+                        /*CancellationSignal cancellationSignal = new CancellationSignal();
                         cancellationSignal.setOnCancelListener(() -> {
                             synchronized (ShizukuService.this) {
                                 UserServiceRecord r = getUserServiceRecordLocked(key);
@@ -449,7 +449,7 @@ public class ShizukuService extends IShizukuService.Stub {
                             }
                         });
 
-                        startUserServiceLocalProcess(key, record.token, packageName, className, sourceDir, cancellationSignal);
+                        startUserServiceLocalProcess(key, record.token, packageName, className, sourceDir, cancellationSignal);*/
                     };
                 }
                 executor.execute(runnable);
@@ -486,17 +486,16 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     private void startUserServiceLocalProcess(String key, String token, String packageName, String className, String sourceDir, CancellationSignal cancellationSignal) {
+        UserServiceRecord record = userServiceRecords.get(key);
+        if (record == null || !Objects.equals(token, record.token)) {
+            LOGGER.w("unable to find service record %s (%s)", key, token);
+            return;
+        }
+
         IBinder service;
         try {
-            ClassLoader classLoader;
-            classLoader = new DexClassLoader(sourceDir, "/data/local/shizuku/user/" + key, null, ClassLoader.getSystemClassLoader());
-
-            // createPackageContext gets old apk path after reinstall
-            /*UserHandle userHandle = HiddenApiBridge.createUserHandle(UserHandleCompat.getUserId(applicationInfo.uid));
-            Context context = HiddenApiBridge.Context_createPackageContextAsUser(systemContext, packageName, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
-            classLoader = context.getClassLoader();*/
-
-            Class<?> serviceClass = classLoader.loadClass(className);
+            ClassLoader classLoader = new PathClassLoader(sourceDir, null, ClassLoader.getSystemClassLoader());
+            Class<?> serviceClass = Objects.requireNonNull(classLoader.loadClass(className));
             Constructor<?> constructor;
 
             try {
@@ -512,11 +511,6 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
         }
 
-        UserServiceRecord record = userServiceRecords.get(key);
-        if (record == null || !Objects.equals(token, record.token)) {
-            LOGGER.w("unable to find service record %s (%s)", key, token);
-            return;
-        }
         record.setBinder(service);
     }
 
