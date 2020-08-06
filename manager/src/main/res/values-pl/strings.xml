@@ -7,4 +7,8 @@
     <string name="home_status_service_is_running">%1$s działa</string>
     <string name="home_adb_button_view_command">Zobacz komendę</string>
     <string name="home_adb_description">Dla urządzeń bez roota musisz użyć adb aby uruchomić Shizuku (wymaga podłączenia do komputera). Ten proces musi być powtarzany za każdym razem kiedy urządzenie jest uruchamiane ponownie. <b><a href="%1$s">Przeczytaj o tym artykuł</a></b>.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="home_wireless_adb_title">Uruchom przez debugowanie bezprzewodowe</string>
+    <string name="home_adb_dialog_view_command_button_send">Wyślij</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiuj</string>
 </resources>

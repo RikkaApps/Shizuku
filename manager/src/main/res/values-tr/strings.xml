@@ -87,4 +87,9 @@
     <string name="home_learn_more_description">Shizuku ile nasıl uygulamalar geliştireceğinizi öğrenin veya Shizuku kullanarak uygulamalar edinin</string>
     <string name="home_learn_more_title">Daha fazlasını öğren</string>
     <string name="home_app_management_view_authorized_apps">Yetkilendirilmiş uygulamaları yönetmek için dokunun</string>
+    <string name="settings_start_on_boot_summary">Rootlu cihazlar için, Shizuku sistem açılışı sırasında otomatik olarak başlayabilir</string>
+    <string name="settings_start_on_boot">Sistem açılışında başlat (root)</string>
+    <string name="settings_translation_summary_percentage">" (%s kadar çeviri yapıldı)"</string>
+    <string name="magisk_module">Magisk modülü</string>
+    <string name="home_root_description_magisk">Sisteminiz, Shizuku\'nun açılışta başlatılmasına izin vermesine rağmen hâlâ izin vermiyorsa, %s kullanmayı deneyebilirsiniz.</string>
 </resources>
