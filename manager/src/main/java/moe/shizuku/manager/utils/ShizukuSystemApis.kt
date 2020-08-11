@@ -70,7 +70,7 @@ object ShizukuSystemApis {
         }
         try {
             if (BuildUtils.atLeast30) {
-                HiddenApiBridge.IPermissionManager_revokeRuntimePermission(permissionManager, packageName, permissionName, userId)
+                HiddenApiBridge.IPermissionManager_revokeRuntimePermission(permissionManager, packageName, permissionName, userId, null)
             } else {
                 HiddenApiBridge.IPackageManager_revokeRuntimePermission(packageManager, packageName, permissionName, userId)
             }

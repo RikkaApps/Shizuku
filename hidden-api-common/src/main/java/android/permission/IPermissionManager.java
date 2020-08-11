@@ -16,6 +16,9 @@ public interface IPermissionManager extends IInterface {
     void revokeRuntimePermission(String packageName, String permissionName, int userId)
             throws RemoteException;
 
+    void revokeRuntimePermission(String packageName, String permissionName, int userId, String reason)
+            throws RemoteException;
+
     int getPermissionFlags(String permissionName, String packageName, int userId)
             throws RemoteException;
 

@@ -119,8 +119,12 @@ public class HiddenApiBridge {
     }
 
     @RequiresApi(30)
-    public static void IPermissionManager_revokeRuntimePermission(Object permissionmgr, String packageName, String permissionName, int userId) throws RemoteException {
-        ((IPermissionManager) permissionmgr).revokeRuntimePermission(packageName, permissionName, userId);
+    public static void IPermissionManager_revokeRuntimePermission(Object permissionmgr, String packageName, String permissionName, int userId, String reason) throws RemoteException {
+        try {
+            ((IPermissionManager) permissionmgr).revokeRuntimePermission(packageName, permissionName, userId, reason);
+        } catch (NoSuchMethodError e) {
+            ((IPermissionManager) permissionmgr).revokeRuntimePermission(packageName, permissionName, userId);
+        }
     }
 
     @RequiresApi(29)
