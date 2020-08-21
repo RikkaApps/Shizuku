@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <sched.h>
 
 ssize_t fdgets(char *buf, const size_t size, int fd) {
     ssize_t len = 0;
@@ -173,4 +174,17 @@ uintptr_t memsearch(const uintptr_t start, const uintptr_t end, const void *valu
 
         _start += 1;
     }
+}
+
+int switch_mnt_ns(int pid) {
+    char mnt[32];
+    snprintf(mnt, sizeof(mnt), "/proc/%d/ns/mnt", pid);
+    if (access(mnt, R_OK) == -1) return -1;
+
+    int fd = open(mnt, O_RDONLY);
+    if (fd < 0) return -1;
+
+    int res = setns(fd, 0);
+    close(fd);
+    return res;
 }

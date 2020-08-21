@@ -363,6 +363,16 @@ int main(int argc, char **argv) {
         chown("/data/local/tmp/shizuku_starter", 2000, 2000);
         se::setfilecon("/data/local/tmp/shizuku_starter", "u:object_r:shell_data_file:s0");
         switch_cgroup();
+
+        int sdkLevel = 0;
+        char buf[PROP_VALUE_MAX + 1];
+        if (__system_property_get("ro.build.version.sdk", buf) > 0)
+            sdkLevel = atoi(buf);
+
+        if (sdkLevel >= 29) {
+            printf("info: switching mount namespace to init...\n");
+            switch_mnt_ns(1);
+        }
     }
 
     clock_gettime(CLOCK_REALTIME, &ts);
