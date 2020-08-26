@@ -85,7 +85,7 @@ public class ShizukuService extends IShizukuService.Stub {
                     " -XjdwpProvider:adbconnection" +
                     " -XjdwpOptions:suspend=n,server=y";
         } else if (sdk >= 28) {
-            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + "--debuggable" +
+            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
                     " -XjdwpProvider:internal" +
                     " -XjdwpOptions:transport=dt_android_adb,suspend=n,server=y";
         } else {
