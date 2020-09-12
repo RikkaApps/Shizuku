@@ -92,14 +92,17 @@ configurations.all {
 }
 
 repositories {
-    //mavenLocal()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://dl.bintray.com/rikkaw/MaterialPreference' }
+    maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
+    maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
@@ -116,24 +119,23 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
-    implementation 'com.github.topjohnwu.libsu:core:2.5.1'
+    implementation 'com.github.topjohnwu.libsu:core:3.0.2'
 
-    def preferenceLibraryVersion = '4.2.0-alpha02'
+    def preferenceLibraryVersion = '4.2.0-alpha03'
     implementation "moe.shizuku.preference:preference-appcompat:$preferenceLibraryVersion"
     implementation "moe.shizuku.preference:preference-simplemenu-appcompat:$preferenceLibraryVersion"
 
-    implementation "rikka.annotation:annotation:1.0.0"
     implementation "rikka.appcompat:appcompat:1.2.0-rc01"
     implementation "rikka.core:core:1.2.3"
-    implementation "rikka.material:material:1.4.1"
-    implementation "rikka.html:html:1.0.0"
-    implementation "rikka.recyclerview:recyclerview-utils:1.1.0"
+    implementation "rikka.material:material:1.4.3"
+    implementation "rikka.html:html:1.1.1"
+    implementation "rikka.recyclerview:recyclerview-utils:1.2.0"
 
     implementation 'moe.shizuku.fontprovider:api:10'
 
     implementation 'me.weishu:free_reflection:2.2.0' // bypass hidden api restriction
 
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.66'
 
     implementation 'me.zhanghai.android.appiconloader:appiconloader:1.2.0'
 }

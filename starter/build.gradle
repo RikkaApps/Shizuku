@@ -72,5 +72,4 @@ dependencies {
     implementation project(':hidden-api-common-bridge')
     implementation project(':hidden-api-21-bridge')
     implementation project(':hidden-api-26-bridge')
-    implementation "rikka.annotation:annotation:1.0.0"
 }

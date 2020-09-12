@@ -216,24 +216,30 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
 
     private val trustManager
         get() =
-            @SuppressLint("TrustAllX509TrustManager")
+            @RequiresApi(Build.VERSION_CODES.R)
             object : X509ExtendedTrustManager() {
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?, socket: Socket?) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?, engine: SSLEngine?) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?, socket: Socket?) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?, engine: SSLEngine?) {
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
                 }
 

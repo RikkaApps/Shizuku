@@ -13,7 +13,7 @@ buildscript {
         maven { url 'http://storage.googleapis.com/r8-releases/raw' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha05'
+        classpath 'com.android.tools.build:gradle:4.2.0-alpha10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
@@ -28,10 +28,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://dl.bintray.com/rikkaw/MaterialPreference' }
-        maven { url 'https://dl.bintray.com/rikkaw/Libraries' }
-        maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
     }
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
@@ -53,5 +49,5 @@ ext {
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 
-    apiVersionName = '5.0.0'
+    apiVersionName = '5.0.0-alpha02'
 }
