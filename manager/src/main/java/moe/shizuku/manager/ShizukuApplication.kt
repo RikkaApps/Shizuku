@@ -20,9 +20,6 @@ class ShizukuApplication : Application() {
             logd("ShizukuApplication", "init")
 
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
-            if (BuildConfig.DEBUG && atLeast29) {
-                AdbPairingClient.available()
-            }
             if (atLeast30) {
                 System.loadLibrary("adb")
             }

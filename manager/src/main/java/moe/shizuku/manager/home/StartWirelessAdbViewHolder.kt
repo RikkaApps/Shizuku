@@ -4,17 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.method.LinkMovementMethod
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import hidden.HiddenApiBridge
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
-import moe.shizuku.manager.adb.AdbPairingClient
 import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
@@ -71,10 +68,6 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
 
     @SuppressLint("NewApi")
     private fun onPairClicked(context: Context) {
-        if (AdbPairingClient.available()) {
-            AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
-        } else {
-            Toast.makeText(context, "Paring is not available on this device.", Toast.LENGTH_LONG).apply { setGravity(Gravity.CENTER, 0, 0) }.show()
-        }
+        AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
     }
 }

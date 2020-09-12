@@ -20,7 +20,8 @@ android {
         }
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
+        prefab true
     }
     signingConfigs {
         sign
@@ -130,6 +131,7 @@ dependencies {
     implementation "rikka.material:material:1.4.3"
     implementation "rikka.html:html:1.1.1"
     implementation "rikka.recyclerview:recyclerview-utils:1.2.0"
+    implementation 'rikka.ndk.thirdparty:boringssl:20200911'
 
     implementation 'moe.shizuku.fontprovider:api:10'
 

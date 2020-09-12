@@ -1,105 +1,18 @@
 #include <jni.h>
 #include <dirent.h>
 #include <cstring>
-#include <dlfcn.h>
 #include <cstdlib>
 #include <cinttypes>
 #include <sys/system_properties.h>
+#include <openssl/curve25519.h>
+#include <openssl/hkdf.h>
+#include <openssl/evp.h>
 #include "adb_pairing.h"
 
 #define LOG_TAG "AdbPairClient"
 
 #include "logging.h"
 #include "bypass.h"
-
-// ---------------------------------------------------------
-
-#define FUNC_DEF(ret, name, ...) \
-    using name##_t = ret(__VA_ARGS__); \
-    static name##_t *name;
-
-#define FIND_FUNC(handle, name) \
-    name = (name##_t *) dlsym(handle, #name); \
-    if (!name) { LOGE("can't find " #name); available = 0; }
-
-FUNC_DEF(SPAKE2_CTX *, SPAKE2_CTX_new,
-         enum spake2_role_t my_role, const uint8_t *my_name, size_t my_name_len,
-         const uint8_t *their_name, size_t their_name_len)
-
-FUNC_DEF(void, SPAKE2_CTX_free,
-         SPAKE2_CTX *ctx)
-
-FUNC_DEF(int, SPAKE2_generate_msg,
-         SPAKE2_CTX *ctx, uint8_t *out, size_t *out_len, size_t max_out_len,
-         const uint8_t *password, size_t password_len)
-
-FUNC_DEF(int, SPAKE2_process_msg,
-         SPAKE2_CTX *ctx, uint8_t *out_key, size_t *out_key_len, size_t max_out_key_len,
-         const uint8_t *their_msg, size_t their_msg_len)
-
-FUNC_DEF(int, HKDF,
-         uint8_t *out_key, size_t out_len, const EVP_MD *digest,
-         const uint8_t *secret, size_t secret_len,
-         const uint8_t *salt, size_t salt_len,
-         const uint8_t *info, size_t info_len)
-
-FUNC_DEF(const EVP_MD *, EVP_sha256)
-
-FUNC_DEF(EVP_AEAD_CTX *, EVP_AEAD_CTX_new,
-         const EVP_AEAD *aead, const uint8_t *key,
-         size_t key_len, size_t tag_len)
-
-FUNC_DEF(void, EVP_AEAD_CTX_free,
-         EVP_AEAD_CTX *ctx)
-
-FUNC_DEF(const EVP_AEAD *, EVP_aead_aes_128_gcm)
-
-FUNC_DEF(const EVP_AEAD *, EVP_AEAD_CTX_aead,
-         const EVP_AEAD_CTX *ctx)
-
-FUNC_DEF(size_t, EVP_AEAD_max_overhead,
-         const EVP_AEAD *aead)
-
-FUNC_DEF(size_t, EVP_AEAD_nonce_length,
-         const EVP_AEAD *aead)
-
-FUNC_DEF(int, EVP_AEAD_CTX_seal,
-         const EVP_AEAD_CTX *ctx, uint8_t *out,
-         size_t *out_len, size_t max_out_len,
-         const uint8_t *nonce, size_t nonce_len,
-         const uint8_t *in, size_t in_len,
-         const uint8_t *ad, size_t ad_len)
-
-FUNC_DEF(int, EVP_AEAD_CTX_open,
-         const EVP_AEAD_CTX *ctx, uint8_t *out,
-         size_t *out_len, size_t max_out_len,
-         const uint8_t *nonce, size_t nonce_len,
-         const uint8_t *in, size_t in_len,
-         const uint8_t *ad, size_t ad_len)
-
-static u_char available = 0;
-
-static void findFunctions() {
-    auto handle = dlopen(nullptr, 0);
-    if (!handle) return;
-
-    available = 1;
-
-    FIND_FUNC(handle, SPAKE2_CTX_new)
-    FIND_FUNC(handle, SPAKE2_CTX_free)
-    FIND_FUNC(handle, SPAKE2_generate_msg)
-    FIND_FUNC(handle, SPAKE2_process_msg)
-    FIND_FUNC(handle, HKDF)
-    FIND_FUNC(handle, EVP_sha256)
-    FIND_FUNC(handle, EVP_AEAD_CTX_new)
-    FIND_FUNC(handle, EVP_AEAD_CTX_free)
-    FIND_FUNC(handle, EVP_aead_aes_128_gcm)
-    FIND_FUNC(handle, EVP_AEAD_CTX_aead)
-    FIND_FUNC(handle, EVP_AEAD_max_overhead)
-    FIND_FUNC(handle, EVP_AEAD_nonce_length)
-    FIND_FUNC(handle, EVP_AEAD_CTX_seal)
-    FIND_FUNC(handle, EVP_AEAD_CTX_open)
-}
 
 // ---------------------------------------------------------
 
@@ -296,21 +209,11 @@ static void PairingContext_Destroy(JNIEnv *env, jobject obj, jlong ptr) {
 
 // ---------------------------------------------------------
 
-static jboolean AdbPairingClient_Available(JNIEnv *env, jclass clazz) {
-    return available == 1;
-}
-
-// ---------------------------------------------------------
-
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     JNIEnv *env = nullptr;
 
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK)
         return -1;
-
-    JNINativeMethod methods_AdbPairingClient[] = {
-            {"available", "()Z", (void *) AdbPairingClient_Available},
-    };
 
     JNINativeMethod methods_PairingContext[] = {
             {"nativeConstructor", "(Z[B)J",  (void *) PairingContext_Constructor},
@@ -321,14 +224,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
             {"nativeDestroy",     "(J)V",    (void *) PairingContext_Destroy},
     };
 
-    env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/AdbPairingClient"), methods_AdbPairingClient,
-                         sizeof(methods_AdbPairingClient) / sizeof(JNINativeMethod));
-
     env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/PairingContext"), methods_PairingContext,
                          sizeof(methods_PairingContext) / sizeof(JNINativeMethod));
-
-    findFunctions();
-    LOGI(available ? "available" : "not available");
 
     int sdkLevel = -1, previewSdkLevel = -1;
     char buf[PROP_VALUE_MAX + 1];
