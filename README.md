@@ -96,3 +96,28 @@ Note, something is not mentioned below, please be sure to read the [sample](http
 ## Developing Shizuku itself
 
 The `:server:assembleDebug` task generates debuggable server. You can attach debugger to `shizuku_server` to debug server.
+
+## License
+
+This project is available under the Apache-2.0 license.
+
+### Exceptions
+
+* You are **FORBIDDEN** to use image files listed below in any way.
+
+  ```
+  manager/src/main/res/mipmap-hdpi/ic_launcher.png
+  manager/src/main/res/mipmap-hdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+  ```
+
+* You are **FORBIDDEN** to distribute the apk compiled by you (including modified, e.g., rename "Shizuku" to something else) to any store (IBNLT Google Play Store, etc.).
