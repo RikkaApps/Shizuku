@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService

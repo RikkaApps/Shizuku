@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.observe
 import moe.shizuku.api.ShizukuProvider
 import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.R
