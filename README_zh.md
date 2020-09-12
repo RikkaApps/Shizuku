@@ -98,4 +98,28 @@ Shizuku 所提供的最重要的功能， 就是作为一个中间人接收应�
 
 使用 `:server:assembleDebug` task 来生成可调试的 Shizuku 服务。 你可以将调试器附加到 `shizku_server` 进程上来调试 Shizuku 服务。
 
+## 许可协议
+
+本项目在 Apache-2.0 License 下开放源代码。
+
+### 例外
+
+* 你 **不可以** 以任何方式使用下面列出的图像文件。
+
+  ```
+  manager/src/main/res/mipmap-hdpi/ic_launcher.png
+  manager/src/main/res/mipmap-hdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png
+  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+  ```
+
+* 你 **不可以** 将你自己编译的 APK （包括修改过的， 例如将 「Shizuku」 改成别的名称） 发布到任何应用商店 （包括但不限于 Google Play Store 等）。
 
