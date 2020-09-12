@@ -88,4 +88,10 @@
     <string name="home_status_service_version">Версия %2$d, %1$s</string>
     <string name="home_status_service_not_running">%1$s не запущен</string>
     <string name="home_status_service_is_running">%1$s запущен</string>
+    <string name="translation_contributors">sermart1234</string>
+    <string name="settings_start_on_boot_summary">На устройствах с правами суперпользователя, Shizuku может запускаться автоматически при загрузке</string>
+    <string name="settings_start_on_boot">Старт при загрузке (права суперпользователя)</string>
+    <string name="settings_translation_summary_percentage">" (%s переведено)"</string>
+    <string name="magisk_module">модуль Magisk</string>
+    <string name="home_root_description_magisk">Если по-прежнему не удается разрешить вашей системе запускать Shizuku при загрузке, вы можете попробовать использовать %s.</string>
 </resources>
