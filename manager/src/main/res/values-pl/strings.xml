@@ -11,7 +11,8 @@
     <string name="home_wireless_adb_title">Uruchom przez debugowanie bezprzewodowe</string>
     <string name="home_adb_dialog_view_command_button_send">Wyślij</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopiuj</string>
-    <string name="dialog_wireless_adb_not_enabled">Debugowanie bezprzewodowe jest wyłączone. Przed Android 11 żeby włączyć debugowanie bezprzewodowe musisz mieć polączenie z komputerem.</string>
+    <string name="dialog_wireless_adb_not_enabled">Debugowanie bezprzewodowe jest wyłączone. 
+\nPrzed Android 11 żeby włączyć debugowanie bezprzewodowe musisz mieć polączenie z komputerem.</string>
     <string name="notification_service_starting">Usługa Shizuku się uruchamia…</string>
     <string name="action_stop">Zatrzymaj Shizuku</string>
     <string name="action_about">O</string>
@@ -39,7 +40,19 @@
     <string name="home_root_button_restart">Restart</string>
     <string name="home_root_button_start">Start</string>
     <string name="magisk_module">moduł Magisk</string>
-    <string name="translation_contributors">Gabriel Markowski</string>
+    <string name="translation_contributors">"Gabriel Markowski "</string>
     <string name="dialog_adb_discovery">Szukanie usługi bezprzewodowego debugowania</string>
     <string name="home_adb_button_view_help">Przeczytaj pomoc</string>
+    <string name="toast_copied_to_clipboard">%s
+\nzostał skopiowany do schowka.</string>
+    <string name="permission_group_description">Dostęp Shizuku</string>
+    <string name="notification_working">Działa…</string>
+    <string name="notification_service_start_failed">Błąd przy starcie usługi Shizuku.</string>
+    <string name="settings_startup">Rozruch</string>
+    <string name="app_management_item_summary_requires_root">* wymaga by Shizuku działało z rootem</string>
+    <string name="app_management_dialog_adb_is_limited_title">Uprawnienia adb są ograniczone</string>
+    <string name="home_learn_more_title">Dowiedz się więcej o Shizuku</string>
+    <string name="dialog_adb_discovery_message">Proszę włączyć \"Debugowanie bezprzewodowe\" w \"Ustawieniach developerskich\". Debugowanie bezprzewodowe jest automatycznie wyłączane gdy przełączasz się między sieciami.
+\n
+\nNIE wyłączaj \"Ustawień developerskich\" lub \" Debugowania USB\" ponieważ jest wymagane do prawidłowego działania Shizuku.</string>
 </resources>

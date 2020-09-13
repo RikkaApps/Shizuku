@@ -7,7 +7,7 @@
     <string name="app_management_dialog_adb_is_limited_title">Дозвіл на adb обмежений</string>
     <string name="home_app_management_title">Авторизовані додатки</string>
     <string name="settings_black_night_theme">Чорна темна тема</string>
-    <string name="settings_black_night_theme_summary">Використовуйте чорну тему тему, якщо включений нічний режим</string>
+    <string name="settings_black_night_theme_summary">Використовуйте чорну тему, якщо включений нічний режим</string>
     <string name="start_with_root_failed">Неможливо запустити службу, оскільки не надано дозвіл root або цей пристрій не рутовано.</string>
     <string name="notification_channel_service_status">Статус запуску серав</string>
     <string name="home_adb_dialog_view_command_copy_button">Копіювати</string>
@@ -37,13 +37,14 @@
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Зазвичай це робить ваш постачальник пристроїв, який ми не змогли вирішити.<br>Спробуйте знайти параметри, пов’язані з \"Параметри розробника\". Наприклад, для MIUI опція \"Налагодження через USB (параметри безпеки)\".]]></string>
-    <string name="home_adb_description"><![CDATA[Використовувати adb не складно, прочитайте довідку нижче. Довідка буде оновлена ​​в будь-який час, включаючи вирішення проблем (наприклад, Shizuku зупиняється раптово).]]></string>
+    <string name="home_adb_description">Для пристроїв без root не потрібно використовувати adb для запуску Shizuku (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка <b><a href="%1$s">прочитайте довідку</a></b>.</string>
     <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
     <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
-    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> скопійовано в буфер обміну]]></string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> скопійовано в буфер обміну.</string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Є деякі інші міркування, будь ласка, підтвердьте, що ви прочитали довідку спочатку.]]></string>
     <string name="home_root_description"><![CDATA[     У разі успішного запуску, Shizuku автоматично запуститься після завантаження.<br>Якщо Shizuku не може запуститися після завантаження належним чином, перевірте, чи ваша система чи сторонні інструменти обмежили фоновий режим Shizuku.<p>Майже у всіх постачальників, окрім Google, є свій механізм обмеження фонового режиму (деякі постачальники неоднакові, наприклад, OnePlus, що серйозно впливає на функціональність багатьох додатків).<br>Будь ласка, зверніться до %s для інструкцій щодо вимкнення обмежень.]]></string>
-    <string name="toast_copied_to_clipboard">%s скопійовано в буфер обміну.</string>
+    <string name="toast_copied_to_clipboard">%s 
+\nскопійовано в буфер обміну.</string>
     <string name="translation_contributors">MrIkso</string>
 </resources>
