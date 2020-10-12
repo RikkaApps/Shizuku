@@ -93,10 +93,10 @@ public class SampleActivity extends Activity {
             if (checkPermission(REQUEST_CODE_BUTTON6)) removeUserServiceMainProcess();
         });*/
         binding.button7.setOnClickListener((v) -> {
-            if (checkPermission(REQUEST_CODE_BUTTON7)) addUserServiceStandaloneProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON7)) bindUserServiceStandaloneProcess();
         });
         binding.button8.setOnClickListener((v) -> {
-            if (checkPermission(REQUEST_CODE_BUTTON8)) removeUserServiceStandaloneProcess();
+            if (checkPermission(REQUEST_CODE_BUTTON8)) unbindUserServiceStandaloneProcess();
         });
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
@@ -132,11 +132,11 @@ public class SampleActivity extends Activity {
                     break;
                 }*/
                 case REQUEST_CODE_BUTTON7: {
-                    addUserServiceStandaloneProcess();
+                    bindUserServiceStandaloneProcess();
                     break;
                 }
                 case REQUEST_CODE_BUTTON8: {
-                    removeUserServiceStandaloneProcess();
+                    unbindUserServiceStandaloneProcess();
                     break;
                 }
 
@@ -420,7 +420,7 @@ public class SampleActivity extends Activity {
             .useStandaloneProcess("service", BuildConfig.DEBUG)
             .version(BuildConfig.VERSION_CODE);
 
-    private void addUserServiceStandaloneProcess() {
+    private void bindUserServiceStandaloneProcess() {
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
@@ -435,7 +435,7 @@ public class SampleActivity extends Activity {
         binding.text3.setText(res.toString().trim());
     }
 
-    private void removeUserServiceStandaloneProcess() {
+    private void unbindUserServiceStandaloneProcess() {
 
         StringBuilder res = new StringBuilder();
         try {

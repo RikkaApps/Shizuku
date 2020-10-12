@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-12dp"
             android:layout_marginTop="4dp"
-            android:text="addUserService (standalone process)"
+            android:text="bindUserService (standalone process)"
             android:textAllCaps="false"
             android:textColor="?android:colorAccent" />
 
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-12dp"
             android:layout_marginTop="4dp"
-            android:text="removeUserService (standalone process)"
+            android:text="unbindUserService (standalone process)"
             android:textAllCaps="false"
             android:textColor="?android:colorAccent" />
 
