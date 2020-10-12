@@ -8,7 +8,6 @@
     android:clipToPadding="false"
     android:fadeScrollbars="true"
     android:paddingTop="?actionBarSize"
-    android:paddingBottom="8dp"
     android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical"
     app:borderBottomStyle="never"

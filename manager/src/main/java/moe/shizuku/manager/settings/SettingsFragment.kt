@@ -24,6 +24,7 @@ import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.material.widget.BorderRecyclerView
 import rikka.material.widget.BorderView
+import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import java.text.NumberFormat
 import java.util.*
@@ -165,7 +166,7 @@ class SettingsFragment : PreferenceFragment() {
     override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState) as BorderRecyclerView
         recyclerView.fixEdgeEffect()
-        //recyclerView.addVerticalPadding(0, 8)
+        recyclerView.addVerticalPadding(0, 8)
 
         val lp = recyclerView.layoutParams
         if (lp is FrameLayout.LayoutParams) {
