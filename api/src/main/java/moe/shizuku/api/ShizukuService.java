@@ -3,9 +3,7 @@ package moe.shizuku.api;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 
@@ -13,13 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import moe.shizuku.server.IShizukuService;
-import moe.shizuku.server.IShizukuServiceConnection;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
@@ -166,13 +160,12 @@ public class ShizukuService {
 
     public static class UserServiceArgs {
 
-        private final ComponentName componentName;
-        private ServiceConnection connection;
-        private int versionCode = 1;
-        private boolean standalone = true;
-        private String processName;
-        private String tag;
-        private boolean debuggable = false;
+        final ComponentName componentName;
+        int versionCode = 1;
+        boolean standalone = true;
+        String processName;
+        String tag;
+        boolean debuggable = false;
 
         public UserServiceArgs(@NonNull ComponentName componentName) {
             this.componentName = componentName;
@@ -180,11 +173,6 @@ public class ShizukuService {
 
         public UserServiceArgs tag(@NonNull String tag) {
             this.tag = tag;
-            return this;
-        }
-
-        public UserServiceArgs connection(ServiceConnection connection) {
-            this.connection = connection;
             return this;
         }
 
@@ -232,58 +220,29 @@ public class ShizukuService {
         }
     }
 
-    private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
-    private static final Map<String, IShizukuServiceConnection> CONNECTION_CACHE = Collections.synchronizedMap(new HashMap<>());
-
-    private static IShizukuServiceConnection getOrCreateServiceConnection(UserServiceArgs args) {
-        String key = args.tag != null ? args.tag : args.componentName.getClassName();
-        IShizukuServiceConnection connection = CONNECTION_CACHE.get(key);
-
-        if (connection == null) {
-            connection = new IShizukuServiceConnection.Stub() {
-
-                private boolean dead = false;
-
-                @Override
-                public void connected(IBinder binder) {
-                    MAIN_HANDLER.post(() -> args.connection.onServiceConnected(args.componentName, binder));
-
-                    if (args.standalone) {
-                        try {
-                            binder.linkToDeath(this::dead, 0);
-                        } catch (RemoteException ignored) {
-                        }
-                    }
-                }
-
-                @Override
-                public void dead() {
-                    if (dead) return;
-                    dead = true;
-
-                    MAIN_HANDLER.post(() -> args.connection.onServiceDisconnected(args.componentName));
-
-                    CONNECTION_CACHE.remove(key);
-                }
-            };
-            CONNECTION_CACHE.put(key, connection);
-        }
-        return connection;
-    }
-
     /**
      * Run service class from the apk of current app.
      *
      * @since added from version 10
      */
-    public static void addUserService(@NonNull UserServiceArgs args) throws RemoteException {
-        requireService().addUserService(getOrCreateServiceConnection(args), args.forAdd());
+    public static void bindUserService(@NonNull UserServiceArgs args, @NonNull ServiceConnection conn) throws RemoteException {
+        ShizukuServiceConnection connection = ShizukuServiceConnection.getOrCreate(args);
+        connection.addConnection(conn);
+        requireService().addUserService(connection, args.forAdd());
     }
 
     /**
      * Remove user service.
+     *
+     * @param remove Remove (kill) the remote user service.
      */
-    public static void removeUserService(@NonNull UserServiceArgs args) throws RemoteException {
-        requireService().removeUserService(getOrCreateServiceConnection(args), args.forRemove());
+    public static void unbindUserService(@NonNull UserServiceArgs args, @NonNull ServiceConnection conn, boolean remove) throws RemoteException {
+        ShizukuServiceConnection connection = ShizukuServiceConnection.get(args);
+        if (connection != null) {
+            connection.removeConnection(conn);
+        }
+        if (remove) {
+            requireService().removeUserService(null /* (unused) */, args.forRemove());
+        }
     }
 }

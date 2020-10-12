@@ -32,7 +32,6 @@ import moe.shizuku.api.ShizukuBinderWrapper;
 import moe.shizuku.api.ShizukuService;
 import moe.shizuku.api.ShizukuSystemProperties;
 import moe.shizuku.sample.databinding.MainActivityBinding;
-import moe.shizuku.sample.service.MainProcessUserService;
 import moe.shizuku.sample.service.StandaloneProcessUserService;
 import moe.shizuku.sample.util.ApplicationUtils;
 import moe.shizuku.sample.util.IIntentSenderAdaptor;
@@ -415,19 +414,19 @@ public class SampleActivity extends Activity {
         binding.text3.setText(res.toString().trim());
     }*/
 
-    private void addUserServiceStandaloneProcess() {
-        ComponentName componentName = new ComponentName(this, StandaloneProcessUserService.class);
-        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
-                .useStandaloneProcess("service", BuildConfig.DEBUG)
-                .version(BuildConfig.VERSION_CODE)
-                .connection(userServiceConnection);
+    private final ShizukuService.UserServiceArgs userServiceStandaloneProcessArgs = new ShizukuService.UserServiceArgs(
+            new ComponentName("moe.shizuku.sample", StandaloneProcessUserService.class.getName())
+    )
+            .useStandaloneProcess("service", BuildConfig.DEBUG)
+            .version(BuildConfig.VERSION_CODE);
 
+    private void addUserServiceStandaloneProcess() {
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.addUserService(args);
+                ShizukuService.bindUserService(userServiceStandaloneProcessArgs, userServiceConnection);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
@@ -437,21 +436,31 @@ public class SampleActivity extends Activity {
     }
 
     private void removeUserServiceStandaloneProcess() {
-        ComponentName componentName = new ComponentName(this, StandaloneProcessUserService.class);
-        ShizukuService.UserServiceArgs args = new ShizukuService.UserServiceArgs(componentName)
-                .connection(userServiceConnection);
 
         StringBuilder res = new StringBuilder();
         try {
             if (ShizukuService.getVersion() < 10) {
                 res.append("requires Shizuku v5.0.0+ (Service version 10)");
             } else {
-                ShizukuService.removeUserService(args);
+                ShizukuService.unbindUserService(userServiceStandaloneProcessArgs, userServiceConnection, true);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();
             res.append(tr.toString());
         }
         binding.text3.setText(res.toString().trim());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            if (ShizukuService.getVersion() >= 10) {
+                ShizukuService.unbindUserService(userServiceStandaloneProcessArgs, userServiceConnection, false);
+            }
+        } catch (Throwable tr) {
+            tr.printStackTrace();
+        }
     }
 }

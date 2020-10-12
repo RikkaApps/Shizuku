@@ -13,7 +13,7 @@ buildscript {
         maven { url 'http://storage.googleapis.com/r8-releases/raw' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha10'
+        classpath 'com.android.tools.build:gradle:4.2.0-alpha13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
@@ -32,6 +32,7 @@ allprojects {
         google()
     }
     tasks.withType(Javadoc) {
+        failOnError false
         options.addStringOption('Xdoclint:none', '-quiet')
     }
 }
@@ -51,5 +52,5 @@ ext {
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 
-    apiVersionName = '5.0.0-alpha02'
+    apiVersionName = '5.0.0-alpha03'
 }
