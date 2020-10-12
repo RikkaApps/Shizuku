@@ -88,4 +88,5 @@
     <string name="home_root_description_magisk">如果您还是无法让您的系统允许 Shizuku 开机启动，您可以尝试使用 %s。</string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
+    <string name="dialog_adb_try">强制尝试 %d</string>
 </resources>

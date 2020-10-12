@@ -33,7 +33,7 @@
     <string name="dialog_adb_pairing_discovery">Searching for pairing service</string>
     <string name="dialog_adb_pairing_paring_code">Pairing code</string>
     <string name="paring_code_is_wrong">Pairing code is wrong.</string>
-    <string name="cannot_connect_port">Can\'t connect wireless debugging service.</string>
+    <string name="cannot_connect_port">Can\'t connect to wireless debugging service.</string>
     <string name="dialog_wireless_adb_not_enabled">Wireless debugging is not enabled.\nNote, before Android 11, to enable wireless debugging, computer connection is a must.</string>
     <string name="dialog_adb_pairing_message">Please start paring by the following steps: \"Developer Options\" - \"Wireless debugging\" - \"Pairing device using pairing code\".\n\nAfter the pairing process starts, you will able to input the pairing code.</string>
     <string name="adb_pairing_requires_multi_window">Please enter split-screen (multi-window) mode first.</string>
@@ -41,6 +41,7 @@
     <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
     <string name="adb_pair_required">Please go through the pairing step first.</string>
     <string name="development_settings">Developer options</string>
+    <string name="dialog_adb_try">Forced to try %d</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
