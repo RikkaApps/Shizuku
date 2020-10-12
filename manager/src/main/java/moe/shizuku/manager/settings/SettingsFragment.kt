@@ -14,6 +14,7 @@ import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.preference.*
@@ -136,7 +137,7 @@ class SettingsFragment : PreferenceFragment() {
             true
         }
 
-        val contributors = context.getString(R.string.translation_contributors)
+        val contributors = context.getString(R.string.translation_contributors).toHtml().toString()
         if (contributors.isNotBlank()) {
             translationContributorsPreference.summary = contributors
         } else {
