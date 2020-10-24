@@ -41,7 +41,6 @@
     <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
     <string name="adb_pair_required">Please go through the pairing step first.</string>
     <string name="development_settings">Developer options</string>
-    <string name="dialog_adb_try">Forced to try %d</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
