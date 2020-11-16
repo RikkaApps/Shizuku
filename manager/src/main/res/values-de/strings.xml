@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dialog_adb_discovery">Suche nach wireless debugging service</string>
-    <string name="home_wireless_adb_description">"In Android 11 ist Wireless debugging eine integrierte Funktion. Bitte beziehen Sie sich auf &lt;b&gt;&lt;a href=\"%1$s\"&gt;dieses Hilfsdokument&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Dies funktioniert mit allen Systemversionen.  In Versionen vor Android 11 kann Wireless debugging jedoch nicht direkt aktiviert werden."</string>
-    <string name="home_wireless_adb_title">Starten Sie via Wireless debugging</string>
+    <string name="home_wireless_adb_description">In Android 11 ist Wireless Debugging eine integrierte Funktion. Bitte beziehen Sie sich auf &lt;b&gt;&lt;a href=\"%1$s\"&gt;dieses Hilfsdokument&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Dies funktioniert mit allen Systemversionen. In Versionen vor Android 11 kann Wireless Debugging jedoch nicht direkt aktiviert werden.</string>
+    <string name="home_wireless_adb_title">Per Wireless Debugging starten</string>
     <string name="home_adb_dialog_view_command_button_send">Senden</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopieren</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Es gibt noch einige andere Möglichkeiten. Bitte bestätigen Sie, dass Sie das Hilfsdokument bereits gelesen haben.</string>
@@ -12,6 +12,26 @@
     <string name="home_adb_title">Starten, indem Sie eine Verbindung zu einem Computer herstellen</string>
     <string name="home_status_service_version_update">Version %2$d, %1$s&lt;br&gt;Starten Sie erneut, um auf Version %3$d zu aktualisieren</string>
     <string name="home_status_service_version">Version %2$d, %1$s</string>
-    <string name="home_status_service_not_running">%1$s gestoppt</string>
+    <string name="home_status_service_not_running">%1$s beendet</string>
     <string name="home_status_service_is_running">%1$s läuft</string>
+    <string name="app_management_dialog_adb_is_limited_title">Die ADB-Berechtigungen sind beschränkt</string>
+    <string name="app_management_menu_get_more">Mehr</string>
+    <string name="about_view_source_code">Quelltext auf %s anzeigen</string>
+    <string name="action_about">Über</string>
+    <string name="action_stop">Shizuku anhalten</string>
+    <string name="settings_translation_summary_percentage">" (%s sind übersetzt)"</string>
+    <string name="settings_black_night_theme_summary">Wenn aktiviert, rein schwarzes Design statt dunklem Design verwenden</string>
+    <string name="settings_black_night_theme">Schwarzes Design</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d autorisierte App</item>
+        <item quantity="other">%d autorisierte Apps</item>
+    </plurals>
+    <string name="dialog_wireless_adb_not_enabled">Wireless Debugging ist nicht aktiviert.
+\nAchtung, vor Android 11 muss zur Aktivierung eine Computerverbindung hergestellt werden.</string>
+    <string name="home_root_description">Zusätzlich kann Shizuku beim Booten automatisch gestartet werden. Falls nicht, bitte überprüfen, ob Shizuku durch Ihr System oder Tools von Drittanbietern eingeschränkt ist.&lt;br&gt;Sie können sich auf %s beziehen.</string>
+    <string name="development_settings">Entwickleroptionen</string>
+    <string name="adb_pairing_requires_multi_window">Bitte zuerst mit geteiltem Bildschirm öffnen (Mehrfenstermodus).</string>
+    <string name="dialog_adb_discovery_message">Bitte Wireless Debugging in Entwickleroptionen aktivieren. Wireless Debugging wird automatisch deaktiviert, wenn sich das Netzwerk ändert.
+\n
+\nHinweis: Deaktivieren Sie die Entwickleroptionen oder USB-Debugging nicht, oder Shizuku wird gestoppt.</string>
 </resources>

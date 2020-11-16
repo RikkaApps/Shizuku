@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_status_service_version">Version %2$d, %1$s</string>
+    <string name="toast_copied_to_clipboard">%s
+\nはクリップボードにコピーされました。</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; はクリップボードにコピーされました。</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizukuを開く</string>
+    <string name="home_status_service_is_running">%1$s 実行中</string>
+    <string name="home_adb_dialog_view_command_copy_button">コピー</string>
+    <string name="home_adb_title">コンピュータに接続して開始する</string>
+</resources>
