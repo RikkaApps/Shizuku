@@ -104,7 +104,7 @@ Shizuku 所提供的最重要的功能， 就是作为一个中间人接收应�
 
 ### 例外
 
-* 你 **不可以** 以任何方式使用下面列出的图像文件。
+* 你 **不可以** 以任何方式使用下面列出的图像文件（除非是用于展示 Shizuku 本身）。
 
   ```
   manager/src/main/res/mipmap-hdpi/ic_launcher.png

@@ -103,7 +103,7 @@ This project is available under the Apache-2.0 license.
 
 ### Exceptions
 
-* You are **FORBIDDEN** to use image files listed below in any way.
+* You are **FORBIDDEN** to use image files listed below in any way (unless for displaying Shizuku itself).
 
   ```
   manager/src/main/res/mipmap-hdpi/ic_launcher.png
