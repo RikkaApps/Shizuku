@@ -43,12 +43,8 @@ public class ShizukuBinderWrapper implements IBinder {
 
     @Nullable
     @Override
-    public String getInterfaceDescriptor() {
-        try {
-            return original.getInterfaceDescriptor();
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName(), e);
-        }
+    public String getInterfaceDescriptor() throws RemoteException {
+        return original.getInterfaceDescriptor();
     }
 
     @Override
@@ -68,30 +64,18 @@ public class ShizukuBinderWrapper implements IBinder {
     }
 
     @Override
-    public void dump(@NonNull FileDescriptor fd, @Nullable String[] args) {
-        try {
-            original.dump(fd, args);
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName(), e);
-        }
+    public void dump(@NonNull FileDescriptor fd, @Nullable String[] args) throws RemoteException {
+        original.dump(fd, args);
     }
 
     @Override
-    public void dumpAsync(@NonNull FileDescriptor fd, @Nullable String[] args) {
-        try {
-            original.dumpAsync(fd, args);
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName(), e);
-        }
+    public void dumpAsync(@NonNull FileDescriptor fd, @Nullable String[] args) throws RemoteException {
+        original.dumpAsync(fd, args);
     }
 
     @Override
-    public void linkToDeath(@NonNull DeathRecipient recipient, int flags) {
-        try {
-            original.linkToDeath(recipient, flags);
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e.getClass().getSimpleName(), e);
-        }
+    public void linkToDeath(@NonNull DeathRecipient recipient, int flags) throws RemoteException {
+        original.linkToDeath(recipient, flags);
     }
 
     @Override
