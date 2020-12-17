@@ -118,7 +118,6 @@ int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const cha
     int src_fd;
     int dst_fd;
     struct stat stat_buf{};
-    off_t offset = 0;
     int64_t size_remaining;
     size_t count;
     ssize_t result;
@@ -142,7 +141,7 @@ int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const cha
         else
             count = static_cast<size_t>(size_remaining);
 
-        result = sendfile(dst_fd, src_fd, &offset, count);
+        result = sendfile(dst_fd, src_fd, nullptr, count);
         if (result == -1) {
             close(src_fd);
             close(dst_fd);
