@@ -25,4 +25,7 @@
 }
 
 -keepattributes SourceFile,LineNumberTable
--keep public class * extends java.lang.Exception
+-renamesourcefileattribute SourceFile
+
+-dontwarn android.**
+-dontwarn com.android.**
