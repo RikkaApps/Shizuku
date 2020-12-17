@@ -17,7 +17,6 @@
     <string name="action_stop">Zatrzymaj Shizuku</string>
     <string name="action_about">O</string>
     <string name="settings_start_on_boot">Uruchom przy starcie systemu (tylko dla urządzeń z rootem)</string>
-    <string name="settings_prefer_su_context">Użyj pełnego roota gdy dostępny</string>
     <string name="settings_black_night_theme">Motyw ciemny</string>
     <string name="settings_black_night_theme_summary">Użyj czysto-czarnego motywu gdy tryb nnocny jest włączony</string>
     <string name="settings_language">Język</string>

@@ -76,8 +76,6 @@
     <string name="settings_black_night_theme">Black night theme</string>
     <string name="settings_black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
     <string name="settings_startup">Startup</string>
-    <string name="settings_prefer_su_context">Use full root if available</string>
-    <string name="settings_prefer_su_context_summary">Disable this option (or not supported by your su) will use the secontext of adb shell</string>
     <string name="settings_translation_contributors">Translation contributors</string>
     <string name="settings_translation">Participate in translation</string>
     <string name="settings_translation_summary">Help us translate %s into your language</string>

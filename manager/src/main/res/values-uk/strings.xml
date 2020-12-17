@@ -12,8 +12,6 @@
     <string name="notification_channel_service_status">Статус запуску серав</string>
     <string name="home_adb_dialog_view_command_copy_button">Копіювати</string>
     <string name="dialog_cannot_open_browser_title">Не вдається запустити браузер</string>
-    <string name="settings_prefer_su_context">Використовуйте повний рут доступ, якщо він є</string>
-    <string name="settings_prefer_su_context_summary">Якщо вимкнути цю опцію (або не підтримується вашим su), буде використано контекст adb shell</string>
     <string name="home_learn_more_title">Вивчіть Shizuku</string>
     <string name="home_learn_more_description">Дізнайтеся, як розвиватися за допомогою Shizuku або отримувати додатки за допомогою Shizuku</string>
     <string name="notification_service_start_failed">Помилка запуску служби Shizuku.</string>

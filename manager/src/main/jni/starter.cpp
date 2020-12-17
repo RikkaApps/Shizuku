@@ -26,6 +26,7 @@
 #define EXIT_FATAL_APP_PROCESS 5
 #define EXIT_FATAL_UID 6
 #define EXIT_FATAL_KILL 9
+#define EXIT_FATAL_BINDER_BLOCKED_BY_SELINUX 10
 
 #define SERVER_NAME "shizuku_server"
 #define SERVER_CLASS_PATH "moe.shizuku.server.Starter"
@@ -97,16 +98,10 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     }
 }
 
-static int start_server(const char *path, const char *main_class, const char *process_name, int change_context) {
+static int start_server(const char *path, const char *main_class, const char *process_name) {
     pid_t pid = fork();
     if (pid == 0) {
         daemon(false, false);
-
-        // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
-        if (change_context && getuid() == 0) {
-            se::setcon("u:r:shell:s0");
-        }
-
         run_server(path, main_class, process_name);
         return 0;
     } else if (pid == -1) {
@@ -217,22 +212,13 @@ int main(int argc, char **argv) {
     }
 
     char *_server_dex_path = nullptr, *_starter_dex_path = nullptr;
-    int i;
-    int use_shell_context = 0;
-
-    for (i = 0; i < argc; ++i) {
+    for (int i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--server-dex=", 13) == 0) {
             _server_dex_path = argv[i] + 13;
         } else if (strncmp(argv[i], "--starter-dex=", 14) == 0) {
             _starter_dex_path = argv[i] + 14;
-        } else if (strncmp(argv[i], "--use-shell-context", 19) == 0) {
-            use_shell_context = 1;
         }
     }
-#ifdef DEBUG
-    printf("debug: use_shell_context=%d\n", use_shell_context);
-    fflush(stdout);
-#endif
 
     if (uid == 0) {
         if (se::getcon(&context) == 0) {
@@ -241,15 +227,9 @@ int main(int argc, char **argv) {
             res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "call");
             res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "transfer");
 
-            if (res == 0) {
-                if (use_shell_context) {
-                    printf("warn: context %s seems safe, but force use shell context from cmd.\n", context);
-                    fflush(stdout);
-                }
-            } else {
-                use_shell_context = 1;
-                printf("warn: app context can't connect to context %s, use shell context instead.\n", context);
-                fflush(stdout);
+            if (res != 0) {
+                perrorf("fatal: the su you are using does not allow app (u:r:untrusted_app:s0) to connect to su (%s) with binder.\n", context);
+                exit(EXIT_FATAL_BINDER_BLOCKED_BY_SELINUX);
             }
             se::freecon(context);
         }
@@ -302,15 +282,9 @@ int main(int argc, char **argv) {
         }
     });
 
-
-    if (use_shell_context) {
-        printf("info: use %s for Shizuku.\n", "u:r:shell:s0");
-        fflush(stdout);
-    }
-
     printf("info: starting server...\n");
     fflush(stdout);
-    start_server(server_dex_path, SERVER_CLASS_PATH, SERVER_NAME, use_shell_context);
+    start_server(server_dex_path, SERVER_CLASS_PATH, SERVER_NAME);
 
     exit(EXIT_SUCCESS);
 }

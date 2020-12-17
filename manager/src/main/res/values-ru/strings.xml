@@ -26,8 +26,6 @@
     <string name="settings_translation_summary">Помогите перевести %s на ваш язык</string>
     <string name="settings_translation">Участвуйте в переводе</string>
     <string name="settings_translation_contributors">Авторы перевода</string>
-    <string name="settings_prefer_su_context_summary">Отключение этой опции будет использовать контекст оболочки adb</string>
-    <string name="settings_prefer_su_context">Используйте полный корень, если он доступен</string>
     <string name="settings_startup">Запуск</string>
     <string name="settings_black_night_theme_summary">Используйте черную тему, если включен ночной режим</string>
     <string name="settings_black_night_theme">Чёрная тема</string>

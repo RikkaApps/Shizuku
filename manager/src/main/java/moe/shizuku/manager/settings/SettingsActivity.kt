@@ -9,8 +9,6 @@ import moe.shizuku.manager.starter.Starter
 
 class SettingsActivity : AppBarFragmentActivity() {
 
-    private var isKeepSuContext = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,21 +18,6 @@ class SettingsActivity : AppBarFragmentActivity() {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SettingsFragment())
                     .commit()
-            isKeepSuContext = ShizukuSettings.isKeepSuContext()
-        } else {
-            isKeepSuContext = savedInstanceState.getBoolean("keep_su_context", true)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("keep_su_context", isKeepSuContext)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (ShizukuSettings.isKeepSuContext() != isKeepSuContext) {
-            Starter.writeFilesAsync(this, true)
         }
     }
 

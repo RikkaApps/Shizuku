@@ -50,8 +50,6 @@
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被複制到剪貼簿。]]></string>
     <string name="home_learn_more_title">瞭解 Shizuku</string>
     <string name="home_learn_more_description">瞭解如何使用 Shizuku 開發或檢視使用 Shizuku 的程式</string>
-    <string name="settings_prefer_su_context">使用完整 root（如果可用）</string>
-    <string name="settings_prefer_su_context_summary">關閉此選項（或你的 su 不支援時）會使用 adb shell 的 secontext</string>
     <string name="app_management_item_summary_requires_root">* 需要以 root 運作的 Shizuku</string>
     <string name="settings_translation_contributors">翻譯貢獻者</string>
     <string name="translation_contributors"/>

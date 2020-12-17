@@ -28,7 +28,6 @@ import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import java.text.NumberFormat
 import java.util.*
-import moe.shizuku.manager.ShizukuSettings.KEEP_SU_CONTEXT as KEY_KEEP_SU_CONTEXT
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
 import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
 
@@ -43,7 +42,6 @@ class SettingsFragment : PreferenceFragment() {
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: Preference
     private lateinit var blackNightThemePreference: SwitchPreference
-    private lateinit var keepSuContextPreference: SwitchPreference
     private lateinit var startOnBootPreference: SwitchPreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
@@ -60,13 +58,10 @@ class SettingsFragment : PreferenceFragment() {
         languagePreference = findPreference(KEY_LANGUAGE) as ListPreference
         nightModePreference = findPreference(KEY_NIGHT_MODE)
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
-        keepSuContextPreference = findPreference(KEY_KEEP_SU_CONTEXT) as SwitchPreference
         startOnBootPreference = findPreference(KEEP_START_ON_BOOT) as SwitchPreference
         startupPreference = findPreference("startup") as PreferenceCategory
         translationPreference = findPreference("translation")
         translationContributorsPreference = findPreference("translation_contributors")
-
-        keepSuContextPreference.isVisible = false
 
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
 
@@ -159,7 +154,7 @@ class SettingsFragment : PreferenceFragment() {
                 }
     }
 
-    override fun onCreateItemDecoration(): DividerDecoration? {
+    override fun onCreateItemDecoration(): DividerDecoration {
         return CategoryDivideDividerDecoration()
     }
 

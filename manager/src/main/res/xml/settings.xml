@@ -10,12 +10,6 @@
             android:summary="@string/settings_start_on_boot_summary"
             android:title="@string/settings_start_on_boot" />
 
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="keep_su_context"
-            android:summary="@string/settings_prefer_su_context_summary"
-            android:title="@string/settings_prefer_su_context" />
-
     </moe.shizuku.preference.PreferenceCategory>
 
     <moe.shizuku.preference.PreferenceCategory android:title="@string/settings_language">

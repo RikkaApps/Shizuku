@@ -165,7 +165,6 @@ object Starter {
     private fun getStarterParam(server: String, starter: String): String {
         Objects.requireNonNull(server)
         return ("--server-dex=" + server
-                + " --starter-dex=" + starter
-                + if (ShizukuSettings.isKeepSuContext()) "" else " --use-shell-context")
+                + " --starter-dex=" + starter)
     }
 }

@@ -72,8 +72,6 @@
     <string name="settings_translation_summary">%s , dilinize çevirmemize yardımcı olun</string>
     <string name="settings_translation">Çeviriye katılın</string>
     <string name="settings_translation_contributors">Çeviriye katkıda bulunanlar</string>
-    <string name="settings_prefer_su_context_summary">Bu seçeneği devre dışı bırak (veya su tarafından desteklenmez) adb kabuğunun secontext\'i kullanılacak</string>
-    <string name="settings_prefer_su_context">Varsa tam root kullanın</string>
     <string name="settings_startup">Başlangıç</string>
     <string name="settings_black_night_theme_summary">Gece modu etkinse saf siyah temasını kullanın</string>
     <string name="settings_black_night_theme">Siyah gece teması</string>
