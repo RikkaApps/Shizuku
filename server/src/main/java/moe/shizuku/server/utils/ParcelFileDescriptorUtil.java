@@ -45,7 +45,7 @@ public class ParcelFileDescriptorUtil {
 
         @Override
         public void run() {
-            byte[] buf = new byte[1024];
+            byte[] buf = new byte[8192];
             int len;
 
             try {

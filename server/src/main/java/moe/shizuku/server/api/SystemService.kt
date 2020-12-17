@@ -1,11 +1,16 @@
 package moe.shizuku.server.api
 
+import android.app.IActivityManager
 import android.app.IProcessObserver
 import android.app.IUidObserver
 import android.content.IContentProvider
 import android.content.pm.*
 import android.os.IBinder
+import android.os.IUserManager
 import android.os.RemoteException
+import android.permission.IPermissionManager
+import androidx.annotation.RequiresApi
+import com.android.internal.app.IAppOpsService
 import hidden.HiddenApiBridgeV23
 import moe.shizuku.server.utils.BuildUtils
 import moe.shizuku.server.utils.Logger.LOGGER
@@ -13,24 +18,73 @@ import java.util.*
 
 object SystemService {
 
+    private val activityManagerBinder by lazy {
+        SystemServiceBinder<IActivityManager>("activity") {
+            if (BuildUtils.atLeast26()) {
+                IActivityManager.Stub.asInterface(it)
+            } else {
+                HiddenApiBridgeV23.ActivityManagerNative_asInterface(it)
+            }
+        }
+    }
+
+    private val packageManagerBinder by lazy {
+        SystemServiceBinder<IPackageManager>("package") {
+            IPackageManager.Stub.asInterface(it)
+        }
+    }
+
+    private val userManagerBinder by lazy {
+        SystemServiceBinder<IUserManager>("user") {
+            IUserManager.Stub.asInterface(it)
+        }
+
+    }
+
+    private val appOpsServiceBinder by lazy {
+        SystemServiceBinder<IAppOpsService>("appops") {
+            IAppOpsService.Stub.asInterface(it)
+        }
+    }
+
+    private val launcherAppsBinder by lazy {
+        SystemServiceBinder<ILauncherApps>("launcherapps") {
+            ILauncherApps.Stub.asInterface(it)
+        }
+    }
+
+    @delegate:RequiresApi(30)
+    private val permissionManagerBinder by lazy {
+        SystemServiceBinder<IPermissionManager>("permissionmgr") {
+            IPermissionManager.Stub.asInterface(it)
+        }
+    }
+
+    val activityManager get() = activityManagerBinder.service
+    val packageManager get() = packageManagerBinder.service
+    val userManager get() = userManagerBinder.service
+    val appOpsService get() = appOpsServiceBinder.service
+    val launcherApps get() = launcherAppsBinder.service
+    val permissionManager get() = permissionManagerBinder.service
+
     @JvmStatic
     @Throws(RemoteException::class)
     fun checkPermission(permission: String?, pid: Int, uid: Int): Int {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         return am.checkPermission(permission, pid, uid)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun getPackageInfo(packageName: String?, flags: Int, userId: Int): PackageInfo? {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+        val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
         return pm.getPackageInfo(packageName, flags, userId)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun getApplicationInfo(packageName: String?, flags: Int, userId: Int): ApplicationInfo? {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+        val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
         return pm.getApplicationInfo(packageName, flags, userId)
     }
 
@@ -38,10 +92,10 @@ object SystemService {
     @Throws(RemoteException::class)
     fun checkPermission(permName: String?, uid: Int): Int {
         return if (BuildUtils.atLeast30()) {
-            val permmgr = SystemServiceProvider.permissionManager ?: throw RemoteException("can't get IPermission")
+            val permmgr = permissionManager ?: throw RemoteException("can't get IPermission")
             permmgr.checkUidPermission(permName, uid)
         } else {
-            val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+            val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
             pm.checkUidPermission(permName, uid)
         }
     }
@@ -49,28 +103,28 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun registerProcessObserver(processObserver: IProcessObserver?) {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         am.registerProcessObserver(processObserver)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun registerUidObserver(observer: IUidObserver?, which: Int, cutpoint: Int, callingPackage: String?) {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         am.registerUidObserver(observer, which, cutpoint, callingPackage)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun getPackagesForUid(uid: Int): Array<String?>? {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManger")
+        val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
         return pm.getPackagesForUid(uid)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun getInstalledApplications(flags: Int, userId: Int): ParceledListSlice<ApplicationInfo>? {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManager")
+        val pm = packageManager ?: throw RemoteException("can't get IPackageManager")
         @Suppress("UNCHECKED_CAST")
         return pm.getInstalledApplications(flags, userId) as ParceledListSlice<ApplicationInfo>?
     }
@@ -78,7 +132,7 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun getInstalledPackages(flags: Int, userId: Int): ParceledListSlice<PackageInfo>? {
-        val pm = SystemServiceProvider.packageManager ?: throw RemoteException("can't get IPackageManager")
+        val pm = packageManager ?: throw RemoteException("can't get IPackageManager")
         @Suppress("UNCHECKED_CAST")
         return pm.getInstalledPackages(flags, userId) as ParceledListSlice<PackageInfo>?
     }
@@ -86,7 +140,7 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun getContentProviderExternal(name: String?, userId: Int, token: IBinder?, tag: String?): IContentProvider? {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         return when {
             BuildUtils.atLeast29() -> {
                 am.getContentProviderExternal(name, userId, token, tag)?.provider
@@ -103,14 +157,14 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun removeContentProviderExternal(name: String?, token: IBinder?) {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         am.removeContentProviderExternal(name, token)
     }
 
     @JvmStatic
     @Throws(RemoteException::class)
     fun getUsers(excludePartial: Boolean, excludeDying: Boolean, excludePreCreated: Boolean): List<UserInfo> {
-        val um = SystemServiceProvider.userManager ?: throw RemoteException("can't get IUserManger")
+        val um = userManager ?: throw RemoteException("can't get IUserManger")
         return if (BuildUtils.atLeast30()) {
             um.getUsers(excludePartial, excludeDying, excludePreCreated)
         } else {
@@ -188,7 +242,7 @@ object SystemService {
 
     @JvmStatic
     fun forceStopPackageNoThrow(packageName: String?, userId: Int) {
-        val am = SystemServiceProvider.activityManager ?: throw RemoteException("can't get IActivityManager")
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
         try {
             am.forceStopPackage(packageName, userId)
         } catch (e: Exception) {
@@ -198,7 +252,7 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun addOnAppsChangedListener(callingPackage: String?, listener: IOnAppsChangedListener?) {
-        val la = SystemServiceProvider.launcherApps ?: throw RemoteException("can't get ILauncherApps")
+        val la = launcherApps ?: throw RemoteException("can't get ILauncherApps")
         if (BuildUtils.atLeast24()) {
             la.addOnAppsChangedListener(callingPackage, listener)
         } else {

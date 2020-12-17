@@ -34,12 +34,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import dalvik.system.PathClassLoader;
+import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.ktx.IContentProviderKt;
-import moe.shizuku.server.utils.ArrayUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT;
@@ -600,7 +600,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
-                if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION)) {
+                if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
                     sendBinderToUserApp(binder, pi.packageName, userId);
                 }
             }

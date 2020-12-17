@@ -12,10 +12,9 @@ import java.util.List;
 import hidden.HiddenApiBridge;
 import hidden.ProcessObserverAdapter;
 import hidden.UidObserverAdapter;
+import kotlin.collections.ArraysKt;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.SystemService;
-import moe.shizuku.server.utils.ArrayUtils;
-import moe.shizuku.server.utils.BuildUtils;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
@@ -92,7 +91,7 @@ public class BinderSender {
             if (pi == null || pi.requestedPermissions == null)
                 continue;
 
-            if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
+            if (ArraysKt.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
                 boolean granted;
                 if (pid == -1)
                     granted = SystemService.checkPermission(PERMISSION_MANAGER, uid) == PackageManager.PERMISSION_GRANTED;
@@ -103,7 +102,7 @@ public class BinderSender {
                     ShizukuService.sendBinderToManger(sShizukuService, userId);
                     return;
                 }
-            } else if (ArrayUtils.contains(pi.requestedPermissions, PERMISSION)) {
+            } else if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
                 ShizukuService.sendBinderToUserApp(sShizukuService, packageName, userId);
                 return;
             }
