@@ -10,18 +10,11 @@ buildscript {
     repositories {
         jcenter()
         google()
-        maven { url 'http://storage.googleapis.com/r8-releases/raw' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-
-        // for org.bouncycastle:bcprov-jdk15on (https://issuetracker.google.com/issues/159151549)
-        classpath 'org.ow2.asm:asm:8.0.1'
-        classpath 'org.ow2.asm:asm-util:8.0.1'
-        classpath 'org.ow2.asm:asm-commons:8.0.1'
     }
 }
 
