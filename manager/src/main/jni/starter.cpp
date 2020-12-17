@@ -1,8 +1,3 @@
-//
-// Created by haruue on 17-6-28.
-//
-
-
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
@@ -12,12 +7,17 @@
 #include <libgen.h>
 #include <sys/stat.h>
 #include <sys/system_properties.h>
+#include <cerrno>
+#include "android.h"
 #include "misc.h"
 #include "selinux.h"
 #include "cgroup.h"
 
-#define TRUE 1
-#define FALSE 0
+#ifdef DEBUG
+#define JAVA_DEBUGGABLE
+#endif
+
+#define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
 #define EXIT_FATAL_CANNOT_ACCESS_PATH 1
 #define EXIT_FATAL_PATH_NOT_SET 2
@@ -25,217 +25,93 @@
 #define EXIT_FATAL_FORK 4
 #define EXIT_FATAL_APP_PROCESS 5
 #define EXIT_FATAL_UID 6
-#define EXIT_WARN_START_TIMEOUT 7
-#define EXIT_WARN_SERVER_STOP 8
 #define EXIT_FATAL_KILL 9
 
-#define SERVER_NAME_LEGACY "shizuku_server_legacy"
 #define SERVER_NAME "shizuku_server"
-
-#define perrorf(...) fprintf(stderr, __VA_ARGS__)
-
-#define SERVER_CLASS_PATH_LEGACY "moe.shizuku.server.ShizukuServer"
 #define SERVER_CLASS_PATH "moe.shizuku.server.Starter"
 
-static struct timespec ts{};
-
-static void logcat(time_t now) {
-    char command[BUFSIZ];
-    char time[BUFSIZ];
-    struct tm *tm = localtime(&now);
-    strftime(time, sizeof(time), "%m-%d %H:%M:%S.000", tm);
-    printf("--- crash start ---\n");
-    sprintf(command, "logcat -b crash -t '%s' -d", time);
-    printf("[command] %s\n", command);
-    fflush(stdout);
-    system(command);
-    fflush(stdout);
-    printf("--- crash end ---\n");
-    fflush(stdout);
-    printf("--- shizuku start ---\n");
-    sprintf(command, "logcat -b main -t '%s' -d -s ShizukuServer ShizukuManager",
-            time);
-    printf("[command] %s\n", command);
-    fflush(stdout);
-    system(command);
-    fflush(stdout);
-    printf("--- shizuku end ---\n");
-    fflush(stdout);
-}
-
-static void exit_with_logcat(int code) {
-    logcat(ts.tv_sec);
-    exit(code);
-}
-
-static void setClasspathEnv(const char *path) {
-    if (setenv("CLASSPATH", path, TRUE)) {
+static void run_server(const char *dex_path, const char *main_class, const char *process_name) {
+    if (setenv("CLASSPATH", dex_path, true)) {
         perrorf("fatal: can't set CLASSPATH\n");
         exit(EXIT_FATAL_SET_CLASSPATH);
     }
-    printf("info: CLASSPATH=%s\n", path);
+
+#define ARG(v) char **v = nullptr; \
+    char buf_##v[PATH_MAX]; \
+    size_t v_size = 0; \
+    uintptr_t v_current = 0;
+#define ARG_PUSH(v, arg) v_size += sizeof(char *); \
+if (v == nullptr) { \
+    v = (char **) malloc(v_size); \
+} else { \
+    v = (char **) realloc(v, v_size);\
+} \
+v_current = (uintptr_t) v + v_size - sizeof(char *); \
+*((char **) v_current) = arg ? strdup(arg) : nullptr;
+
+#define ARG_END(v) ARG_PUSH(v, nullptr)
+
+#define ARG_PUSH_FMT(v, fmt, ...) snprintf(buf_##v, PATH_MAX, fmt, __VA_ARGS__); \
+    ARG_PUSH(v, buf_##v)
+
+#ifdef JAVA_DEBUGGABLE
+#define ARG_PUSH_DEBUG_ONLY(v, arg) ARG_PUSH(v, arg)
+#define ARG_PUSH_DEBUG_VM_PARAMS(v) \
+    if (android::GetApiLevel() >= 30) { \
+        ARG_PUSH(v, "-Xcompiler-option"); \
+        ARG_PUSH(v, "--debuggable"); \
+        ARG_PUSH(v, "-XjdwpProvider:adbconnection"); \
+        ARG_PUSH(v, "-XjdwpOptions:suspend=n,server=y"); \
+    } else if (android::GetApiLevel() >= 28) { \
+        ARG_PUSH(v, "-Xcompiler-option"); \
+        ARG_PUSH(v, "--debuggable"); \
+        ARG_PUSH(v, "-XjdwpProvider:internal"); \
+        ARG_PUSH(v, "-XjdwpOptions:transport=dt_android_adb,suspend=n,server=y"); \
+    } else { \
+        ARG_PUSH(v, "-Xcompiler-option"); \
+        ARG_PUSH(v, "--debuggable"); \
+        ARG_PUSH(v, "-agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y"); \
+    }
+#else
+#define ARG_PUSH_DEBUG_VM_PARAMS(v)
+#define ARG_PUSH_DEBUG_ONLY(v, arg)
+#endif
+
+    ARG(argv)
+    ARG_PUSH(argv, "/system/bin/app_process")
+    ARG_PUSH_FMT(argv, "-Djava.class.path=%s", dex_path)
+    ARG_PUSH_DEBUG_VM_PARAMS(argv)
+    ARG_PUSH(argv, "/system/bin")
+    ARG_PUSH_FMT(argv, "--nice-name=%s", process_name)
+    ARG_PUSH(argv, main_class)
+    ARG_PUSH_DEBUG_ONLY(argv, "--debug")
+    ARG_END(argv)
+
+    for (int i = 0; i < 4; ++i) {
+        printf("%s\n", argv[i]);
+    }
     fflush(stdout);
+
+    if (execvp((const char *) argv[0], argv)) {
+        exit(EXIT_FATAL_APP_PROCESS);
+    }
 }
 
 static int start_server(const char *path, const char *main_class, const char *process_name, int change_context) {
     pid_t pid = fork();
     if (pid == 0) {
-        pid = daemon(FALSE, FALSE);
-        if (pid == -1) {
-            printf("fatal: can't fork");
-            exit_with_logcat(EXIT_FATAL_FORK);
-        } else {
-            // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
-            if (change_context && getuid() == 0) {
-                se::setcon("u:r:shell:s0");
-            }
+        daemon(false, false);
 
-            char nice_name[128], class_path[PATH_MAX];
-            sprintf(nice_name, "--nice-name=%s", process_name);
-            setClasspathEnv(path);
-            snprintf(class_path, PATH_MAX, "-Djava.class.path=%s", path);
-
-#ifdef DEBUG
-            int sdkLevel = -1, previewSdkLevel = -1;
-            char buf[PROP_VALUE_MAX + 1];
-            if (__system_property_get("ro.build.version.sdk", buf) > 0)
-                sdkLevel = atoi(buf);
-
-            if (__system_property_get("ro.build.version.preview_sdk", buf) > 0)
-                previewSdkLevel = atoi(buf);
-
-            if (sdkLevel == -1) {
-                printf("fatal: can't read ro.build.version.sdk");
-                exit_with_logcat(127);
-            }
-
-            if (sdkLevel >= 30 || (sdkLevel == 29 && previewSdkLevel > 0)) {
-                const char *appProcessArgs[] = {
-                        "/system/bin/app_process",
-
-                        // vm params
-                        class_path,
-                        "-Xcompiler-option", "--debuggable",
-                        "-XjdwpProvider:adbconnection",
-                        "-XjdwpOptions:suspend=n,server=y",
-                        "/system/bin",
-
-                        // extra params
-                        nice_name,
-
-                        // class
-                        main_class,
-
-                        // Java params
-                        "--debug",
-                        nullptr
-                };
-                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
-                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
-                }
-            } else if (sdkLevel >= 28) {
-                const char *appProcessArgs[] = {
-                        "/system/bin/app_process",
-
-                        // vm params
-                        class_path,
-                        "-Xcompiler-option", "--debuggable",
-                        "-XjdwpProvider:internal",
-                        "-XjdwpOptions:transport=dt_android_adb,suspend=n,server=y",
-                        "/system/bin",
-
-                        // extra params
-                        nice_name,
-
-                        // class
-                        main_class,
-
-                        // Java params
-                        "--debug",
-                        nullptr
-                };
-                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
-                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
-                }
-            } else {
-                const char *appProcessArgs[] = {
-                        "/system/bin/app_process",
-
-                        // vm params
-                        class_path,
-                        "-Xcompiler-option", "--debuggable",
-                        "-agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y",
-
-                        "/system/bin",
-
-                        // extra params
-                        nice_name,
-
-                        // class
-                        main_class,
-
-                        // Java params
-                        "--debug",
-                        nullptr
-                };
-                if (execvp((const char *) appProcessArgs[0], (char *const *) appProcessArgs)) {
-                    exit_with_logcat(EXIT_FATAL_APP_PROCESS);
-                }
-            }
-#else
-            char *appProcessArgs[] = {
-                    const_cast<char *>("/system/bin/app_process"),
-                    class_path,
-                    const_cast<char *>("/system/bin"),
-                    const_cast<char *>(nice_name),
-                    const_cast<char *>(main_class),
-                    nullptr
-            };
-
-            if (execvp(appProcessArgs[0], appProcessArgs)) {
-                exit_with_logcat(EXIT_FATAL_APP_PROCESS);
-            }
-#endif
+        // for now, set context to adb shell's context to avoid SELinux problem until we find a reliable way to patch policy
+        if (change_context && getuid() == 0) {
+            se::setcon("u:r:shell:s0");
         }
+
+        run_server(path, main_class, process_name);
         return 0;
     } else if (pid == -1) {
         perrorf("fatal: can't fork\n");
-        exit_with_logcat(EXIT_FATAL_FORK);
-    } else {
-        signal(SIGCHLD, SIG_IGN);
-        signal(SIGHUP, SIG_IGN);
-        printf("info: process forked, pid=%d\n", pid);
-        fflush(stdout);
-        printf("info: checking %s start...\n", process_name);
-        fflush(stdout);
-        int count = 0;
-        size_t size = 0;
-        while (!get_pids_by_name(process_name, size)) {
-            fflush(stdout);
-            usleep(200 * 1000);
-            count++;
-            if (count >= 50) {
-                perrorf("warn: timeout but can't get pid of %s.\n", process_name);
-                exit_with_logcat(EXIT_WARN_START_TIMEOUT);
-            }
-        }
-        count = 0;
-        pid_t *res;
-        while ((res = get_pids_by_name(process_name, size))) {
-            free(res);
-            printf("info: checking %s stability...\n", process_name);
-            fflush(stdout);
-            usleep(1000 * 500);
-            count++;
-            if (count >= 3) {
-                printf("info: %s started.\n", process_name);
-                fflush(stdout);
-                return EXIT_SUCCESS;
-            }
-        }
-
-        perrorf("warn: %s stopped after started.\n", process_name);
-        return EXIT_WARN_SERVER_STOP;
+        exit(EXIT_FATAL_FORK);
     }
     return EXIT_SUCCESS;
 }
@@ -251,41 +127,6 @@ static void check_access(const char *path, const char *name) {
     if (access(path, F_OK) != 0) {
         perrorf("fatal: can't access %s, please open Shizuku app and try again.\n", path);
         exit(EXIT_FATAL_CANNOT_ACCESS_PATH);
-    }
-}
-
-static void kill_proc_by_name(const char *name) {
-    pid_t pid;
-    size_t size = 0;
-
-    auto pids = get_pids_by_name(name, size);
-    for (int i = 0; i < size; ++i) {
-        pid = pids[i];
-
-        if (pid == getpid())
-            continue;
-
-        if (kill(pid, SIGKILL) == 0)
-            printf("info: killed %d (%s)\n", pid, name);
-        else
-            printf("warn: failed to kill %d (%s)\n", pid, name);
-    }
-    if (pids) {
-        free(pids);
-    }
-
-    pids = get_pids_by_name(name, size);
-    for (int i = 0; i < size; ++i) {
-        pid = pids[i];
-
-        if (pid == getpid())
-            continue;
-
-        perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
-        exit(EXIT_FATAL_KILL);
-    }
-    if (pids) {
-        free(pids);
     }
 }
 
@@ -375,8 +216,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    clock_gettime(CLOCK_REALTIME, &ts);
-
     char *_server_dex_path = nullptr, *_starter_dex_path = nullptr;
     int i;
     int use_shell_context = 0;
@@ -443,8 +282,26 @@ int main(int argc, char **argv) {
     printf("info: killing old process...\n");
     fflush(stdout);
 
-    kill_proc_by_name(SERVER_NAME);
-    kill_proc_by_name(SERVER_NAME_LEGACY);
+    foreach_proc([](pid_t pid) {
+        if (pid == getpid()) return;
+
+        char name[1024];
+        if (get_proc_name(pid, name, 1024) != 0) return;
+
+        if (strcmp(SERVER_NAME, name) != 0
+            && strcmp("shizuku_server_legacy", name) != 0)
+            return;
+
+        if (kill(pid, SIGKILL) == 0)
+            printf("info: killed %d (%s)\n", pid, name);
+        else if (errno == EPERM) {
+            perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
+            exit(EXIT_FATAL_KILL);
+        } else {
+            printf("warn: failed to kill %d (%s)\n", pid, name);
+        }
+    });
+
 
     if (use_shell_context) {
         printf("info: use %s for Shizuku.\n", "u:r:shell:s0");
@@ -455,5 +312,5 @@ int main(int argc, char **argv) {
     fflush(stdout);
     start_server(server_dex_path, SERVER_CLASS_PATH, SERVER_NAME, use_shell_context);
 
-    exit_with_logcat(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }

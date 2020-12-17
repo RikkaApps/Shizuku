@@ -26,7 +26,7 @@ find_library(log-lib log)
 find_package(boringssl REQUIRED CONFIG)
 
 add_executable(libshizuku.so
-        starter.cpp misc.cpp selinux.cpp cgroup.cpp)
+        starter.cpp misc.cpp selinux.cpp cgroup.cpp android.cpp)
 
 target_link_libraries(libshizuku.so ${log-lib})
 

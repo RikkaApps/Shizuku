@@ -8,6 +8,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <sched.h>
+#include "misc.h"
 
 ssize_t fdgets(char *buf, const size_t size, int fd) {
     ssize_t len = 0;
@@ -83,37 +84,6 @@ int is_num(const char *s) {
     return 1;
 }
 
-pid_t *get_pids_by_name(const char *name, size_t &size) {
-    pid_t *res = nullptr;
-    size = 0;
-
-    DIR *dir;
-    struct dirent *entry;
-
-    if (!(dir = opendir("/proc")))
-        return res;
-
-    while ((entry = readdir(dir))) {
-        if (entry->d_type == DT_DIR) {
-            if (is_num(entry->d_name)) {
-                pid_t pid = atoi(entry->d_name);
-                if (is_proc_name_equals(pid, name)) {
-                    if (!res) {
-                        res = (pid_t *) malloc(sizeof(pid_t));
-                    } else {
-                        res = (pid_t *) realloc(res, sizeof(pid_t) * (size + 1));
-                    }
-                    res[size] = pid;
-                    size++;
-                }
-            }
-        }
-    }
-
-    closedir(dir);
-    return res;
-}
-
 int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const char *dst_path) {
     int src_fd;
     int dst_fd;
@@ -186,4 +156,21 @@ int switch_mnt_ns(int pid) {
     int res = setns(fd, 0);
     close(fd);
     return res;
+}
+
+void foreach_proc(foreach_proc_function *func) {
+    DIR *dir;
+    struct dirent *entry;
+
+    if (!(dir = opendir("/proc")))
+        return;
+
+    while ((entry = readdir(dir))) {
+        if (entry->d_type != DT_DIR) continue;
+        if (!is_num(entry->d_name)) continue;
+        pid_t pid = atoi(entry->d_name);
+        func(pid);
+    }
+
+    closedir(dir);
 }
