@@ -95,6 +95,10 @@ Note, something is not mentioned below, please be sure to read the [sample](http
 
 ## Developing Shizuku itself
 
+### Build
+
+Run gradle task `:server:assembleDebug` `:starter:assembleDebug` `:app:assembleDebug`.
+
 The `:server:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug server.
 
 ## License

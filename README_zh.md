@@ -96,6 +96,10 @@ Shizuku 所提供的最重要的功能， 就是作为一个中间人接收应�
 
 ## 对 Shizuku 本身的开发
 
+### 构建
+
+运行 gradle task `:server:assembleDebug` `:starter:assembleDebug` `:app:assembleDebug`。
+
 使用 `:server:assembleDebug` task 来生成可调试的 Shizuku 服务。 你可以将调试器附加到 `shizku_server` 进程上来调试 Shizuku 服务。
 
 ## 许可协议
