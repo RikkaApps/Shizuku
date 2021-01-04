@@ -88,11 +88,6 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     ARG_PUSH_DEBUG_ONLY(argv, "--debug")
     ARG_END(argv)
 
-    for (int i = 0; i < 4; ++i) {
-        printf("%s\n", argv[i]);
-    }
-    fflush(stdout);
-
     if (execvp((const char *) argv[0], argv)) {
         exit(EXIT_FATAL_APP_PROCESS);
     }
