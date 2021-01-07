@@ -1,6 +1,0 @@
-id=shizuku-starter
-name=Shizuku Starter
-version=v1.0
-versionCode=1
-author=Rikka
-description=A simple module do nothing but start Shizuku on boot. On some highly customized systems, it's hard or impossible to guarantee the app to start on boot.
