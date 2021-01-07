@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     implementation "androidx.annotation:annotation:1.1.0"
-    api "moe.shizuku.privilege:shared:${rootProject.ext.apiVersionName}"
+    api project(':shared')
     compileOnly project(':hidden-api-common')
 }
 

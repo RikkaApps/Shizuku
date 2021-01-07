@@ -19,21 +19,21 @@ class HomeViewModel : ViewModel() {
     val serviceStatus = _serviceStatus as LiveData<Resource<ServiceStatus>>
 
     private fun load(): ServiceStatus {
-        val status = ServiceStatus()
         if (!ShizukuService.pingBinder()) {
-            return status
+            return ServiceStatus()
         }
 
-        status.uid = ShizukuService.getUid()
-        status.version = ShizukuService.getVersion()
-        if (status.version >= 6) {
+        val uid = ShizukuService.getUid()
+        val version = ShizukuService.getVersion()
+        val seContext = if (version >= 6) {
             try {
-                status.seContext = ShizukuService.getSELinuxContext()
+                ShizukuService.getSELinuxContext()
             } catch (tr: Throwable) {
                 LOGGER.w(tr, "getSELinuxContext")
+                null
             }
-        }
-        return status
+        } else null
+        return ServiceStatus(uid, version, seContext)
     }
 
     fun reload() {
