@@ -19,7 +19,6 @@
     <string name="notification_service_starting">Сервіс Shizuku запущено…</string>
     <string name="notification_working">Працює…</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Відкрити Shizuku</string>
-    <string name="permission_description">Дозвольте додатку використовувати системні API з більш високими привілеями.</string>
     <string name="home_root_button_restart">Перезапуск</string>
     <string name="home_status_service_is_running">%1$s працює</string>
     <string name="home_adb_dialog_view_command_button_send">Відправити</string>
@@ -29,8 +28,7 @@
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
     <string name="home_status_service_version_update">версія %2$d, %1$s&lt;br&gt;почніть оновлюватися до версії %3$d</string>
-    <string name="permission_group_description">доступ до Shizuku</string>
-    <string name="permission_label">доступ до системних API з більш високими привілеями</string>
+    <string name="permission_label">доступ до Shizuku</string>
     <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
@@ -45,4 +43,7 @@
     <string name="toast_copied_to_clipboard">%s 
 \nскопійовано в буфер обміну.</string>
     <string name="translation_contributors">MrIkso</string>
+    <string name="grant_dialog_button_allow_always">Завжди дозволяти</string>
+    <string name="grant_dialog_button_deny">Заборонити</string>
+    <string name="permission_warning_template"><![CDATA[Дозволити додатку &lt;b&gt;%1$s&lt;/b&gt; таке: %2$s?]]></string>
 </resources>

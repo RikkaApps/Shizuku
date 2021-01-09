@@ -57,9 +57,7 @@
     <string name="dialog_cannot_open_browser_title">Tarayıcı başlatılamıyor</string>
     <string name="start_with_root_failed">Root izni verilmediği veya bu aygıtın rootlu olmadığı için hizmet başlatılamıyor.</string>
     <string name="starter">Başlatıcı</string>
-    <string name="permission_description">Uygulamanın daha yüksek ayrıcalıklara sahip sistem API\'lerini kullanmasına izin verin.</string>
-    <string name="permission_label">daha yüksek ayrıcalıklara sahip sistem API\'lerine erişim</string>
-    <string name="permission_group_description">Shizuku\'ya erişim</string>
+    <string name="permission_label">Shizuku\'ya erişim</string>
     <string name="notification_working">Çalışıyor…</string>
     <string name="notification_service_start_no_root">Kök izni sağlanamadı.</string>
     <string name="notification_service_start_failed">Shizuku hizmeti başlatılamadı.</string>
@@ -90,4 +88,7 @@
     <string name="settings_translation_summary_percentage">" (%s kadar çeviri yapıldı)"</string>
     <string name="magisk_module">Magisk modülü</string>
     <string name="home_root_description_magisk">Sisteminiz, Shizuku\'nun açılışta başlatılmasına izin vermesine rağmen hâlâ izin vermiyorsa, %s kullanmayı deneyebilirsiniz.</string>
+    <string name="grant_dialog_button_allow_always">Her zaman izin ver</string>
+    <string name="grant_dialog_button_deny">Reddet</string>
+    <string name="permission_warning_template"><![CDATA[&lt;b&gt;%1$s&lt;/b&gt; uygulamasına %2$s için izin verilsin mi?]]></string>
 </resources>

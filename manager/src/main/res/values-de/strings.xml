@@ -34,4 +34,7 @@
     <string name="dialog_adb_discovery_message">Bitte Wireless Debugging in Entwickleroptionen aktivieren. Wireless Debugging wird automatisch deaktiviert, wenn sich das Netzwerk ändert.
 \n
 \nHinweis: Deaktivieren Sie die Entwickleroptionen oder USB-Debugging nicht, oder Shizuku wird gestoppt.</string>
+    <string name="grant_dialog_button_allow_always">Immer zulassen</string>
+    <string name="grant_dialog_button_deny">Ablehnen</string>
+    <string name="permission_warning_template"><![CDATA[Zulassen, dass die App &lt;b&gt;%1$s&lt;/b&gt; Folgendes darf: %2$s?]]></string>
 </resources>

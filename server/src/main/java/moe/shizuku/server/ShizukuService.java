@@ -2,6 +2,7 @@ package moe.shizuku.server;
 
 import android.content.ComponentName;
 import android.content.IContentProvider;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -39,9 +41,19 @@ import moe.shizuku.api.BinderContainer;
 import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
+import moe.shizuku.server.config.Config;
+import moe.shizuku.server.config.ConfigManager;
 import moe.shizuku.server.ktx.IContentProviderKt;
+import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_PERMISSION_GRANTED;
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
+import static moe.shizuku.api.ShizukuApiConstants.MANAGER_APPLICATION_ID;
+import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
+import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE;
 import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME;
@@ -52,7 +64,6 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
 
-    private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
 
     private static ApplicationInfo getManagerApplicationInfo() {
@@ -99,9 +110,17 @@ public class ShizukuService extends IShizukuService.Stub {
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
+    private final ClientManager clientManager;
+    private final ConfigManager configManager;
+    private final int managerUid;
 
     ShizukuService(ApplicationInfo ai) {
         super();
+
+        managerUid = ai.uid;
+
+        configManager = ConfigManager.getInstance();
+        clientManager = ClientManager.getInstance();
 
         ApkChangedObservers.start(ai.sourceDir, () -> {
             if (getManagerApplicationInfo() == null) {
@@ -130,27 +149,34 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     private void enforceManager(String func) {
-        if (Binder.getCallingPid() == Os.getpid()) {
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+
+        if (callingPid == Os.getpid() || callingUid == managerUid) {
             return;
         }
 
-        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED)
-            return;
-
         String msg = "Permission Denial: " + func + " from pid="
                 + Binder.getCallingPid()
-                + " requires " + PERMISSION_MANAGER;
+                + " is not manager ";
         LOGGER.w(msg);
         throw new SecurityException(msg);
     }
 
     private void enforceCallingPermission(String func) {
-        if (Binder.getCallingPid() == Os.getpid()) {
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+
+        if (callingUid == OsUtils.getUid() || callingUid == managerUid) {
             return;
         }
 
-        if (checkCallingPermission(PERMISSION_MANAGER) == PackageManager.PERMISSION_GRANTED
-                || checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
+        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
+        if (clientRecord != null && clientRecord.allowed) {
+            return;
+        }
+
+        if (checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
             return;
 
         String msg = "Permission Denial: " + func + " from pid="
@@ -555,6 +581,190 @@ public class ShizukuService extends IShizukuService.Stub {
 
         synchronized (this) {
             sendUserServiceLocked(binder, token);
+        }
+    }
+
+    @Override
+    public void attachApplication(IShizukuApplication application, String requestPackageName) {
+        if (application == null || requestPackageName == null) {
+            return;
+        }
+
+        int callingPid = Binder.getCallingPid();
+        int callingUid = Binder.getCallingUid();
+        boolean isManager;
+        ClientRecord clientRecord = null;
+
+        List<String> packages = SystemService.getPackagesForUidNoThrow(callingUid);
+        if (!packages.contains(requestPackageName)) {
+            throw new SecurityException("Request package " + requestPackageName + "does not belong to uid " + callingUid);
+        }
+
+        isManager = ShizukuApiConstants.MANAGER_APPLICATION_ID.equals(requestPackageName);
+
+        if (!isManager && clientManager.findClient(callingUid, callingPid) == null) {
+            synchronized (this) {
+                clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName);
+            }
+            if (clientRecord == null) {
+                return;
+            }
+        }
+
+        Bundle reply = new Bundle();
+        reply.putInt(ATTACH_REPLY_SERVER_UID, OsUtils.getUid());
+        reply.putInt(ATTACH_REPLY_SERVER_VERSION, ShizukuApiConstants.SERVER_VERSION);
+        reply.putString(ATTACH_REPLY_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
+        if (!isManager) {
+            reply.putBoolean(ATTACH_REPLY_SERVER_PERMISSION_GRANTED, clientRecord.allowed);
+        }
+        try {
+            application.bindApplication(reply);
+        } catch (Throwable e) {
+            LOGGER.w(e, "attachApplication");
+        }
+    }
+
+    @Override
+    public void requestPermission(int requestCode) {
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+        int userId = UserHandleCompat.getUserId(callingUid);
+
+        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
+            return;
+        }
+
+        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
+        if (clientRecord == null) {
+            throw new IllegalStateException("Not an attached client");
+        }
+
+        if (clientRecord.allowed) {
+            clientRecord.dispatchRequestPermissionResult(requestCode, true);
+            return;
+        }
+
+        Config.PackageEntry entry = configManager.find(callingUid);
+        if (entry != null && entry.isDenied()) {
+            clientRecord.dispatchRequestPermissionResult(requestCode, false);
+            return;
+        }
+
+        ApplicationInfo ai = SystemService.getApplicationInfoNoThrow(clientRecord.packageName, 0, userId);
+        if (ai == null) {
+            return;
+        }
+
+        Intent intent = new Intent(ServerConstants.REQUEST_PERMISSION_ACTION)
+                .setPackage(MANAGER_APPLICATION_ID)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                .putExtra("uid", callingUid)
+                .putExtra("pid", callingPid)
+                .putExtra("requestCode", requestCode)
+                .putExtra("applicationInfo", ai);
+        SystemService.startActivityNoThrow(intent, null, 0);
+    }
+
+    @Override
+    public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) {
+        if (Binder.getCallingUid() != managerUid) {
+            LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
+            return;
+        }
+
+        if (data == null) {
+            return;
+        }
+
+        boolean allowed = data.getBoolean(REQUEST_PERMISSION_REPLY_ALLOWED);
+        boolean onetime = data.getBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME);
+
+        LOGGER.i("dispatchPermissionConfirmationResult: uid=%d, pid=%d, requestCode=%d, allowed=%s, onetime=%s",
+                requestUid, requestPid, requestCode, Boolean.toString(allowed), Boolean.toString(onetime));
+
+        ClientRecord clientRecord = clientManager.findClient(requestUid, requestPid);
+        if (clientRecord == null) {
+            LOGGER.w("dispatchPermissionConfirmationResult: client (uid=%d, pid=%d) not found", requestUid, requestPid);
+        } else {
+            clientRecord.allowed = allowed;
+            clientRecord.dispatchRequestPermissionResult(requestCode, allowed);
+        }
+
+        if (!onetime) {
+            configManager.update(requestUid, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : Config.FLAG_DENIED);
+        }
+    }
+
+    @Override
+    public int getFlagsForUid(int uid, int mask) {
+        if (Binder.getCallingUid() != managerUid) {
+            LOGGER.w("updateFlagsForUid is allowed to be called only from the manager");
+            return 0;
+        }
+        Config.PackageEntry entry = configManager.find(uid);
+        if (entry != null) {
+            return entry.flags & mask;
+        }
+
+        int userId = UserHandleCompat.getUserId(uid);
+        for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
+            PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+            if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                continue;
+            }
+
+            try {
+                if (SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED) {
+                    return Config.FLAG_ALLOWED;
+                }
+            } catch (Throwable e) {
+                LOGGER.w("getFlagsForUid");
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public void updateFlagsForUid(int uid, int mask, int value) throws RemoteException {
+        if (Binder.getCallingUid() != managerUid) {
+            LOGGER.w("updateFlagsForUid is allowed to be called only from the manager");
+            return;
+        }
+
+        int userId = UserHandleCompat.getUserId(uid);
+
+        configManager.update(uid, mask, value);
+
+        if ((mask & Config.MASK_PERMISSION) != 0) {
+            boolean allowed = (value & Config.FLAG_ALLOWED) != 0;
+            boolean denied = (value & Config.FLAG_DENIED) != 0;
+
+            List<ClientRecord> records = clientManager.findClients(uid);
+            for (ClientRecord record : records) {
+                if (allowed) {
+                    record.allowed = true;
+                } else if (denied) {
+                    record.allowed = false;
+                    SystemService.forceStopPackageNoThrow(record.packageName, UserHandleCompat.getUserId(record.uid));
+                }
+            }
+
+            if (records.isEmpty()) {
+                // no running client, change runtime permission if needed
+                for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
+                    PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+                    if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                        continue;
+                    }
+
+                    if (allowed) {
+                        SystemService.grantRuntimePermission(packageName, PERMISSION, userId);
+                    } else if (denied) {
+                        SystemService.revokeRuntimePermission(packageName, PERMISSION, userId);
+                    }
+                }
+            }
         }
     }
 

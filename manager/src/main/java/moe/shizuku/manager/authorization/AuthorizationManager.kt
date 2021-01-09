@@ -1,46 +1,42 @@
-package moe.shizuku.manager.authorization;
+package moe.shizuku.manager.authorization
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.Process
+import moe.shizuku.api.ShizukuService
+import moe.shizuku.manager.Manifest
+import moe.shizuku.manager.utils.ShizukuSystemApis
+import java.util.*
 
-import java.util.ArrayList;
-import java.util.List;
+object AuthorizationManager {
 
-public class AuthorizationManager {
+    private const val FLAG_ALLOWED = 1 shl 1
+    private const val FLAG_DENIED = 1 shl 2
+    private const val MASK_PERMISSION = FLAG_ALLOWED or FLAG_DENIED
 
-    private static final AuthorizationManagerImpl IMPL;
-
-    static {
-        IMPL = new AuthorizationManagerImplV23();
-    }
-
-    public static void init(Context context) {
-        IMPL.init(context);
-    }
-
-    public static boolean granted(String packageName, int uid) {
-        return IMPL.granted(packageName, uid);
-    }
-
-    public static void revoke(String packageName, int uid) {
-        IMPL.revoke(packageName, uid);
-    }
-
-    public static void grant(String packageName, int uid) {
-        IMPL.grant(packageName, uid);
-    }
-
-    public static List<PackageInfo> getPackages(int pmFlags) {
-        return IMPL.getPackages(pmFlags);
-    }
-
-    public static List<PackageInfo> getGrantedPackages(int pmFlags) {
-        List<PackageInfo> packages = new ArrayList<>();
-        for (PackageInfo pi : IMPL.getPackages(pmFlags)) {
-            if (granted(pi.packageName, pi.applicationInfo.uid)) {
-                packages.add(pi);
+    fun getPackages(pmFlags: Int): List<PackageInfo> {
+        val packages: MutableList<PackageInfo> = ArrayList()
+        for (pi in ShizukuSystemApis.getInstalledPackages(pmFlags or PackageManager.GET_PERMISSIONS, Process.myUid() / 100000)) {
+            if (pi.requestedPermissions == null) continue
+            for (p in pi.requestedPermissions) {
+                if (Manifest.permission.API_V23 == p) {
+                    packages.add(pi)
+                    break
+                }
             }
         }
-        return packages;
+        return packages
+    }
+
+    fun granted(packageName: String, uid: Int): Boolean {
+        return (ShizukuService.getFlagsForUid(uid, MASK_PERMISSION) and FLAG_ALLOWED) == FLAG_ALLOWED
+    }
+
+    fun grant(packageName: String, uid: Int) {
+        ShizukuService.updateFlagsForUid(uid, MASK_PERMISSION, FLAG_ALLOWED)
+    }
+
+    fun revoke(packageName: String, uid: Int) {
+        ShizukuService.updateFlagsForUid(uid, MASK_PERMISSION, 0)
     }
 }

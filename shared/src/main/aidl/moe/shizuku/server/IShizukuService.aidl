@@ -1,13 +1,10 @@
 package moe.shizuku.server;
 
 import moe.shizuku.server.IRemoteProcess;
+import moe.shizuku.server.IShizukuApplication;
 import moe.shizuku.server.IShizukuServiceConnection;
 
 interface IShizukuService {
-
-    void exit() = 100;
-
-    void sendUserService(in IBinder binder, in Bundle options) = 101;
 
     int getVersion() = 2;
 
@@ -26,4 +23,20 @@ interface IShizukuService {
     int addUserService(in IShizukuServiceConnection conn, in Bundle args) = 11;
 
     int removeUserService(in IShizukuServiceConnection conn, in Bundle args) = 12;
+
+    void attachApplication(in IShizukuApplication application, String requestPackageName) = 13;
+
+    void requestPermission(int requestCode) = 14;
+
+    // ----------------------------
+
+    void exit() = 100;
+
+    void sendUserService(in IBinder binder, in Bundle options) = 101;
+
+    oneway void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, in Bundle data) = 104;
+
+    int getFlagsForUid(int uid, int mask) = 105;
+
+    void updateFlagsForUid(int uid, int mask, int value) = 106;
 }

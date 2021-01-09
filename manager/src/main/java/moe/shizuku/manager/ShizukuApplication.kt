@@ -31,7 +31,6 @@ class ShizukuApplication : Application() {
         LocaleDelegate.defaultLocale = ShizukuSettings.getLocale()
         DayNightDelegate.setApplicationContext(context)
         DayNightDelegate.setDefaultNightMode(ShizukuSettings.getNightMode())
-        AuthorizationManager.init(context)
     }
 
     override fun onCreate() {

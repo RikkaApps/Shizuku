@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_group_description">使用 Shizuku</string>
-    <string name="permission_label">以更高許可權使用系統 API</string>
-    <string name="permission_description">允許應用程式以更高許可權使用系統 API。</string>
+    <string name="permission_label">使用 Shizuku</string>
+    <string name="permission_description">允許應用程式使用 Shizuku。</string>
     <string name="home_status_service_is_running">%1$s 正在運作</string>
     <string name="home_status_service_version">版本 %2$d，%1$s</string>
     <string name="home_status_service_version_update">版本 %2$d，%1$s&lt;br&gt;再次啟動來升級到版本 %3$d</string>
@@ -87,4 +86,7 @@
     <string name="home_root_description_magisk">如果您還是無法讓您的系統允許 Shizuku 開機啟動，您可以嘗試使用 %s。</string>
     <string name="settings_start_on_boot_summary">對於已 root 裝置，Shizuku 可以開機啟動</string>
     <string name="settings_start_on_boot">開機啟動（root）</string>
+    <string name="grant_dialog_button_allow_always">一律允許</string>
+    <string name="grant_dialog_button_deny">拒絕</string>
+    <string name="permission_warning_template"><![CDATA[要允許「%1$s」%2$s嗎？]]></string>
 </resources>

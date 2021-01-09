@@ -44,7 +44,6 @@
     <string name="home_adb_button_view_help">Przeczytaj pomoc</string>
     <string name="toast_copied_to_clipboard">%s
 \nzostał skopiowany do schowka.</string>
-    <string name="permission_group_description">Dostęp Shizuku</string>
     <string name="notification_working">Działa…</string>
     <string name="notification_service_start_failed">Błąd przy starcie usługi Shizuku.</string>
     <string name="settings_startup">Rozruch</string>
@@ -54,4 +53,8 @@
     <string name="dialog_adb_discovery_message">Proszę włączyć \"Debugowanie bezprzewodowe\" w \"Ustawieniach developerskich\". Debugowanie bezprzewodowe jest automatycznie wyłączane gdy przełączasz się między sieciami.
 \n
 \nNIE wyłączaj \"Ustawień developerskich\" lub \" Debugowania USB\" ponieważ jest wymagane do prawidłowego działania Shizuku.</string>
+    <string name="permission_label">Dostęp Shizuku</string>
+    <string name="grant_dialog_button_allow_always">Zawsze zezwalaj</string>
+    <string name="grant_dialog_button_deny">Odmów</string>
+    <string name="permission_warning_template"><![CDATA[Zezwolić aplikacji &lt;b&gt;%1$s&lt;/b&gt; na: %2$s?]]></string>
 </resources>

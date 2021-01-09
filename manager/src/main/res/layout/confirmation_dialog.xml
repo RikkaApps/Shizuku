@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_permission_24dp"
+        android:tint="?android:colorAccent"
+        android:tintMode="src_in" />
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
+        tools:text="@string/permission_warning_template" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:dividerVertical" />
+
+    <TextView
+        android:id="@android:id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:minHeight="56dp"
+        android:padding="16dp"
+        android:text="@string/grant_dialog_button_allow_always"
+        android:textColor="?android:colorAccent"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:dividerVertical" />
+
+    <TextView
+        android:id="@android:id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:minHeight="56dp"
+        android:padding="16dp"
+        android:text="@string/grant_dialog_button_deny"
+        android:textColor="?android:colorAccent"
+        android:textSize="14sp" />
+
+</LinearLayout>

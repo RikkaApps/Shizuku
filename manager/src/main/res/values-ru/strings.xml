@@ -11,9 +11,7 @@
     <string name="dialog_cannot_open_browser_title">Не удается запустить браузер</string>
     <string name="start_with_root_failed">Невозможно запустить сервис. Права суперпользователя не предоставлены или устройство не имеет прав суперпользователя.</string>
     <string name="starter">Запуск</string>
-    <string name="permission_description">Разрешить приложению использовать системные API с более высокими привилегиями.</string>
-    <string name="permission_label">доступ к системным API с более высокими привилегиями</string>
-    <string name="permission_group_description">доступ Shizuku</string>
+    <string name="permission_label">доступ Shizuku</string>
     <string name="notification_working">Работает…</string>
     <string name="notification_service_start_no_root">Не удалось запросить права суперпользователя.</string>
     <string name="notification_service_start_failed">Не удалось запустить Shizuku.</string>
@@ -92,4 +90,7 @@
     <string name="settings_translation_summary_percentage">" (%s переведено)"</string>
     <string name="magisk_module">модуль Magisk</string>
     <string name="home_root_description_magisk">Если по-прежнему не удается разрешить вашей системе запускать Shizuku при загрузке, вы можете попробовать использовать %s.</string>
+    <string name="grant_dialog_button_allow_always">grant_dialog_button_allow_always</string>
+    <string name="grant_dialog_button_deny">Запретить</string>
+    <string name="permission_warning_template"><![CDATA[Разрешить приложению &lt;b&gt;%1$s&lt;/b&gt; %2$s?]]></string>
 </resources>

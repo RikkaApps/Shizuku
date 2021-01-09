@@ -36,6 +36,12 @@ public interface IActivityManager extends IInterface {
     void forceStopPackage(String packageName, int userId)
             throws RemoteException;
 
+    int startActivityAsUser(IApplicationThread caller, String callingPackage,
+                            Intent intent, String resolvedType, IBinder resultTo, String resultWho,
+                            int requestCode, int flags, ProfilerInfo profilerInfo,
+                            Bundle options, int userId)
+            throws RemoteException;
+
     @RequiresApi(26)
     abstract class Stub extends Binder implements IActivityManager {
 

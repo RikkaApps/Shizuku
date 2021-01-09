@@ -4,6 +4,7 @@ import android.app.IActivityManager
 import android.app.IProcessObserver
 import android.app.IUidObserver
 import android.content.IContentProvider
+import android.content.Intent
 import android.content.pm.*
 import android.os.IBinder
 import android.os.IUserManager
@@ -14,6 +15,7 @@ import com.android.internal.app.IAppOpsService
 import hidden.HiddenApiBridgeV23
 import moe.shizuku.server.utils.BuildUtils
 import moe.shizuku.server.utils.Logger.LOGGER
+import moe.shizuku.server.utils.OsUtils
 import java.util.*
 
 object SystemService {
@@ -257,6 +259,51 @@ object SystemService {
             la.addOnAppsChangedListener(callingPackage, listener)
         } else {
             la.addOnAppsChangedListener(listener)
+        }
+    }
+
+    @JvmStatic
+    @Throws(RemoteException::class)
+    fun startActivity(intent: Intent?, mimeType: String?, userId: Int) {
+        val am = activityManager ?: throw RemoteException("can't get IActivityManager")
+        am.startActivityAsUser(null, if (OsUtils.getUid() == 2000) "com.android.shell" else null, intent, mimeType,
+                null, null, 0, 0, null, null, userId)
+    }
+
+    @JvmStatic
+    fun startActivityNoThrow(intent: Intent, mimeType: String?, userId: Int) {
+        try {
+            startActivity(intent, mimeType, userId)
+        } catch (tr: Throwable) {
+            LOGGER.w(tr, "startActivity failed: action=%s, comp=%s", intent.action, intent.component)
+        }
+    }
+
+    @JvmStatic
+    @Throws(RemoteException::class)
+    fun grantRuntimePermission(packageName: String?, permissionName: String?, userId: Int) {
+        if (BuildUtils.atLeast30()) {
+            val pm = permissionManager ?: throw RemoteException("can't get IPermissionManager")
+            pm.grantRuntimePermission(packageName, permissionName, userId)
+        } else {
+            val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
+            pm.grantRuntimePermission(packageName, permissionName, userId)
+        }
+    }
+
+    @JvmStatic
+    @Throws(RemoteException::class)
+    fun revokeRuntimePermission(packageName: String?, permissionName: String?, userId: Int) {
+        if (BuildUtils.atLeast30()) {
+            val pm = permissionManager ?: throw RemoteException("can't get IPermissionManager")
+            try {
+                pm.revokeRuntimePermission(packageName, permissionName, userId, null)
+            } catch (e: NoSuchMethodError) {
+                pm.revokeRuntimePermission(packageName, permissionName, userId)
+            }
+        } else {
+            val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
+            pm.revokeRuntimePermission(packageName, permissionName, userId)
         }
     }
 }

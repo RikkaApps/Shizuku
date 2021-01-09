@@ -54,8 +54,7 @@
     <string name="notification_channel_service_status">서비스 시작 상태</string>
     <string name="notification_service_starting">Shizuku 서비스가 시작 중입니다…</string>
     <string name="settings_user_interface">화면</string>
-    <string name="permission_label">상위 권한으로 시스템 API 접근</string>
-    <string name="permission_group_description">Shizuku에 접근</string>
+    <string name="permission_label">Shizuku에 접근</string>
     <string name="notification_service_start_no_root">루트 권한을 요청하지 못했습니다.</string>
     <string name="settings_start_on_boot">부팅 시 시작 (루트)</string>
     <string name="settings_start_on_boot_summary">루트된 기기에서 Shizuku는 부팅 시 자동으로 시작할 수 있음</string>
@@ -82,11 +81,13 @@
     <string name="home_status_service_version">%1$s, 버전 %2$d</string>
     <string name="home_adb_description">루트 없이 Shizuku를 시작하기 위해 adb가 필요합니다. (컴퓨터 연결 필수) 이 작업은 다시 시작 시 마다 필요로 합니다. 자세한 정보는 &lt;b&gt;&lt;a href=\"%1$s\"&gt;도움말&lt;/a&gt;&lt;/b&gt;을 확인하세요.</string>
     <string name="home_wireless_adb_description">안드로이드 11부터, 무선 디버깅은 기본으로 제공되는 기능입니다. &lt;b&gt;&lt;a href=\"%1$s\"&gt;도움말&lt;/a&gt;&lt;/b&gt;를 참조하세요.&lt;p&gt;모든 시스템 버전에서 작동하나, 안드로이드 11 이전은 무선 디버깅을 직접 사용 설정할 수 없습니다.</string>
-    <string name="permission_description">상위 권한으로 시스템 API를 사용할 수 있도록 허용합니다.</string>
     <string name="home_status_service_version_update">%1$s, 버전 %2$d&lt;br&gt;다시 시작하여 버전 %3$d로 업데이트</string>
     <string name="app_management_dialog_adb_is_limited_title">ADB의 권한이 제한됨</string>
     <string name="app_management_dialog_adb_is_limited_message">높은 가능성으로, 기기 제조사에서 ADB의 권한을 제한한 것 입니다.&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;문서&lt;/a&gt;&lt;/b&gt;에 시스템에 대한 해결 방안이 있을 수 있습니다.</string>
     <string name="dialog_legacy_not_support_title">%1$s는 지금의 Shizuku를 지원하지 않음</string>
     <string name="dialog_legacy_not_support_message">구형 Shizuku는 2019년 3월에 지원이 중단되었습니다. 또한, 구형 Shizuku는 새로운 안드로이드 시스템에서 동작하지 않습니다.&lt;p&gt;업데이트하려면 &lt;b&gt;%1$s&lt;/b&gt; 개발자에게 확인하세요.</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;는 지금의 Shizuku를 지원하나, 구형 Shizuku를 요청하고 있습니다. Shizuku가 실행 중이지 않아서 발생할 수 있는 문제로, Shizuku 앱에서 확인하세요.&lt;p&gt;구형 Shizuku는 2019년 3월 부터 지원이 중단되었습니다.</string>
+    <string name="grant_dialog_button_allow_always">항상 허용</string>
+    <string name="grant_dialog_button_deny">거부</string>
+    <string name="permission_warning_template"><![CDATA[&lt;b&gt;%1$s&lt;/b&gt;에서 %2$s하도록 허용하시겠습니까?]]></string>
 </resources>
