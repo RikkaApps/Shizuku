@@ -85,7 +85,7 @@
     <string name="home_root_description_magisk">如果您还是无法让您的系统允许 Shizuku 开机启动，您可以尝试使用 %s。</string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
-    <string name="permission_warning_template"><![CDATA[要允许<b>%1$</b>%2$s吗？]]></string>
+    <string name="permission_warning_template"><![CDATA[要允许<b>%1$s</b>%2$s吗？]]></string>
     <string name="grant_dialog_button_allow_always">始终允许</string>
     <string name="grant_dialog_button_deny">拒绝</string>
 </resources>
