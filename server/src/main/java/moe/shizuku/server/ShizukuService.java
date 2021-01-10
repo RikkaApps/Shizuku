@@ -783,7 +783,7 @@ public class ShizukuService extends IShizukuService.Stub {
             for (ClientRecord record : records) {
                 if (allowed) {
                     record.allowed = true;
-                } else if (denied) {
+                } else {
                     record.allowed = false;
                     SystemService.forceStopPackageNoThrow(record.packageName, UserHandleCompat.getUserId(record.uid));
                 }
