@@ -168,16 +168,35 @@ public class SampleActivity extends Activity {
     }
 
     private boolean checkPermission(int code) {
-        // Shizuku uses runtime permission, learn more https://developer.android.com/training/permissions/requesting
-        if (checkSelfPermission(ShizukuApiConstants.PERMISSION) == PERMISSION_GRANTED) {
-            return true;
-        } else if (shouldShowRequestPermissionRationale(ShizukuApiConstants.PERMISSION)) {
-            binding.text3.setText("User denied permission (shouldShowRequestPermissionRationale=true)");
-            return false;
-        } else {
-            requestPermissions(new String[]{ShizukuApiConstants.PERMISSION}, code);
-            return false;
+        try {
+            if (ShizukuService.getVersion() >= 11) {
+                if (ShizukuService.checkSelfPermission() == PERMISSION_GRANTED) {
+                    return true;
+                } else if (ShizukuService.shouldShowRequestPermissionRationale()) {
+                    binding.text3.setText("User denied permission (shouldShowRequestPermissionRationale=true)");
+                    return false;
+                } else {
+                    ShizukuService.requestPermission(code);
+                    return false;
+                }
+
+            } else {
+                // Shizuku uses runtime permission, learn more https://developer.android.com/training/permissions/requesting
+                if (checkSelfPermission(ShizukuApiConstants.PERMISSION) == PERMISSION_GRANTED) {
+                    return true;
+                } else if (shouldShowRequestPermissionRationale(ShizukuApiConstants.PERMISSION)) {
+                    binding.text3.setText("User denied permission (shouldShowRequestPermissionRationale=true)");
+                    return false;
+                } else {
+                    requestPermissions(new String[]{ShizukuApiConstants.PERMISSION}, code);
+                    return false;
+                }
+            }
+        } catch (Throwable e) {
+            binding.text3.setText(Log.getStackTraceString(e));
         }
+
+        return false;
     }
 
     private void getUsers() {

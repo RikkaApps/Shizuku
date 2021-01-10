@@ -63,7 +63,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * the binder across processes. See {@link #enableMultiProcessSupport(boolean)}.
  * </p>
  */
-@SuppressWarnings("unused")
 public class ShizukuProvider extends ContentProvider {
 
     private static final String TAG = "ShizukuProvider";
@@ -77,7 +76,7 @@ public class ShizukuProvider extends ContentProvider {
     public static final String ACTION_BINDER_RECEIVED = "moe.shizuku.api.action.BINDER_RECEIVED";
 
     protected static final IBinder.DeathRecipient DEATH_RECIPIENT = ()-> {
-        ShizukuService.setBinder(null);
+        ShizukuService.setBinder(null, null);
         ShizukuProvider.postBinderDeadListeners();
     };
 
@@ -89,8 +88,13 @@ public class ShizukuProvider extends ContentProvider {
         void onBinderDead();
     }
 
+    public interface OnRequestPermissionResult {
+        void onRequestPermissionResult(int requestCode, int result);
+    }
+
     private static final List<OnBinderReceivedListener> RECEIVED_LISTENERS = new CopyOnWriteArrayList<>();
     private static final List<OnBinderDeadListener> DEAD_LISTENERS = new CopyOnWriteArrayList<>();
+    private static final List<OnRequestPermissionResult> PERMISSION_LISTENERS = new CopyOnWriteArrayList<>();
     private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
     /**
@@ -230,7 +234,7 @@ public class ShizukuProvider extends ContentProvider {
                 BinderContainer container = intent.getParcelableExtra(ShizukuApiConstants.EXTRA_BINDER);
                 if (container != null && container.binder != null) {
                     Log.i(TAG, "binder received from broadcast");
-                    ShizukuService.setBinder(container.binder);
+                    ShizukuService.setBinder(container.binder, context.getPackageName());
 
                     postBinderReceivedListeners();
                 }
@@ -251,7 +255,7 @@ public class ShizukuProvider extends ContentProvider {
             BinderContainer container = reply.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
             if (container != null && container.binder != null) {
                 Log.i(TAG, "binder received from other process");
-                ShizukuService.setBinder(container.binder);
+                ShizukuService.setBinder(container.binder, context.getPackageName());
 
                 postBinderReceivedListeners();
             }
@@ -324,7 +328,7 @@ public class ShizukuProvider extends ContentProvider {
         if (container != null && container.binder != null) {
             Log.d(TAG, "binder received");
 
-            ShizukuService.setBinder(container.binder);
+            ShizukuService.setBinder(container.binder, getContext().getPackageName());
 
             if (enableMultiProcess) {
                 Log.d(TAG, "broadcast binder");
