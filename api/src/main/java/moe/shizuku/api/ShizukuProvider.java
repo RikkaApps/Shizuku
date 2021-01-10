@@ -88,13 +88,13 @@ public class ShizukuProvider extends ContentProvider {
         void onBinderDead();
     }
 
-    public interface OnRequestPermissionResult {
-        void onRequestPermissionResult(int requestCode, int result);
+    public interface OnRequestPermissionResultListener {
+        void onRequestPermissionResult(int requestCode, int grantResult);
     }
 
     private static final List<OnBinderReceivedListener> RECEIVED_LISTENERS = new CopyOnWriteArrayList<>();
     private static final List<OnBinderDeadListener> DEAD_LISTENERS = new CopyOnWriteArrayList<>();
-    private static final List<OnRequestPermissionResult> PERMISSION_LISTENERS = new CopyOnWriteArrayList<>();
+    private static final List<OnRequestPermissionResultListener> PERMISSION_LISTENERS = new CopyOnWriteArrayList<>();
     private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
     /**
@@ -193,6 +193,46 @@ public class ShizukuProvider extends ContentProvider {
     static void callBinderDeadListeners() {
         for (OnBinderDeadListener listener : DEAD_LISTENERS) {
             listener.onBinderDead();
+        }
+    }
+
+    /**
+     * Add a listener that will be called when permission result is sent from server.
+     * <p>Note:</p>
+     * <ul>
+     * <li>The listener will be called in main thread.</li>
+     * </ul>
+     * <p>
+     *
+     * @param listener OnBinderReceivedListener
+     */
+    public static void addRequestPermissionResultListener(@NonNull OnRequestPermissionResultListener listener) {
+        PERMISSION_LISTENERS.add(listener);
+    }
+
+    /**
+     * Remove the listener added by {@link #addRequestPermissionResultListener(OnRequestPermissionResultListener)}.
+     *
+     * @param listener OnRequestPermissionResultListener
+     * @return If the listener is removed.
+     */
+    public static boolean removeRequestPermissionResultListener(@NonNull OnRequestPermissionResultListener listener) {
+        return PERMISSION_LISTENERS.remove(listener);
+    }
+
+    static void postRequestPermissionResultListener(int requestCode, int result) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            callRequestPermissionResultListener(requestCode, result);
+        } else {
+            MAIN_HANDLER.post(() -> {
+                callRequestPermissionResultListener(requestCode, result);
+            });
+        }
+    }
+
+    static void callRequestPermissionResultListener(int requestCode, int result) {
+        for (OnRequestPermissionResultListener listener : PERMISSION_LISTENERS) {
+            listener.onRequestPermissionResult(requestCode, result);
         }
     }
 

@@ -101,11 +101,11 @@ public class SampleActivity extends Activity {
 
         ShizukuProvider.addBinderReceivedListenerSticky(() -> binding.text1.setText("Binder received"));
         ShizukuProvider.addBinderDeadListener(() -> binding.text1.setText("Waiting for binder"));
+        ShizukuProvider.addRequestPermissionResultListener(this::onRequestPermissionsResult);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) {
+    private void onRequestPermissionsResult(int requestCode, int grantResult) {
+        if (grantResult == PERMISSION_GRANTED) {
             switch (requestCode) {
                 case REQUEST_CODE_BUTTON1: {
                     getUsers();
@@ -139,10 +139,18 @@ public class SampleActivity extends Activity {
                     unbindUserServiceStandaloneProcess();
                     break;
                 }
-
             }
         } else {
             binding.text1.setText("User denied permission");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        for (String perm : permissions) {
+            if (ShizukuApiConstants.PERMISSION.equals(perm)) {
+                onRequestPermissionsResult(requestCode, grantResults[0]);
+            }
         }
     }
 

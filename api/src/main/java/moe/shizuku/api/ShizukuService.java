@@ -24,6 +24,7 @@ import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
+import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 
 public class ShizukuService {
 
@@ -49,7 +50,9 @@ public class ShizukuService {
 
         @Override
         public void dispatchRequestPermissionResult(int requestCode, Bundle data) {
+            boolean allowed = data.getBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, false);
 
+            ShizukuProvider.postRequestPermissionResultListener(requestCode, allowed ? PackageManager.PERMISSION_GRANTED : PackageManager.PERMISSION_DENIED);
         }
     };
 
