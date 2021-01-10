@@ -99,7 +99,7 @@ public class ShizukuService {
         return binder != null && binder.pingBinder();
     }
 
-    public static RuntimeException rethrowAsRuntimeException(RemoteException e) {
+    private static RuntimeException rethrowAsRuntimeException(RemoteException e) {
         return new RuntimeException(e);
     }
 
