@@ -35,7 +35,8 @@ public class ShizukuApiConstants {
     public static final String ATTACH_REPLY_SERVER_VERSION = "shizuku:attach-reply-version";
     public static final String ATTACH_REPLY_SERVER_UID = "shizuku:attach-reply-uid";
     public static final String ATTACH_REPLY_SERVER_SECONTEXT = "shizuku:attach-reply-secontext";
-    public static final String ATTACH_REPLY_SERVER_PERMISSION_GRANTED = "shizuku:attach-reply-permission-granted";
+    public static final String ATTACH_REPLY_PERMISSION_GRANTED = "shizuku:attach-reply-permission-granted";
+    public static final String ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE = "shizuku:attach-reply-should-show-request-permission-rationale";
 
     // request permission
     public static final String REQUEST_PERMISSION_REPLY_ALLOWED = "shizuku:request-permission-reply-allowed";

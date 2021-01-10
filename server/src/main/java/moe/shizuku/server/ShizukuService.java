@@ -47,10 +47,11 @@ import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_PERMISSION_GRANTED;
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
 import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
+import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
 import static moe.shizuku.api.ShizukuApiConstants.MANAGER_APPLICATION_ID;
 import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
@@ -176,7 +177,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
         }
 
-        if (checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
+        if (clientRecord == null && checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
             return;
 
         String msg = "Permission Denial: " + func + " from pid="
@@ -184,6 +185,15 @@ public class ShizukuService extends IShizukuService.Stub {
                 + " requires " + PERMISSION;
         LOGGER.w(msg);
         throw new SecurityException(msg);
+    }
+
+    private ClientRecord requireClient(int callingUid, int callingPid) {
+        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
+        if (clientRecord == null) {
+            LOGGER.w("Caller (uid %d, pid %d) is not an attached client", callingUid, callingPid);
+            throw new IllegalStateException("Not an attached client");
+        }
+        return clientRecord;
     }
 
     private void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
@@ -597,6 +607,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
         List<String> packages = SystemService.getPackagesForUidNoThrow(callingUid);
         if (!packages.contains(requestPackageName)) {
+            LOGGER.w("Request package " + requestPackageName + "does not belong to uid " + callingUid);
             throw new SecurityException("Request package " + requestPackageName + "does not belong to uid " + callingUid);
         }
 
@@ -607,16 +618,20 @@ public class ShizukuService extends IShizukuService.Stub {
                 clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName);
             }
             if (clientRecord == null) {
+                LOGGER.w("Add client failed");
                 return;
             }
         }
+
+        LOGGER.d("attachApplication: %s %d %d", requestPackageName, callingUid, callingPid);
 
         Bundle reply = new Bundle();
         reply.putInt(ATTACH_REPLY_SERVER_UID, OsUtils.getUid());
         reply.putInt(ATTACH_REPLY_SERVER_VERSION, ShizukuApiConstants.SERVER_VERSION);
         reply.putString(ATTACH_REPLY_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
         if (!isManager) {
-            reply.putBoolean(ATTACH_REPLY_SERVER_PERMISSION_GRANTED, clientRecord.allowed);
+            reply.putBoolean(ATTACH_REPLY_PERMISSION_GRANTED, clientRecord.allowed);
+            reply.putBoolean(ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
         }
         try {
             application.bindApplication(reply);
@@ -635,10 +650,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
         }
 
-        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
-        if (clientRecord == null) {
-            throw new IllegalStateException("Not an attached client");
-        }
+        ClientRecord clientRecord = requireClient(callingUid, callingPid);
 
         if (clientRecord.allowed) {
             clientRecord.dispatchRequestPermissionResult(requestCode, true);
@@ -664,6 +676,33 @@ public class ShizukuService extends IShizukuService.Stub {
                 .putExtra("requestCode", requestCode)
                 .putExtra("applicationInfo", ai);
         SystemService.startActivityNoThrow(intent, null, 0);
+    }
+
+    @Override
+    public boolean checkSelfPermission() {
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+
+        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
+            return true;
+        }
+
+        return requireClient(callingUid, callingPid).allowed;
+    }
+
+    @Override
+    public boolean shouldShowRequestPermissionRationale() {
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+
+        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
+            return true;
+        }
+
+        requireClient(callingUid, callingPid);
+
+        Config.PackageEntry entry = configManager.find(callingUid);
+        return entry != null && entry.isDenied();
     }
 
     @Override
@@ -750,19 +789,16 @@ public class ShizukuService extends IShizukuService.Stub {
                 }
             }
 
-            if (records.isEmpty()) {
-                // no running client, change runtime permission if needed
-                for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
-                    PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
-                    if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
-                        continue;
-                    }
+            for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
+                PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+                if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                    continue;
+                }
 
-                    if (allowed) {
-                        SystemService.grantRuntimePermission(packageName, PERMISSION, userId);
-                    } else if (denied) {
-                        SystemService.revokeRuntimePermission(packageName, PERMISSION, userId);
-                    }
+                if (allowed) {
+                    SystemService.grantRuntimePermission(packageName, PERMISSION, userId);
+                } else {
+                    SystemService.revokeRuntimePermission(packageName, PERMISSION, userId);
                 }
             }
         }

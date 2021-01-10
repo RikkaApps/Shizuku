@@ -28,6 +28,10 @@ interface IShizukuService {
 
     void requestPermission(int requestCode) = 14;
 
+    boolean checkSelfPermission() = 15;
+
+    boolean shouldShowRequestPermissionRationale() = 16;
+
     // ----------------------------
 
     void exit() = 100;
