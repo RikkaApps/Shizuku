@@ -101,7 +101,7 @@ int copyfileat(int src_path_fd, const char *src_path, int dst_path_fd, const cha
     dst_fd = openat(dst_path_fd, dst_path, O_WRONLY | O_CREAT | O_TRUNC, stat_buf.st_mode);
     if (dst_fd == -1) {
         close(src_fd);
-        return false;
+        return -1;
     }
 
     size_remaining = stat_buf.st_size;
