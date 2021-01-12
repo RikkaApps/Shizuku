@@ -369,7 +369,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
         public void destroy() {
             if (standalone) {
-                unlinkToDeath(deathRecipient, 0);
+                service.unlinkToDeath(deathRecipient, 0);
             } else {
                 broadcastBinderDead();
             }
