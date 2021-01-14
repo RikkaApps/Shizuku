@@ -257,7 +257,10 @@ public class ShizukuService extends IShizukuService.Stub {
             throw new RemoteException(e.getMessage());
         }
 
-        return new RemoteProcessHolder(process);
+        ClientRecord clientRecord = clientManager.findClient(Binder.getCallingUid(), Binder.getCallingPid());
+        IBinder token = clientRecord != null ? clientRecord.client.asBinder() : null;
+
+        return new RemoteProcessHolder(process, token);
     }
 
     @Override

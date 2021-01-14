@@ -1,5 +1,6 @@
 package moe.shizuku.server.api;
 
+import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 
@@ -9,14 +10,34 @@ import java.util.concurrent.TimeUnit;
 import moe.shizuku.server.IRemoteProcess;
 import moe.shizuku.server.utils.ParcelFileDescriptorUtil;
 
+import static moe.shizuku.server.utils.Logger.LOGGER;
+
 public class RemoteProcessHolder extends IRemoteProcess.Stub {
 
-    private Process process;
+    private final Process process;
     private ParcelFileDescriptor in;
     private ParcelFileDescriptor out;
 
-    public RemoteProcessHolder(Process process) {
+    public RemoteProcessHolder(Process process, IBinder token) {
         this.process = process;
+
+        if (token != null) {
+            try {
+                DeathRecipient deathRecipient = () -> {
+                    try {
+                        if (alive()) {
+                            destroy();
+                            LOGGER.i("destroy process because the owner is dead");
+                        }
+                    } catch (Throwable e) {
+                        LOGGER.w(e, "failed to destroy process");
+                    }
+                };
+                token.linkToDeath(deathRecipient, 0);
+            } catch (Throwable e) {
+                LOGGER.w(e, "linkToDeath");
+            }
+        }
     }
 
     @Override
