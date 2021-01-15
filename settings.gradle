@@ -1,6 +1,32 @@
-include ':shared'
-include ':api'
-include ':hidden-api-common', ':hidden-api-common-bridge', ':hidden-api-21', ':hidden-api-21-bridge', ':hidden-api-26', ':hidden-api-26-bridge'
+include ':hidden-api-common', ':hidden-api-common-bridge', ':hidden-api-21', ':hidden-api-21-bridge'
 include ':server', ':starter'
 include ':manager'
-include ':sample'
+
+def root = "api"
+
+def propFile = file('local.properties')
+def props = new Properties()
+def apiUseLocal = false
+def apiDir = null
+
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null) {
+        apiDir = props["api.dir"]
+        apiUseLocal = props["api.useLocal"].equals("true")
+    }
+}
+
+if (apiUseLocal) {
+    root = apiDir
+}
+
+include ':aidl'
+project(':aidl').projectDir = file("$root${File.separator}aidl")
+
+include ':shared'
+project(':shared').projectDir = file("$root${File.separator}shared")
+
+include ':api'
+project(':api').projectDir = file("$root${File.separator}api")
