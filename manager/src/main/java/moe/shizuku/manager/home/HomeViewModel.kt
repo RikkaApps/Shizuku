@@ -1,5 +1,6 @@
 package moe.shizuku.manager.home
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,7 +33,8 @@ class HomeViewModel : ViewModel() {
                 null
             }
         } else null
-        return ServiceStatus(uid, version, seContext)
+        val permissionTest = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
+        return ServiceStatus(uid, version, seContext, permissionTest)
     }
 
     fun reload() {

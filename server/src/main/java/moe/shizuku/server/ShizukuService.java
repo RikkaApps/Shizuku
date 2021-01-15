@@ -708,7 +708,7 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     @Override
-    public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) {
+    public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
         if (Binder.getCallingUid() != managerUid) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
@@ -734,6 +734,23 @@ public class ShizukuService extends IShizukuService.Stub {
 
         if (!onetime) {
             configManager.update(requestUid, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : Config.FLAG_DENIED);
+        }
+
+        if (!onetime && allowed) {
+            int userId = UserHandleCompat.getUserId(requestUid);
+
+            for (String packageName : SystemService.getPackagesForUidNoThrow(requestUid)) {
+                PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+                if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                    continue;
+                }
+
+                if (allowed) {
+                    SystemService.grantRuntimePermission(packageName, PERMISSION, userId);
+                } else {
+                    SystemService.revokeRuntimePermission(packageName, PERMISSION, userId);
+                }
+            }
         }
     }
 
@@ -775,8 +792,6 @@ public class ShizukuService extends IShizukuService.Stub {
 
         int userId = UserHandleCompat.getUserId(uid);
 
-        configManager.update(uid, mask, value);
-
         if ((mask & Config.MASK_PERMISSION) != 0) {
             boolean allowed = (value & Config.FLAG_ALLOWED) != 0;
             boolean denied = (value & Config.FLAG_DENIED) != 0;
@@ -804,6 +819,8 @@ public class ShizukuService extends IShizukuService.Stub {
                 }
             }
         }
+
+        configManager.update(uid, mask, value);
     }
 
     private void sendUserServiceLocked(IBinder binder, String token) {

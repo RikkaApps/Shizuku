@@ -2,12 +2,18 @@ package moe.shizuku.manager.authorization
 
 import android.app.Dialog
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
 import moe.shizuku.manager.databinding.ConfirmationDialogBinding
+import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.utils.Logger.LOGGER
+import rikka.core.res.resolveColor
 import rikka.html.text.HtmlCompat
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
@@ -28,6 +34,32 @@ class RequestPermissionActivity : AppActivity() {
         }
     }
 
+    private fun checkPermission(uid: Int, pid: Int, requestCode: Int): Boolean {
+        val permission = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
+        if (permission) return true
+
+        val icon = getDrawable(R.drawable.ic_permission_24dp)
+        icon?.setTint(theme.resolveColor(android.R.attr.colorAccent))
+
+        val dialog = AlertDialog.Builder(this)
+                .setIcon(icon)
+                .setTitle("Shizuku: ${getString(R.string.app_management_dialog_adb_is_limited_title)}")
+                .setMessage(getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener { finish() }
+                .create()
+        dialog.setOnShowListener {
+            (it as AlertDialog).findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+        }
+        try {
+            dialog.show()
+        } catch (ignored: Throwable) {
+        }
+
+        setResult(uid, pid, requestCode, allowed = false, onetime = true)
+        return false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +68,10 @@ class RequestPermissionActivity : AppActivity() {
         val requestCode = intent.getIntExtra("requestCode", -1)
         val ai = intent.getParcelableExtra<ApplicationInfo>("applicationInfo")
         if (uid == -1 || pid == -1 || ai == null) {
+            return
+        }
+
+        if (!checkPermission(uid, pid, requestCode)) {
             return
         }
 
