@@ -31,45 +31,21 @@ The most important feature Shizuku provides is something like be a middle man to
 
 So, we reached our goal, to use system APIs with higher permission. And to the app, it is almost identical to the use of system APIs directly.
 
-## Use Shizuku in your app
+## Developer guide
 
-Note, something is not mentioned below, please be sure to read the [sample](https://github.com/RikkaApps/Shizuku/tree/master/sample).
+### API & sample
 
-1. Add dependency
+https://github.com/RikkaApps/Shizuku-API
 
-   ```
-   maven { url 'https://dl.bintray.com/rikkaw/Shizuku' }
-   ```
-   
-   ```
-   // replace <latest version> to the version below
-   implementation 'moe.shizuku.privilege:api:<latest version>'
-   ```
+### Migrating from pre-v11
 
-    [![Download](https://api.bintray.com/packages/rikkaw/Shizuku/api/images/download.svg)](https://bintray.com/rikkaw/Shizuku/api/_latestVersion)
+> Existing applications still works, of course.
 
-   
-2. Add `ShizukuProvider`
-
-   Add to your `AndroidManifest.xml`
-
-   ```
-   <provider
-        android:name="moe.shizuku.api.ShizukuProvider"
-        android:authorities="${applicationId}.shizuku"
-        android:multiprocess="false"
-        android:enabled="true"
-        android:exported="true"
-        android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
-   ```
-
-3. Request permission
-
-   Request `moe.shizuku.manager.permission.API_V23` permission like other [runtime permissions](https://developer.android.com/distribute/best-practices/develop/runtime-permissions).
-
-4. Use
-
-   See sample.
+- Self-implemented permission is used from v11, the API is same to runtime permission (existing runtime permission still works)
+- Package name is rename to `rikka.shizuku` (replace all `moe.shizuku.api.` to `rikka.shizuku.`)
+- `ShizukuService` class is renamed to `Shizuku`
+- Methods in `Shizuku` class now throw `RuntimeException` rather than `RemoteException` like other Android APIs
+- Listeners are moved from `ShizukuProvider` class to `Shizuku` class
 
 ### Attention
 
@@ -97,9 +73,10 @@ Note, something is not mentioned below, please be sure to read the [sample](http
 
 ### Build
 
-Run gradle task `:server:assembleDebug` `:starter:assembleDebug` `:app:assembleDebug`.
+- Clone with `git clone --recurse-submodules`
+- Run gradle task `:server:assembleDebug` `:starter:assembleDebug` `:app:assembleDebug`
 
-The `:server:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug server.
+The `:server:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug the server.
 
 ## License
 
