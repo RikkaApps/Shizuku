@@ -47,7 +47,9 @@ public class ServiceStarter {
 
         Log.i(TAG, String.format("starting service %s/%s...", pkg, cls));
 
-        Looper.prepare();
+        if (Looper.getMainLooper() == null) {
+            Looper.prepareMainLooper();
+        }
 
         IBinder service = null;
         Context systemContext = HiddenApiBridge.getSystemContext();
