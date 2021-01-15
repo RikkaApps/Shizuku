@@ -724,12 +724,16 @@ public class ShizukuService extends IShizukuService.Stub {
         LOGGER.i("dispatchPermissionConfirmationResult: uid=%d, pid=%d, requestCode=%d, allowed=%s, onetime=%s",
                 requestUid, requestPid, requestCode, Boolean.toString(allowed), Boolean.toString(onetime));
 
-        ClientRecord clientRecord = clientManager.findClient(requestUid, requestPid);
-        if (clientRecord == null) {
-            LOGGER.w("dispatchPermissionConfirmationResult: client (uid=%d, pid=%d) not found", requestUid, requestPid);
+        List<ClientRecord> records = clientManager.findClients(requestUid);
+        if (records.isEmpty()) {
+            LOGGER.w("dispatchPermissionConfirmationResult: no client for uid % was found", requestUid, requestPid);
         } else {
-            clientRecord.allowed = allowed;
-            clientRecord.dispatchRequestPermissionResult(requestCode, allowed);
+            for (ClientRecord record : records) {
+                record.allowed = allowed;
+                if (record.pid == requestPid) {
+                    record.dispatchRequestPermissionResult(requestCode, allowed);
+                }
+            }
         }
 
         if (!onetime) {
