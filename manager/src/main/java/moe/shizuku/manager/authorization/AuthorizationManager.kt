@@ -3,9 +3,9 @@ package moe.shizuku.manager.authorization
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Process
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.Manifest
 import moe.shizuku.manager.utils.ShizukuSystemApis
+import rikka.shizuku.Shizuku
 import java.util.*
 
 object AuthorizationManager {
@@ -29,14 +29,14 @@ object AuthorizationManager {
     }
 
     fun granted(packageName: String, uid: Int): Boolean {
-        return (ShizukuService.getFlagsForUid(uid, MASK_PERMISSION) and FLAG_ALLOWED) == FLAG_ALLOWED
+        return (Shizuku.getFlagsForUid(uid, MASK_PERMISSION) and FLAG_ALLOWED) == FLAG_ALLOWED
     }
 
     fun grant(packageName: String, uid: Int) {
-        ShizukuService.updateFlagsForUid(uid, MASK_PERMISSION, FLAG_ALLOWED)
+        Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, FLAG_ALLOWED)
     }
 
     fun revoke(packageName: String, uid: Int) {
-        ShizukuService.updateFlagsForUid(uid, MASK_PERMISSION, 0)
+        Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, 0)
     }
 }

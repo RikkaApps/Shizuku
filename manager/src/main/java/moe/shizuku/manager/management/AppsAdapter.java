@@ -4,7 +4,6 @@ import android.content.pm.PackageInfo;
 
 import java.util.List;
 
-import moe.shizuku.manager.management.AppViewHolder;
 import rikka.recyclerview.BaseRecyclerViewAdapter;
 import rikka.recyclerview.ClassCreatorPool;
 

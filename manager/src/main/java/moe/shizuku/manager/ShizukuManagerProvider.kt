@@ -2,16 +2,15 @@ package moe.shizuku.manager
 
 import android.os.Bundle
 import moe.shizuku.api.BinderContainer
-import moe.shizuku.api.ShizukuApiConstants.EXTRA_BINDER
-import moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_TOKEN
-import moe.shizuku.api.ShizukuProvider
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.utils.Logger.LOGGER
+import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_TOKEN
+import rikka.shizuku.ShizukuProvider
 
 class ShizukuManagerProvider : ShizukuProvider() {
 
     companion object {
-
+        private const val EXTRA_BINDER = "moe.shizuku.privileged.api.intent.extra.BINDER"
         private const val METHOD_SEND_USER_SERVICE = "sendUserService"
     }
 
@@ -25,12 +24,12 @@ class ShizukuManagerProvider : ShizukuProvider() {
                 val token = extras.getString(USER_SERVICE_ARG_TOKEN) ?: return null
                 val binder = extras.getParcelable<BinderContainer>(EXTRA_BINDER)?.binder ?: return null
 
-                ShizukuService.sendUserService(binder, Bundle().apply {
+                Shizuku.attachUserService(binder, Bundle().apply {
                     putString(USER_SERVICE_ARG_TOKEN, token)
                 })
 
                 val reply = Bundle()
-                reply.putParcelable(EXTRA_BINDER, BinderContainer(ShizukuService.getBinder()))
+                reply.putParcelable(EXTRA_BINDER, BinderContainer(Shizuku.getBinder()))
                 reply
             } catch (e: Throwable) {
                 LOGGER.e(e, "sendUserService")

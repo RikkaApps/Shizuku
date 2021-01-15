@@ -2,8 +2,8 @@ package moe.shizuku.server;
 
 import android.os.Bundle;
 
-import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 import static moe.shizuku.server.utils.Logger.LOGGER;
+import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 
 public class ClientRecord {
 

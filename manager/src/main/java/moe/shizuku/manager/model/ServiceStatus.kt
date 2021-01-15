@@ -1,6 +1,6 @@
 package moe.shizuku.manager.model
 
-import moe.shizuku.api.ShizukuService
+import rikka.shizuku.Shizuku
 
 data class ServiceStatus(
         val uid: Int = - 1,
@@ -8,5 +8,5 @@ data class ServiceStatus(
         val seContext: String? = null
 ) {
     val isRunning: Boolean
-        get() = ShizukuService.pingBinder()
+        get() = Shizuku.pingBinder()
 }

@@ -6,10 +6,10 @@ import android.content.Intent
 import android.os.Process
 import android.util.Log
 import androidx.core.content.ContextCompat
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.LaunchMethod
+import rikka.shizuku.Shizuku
 
 class BootCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -23,7 +23,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
 
         if (ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(AppConstants.TAG, "start on boot, action=" + intent.action)
-            if (ShizukuService.pingBinder()) {
+            if (Shizuku.pingBinder()) {
                 Log.i(AppConstants.TAG, "service is running")
                 return
             }

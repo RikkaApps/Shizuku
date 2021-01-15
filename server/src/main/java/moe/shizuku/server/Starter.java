@@ -1,12 +1,8 @@
 package moe.shizuku.server;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.ddm.DdmHandleAppName;
 import android.os.ServiceManager;
-
-import moe.shizuku.api.ShizukuApiConstants;
-import moe.shizuku.server.api.SystemService;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 

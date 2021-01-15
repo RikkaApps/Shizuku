@@ -6,6 +6,8 @@ idea.module {
 }
 
 buildscript {
+    apply from: 'api/manifest.gradle'
+
     ext.kotlinVersion = '1.4.21'
     repositories {
         jcenter()
@@ -14,7 +16,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
 
@@ -43,6 +45,4 @@ ext {
     ndkVersion = "21.3.6528147"
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
-
-    apiVersionName = '5.0.0-alpha03'
 }

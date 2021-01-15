@@ -13,7 +13,6 @@ import hidden.HiddenApiBridge;
 import hidden.ProcessObserverAdapter;
 import hidden.UidObserverAdapter;
 import kotlin.collections.ArraysKt;
-import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.SystemService;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
@@ -21,7 +20,7 @@ import static moe.shizuku.server.utils.Logger.LOGGER;
 public class BinderSender {
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
-    private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
+    private static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";
 
     private static final List<Integer> PID_LIST = new ArrayList<>();
 

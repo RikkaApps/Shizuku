@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import moe.shizuku.api.ShizukuProvider
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarActivity
@@ -29,15 +27,16 @@ import rikka.core.ktx.unsafeLazy
 import rikka.material.widget.*
 import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.fixEdgeEffect
+import rikka.shizuku.Shizuku
 
 abstract class HomeActivity : AppBarActivity() {
 
-    private val binderReceivedListener = ShizukuProvider.OnBinderReceivedListener {
+    private val binderReceivedListener = Shizuku.OnBinderReceivedListener {
         checkServerStatus()
         appsModel.load()
     }
 
-    private val binderDeadListener = ShizukuProvider.OnBinderDeadListener {
+    private val binderDeadListener = Shizuku.OnBinderDeadListener {
         checkServerStatus()
     }
 
@@ -87,8 +86,8 @@ abstract class HomeActivity : AppBarActivity() {
                     recyclerView.paddingBottom - margin)
         }
 
-        ShizukuProvider.addBinderReceivedListenerSticky(binderReceivedListener)
-        ShizukuProvider.addBinderDeadListener(binderDeadListener)
+        Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
+        Shizuku.addBinderDeadListener(binderDeadListener)
 
         logd("onCreate")
     }
@@ -104,8 +103,8 @@ abstract class HomeActivity : AppBarActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        ShizukuProvider.removeBinderReceivedListener(binderReceivedListener)
-        ShizukuProvider.removeBinderDeadListener(binderDeadListener)
+        Shizuku.removeBinderReceivedListener(binderReceivedListener)
+        Shizuku.removeBinderDeadListener(binderDeadListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -126,14 +125,14 @@ abstract class HomeActivity : AppBarActivity() {
                 true
             }
             R.id.action_stop -> {
-                if (!ShizukuService.pingBinder()) {
+                if (!Shizuku.pingBinder()) {
                     return true
                 }
                 AlertDialog.Builder(this)
                         .setMessage(R.string.dialog_stop_message)
                         .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
                             try {
-                                ShizukuService.exit()
+                                Shizuku.exit()
                             } catch (e: Throwable) {
                             }
                         }

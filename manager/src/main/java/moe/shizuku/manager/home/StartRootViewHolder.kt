@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeStartRootBinding
@@ -15,6 +14,7 @@ import moe.shizuku.manager.starter.StarterActivity
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
+import rikka.shizuku.Shizuku
 
 class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewHolder<Boolean>(binding.root) {
 
@@ -55,7 +55,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
 
         val sb = StringBuilder()
                 .append(context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\'t kill my app!</a></b>"))
-        if (ShizukuService.pingBinder()) {
+        if (Shizuku.pingBinder()) {
             sb.append("<p>").append(context.getString(R.string.home_root_description_magisk, "<b><a href=\"${Helps.DOWNLOAD.get()}\">${context.getString(R.string.magisk_module)}</a></b>"))
         }
 

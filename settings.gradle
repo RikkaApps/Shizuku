@@ -30,3 +30,6 @@ project(':shared').projectDir = file("$root${File.separator}shared")
 
 include ':api'
 project(':api').projectDir = file("$root${File.separator}api")
+
+include ':provider'
+project(':provider').projectDir = file("$root${File.separator}provider")

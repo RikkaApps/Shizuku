@@ -11,7 +11,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ktx.createDeviceProtectedStorageContextCompat
 import moe.shizuku.manager.ktx.logd
 import rikka.core.os.FileUtils
@@ -19,7 +18,7 @@ import rikka.core.util.BuildUtils
 import java.io.*
 import java.util.*
 import java.util.zip.ZipFile
-import moe.shizuku.api.ShizukuApiConstants.SERVER_VERSION as serverVersion
+import rikka.shizuku.ShizukuApiConstants.SERVER_VERSION as serverVersion
 
 object Starter {
 

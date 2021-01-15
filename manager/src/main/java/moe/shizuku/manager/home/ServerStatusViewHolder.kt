@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
@@ -14,6 +13,7 @@ import rikka.html.text.HtmlCompat
 import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
+import rikka.shizuku.Shizuku
 
 class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : BaseViewHolder<ServiceStatus>(binding.root) {
 
@@ -50,8 +50,8 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
             context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name))
         }
         summary = if (ok) {
-            if (status.version != ShizukuService.getLatestServiceVersion()) {
-                context.getString(R.string.home_status_service_version_update, user, version, ShizukuService.getLatestServiceVersion())
+            if (status.version != Shizuku.getLatestServiceVersion()) {
+                context.getString(R.string.home_status_service_version_update, user, version, Shizuku.getLatestServiceVersion())
             } else {
                 context.getString(R.string.home_status_service_version, user, version)
             }

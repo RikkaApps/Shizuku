@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.topjohnwu.superuser.Shell
 import me.weishu.reflection.Reflection
-import moe.shizuku.manager.adb.AdbPairingClient
-import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.ktx.logd
-import rikka.core.util.BuildUtils.atLeast29
 import rikka.core.util.BuildUtils.atLeast30
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate

@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
 import dalvik.system.PathClassLoader;
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
-import moe.shizuku.api.ShizukuApiConstants;
+import rikka.shizuku.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.config.Config;
@@ -47,28 +47,27 @@ import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
-import static moe.shizuku.api.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
-import static moe.shizuku.api.ShizukuApiConstants.MANAGER_APPLICATION_ID;
-import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
-import static moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_TAG;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE;
-import static moe.shizuku.api.ShizukuApiConstants.USER_SERVICE_TRANSACTION_destroy;
+import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
+import static moe.shizuku.server.ServerConstants.PERMISSION;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
+import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
+import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_COMPONENT;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_DEBUGGABLE;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_TAG;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE;
+import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_TRANSACTION_destroy;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
 
-    private static final String PERMISSION = ShizukuApiConstants.PERMISSION;
-
     private static ApplicationInfo getManagerApplicationInfo() {
-        return SystemService.getApplicationInfoNoThrow(ShizukuApiConstants.MANAGER_APPLICATION_ID, 0, 0);
+        return SystemService.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
     }
 
     public static void main() {
@@ -586,8 +585,8 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     @Override
-    public void sendUserService(IBinder binder, Bundle options) {
-        enforceManager("sendUserService");
+    public void attachUserService(IBinder binder, Bundle options) {
+        enforceManager("attachUserService");
 
         Objects.requireNonNull(binder, "binder is null");
         String token = Objects.requireNonNull(options.getString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN), "token is null");
@@ -614,7 +613,7 @@ public class ShizukuService extends IShizukuService.Stub {
             throw new SecurityException("Request package " + requestPackageName + "does not belong to uid " + callingUid);
         }
 
-        isManager = ShizukuApiConstants.MANAGER_APPLICATION_ID.equals(requestPackageName);
+        isManager = MANAGER_APPLICATION_ID.equals(requestPackageName);
 
         if (!isManager && clientManager.findClient(callingUid, callingPid) == null) {
             synchronized (this) {
@@ -869,7 +868,7 @@ public class ShizukuService extends IShizukuService.Stub {
     }
 
     static void sendBinderToManger(Binder binder, int userId) {
-        sendBinderToUserApp(binder, ShizukuApiConstants.MANAGER_APPLICATION_ID, userId);
+        sendBinderToUserApp(binder, MANAGER_APPLICATION_ID, userId);
     }
 
     static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
@@ -896,7 +895,7 @@ public class ShizukuService extends IShizukuService.Stub {
             }
 
             Bundle extra = new Bundle();
-            extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
+            extra.putParcelable("moe.shizuku.privileged.api.intent.extra.BINDER", new BinderContainer(binder));
 
             Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendBinder", null, extra);
             if (reply != null) {
@@ -915,5 +914,17 @@ public class ShizukuService extends IShizukuService.Stub {
                 }
             }
         }
+    }
+
+    // ------ Sui only ------
+
+    @Override
+    public void dispatchPackageChanged(Intent intent) throws RemoteException {
+
+    }
+
+    @Override
+    public boolean isHidden(int uid) throws RemoteException {
+        return false;
     }
 }

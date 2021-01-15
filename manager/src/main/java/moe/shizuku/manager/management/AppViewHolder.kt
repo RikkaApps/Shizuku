@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import kotlinx.coroutines.Job
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.authorization.AuthorizationManager
@@ -18,6 +17,7 @@ import moe.shizuku.manager.utils.AppIconCache
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
+import rikka.shizuku.Shizuku
 
 class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<PackageInfo>(binding.root), View.OnClickListener {
 
@@ -54,7 +54,7 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
             }
         } catch (e: SecurityException) {
             val uid = try {
-                ShizukuService.getUid()
+                Shizuku.getUid()
             } catch (ex: Throwable) {
                 return
             }

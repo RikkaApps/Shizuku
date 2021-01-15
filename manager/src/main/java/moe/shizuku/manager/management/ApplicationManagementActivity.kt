@@ -5,8 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
-import moe.shizuku.api.ShizukuProvider
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
@@ -16,6 +14,7 @@ import moe.shizuku.manager.viewmodel.Status
 import rikka.material.widget.BorderView
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
+import rikka.shizuku.Shizuku
 import java.util.*
 
 class ApplicationManagementActivity : AppBarActivity() {
@@ -23,7 +22,7 @@ class ApplicationManagementActivity : AppBarActivity() {
     private val viewModel by appsViewModel()
     private val adapter = AppsAdapter()
 
-    private val binderDeadListener = ShizukuProvider.OnBinderDeadListener {
+    private val binderDeadListener = Shizuku.OnBinderDeadListener {
         if (!isFinishing) {
             finish()
         }
@@ -32,7 +31,7 @@ class ApplicationManagementActivity : AppBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!ShizukuService.pingBinder()) {
+        if (!Shizuku.pingBinder()) {
             finish()
             return
         }
@@ -74,13 +73,13 @@ class ApplicationManagementActivity : AppBarActivity() {
             }
         })
 
-        ShizukuProvider.addBinderDeadListener(binderDeadListener)
+        Shizuku.addBinderDeadListener(binderDeadListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        ShizukuProvider.removeBinderDeadListener(binderDeadListener)
+        Shizuku.removeBinderDeadListener(binderDeadListener)
     }
 
     override fun onResume() {

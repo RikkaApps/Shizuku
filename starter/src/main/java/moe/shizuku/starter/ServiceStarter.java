@@ -11,13 +11,15 @@ import android.util.Log;
 
 import hidden.HiddenApiBridge;
 import moe.shizuku.api.BinderContainer;
-import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.starter.api.SystemService;
 import moe.shizuku.starter.ktx.IContentProviderKt;
+import rikka.shizuku.ShizukuApiConstants;
 
 public class ServiceStarter {
 
     private static final String TAG = "ShizukuServiceStarter";
+
+    private static final String EXTRA_BINDER = "moe.shizuku.privileged.api.intent.extra.BINDER";
 
     public static void main(String[] args) {
         String name = null;
@@ -87,7 +89,7 @@ public class ServiceStarter {
             }
 
             Bundle extra = new Bundle();
-            extra.putParcelable(ShizukuApiConstants.EXTRA_BINDER, new BinderContainer(binder));
+            extra.putParcelable(EXTRA_BINDER, new BinderContainer(binder));
             extra.putString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN, token);
 
             Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendUserService", null, extra);
@@ -96,7 +98,7 @@ public class ServiceStarter {
                 reply.setClassLoader(BinderContainer.class.getClassLoader());
 
                 Log.i(TAG, String.format("send binder to %s in user %d", packageName, userId));
-                BinderContainer container = reply.getParcelable(ShizukuApiConstants.EXTRA_BINDER);
+                BinderContainer container = reply.getParcelable(EXTRA_BINDER);
 
                 if (container != null && container.binder != null && container.binder.pingBinder()) {
                     container.binder.linkToDeath(() -> {

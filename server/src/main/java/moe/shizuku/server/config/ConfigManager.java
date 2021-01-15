@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import kotlin.collections.ArraysKt;
-import moe.shizuku.api.ShizukuApiConstants;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.ktx.HandlerKt;
 
+import static moe.shizuku.server.ServerConstants.PERMISSION;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ConfigManager {
@@ -111,14 +111,14 @@ public class ConfigManager {
                 if (pi == null
                         || pi.applicationInfo == null
                         || pi.requestedPermissions == null
-                        || !ArraysKt.contains(pi.requestedPermissions, ShizukuApiConstants.PERMISSION)) {
+                        || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
                     continue;
                 }
 
                 int uid = pi.applicationInfo.uid;
                 boolean allowed;
                 try {
-                    allowed = SystemService.checkPermission(ShizukuApiConstants.PERMISSION, uid) == PackageManager.PERMISSION_GRANTED;
+                    allowed = SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED;
                 } catch (Throwable e) {
                     LOGGER.w("checkPermission");
                     continue;

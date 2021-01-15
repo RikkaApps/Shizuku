@@ -4,14 +4,14 @@ import android.app.Dialog
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
-import moe.shizuku.api.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME
-import moe.shizuku.api.ShizukuService
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
 import moe.shizuku.manager.databinding.ConfirmationDialogBinding
 import moe.shizuku.manager.utils.Logger.LOGGER
 import rikka.html.text.HtmlCompat
+import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
+import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME
 
 class RequestPermissionActivity : AppActivity() {
 
@@ -22,7 +22,7 @@ class RequestPermissionActivity : AppActivity() {
         data.putBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, allowed)
         data.putBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME, onetime)
         try {
-            ShizukuService.dispatchPermissionConfirmationResult(requestUid, requestPid, requestCode, data)
+            Shizuku.dispatchPermissionConfirmationResult(requestUid, requestPid, requestCode, data)
         } catch (e: Throwable) {
             LOGGER.e("dispatchPermissionConfirmationResult")
         }

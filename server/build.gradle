@@ -67,11 +67,14 @@ android.applicationVariants.all { variant ->
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation project(':aidl')
     implementation project(':shared')
+
     compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
     implementation project(':hidden-api-21-bridge')
-
-    implementation "androidx.annotation:annotation:1.1.0"
-    implementation 'com.google.code.gson:gson:2.8.6'
 }

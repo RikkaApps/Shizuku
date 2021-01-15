@@ -3,9 +3,7 @@ package moe.shizuku.manager.settings
 import android.os.Bundle
 import android.view.MenuItem
 import moe.shizuku.manager.R
-import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.app.AppBarFragmentActivity
-import moe.shizuku.manager.starter.Starter
 
 class SettingsActivity : AppBarFragmentActivity() {
 
