@@ -41,11 +41,7 @@ https://github.com/RikkaApps/Shizuku-API
 
 > Existing applications still works, of course.
 
-- Self-implemented permission is used from v11, the API is same to runtime permission (existing runtime permission still works)
-- Package name is rename to `rikka.shizuku` (replace all `moe.shizuku.api.` to `rikka.shizuku.`)
-- `ShizukuService` class is renamed to `Shizuku`
-- Methods in `Shizuku` class now throw `RuntimeException` rather than `RemoteException` like other Android APIs
-- Listeners are moved from `ShizukuProvider` class to `Shizuku` class
+https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applications-use-shizuku-pre-v11
 
 ### Attention
 
