@@ -56,6 +56,7 @@ class ApkChangedObserver internal constructor(private val path: String, mask: In
 
     override fun onEvent(event: Int, path: String?) {
         Log.d("ShizukuServer", "onEvent: $event $path")
+        if (path?.endsWith(".apk") == false) return
         if ((event and 0x00008000) != 0) return
         stopWatching()
         listeners.forEach { it.onApkChanged() }
