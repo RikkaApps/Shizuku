@@ -7,7 +7,9 @@
     <string name="dialog_cannot_open_browser_title">Չհաջողվեց միացնել ինտերնետի ծրագիրը</string>
     <string name="start_with_root_failed">Չհաջողվեց բեռնել ծառայությունը քանի որ root թույլտվությունը մերժված է կամ սարքը root չունի։</string>
     <string name="starter">Սկսնակ</string>
+    <string name="permission_description">Թողնել ծրագրին օգտվել ավելի բարձր արտոնություններով համակարգային API-ներից։</string>
     <string name="permission_label">օգտվել Shizuku-ից</string>
+    <string name="permission_group_description">օգտվել Shizuku-ից</string>
     <string name="notification_working">Աշխատում է…</string>
     <string name="notification_service_start_no_root">Չհաջողվեց ստանալ root թույլտվություն։</string>
     <string name="notification_service_start_failed">Shizuku-ի միացումը ձախողվեց։</string>
@@ -45,7 +47,6 @@
     <string name="home_root_button_start">Միացնել</string>
     <string name="magisk_module">Magisk-ի մոդուլը</string>
     <string name="home_root_description_magisk">Եթե դուք կրկին չեք կարողանա Shizuku-ի միանալը ավտոմատացնել, փորձեք օգտագործել %s։</string>
-    <string name="home_root_description">Որպես լրացում, Shizuku-ն կարելի է ավտոմատացված ձևով միանա սարքի հետ։ Այլապես ստուգեք, թե համակարգը կամ ուրիշ ծրագրերը սահմանափակել են Shizuku-ին։ &lt;br&gt;Դուք կարող եք ստուգել այստեղ։</string>
     <string name="home_root_title">Միացնել (root արած սարքերի համար)</string>
     <string name="development_settings">Ծրագրավորողի կարգավորումներ</string>
     <string name="adb_pair_required">Խնդրում ենք սկզբում կատարել զուգելու քայլերը։</string>
@@ -88,7 +89,7 @@
     <string name="dialog_legacy_not_support_message">Հին Shizuku-ն համարվում է հնացած 2019-ի մարտից։ Հին Shizuku-ն չի աշխատում նոր Android-ի փոփոխակներում։&lt;p&gt;Դիմեք &lt;b&gt;%1$s&lt;/b&gt;-ի ծրագրավորողին և ասեք, որ ծրագիրը թարմացնի։</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Բացել Shizuku-ն</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;-ն օժտված է նոր Shizuku-ից օգտվելու հատկությունից, բայց այն փորձում է օգտվել հին Shizuku-ից։ Հնարավոր է, որ Shizuku-ն միացված չէ, ստուգեք Shizuku ծրագիրը։&lt;p&gt;Հին Shizuku-ն համարվում է հնացած 2019-ի մարտից։</string>
-    <string name="grant_dialog_button_allow_always">Միշտ թույլատրել</string>
     <string name="grant_dialog_button_deny">Մերժել</string>
-    <string name="permission_warning_template"><![CDATA[Թույլատրե՞լ <b>%1$s</b> հավելվածին %2$s:"]]></string>
+    <string name="grant_dialog_button_allow_always">Միշտ թույլատրել</string>
+    <string name="permission_warning_template">Թույլատրե՞լ <b>%1$s</b> հավելվածին %2$s:</string>
 </resources>
