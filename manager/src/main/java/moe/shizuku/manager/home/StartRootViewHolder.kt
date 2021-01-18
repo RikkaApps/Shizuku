@@ -56,7 +56,7 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
         val sb = StringBuilder()
                 .append(context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\'t kill my app!</a></b>"))
         if (Shizuku.pingBinder()) {
-            sb.append("<p>").append(context.getString(R.string.home_root_description_magisk, "<b><a href=\"${Helps.DOWNLOAD.get()}\">${context.getString(R.string.magisk_module)}</a></b>"))
+            sb.append("<p>").append(context.getString(R.string.home_root_description_sui, "<b><a href=\"${Helps.SUI.get()}\">Sui</a></b>", "Sui"))
         }
 
         binding.text1.text = sb.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
