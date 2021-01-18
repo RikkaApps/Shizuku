@@ -16,10 +16,13 @@
     <string-array name="language" translatable="false">
         <item>@string/follow_system</item>
         <item>ar</item>
+        <item>cs</item>
         <item>de</item>
         <item>es-CL</item>
+        <item>es-US</item>
         <item>en</item>
-        <!--<item>ja</item>-->
+        <item>hy</item>
+        <item>ja</item>
         <item>ko</item>
         <item>pl</item>
         <item>pt-BR</item>
@@ -33,10 +36,13 @@
     <string-array name="language_value" translatable="false">
         <item>SYSTEM</item>
         <item>ar</item>
+        <item>cs</item>
         <item>de</item>
         <item>es-CL</item>
+        <item>es-US</item>
         <item>en-US</item>
-        <!--<item>ja</item>-->
+        <item>hy</item>
+        <item>ja</item>
         <item>ko</item>
         <item>pl</item>
         <item>pt-BR</item>

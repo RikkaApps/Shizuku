@@ -5,7 +5,7 @@
     <string name="home_status_service_not_running">%1$s não está rodando</string>
     <string name="home_status_service_is_running">%1$s está rodando</string>
     <string name="translation_contributors">Marcio de Andrade</string>
-    <string name="grant_dialog_button_allow_always">Permitir o tempo todo</string>
     <string name="grant_dialog_button_deny">Negar</string>
-    <string name="permission_warning_template"><![CDATA[Permitir que o app &lt;b&gt;%1$s&lt;/b&gt; %2$s?]]></string>
+    <string name="grant_dialog_button_allow_always">Permitir o tempo todo</string>
+    <string name="permission_warning_template">Permitir que o app &lt;b&gt;%1$s&lt;/b&gt; %2$s\?</string>
 </resources>

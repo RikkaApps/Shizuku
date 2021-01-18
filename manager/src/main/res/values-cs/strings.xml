@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Otevřít Shizuku</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s &lt;/b&gt; má moderní podporu Shizuku, ale vyžaduje starší Shizuku. Mohlo by to být proto, že Shizuku není spuštěno, zkontrolujte aplikaci Shizuku. &lt;p&gt; Podpora staršího Shizuku je od března 2019 ukončena.</string>
+    <string name="dialog_requesting_legacy_title">%1$s požaduje starší Shizuku</string>
+    <string name="dialog_legacy_not_support_message">Podpora starší verze Shizuku je od března 2019. Starší verze Shizuku také nefunguje na novějších systémech Android. &lt;p&gt; O aktualizaci požádejte vývojáře &lt;b&gt;%1$s &lt;/b&gt;.</string>
+    <string name="dialog_legacy_not_support_title">%1$s nepodporuje moderní Shizuku</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; byl zkopírován do schránky.</string>
+    <string name="toast_copied_to_clipboard">%s
+\nbyl zkopírován do schránky.</string>
+    <string name="dialog_cannot_open_browser_title">Prohlížeč nelze spustit</string>
+    <string name="start_with_root_failed">Službu nelze spustit, protože není uděleno oprávnění uživatele root nebo toto zařízení není rootováno.</string>
+    <string name="starter">Spouštěč</string>
+    <string name="permission_label">přístup k Shizuku</string>
+    <string name="notification_working">Pracuji…</string>
+    <string name="notification_service_start_no_root">Nepodařilo se požádat o oprávnění root.</string>
+    <string name="notification_service_start_failed">Spuštění služby Shizuku se nezdařilo.</string>
+    <string name="notification_service_starting">Služba Shizuku se spouští…</string>
+    <string name="notification_channel_service_status">Stav spuštění služby</string>
+    <string name="dialog_stop_message">Služba Shizuku bude zastavena.</string>
+    <string name="action_stop">Zastavit Shizuku</string>
+    <string name="about_view_source_code">Zobrazit zdrojový kód na %s</string>
+    <string name="action_about">O Shizuku</string>
+    <string name="settings_start_on_boot_summary">U rootovaných zařízení je Shizuku schopen automaticky spustit při spuštění</string>
+    <string name="settings_start_on_boot">Spustit při spuštění (root)</string>
+    <string name="settings_translation_summary_percentage">" (%s je přeloženo)"</string>
+    <string name="settings_translation_summary">Pomozte nám přeložit %s do vašeho jazyka</string>
+    <string name="settings_translation">Podílet se na překladu</string>
+    <string name="settings_translation_contributors">Přispěvatelé překladu</string>
+    <string name="settings_startup">Spuštění</string>
+    <string name="settings_black_night_theme_summary">Pokud je povolen noční režim, použijte motiv čistě černé barvy</string>
+    <string name="settings_black_night_theme">Černá noc téma</string>
+    <string name="settings_user_interface">Vzhled</string>
+    <string name="settings_language">Jazyk</string>
+    <string name="settings_title">Nastavení</string>
+    <string name="app_management_item_summary_requires_root">* vyžaduje spustit Shizuku s rootem</string>
+    <string name="app_management_dialog_adb_is_limited_message">Je vysoce možné, že výrobce vašeho zařízení omezuje oprávnění adb. &lt;p&gt; V &lt;b&gt; &lt;a href=\"%1$s\"&gt; tomto dokumentu &lt;/a&gt; &lt;/b&gt; může být pro váš systém řešení.</string>
+    <string name="app_management_dialog_adb_is_limited_title">Povolení adb je omezené</string>
+    <string name="app_management_menu_get_more">Získat více</string>
+    <string name="home_learn_more_description">Naučte se, jak se vyvíjet pomocí Shizuku nebo získávat aplikace pomocí Shizuku</string>
+    <string name="home_learn_more_title">Naučte se Shizuku</string>
+    <string name="home_app_management_view_authorized_apps">Klepnutím můžete spravovat autorizované aplikace</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Autorizovaná %d aplikace</item>
+        <item quantity="few">Autorizováno %d aplikací</item>
+        <item quantity="other">Autorizovány %d aplikace</item>
+    </plurals>
+    <string name="home_app_management_title">Správa aplikací</string>
+    <string name="home_root_button_restart">Restartovat</string>
+    <string name="home_root_button_start">Spustit</string>
+    <string name="magisk_module">Magisk modul</string>
+    <string name="home_root_description_magisk">Pokud stále nedovolíte, aby váš systém umožňoval spuštění Shizuku při spuštění, můžete zkusit použít %s.</string>
+    <string name="home_root_description">Kromě toho lze Shizuku spustit automaticky při spuštění. Pokud ne, zkontrolujte, zda váš systém nebo nástroje třetích stran neomezují Shizuku. &lt;br&gt; Můžete se podívat na %s.</string>
+    <string name="home_adb_title">Spustit připojením k počítači</string>
+    <string name="home_status_service_version_update">Verze %2$d, %1$s&lt;br&gt;Znovu spusťte pro aktualizaci na verzi %3$d</string>
+    <string name="home_status_service_version">Verze %2$d, %1$s</string>
+    <string name="home_status_service_not_running">%1$ neběží</string>
+    <string name="home_status_service_is_running">%1$ běží</string>
+    <string name="home_root_title">Start (pro rootovaná zařízení)</string>
+    <string name="development_settings">Developer options</string>
+    <string name="adb_pair_required">Nejprve projděte krok párování.</string>
+    <string name="adb_error_key_store">Nelze vygenerovat klíč pro bezdrátové ladění.
+\nMůže to být proto, že je narušen mechanismus úložiště klíčů tohoto zařízení.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Systém vyžaduje, aby bylo dialogové okno párování vždy viditelné, použití režimu rozdělené obrazovky je jediný způsob, jak nechat tuto aplikaci a systémový dialog viditelný současně.</string>
+    <string name="adb_pairing_requires_multi_window">Nejprve prosím přejděte do režimu rozdělené obrazovky (více oken).</string>
+    <string name="dialog_adb_pairing_message">Začněte párovat podle následujících kroků: „Možnosti pro vývojáře“ - „Bezdrátové ladění“ - „Párování zařízení pomocí párovacího kódu“.
+\n
+\nPo zahájení procesu párování budete moci zadat párovací kód.</string>
+    <string name="dialog_wireless_adb_not_enabled">Bezdrátové ladění není povoleno.
+\nPřed povolením systému Android 11 je pro povolení bezdrátového ladění nutné připojení k počítači.</string>
+    <string name="cannot_connect_port">Nelze se připojit k bezdrátové ladicí službě.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_discovery_message">Povolte „Bezdrátové ladění“ v „Možnosti pro vývojáře“. „Bezdrátové ladění“ je při změně sítě automaticky deaktivováno.
+\n
+\nNezapínejte „Možnosti pro vývojáře“ nebo „Ladění USB“, jinak bude Shizuku zastaven.</string>
+    <string name="paring_code_is_wrong">Chybný kód pro párování.</string>
+    <string name="dialog_adb_pairing_paring_code">Kód pro párování</string>
+    <string name="dialog_adb_pairing_discovery">Hledání zařízení pro párování</string>
+    <string name="dialog_adb_pairing_title">Párovat se zařízením</string>
+    <string name="adb_pairing">Párování</string>
+    <string name="dialog_adb_invalid_port">Port je číslo od 1 do 65535.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopírovat</string>
+    <string name="translation_contributors">JohanyXcz</string>
+    <string name="dialog_adb_discovery">Hledání služby bezdrátového ladění</string>
+    <string name="home_wireless_adb_description">V systému Android 11 je bezdrátové ladění integrovanou funkcí. Přečtěte si prosím &lt;b&gt; &lt;a href=\"%1$s\"&gt; tento dokument nápovědy &lt;/a&gt; &lt;/b&gt;. &lt;p&gt; Funguje to pro všechny verze systému. Ale před Androidem 11 nelze bezdrátové ladění přímo povolit.</string>
+    <string name="home_wireless_adb_title">Spustit pomocí WiFi debuging</string>
+    <string name="home_adb_dialog_view_command_button_send">Odeslat</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Existuje několik dalších úvah, nejprve si prosím přečtěte nápovědu.</string>
+    <string name="home_adb_button_view_command">Zobrazit příkaz</string>
+    <string name="home_adb_button_view_help">Přečíst nápovědu</string>
+    <string name="home_adb_description">U zařízení bez root musíte ke spuštění Shizuku použít adb (vyžaduje připojení k počítači). Tento proces je třeba opakovat při každém restartu zařízení. Přečtěte si prosím &lt;b&gt; &lt;a href=\"%1$s\"&gt; nápovědu &lt;/a&gt; &lt;/b&gt;.</string>
+    <string name="grant_dialog_button_allow_always">Povolit vždy</string>
+    <string name="grant_dialog_button_deny">Zakázat</string>
+    <string name="permission_warning_template"><![CDATA[Povolit aplikaci </b>%1$s</b> %2$s?]]></string>
+</resources>
