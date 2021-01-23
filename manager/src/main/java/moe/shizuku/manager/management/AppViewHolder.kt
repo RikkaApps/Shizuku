@@ -14,6 +14,7 @@ import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.databinding.AppListItemBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.utils.AppIconCache
+import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
@@ -79,7 +80,11 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
     override fun onBind() {
         val pm = itemView.context.packageManager
         icon.setImageDrawable(ai.loadIcon(pm))
-        name.text = ai.loadLabel(pm)
+        name.text = if (UserHandleCompat.getUserId(uid) != UserHandleCompat.myUserId()) {
+            "${ai.loadLabel(pm)} - ${UserHandleCompat.getUserId(uid)}"
+        } else {
+            ai.loadLabel(pm)
+        }
         pkg.text = ai.packageName
         switchWidget.isChecked = AuthorizationManager.granted(packageName, uid)
         root.visibility = if (ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_REQUIRES_ROOT")) View.VISIBLE else View.GONE

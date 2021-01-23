@@ -25,6 +25,20 @@ object ShizukuSystemApis {
         HiddenApiBridge.IPermissionManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
     }
 
+    private val userManager by unsafeLazy {
+        HiddenApiBridge.IUserManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("user")))
+    }
+
+    fun getUsers(): List<Int> {
+        return if (!Shizuku.pingBinder()) {
+            ArrayList(UserHandleCompat.myUserId())
+        } else try {
+            HiddenApiBridge.IUserManager_getUsers(userManager)
+        } catch (tr: Throwable) {
+            ArrayList(UserHandleCompat.myUserId())
+        }
+    }
+
     fun getInstalledPackages(flags: Int, userId: Int): List<PackageInfo> {
         return if (!Shizuku.pingBinder()) {
             ArrayList()

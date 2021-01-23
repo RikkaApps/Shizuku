@@ -8,7 +8,9 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
+import android.content.pm.UserInfo;
 import android.os.IBinder;
+import android.os.IUserManager;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -76,6 +78,24 @@ public class HiddenApiBridge {
 
     public static String PackageInfo_overlayTarget(PackageInfo packageInfo) {
         return packageInfo.overlayTarget;
+    }
+
+    public static Object IUserManager_Stub_asInterface(IBinder binder) {
+        return IUserManager.Stub.asInterface(binder);
+    }
+
+    public static List<Integer> IUserManager_getUsers(Object um) throws RemoteException {
+        List<UserInfo> list;
+        try {
+            list = ((IUserManager) um).getUsers(true, true, true);
+        } catch (NoSuchMethodError e) {
+            list = ((IUserManager) um).getUsers(true);
+        }
+        List<Integer> users = new ArrayList<>();
+        for (UserInfo ui : list) {
+            users.add(ui.id);
+        }
+        return users;
     }
 
     public static Object IPackageManager_Stub_asInterface(IBinder binder) {

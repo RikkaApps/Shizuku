@@ -2,8 +2,8 @@ package moe.shizuku.manager.authorization
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.os.Process
 import moe.shizuku.manager.Manifest
+import moe.shizuku.manager.utils.Logger.LOGGER
 import moe.shizuku.manager.utils.ShizukuSystemApis
 import rikka.shizuku.Shizuku
 import java.util.*
@@ -15,8 +15,16 @@ object AuthorizationManager {
     private const val MASK_PERMISSION = FLAG_ALLOWED or FLAG_DENIED
 
     fun getPackages(pmFlags: Int): List<PackageInfo> {
+        val allPackages: MutableList<PackageInfo> = ArrayList()
+        for (user in ShizukuSystemApis.getUsers()) {
+            try {
+                allPackages.addAll(ShizukuSystemApis.getInstalledPackages(pmFlags or PackageManager.GET_PERMISSIONS, user))
+            } catch (e: Throwable) {
+                LOGGER.w(e, "getInstalledPackages")
+            }
+        }
         val packages: MutableList<PackageInfo> = ArrayList()
-        for (pi in ShizukuSystemApis.getInstalledPackages(pmFlags or PackageManager.GET_PERMISSIONS, Process.myUid() / 100000)) {
+        for (pi in allPackages) {
             if (pi.requestedPermissions == null) continue
             for (p in pi.requestedPermissions) {
                 if (Manifest.permission.API_V23 == p) {
