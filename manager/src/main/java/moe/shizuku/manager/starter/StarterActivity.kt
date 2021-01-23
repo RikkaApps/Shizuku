@@ -24,6 +24,7 @@ import moe.shizuku.manager.viewmodel.Resource
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.material.widget.BorderView
+import rikka.shizuku.Shizuku
 import java.net.ConnectException
 import javax.net.ssl.SSLProtocolException
 
@@ -53,9 +54,20 @@ class StarterActivity : AppBarActivity() {
 
         viewModel.output.observe(this) {
             val output = it.data!!.trim()
-            binding.text1.text = output
             if (output.endsWith("info: shizuku_starter exit with 0")) {
-                finish()
+                viewModel.appendOutput("")
+                viewModel.appendOutput("Waiting for service...")
+
+                Shizuku.addBinderReceivedListenerSticky(object : Shizuku.OnBinderReceivedListener {
+                    override fun onBinderReceived() {
+                        Shizuku.removeBinderReceivedListener(this)
+                        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
+
+                        window?.decorView?.postDelayed({
+                            if (!isFinishing) finish()
+                        }, 3000)
+                    }
+                })
             } else if (it.status == Status.ERROR) {
                 var message = 0
                 when (it.error) {
@@ -80,6 +92,7 @@ class StarterActivity : AppBarActivity() {
                             .show()
                 }
             }
+            binding.text1.text = output
         }
     }
 
@@ -117,6 +130,11 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         } catch (e: Throwable) {
             postResult(e)
         }
+    }
+
+    fun appendOutput(line: String) {
+        sb.appendLine(line)
+        postResult()
     }
 
     private fun postResult(throwable: Throwable? = null) {
