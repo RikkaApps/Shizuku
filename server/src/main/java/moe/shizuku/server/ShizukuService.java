@@ -112,12 +112,12 @@ public class ShizukuService extends IShizukuService.Stub {
     private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
     private final ClientManager clientManager;
     private final ConfigManager configManager;
-    private final int managerUid;
+    private final int managerAppId;
 
     ShizukuService(ApplicationInfo ai) {
         super();
 
-        managerUid = ai.uid;
+        managerAppId = ai.uid;
 
         configManager = ConfigManager.getInstance();
         clientManager = ClientManager.getInstance();
@@ -152,7 +152,7 @@ public class ShizukuService extends IShizukuService.Stub {
         int callingUid = Binder.getCallingUid();
         int callingPid = Binder.getCallingPid();
 
-        if (callingPid == Os.getpid() || callingUid == managerUid) {
+        if (callingPid == Os.getpid() || UserHandleCompat.getAppId(callingUid) == managerAppId) {
             return;
         }
 
@@ -167,7 +167,7 @@ public class ShizukuService extends IShizukuService.Stub {
         int callingUid = Binder.getCallingUid();
         int callingPid = Binder.getCallingPid();
 
-        if (callingUid == OsUtils.getUid() || callingUid == managerUid) {
+        if (callingUid == OsUtils.getUid() || UserHandleCompat.getAppId(callingUid) == managerAppId) {
             return;
         }
 
@@ -709,7 +709,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
-        if (Binder.getCallingUid() != managerUid) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid())!= managerAppId) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
         }
@@ -760,7 +760,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public int getFlagsForUid(int uid, int mask) {
-        if (Binder.getCallingUid() != managerUid) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("updateFlagsForUid is allowed to be called only from the manager");
             return 0;
         }
@@ -789,7 +789,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void updateFlagsForUid(int uid, int mask, int value) throws RemoteException {
-        if (Binder.getCallingUid() != managerUid) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("updateFlagsForUid is allowed to be called only from the manager");
             return;
         }
