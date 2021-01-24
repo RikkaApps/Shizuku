@@ -72,7 +72,9 @@ def optimizeReleaseResources = task('optimizeReleaseResources').doLast {
     def optimized = new File("${zip}.opt")
     def cmd = exec {
         commandLine aapt2, 'optimize', '--collapse-resource-names',
-                '--shorten-resource-paths', '-o', optimized, zip
+                '--shorten-resource-paths',
+                '--resources-config-path', 'aapt2-resources.cfg',
+                '-o', optimized, zip
         ignoreExitValue false
     }
     if (cmd.exitValue == 0) {
