@@ -20,8 +20,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${C_FLAGS}")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${LINKER_FLAGS}")
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../../../build/starter/${ANDROID_ABI})
-
 find_library(log-lib log)
 find_package(boringssl REQUIRED CONFIG)
 
@@ -29,6 +27,9 @@ add_executable(libshizuku.so
         starter.cpp misc.cpp selinux.cpp cgroup.cpp android.cpp)
 
 target_link_libraries(libshizuku.so ${log-lib})
+
+add_custom_command(TARGET libshizuku.so POST_BUILD
+        COMMAND ${CMAKE_STRIP} --remove-section=.comment "libshizuku.so")
 
 #add_library(helper SHARED
 #        helper.cpp selinux.cpp)
@@ -39,3 +40,6 @@ add_library(adb SHARED
         adb_pairing.cpp bypass.cpp misc.cpp pmparser.c)
 
 target_link_libraries(adb ${log-lib} boringssl::crypto)
+
+add_custom_command(TARGET adb POST_BUILD
+        COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libadb.so")
