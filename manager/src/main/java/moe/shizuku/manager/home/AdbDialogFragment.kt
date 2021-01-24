@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
+import hidden.HiddenApiBridge
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbMdns
 import moe.shizuku.manager.databinding.AdbDialogBinding
@@ -31,11 +32,18 @@ class AdbDialogFragment : DialogFragment() {
         binding = AdbDialogBinding.inflate(LayoutInflater.from(context))
         adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT, port)
 
+        var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
+        if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
+
         val builder = AlertDialog.Builder(context).apply {
             setTitle(R.string.dialog_adb_discovery)
             setView(binding.root)
             setNegativeButton(android.R.string.cancel, null)
             setPositiveButton(R.string.development_settings, null)
+
+            if (port != -1) {
+                setNeutralButton("$port", null)
+            }
         }
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
@@ -60,18 +68,28 @@ class AdbDialogFragment : DialogFragment() {
             }
         }
 
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
+            var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
+            if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
+            startAndDismiss(port)
+        }
+
         port.observe(this) {
             if (it > 65535 || it < 1) return@observe
-            val host = InetAddress.getLoopbackAddress().hostName
-            val intent = Intent(context, StarterActivity::class.java).apply {
-                putExtra(StarterActivity.EXTRA_IS_ROOT, false)
-                putExtra(StarterActivity.EXTRA_HOST, host)
-                putExtra(StarterActivity.EXTRA_PORT, it)
-            }
-            requireContext().startActivity(intent)
-
-            dismissAllowingStateLoss()
+            startAndDismiss(it)
         }
+    }
+
+    private fun startAndDismiss(port: Int) {
+        val host = InetAddress.getLoopbackAddress().hostName
+        val intent = Intent(context, StarterActivity::class.java).apply {
+            putExtra(StarterActivity.EXTRA_IS_ROOT, false)
+            putExtra(StarterActivity.EXTRA_HOST, host)
+            putExtra(StarterActivity.EXTRA_PORT, port)
+        }
+        requireContext().startActivity(intent)
+
+        dismissAllowingStateLoss()
     }
 
     fun show(fragmentManager: FragmentManager) {
