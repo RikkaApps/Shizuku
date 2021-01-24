@@ -127,7 +127,6 @@ object Starter {
             os.println(line!!
                     .replace("%%%STARTER_PATH%%%", starter)
                     .replace("%%%STARTER_PARAM%%%", getStarterParam(serverDex, starterDex))
-                    //.replace("%%%LIBRARY_PATH%%%", getLibPath(context, "libhelper.so"))
             )
         }
         os.flush()

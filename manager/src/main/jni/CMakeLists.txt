@@ -31,11 +31,6 @@ target_link_libraries(libshizuku.so ${log-lib})
 add_custom_command(TARGET libshizuku.so POST_BUILD
         COMMAND ${CMAKE_STRIP} --remove-section=.comment "libshizuku.so")
 
-#add_library(helper SHARED
-#        helper.cpp selinux.cpp)
-#
-#target_link_libraries(helper ${log-lib})
-
 add_library(adb SHARED
         adb_pairing.cpp bypass.cpp misc.cpp pmparser.c)
 
