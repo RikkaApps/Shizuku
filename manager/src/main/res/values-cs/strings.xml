@@ -50,14 +50,12 @@
     <string name="home_app_management_title">Správa aplikací</string>
     <string name="home_root_button_restart">Restartovat</string>
     <string name="home_root_button_start">Spustit</string>
-    <string name="magisk_module">Magisk modul</string>
-    <string name="home_root_description_magisk">Pokud stále nedovolíte, aby váš systém umožňoval spuštění Shizuku při spuštění, můžete zkusit použít %s.</string>
     <string name="home_root_description">Kromě toho lze Shizuku spustit automaticky při spuštění. Pokud ne, zkontrolujte, zda váš systém nebo nástroje třetích stran neomezují Shizuku. &lt;br&gt; Můžete se podívat na %s.</string>
     <string name="home_adb_title">Spustit připojením k počítači</string>
     <string name="home_status_service_version_update">Verze %2$d, %1$s&lt;br&gt;Znovu spusťte pro aktualizaci na verzi %3$d</string>
     <string name="home_status_service_version">Verze %2$d, %1$s</string>
-    <string name="home_status_service_not_running">%1$ neběží</string>
-    <string name="home_status_service_is_running">%1$ běží</string>
+    <string name="home_status_service_not_running">%1$s neběží</string>
+    <string name="home_status_service_is_running">%1$s běží</string>
     <string name="home_root_title">Start (pro rootovaná zařízení)</string>
     <string name="development_settings">Developer options</string>
     <string name="adb_pair_required">Nejprve projděte krok párování.</string>
