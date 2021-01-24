@@ -42,6 +42,7 @@ def baseVersionName = "${api_version_major}.1.1"
 ext {
     minSdkVersion = 23
     targetSdkVersion = 30
+    buildToolsVersion = "30.0.3"
     ndkVersion = "21.3.6528147"
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
