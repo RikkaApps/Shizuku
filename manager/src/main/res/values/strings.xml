@@ -52,7 +52,6 @@
     <!-- Home - Application management -->
     <string name="home_app_management_title">Application management</string>
     <plurals name="home_app_management_authorized_apps_count">
-        <item quantity="zero"><![CDATA[Authorized %d application]]></item>
         <item quantity="one"><![CDATA[Authorized %d application]]></item>
         <item quantity="other"><![CDATA[Authorized %d applications]]></item>
     </plurals>
