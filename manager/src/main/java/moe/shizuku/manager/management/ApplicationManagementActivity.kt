@@ -87,11 +87,6 @@ class ApplicationManagementActivity : AppBarActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.apps, menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()
