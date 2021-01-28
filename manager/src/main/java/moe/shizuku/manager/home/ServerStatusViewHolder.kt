@@ -40,10 +40,7 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
         }
         val title: String
         val summary: String
-        var user = if (isRoot) "root" else "adb"
-        if (isRoot) {
-            user += if (status.seContext != null) " (context=" + status.seContext + ")" else ""
-        }
+        val user = if (isRoot) "root" else "adb"
         title = if (ok) {
             context.getString(R.string.home_status_service_is_running, context.getString(R.string.app_name))
         } else {
