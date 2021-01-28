@@ -14,6 +14,7 @@ import moe.shizuku.manager.authorization.AuthorizationManager
 import moe.shizuku.manager.databinding.AppListItemBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.utils.AppIconCache
+import moe.shizuku.manager.utils.ShizukuSystemApis
 import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
@@ -79,9 +80,11 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
 
     override fun onBind() {
         val pm = itemView.context.packageManager
+        val userId = UserHandleCompat.getUserId(uid)
         icon.setImageDrawable(ai.loadIcon(pm))
-        name.text = if (UserHandleCompat.getUserId(uid) != UserHandleCompat.myUserId()) {
-            "${ai.loadLabel(pm)} - ${UserHandleCompat.getUserId(uid)}"
+        name.text = if (userId != UserHandleCompat.myUserId()) {
+            val userInfo = ShizukuSystemApis.getUserInfo(userId)
+            "${ai.loadLabel(pm)} - ${userInfo.name} ($userId)"
         } else {
             ai.loadLabel(pm)
         }

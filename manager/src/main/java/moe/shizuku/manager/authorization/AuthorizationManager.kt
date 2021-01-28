@@ -16,9 +16,9 @@ object AuthorizationManager {
 
     fun getPackages(pmFlags: Int): List<PackageInfo> {
         val allPackages: MutableList<PackageInfo> = ArrayList()
-        for (user in ShizukuSystemApis.getUsers()) {
+        for (user in ShizukuSystemApis.getUsers(useCache = false)) {
             try {
-                allPackages.addAll(ShizukuSystemApis.getInstalledPackages(pmFlags or PackageManager.GET_PERMISSIONS, user))
+                allPackages.addAll(ShizukuSystemApis.getInstalledPackages(pmFlags or PackageManager.GET_PERMISSIONS, user.id))
             } catch (e: Throwable) {
                 LOGGER.w(e, "getInstalledPackages")
             }

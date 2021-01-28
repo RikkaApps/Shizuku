@@ -84,16 +84,16 @@ public class HiddenApiBridge {
         return IUserManager.Stub.asInterface(binder);
     }
 
-    public static List<Integer> IUserManager_getUsers(Object um) throws RemoteException {
+    public static List<UserInfoCompat> IUserManager_getUsers(Object um) throws RemoteException {
         List<UserInfo> list;
         try {
             list = ((IUserManager) um).getUsers(true, true, true);
         } catch (NoSuchMethodError e) {
             list = ((IUserManager) um).getUsers(true);
         }
-        List<Integer> users = new ArrayList<>();
+        List<UserInfoCompat> users = new ArrayList<>();
         for (UserInfo ui : list) {
-            users.add(ui.id);
+            users.add(new UserInfoCompat(ui.id, ui.name));
         }
         return users;
     }
