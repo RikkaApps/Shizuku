@@ -45,8 +45,6 @@
     <string name="home_app_management_title">Ծրագրերի տիրապետում</string>
     <string name="home_root_button_restart">Վերաբեռնել</string>
     <string name="home_root_button_start">Միացնել</string>
-    <string name="magisk_module">Magisk-ի մոդուլը</string>
-    <string name="home_root_description_magisk">Եթե դուք կրկին չեք կարողանա Shizuku-ի միանալը ավտոմատացնել, փորձեք օգտագործել %s։</string>
     <string name="home_root_title">Միացնել (root արած սարքերի համար)</string>
     <string name="development_settings">Ծրագրավորողի կարգավորումներ</string>
     <string name="adb_pair_required">Խնդրում ենք սկզբում կատարել զուգելու քայլերը։</string>

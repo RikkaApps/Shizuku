@@ -44,5 +44,5 @@
     <string name="translation_contributors">MrIkso</string>
     <string name="grant_dialog_button_allow_always">Завжди дозволяти</string>
     <string name="grant_dialog_button_deny">Заборонити</string>
-    <string name="permission_warning_template"><![CDATA[Дозволити додатку &lt;b&gt;%1$s&lt;/b&gt; таке: %2$s?]]></string>
+    <string name="permission_warning_template">Дозволити додатку <b>%1$s</b> таке: %2$s\?</string>
 </resources>

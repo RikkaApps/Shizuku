@@ -38,7 +38,6 @@
     <string name="home_app_management_title">Zarządzanie aplikacjami</string>
     <string name="home_root_button_restart">Restart</string>
     <string name="home_root_button_start">Start</string>
-    <string name="magisk_module">moduł Magisk</string>
     <string name="translation_contributors">"Gabriel Markowski "</string>
     <string name="dialog_adb_discovery">Szukanie usługi bezprzewodowego debugowania</string>
     <string name="home_adb_button_view_help">Przeczytaj pomoc</string>

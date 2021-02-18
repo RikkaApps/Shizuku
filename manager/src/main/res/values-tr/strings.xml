@@ -86,8 +86,6 @@
     <string name="settings_start_on_boot_summary">Rootlu cihazlar için, Shizuku sistem açılışı sırasında otomatik olarak başlayabilir</string>
     <string name="settings_start_on_boot">Sistem açılışında başlat (root)</string>
     <string name="settings_translation_summary_percentage">" (%s kadar çeviri yapıldı)"</string>
-    <string name="magisk_module">Magisk modülü</string>
-    <string name="home_root_description_magisk">Sisteminiz, Shizuku\'nun açılışta başlatılmasına izin vermesine rağmen hâlâ izin vermiyorsa, %s kullanmayı deneyebilirsiniz.</string>
     <string name="grant_dialog_button_allow_always">Her zaman izin ver</string>
     <string name="grant_dialog_button_deny">Reddet</string>
     <string name="permission_warning_template"><![CDATA[&lt;b&gt;%1$s&lt;/b&gt; uygulamasına %2$s için izin verilsin mi?]]></string>

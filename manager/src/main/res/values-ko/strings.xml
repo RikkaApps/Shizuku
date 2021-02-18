@@ -28,7 +28,6 @@
     <string name="development_settings">개발자 옵션</string>
     <string name="home_root_title">시작 (루트된 기기용)</string>
     <string name="home_root_description">Shizuku는 부팅 시 자동으로 시작됩니다. 그렇지 않을 경우, 시스템 또는 제 3자 도구에서 Shizuku를 제한하고 있는지 확인하세요.&lt;br&gt;%s를 참조할 수 있습니다.</string>
-    <string name="magisk_module">Magisk 모듈</string>
     <string name="home_root_button_start">시작</string>
     <string name="home_root_button_restart">다시 시작</string>
     <string name="home_app_management_title">앱 관리</string>
@@ -36,7 +35,6 @@
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other">%d개 앱 인증됨</item>
     </plurals>
-    <string name="home_root_description_magisk">여전히 시스템에서 부팅 시 Shizuku를 시작하도록 허용하지 않은 경우, %s를 사용해 볼 수 있습니다.</string>
     <string name="home_learn_more_title">Shizuku 알아보기</string>
     <string name="settings_title">설정</string>
     <string name="home_learn_more_description">Shizuku와 개발하거나 Shizuku를 사용하는 앱 알아보기</string>
