@@ -93,12 +93,19 @@ object SystemService {
     @JvmStatic
     @Throws(RemoteException::class)
     fun checkPermission(permName: String?, uid: Int): Int {
-        return if (BuildUtils.atLeast30()) {
-            val permmgr = permissionManager ?: throw RemoteException("can't get IPermission")
-            permmgr.checkUidPermission(permName, uid)
-        } else {
-            val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
-            pm.checkUidPermission(permName, uid)
+        return when {
+            BuildUtils.atLeast31() -> {
+                val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
+                pm.checkUidPermission(permName, uid)
+            }
+            BuildUtils.atLeast30() -> {
+                val permmgr = permissionManager ?: throw RemoteException("can't get IPermission")
+                permmgr.checkUidPermission(permName, uid)
+            }
+            else -> {
+                val pm = packageManager ?: throw RemoteException("can't get IPackageManger")
+                pm.checkUidPermission(permName, uid)
+            }
         }
     }
 

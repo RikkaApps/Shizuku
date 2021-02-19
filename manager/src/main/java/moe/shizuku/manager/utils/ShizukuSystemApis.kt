@@ -70,7 +70,9 @@ object ShizukuSystemApis {
         return if (!Shizuku.pingBinder()) {
             PackageManager.PERMISSION_DENIED
         } else try {
-            if (Build.VERSION.SDK_INT >= 30) {
+            if (Build.VERSION.SDK_INT >= 31 || Build.VERSION.SDK_INT == 30 && Build.VERSION.PREVIEW_SDK_INT > 0) {
+                HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
+            } else if (Build.VERSION.SDK_INT >= 30) {
                 HiddenApiBridge.IPermissionManager_checkPermission(permissionManager, permName, pkgName, userId)
             } else {
                 HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
