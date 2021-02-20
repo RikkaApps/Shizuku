@@ -22,10 +22,10 @@ import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
-import rikka.material.widget.BorderRecyclerView
-import rikka.material.widget.BorderView
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
+import rikka.widget.borderview.BorderRecyclerView
+import rikka.widget.borderview.BorderView
 import java.text.NumberFormat
 import java.util.*
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE

@@ -16,7 +16,7 @@ class ShizukuApplication : Application() {
         init {
             logd("ShizukuApplication", "init")
 
-            Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
+            Shell.setDefaultBuilder(Shell.Builder.create().setFlags(Shell.FLAG_REDIRECT_STDERR))
             if (atLeast30) {
                 System.loadLibrary("adb")
             }

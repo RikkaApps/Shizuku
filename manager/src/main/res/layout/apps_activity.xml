@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rikka.material.widget.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<rikka.widget.borderview.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/list"
     android:layout_width="match_parent"
@@ -10,8 +10,8 @@
     android:paddingEnd="@dimen/rd_activity_horizontal_margin"
     android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical"
-    app:borderBottomStyle="never"
+    app:borderBottomVisibility="never"
     app:borderTopDrawable="@null"
-    app:borderTopStyle="whenTop"
+    app:borderTopVisibility="whenTop"
     app:fitSystemWindowsInsets="bottom|top"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

@@ -11,10 +11,10 @@ import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AppsActivityBinding
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.manager.viewmodel.Status
-import rikka.material.widget.BorderView
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
+import rikka.widget.borderview.BorderView
 import java.util.*
 
 class ApplicationManagementActivity : AppBarActivity() {

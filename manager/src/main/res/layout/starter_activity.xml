@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <rikka.material.widget.BorderScrollView
+    <rikka.widget.borderview.BorderNestedScrollView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,9 +13,9 @@
         android:paddingTop="?actionBarSize"
         android:scrollbarStyle="insideOverlay"
         android:scrollbars="vertical"
-        app:borderBottomStyle="never"
+        app:borderBottomVisibility="never"
         app:borderTopDrawable="@null"
-        app:borderTopStyle="whenTop"
+        app:borderTopVisibility="whenTop"
         app:fitSystemWindowsInsets="top|bottom">
 
         <TextView
@@ -31,6 +31,6 @@
             android:textIsSelectable="true"
             android:textSize="12sp" />
 
-    </rikka.material.widget.BorderScrollView>
+    </rikka.widget.borderview.BorderNestedScrollView>
 
 </FrameLayout>

@@ -8,7 +8,7 @@ idea.module {
 buildscript {
     apply from: 'api/manifest.gradle'
 
-    ext.kotlinVersion = '1.4.21'
+    ext.kotlinVersion = '1.4.30'
     repositories {
         jcenter()
         google()

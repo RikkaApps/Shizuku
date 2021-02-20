@@ -23,8 +23,8 @@ import moe.shizuku.manager.databinding.StarterActivityBinding
 import moe.shizuku.manager.viewmodel.Resource
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
-import rikka.material.widget.BorderView
 import rikka.shizuku.Shizuku
+import rikka.widget.borderview.BorderView
 import java.net.ConnectException
 import javax.net.ssl.SSLProtocolException
 

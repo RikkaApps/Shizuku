@@ -24,10 +24,11 @@ import moe.shizuku.manager.utils.AppIconCache
 import moe.shizuku.manager.viewmodel.Status
 import moe.shizuku.manager.viewmodel.viewModels
 import rikka.core.ktx.unsafeLazy
+import rikka.insets.*
 import rikka.material.widget.*
-import rikka.material.widget.BorderView.OnBorderVisibilityChangedListener
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
+import rikka.widget.borderview.BorderView
 
 abstract class HomeActivity : AppBarActivity() {
 
@@ -67,7 +68,7 @@ abstract class HomeActivity : AppBarActivity() {
 
         val recyclerView = binding.list
         recyclerView.adapter = adapter
-        recyclerView.borderViewDelegate.borderVisibilityChangedListener = OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
+        recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar!!.setRaised(!top) }
         recyclerView.fixEdgeEffect(alwaysClipToPadding = false)
 
         val margin = resources.getDimension(R.dimen.home_margin).toInt()
