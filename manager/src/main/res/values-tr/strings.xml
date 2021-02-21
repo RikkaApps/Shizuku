@@ -23,8 +23,8 @@
     <string name="home_adb_button_view_help">Yardımı oku</string>
     <string name="home_adb_description">Rootsuz cihazlar için Shizuku\'yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlem, cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen &lt;b&gt;&lt;a href=\"%1$s\"&gt;yardımı okuyun&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="home_adb_title">Bilgisayara bağlanarak başlatın</string>
-    <string name="home_status_service_version_update">Sürüm %2$d, %1$s&lt;br&gt;Sürüm %3$d, güncelleştirmek için yeniden başlatın</string>
-    <string name="home_status_service_version">Sürüm %2$d, %1$s</string>
+    <string name="home_status_service_version_update">Sürüm %2$s, %1$s&lt;br&gt;Sürüm %3$s, güncelleştirmek için yeniden başlatın</string>
+    <string name="home_status_service_version">Sürüm %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s çalışmıyor</string>
     <string name="home_status_service_is_running">%1$s çalışıyor</string>
     <plurals name="home_app_management_authorized_apps_count">

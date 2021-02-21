@@ -24,10 +24,10 @@
     <string name="home_adb_dialog_view_command_button_send">Відправити</string>
     <string name="settings_language">Мова</string>
     <string name="home_root_button_start">Заупск</string>
-    <string name="home_status_service_version">версія %2$d, %1$s</string>
+    <string name="home_status_service_version">версія %2$s, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
-    <string name="home_status_service_version_update">версія %2$d, %1$s&lt;br&gt;почніть оновлюватися до версії %3$d</string>
+    <string name="home_status_service_version_update">версія %2$s, %1$s&lt;br&gt;почніть оновлюватися до версії %3$s</string>
     <string name="permission_label">доступ до Shizuku</string>
     <string name="app_management_item_summary_requires_root">* потрібен root, щоб запускався Shizuku</string>
     <string name="home_status_service_not_running">%1$s не працює</string>

@@ -24,8 +24,9 @@ class HomeViewModel : ViewModel() {
         }
 
         val uid = Shizuku.getUid()
-        val version = Shizuku.getVersion()
-        val seContext = if (version >= 6) {
+        val apiVersion = Shizuku.getVersion()
+        val patchVersion = Shizuku.getServerPatchVersion().let { if (it < 0) 0 else it }
+        val seContext = if (apiVersion >= 6) {
             try {
                 Shizuku.getSELinuxContext()
             } catch (tr: Throwable) {
@@ -34,7 +35,7 @@ class HomeViewModel : ViewModel() {
             }
         } else null
         val permissionTest = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
-        return ServiceStatus(uid, version, seContext, permissionTest)
+        return ServiceStatus(uid, apiVersion, patchVersion, seContext, permissionTest)
     }
 
     fun reload() {

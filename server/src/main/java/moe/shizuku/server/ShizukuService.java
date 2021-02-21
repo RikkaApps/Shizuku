@@ -53,6 +53,7 @@ import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static moe.shizuku.server.ServerConstants.PERMISSION;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_PATCH_VERSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
@@ -621,6 +622,8 @@ public class ShizukuService extends IShizukuService.Stub {
         if (!isManager) {
             reply.putBoolean(ATTACH_REPLY_PERMISSION_GRANTED, clientRecord.allowed);
             reply.putBoolean(ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
+        } else {
+            reply.putInt(ATTACH_REPLY_SERVER_PATCH_VERSION, ServerConstants.PATCH_VERSION);
         }
         try {
             application.bindApplication(reply);

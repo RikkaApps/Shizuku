@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_status_service_version">Version %2$d, %1$s</string>
+    <string name="home_status_service_version">Version %2$s, %1$s</string>
     <string name="toast_copied_to_clipboard">%s
 \nはクリップボードにコピーされました。</string>
     <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; はクリップボードにコピーされました。</string>

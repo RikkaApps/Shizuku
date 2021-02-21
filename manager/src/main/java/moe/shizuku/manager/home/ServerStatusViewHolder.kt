@@ -9,6 +9,7 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.widget.MaterialCircleIconView
+import moe.shizuku.server.ServerConstants
 import rikka.html.text.HtmlCompat
 import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder
@@ -30,7 +31,8 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
         val status = data
         val ok = status.isRunning
         val isRoot = status.uid == 0
-        val version = status.version
+        val apiVersion = status.apiVersion
+        val patchVersion = status.patchVersion
         if (ok) {
             iconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_24dp))
             iconView.colorName = "blue"
@@ -38,19 +40,19 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
             iconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_24dp))
             iconView.colorName = "blue_grey"
         }
-        val title: String
-        val summary: String
         val user = if (isRoot) "root" else "adb"
-        title = if (ok) {
+        val title = if (ok) {
             context.getString(R.string.home_status_service_is_running, context.getString(R.string.app_name))
         } else {
             context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name))
         }
-        summary = if (ok) {
-            if (status.version != Shizuku.getLatestServiceVersion()) {
-                context.getString(R.string.home_status_service_version_update, user, version, Shizuku.getLatestServiceVersion())
+        val summary = if (ok) {
+            if (apiVersion != Shizuku.getLatestServiceVersion() || status.patchVersion != ServerConstants.PATCH_VERSION) {
+                context.getString(R.string.home_status_service_version_update, user,
+                        "${apiVersion}.${patchVersion}",
+                        "${Shizuku.getLatestServiceVersion()}.${ServerConstants.PATCH_VERSION}")
             } else {
-                context.getString(R.string.home_status_service_version, user, version)
+                context.getString(R.string.home_status_service_version, user, "${apiVersion}.${patchVersion}")
             }
         } else {
             ""

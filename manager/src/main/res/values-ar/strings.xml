@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_status_service_version">الإصدار %2$d, %1$s</string>
+    <string name="home_status_service_version">الإصدار %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s ليس قيد التشغيل</string>
     <string name="home_status_service_is_running">%1$s قيد التشغيل</string>
 </resources>

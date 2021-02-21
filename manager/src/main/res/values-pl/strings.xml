@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_adb_title">Uruchom poprzez podłączenie do komputera</string>
-    <string name="home_status_service_version_update">Wersja %2$d, %1$s&lt;br&gt;Uruchom ponownie aby uaktualnić do wersji %3$d</string>
-    <string name="home_status_service_version">Wersja %2$d, %1$s</string>
+    <string name="home_status_service_version_update">Wersja %2$s, %1$s&lt;br&gt;Uruchom ponownie aby uaktualnić do wersji %3$s</string>
+    <string name="home_status_service_version">Wersja %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s nie działa</string>
     <string name="home_status_service_is_running">%1$s działa</string>
     <string name="home_adb_button_view_command">Zobacz komendę</string>

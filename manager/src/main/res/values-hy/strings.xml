@@ -78,8 +78,8 @@
     <string name="home_adb_button_view_help">Կարդալ օգնությունը</string>
     <string name="home_adb_description">Առանց «root» թույլտվություն ունեցող սարքերի օգտատերերը պետք է օգտագործեն adb, որպեսզի միացնեն Shizuku-ն (անհրաժեշտ է համակարգչային կապ)։ Այս գործողությունը պետք է կրկնել ամեն անգամ սարքի վերաբեռնելուց հետո։ Խնդրում ենք &lt;b&gt;&lt;a href=\"%1$s\"&gt;կարդալ օգնությունը&lt;/a&gt;&lt;/b&gt;։</string>
     <string name="home_adb_title">Միացնել համակարգչի օգնությամբ</string>
-    <string name="home_status_service_version_update">Փոփոխակ %2$d, %1$s&lt;br&gt;Միացրեք կրկին որպեսզի թարմացնեք դեպի %3$d փոփոխակ</string>
-    <string name="home_status_service_version">Փոփոխակ %2$d, %1$s</string>
+    <string name="home_status_service_version_update">Փոփոխակ %2$s, %1$s&lt;br&gt;Միացրեք կրկին որպեսզի թարմացնեք դեպի %3$s փոփոխակ</string>
+    <string name="home_status_service_version">Փոփոխակ %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s-ը միացված չէ</string>
     <string name="home_status_service_is_running">%1$s-ը միացված է</string>
     <string name="translation_contributors">Tigran Khachatryan</string>

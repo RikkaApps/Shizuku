@@ -80,8 +80,8 @@
     <string name="home_adb_button_view_help">Читать справку</string>
     <string name="home_adb_description">Для устройств без root прав потребуется обращаться к adb для запуска Shizuku (не обойтись без соединения с компьютером). Этот процесс нужно повторять каждый раз, когда устройство перезагружается. Пожалуйста, <b><a href="%1$s">прочтите справку</a></b>.</string>
     <string name="home_adb_title">Запуск через соединение с ПК</string>
-    <string name="home_status_service_version_update">Версия %2$d, %1$s&lt;br&gt;Обновитесь до версии %3$d и запустите снова</string>
-    <string name="home_status_service_version">Версия %2$d, %1$s</string>
+    <string name="home_status_service_version_update">Версия %2$s, %1$s&lt;br&gt;Обновитесь до версии %3$s и запустите снова</string>
+    <string name="home_status_service_version">Версия %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s не запущен</string>
     <string name="home_status_service_is_running">%1$s запущен</string>
     <string name="translation_contributors">sermart1234, ruvlad</string>

@@ -7,8 +7,8 @@
     <!-- Home - Status -->
     <string name="home_status_service_is_running">%1$s is running</string>
     <string name="home_status_service_not_running">%1$s not running</string>
-    <string name="home_status_service_version">Version %2$d, %1$s</string>
-    <string name="home_status_service_version_update"><![CDATA[Version %2$d, %1$s<br>Start again to update to version %3$d]]></string>
+    <string name="home_status_service_version">Version %2$s, %1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[Version %2$s, %1$s<br>Start again to update to version %3$s]]></string>
 
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[Start by connecting to a computer]]></string>
