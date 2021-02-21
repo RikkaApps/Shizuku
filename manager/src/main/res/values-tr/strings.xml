@@ -88,5 +88,5 @@
     <string name="settings_translation_summary_percentage">" (%s kadar çeviri yapıldı)"</string>
     <string name="grant_dialog_button_allow_always">Her zaman izin ver</string>
     <string name="grant_dialog_button_deny">Reddet</string>
-    <string name="permission_warning_template"><![CDATA[&lt;b&gt;%1$s&lt;/b&gt; uygulamasına %2$s için izin verilsin mi?]]></string>
+    <string name="permission_warning_template"><b>%1$s</b> uygulamasına %2$s için izin verilsin mi\?</string>
 </resources>
