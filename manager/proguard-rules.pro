@@ -14,13 +14,13 @@
 
 # Missing class android.app.IProcessObserver$Stub
 # Missing class android.app.IUidObserver$Stub
-#-keepclassmembers class hidden.ProcessObserverAdapter {
-#    <methods>;
-#}
-#
-#-keepclassmembers class hidden.UidObserverAdapter {
-#    <methods>;
-#}
+-keepclassmembers class hidden.ProcessObserverAdapter {
+    <methods>;
+}
+
+-keepclassmembers class hidden.UidObserverAdapter {
+    <methods>;
+}
 
 # Entrance of Shizuku service
 -keep class moe.shizuku.server.ShizukuService {
