@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import moe.shizuku.manager.BuildConfig
+import moe.shizuku.manager.Manifest
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.utils.Logger.LOGGER
+import moe.shizuku.manager.utils.ShizukuSystemApis
 import moe.shizuku.manager.viewmodel.Resource
 import rikka.shizuku.Shizuku
 
@@ -35,6 +38,10 @@ class HomeViewModel : ViewModel() {
             }
         } else null
         val permissionTest = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
+
+        // Before a526d6bb, server will not exit on uninstall, manager installed later will get not permission
+        // Run a random remote transaction here, report no permission as not running
+        ShizukuSystemApis.checkPermission(Manifest.permission.API_V23, BuildConfig.APPLICATION_ID, 0)
         return ServiceStatus(uid, apiVersion, patchVersion, seContext, permissionTest)
     }
 
@@ -46,7 +53,7 @@ class HomeViewModel : ViewModel() {
             } catch (e: CancellationException) {
 
             } catch (e: Throwable) {
-                _serviceStatus.postValue(Resource.error(e))
+                _serviceStatus.postValue(Resource.error(e, ServiceStatus()))
             }
         }
     }
