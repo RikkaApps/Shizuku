@@ -10,6 +10,7 @@ public class UidObserverAdapter extends IUidObserver.Stub {
     /**
      * Report that there are no longer any processes running for a uid.
      */
+    @Override
     public void onUidGone(int uid, boolean disabled) throws RemoteException {
 
     }
@@ -17,6 +18,7 @@ public class UidObserverAdapter extends IUidObserver.Stub {
     /**
      * Report that a uid is now active (no longer idle).
      */
+    @Override
     public void onUidActive(int uid) throws RemoteException {
 
     }
@@ -25,6 +27,7 @@ public class UidObserverAdapter extends IUidObserver.Stub {
      * Report that a uid is idle -- it has either been running in the background for
      * a sufficient period of time, or all of its processes have gone away.
      */
+    @Override
     public void onUidIdle(int uid, boolean disabled) throws RemoteException {
 
     }
@@ -37,6 +40,7 @@ public class UidObserverAdapter extends IUidObserver.Stub {
      * @param procStateSeq The sequence no. associated with process state change of the uid,
      *                     see UidRecord.procStateSeq for details.
      */
+    @Override
     public void onUidStateChanged(int uid, int procState, long procStateSeq) throws RemoteException {
 
     }
@@ -49,6 +53,7 @@ public class UidObserverAdapter extends IUidObserver.Stub {
      * onUidCached() has been reported true.  It will happen when either one of its actively
      * running processes is no longer cached, or it no longer has any actively running processes.
      */
+    @Override
     public void onUidCachedChanged(int uid, boolean cached) throws RemoteException {
 
     }

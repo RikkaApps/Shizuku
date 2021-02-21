@@ -19,8 +19,6 @@ class BootCompleteReceiver : BroadcastReceiver() {
         }
         if (Process.myUid() / 100000 > 0) return
 
-        Starter.writeFiles(context)
-
         if (ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(AppConstants.TAG, "start on boot, action=" + intent.action)
             if (Shizuku.pingBinder()) {

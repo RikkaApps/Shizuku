@@ -28,17 +28,17 @@ class StartAdbViewHolder(binding: HomeStartAdbBinding) : BaseViewHolder<Any?>(bi
             val context = v.context
             AlertDialog.Builder(context)
                     .setTitle(R.string.home_adb_button_view_command)
-                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, Starter.commandAdb)))
+                    .setMessage(HtmlCompat.fromHtml(context.getString(R.string.home_adb_dialog_view_command_message, Starter.adbCommand)))
                     .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
-                        if (ClipboardUtils.put(context, Starter.commandAdb)) {
-                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, Starter.commandAdb), Toast.LENGTH_SHORT).show()
+                        if (ClipboardUtils.put(context, Starter.adbCommand)) {
+                            Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard, Starter.adbCommand), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { _, _ ->
                         var intent = Intent(Intent.ACTION_SEND)
                         intent.type = "text/plain"
-                        intent.putExtra(Intent.EXTRA_TEXT, Starter.commandAdb)
+                        intent.putExtra(Intent.EXTRA_TEXT, Starter.adbCommand)
                         intent = Intent.createChooser(intent, context.getString(R.string.home_adb_dialog_view_command_button_send))
                         context.startActivity(intent)
                     }

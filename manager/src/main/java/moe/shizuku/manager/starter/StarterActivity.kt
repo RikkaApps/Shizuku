@@ -19,6 +19,7 @@ import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
+import moe.shizuku.manager.application
 import moe.shizuku.manager.databinding.StarterActivityBinding
 import moe.shizuku.manager.viewmodel.Resource
 import moe.shizuku.manager.viewmodel.Status
@@ -161,7 +162,8 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 }
             }
 
-            Shell.su(Starter.command).to(object : CallbackList<String?>() {
+            Starter.writeDataFiles(application)
+            Shell.su(Starter.dataCommand).to(object : CallbackList<String?>() {
                 override fun onAddElement(s: String?) {
                     sb.append(s).append('\n')
                     postResult()
@@ -177,6 +179,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
     private fun startAdb(host: String, port: Int) {
         sb.append("Starting with wireless adb...").append('\n').append('\n')
+        postResult()
 
         GlobalScope.launch(Dispatchers.IO) {
             val key = try {
@@ -191,7 +194,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
             AdbClient(host, port, key).runCatching {
                 connect()
-                shellCommand(Starter.command) {
+                shellCommand(Starter.sdcardCommand) {
                     sb.append(String(it))
                     postResult()
                 }

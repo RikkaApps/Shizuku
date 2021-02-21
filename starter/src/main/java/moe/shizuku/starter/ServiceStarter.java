@@ -3,11 +3,14 @@ package moe.shizuku.starter;
 import android.content.Context;
 import android.content.IContentProvider;
 import android.ddm.DdmHandleAppName;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.util.Log;
+
+import java.util.Locale;
 
 import hidden.HiddenApiBridge;
 import moe.shizuku.api.BinderContainer;
@@ -20,6 +23,44 @@ public class ServiceStarter {
     private static final String TAG = "ShizukuServiceStarter";
 
     private static final String EXTRA_BINDER = "moe.shizuku.privileged.api.intent.extra.BINDER";
+
+    public static final String DEBUG_ARGS;
+
+    static {
+        int sdk = Build.VERSION.SDK_INT;
+        if (sdk >= 30) {
+            DEBUG_ARGS = "-Xcompiler-option" + " --debuggable" +
+                    " -XjdwpProvider:adbconnection" +
+                    " -XjdwpOptions:suspend=n,server=y";
+        } else if (sdk >= 28) {
+            DEBUG_ARGS = "-Xcompiler-option" + " --debuggable" +
+                    " -XjdwpProvider:internal" +
+                    " -XjdwpOptions:transport=dt_android_adb,suspend=n,server=y";
+        } else {
+            DEBUG_ARGS = "-Xcompiler-option" + " --debuggable" +
+                    " -agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y";
+        }
+    }
+
+    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH=%s /system/bin/app_process%s /system/bin " +
+            "--nice-name=%s moe.shizuku.starter.ServiceStarter " +
+            "--token=%s --package=%s --class=%s --uid=%d%s)&";
+
+    public static String commandForUserService(String managerApkPath, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
+        String processName = String.format("%s:%s", packageName, processNameSuffix);
+        return String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
+                managerApkPath, debug ? (" " + DEBUG_ARGS) : "",
+                processName,
+                token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
+    }
+
+    private static final String SHIZUKU_CMD_FORMAT = "CLASSPATH=%s /system/bin/app_process%s -Djava.library.path=%s /system/bin " +
+            "--nice-name=shizuku_server moe.shizuku.starter.ServiceStarter";
+
+    public static String commandForShizuku(String managerApkPath, boolean debug) {
+        return String.format(Locale.ENGLISH, SHIZUKU_CMD_FORMAT,
+                managerApkPath, debug ? (" " + ServiceStarter.DEBUG_ARGS) : "", managerApkPath);
+    }
 
     public static void main(String[] args) {
         String name = null;
@@ -42,7 +83,6 @@ public class ServiceStarter {
             }
         }
 
-        int appId = uid % 100000;
         int userId = uid / 100000;
 
         Log.i(TAG, String.format("starting service %s/%s...", pkg, cls));

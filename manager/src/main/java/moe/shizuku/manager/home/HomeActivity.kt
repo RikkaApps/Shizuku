@@ -51,7 +51,7 @@ abstract class HomeActivity : AppBarActivity() {
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Starter.writeFilesAsync(this)
+        Starter.writeSdcardFilesAsync(this)
 
         homeModel.serviceStatus.observe(this) {
             if (it.status == Status.SUCCESS) {

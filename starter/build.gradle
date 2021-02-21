@@ -1,73 +1,28 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     ndkVersion rootProject.ext.ndkVersion
     defaultConfig {
-        applicationId "moe.shizuku.privileged.api"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
     }
     buildFeatures {
         buildConfig = false
     }
-    buildTypes {
-        debug {
-            multiDexEnabled false
-        }
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    lintOptions {
-        checkReleaseBuilds false
-    }
-    dependenciesInfo {
-        includeInApk false
-    }
-}
-
-android.applicationVariants.all { variant ->
-    variant.outputs.all {
-        outputFileName = "starter-v${versionName}.apk"
-
-        def outDir = new File(rootDir, "out")
-        def mappingPath = new File(outDir, "mapping").absolutePath
-        def apkPath = new File(outDir, "apk").absolutePath
-        def dexPath = project(':manager').file("src" + File.separator + "main" + File.separator + "assets").absolutePath
-
-        variant.assembleProvider.get().doLast {
-            if (variant.getBuildType().isMinifyEnabled()) {
-                copy {
-                    from variant.mappingFileProvider.get()
-                    into mappingPath
-                    rename { fileName -> "starter-v${variant.versionName}.txt" }
-                }
-            }
-            copy {
-                from outputFile
-                into apkPath
-            }
-            copy {
-                from zipTree(outputFile).matching { include 'classes.dex' }.singleFile
-                into dexPath
-                rename { fileName -> 'starter.dex' }
-            }
-        }
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation project(':shared')
+    compileOnly project(':provider')
     compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
     implementation project(':hidden-api-21-bridge')

@@ -1,13 +1,14 @@
 package moe.shizuku.server;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.IContentProvider;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.ddm.DdmHandleAppName;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.os.Parcel;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SELinux;
+import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.system.Os;
 import android.util.ArrayMap;
@@ -28,7 +30,6 @@ import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -38,7 +39,6 @@ import java.util.concurrent.Executors;
 import dalvik.system.PathClassLoader;
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
-import rikka.shizuku.ShizukuApiConstants;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.config.Config;
@@ -46,9 +46,12 @@ import moe.shizuku.server.config.ConfigManager;
 import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
+import moe.shizuku.starter.ServiceStarter;
+import rikka.shizuku.ShizukuApiConstants;
 
 import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static moe.shizuku.server.ServerConstants.PERMISSION;
+import static moe.shizuku.server.utils.Logger.LOGGER;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
@@ -62,47 +65,30 @@ import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_PROCESS_NAME;
 import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_TAG;
 import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_VERSION_CODE;
 import static rikka.shizuku.ShizukuApiConstants.USER_SERVICE_TRANSACTION_destroy;
-import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuService extends IShizukuService.Stub {
 
-    private static ApplicationInfo getManagerApplicationInfo() {
-        return SystemService.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
-    }
-
-    public static void main() {
-        ApplicationInfo ai = getManagerApplicationInfo();
-        if (ai == null) {
-            System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
-            return;
-        }
-
-        LOGGER.i("starting server...");
+    public static void main(String[] args) {
+        DdmHandleAppName.setAppName("shizuku_server", 0);
 
         Looper.prepare();
-        new ShizukuService(ai);
+        new ShizukuService();
         Looper.loop();
-
-        LOGGER.i("server exited");
-        System.exit(0);
     }
 
-    private static final String USER_SERVICE_CMD_DEBUG;
-
-    static {
-        int sdk = Build.VERSION.SDK_INT;
-        if (sdk >= 30) {
-            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
-                    " -XjdwpProvider:adbconnection" +
-                    " -XjdwpOptions:suspend=n,server=y";
-        } else if (sdk >= 28) {
-            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
-                    " -XjdwpProvider:internal" +
-                    " -XjdwpOptions:transport=dt_android_adb,suspend=n,server=y";
-        } else {
-            USER_SERVICE_CMD_DEBUG = "-Xcompiler-option" + " --debuggable" +
-                    " -agentlib:jdwp=transport=dt_android_adb,suspend=n,server=y";
+    private static void waitSystemService(String name) {
+        while (ServiceManager.getService(name) == null) {
+            try {
+                LOGGER.i("service " + name + " is not started, wait 1s.");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOGGER.w(e.getMessage(), e);
+            }
         }
+    }
+
+    private static ApplicationInfo getManagerApplicationInfo() {
+        return SystemService.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
     }
 
     @SuppressWarnings({"FieldCanBeLocal"})
@@ -113,11 +99,23 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
+    private final String managerApkPath;
 
-    ShizukuService(ApplicationInfo ai) {
-        super();
+    public ShizukuService() {
+        LOGGER.i("starting server...");
+
+        waitSystemService("package");
+        waitSystemService("activity");
+        waitSystemService(Context.USER_SERVICE);
+        waitSystemService(Context.APP_OPS_SERVICE);
+
+        ApplicationInfo ai = getManagerApplicationInfo();
+        if (ai == null) {
+            System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
+        }
 
         managerAppId = ai.uid;
+        managerApkPath = ai.sourceDir;
 
         configManager = ConfigManager.getInstance();
         clientManager = ClientManager.getInstance();
@@ -552,23 +550,13 @@ public class ShizukuService extends IShizukuService.Stub {
         record.setBinder(service);
     }
 
-    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH=/data/local/tmp/shizuku/starter-v%d.dex /system/bin/app_process%s /system/bin " +
-            "--nice-name=%s %s " +
-            "--token=%s --package=%s --class=%s --uid=%d%s)&";
-
     private void startUserServiceNewProcess(String key, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
         LOGGER.v("starting process for service record %s (%s)...", key, token);
 
-        String processName = String.format("%s:%s", packageName, processNameSuffix);
-        String cmd = String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
-                ShizukuApiConstants.SERVER_VERSION, debug ? (" " + USER_SERVICE_CMD_DEBUG) : "",
-                processName, "moe.shizuku.starter.ServiceStarter",
-                token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
-
-        java.lang.Process process;
+        String cmd = ServiceStarter.commandForUserService(managerApkPath, token, packageName, classname, processNameSuffix, callingUid, debug);
         int exitCode;
         try {
-            process = Runtime.getRuntime().exec("sh");
+            java.lang.Process process = Runtime.getRuntime().exec("sh");
             OutputStream os = process.getOutputStream();
             os.write(cmd.getBytes());
             os.flush();
@@ -578,7 +566,6 @@ public class ShizukuService extends IShizukuService.Stub {
         } catch (Throwable e) {
             throw new IllegalStateException(e.getMessage());
         }
-
         if (exitCode != 0) {
             throw new IllegalStateException("sh exited with " + exitCode);
         }
@@ -709,7 +696,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
-        if (UserHandleCompat.getAppId(Binder.getCallingUid())!= managerAppId) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
         }

@@ -9,6 +9,8 @@ import rikka.core.util.BuildUtils.atLeast30
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 
+lateinit var application: ShizukuApplication
+
 class ShizukuApplication : Application() {
 
     companion object {
@@ -32,6 +34,7 @@ class ShizukuApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        application = this
         init(this)
     }
 

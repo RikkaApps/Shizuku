@@ -12,6 +12,7 @@
 #include "misc.h"
 #include "selinux.h"
 #include "cgroup.h"
+#include "logging.h"
 
 #ifdef DEBUG
 #define JAVA_DEBUGGABLE
@@ -19,21 +20,21 @@
 
 #define perrorf(...) fprintf(stderr, __VA_ARGS__)
 
-#define EXIT_FATAL_CANNOT_ACCESS_PATH 1
-#define EXIT_FATAL_PATH_NOT_SET 2
 #define EXIT_FATAL_SET_CLASSPATH 3
 #define EXIT_FATAL_FORK 4
 #define EXIT_FATAL_APP_PROCESS 5
 #define EXIT_FATAL_UID 6
+#define EXIT_FATAL_PM_PATH 7
 #define EXIT_FATAL_KILL 9
 #define EXIT_FATAL_BINDER_BLOCKED_BY_SELINUX 10
 
+#define PACKAGE_NAME "moe.shizuku.privileged.api"
 #define SERVER_NAME "shizuku_server"
-#define SERVER_CLASS_PATH "moe.shizuku.server.Starter"
+#define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuService"
 
 static void run_server(const char *dex_path, const char *main_class, const char *process_name) {
     if (setenv("CLASSPATH", dex_path, true)) {
-        perrorf("fatal: can't set CLASSPATH\n");
+        LOGE("can't set CLASSPATH\n");
         exit(EXIT_FATAL_SET_CLASSPATH);
     }
 
@@ -88,52 +89,25 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     ARG_PUSH_DEBUG_ONLY(argv, "--debug")
     ARG_END(argv)
 
+    LOGD("exec app_process");
+
     if (execvp((const char *) argv[0], argv)) {
         exit(EXIT_FATAL_APP_PROCESS);
     }
 }
 
 static int start_server(const char *path, const char *main_class, const char *process_name) {
-    pid_t pid = fork();
+    pid_t pid = daemon(false, false);
     if (pid == 0) {
-        daemon(false, false);
+        LOGD("child");
         run_server(path, main_class, process_name);
         return 0;
     } else if (pid == -1) {
         perrorf("fatal: can't fork\n");
         exit(EXIT_FATAL_FORK);
     }
+    LOGD("forked %d", pid);
     return EXIT_SUCCESS;
-}
-
-static void check_access(const char *path, const char *name) {
-    if (!path) {
-        perrorf("fatal: %s not set.\n", name);
-        exit(EXIT_FATAL_PATH_NOT_SET);
-    }
-
-    printf("info: %s is %s\n", name, path);
-
-    if (access(path, F_OK) != 0) {
-        perrorf("fatal: can't access %s, please open Shizuku app and try again.\n", path);
-        exit(EXIT_FATAL_CANNOT_ACCESS_PATH);
-    }
-}
-
-static void copy_if_not_exist(const char *src, const char *dst) {
-#ifdef DEBUG
-    remove(dst);
-    copyfile(src, dst);
-#else
-    if (access(dst, F_OK)) {
-        copyfile(src, dst);
-    }
-#endif
-    chmod(dst, 0707);
-    if (getuid() == 0) {
-        chown(dst, 2000, 2000);
-        se::setfilecon(dst, "u:object_r:shell_data_file:s0");
-    }
 }
 
 static int check_selinux(const char *s, const char *t, const char *c, const char *p) {
@@ -206,15 +180,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    char *_server_dex_path = nullptr, *_starter_dex_path = nullptr;
-    for (int i = 0; i < argc; ++i) {
-        if (strncmp(argv[i], "--server-dex=", 13) == 0) {
-            _server_dex_path = argv[i] + 13;
-        } else if (strncmp(argv[i], "--starter-dex=", 14) == 0) {
-            _starter_dex_path = argv[i] + 14;
-        }
-    }
-
     if (uid == 0) {
         if (se::getcon(&context) == 0) {
             int res = 0;
@@ -230,25 +195,12 @@ int main(int argc, char **argv) {
         }
     }
 
-    check_access(_server_dex_path, "server dex path");
-    check_access(_starter_dex_path, "starter dex path");
-
     mkdir("/data/local/tmp/shizuku", 0707);
     chmod("/data/local/tmp/shizuku", 0707);
     if (uid == 0) {
         chown("/data/local/tmp/shizuku", 2000, 2000);
         se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
-
-    char server_dex_path[PATH_MAX], starter_dex_path[PATH_MAX];
-    sprintf(server_dex_path, "/data/local/tmp/shizuku/%s", basename(_server_dex_path));
-    sprintf(starter_dex_path, "/data/local/tmp/shizuku/%s", basename(_starter_dex_path));
-
-    copy_if_not_exist(_server_dex_path, server_dex_path);
-    copy_if_not_exist(_starter_dex_path, starter_dex_path);
-
-    check_access(server_dex_path, "server dex path");
-    check_access(starter_dex_path, "starter dex path");
 
     printf("info: starter begin\n");
     fflush(stdout);
@@ -277,9 +229,27 @@ int main(int argc, char **argv) {
         }
     });
 
+    char line[PATH_MAX]{0};
+    char *apk_path = nullptr;
+    auto f = popen("pm path " PACKAGE_NAME, "r");
+    if (f) {
+        fgets(line, PATH_MAX, f);
+        trim(line);
+        if (strstr(line, "package:") == line) {
+            apk_path = line + strlen("package:");
+        }
+        pclose(f);
+    } else {
+        perrorf("fatal: can't get path of manager\n");
+        exit(EXIT_FATAL_PM_PATH);
+    }
+
+    printf("info: apk path is %s\n", apk_path);
     printf("info: starting server...\n");
     fflush(stdout);
-    start_server(server_dex_path, SERVER_CLASS_PATH, SERVER_NAME);
+    LOGD("start_server");
+    start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);
+    sleep(1);
 
     exit(EXIT_SUCCESS);
 }

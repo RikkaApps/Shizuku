@@ -43,8 +43,8 @@ class BootCompleteService : ForegroundIntentService("BootCompleteService") {
             return
         }
 
-        Starter.writeFiles(context)
-        Shell.su(Starter.command).exec().let {
+        Starter.writeDataFiles(context)
+        Shell.su(Starter.dataCommand).exec().let {
             if (it.code == 0) {
                 NotificationHelper.cancel(context, AppConstants.NOTIFICATION_ID_STATUS)
             } else {
