@@ -5,13 +5,36 @@ STARTER_PATH="/data/local/tmp/shizuku_starter"
 
 echo "info: start.sh begin"
 
+recreate_tmp() {
+  echo "info: /data/local/tmp is possible broken, recreating..."
+  rm -rf /data/local/tmp
+  mkdir -p /data/local/tmp
+}
+
+broken_tmp() {
+  echo "fatal: /data/local/tmp is broken, please try reboot the device or manually recreate it..."
+  exit 1
+}
+
 if [ -f "$SOURCE_PATH" ]; then
+    echo "info: attempt to copy starter from $SOURCE_PATH to $STARTER_PATH"
     rm -f $STARTER_PATH
+
     cp "$SOURCE_PATH" $STARTER_PATH
+    res=$?
+    if [ $res -ne 0 ]; then
+      recreate_tmp
+      cp "$SOURCE_PATH" $STARTER_PATH
+
+      res=$?
+      if [ $res -ne 0 ]; then
+        broken_tmp
+      fi
+    fi
+
     chmod 700 $STARTER_PATH
     chown 2000 $STARTER_PATH
     chgrp 2000 $STARTER_PATH
-    echo "info: copy starter from $SOURCE_PATH"
 fi
 
 if [ -f $STARTER_PATH ]; then
