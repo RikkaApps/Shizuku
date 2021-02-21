@@ -100,7 +100,6 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
-    private final String managerApkPath;
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -116,7 +115,6 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         managerAppId = ai.uid;
-        managerApkPath = ai.sourceDir;
 
         configManager = ConfigManager.getInstance();
         clientManager = ClientManager.getInstance();
@@ -554,7 +552,7 @@ public class ShizukuService extends IShizukuService.Stub {
     private void startUserServiceNewProcess(String key, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
         LOGGER.v("starting process for service record %s (%s)...", key, token);
 
-        String cmd = ServiceStarter.commandForUserService(managerApkPath, token, packageName, classname, processNameSuffix, callingUid, debug);
+        String cmd = ServiceStarter.commandForUserService(getManagerApplicationInfo().sourceDir, token, packageName, classname, processNameSuffix, callingUid, debug);
         int exitCode;
         try {
             java.lang.Process process = Runtime.getRuntime().exec("sh");
