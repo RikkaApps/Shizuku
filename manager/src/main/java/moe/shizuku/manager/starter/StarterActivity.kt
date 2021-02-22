@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.AppConstants.EXTRA
+import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
@@ -204,6 +205,34 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
                 sb.append('\n').append(it.toString())
                 postResult(it)
+            }
+
+            /* Adb on MIUI Android 11 has no permission to access Android/data.
+               Before MIUI Android 12, we can temporarily use /data/user_de.
+               After that, is better to implement "adb push" and push files directly to /data/local/tmp.
+             */
+            if (sb.contains("/Android/data/${BuildConfig.APPLICATION_ID}/start.sh: Permission denied")) {
+                sb.append('\n')
+                        .appendLine("adb have no permission to access Android/data, how could this possible ?!")
+                        .appendLine("try /data/user_de instead...")
+                        .appendLine()
+                postResult()
+
+                Starter.writeDataFiles(application, true)
+
+                AdbClient(host, port, key).runCatching {
+                    connect()
+                    shellCommand(Starter.dataCommand) {
+                        sb.append(String(it))
+                        postResult()
+                    }
+                    close()
+                }.onFailure {
+                    it.printStackTrace()
+
+                    sb.append('\n').append(it.toString())
+                    postResult(it)
+                }
             }
         }
     }

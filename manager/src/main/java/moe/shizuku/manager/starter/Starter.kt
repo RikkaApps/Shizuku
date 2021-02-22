@@ -3,10 +3,11 @@ package moe.shizuku.manager.starter
 import android.content.Context
 import android.os.Build
 import android.os.UserManager
+import android.system.ErrnoException
+import android.system.Os
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ktx.createDeviceProtectedStorageContextCompat
 import moe.shizuku.manager.ktx.logd
@@ -51,18 +52,40 @@ object Starter {
         }
     }
 
-    fun writeDataFiles(context: Context) {
-        if (commandInternal[0] != null) {
+    fun writeDataFiles(context: Context, permission: Boolean = false) {
+        if (commandInternal[0] != null && !permission) {
             logd("already written")
             return
         }
 
+        val dir = context.createDeviceProtectedStorageContextCompat().filesDir?.parentFile ?: return
+
+        if (permission) {
+            try {
+                Os.chmod(dir.absolutePath, 457 /* 0711 */)
+            } catch (e: ErrnoException) {
+                e.printStackTrace()
+            }
+        }
+
         try {
-            val dir = context.createDeviceProtectedStorageContextCompat().filesDir?.parentFile ?: return
             val starter = copyStarter(context, File(dir, "starter"))
             val sh = writeScript(context, File(dir, "start.sh"), starter)
             commandInternal[0] = "sh $sh"
             logd(commandInternal[0]!!)
+
+            if (permission) {
+                try {
+                    Os.chmod(starter, 420 /* 0644 */)
+                } catch (e: ErrnoException) {
+                    e.printStackTrace()
+                }
+                try {
+                    Os.chmod(sh, 420 /* 0644 */)
+                } catch (e: ErrnoException) {
+                    e.printStackTrace()
+                }
+            }
         } catch (e: IOException) {
             loge("write files", e)
         }
