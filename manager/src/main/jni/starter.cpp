@@ -96,18 +96,14 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     }
 }
 
-static int start_server(const char *path, const char *main_class, const char *process_name) {
-    pid_t pid = daemon(false, false);
-    if (pid == 0) {
+static void start_server(const char *path, const char *main_class, const char *process_name) {
+    if (daemon(false, false) == 0) {
         LOGD("child");
         run_server(path, main_class, process_name);
-        return 0;
-    } else if (pid == -1) {
+    } else {
         perrorf("fatal: can't fork\n");
         exit(EXIT_FATAL_FORK);
     }
-    LOGD("forked %d", pid);
-    return EXIT_SUCCESS;
 }
 
 static int check_selinux(const char *s, const char *t, const char *c, const char *p) {
@@ -249,7 +245,5 @@ int main(int argc, char **argv) {
     fflush(stdout);
     LOGD("start_server");
     start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);
-    sleep(1);
-
     exit(EXIT_SUCCESS);
 }
