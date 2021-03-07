@@ -13,19 +13,20 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleableRes;
 import androidx.core.content.res.TypedArrayUtils;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 import moe.shizuku.manager.R;
-import moe.shizuku.preference.Preference;
-import moe.shizuku.preference.PreferenceViewHolder;
-import moe.shizuku.preference.simplemenu.SimpleMenuPopupWindow;
+import rikka.preference.simplemenu.SimpleMenuPopupWindow;
 
 /**
- * a {@link moe.shizuku.preference.SimpleMenuPreference} to implement night mode in user interface settings.
- * a {@link moe.shizuku.preference.SimpleMenuPreference} which use integer values array as entryValues.
+ * a {@link rikka.preference.SimpleMenuPreference} to implement night mode in user interface settings.
+ * a {@link rikka.preference.SimpleMenuPreference} which use integer values array as entryValues.
  *
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
 
+@SuppressLint("RestrictedApi")
 public class IntegerSimpleMenuPreference extends Preference {
 
     private final SimpleMenuPopupWindow mPopupWindow;

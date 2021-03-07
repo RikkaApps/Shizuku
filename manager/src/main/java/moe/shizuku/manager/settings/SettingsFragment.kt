@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
@@ -17,11 +18,11 @@ import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
-import moe.shizuku.preference.*
 import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
+import rikka.preference.SimpleMenuPreference
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import rikka.widget.borderview.BorderRecyclerView
@@ -31,7 +32,7 @@ import java.util.*
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
 import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
 
-class SettingsFragment : PreferenceFragment() {
+class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         init {
@@ -55,13 +56,13 @@ class SettingsFragment : PreferenceFragment() {
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
         setPreferencesFromResource(R.xml.settings, null)
 
-        languagePreference = findPreference(KEY_LANGUAGE) as ListPreference
-        nightModePreference = findPreference(KEY_NIGHT_MODE)
-        blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME) as SwitchPreference
-        startOnBootPreference = findPreference(KEEP_START_ON_BOOT) as SwitchPreference
-        startupPreference = findPreference("startup") as PreferenceCategory
-        translationPreference = findPreference("translation")
-        translationContributorsPreference = findPreference("translation_contributors")
+        languagePreference = findPreference(KEY_LANGUAGE)!!
+        nightModePreference = findPreference(KEY_NIGHT_MODE)!!
+        blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME)!!
+        startOnBootPreference = findPreference(KEEP_START_ON_BOOT)!!
+        startupPreference = findPreference("startup")!!
+        translationPreference = findPreference("translation")!!
+        translationContributorsPreference = findPreference("translation_contributors")!!
 
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
 
@@ -152,10 +153,6 @@ class SettingsFragment : PreferenceFragment() {
                 } else {
                     ""
                 }
-    }
-
-    override fun onCreateItemDecoration(): DividerDecoration {
-        return CategoryDivideDividerDecoration()
     }
 
     override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {

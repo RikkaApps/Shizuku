@@ -1,27 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <moe.shizuku.preference.PreferenceCategory
+    <PreferenceCategory
         android:key="startup"
         android:title="@string/settings_startup">
 
         <SwitchPreference
             android:key="start_on_boot"
             android:summary="@string/settings_start_on_boot_summary"
-            android:title="@string/settings_start_on_boot" />
+            android:title="@string/settings_start_on_boot"
+            app:icon="@drawable/ic_outline_play_arrow_24" />
 
-    </moe.shizuku.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <moe.shizuku.preference.PreferenceCategory android:title="@string/settings_language">
+    <PreferenceCategory android:title="@string/settings_language">
 
-        <SimpleMenuPreference
+        <rikka.preference.SimpleMenuPreference
             android:defaultValue="SYSTEM"
             android:entries="@array/language"
             android:entryValues="@array/language_value"
             android:key="language"
             android:summary="%s"
-            android:title="@string/settings_language" />
-
+            android:title="@string/settings_language"
+            app:icon="@drawable/ic_outline_translate_24" />
 
         <Preference
             style="?preferenceInformationStyle"
@@ -32,9 +34,9 @@
             android:key="translation"
             android:title="@string/settings_translation" />
 
-    </moe.shizuku.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <moe.shizuku.preference.PreferenceCategory
+    <PreferenceCategory
         android:key="user_interface"
         android:title="@string/settings_user_interface">
 
@@ -52,6 +54,6 @@
             android:summary="@string/settings_black_night_theme_summary"
             android:title="@string/settings_black_night_theme" />
 
-    </moe.shizuku.preference.PreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

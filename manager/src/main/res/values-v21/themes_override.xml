@@ -23,4 +23,21 @@
         <item name="enforceMaterialTheme">true</item>
         <item name="useMaterialThemeColors">true</item>
     </style>
+
+    <style name="PreferenceSummaryTextStyle" tools:override="true">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.0178571429</item>
+    </style>
+
+    <style name="PreferenceCategoryTitleTextStyle" tools:override="true">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">11sp</item>
+        <!-- 0.8 Spacing, 0.8/11 = 0.072727273 -->
+        <item name="android:letterSpacing">0.072727273</item>
+    </style>
+
 </resources>
