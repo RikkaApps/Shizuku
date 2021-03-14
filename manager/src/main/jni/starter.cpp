@@ -152,6 +152,13 @@ static int switch_cgroup() {
 char *context = nullptr;
 
 int main(int argc, char **argv) {
+    char *apk_path = nullptr;
+    for (int i = 0; i < argc; ++i) {
+        if (strncmp(argv[i], "--apk=", 6) == 0) {
+            apk_path = argv[i] + 6;
+        }
+    }
+
     int uid = getuid();
     if (uid != 0 && uid != 2000) {
         perrorf("fatal: run Shizuku from non root nor adb user (uid=%d).\n", uid);
@@ -184,7 +191,8 @@ int main(int argc, char **argv) {
             res |= check_selinux("u:r:untrusted_app:s0", context, "binder", "transfer");
 
             if (res != 0) {
-                perrorf("fatal: the su you are using does not allow app (u:r:untrusted_app:s0) to connect to su (%s) with binder.\n", context);
+                perrorf("fatal: the su you are using does not allow app (u:r:untrusted_app:s0) to connect to su (%s) with binder.\n",
+                        context);
                 exit(EXIT_FATAL_BINDER_BLOCKED_BY_SELINUX);
             }
             se::freecon(context);
@@ -225,22 +233,35 @@ int main(int argc, char **argv) {
         }
     });
 
-    char line[PATH_MAX]{0};
-    char *apk_path = nullptr;
-    auto f = popen("pm path " PACKAGE_NAME, "r");
-    if (f) {
-        fgets(line, PATH_MAX, f);
-        trim(line);
-        if (strstr(line, "package:") == line) {
-            apk_path = line + strlen("package:");
+    if (access(apk_path, R_OK) == 0) {
+        printf("info: use apk path from argv\n");
+        fflush(stdout);
+    }
+
+    if (!apk_path) {
+        auto f = popen("pm path " PACKAGE_NAME, "r");
+        if (f) {
+            char line[PATH_MAX]{0};
+            fgets(line, PATH_MAX, f);
+            trim(line);
+            if (strstr(line, "package:") == line) {
+                apk_path = line + strlen("package:");
+            }
+            pclose(f);
         }
-        pclose(f);
-    } else {
+    }
+
+    if (!apk_path) {
         perrorf("fatal: can't get path of manager\n");
         exit(EXIT_FATAL_PM_PATH);
     }
 
     printf("info: apk path is %s\n", apk_path);
+    if (access(apk_path, R_OK) != 0) {
+        perrorf("fatal: can't access manager %s\n", apk_path);
+        exit(EXIT_FATAL_PM_PATH);
+    }
+
     printf("info: starting server...\n");
     fflush(stdout);
     LOGD("start_server");

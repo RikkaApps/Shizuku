@@ -71,7 +71,7 @@ object Starter {
         try {
             val starter = copyStarter(context, File(dir, "starter"))
             val sh = writeScript(context, File(dir, "start.sh"), starter)
-            commandInternal[0] = "sh $sh"
+            commandInternal[0] = "sh $sh --apk=${context.applicationInfo.sourceDir}"
             logd(commandInternal[0]!!)
 
             if (permission) {
