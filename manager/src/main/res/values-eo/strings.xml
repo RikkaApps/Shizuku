@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_black_night_theme">Nigra nokta etoso</string>
+    <string name="settings_user_interface">Aspekto</string>
+    <string name="settings_language">Lingvo</string>
+    <string name="settings_title">Agordoj</string>
+    <string name="app_management_menu_get_more">Ricevi pli</string>
+    <string name="home_learn_more_title">Lerni Shizuku</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Rajtigis %d aplikaĵon</item>
+        <item quantity="other">Rajtigis %d aplikaĵojn</item>
+    </plurals>
+    <string name="home_root_button_start">Komenci</string>
+    <string name="development_settings">Programistaj opcioj</string>
+    <string name="home_adb_dialog_view_command_button_send">Sendi</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopii</string>
+    <string name="home_adb_button_view_command">Vidi komandon</string>
+    <string name="home_adb_button_view_help">Legi helpon</string>
+    <string name="home_adb_title">Konektu al komputilo por komenci</string>
+    <string name="home_status_service_version">Versio %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s ne estas funkcianta</string>
+    <string name="home_status_service_is_running">%1$s estas funkcianta</string>
+    <string name="translation_contributors">JakubFabijan</string>
+</resources>

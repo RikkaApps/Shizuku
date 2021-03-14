@@ -14,7 +14,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'en', 'ar', 'cs', 'de', 'es-rCL', 'en-rUS', 'hy', 'ja', 'ko', 'pl', 'pt-rBR', 'ru', 'tr', 'uk', 'zh-rCN', 'zh-rTW'
+        resConfigs 'en', 'ar', 'cs', 'de', 'es-rCL', 'b+es+419', 'eo', 'hy', 'ja', 'ko', 'pl', 'pt-rBR', 'ru', 'tr', 'uk', 'zh-rCN', 'zh-rTW'
         resValue "string", "versionName", "${rootProject.ext.versionName}"
         externalNativeBuild {
             cmake {

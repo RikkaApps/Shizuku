@@ -56,4 +56,39 @@
     <string name="dialog_wireless_adb_not_enabled">La depuración inalámbrica no está habilitada.
 \nTenga en cuenta que antes de Android 11, para habilitar la depuración inalámbrica, la conexión a la computadora es imprescindible.</string>
     <string name="cannot_connect_port">No se puede conectar al servicio de depuración inalámbrico.</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; tiene soporte para Shizuku moderno, pero está solicitando Shizuku heredado. Esto podría deberse a que Shizuku no se está ejecutando, por favor, compruébalo en la aplicación Shizuku.&lt;p&gt;Shizuku heredado está obsoleto desde marzo de 2019.</string>
+    <string name="dialog_requesting_legacy_title">%1$s está solicitando Shizuku heredado</string>
+    <string name="dialog_cannot_open_browser_title">No se puede iniciar el navegador</string>
+    <string name="starter">Inicio</string>
+    <string name="permission_warning_template">¿Permitir a <b>%1$s</b> a %2$s\?</string>
+    <string name="permission_label">acceder a Shizuku</string>
+    <string name="notification_working">Trabajando…</string>
+    <string name="notification_service_start_no_root">No se ha podido solicitar el permiso de root.</string>
+    <string name="notification_channel_service_status">Estado de inicio del servicio</string>
+    <string name="dialog_stop_message">El servicio de Shizuku se detendrá.</string>
+    <string name="settings_startup">Inicio</string>
+    <string name="app_management_menu_get_more">Más</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Aplicación %d autorizada</item>
+        <item quantity="other">Aplicaciones %d autorizadas</item>
+    </plurals>
+    <string name="home_root_description_sui">Si estás usando Magisk, puedes probar %1$s (un módulo de Riru). Para los usuarios root, eventualmente reemplazará a Shizuku. Tenga en cuenta que las aplicaciones existentes deben cambiar un poco para utilizar %2$s.</string>
+    <string name="dialog_legacy_not_support_title">%1$s no soporta el Shizuku moderno</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> se ha copiado en el portapapeles.</string>
+    <string name="toast_copied_to_clipboard">%s
+\nse ha copiado en el portapapeles.</string>
+    <string name="permission_description">Permitir que la aplicación utilice Shizuku.</string>
+    <string name="app_management_item_summary_requires_root">* requiere que Shizuku se ejecute con la root</string>
+    <string name="app_management_dialog_adb_is_limited_title">El permiso de adb es limitado</string>
+    <string name="home_learn_more_description">Aprenda a desarrollar con Shizuku o consiga aplicaciones con Shizuku</string>
+    <string name="start_with_root_failed">No se puede iniciar el servicio porque el permiso de root no está concedido o este dispositivo no está rooteado.</string>
+    <string name="app_management_dialog_adb_is_limited_message">Es muy posible que el fabricante de tu dispositivo limite el permiso de adb.&lt;p&gt;Puede que haya una solución para tu sistema en &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="dialog_legacy_not_support_message">El Shizuku heredado está obsoleto desde marzo de 2019. Además, el Shizuku heredado no funciona en los sistemas Android más nuevos.&lt;p&gt;Por favor, pide al desarrollador de &lt;b&gt;%1$s&lt;/b&gt; que se actualice.</string>
+    <string name="home_root_description">Además, Shizuku puede iniciarse automáticamente al arrancar. Si no es así, por favor compruebe si su sistema o herramientas de terceros han restringido Shizuku.&lt;br&gt;Puede consultar %s.</string>
+    <string name="dialog_adb_pairing_message">Por favor, inicie el emparejamiento mediante los siguientes pasos: \"Opciones de desarrollador\" - \"Depuración inalámbrica\" - \"Emparejar el dispositivo con el código de emparejamiento\".
+\n
+\nUna vez iniciado el proceso de emparejamiento, podrá introducir el código de emparejamiento.</string>
+    <string name="adb_pairing">‎Emparejamiento‎</string>
+    <string name="home_wireless_adb_description">En Android 11, la depuración inalámbrica es una característica incorporada. Por favor, consulte &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento de ayuda&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Esto funciona para todas las versiones del sistema. Pero antes de Android 11, la depuración inalámbrica no se puede habilitar directamente.</string>
+    <string name="settings_translation_summary">Ayúdanos a traducir %s a tu idioma</string>
 </resources>
