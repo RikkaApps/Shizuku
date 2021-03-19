@@ -15,19 +15,19 @@
     <string name="home_status_service_not_running">%1$s beendet</string>
     <string name="home_status_service_is_running">%1$s läuft</string>
     <string name="app_management_dialog_adb_is_limited_title">Die ADB-Berechtigungen sind beschränkt</string>
-    <string name="app_management_menu_get_more">Mehr</string>
+    <string name="app_management_menu_get_more">Bekommen Sie mehr</string>
     <string name="about_view_source_code">Quelltext auf %s anzeigen</string>
     <string name="action_about">Über</string>
-    <string name="action_stop">Shizuku anhalten</string>
+    <string name="action_stop">Shizuku stoppen</string>
     <string name="settings_translation_summary_percentage">" (%s sind übersetzt)"</string>
     <string name="settings_black_night_theme_summary">Wenn aktiviert, rein schwarzes Design statt dunklem Design verwenden</string>
     <string name="settings_black_night_theme">Schwarzes Design</string>
     <plurals name="home_app_management_authorized_apps_count">
-        <item quantity="one">%d autorisierte App</item>
-        <item quantity="other">%d autorisierte Apps</item>
+        <item quantity="one">%d autorisierte Anwendung</item>
+        <item quantity="other">%d autorisierte Anwendungen</item>
     </plurals>
-    <string name="dialog_wireless_adb_not_enabled">Wireless Debugging ist nicht aktiviert.
-\nAchtung, vor Android 11 muss zur Aktivierung eine Computerverbindung hergestellt werden.</string>
+    <string name="dialog_wireless_adb_not_enabled">Der drahtlose Debugging-Dienst ist nicht aktiviert.
+\nBeachten Sie, dass vor Android 11 eine Computerverbindung erforderlich ist, um das drahtlose Debuggen zu aktivieren.</string>
     <string name="home_root_description">Zusätzlich kann Shizuku beim Booten automatisch gestartet werden. Falls nicht, bitte überprüfen, ob Shizuku durch Ihr System oder Tools von Drittanbietern eingeschränkt ist.&lt;br&gt;Sie können sich auf %s beziehen.</string>
     <string name="development_settings">Entwickleroptionen</string>
     <string name="adb_pairing_requires_multi_window">Bitte zuerst mit geteiltem Bildschirm öffnen (Mehrfenstermodus).</string>
@@ -36,5 +36,59 @@
 \nHinweis: Deaktivieren Sie die Entwickleroptionen oder USB-Debugging nicht, oder Shizuku wird gestoppt.</string>
     <string name="grant_dialog_button_deny">Ablehnen</string>
     <string name="grant_dialog_button_allow_always">Immer zulassen</string>
-    <string name="permission_warning_template">Zulassen, dass die App &lt;b&gt;%1$s&lt;/b&gt; Folgendes darf: %2$s\?</string>
+    <string name="permission_warning_template">Zulassen, dass die Anwendung <b>%1$s</b> %2$s nutzen darf\?</string>
+    <string name="translation_contributors">" "</string>
+    <string name="notification_service_start_failed">Der Shizuku Start Dienst ist fehlgeschlagen.</string>
+    <string name="notification_channel_service_status">Status des Start Dienstes</string>
+    <string name="app_management_dialog_adb_is_limited_message">Es ist gut möglich, dass der Hersteller ihres Gerätes die Berechtigungen von ADB beschränkt hat.&lt;p&gt;Es gibt vielleicht eine Lösung für ihr System in &lt;b&gt;&lt;a href=\"%1$s\"&gt;diesem Dokument&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_root_description_sui">Falls Sie Magisk benutzen, können Sie %1$s (ein Riru-Modul) ausprobieren. Für Root Nutzer, es wird Shizuku eventuell ersetzen. Hinweis: Vorhandene Anwendungen müssen ein wenig geladen werden, um %1$s zu benuten.</string>
+    <string name="adb_pairing">Kopplung</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Öffnen Sie Shizuku</string>
+    <string name="dialog_requesting_legacy_title">%1$s fragt nach legacy Shizuku</string>
+    <string name="dialog_legacy_not_support_message">Legacy Shizuku ist seit März 2019 veraltet. Zudem funktioniert legacy Shizuku auf neueren Android Systemen nicht.&lt;p&gt;Bitte fragen Sie den Entwickler von &lt;b&gt;%1$s&lt;/b&gt; ein Update zu veröffentlichen.</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; unterstützt modern Shizuku, aber es fragt nach legacy Shizuku. Dies könnte sein, da Shizuku nicht läuft, bitte überprüfen Sie die Shizuku Anwendung.&lt;p&gt;Legacy Shizuku ist seit März 2019 veraltet.</string>
+    <string name="dialog_legacy_not_support_title">%1$s unterstützt das moderne Shizuku nicht</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b>wurde in die Zwischenablage kopiert.</string>
+    <string name="toast_copied_to_clipboard">%s
+\nwurde in die Zwischenablage kopiert.</string>
+    <string name="dialog_cannot_open_browser_title">Kann den Browser nicht starten</string>
+    <string name="start_with_root_failed">Kann den Dienst nicht starten, da kein Root zugriff gewährt wurde oder dieses Gerät nicht gerootet ist.</string>
+    <string name="starter">Starter</string>
+    <string name="permission_description">Erlaube der Anwendung Shizuku zu nutzen.</string>
+    <string name="permission_label">auf Shizuku zugreifen</string>
+    <string name="notification_working">Arbeitet…</string>
+    <string name="notification_service_start_no_root">Fehler bei Root Zugriff.</string>
+    <string name="notification_service_starting">Der Shizuku Dienst startet gerade…</string>
+    <string name="dialog_stop_message">Der Shizuku-Dienst wird gestoppt.</string>
+    <string name="settings_translation">An der Übersetzung beteiligen</string>
+    <string name="settings_translation_contributors">Mitwirkende</string>
+    <string name="settings_translation_summary">Helfen Sie uns %s in deine Sprache zu übersetzen</string>
+    <string name="settings_start_on_boot_summary">Mit Root-Zugriff kann Shizuku automatisch beim Hochfahren starten</string>
+    <string name="settings_start_on_boot">Beim Hochfahren starten (root)</string>
+    <string name="settings_startup">Start</string>
+    <string name="settings_user_interface">Darstellung</string>
+    <string name="settings_language">Sprache</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="app_management_item_summary_requires_root">* benötigt Shizuku mit Root-Zugriff</string>
+    <string name="home_learn_more_description">Lernen Sie, wie Anwendungen mit Shizuku entwickelt werden oder bekommen Sie Anwendungen, die Shizuku nutzen</string>
+    <string name="home_learn_more_title">Shizuku kennenlernen</string>
+    <string name="home_app_management_view_authorized_apps">Tippen, um autorisierte Anwendungen zu verwalten</string>
+    <string name="home_app_management_title">Anwendungsverwaltung</string>
+    <string name="home_root_button_restart">Neustart</string>
+    <string name="home_root_button_start">Start</string>
+    <string name="home_root_title">Start (für gerootete Geräte)</string>
+    <string name="adb_pair_required">Bitte gehen Sie die Kopplungsschritte zuerst durch.</string>
+    <string name="adb_error_key_store">Fehler bei Generierung eines Schlüssels für \"Wireless Debugging\".
+\nViellecht ist der KeyStore Mechanismus des Gerätes beschädigt.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Der Kopplungsdialog muss immer sichtbar sein, den Split-Screen Modus zu benutzen ist der einzige Weg diese App und den Systemdialog zur selben Zeit sichtbar zu lassen.</string>
+    <string name="dialog_adb_pairing_paring_code">Kopplungs-Code</string>
+    <string name="paring_code_is_wrong">Der Kopplungs-Code ist falsch.</string>
+    <string name="dialog_adb_pairing_message">Bitte starten Sie die Kopplung mit den folgenden Schritten:\"Entwickleroptionen\" - \"Wireless debugging\" - \"Kopple Gerät mit dem Kopplungs Code\".
+\n
+\nNach dem Start der Kopplung, können sie den Kopplungs Code eingeben.</string>
+    <string name="cannot_connect_port">Es kann keine Verbindung zum drahtlosen Debugging-Dienst hergestellt werden.</string>
+    <string name="dialog_adb_pairing_discovery">Sucht nach einem Kopplungsdienst</string>
+    <string name="dialog_adb_pairing_title">Mit Gerät koppeln</string>
+    <string name="dialog_adb_invalid_port">Der Port ist eine ganze Zahl zwischen 0 und 65536.</string>
 </resources>
