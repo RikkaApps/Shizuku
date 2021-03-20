@@ -89,7 +89,7 @@ namespace se {
     freecon_t *freecon = __freecon;
 
     void init() {
-        if (access("/system/lib/libselinux.so", F_OK) != 0)
+        if (access("/system/lib/libselinux.so", F_OK) != 0 && access("/system/lib64/libselinux.so", F_OK) != 0)
             return;
 
         void *handle = dlopen("libselinux.so", RTLD_LAZY | RTLD_LOCAL);
