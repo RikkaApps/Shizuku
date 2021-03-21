@@ -156,7 +156,7 @@ public class ShizukuCmd {
         } else if (Shizuku.shouldShowRequestPermissionRationale()) {
             abort("Permission denied, please check Shizuku app");
         } else {
-            System.out.println("[ Requesting permission... ]");
+            verbose("Requesting permission...");
 
             Shizuku.addRequestPermissionResultListener(new Shizuku.OnRequestPermissionResultListener() {
                 @Override
