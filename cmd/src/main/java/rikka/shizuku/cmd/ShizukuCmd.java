@@ -119,7 +119,7 @@ public class ShizukuCmd {
             packageName = "com.android.shell";
         } else {
             packageName = System.getenv("SHIZUKU_APPLICATION_ID");
-            if (TextUtils.isEmpty(packageName)) {
+            if (TextUtils.isEmpty(packageName) || "PKG".equals(packageName)) {
                 abort("SHIZUKU_APPLICATION_ID is not set, set this environment variable to the id of current application (package name)");
             }
         }

@@ -76,4 +76,9 @@
         <item name="android:backgroundTintMode">src_in</item>
     </style>
 
+    <style name="TerminalTutorialText">
+        <item name="android:textAppearance">?textAppearanceBody2</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+    </style>
+
 </resources>

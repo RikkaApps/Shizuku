@@ -32,7 +32,7 @@ android.applicationVariants.all { variant ->
 
         def outDir = new File(rootDir, "out")
         def mappingPath = new File(outDir, "mapping").absolutePath
-        def dexPath = new File(outDir, "cmd").absolutePath
+        def dexPath = "${rootProject.rootDir.path}/manager/src/main/assets"
         variant.assembleProvider.get().doLast {
             if (variant.getBuildType().isMinifyEnabled()) {
                 copy {

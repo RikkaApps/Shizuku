@@ -54,6 +54,13 @@ abstract class AppActivity : MaterialActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        if (!super.onSupportNavigateUp()) {
+            finish()
+        }
+        return true
+    }
+
     companion object {
         private var sFontInitialized = false
     }

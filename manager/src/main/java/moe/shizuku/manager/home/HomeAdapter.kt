@@ -28,9 +28,10 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, 0)
-        addItem(ManageAppsViewHolder.CREATOR, Pair(status, grantedCount), 1)
+        addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, 1)
+        addItem(TerminalViewHolder.CREATOR, status, 1)
         if (Process.myUid() / 100000 == 0) {
-            val root = ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT || isRooted()
+            val root = isRooted()
             val rootRestart = running && status.uid == 0
             when {
                 root && BuildUtils.atLeast30 -> {

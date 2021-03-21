@@ -89,8 +89,6 @@ abstract class HomeActivity : AppBarActivity() {
 
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
         Shizuku.addBinderDeadListener(binderDeadListener)
-
-        logd("onCreate")
     }
 
     override fun onResume() {

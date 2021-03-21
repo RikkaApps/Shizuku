@@ -50,6 +50,9 @@
             android:name=".management.ApplicationManagementActivity"
             android:label="@string/home_app_management_title" />
         <activity
+            android:name=".cmd.TerminalTutorialActivity"
+            android:label="@string/home_terminal_title" />
+        <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/settings_title" />
         <activity

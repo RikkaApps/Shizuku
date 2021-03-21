@@ -67,6 +67,17 @@
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[It\'s highly possible that your device manufacturer limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>
     <string name="app_management_item_summary_requires_root">* requires Shizuku runs with root</string>
 
+    <!-- Terminal -->
+    <string name="home_terminal_title">Use Shizuku in terminal apps</string>
+    <string name="home_terminal_description">Run commands through Shizuku in terminal apps you like</string>
+    <string name="terminal_tutorial_1">First, Export files to any where you want. You will find two files, %1$s and %2$s.</string>
+    <string name="terminal_tutorial_1_description">If there are files with the same name in the selected folder, they will be deleted.\n\nThe export function uses SAF (Storage Access Framework). It\'s reported that MIUI breaks the functions of SAF. If you are using MIUI, you may have to extract the file from Shizuku\'s apk or download from GitHub.</string>
+    <string name="terminal_export_files">Export files</string>
+    <string name="terminal_tutorial_2">Then, use any text editor to open and edit %1$s.</string>
+    <string name="terminal_tutorial_2_description">For example, if you want to use Shizuku in %1$s, you should replace %2$s with %3$s (%4$s is the package name of %1$s).</string>
+    <string name="terminal_tutorial_3">Finally, move the files to somewhere where your terminal app can access, you will be able to use %1$s to run commands through Shizuku.</string>
+    <string name="terminal_tutorial_3_description">Some tips: grant execute permission to %1$s and add it to %2$s, you will able to use %1$s directly.</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_language">Language</string>

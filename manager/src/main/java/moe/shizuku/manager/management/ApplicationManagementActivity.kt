@@ -88,10 +88,7 @@ class ApplicationManagementActivity : AppBarActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        } else if (item.itemId == R.id.action_view_apps) {
+        if (item.itemId == R.id.action_view_apps) {
             CustomTabsHelper.launchUrlOrCopy(this, Helps.APPS.get())
             return true
         }

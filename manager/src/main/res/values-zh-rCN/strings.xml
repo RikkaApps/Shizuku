@@ -88,4 +88,14 @@
     <string name="permission_warning_template"><![CDATA[要允许<b>%1$s</b>%2$s吗？]]></string>
     <string name="grant_dialog_button_allow_always">始终允许</string>
     <string name="grant_dialog_button_deny">拒绝</string>
+    <string name="home_terminal_title">在终端应用中使用 Shizuku</string>
+    <string name="home_terminal_description">在您喜欢的终端应用中通过 Shizuku 运行命令</string>
+    <string name="terminal_tutorial_1">首先，将文件导出到任何您想要的位置。您将找到两个文件，%1$s 和 %2$s。</string>
+    <string name="terminal_tutorial_1_description">若选择的文件夹中已有同名文件，它们会被删除。\n\n导出功能使用 SAF（Storage Access Framework）。有报告称 MIUI 破坏了 SAF 的功能，如果您使用 MIUI，您可能需要从 Shizuku 的 apk 中提取文件，或是从 GitHub 下载文件。</string>
+    <string name="terminal_export_files">导出文件</string>
+    <string name="terminal_tutorial_2">然后，使用任意文本编辑器打开并编辑 %1$s。</string>
+    <string name="terminal_tutorial_2_description">例如，如果要在 %1$s 中使用 Shizuku，则应将 %2$s 替换为 %3$s（%4$s 是 %1$s 的软件包名称）。</string>
+    <string name="terminal_tutorial_3">最后，将文件移动到终端应用可以访问的位置，您便可使用 %1$s 来通过 Shizuku 运行命令。</string>
+    <string name="terminal_tutorial_3_description">一些技巧：将执行权限授予 %1$s 并将其添加到 %2$s，您将可以直接使用 %1$s。</string>
+
 </resources>
