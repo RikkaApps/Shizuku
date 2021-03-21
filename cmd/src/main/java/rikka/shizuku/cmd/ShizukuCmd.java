@@ -75,6 +75,9 @@ public class ShizukuCmd {
         am.startActivityAsUser(null, packageName, intent, null, null, null, 0, 0, null, null, Os.getuid() / 100000);
     }
 
+    private static boolean verboseMessageAllowed = false;
+    private static boolean preserveEnvironment = false;
+
     public static void main(String[] args) {
         if (BuildConfig.DEBUG) {
             System.out.println("args: " + Arrays.toString(args));
@@ -84,6 +87,8 @@ public class ShizukuCmd {
             printHelp();
             return;
         }
+
+        List<String> cmds = new ArrayList<>();
 
         for (String arg : args) {
             switch (arg) {
@@ -98,6 +103,14 @@ public class ShizukuCmd {
                 case "-v":
                     System.out.println(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
                     return;
+                case "-m":
+                case "-p":
+                case "--preserve-environment":
+                    preserveEnvironment = true;
+                    break;
+                default:
+                    cmds.add(arg);
+                    break;
             }
         }
 
@@ -121,7 +134,7 @@ public class ShizukuCmd {
 
         Shizuku.addBinderReceivedListener(() -> {
             try {
-                preExec(args);
+                preExec(cmds.toArray(new String[0]));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -167,27 +180,30 @@ public class ShizukuCmd {
     }
 
     private static void doExec(String[] args) throws InterruptedException {
-        List<String> envList = new ArrayList<>();
-        for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
-            envList.add(entry.getKey() + "=" + entry.getValue());
-        }
-        String[] env = envList.toArray(new String[0]);
-        String cwd = new File("").getAbsolutePath();
-
-        if (BuildConfig.DEBUG) {
-            System.out.println("[ " + cwd + " ]");
-            System.out.println("[ " + Arrays.toString(env) + " ]");
-        }
-
-        verbose("Starting command " + args[0] + "...");
-
         Process process;
         InputStream in;
         InputStream err;
         OutputStream out;
 
         try {
-            process = Shizuku.newProcess(args, env, cwd);
+            if (preserveEnvironment) {
+                List<String> envList = new ArrayList<>();
+                for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
+                    envList.add(entry.getKey() + "=" + entry.getValue());
+                }
+                String[] env = envList.toArray(new String[0]);
+                String cwd = new File("").getAbsolutePath();
+
+                verbose("cwd: " + cwd);
+                verbose("env: " + Arrays.toString(env));
+
+                verbose("Starting command " + args[0] + "...");
+                process = Shizuku.newProcess(args, env, cwd);
+            } else {
+                verbose("Starting command " + args[0] + "...");
+                process = Shizuku.newProcess(args, null, null);
+            }
+
             in = process.getInputStream();
             err = process.getErrorStream();
             out = process.getOutputStream();
@@ -242,8 +258,6 @@ public class ShizukuCmd {
         }
     }
 
-    private static boolean verboseMessageAllowed = false;
-
     private static void verbose(String message) {
         if (!verboseMessageAllowed) return;
 
@@ -261,9 +275,11 @@ public class ShizukuCmd {
         System.out.println("usage: shizuku [OPTION]... [CMD]...\n" +
                 "Run command through Shizuku.\n\n" +
                 "Options:\n" +
-                "-h, --help        print this help\n" +
-                "-v, --version     print the version of the shizuku tool\n" +
-                "--verbose         print more messages\n" +
+                "-h, --help               print this help\n" +
+                "-v, --version            print the version of the shizuku tool\n" +
+                "--verbose                print more messages\n" +
+                "-m, -p,\n" +
+                "--preserve-environment   preserve the entire environment\n" +
                 "\n" +
                 "This file can be used in adb shell or terminal apps.\n" +
                 "For terminal apps, the environment variable SHIZUKU_APPLICATION_ID needs to be set to the first.");
