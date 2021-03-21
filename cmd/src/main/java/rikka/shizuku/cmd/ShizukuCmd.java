@@ -64,6 +64,7 @@ public class ShizukuCmd {
 
         Intent intent = Intent.createChooser(
                 new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
                         .putExtra("data", data),
