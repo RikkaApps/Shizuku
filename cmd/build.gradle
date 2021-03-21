@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+    }
+    buildTypes {
+        debug {
+            multiDexEnabled false
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "shizuku-v${versionName}.apk"
+
+        def outDir = new File(rootDir, "out")
+        def mappingPath = new File(outDir, "mapping").absolutePath
+        def dexPath = new File(outDir, "cmd").absolutePath
+        variant.assembleProvider.get().doLast {
+            if (variant.getBuildType().isMinifyEnabled()) {
+                copy {
+                    from variant.mappingFileProvider.get()
+                    into mappingPath
+                    rename { String fileName ->
+                        mappingPath + File.separator + "cmd-v${variant.versionName}.txt"
+                    }
+                }
+            }
+            copy {
+                def file = zipTree(file(outputFile)).matching { include 'classes*.dex' }.singleFile
+
+                from file
+                into dexPath
+                rename { String fileName ->
+                    fileName.replace(file.getName(), "shizuku.dex")
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(':api')
+    compileOnly project(':hidden-api-common')
+    implementation project(':hidden-api-common-bridge')
+    implementation project(':hidden-api-21-bridge')
+}

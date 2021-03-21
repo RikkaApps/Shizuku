@@ -40,9 +40,7 @@ class AppsViewModel(context: Context) : ViewModel() {
             try {
                 val list: MutableList<PackageInfo> = ArrayList()
                 var count = 0
-                for (pi in AuthorizationManager.getPackages(PackageManager.GET_META_DATA)) {
-                    if (packageName == pi.packageName) continue
-                    if (pi?.applicationInfo?.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") != true) continue
+                for (pi in AuthorizationManager.getPackages()) {
                     list.add(pi)
                     if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid)) count++
                 }
@@ -62,8 +60,7 @@ class AppsViewModel(context: Context) : ViewModel() {
             try {
                 val list: MutableList<PackageInfo> = ArrayList()
                 val packages: MutableList<String> = ArrayList()
-                for (pi in AuthorizationManager.getPackages(PackageManager.GET_META_DATA)) {
-                    if (packageName == pi.packageName) continue
+                for (pi in AuthorizationManager.getPackages()) {
                     list.add(pi)
                     if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid)) packages.add(pi.packageName)
                 }

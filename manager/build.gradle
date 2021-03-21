@@ -51,6 +51,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
     packagingOptions {
         exclude '/META-INF/*.version'
@@ -126,11 +127,6 @@ repositories {
             includeGroup('com.github.topjohnwu.libsu')
         }
     }
-    maven { url 'https://dl.bintray.com/rikkaw/MaterialPreference'
-        content {
-            includeGroup('moe.shizuku.preference')
-        }
-    }
     maven {
         url 'https://dl.bintray.com/rikkaw/Libraries'
         content {
@@ -145,8 +141,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 
     //compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
@@ -157,7 +153,7 @@ dependencies {
 
     implementation 'androidx.browser:browser:1.3.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.fragment:fragment-ktx:1.3.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
@@ -166,13 +162,13 @@ dependencies {
     implementation 'com.github.topjohnwu.libsu:core:3.1.1'
 
     implementation 'dev.rikka.rikkax.appcompat:appcompat:1.2.0-rc01'
-    implementation 'dev.rikka.rikkax.core:core:1.3.0'
+    implementation 'dev.rikka.rikkax.core:core:1.3.1'
     implementation 'dev.rikka.rikkax.material:material:1.6.0'
     implementation 'dev.rikka.rikkax.html:html-ktx:1.1.2'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-adapter:1.2.0'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.2.0'
     implementation 'dev.rikka.rikkax.widget:borderview:1.0.1'
-    implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.1'
+    implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.2'
     implementation 'rikka.ndk.thirdparty:boringssl:20200911'
 
     implementation 'moe.shizuku.fontprovider:api:10'

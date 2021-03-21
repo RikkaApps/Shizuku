@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,7 @@ import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 import moe.shizuku.starter.ServiceStarter;
+import rikka.parcelablelist.ParcelableListSlice;
 import rikka.shizuku.ShizukuApiConstants;
 
 import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
@@ -250,7 +252,7 @@ public class ShizukuService extends IShizukuService.Stub {
         try {
             process = Runtime.getRuntime().exec(cmd, env, dir != null ? new File(dir) : null);
         } catch (IOException e) {
-            throw new RemoteException(e.getMessage());
+            throw new IllegalStateException(e.getMessage());
         }
 
         ClientRecord clientRecord = clientManager.findClient(Binder.getCallingUid(), Binder.getCallingPid());
@@ -266,7 +268,7 @@ public class ShizukuService extends IShizukuService.Stub {
         try {
             return SELinux.getContext();
         } catch (Throwable tr) {
-            throw new RemoteException(tr.getMessage());
+            throw new IllegalStateException(tr.getMessage());
         }
     }
 
@@ -277,7 +279,7 @@ public class ShizukuService extends IShizukuService.Stub {
         try {
             return SystemProperties.get(name, defaultValue);
         } catch (Throwable tr) {
-            throw new RemoteException(tr.getMessage());
+            throw new IllegalStateException(tr.getMessage());
         }
     }
 
@@ -288,7 +290,7 @@ public class ShizukuService extends IShizukuService.Stub {
         try {
             SystemProperties.set(name, value);
         } catch (Throwable tr) {
-            throw new RemoteException(tr.getMessage());
+            throw new IllegalStateException(tr.getMessage());
         }
     }
 
@@ -746,33 +748,39 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
+    private int getFlagsForUidInternal(int uid, int mask, boolean allowRuntimePermission) {
+        Config.PackageEntry entry = configManager.find(uid);
+        if (entry != null) {
+            return entry.flags & mask;
+        }
+
+        if (allowRuntimePermission && (mask & Config.MASK_PERMISSION) != 0) {
+            int userId = UserHandleCompat.getUserId(uid);
+            for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
+                PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+                if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                    continue;
+                }
+
+                try {
+                    if (SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED) {
+                        return Config.FLAG_ALLOWED;
+                    }
+                } catch (Throwable e) {
+                    LOGGER.w("getFlagsForUid");
+                }
+            }
+        }
+        return 0;
+    }
+
     @Override
     public int getFlagsForUid(int uid, int mask) {
         if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("updateFlagsForUid is allowed to be called only from the manager");
             return 0;
         }
-        Config.PackageEntry entry = configManager.find(uid);
-        if (entry != null) {
-            return entry.flags & mask;
-        }
-
-        int userId = UserHandleCompat.getUserId(uid);
-        for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
-            PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
-            if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
-                continue;
-            }
-
-            try {
-                if (SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED) {
-                    return Config.FLAG_ALLOWED;
-                }
-            } catch (Throwable e) {
-                LOGGER.w("getFlagsForUid");
-            }
-        }
-        return 0;
+        return getFlagsForUidInternal(uid, mask, true);
     }
 
     @Override
@@ -834,12 +842,49 @@ public class ShizukuService extends IShizukuService.Stub {
         record.setBinder(binder);
     }
 
+    private ParcelableListSlice<PackageInfo> getApplications(int userId) {
+        List<PackageInfo> list = new ArrayList<>();
+        List<Integer> users = new ArrayList<>();
+        if (userId == -1) {
+            users = SystemService.getUserIdsNoThrow();
+        } else {
+            users.add(userId);
+        }
+
+        for (int user : users) {
+            for (PackageInfo pi : SystemService.getInstalledPackagesNoThrow(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS, user)) {
+                if (Objects.equals(MANAGER_APPLICATION_ID, pi.packageName)) continue;
+                if (pi.applicationInfo == null) continue;
+
+                int uid = pi.applicationInfo.uid;
+                int flags = getFlagsForUidInternal(uid, Config.MASK_PERMISSION, false);
+                if (flags != 0) {
+                    list.add(pi);
+                } else if (pi.applicationInfo.metaData != null
+                        && pi.applicationInfo.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT", false)
+                        && pi.requestedPermissions != null
+                        && ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                    list.add(pi);
+                }
+            }
+
+        }
+        return new ParcelableListSlice<>(list);
+    }
+
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
         if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
             transactRemote(data, reply, flags);
+            return true;
+        } else if (code == ServerConstants.BINDER_TRANSACTION_getApplications) {
+            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
+            int userId = data.readInt();
+            ParcelableListSlice<PackageInfo> result = getApplications(userId);
+            reply.writeNoException();
+            result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
             return true;
         }
         return super.onTransact(code, data, reply, flags);

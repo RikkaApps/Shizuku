@@ -24,6 +24,7 @@ dependencies {
     
     implementation "androidx.annotation:annotation:1.1.0"
     implementation 'com.google.code.gson:gson:2.8.6'
+    api 'dev.rikka.rikkax.parcelablelist:parcelablelist:1.0.0'
 
     implementation project(':aidl')
     implementation project(':shared')

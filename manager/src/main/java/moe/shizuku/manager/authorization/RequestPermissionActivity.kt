@@ -34,7 +34,7 @@ class RequestPermissionActivity : AppActivity() {
         }
     }
 
-    private fun checkPermission(uid: Int, pid: Int, requestCode: Int): Boolean {
+    private fun checkSelfPermission(): Boolean {
         val permission = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
         if (permission) return true
 
@@ -55,8 +55,6 @@ class RequestPermissionActivity : AppActivity() {
             dialog.show()
         } catch (ignored: Throwable) {
         }
-
-        setResult(uid, pid, requestCode, allowed = false, onetime = true)
         return false
     }
 
@@ -68,10 +66,11 @@ class RequestPermissionActivity : AppActivity() {
         val requestCode = intent.getIntExtra("requestCode", -1)
         val ai = intent.getParcelableExtra<ApplicationInfo>("applicationInfo")
         if (uid == -1 || pid == -1 || ai == null) {
+            finish()
             return
         }
-
-        if (!checkPermission(uid, pid, requestCode)) {
+        if (!checkSelfPermission()) {
+            setResult(uid, pid, requestCode, allowed = false, onetime = true)
             return
         }
 

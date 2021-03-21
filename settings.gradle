@@ -1,5 +1,5 @@
 include ':hidden-api-common', ':hidden-api-common-bridge', ':hidden-api-21', ':hidden-api-21-bridge'
-include ':server', ':starter'
+include ':server', ':starter', ':cmd'
 include ':manager'
 
 def root = "api"
