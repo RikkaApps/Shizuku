@@ -45,7 +45,7 @@ typedef struct procmaps_struct{
 	char dev[12];	//< dev major:minor
 	int inode;		//< inode of the file that backs the area
 
-	char pathname[600];		//< the path of the file that backs the area
+	char pathname[PATH_MAX];		//< the path of the file that backs the area
 	//chained list
 	struct procmaps_struct* next;		//<handler of the chinaed list
 } procmaps_struct;
