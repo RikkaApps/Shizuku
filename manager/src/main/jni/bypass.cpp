@@ -2,6 +2,7 @@
 #include <utility>
 #include <fcntl.h>
 #include <cinttypes>
+#include <link.h>
 #include "misc.h"
 
 extern "C" {
@@ -41,6 +42,7 @@ static JNINativeMethod *search_jni_method(
     }
     if (name_addr == 0 | signature_addr == 0) {
         LOGE("findMethod: can't find address for name or signature.");
+        return nullptr;
     }
 
     // Step 2: search JNINativeMethod
@@ -89,14 +91,13 @@ static bool doBypass(JNIEnv *env) {
             auto end = (uintptr_t) maps_tmp->addr_end;
             if (maps_tmp->is_r) {
                 if (addresses) {
-                    addresses = (procmaps_struct **) realloc(addresses, sizeof(procmaps_struct*) * (size + 1));
+                    addresses = (procmaps_struct **) realloc(addresses, sizeof(procmaps_struct *) * (size + 1));
                 } else {
-                    addresses = (procmaps_struct **) malloc(sizeof(procmaps_struct*));
+                    addresses = (procmaps_struct **) malloc(sizeof(procmaps_struct *));
                 }
                 addresses[size] = maps_tmp;
                 size += 1;
             }
-            LOGD("%" PRIxPTR"-%" PRIxPTR" %s %ld %s", start, end, maps_tmp->perm, maps_tmp->offset, maps_tmp->pathname);
         }
     }
 
