@@ -18,7 +18,7 @@ android {
         resValue "string", "versionName", "${rootProject.ext.versionName}"
         externalNativeBuild {
             cmake {
-                arguments '-DANDROID_STL=c++_static'
+                arguments '-DANDROID_STL=none'
             }
         }
     }
@@ -127,12 +127,6 @@ repositories {
             includeGroup('com.github.topjohnwu.libsu')
         }
     }
-    maven {
-        url 'https://dl.bintray.com/rikkaw/Libraries'
-        content {
-            includeGroupByRegex('rikka.*')
-        }
-    }
 }
 
 dependencies {
@@ -153,23 +147,25 @@ dependencies {
 
     implementation 'androidx.browser:browser:1.3.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.fragment:fragment-ktx:1.3.1'
+    implementation 'androidx.fragment:fragment-ktx:1.3.2'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     implementation 'com.github.topjohnwu.libsu:core:3.1.1'
 
     implementation 'dev.rikka.rikkax.appcompat:appcompat:1.2.0-rc01'
     implementation 'dev.rikka.rikkax.core:core:1.3.2'
-    implementation 'dev.rikka.rikkax.material:material:1.6.1'
+    implementation 'dev.rikka.rikkax.material:material:1.6.4'
     implementation 'dev.rikka.rikkax.html:html-ktx:1.1.2'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-adapter:1.2.0'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.2.0'
     implementation 'dev.rikka.rikkax.widget:borderview:1.0.1'
     implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.2'
-    implementation 'rikka.ndk.thirdparty:boringssl:20200911'
+
+    implementation 'io.github.vvb2060.ndk:boringssl:2.1'
+    implementation 'dev.rikka.ndk.thirdparty:cxx:1.1.0'
 
     implementation 'moe.shizuku.fontprovider:api:10'
 
