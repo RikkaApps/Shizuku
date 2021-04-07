@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="translation_url" translatable="false">https://rikka.app/contribute_translation.html</string>
+    <string name="translation_url" translatable="false">https://rikka.app/contribute_translation/</string>
 </resources>
