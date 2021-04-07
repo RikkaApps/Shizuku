@@ -12,25 +12,25 @@ public class Helps {
     public static final MultiLocaleEntity SUI = new MultiLocaleEntity();
 
     static {
-        ADB.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup.html");
-        ADB.put("zh-TW", "https://shizuku.rikka.app/zh-hant/guide/setup.html");
-        ADB.put("en", "https://shizuku.rikka.app/guide/setup.html");
+        ADB.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup/");
+        ADB.put("zh-TW", "https://shizuku.rikka.app/zh-hant/guide/setup/");
+        ADB.put("en", "https://shizuku.rikka.app/guide/setup/");
 
-        ADB_ANDROID11.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup.html");
-        ADB_ANDROID11.put("zh-TW", "https://shizuku.rikka.app/zh-hant/guide/setup.html");
-        ADB_ANDROID11.put("en", "https://shizuku.rikka.app/guide/setup.html");
+        ADB_ANDROID11.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup/");
+        ADB_ANDROID11.put("zh-TW", "https://shizuku.rikka.app/zh-hant/guide/setup/");
+        ADB_ANDROID11.put("en", "https://shizuku.rikka.app/guide/setup/");
 
-        APPS.put("zh-CN", "https://shizuku.rikka.app/zh-hans/apps.html");
-        APPS.put("zh-TW", "https://shizuku.rikka.app/zh-hant/apps.html");
-        APPS.put("en", "https://shizuku.rikka.app/apps.html");
+        APPS.put("zh-CN", "https://shizuku.rikka.app/zh-hans/apps/");
+        APPS.put("zh-TW", "https://shizuku.rikka.app/zh-hant/apps/");
+        APPS.put("en", "https://shizuku.rikka.app/apps/");
 
         HOME.put("zh-CN", "https://shizuku.rikka.app/zh-hans/");
         HOME.put("zh-TW", "https://shizuku.rikka.app/zh-hant/");
         HOME.put("en", "https://shizuku.rikka.app/");
 
-        DOWNLOAD.put("zh-CN", "https://shizuku.rikka.app/zh-hans/download.html");
-        DOWNLOAD.put("zh-TW", "https://shizuku.rikka.app/zh-hant/download.html");
-        DOWNLOAD.put("en", "https://shizuku.rikka.app/download.html");
+        DOWNLOAD.put("zh-CN", "https://shizuku.rikka.app/zh-hans/download/");
+        DOWNLOAD.put("zh-TW", "https://shizuku.rikka.app/zh-hant/download/");
+        DOWNLOAD.put("en", "https://shizuku.rikka.app/download/");
 
         SUI.put("en", "https://github.com/RikkaApps/Sui");
     }
