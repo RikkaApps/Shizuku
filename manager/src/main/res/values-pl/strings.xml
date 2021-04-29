@@ -56,4 +56,7 @@
     <string name="grant_dialog_button_allow_always">Zawsze zezwalaj</string>
     <string name="grant_dialog_button_deny">Odmów</string>
     <string name="permission_warning_template"><![CDATA[Zezwolić aplikacji &lt;b&gt;%1$s&lt;/b&gt; na: %2$s?]]></string>
+    <string name="dialog_adb_invalid_port">Port to liczba całkowita z zakresu od 1 do 65535.</string>
+    <string name="home_wireless_adb_description">W systemie Android 11 debugowanie bezprzewodowe jest funkcją wbudowaną. Zapoznaj się z &lt;b&gt;&lt;a href=\"%1$s\"&gt;tym dokumentem pomocy&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Działa to dla wszystkich wersji systemu. Ale przed Androidem 11 debugowania bezprzewodowego nie można bezpośrednio włączyć.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;*Jest jeszcze kilka innych kwestii. Potwierdź, że najpierw przeczytałeś pomoc.</string>
 </resources>
