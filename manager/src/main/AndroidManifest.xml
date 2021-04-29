@@ -10,6 +10,13 @@
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
         tools:node="remove" />
+    
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
 
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
@@ -32,6 +39,7 @@
         android:name=".ShizukuApplication"
         android:allowBackup="false"
         android:autoRevokePermissions="allowed"
+        android:banner="@drawable/ic_launcher"
         android:directBootAware="true"
         android:extractNativeLibs="false"
         android:icon="@drawable/ic_launcher"
@@ -44,6 +52,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
