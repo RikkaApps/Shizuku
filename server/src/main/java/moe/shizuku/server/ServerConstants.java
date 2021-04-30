@@ -4,7 +4,7 @@ public class ServerConstants {
 
     public static final int MANAGER_APP_NOT_FOUND = 50;
 
-    public static final int PATCH_VERSION = 3;
+    public static final int PATCH_VERSION = 4;
 
     public static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";
     public static final String MANAGER_APPLICATION_ID = "moe.shizuku.privileged.api";

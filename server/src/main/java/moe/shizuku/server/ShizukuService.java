@@ -715,10 +715,12 @@ public class ShizukuService extends IShizukuService.Stub {
                 requestUid, requestPid, requestCode, Boolean.toString(allowed), Boolean.toString(onetime));
 
         List<ClientRecord> records = clientManager.findClients(requestUid);
+        List<String> packages = new ArrayList<>();
         if (records.isEmpty()) {
             LOGGER.w("dispatchPermissionConfirmationResult: no client for uid %d was found", requestUid);
         } else {
             for (ClientRecord record : records) {
+                packages.add(record.packageName);
                 record.allowed = allowed;
                 if (record.pid == requestPid) {
                     record.dispatchRequestPermissionResult(requestCode, allowed);
@@ -727,7 +729,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         if (!onetime) {
-            configManager.update(requestUid, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : Config.FLAG_DENIED);
+            configManager.update(requestUid, packages, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : Config.FLAG_DENIED);
         }
 
         if (!onetime && allowed) {
@@ -820,7 +822,7 @@ public class ShizukuService extends IShizukuService.Stub {
             }
         }
 
-        configManager.update(uid, mask, value);
+        configManager.update(uid, null, mask, value);
     }
 
     private void sendUserServiceLocked(IBinder binder, String token) {
@@ -857,7 +859,13 @@ public class ShizukuService extends IShizukuService.Stub {
                 if (pi.applicationInfo == null) continue;
 
                 int uid = pi.applicationInfo.uid;
-                int flags = getFlagsForUidInternal(uid, Config.MASK_PERMISSION, false);
+                int flags = 0;
+                Config.PackageEntry entry = configManager.find(uid);
+                if (entry != null) {
+                    if (entry.packages != null && !entry.packages.contains(pi.packageName)) continue;
+                    flags = entry.flags & Config.MASK_PERMISSION;
+                }
+
                 if (flags != 0) {
                     list.add(pi);
                 } else if (pi.applicationInfo.metaData != null

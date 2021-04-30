@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import kotlin.collections.ArraysKt;
 import moe.shizuku.server.api.SystemService;
@@ -106,6 +108,47 @@ public class ConfigManager {
     private ConfigManager() {
         this.config = load();
 
+        boolean changed = false;
+
+        if (config.packages == null) {
+            config.packages = new ArrayList<>();
+            changed = true;
+        }
+
+        if (config.version < 2) {
+            for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
+                entry.packages = SystemService.getPackagesForUidNoThrow(entry.uid);
+            }
+            changed = true;
+        }
+
+        for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
+            if (entry.packages == null) continue;
+
+            List<String> packages = SystemService.getPackagesForUidNoThrow(entry.uid);
+            if (packages.isEmpty()) {
+                LOGGER.i("remove config for uid %d since it has gone", entry.uid);
+                config.packages.remove(entry);
+                changed = true;
+                continue;
+            }
+
+            boolean packagesChanged = true;
+
+            for (String packageName : entry.packages) {
+                if (packages.contains(packageName)) {
+                    packagesChanged = false;
+                    break;
+                }
+            }
+
+            if (packagesChanged) {
+                LOGGER.i("remove config for uid %d since the packages for it changed", entry.uid);
+                config.packages.remove(entry);
+                changed = true;
+            }
+        }
+
         for (int userId : SystemService.getUserIdsNoThrow()) {
             for (PackageInfo pi : SystemService.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null
@@ -124,8 +167,13 @@ public class ConfigManager {
                     continue;
                 }
 
-                updateLocked(uid, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : 0);
+                updateLocked(uid, null, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : 0);
+                changed = true;
             }
+        }
+
+        if (changed) {
+            scheduleWriteLocked();
         }
     }
 
@@ -156,7 +204,7 @@ public class ConfigManager {
         }
     }
 
-    private void updateLocked(int uid, int mask, int values) {
+    private void updateLocked(int uid, List<String> packages, int mask, int values) {
         Config.PackageEntry entry = findLocked(uid);
         if (entry == null) {
             entry = new Config.PackageEntry(uid, mask & values);
@@ -168,12 +216,15 @@ public class ConfigManager {
             }
             entry.flags = newValue;
         }
+        if (packages != null) {
+            entry.packages = new ArrayList<>(packages);
+        }
         scheduleWriteLocked();
     }
 
-    public void update(int uid, int mask, int values) {
+    public void update(int uid, List<String> packages, int mask, int values) {
         synchronized (this) {
-            updateLocked(uid, mask, values);
+            updateLocked(uid, packages, mask, values);
         }
     }
 
