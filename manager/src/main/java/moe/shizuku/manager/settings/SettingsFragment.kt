@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
+import moe.shizuku.manager.app.ThemeHelper
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
@@ -41,7 +42,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private lateinit var languagePreference: ListPreference
-    private lateinit var nightModePreference: Preference
+    private lateinit var nightModePreference: IntegerSimpleMenuPreference
     private lateinit var blackNightThemePreference: SwitchPreference
     private lateinit var startOnBootPreference: SwitchPreference
     private lateinit var startupPreference: PreferenceCategory
@@ -114,6 +115,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val name = localeNameUser[index - 1]
             languagePreference.summary = name
         }
+        nightModePreference.value = ShizukuSettings.getNightMode()
         nightModePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
             if (value is Int) {
                 if (ShizukuSettings.getNightMode() != value) {
@@ -123,6 +125,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
+        blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
         blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
             if (ResourceUtils.isNightMode(requireContext().resources.configuration)) activity?.recreate()
             true
