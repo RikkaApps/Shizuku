@@ -53,7 +53,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 
 2. Hidden API limitation from Android 9
 
-   As of Android 9, the usage of the hidden APIs is limited for normal apps. Please use other methods (such as <https://github.com/tiann/FreeReflection>).
+   As of Android 9, the usage of the hidden APIs is limited for normal apps. Please use other methods (such as <https://github.com/tiann/FreeReflection> or <https://github.com/LSPosed/AndroidHiddenApiBypass>).
 
 3. Android 8.0 & ADB
 
@@ -70,6 +70,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 ### Build
 
 - Clone with `git clone --recurse-submodules`
+- Create signing configuration file `signing.properties`. Please refer to [the template](signing_template.properties) to complete it.
 - Run gradle task `:manager:assembleDebug` or `:manager:assembleRelease`
 
 The `:manager:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug the server.
