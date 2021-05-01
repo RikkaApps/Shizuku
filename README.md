@@ -53,7 +53,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 
 2. Hidden API limitation from Android 9
 
-   As of Android 9, the usage of the hidden APIs is limited for normal apps. Please use other methods (such as <https://github.com/tiann/FreeReflection> or <https://github.com/LSPosed/AndroidHiddenApiBypass>).
+   As of Android 9, the usage of the hidden APIs is limited for normal apps. Please use other methods (such as <https://github.com/LSPosed/AndroidHiddenApiBypass>).
 
 3. Android 8.0 & ADB
 
