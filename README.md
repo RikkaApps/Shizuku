@@ -70,7 +70,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 ### Build
 
 - Clone with `git clone --recurse-submodules`
-- Create Signing configuration file `signing.properties`. Go to see [`signing_template.properties`](signing_template.properties) as the template.
+- Create signing configuration file `signing.properties`. Please refer to [the template](signing_template.properties) to complete it.
 - Run gradle task `:manager:assembleDebug` or `:manager:assembleRelease`
 
 The `:manager:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug the server.
