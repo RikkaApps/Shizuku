@@ -126,6 +126,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
         blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
+        if (nightModePreference.value == DayNightDelegate.MODE_NIGHT_NO) blackNightThemePreference.isEnabled = false
         blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
             if (ResourceUtils.isNightMode(requireContext().resources.configuration)) activity?.recreate()
             true
