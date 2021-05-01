@@ -12,7 +12,6 @@
 #define LOG_TAG "AdbPairClient"
 
 #include "logging.h"
-#include "bypass.h"
 
 // ---------------------------------------------------------
 
@@ -226,18 +225,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/PairingContext"), methods_PairingContext,
                          sizeof(methods_PairingContext) / sizeof(JNINativeMethod));
-
-    int sdkLevel = -1, previewSdkLevel = -1;
-    char buf[PROP_VALUE_MAX + 1];
-    if (__system_property_get("ro.build.version.sdk", buf) > 0)
-        sdkLevel = atoi(buf);
-
-    if (__system_property_get("ro.build.version.preview_sdk", buf) > 0)
-        previewSdkLevel = atoi(buf);
-
-    if (sdkLevel >= 30 || (sdkLevel == 29 && previewSdkLevel > 0)) {
-        bypass::Bypass(env);
-    }
 
     return JNI_VERSION_1_6;
 }

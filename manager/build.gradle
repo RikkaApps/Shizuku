@@ -169,7 +169,7 @@ dependencies {
 
     implementation 'moe.shizuku.fontprovider:api:10'
 
-    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:1.1' // bypass hidden api restriction
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:1.1'
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.68'
 

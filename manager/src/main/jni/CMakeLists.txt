@@ -35,7 +35,7 @@ add_custom_command(TARGET libshizuku.so POST_BUILD
         COMMAND ${CMAKE_STRIP} --remove-section=.comment "libshizuku.so")
 
 add_library(adb SHARED
-        adb_pairing.cpp bypass.cpp misc.cpp pmparser.c)
+        adb_pairing.cpp misc.cpp)
 
 target_link_libraries(adb ${log-lib} boringssl::crypto_static cxx::cxx)
 
