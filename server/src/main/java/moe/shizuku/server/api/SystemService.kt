@@ -27,7 +27,7 @@ object SystemService {
      */
 
     private val activityManagerBinder by lazy {
-        SystemServiceBinder<IActivityManager>(Context.ACTIVITY_SERVICE) {
+        SystemServiceBinder<IActivityManager>("activity") {
             if (BuildUtils.atLeast26()) {
                 IActivityManager.Stub.asInterface(it)
             } else {
