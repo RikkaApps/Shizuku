@@ -1,6 +1,7 @@
 package moe.shizuku.manager.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
@@ -27,7 +28,7 @@ object ShizukuSystemApis {
     }
 
     private val userManager by unsafeLazy {
-        HiddenApiBridge.IUserManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("user")))
+        HiddenApiBridge.IUserManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService(Context.USER_SERVICE)))
     }
 
     private val users = arrayListOf<UserInfoCompat>()
