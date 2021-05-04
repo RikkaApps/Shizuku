@@ -45,7 +45,8 @@
             android:entryValues="@array/night_mode_value"
             android:key="night_mode"
             android:summary="%s"
-            android:title="@string/dark_theme" />
+            android:title="@string/dark_theme"
+            app:icon="@drawable/ic_outline_dark_mode_24" />
 
         <SwitchPreference
             android:key="black_night_theme"
