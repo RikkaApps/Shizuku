@@ -13,7 +13,7 @@ public class OsUtils {
         try {
             context = SELinux.getContext();
         } catch (Throwable tr) {
-            context =null;
+            context = null;
         }
         SELINUX_CONTEXT = context;
     }
@@ -22,7 +22,7 @@ public class OsUtils {
     public static int getUid() {
         return UID;
     }
-    
+
     public static int getPid() {
         return PID;
     }

@@ -1,8 +1,6 @@
 package moe.shizuku.manager.home
 
 import android.os.Process
-import moe.shizuku.manager.ShizukuSettings
-import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.management.AppsViewModel
 import rikka.core.util.BuildUtils
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
