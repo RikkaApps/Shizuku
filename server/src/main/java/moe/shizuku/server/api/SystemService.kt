@@ -21,6 +21,11 @@ import java.util.*
 
 object SystemService {
 
+    /*
+     * Cannot replace these hardcoded service names to Context.class's **_SERVICE fields!
+     * "server" module depends on "hidden-api-common" module, which has Context class stub.
+     */
+
     private val activityManagerBinder by lazy {
         SystemServiceBinder<IActivityManager>(Context.ACTIVITY_SERVICE) {
             if (BuildUtils.atLeast26()) {
@@ -38,20 +43,20 @@ object SystemService {
     }
 
     private val userManagerBinder by lazy {
-        SystemServiceBinder<IUserManager>(Context.USER_SERVICE) {
+        SystemServiceBinder<IUserManager>("user") {
             IUserManager.Stub.asInterface(it)
         }
 
     }
 
     private val appOpsServiceBinder by lazy {
-        SystemServiceBinder<IAppOpsService>(Context.APP_OPS_SERVICE) {
+        SystemServiceBinder<IAppOpsService>("appops") {
             IAppOpsService.Stub.asInterface(it)
         }
     }
 
     private val launcherAppsBinder by lazy {
-        SystemServiceBinder<ILauncherApps>(Context.LAUNCHER_APPS_SERVICE) {
+        SystemServiceBinder<ILauncherApps>("launcherapps") {
             ILauncherApps.Stub.asInterface(it)
         }
     }
