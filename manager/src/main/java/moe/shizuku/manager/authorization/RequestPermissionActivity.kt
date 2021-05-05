@@ -38,7 +38,7 @@ class RequestPermissionActivity : AppActivity() {
         val permission = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
         if (permission) return true
 
-        val icon = getDrawable(R.drawable.ic_permission_24dp)
+        val icon = getDrawable(R.drawable.ic_system_icon)
         icon?.setTint(theme.resolveColor(android.R.attr.colorAccent))
 
         val dialog = AlertDialog.Builder(this)

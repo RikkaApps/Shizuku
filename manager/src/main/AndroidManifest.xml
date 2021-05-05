@@ -21,7 +21,7 @@
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
         android:description="@string/permission_group_description"
-        android:icon="@drawable/ic_permission_24dp"
+        android:icon="@drawable/ic_system_icon"
         android:label="@string/permission_group_label" />
 
     <permission
@@ -30,7 +30,7 @@
     <permission
         android:name="moe.shizuku.manager.permission.API_V23"
         android:description="@string/permission_description"
-        android:icon="@drawable/ic_permission_24dp"
+        android:icon="@drawable/ic_system_icon"
         android:label="@string/permission_label"
         android:permissionGroup="moe.shizuku.manager.permission-group.API"
         android:protectionLevel="dangerous" />

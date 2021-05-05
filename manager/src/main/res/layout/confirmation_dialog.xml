@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_permission_24dp"
+        android:src="@drawable/ic_system_icon"
         android:tint="?android:colorAccent"
         android:tintMode="src_in" />
 
