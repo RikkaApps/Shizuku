@@ -1,8 +1,6 @@
 package moe.shizuku.manager.utils;
 
 import android.content.ActivityNotFoundException;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,6 +16,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
 import moe.shizuku.manager.R;
+import rikka.core.util.ClipboardUtils;
 import rikka.html.text.HtmlCompat;
 
 /**
@@ -96,8 +95,7 @@ public class CustomTabsHelper {
                 context.startActivity(intent);
             } catch (Throwable tr) {
                 try {
-                    ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE))
-                            .setPrimaryClip(new ClipData(ClipData.newPlainText("label", url)));
+                    ClipboardUtils.put(context, url);
 
                     new AlertDialog.Builder(context)
                             .setTitle(R.string.dialog_cannot_open_browser_title)

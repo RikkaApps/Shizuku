@@ -25,7 +25,7 @@ public class NotificationHelper {
     }
 
     public static void notify(Context context, int id, NotificationCompat.Builder builder) {
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         if (notificationManager == null) {
             return;
         }
@@ -34,7 +34,7 @@ public class NotificationHelper {
     }
 
     public static void cancel(Context context, int id) {
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         if (notificationManager == null) {
             return;
         }
