@@ -5,13 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Process
 import android.util.Log
-import androidx.core.content.ContextCompat
+import com.topjohnwu.superuser.Shell
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import rikka.shizuku.Shizuku
 
 class BootCompleteReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent) {
         if (Intent.ACTION_LOCKED_BOOT_COMPLETED != intent.action
                 && Intent.ACTION_BOOT_COMPLETED != intent.action) {
@@ -25,7 +26,17 @@ class BootCompleteReceiver : BroadcastReceiver() {
                 Log.i(AppConstants.TAG, "service is running")
                 return
             }
-            ContextCompat.startForegroundService(context, Intent(context, BootCompleteService::class.java))
+            start(context)
         }
+    }
+
+    private fun start(context: Context) {
+        if (!Shell.rootAccess()) {
+            //NotificationHelper.notify(context, AppConstants.NOTIFICATION_ID_STATUS, AppConstants.NOTIFICATION_CHANNEL_STATUS, R.string.notification_service_start_no_root)
+            return
+        }
+
+        Starter.writeDataFiles(context)
+        Shell.su(Starter.dataCommand).exec().let {}
     }
 }

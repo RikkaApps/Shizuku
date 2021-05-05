@@ -125,11 +125,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".starter.BootCompleteService"
-            android:directBootAware="true"
-            android:exported="false" />
-
         <provider
             android:name=".ShizukuManagerProvider"
             android:authorities="${applicationId}.shizuku"
