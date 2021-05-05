@@ -126,10 +126,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
         blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
-        if (nightModePreference.value == DayNightDelegate.MODE_NIGHT_NO) blackNightThemePreference.isEnabled = false
-        blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-            if (ResourceUtils.isNightMode(requireContext().resources.configuration)) activity?.recreate()
-            true
+        if (ResourceUtils.isNightMode(context.resources.configuration)) {
+            blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
+                activity?.recreate()
+                true
+            }
+        } else {
+            blackNightThemePreference.isEnabled = false
         }
 
         translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
