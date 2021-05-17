@@ -13,6 +13,6 @@
     app:borderBottomVisibility="never"
     app:borderTopDrawable="@null"
     app:borderTopVisibility="whenTop"
-    app:fitSystemWindowsInsets="bottom|top"
+    app:fitsSystemWindowsInsets="bottom|top"
     tools:ignore="UnusedResources"
     tools:viewBindingIgnore="true" />

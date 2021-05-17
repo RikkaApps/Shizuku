@@ -20,7 +20,7 @@
         android:paddingTop="?actionBarSize"
         android:paddingEnd="?android:listPreferredItemPaddingEnd"
         android:paddingBottom="16dp"
-        app:fitSystemWindowsInsets="bottom|top">
+        app:fitsSystemWindowsInsets="bottom|top">
 
         <LinearLayout
             android:layout_width="match_parent"

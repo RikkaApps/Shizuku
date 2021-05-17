@@ -16,7 +16,7 @@
         app:borderBottomVisibility="never"
         app:borderTopDrawable="@null"
         app:borderTopVisibility="whenTop"
-        app:fitSystemWindowsInsets="top|bottom">
+        app:fitsSystemWindowsInsets="top|bottom">
 
         <TextView
             android:id="@android:id/text1"

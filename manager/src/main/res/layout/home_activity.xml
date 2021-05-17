@@ -15,6 +15,6 @@
     app:borderBottomVisibility="never"
     app:borderTopDrawable="@null"
     app:borderTopVisibility="whenTop"
-    app:fitSystemWindowsInsets="bottom|top"
+    app:fitsSystemWindowsInsets="bottom|top"
     app:layoutManager="@string/main_layout_manager"
     app:spanCount="2" />
