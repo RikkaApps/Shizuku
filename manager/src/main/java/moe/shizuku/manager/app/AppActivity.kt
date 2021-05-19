@@ -6,21 +6,10 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import moe.shizuku.fontprovider.FontProviderClient
 import rikka.core.res.resolveColor
 import rikka.material.app.MaterialActivity
 
 abstract class AppActivity : MaterialActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        if (!sFontInitialized && Build.VERSION.SDK_INT < 28) {
-            val client = FontProviderClient.create(this)
-            client?.replace("Noto Sans CJK",
-                    "sans-serif", "sans-serif-medium")
-            sFontInitialized = true
-        }
-        super.onCreate(savedInstanceState)
-    }
 
     override fun computeUserThemeKey(): String {
         return ThemeHelper.getTheme(this)
@@ -59,9 +48,5 @@ abstract class AppActivity : MaterialActivity() {
             finish()
         }
         return true
-    }
-
-    companion object {
-        private var sFontInitialized = false
     }
 }

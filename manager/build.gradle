@@ -168,8 +168,6 @@ dependencies {
     implementation 'io.github.vvb2060.ndk:boringssl:2.1'
     implementation 'dev.rikka.ndk.thirdparty:cxx:1.1.0'
 
-    implementation 'moe.shizuku.fontprovider:api:10'
-
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:1.1'
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.68'
