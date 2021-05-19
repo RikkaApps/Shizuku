@@ -959,7 +959,7 @@ public class ShizukuService extends IShizukuService.Stub {
             Bundle extra = new Bundle();
             extra.putParcelable("moe.shizuku.privileged.api.intent.extra.BINDER", new BinderContainer(binder));
 
-            Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendBinder", null, extra);
+            Bundle reply = IContentProviderKt.callCompat(provider, null, name, "sendBinder", null, extra);
             if (reply != null) {
                 LOGGER.i("send binder to user app %s in user %d", packageName, userId);
             } else {

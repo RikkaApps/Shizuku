@@ -34,6 +34,10 @@ public interface IContentProvider {
     Bundle call(String callingPkg, String featureId, String authority, String method, @Nullable String arg, @Nullable Bundle extras)
             throws RemoteException;
 
+    @RequiresApi(31)
+    Bundle call(AttributionSource attributionSource, String authority, String method, @Nullable String arg, @Nullable Bundle extras)
+            throws RemoteException;
+
     AssetFileDescriptor openAssetFile(
             String callingPkg, Uri url, String mode, ICancellationSignal signal)
             throws RemoteException, FileNotFoundException;
