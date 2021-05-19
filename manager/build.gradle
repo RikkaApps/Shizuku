@@ -127,6 +127,11 @@ repositories {
             includeGroup('com.github.topjohnwu.libsu')
         }
     }
+    jcenter {
+        content {
+            includeGroup('me.zhanghai.android.fastscroll')
+        }
+    }
 }
 
 dependencies {

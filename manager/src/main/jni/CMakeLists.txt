@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(C_FLAGS "-Werror=format -fdata-sections -ffunction-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics")
 set(LINKER_FLAGS "-Wl,--hash-style=both")
 
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Builing Release...")
 
     set(C_FLAGS "${C_FLAGS} -O2 -fvisibility=hidden -fvisibility-inlines-hidden")
@@ -31,13 +31,17 @@ add_executable(libshizuku.so
 
 target_link_libraries(libshizuku.so ${log-lib} cxx::cxx)
 
-add_custom_command(TARGET libshizuku.so POST_BUILD
-        COMMAND ${CMAKE_STRIP} --remove-section=.comment "libshizuku.so")
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_custom_command(TARGET libshizuku.so POST_BUILD
+            COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libshizuku.so")
+endif ()
 
 add_library(adb SHARED
         adb_pairing.cpp misc.cpp)
 
 target_link_libraries(adb ${log-lib} boringssl::crypto_static cxx::cxx)
 
-add_custom_command(TARGET adb POST_BUILD
-        COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libadb.so")
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_custom_command(TARGET adb POST_BUILD
+            COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libadb.so")
+endif ()

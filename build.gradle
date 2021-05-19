@@ -8,16 +8,14 @@ idea.module {
 buildscript {
     apply from: 'api/manifest.gradle'
 
-    ext.kotlinVersion = '1.4.32'
+    ext.kotlinVersion = '1.5.0'
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
 
@@ -25,7 +23,6 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
     tasks.withType(Javadoc) {
         failOnError false
