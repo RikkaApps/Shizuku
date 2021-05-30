@@ -123,7 +123,9 @@ public class ConfigManager {
         }
 
         for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
-            if (entry.packages == null) continue;
+            if (entry.packages == null) {
+                entry.packages = new ArrayList<>();
+            }
 
             List<String> packages = SystemService.getPackagesForUidNoThrow(entry.uid);
             if (packages.isEmpty()) {
