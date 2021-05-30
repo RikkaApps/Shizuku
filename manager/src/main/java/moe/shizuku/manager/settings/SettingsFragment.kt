@@ -35,12 +35,6 @@ import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    companion object {
-        init {
-            SimpleMenuPreference.setLightFixEnabled(true)
-        }
-    }
-
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: IntegerSimpleMenuPreference
     private lateinit var blackNightThemePreference: SwitchPreference
