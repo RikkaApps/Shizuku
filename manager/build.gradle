@@ -116,8 +116,6 @@ android.applicationVariants.all { variant ->
 
 configurations.all {
     exclude group: 'androidx.appcompat', module: 'appcompat'
-    exclude group: 'moe.shizuku.preference', module: 'preference-android'
-    exclude group: 'moe.shizuku.preference', module: 'preference-simplemenu-android'
 }
 
 repositories {
@@ -151,8 +149,8 @@ dependencies {
     implementation project(':provider')
 
     implementation 'androidx.browser:browser:1.3.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.fragment:fragment-ktx:1.3.3'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
@@ -168,7 +166,7 @@ dependencies {
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.2.1'
     implementation 'dev.rikka.rikkax.insets:insets:1.1.0'
     implementation 'dev.rikka.rikkax.widget:borderview:1.0.1'
-    implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.2'
+    implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.3'
 
     implementation 'io.github.vvb2060.ndk:boringssl:2.1'
     implementation 'dev.rikka.ndk.thirdparty:cxx:1.1.0'
