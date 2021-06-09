@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcel;
+import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SELinux;
@@ -107,7 +108,7 @@ public class ShizukuService extends IShizukuService.Stub {
         LOGGER.i("starting server...");
 
         waitSystemService("package");
-        waitSystemService("activity");
+        waitSystemService(Context.ACTIVITY_SERVICE);
         waitSystemService(Context.USER_SERVICE);
         waitSystemService(Context.APP_OPS_SERVICE);
 
@@ -115,6 +116,8 @@ public class ShizukuService extends IShizukuService.Stub {
         if (ai == null) {
             System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
         }
+
+        Process.setThreadPriority(-20);
 
         managerAppId = ai.uid;
 
@@ -862,7 +865,8 @@ public class ShizukuService extends IShizukuService.Stub {
                 int flags = 0;
                 Config.PackageEntry entry = configManager.find(uid);
                 if (entry != null) {
-                    if (entry.packages != null && !entry.packages.contains(pi.packageName)) continue;
+                    if (entry.packages != null && !entry.packages.contains(pi.packageName))
+                        continue;
                     flags = entry.flags & Config.MASK_PERMISSION;
                 }
 
