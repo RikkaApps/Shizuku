@@ -32,3 +32,15 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :manager:assembleRelease
+
+      - name: Check apk
+        env:
+          BUILD_TOOLS_VERSION: 30.0.3
+        run: |
+          export APK_PATH=$(find ./manager/build/outputs/apk/release/ -maxdepth 1 -name *.apk)
+          export PATH=$PATH:$ANDROID_SDK_ROOT/build-tools/$BUILD_TOOLS_VERSION
+          aapt2 dump badging $APK_PATH
+          aapt2 dump permissions $APK_PATH
+          aapt2 dump strings $APK_PATH
+          aapt2 dump resources $APK_PATH
+          aapt2 dump configurations $APK_PATH
