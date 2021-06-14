@@ -44,3 +44,15 @@ jobs:
           aapt2 dump strings $APK_PATH
           aapt2 dump resources $APK_PATH
           aapt2 dump configurations $APK_PATH
+
+      - name: Upload apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: shizuku_apk_${{ github.sha }}
+          path: manager/build/outputs/apk/release/*.apk
+
+      - name: Upload mappings
+        uses: actions/upload-artifact@v2
+        with:
+          name: shizuku_mappings_${{ github.sha }}
+          path: app/build/outputs/mapping
