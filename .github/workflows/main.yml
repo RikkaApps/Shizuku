@@ -55,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: shizuku_mappings_${{ github.sha }}
-          path: app/build/outputs/mapping
+          path: app/build/outputs/mapping/release
