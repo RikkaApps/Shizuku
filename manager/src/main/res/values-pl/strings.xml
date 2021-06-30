@@ -55,8 +55,15 @@
     <string name="permission_label">Dostęp Shizuku</string>
     <string name="grant_dialog_button_allow_always">Zawsze zezwalaj</string>
     <string name="grant_dialog_button_deny">Odmów</string>
-    <string name="permission_warning_template"><![CDATA[Zezwolić aplikacji &lt;b&gt;%1$s&lt;/b&gt; na: %2$s?]]></string>
+    <string name="permission_warning_template">Zezwolić aplikacji <b>%1$s</b> na %2$s\?</string>
     <string name="dialog_adb_invalid_port">Port to liczba całkowita z zakresu od 1 do 65535.</string>
     <string name="home_wireless_adb_description">W systemie Android 11 debugowanie bezprzewodowe jest funkcją wbudowaną. Zapoznaj się z &lt;b&gt;&lt;a href=\"%1$s\"&gt;tym dokumentem pomocy&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Działa to dla wszystkich wersji systemu. Ale przed Androidem 11 debugowania bezprzewodowego nie można bezpośrednio włączyć.</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;*Jest jeszcze kilka innych kwestii. Potwierdź, że najpierw przeczytałeś pomoc.</string>
+    <string name="adb_pairing_requires_multi_window_reason">System wymaga ciągle otwartego okna parowania, używanie trybu podzielonego ekranu jest jedyną opcją aby korzystać z aplikacji i okna parowania w jednej chwili.</string>
+    <string name="terminal_export_files">Eksportuj pliki</string>
+    <string name="dialog_adb_pairing_message">Proszę rozpocznij parowanie podejmując następujące czynności: \"Opcje dla programistów\" - \"Bezprzewodowe debugowanie\" - \"Sparuj urządzenie używając kodu parowania\".
+\n
+\nPo rozpoczęciu procesu parowania będziesz w stanie wpisać kod parowania.</string>
+    <string name="adb_pairing_requires_multi_window">Proszę, uruchom najpierw tryb podzielonego ekranu.</string>
+    <string name="settings_user_interface">Wygląd</string>
 </resources>

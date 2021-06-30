@@ -91,4 +91,14 @@
     <string name="dialog_adb_pairing_discovery">Sucht nach einem Kopplungsdienst</string>
     <string name="dialog_adb_pairing_title">Mit Gerät koppeln</string>
     <string name="dialog_adb_invalid_port">Der Port ist eine ganze Zahl zwischen 0 und 65536.</string>
+    <string name="terminal_tutorial_3">Schlussendlich, verschiebe die Dateien an einen beliebigen Ort, auf den deine Terminal Anwendung zugreifen kann, dann wird es dir möglich sein %1$s zu benutzen, um Befehle durch Shizuku zu erteilen.</string>
+    <string name="terminal_tutorial_2_description">Zum Beispiel, wenn du Shizuku in %1$s verwenden willst, solltest du %2$s durch %3$s (%4$s ist der Paket-Name von %1$s) ersetzen.</string>
+    <string name="terminal_tutorial_2">Dann, benutze eine Beliebigen Text Editor um %1$s zu öffnen und zu bearbeiten.</string>
+    <string name="terminal_export_files">Exportiere Dateien</string>
+    <string name="terminal_tutorial_1_description">Falls im ausgewählten Ordner Dateien mit dem selben Namen vorhanden sind, werden diese gelöscht werden.
+\n
+\nDie Exportieren Funktion benutzt SAF (Storage Access Framework)#. Es wurde gemeldet, dass MIUI die Funktionen von SAF verhindert. Falls du MIUI benutzt, musst du vielleicht die Datei aus Shizuku´s Apk extrahieren oder von GitHub herunterladen.</string>
+    <string name="terminal_tutorial_1">Als Erstes, Exportiere die Dateien an einen beliebigen Ort. Du wirst zwei Dateien finden, %1$s und %2$s.</string>
+    <string name="home_terminal_description">Befehle durch Shizuku in beliebigen Terminal Anwendungen ausführen</string>
+    <string name="home_terminal_title">Benutze Shizuku in Terminal Anwendungen</string>
 </resources>
