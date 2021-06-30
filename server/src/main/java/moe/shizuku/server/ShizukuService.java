@@ -102,6 +102,7 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
+    boolean exemptPermissionConfirmationCheck;
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -660,6 +661,21 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
         }
 
+        PackageInfo pi = SystemService.getPackageInfoNoThrow(MANAGER_APPLICATION_ID, 0, userId);
+        if (pi == null) {
+            LOGGER.w("Manager not found in user %d. Revoke permission automatically.", userId);
+            Bundle data = new Bundle();
+            data.putBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, false);
+            data.putBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME, true);
+            try {
+                exemptPermissionConfirmationCheck = true;
+                dispatchPermissionConfirmationResult(callingUid, callingPid, requestCode, data);
+            } catch (RemoteException ignore) {
+            } finally {
+                exemptPermissionConfirmationCheck = false;
+            }
+        }
+
         Intent intent = new Intent(ServerConstants.REQUEST_PERMISSION_ACTION)
                 .setPackage(MANAGER_APPLICATION_ID)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
@@ -667,7 +683,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 .putExtra("pid", callingPid)
                 .putExtra("requestCode", requestCode)
                 .putExtra("applicationInfo", ai);
-        SystemService.startActivityNoThrow(intent, null, 0);
+        SystemService.startActivityNoThrow(intent, null, userId);
     }
 
     @Override
@@ -699,7 +715,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
-        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId && !exemptPermissionConfirmationCheck) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
         }
