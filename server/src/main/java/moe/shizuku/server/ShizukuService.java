@@ -667,13 +667,13 @@ public class ShizukuService extends IShizukuService.Stub {
             Bundle data = new Bundle();
             data.putBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, false);
             data.putBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME, true);
+            exemptPermissionConfirmationCheck = true;
             try {
-                exemptPermissionConfirmationCheck = true;
                 dispatchPermissionConfirmationResult(callingUid, callingPid, requestCode, data);
             } catch (RemoteException ignore) {
-            } finally {
-                exemptPermissionConfirmationCheck = false;
             }
+            exemptPermissionConfirmationCheck = false;
+            return;
         }
 
         Intent intent = new Intent(ServerConstants.REQUEST_PERMISSION_ACTION)
