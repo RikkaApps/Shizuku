@@ -1,7 +1,10 @@
-package moe.shizuku.server.utils;
+package moe.shizuku.common.util;
 
 import android.os.Build;
 
+/**
+ * TODO: Replace it with {@link rikka.core.util.BuildUtils}.
+ */
 public class BuildUtils {
 
     private static final int SDK = Build.VERSION.SDK_INT;

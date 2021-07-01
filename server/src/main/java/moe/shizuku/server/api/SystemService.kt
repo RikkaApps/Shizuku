@@ -3,7 +3,6 @@ package moe.shizuku.server.api
 import android.app.IActivityManager
 import android.app.IProcessObserver
 import android.app.IUidObserver
-import android.content.Context
 import android.content.IContentProvider
 import android.content.Intent
 import android.content.pm.*
@@ -14,9 +13,9 @@ import android.permission.IPermissionManager
 import androidx.annotation.RequiresApi
 import com.android.internal.app.IAppOpsService
 import hidden.HiddenApiBridgeV23
-import moe.shizuku.server.utils.BuildUtils
+import moe.shizuku.common.util.BuildUtils
+import moe.shizuku.common.util.OsUtils
 import moe.shizuku.server.utils.Logger.LOGGER
-import moe.shizuku.server.utils.OsUtils
 import java.util.*
 
 object SystemService {
