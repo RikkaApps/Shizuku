@@ -46,8 +46,6 @@ import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.config.Config;
 import moe.shizuku.server.config.ConfigManager;
 import moe.shizuku.server.ktx.IContentProviderKt;
-import moe.shizuku.server.utils.BuildUtils;
-import moe.shizuku.server.utils.OsUtils;
 import moe.shizuku.server.utils.UserHandleCompat;
 import moe.shizuku.starter.ServiceStarter;
 import rikka.parcelablelist.ParcelableListSlice;
