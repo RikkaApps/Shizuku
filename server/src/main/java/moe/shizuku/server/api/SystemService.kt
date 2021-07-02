@@ -3,7 +3,6 @@ package moe.shizuku.server.api
 import android.app.IActivityManager
 import android.app.IProcessObserver
 import android.app.IUidObserver
-import android.content.Context
 import android.content.IContentProvider
 import android.content.Intent
 import android.content.pm.*
@@ -189,6 +188,12 @@ object SystemService {
                 um.getUsers(excludePartial, excludeDying, excludePreCreated)
             }
         }
+    }
+
+    @JvmStatic
+    fun getUserInfo(userId: Int): UserInfo {
+        val um = userManager ?: throw RemoteException("can't get IUserManger")
+        return um.getUserInfo(userId)
     }
 
     @JvmStatic

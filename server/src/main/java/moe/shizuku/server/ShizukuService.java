@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.UserInfo;
 import android.ddm.DdmHandleAppName;
 import android.os.Binder;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import java.util.concurrent.Executors;
 import dalvik.system.PathClassLoader;
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
+import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.config.Config;
@@ -662,8 +664,12 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         PackageInfo pi = SystemService.getPackageInfoNoThrow(MANAGER_APPLICATION_ID, 0, userId);
-        if (pi == null) {
-            LOGGER.w("Manager not found in user %d. Revoke permission automatically.", userId);
+        UserInfo userInfo = SystemService.getUserInfo(userId);
+        boolean isWorkProfileUser = BuildUtils.atLeast30() ?
+                "android.os.usertype.profile.MANAGED".equals(userInfo.userType) :
+                (userInfo.flags & UserInfo.FLAG_MANAGED_PROFILE) != 0;
+        if (pi == null && !isWorkProfileUser) {
+            LOGGER.w("Manager not found in non work profile user %d. Revoke permission.", userId);
             Bundle data = new Bundle();
             data.putBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, false);
             data.putBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME, true);
@@ -683,7 +689,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 .putExtra("pid", callingPid)
                 .putExtra("requestCode", requestCode)
                 .putExtra("applicationInfo", ai);
-        SystemService.startActivityNoThrow(intent, null, userId);
+        SystemService.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
     }
 
     @Override
