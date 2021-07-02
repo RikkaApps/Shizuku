@@ -27,6 +27,7 @@ dependencies {
     api 'dev.rikka.rikkax.parcelablelist:parcelablelist:1.0.0'
 
     implementation project(':aidl')
+    implementation project(':common')
     implementation project(':shared')
     compileOnly project(':provider')
     implementation project(':starter')

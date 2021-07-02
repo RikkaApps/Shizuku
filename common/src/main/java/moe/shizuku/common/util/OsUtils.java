@@ -1,4 +1,4 @@
-package moe.shizuku.server.utils;
+package moe.shizuku.common.util;
 
 import android.os.SELinux;
 
