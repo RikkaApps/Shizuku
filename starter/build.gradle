@@ -20,7 +20,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation project(':common')
     implementation project(':shared')
     compileOnly project(':provider')
