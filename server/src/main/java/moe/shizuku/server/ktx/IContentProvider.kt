@@ -4,8 +4,8 @@ import android.content.AttributionSource
 import android.content.IContentProvider
 import android.os.Bundle
 import android.os.RemoteException
-import moe.shizuku.server.utils.BuildUtils
-import moe.shizuku.server.utils.OsUtils
+import moe.shizuku.common.util.BuildUtils
+import moe.shizuku.common.util.OsUtils
 
 @Throws(RemoteException::class)
 fun IContentProvider.callCompat(callingPkg: String?, authority: String?, method: String?, arg: String?, extras: Bundle?): Bundle {

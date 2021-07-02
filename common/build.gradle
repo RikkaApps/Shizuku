@@ -1,11 +1,9 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
 }
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    ndkVersion rootProject.ext.ndkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -20,10 +18,5 @@ android {
 }
 
 dependencies {
-    implementation project(':common')
-    implementation project(':shared')
-    compileOnly project(':provider')
     compileOnly project(':hidden-api-common')
-    implementation project(':hidden-api-common-bridge')
-    implementation project(':hidden-api-21-bridge')
 }
