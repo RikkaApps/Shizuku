@@ -191,6 +191,12 @@ object SystemService {
     }
 
     @JvmStatic
+    fun getUserInfo(userId: Int): UserInfo {
+        val um = userManager ?: throw RemoteException("can't get IUserManger")
+        return um.getUserInfo(userId)
+    }
+
+    @JvmStatic
     fun getInstalledPackagesNoThrow(flags: Int, userId: Int): List<PackageInfo> {
         return try {
             getInstalledPackages(flags, userId)?.list ?: emptyList()
