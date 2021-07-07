@@ -104,7 +104,6 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
-    boolean exemptPermissionConfirmationCheck;
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -670,15 +669,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 (userInfo.flags & UserInfo.FLAG_MANAGED_PROFILE) != 0;
         if (pi == null && !isWorkProfileUser) {
             LOGGER.w("Manager not found in non work profile user %d. Revoke permission", userId);
-            Bundle data = new Bundle();
-            data.putBoolean(REQUEST_PERMISSION_REPLY_ALLOWED, false);
-            data.putBoolean(REQUEST_PERMISSION_REPLY_IS_ONETIME, true);
-            exemptPermissionConfirmationCheck = true;
-            try {
-                dispatchPermissionConfirmationResult(callingUid, callingPid, requestCode, data);
-            } catch (RemoteException ignore) {
-            }
-            exemptPermissionConfirmationCheck = false;
+            clientRecord.dispatchRequestPermissionResult(requestCode, false);
             return;
         }
 
@@ -721,7 +712,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
-        if (!exemptPermissionConfirmationCheck && UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
+        if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
         }
@@ -884,7 +875,8 @@ public class ShizukuService extends IShizukuService.Stub {
                 int flags = 0;
                 Config.PackageEntry entry = configManager.find(uid);
                 if (entry != null) {
-                    if (entry.packages != null && !entry.packages.contains(pi.packageName)) continue;
+                    if (entry.packages != null && !entry.packages.contains(pi.packageName))
+                        continue;
                     flags = entry.flags & Config.MASK_PERMISSION;
                 }
 
