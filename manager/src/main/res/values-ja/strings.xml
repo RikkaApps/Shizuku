@@ -11,4 +11,94 @@
     <string name="grant_dialog_button_deny">許可しない</string>
     <string name="grant_dialog_button_allow_always">常に許可</string>
     <string name="permission_warning_template">&lt;b&gt;%1$s&lt;/b&gt; に「%2$s」を許可しますか？</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other">承認された %d 個のアプリケーション</item>
+    </plurals>
+    <string name="dialog_requesting_legacy_title">%1$s はレガシー Shizuku を要求しています</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;は最新のShizukuをサポートしていますが、レガシーなShizukuを要求しています。これは、Shizukuが実行されていない可能性があります。Shizukuアプリで確認してください。&lt;p&gt;レガシーShizukuは2019年3月から非推奨となっています。</string>
+    <string name="terminal_tutorial_3_description">ヒント: %1$s に実行権限を与え、それを %2$s に追加すると、%1$s を直接使用できるようになります。</string>
+    <string name="terminal_tutorial_3">最後に、ファイルをターミナルアプリがアクセスできる場所に移動させると、%1$sを使ってShizukuでコマンドを実行できるようになります。</string>
+    <string name="terminal_tutorial_2_description">例えば、%1$sでShizukuを使いたい場合は、%2$sを%3$sに置き換えてください（%4$sは%1$sのパッケージ名です）。</string>
+    <string name="terminal_tutorial_2">その後、任意のテキストエディタで%1$sを開いて編集します。</string>
+    <string name="terminal_export_files">ファイルのエクスポート</string>
+    <string name="terminal_tutorial_1_description">選択したフォルダー内に同名のファイルがある場合は、そのファイルは削除されます。
+\n
+\nエクスポート機能には、SAF（Storage Access Framework）が使用されています。MIUIではSAFの機能が壊れることが報告されています。MIUIをお使いの方は、Shizukuのapkからファイルを抽出するか、GitHubからダウンロードする必要があるかもしれません。</string>
+    <string name="terminal_tutorial_1">まず、ファイルを任意の場所にエクスポートします。%1$sと%2$sの2つのファイルがあります。</string>
+    <string name="home_terminal_title">ターミナルアプリで「Shizuku」を利用する</string>
+    <string name="home_terminal_description">Shizukuを介して、好きなターミナルアプリでコマンドを実行する</string>
+    <string name="home_app_management_title">アプリケーション管理</string>
+    <string name="home_app_management_view_authorized_apps">タップで許可されたアプリを管理</string>
+    <string name="home_learn_more_title">Shizukuについて学ぶ</string>
+    <string name="home_root_button_start">開始</string>
+    <string name="home_root_button_restart">再起動</string>
+    <string name="home_root_description">また、起動時にShizukuを自動的に起動することもできます。もし、起動しない場合は、システムやサードパーティのツールがShizukuを制限していないか確認してください。&lt;br&gt;%sを参照することができます。</string>
+    <string name="adb_pair_required">まずはペアリングの手順を行ってください。</string>
+    <string name="development_settings">開発者向けオプション</string>
+    <string name="home_root_title">開始(Root化された端末の場合のみ)</string>
+    <string name="adb_pairing_requires_multi_window_reason">システムではペアリングダイアログが常に表示されている必要があり、このアプリとシステムダイアログを同時に表示させるには、分割画面を使用するしかありません。</string>
+    <string name="adb_error_key_store">ワイヤレスデバッグ用のキーを生成できません。
+\nこれは、お使いのデバイスのKeyStoreの仕組みが壊れているためと思われます。</string>
+    <string name="adb_pairing_requires_multi_window">最初に分割画面（マルチウィンドウ）モードに入ってください。</string>
+    <string name="dialog_wireless_adb_not_enabled">ワイヤレスデバッグが有効になっていません。
+\nなお、Android 11以前のバージョンでは、ワイヤレスデバッグを有効にするためには、コンピューターの接続が必要です。</string>
+    <string name="dialog_adb_pairing_message">以下の手順でペアリングを開始してください。開発者向け「オプション」＞「ワイヤレスデバッグ」＞「ペア設定コードによるデバイスのペアの設定」を選択します。
+\n
+\nペアリング処理が開始されると、ペアリングコードの入力が可能になります。</string>
+    <string name="dialog_adb_pairing_discovery">ペアリングサービスの検索</string>
+    <string name="dialog_adb_pairing_paring_code">ペアリングコード</string>
+    <string name="paring_code_is_wrong">ペアリングコードが間違っています。</string>
+    <string name="cannot_connect_port">ワイヤレスデバッグサービスに接続することができません。</string>
+    <string name="dialog_adb_port">ポート</string>
+    <string name="dialog_adb_invalid_port">ポートは1から65535までの整数です。</string>
+    <string name="adb_pairing">ペアリング</string>
+    <string name="dialog_adb_pairing_title">デバイスとのペアリング</string>
+    <string name="home_wireless_adb_description">Android 11では、ワイヤレスデバッグ機能が内蔵されています。&lt;b&gt;&lt;a href=\"%1$s\"&gt;このヘルプ文書&lt;/a&gt;&lt;/b&gt;を参照してください。&lt;p&gt;これは、すべてのシステムバージョンで動作します。しかし、Android 11以前のバージョンでは、ワイヤレスデバッグを直接有効にすることはできません。</string>
+    <string name="dialog_adb_discovery">ワイヤレスデバッグサービスの検索</string>
+    <string name="home_adb_dialog_view_command_button_send">送信</string>
+    <string name="home_wireless_adb_title">ワイヤレスデバッグで開始</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* 他にもいくつか注意点がありますので、まずはヘルプを読んで確認してください。</string>
+    <string name="home_adb_button_view_help">ヘルプ</string>
+    <string name="home_adb_button_view_command">コマンドを表示する</string>
+    <string name="home_adb_description">rootを持たないデバイスの場合、adbを使ってShizukuを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。<b><a href="%1$s">ヘルプをお読みください</a></b>。</string>
+    <string name="home_root_description_sui">Magiskをお使いの方は、%1$s(a Riru module)をお試しください。rootユーザにとっては、最終的にShizukuを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
+    <string name="dialog_adb_discovery_message">開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。
+\n
+\n注意:「開発者向けオプション」や「USBデバッグ」を無効にしないでください。無効にすると、Shizukuが停止してしまいます。</string>
+    <string name="dialog_legacy_not_support_title">%1$s は最新の Shizuku をサポートしていません</string>
+    <string name="dialog_legacy_not_support_message">レガシーShizukuは2019年3月より非推奨となりました。また、レガシーShizukuは新しいAndroidシステムでは動作しません。&lt;p&gt;&lt;b&gt;%1$s&lt;/b&gt;の開発者にアップデートを依頼してください。</string>
+    <string name="home_status_service_not_running">%1$s が実行停止中</string>
+    <string name="home_status_service_version_update">バージョン %2$s, %1$s&lt;br&gt;バージョン %3$s にアップデートするには、再度起動してください</string>
+    <string name="translation_contributors">MES-mitutti</string>
+    <string name="home_learn_more_description">Shizukuでの開発方法や、Shizukuを使ったアプリの取得方法をご紹介します</string>
+    <string name="app_management_menu_get_more">もっと見る</string>
+    <string name="app_management_dialog_adb_is_limited_title">adbの権限が制限されています</string>
+    <string name="app_management_dialog_adb_is_limited_message">端末の製造元がadbの権限を制限している可能性が高いです。&lt;p&gt; &lt;b&gt;&lt;a href=\"%1$s\"&gt;このドキュメント&lt;/a&gt;&lt;/b&gt;の中に、あなたのシステムに合った解決策があるかもしれません。</string>
+    <string name="app_management_item_summary_requires_root">* Shizukuはrootで実行する必要があります</string>
+    <string name="about_view_source_code">%sでソースコードを見る</string>
+    <string name="action_stop">Shizukuを停止する</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_black_night_theme">Black night テーマ</string>
+    <string name="settings_user_interface">外観</string>
+    <string name="settings_black_night_theme_summary">ナイトモードが有効な場合、黒色のテーマを使用する</string>
+    <string name="settings_startup">スタートアップ</string>
+    <string name="settings_translation_contributors">翻訳協力者</string>
+    <string name="settings_translation">翻訳作業に参加</string>
+    <string name="settings_translation_summary">%sをあなたの言語に翻訳するのを手伝ってください</string>
+    <string name="settings_translation_summary_percentage">" (%sは翻訳されています)"</string>
+    <string name="settings_start_on_boot">起動時にスタート（要root)</string>
+    <string name="settings_start_on_boot_summary">root化された端末では、起動時に自動的にShizukuを起動することができます</string>
+    <string name="action_about">このアプリについて</string>
+    <string name="dialog_stop_message">Shizukuのサービスが停止します。</string>
+    <string name="notification_channel_service_status">サービス開始状況</string>
+    <string name="notification_service_starting">Shizukuを開始しています…</string>
+    <string name="notification_service_start_failed">Shizukuを開始することができませんでした。</string>
+    <string name="notification_service_start_no_root">root権限の要求に失敗しました。</string>
+    <string name="notification_working">稼働中…</string>
+    <string name="permission_description">アプリでShizukuの使用を許可する。</string>
+    <string name="start_with_root_failed">root権限が付与されていないか、このデバイスがroot化されていないため、サービスを開始できません。</string>
+    <string name="permission_label">アクセス Shizuku</string>
+    <string name="starter">起動</string>
+    <string name="dialog_cannot_open_browser_title">ブラウザが起動できない</string>
 </resources>
