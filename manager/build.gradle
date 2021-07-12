@@ -5,7 +5,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
@@ -92,7 +91,7 @@ tasks.whenTaskAdded { task ->
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
-        outputFileName = "shizuku-${variant.versionName}-${variant.name}.apk"
+        outputFileName = "shizuku-v${variant.versionName}-${variant.name}.apk"
 
         variant.assembleProvider.get().doLast {
             def outDir = new File(rootDir, "out")
