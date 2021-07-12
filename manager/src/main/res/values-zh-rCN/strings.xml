@@ -82,7 +82,6 @@
 \n配对过程开始后，您将能够输入配对码。</string>
     <string name="development_settings">开发者选项</string>
     <string name="home_root_description_sui"><![CDATA[如果您正在使用 Magisk，可以尝试 %1$s（一个 Riru 模块）。对于 root 用户，它将最终取代 Shizuku。注意，已有的应用需要一点点修改来使用 %2$s。]]></string>
-
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
     <string name="permission_warning_template"><![CDATA[要允许<b>%1$s</b>%2$s吗？]]></string>
@@ -97,5 +96,5 @@
     <string name="terminal_tutorial_2_description">例如，如果要在 %1$s 中使用 Shizuku，则应将 %2$s 替换为 %3$s（%4$s 是 %1$s 的软件包名称）。</string>
     <string name="terminal_tutorial_3">最后，将文件移动到终端应用可以访问的位置，您便可使用 %1$s 来通过 Shizuku 运行命令。</string>
     <string name="terminal_tutorial_3_description">一些技巧：将执行权限授予 %1$s 并将其添加到 %2$s，您将可以直接使用 %1$s。</string>
-
+    <string name="settings_translation_summary_percentage">" （已翻译 %s）"</string>
 </resources>
