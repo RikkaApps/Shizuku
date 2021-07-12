@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.os.Build
 import android.widget.ImageView
 import androidx.collection.LruCache
 import kotlinx.coroutines.*
@@ -110,7 +111,11 @@ object AppIconCache : CoroutineScope {
             if (bitmap != null) {
                 view.setImageBitmap(bitmap)
             } else {
-                view.setImageResource(R.drawable.ic_default_app_icon)
+                if (Build.VERSION.SDK_INT >= 26) {
+                    view.setImageResource(R.drawable.ic_default_app_icon)
+                } else {
+                    view.setImageDrawable(null)
+                }
             }
         }
     }
