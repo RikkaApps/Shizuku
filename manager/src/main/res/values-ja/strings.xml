@@ -14,8 +14,8 @@
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other">承認された %d 個のアプリケーション</item>
     </plurals>
-    <string name="dialog_requesting_legacy_title">%1$s はレガシー Shizuku を要求しています</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;は最新のShizukuをサポートしていますが、レガシーなShizukuを要求しています。これは、Shizukuが実行されていない可能性があります。Shizukuアプリで確認してください。&lt;p&gt;レガシーShizukuは2019年3月から非推奨となっています。</string>
+    <string name="dialog_requesting_legacy_title">%1$s は古いバージョンのShizukuを要求しています</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;は最新のShizukuをサポートしていますが、古いバージョンのShizukuを要求しています。これは、Shizukuが実行されていない可能性があります。Shizukuアプリで確認してください。&lt;p&gt;古いバージョンのShizukuは2019年3月から非推奨となっています。</string>
     <string name="terminal_tutorial_3_description">ヒント: %1$s に実行権限を与え、それを %2$s に追加すると、%1$s を直接使用できるようになります。</string>
     <string name="terminal_tutorial_3">最後に、ファイルをターミナルアプリがアクセスできる場所に移動させると、%1$sを使ってShizukuでコマンドを実行できるようになります。</string>
     <string name="terminal_tutorial_2_description">例えば、%1$sでShizukuを使いたい場合は、%2$sを%3$sに置き換えてください（%4$sは%1$sのパッケージ名です）。</string>
@@ -62,11 +62,11 @@
     <string name="home_adb_button_view_command">コマンドを表示する</string>
     <string name="home_adb_description">rootを持たないデバイスの場合、adbを使ってShizukuを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。<b><a href="%1$s">ヘルプをお読みください</a></b>。</string>
     <string name="home_root_description_sui">Magiskをお使いの方は、%1$s(a Riru module)をお試しください。rootユーザにとっては、最終的にShizukuを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
-    <string name="dialog_adb_discovery_message">開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。
+    <string name="dialog_adb_discovery_message">「開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。
 \n
 \n注意:「開発者向けオプション」や「USBデバッグ」を無効にしないでください。無効にすると、Shizukuが停止してしまいます。</string>
     <string name="dialog_legacy_not_support_title">%1$s は最新の Shizuku をサポートしていません</string>
-    <string name="dialog_legacy_not_support_message">レガシーShizukuは2019年3月より非推奨となりました。また、レガシーShizukuは新しいAndroidシステムでは動作しません。&lt;p&gt;&lt;b&gt;%1$s&lt;/b&gt;の開発者にアップデートを依頼してください。</string>
+    <string name="dialog_legacy_not_support_message">古いバージョンのShizukuは2019年3月より非推奨となりました。また、古いバージョンのShizukuは新しいAndroidシステムでは動作しません。&lt;p&gt;&lt;b&gt;%1$s&lt;/b&gt;の開発者にアップデートを依頼してください。</string>
     <string name="home_status_service_not_running">%1$s が実行停止中</string>
     <string name="home_status_service_version_update">バージョン %2$s, %1$s&lt;br&gt;バージョン %3$s にアップデートするには、再度起動してください</string>
     <string name="translation_contributors">MES-mitutti</string>
@@ -95,10 +95,10 @@
     <string name="notification_service_starting">Shizukuを開始しています…</string>
     <string name="notification_service_start_failed">Shizukuを開始することができませんでした。</string>
     <string name="notification_service_start_no_root">root権限の要求に失敗しました。</string>
-    <string name="notification_working">稼働中…</string>
+    <string name="notification_working">実行中…</string>
     <string name="permission_description">アプリでShizukuの使用を許可する。</string>
-    <string name="start_with_root_failed">root権限が付与されていないか、このデバイスがroot化されていないため、サービスを開始できません。</string>
+    <string name="start_with_root_failed">root権限が付与されていないか、端末がroot化されていないため、サービスを開始できません。</string>
     <string name="permission_label">アクセス Shizuku</string>
     <string name="starter">起動</string>
-    <string name="dialog_cannot_open_browser_title">ブラウザが起動できない</string>
+    <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
 </resources>
