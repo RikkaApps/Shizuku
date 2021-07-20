@@ -1,2 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_status_service_version_update">Versi %2$s, %1$s &lt;br&gt; Mulai ulang untuk upgrade ke versi %3$s</string>
+    <string name="home_adb_description">Untuk perangkat tanpa akses root, Anda harus menggunakan adb untuk memulai Shizuku (perlu terhubung dengan komputer). Proses ini harus diulang setiap kali perangkat di-restart. Harap <b><a href="%1$s">baca dokumentasi</a></b> untuk info lebih lanjut.</string>
+    <string name="home_wireless_adb_description">Pada Android 11, Debug Nirkabel merupakan fitur bawaan. Bisa dilihat pada &lt;b&gt;&lt;a href=\"%1$s\"&gt;dokumen ini&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Metode ini bekerja pada seluruh versi Android. Namun, sebelum Android 11, Debug Nirkabel tidak bisa diaktifkan secara langsung.</string>
+    <string name="dialog_adb_discovery_message">Harap aktifkan \"Debug Nirkabel (Wireless Debugging)\" pada \"Pilihan Pengembang (Developer Option)\". Opsi \"Debug Nirkabel\" akan nonaktif otomatis saat koneksi berubah.
+\n
+\nSebagai catatan, jangan nonaktifkan \"Pilihan Pengembang\" atau \"Debug USB\", karena Shizuku akan terhenti.</string>
+    <string name="dialog_adb_pairing_message">Harap mulai penyambungan melalui langkah berikut: \"Pilihan Pengembang\" – \"Debug Nirkabel\" – \"Sambungkan perangkat dengan kode penghubung\".
+\n
+\nSetelah penyambungan dimulai, Anda akan diminta untuk memasukkan kode penghubung.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem mengharuskan dialog penyambungan untuk selalu terlihat, hal ini hanya bisa diakali dengan mode layar pisah (split-screen) untuk membuat Shizuku dan dialog sistem muncul secara bersamaan.</string>
+    <string name="home_root_description">Sebagai tambahan, Shizuku bisa dimulai secara otomatis saat perangkat dimulai. Kalau hal ini tak bisa dilakukan, harap cek apakah sistem Anda atau aplikasi pihak-ketiga telah membatasi Shizuku.&lt;br&gt;Lebih lanjut, cek %s.</string>
+    <string name="home_learn_more_description">Pelajari cara mengembangkan aplikasi dengan akses Shizuku atau cari aplikasi yang menggunakan Shizuku</string>
+    <string name="terminal_tutorial_1">Pertama, Ekspor file ke tempat mana pun yang Anda mau. Anda akan mendapatkan dua file, yaitu %1$s dan %2$s.</string>
+    <string name="terminal_tutorial_1_description">Jika ada file bernama sama pada folder tersebut, maka file tersebut akan ditimpa.
+\n
+\nFungsi ekspor ini menggunakan SAF (Storage Access Framework). Beberapa orang melaporkan bahwa MIUI mengacaukan fungsi SAF. Jadi jika Anda memakai MIUI, mungkin Anda harus mengekstrak file ini dari apk Shizuku atau mengunduhnya dari GitHub.</string>
+    <string name="terminal_tutorial_2_description">Sebagai contoh, jika Anda mau menggunakan Shizuku di %1$s, Anda harus menimpa %2$s dengan %3$s (%4$s adalah nama paket dari %1$s).</string>
+    <string name="terminal_tutorial_3_description">Tips tambahan: berikan izin eksekusi pada %1$s dan tambahkan pada %2$s, Anda akan bisa menggunakan %1$s secara langsung.</string>
+    <string name="action_stop">Hentikan Shizuku</string>
+    <string name="notification_service_start_no_root">Gagal mendapat izin root.</string>
+    <string name="start_with_root_failed">Layanan tidak bisa dimulai karena aplikasi tidak mendapat izin root atau perangkat tidak memiliki akses root.</string>
+    <string name="translation_contributors">Amfakh</string>
+    <string name="home_status_service_is_running">%1$s aktif</string>
+    <string name="home_status_service_not_running">%1$s tidak aktif</string>
+    <string name="home_status_service_version">Versi %2$s, %1$s</string>
+    <string name="home_adb_title">Mulai dengan menghubungkan ke komputer</string>
+    <string name="home_adb_button_view_help">Baca dokumentasi</string>
+    <string name="home_adb_button_view_command">Lihat perintah adb</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Terdapat beberapa pertimbangan tambahan, harap pastikan bahwa Anda telah membaca dokumentasi.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Salin</string>
+    <string name="home_adb_dialog_view_command_button_send">Kirim ke...</string>
+    <string name="home_wireless_adb_title">Mulai melalui Debug Nirkabel</string>
+    <string name="dialog_adb_discovery">Mencari layanan debug nirkabel</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Port adalah integer antara 1 sampai 65535.</string>
+    <string name="dialog_wireless_adb_not_enabled">Debug nirkabel belum diaktifkan.
+\nSebagai catatan, Anda harus terhubung ke komputer untuk mengaktifkan debug nirkabel pada perangkat sebelum Android 11.</string>
+    <string name="adb_pairing">Sambungkan</string>
+    <string name="dialog_adb_pairing_title">Sambungkan dengan perangkat</string>
+    <string name="dialog_adb_pairing_discovery">Mencari layanan penyambung</string>
+    <string name="dialog_adb_pairing_paring_code">Kode penghubung</string>
+    <string name="paring_code_is_wrong">Kode penghubung tidak sesuai.</string>
+    <string name="cannot_connect_port">Gagal menyambungkan ke layanan debug nirkabel.</string>
+    <string name="adb_pairing_requires_multi_window">Harap pindah ke mode layar pisah (split-screen) terlebih dahulu.</string>
+    <string name="adb_error_key_store">Gagal membuat kunci untuk debug nirkabel.
+\nHal ini bisa terjadi karena mekanisme KeyStore pada perangkat ini mengalami kerusakan.</string>
+    <string name="adb_pair_required">Harap lakukan penyambungan terlebih dahulu.</string>
+    <string name="development_settings">Pilihan pengembang</string>
+    <string name="home_root_title">Mulai (untuk perangkat dengan root)</string>
+    <string name="home_root_description_sui">Jika Anda menggunakan Magisk, Anda bisa coba %1$s (modul Riru). Untuk pengguna root, hal ini perlahan akan menggantikan Shizuku. Sebagai catatan, aplikasi yang sudah ada harus disesuaikan sedikit untuk menggunakan %2$s.</string>
+    <string name="home_root_button_start">Mulai</string>
+    <string name="home_root_button_restart">Mulai ulang</string>
+    <string name="home_app_management_title">Manajemen Aplikasi</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other">%d aplikasi terdaftar</item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps">Ketuk untuk mengatur aplikasi terdaftar</string>
+    <string name="home_learn_more_title">Pelajari Shizuku</string>
+    <string name="app_management_menu_get_more">Lihat lebih banyak</string>
+    <string name="app_management_dialog_adb_is_limited_title">Izin adb terbatas</string>
+    <string name="app_management_dialog_adb_is_limited_message">Kemungkinan besar merk perangkat Anda membatasi perizinan adb.&lt;p&gt;Solusi untuk perangkat Anda mungkin ada pada &lt;b&gt;&lt;a href=\"%1$s\"&gt;dokumentasi ini&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* Shizuku harus dijalankan dengan root</string>
+    <string name="home_terminal_title">Gunakan Shizuku pada aplikasi terminal</string>
+    <string name="home_terminal_description">Jalankan perintah melalui Shizuku pada aplikasi terminal yang Anda gunakan</string>
+    <string name="terminal_export_files">Ekspor file</string>
+    <string name="terminal_tutorial_2">Lalu, gunakan penyunting teks apa pun untuk membuka dan mengubah %1$s.</string>
+    <string name="terminal_tutorial_3">Terakhir, pindahkan file ke tempat yang bisa diakses oleh aplikasi terminal yang Anda gunakan, Anda akan bisa menggunakan %1$s untuk menjalan perintah melalui Shizuku.</string>
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_user_interface">Penampilan</string>
+    <string name="settings_black_night_theme">Tema hitam gelap</string>
+    <string name="settings_black_night_theme_summary">Gunakan tema hitam gelap jika mode malam diaktifkan</string>
+    <string name="settings_startup">Pemulaian</string>
+    <string name="settings_translation_contributors">Kontributor penerjemah</string>
+    <string name="settings_translation">Ikut menerjemahkan</string>
+    <string name="settings_translation_summary">Bantu kami menerjemahkan %s dengan bahasa Anda</string>
+    <string name="settings_translation_summary_percentage">" (%s sudah diterjemahkan)"</string>
+    <string name="settings_start_on_boot">Mulai saat boot (root)</string>
+    <string name="settings_start_on_boot_summary">Untuk perangkat root, Shizuku bisa mulai otomatis saat boot</string>
+    <string name="action_about">Tentang</string>
+    <string name="about_view_source_code">Lihat kode sumbernya di %s</string>
+    <string name="dialog_stop_message">Layanan Shizuku akan berhenti.</string>
+    <string name="notification_channel_service_status">Status layanan</string>
+    <string name="notification_service_starting">Memulai layanan Shizuku…</string>
+    <string name="notification_service_start_failed">Layanan Shizuku gagal dimulai.</string>
+    <string name="notification_working">Sedang bekerja…</string>
+    <string name="permission_description">Izinkan aplikasi menggunakan Shizuku.</string>
+    <string name="permission_label">mengakses Shizuku</string>
+    <string name="permission_warning_template">Izinkan <b>%1$s</b> untuk %2$s\?</string>
+    <string name="grant_dialog_button_allow_always">Selalu izinkan</string>
+    <string name="grant_dialog_button_deny">Tolak</string>
+    <string name="starter">Pemulaian</string>
+    <string name="dialog_cannot_open_browser_title">Tidak bisa membuka browser</string>
+    <string name="toast_copied_to_clipboard">%s
+\ntelah disalin ke papan klip.</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> telah disalin ke papan klip.</string>
+    <string name="dialog_legacy_not_support_title">%1$s tidak mendukung Shizuku modern</string>
+    <string name="dialog_legacy_not_support_message">Shizuku Kuno sudah dihentikan sejak Maret 2019. Selain itu, Shizuku kuno tidak bisa bekerja pada sistem Android yang lebih baru.&lt;p&gt;Coba minta kepada pengembang dari &lt;b&gt;%1$s&lt;/b&gt; untuk memperbarui aplikasinya.</string>
+    <string name="dialog_requesting_legacy_title">%1$s meminta akses Shizuku kuno</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; memiliki dukungan Shizuku modern, namun meminta akses Shizuku kuno. Hal ini bisa terjadi karena Shizuku tidak aktif, harap periksa di aplikasi Shizuku. &lt;p&gt;Shizuku Kuno sudah dihentikan sejak Maret 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Buka Shizuku</string>
+</resources>
