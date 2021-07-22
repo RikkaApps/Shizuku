@@ -54,7 +54,7 @@ jobs:
           echo 'org.gradle.parallel=true' >> gradle.properties
           echo 'org.gradle.vfs.watch=true' >> gradle.properties
           echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-          ./gradlew :manager:assembleRelease :manager:assembleDebug
+          ./gradlew :cmd:assembleRelease :cmd:assembleDebug :manager:assembleRelease :manager:assembleDebug
           echo "::set-output name=releaseName::`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'`"
           echo "::set-output name=debugName::`ls manager/build/outputs/apk/debug/shizuku*-v*-debug.apk | awk -F '(/|.apk)' '{print $6}'`"
       - name: Upload release
