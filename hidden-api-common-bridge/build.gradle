@@ -1,4 +1,6 @@
-apply plugin: 'java-library'
+plugins {
+    id 'java-library'
+}
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"

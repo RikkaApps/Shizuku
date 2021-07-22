@@ -62,7 +62,7 @@
             android:name=".management.ApplicationManagementActivity"
             android:label="@string/home_app_management_title" />
         <activity
-            android:name=".cmd.TerminalTutorialActivity"
+            android:name=".shell.ShellTutorialActivity"
             android:label="@string/home_terminal_title" />
         <activity
             android:name=".settings.SettingsActivity"
@@ -89,7 +89,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".cmd.CmdRequestHandlerActivity"
+            android:name=".shell.ShellRequestHandlerActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="true"

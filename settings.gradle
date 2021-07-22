@@ -26,6 +26,9 @@ if (apiUseLocal) {
 include ':aidl'
 project(':aidl').projectDir = file("$root${File.separator}aidl")
 
+include ':bsh'
+project(':bsh').projectDir = file("$root${File.separator}bsh")
+
 include ':shared'
 project(':shared').projectDir = file("$root${File.separator}shared")
 

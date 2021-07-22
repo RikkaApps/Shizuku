@@ -1,6 +1,7 @@
 package moe.shizuku.server.utils;
 
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,11 +33,11 @@ public class ParcelFileDescriptorUtil {
         return writeSide;
     }
 
-    static class TransferThread extends Thread {
+    public static class TransferThread extends Thread {
         final InputStream mIn;
         final OutputStream mOut;
 
-        TransferThread(InputStream in, OutputStream out) {
+        public TransferThread(InputStream in, OutputStream out) {
             super("ParcelFileDescriptor Transfer Thread");
             mIn = in;
             mOut = out;
@@ -50,6 +51,8 @@ public class ParcelFileDescriptorUtil {
 
             try {
                 while ((len = mIn.read(buf)) > 0) {
+                    Log.d("Shizuku", "Server write " + new String(buf, 0, len));
+
                     mOut.write(buf, 0, len);
                     mOut.flush();
                 }

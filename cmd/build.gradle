@@ -48,7 +48,7 @@ android.applicationVariants.all { variant ->
                 from file
                 into dexPath
                 rename { String fileName ->
-                    fileName.replace(file.getName(), "shizuku.dex")
+                    fileName.replace(file.getName(), "bsh_shizuku.dex")
                 }
             }
         }
@@ -56,7 +56,6 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    implementation project(':api')
     compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
     implementation project(':hidden-api-21-bridge')

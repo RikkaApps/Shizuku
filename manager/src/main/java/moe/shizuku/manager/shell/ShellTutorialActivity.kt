@@ -1,4 +1,4 @@
-package moe.shizuku.manager.cmd
+package moe.shizuku.manager.shell
 
 import android.net.Uri
 import android.os.Bundle
@@ -10,7 +10,7 @@ import moe.shizuku.manager.databinding.TerminalTutorialActivityBinding
 import moe.shizuku.manager.ktx.toHtml
 import rikka.widget.borderview.BorderView
 
-class TerminalTutorialActivity : AppBarActivity() {
+class ShellTutorialActivity : AppBarActivity() {
 
     private val openDocumentsTree = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { tree: Uri? ->
         if (tree == null) return@registerForActivityResult
@@ -23,7 +23,7 @@ class TerminalTutorialActivity : AppBarActivity() {
             while (it.moveToNext()) {
                 val id = it.getString(0)
                 val name = it.getString(1)
-                if (name == "shizuku" || name == "shizuku.dex") {
+                if (name == "bsh" || name == "bsh_shizuku.dex") {
                     DocumentsContract.deleteDocument(cr, DocumentsContract.buildDocumentUriUsingTree(tree, id))
                 }
             }
@@ -35,8 +35,8 @@ class TerminalTutorialActivity : AppBarActivity() {
             }
         }
 
-        writeToDocument("shizuku")
-        writeToDocument("shizuku.dex")
+        writeToDocument("bsh")
+        writeToDocument("bsh_shizuku.dex")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +50,8 @@ class TerminalTutorialActivity : AppBarActivity() {
         binding.apply {
             scrollView.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar?.setRaised(!top) }
 
-            val shizukuName = "<font face=\"monospace\">shizuku</font>"
-            val shizukuDexName = "<font face=\"monospace\">shizuku.dex</font>"
+            val shizukuName = "<font face=\"monospace\">bsh</font>"
+            val shizukuDexName = "<font face=\"monospace\">bsh_shizuku.dex</font>"
 
             text1.text = getString(R.string.terminal_tutorial_1, shizukuName, shizukuDexName).toHtml()
 
@@ -66,7 +66,7 @@ class TerminalTutorialActivity : AppBarActivity() {
 
             text3.text = getString(
                     R.string.terminal_tutorial_3,
-                    "<font face=\"monospace\">sh shizuku</font>",
+                    "<font face=\"monospace\">sh bsh</font>",
             ).toHtml()
             summary3.text = getString(R.string.terminal_tutorial_3_description,
                     shizukuName, "<font face=\"monospace\">PATH</font>"

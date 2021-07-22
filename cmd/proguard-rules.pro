@@ -1,3 +1,3 @@
--keep class rikka.shizuku.cmd.ShizukuCmd {
+-keep class rikka.shizuku.shell.ShizukuShellLoader {
     public static void main(java.lang.String[]);
 }

@@ -1,4 +1,4 @@
-package moe.shizuku.manager.cmd
+package moe.shizuku.manager.shell
 
 import android.os.Bundle
 import android.os.IBinder
@@ -6,7 +6,7 @@ import android.os.Parcel
 import moe.shizuku.manager.app.AppActivity
 import rikka.shizuku.Shizuku
 
-class CmdRequestHandlerActivity : AppActivity() {
+class ShellRequestHandlerActivity : AppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,7 @@ class CmdRequestHandlerActivity : AppActivity() {
         val data = Parcel.obtain()
         try {
             data.writeStrongBinder(Shizuku.getBinder())
+            data.writeString(applicationInfo.sourceDir)
             binder.transact(1, data, null, IBinder.FLAG_ONEWAY)
         } catch (e: Throwable) {
             e.printStackTrace()

@@ -8,6 +8,8 @@
 #include <sys/stat.h>
 #include <sys/system_properties.h>
 #include <cerrno>
+#include <string_view>
+#include <termios.h>
 #include "android.h"
 #include "misc.h"
 #include "selinux.h"
@@ -31,6 +33,16 @@
 #define PACKAGE_NAME "moe.shizuku.privileged.api"
 #define SERVER_NAME "shizuku_server"
 #define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuService"
+
+#if defined(__arm__)
+#define ABI "armeabi-v7a"
+#elif defined(__i386__)
+#define ABI "x86"
+#elif defined(__x86_64__)
+#define ABI "x86_64"
+#elif defined(__aarch64__)
+#define ABI "arm64-v8a"
+#endif
 
 static void run_server(const char *dex_path, const char *main_class, const char *process_name) {
     if (setenv("CLASSPATH", dex_path, true)) {
@@ -79,9 +91,13 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
 #define ARG_PUSH_DEBUG_ONLY(v, arg)
 #endif
 
+    char lib_path[PATH_MAX]{0};
+    snprintf(lib_path, PATH_MAX, "%s!/lib/%s", dex_path, ABI);
+
     ARG(argv)
     ARG_PUSH(argv, "/system/bin/app_process")
     ARG_PUSH_FMT(argv, "-Djava.class.path=%s", dex_path)
+    ARG_PUSH_FMT(argv, "-Djava.library.path=%s", lib_path)
     ARG_PUSH_DEBUG_VM_PARAMS(argv)
     ARG_PUSH(argv, "/system/bin")
     ARG_PUSH_FMT(argv, "--nice-name=%s", process_name)
@@ -151,7 +167,7 @@ static int switch_cgroup() {
 
 char *context = nullptr;
 
-int main(int argc, char **argv) {
+int starter_main(int argc, char *argv[]) {
     char *apk_path = nullptr;
     for (int i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--apk=", 6) == 0) {
@@ -267,4 +283,24 @@ int main(int argc, char **argv) {
     LOGD("start_server");
     start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);
     exit(EXIT_SUCCESS);
+}
+
+using main_func = int (*)(int, char *[]);
+
+static main_func applet_main[] = {starter_main, nullptr};
+
+int main(int argc, char **argv) {
+    std::string_view base = basename(argv[0]);
+
+    LOGD("applet %s", base.data());
+
+    constexpr const char *applet_names[] = {"shizuku_starter", nullptr};
+
+    for (int i = 0; applet_names[i]; ++i) {
+        if (base == applet_names[i]) {
+            return (*applet_main[i])(argc, argv);
+        }
+    }
+
+    return 1;
 }

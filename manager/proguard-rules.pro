@@ -32,6 +32,11 @@
     public static void main(java.lang.String[]);
 }
 
+# Entrance of shell
+-keep class moe.shizuku.manager.shell.Shell {
+    public static void main(java.lang.String[], android.os.IBinder, android.os.Handler);
+}
+
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
 }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import moe.shizuku.manager.R
-import moe.shizuku.manager.cmd.TerminalTutorialActivity
+import moe.shizuku.manager.shell.ShellTutorialActivity
 import moe.shizuku.manager.databinding.HomeTerminalBinding
 import moe.shizuku.manager.model.ServiceStatus
 import rikka.recyclerview.BaseViewHolder
@@ -35,6 +35,6 @@ class TerminalViewHolder(private val binding: HomeTerminalBinding) : BaseViewHol
     }
 
     override fun onClick(v: View) {
-        v.context.startActivity(Intent(v.context, TerminalTutorialActivity::class.java))
+        v.context.startActivity(Intent(v.context, ShellTutorialActivity::class.java))
     }
 }

@@ -50,6 +50,8 @@ import moe.shizuku.server.config.ConfigManager;
 import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.UserHandleCompat;
 import moe.shizuku.starter.ServiceStarter;
+import rikka.bsh.BSHConfig;
+import rikka.bsh.BSHService;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.shizuku.ShizukuApiConstants;
 
@@ -75,6 +77,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     public static void main(String[] args) {
         DdmHandleAppName.setAppName("shizuku_server", 0);
+        BSHConfig.init(ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
 
         Looper.prepare();
         new ShizukuService();
@@ -104,6 +107,13 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
+    private final BSHService bshService = new BSHService() {
+
+        @Override
+        public void enforceCallingPermission(String func) {
+            ShizukuService.this.enforceCallingPermission(func);
+        }
+    };
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -181,7 +191,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return;
 
         String msg = "Permission Denial: " + func + " from pid="
-                + Binder.getCallingPid()
+                + callingPid
                 + " requires " + PERMISSION;
         LOGGER.w(msg);
         throw new SecurityException(msg);
@@ -907,6 +917,8 @@ public class ShizukuService extends IShizukuService.Stub {
             ParcelableListSlice<PackageInfo> result = getApplications(userId);
             reply.writeNoException();
             result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+            return true;
+        } else if (bshService.onTransact(code, data, reply, flags)) {
             return true;
         }
         return super.onTransact(code, data, reply, flags);
