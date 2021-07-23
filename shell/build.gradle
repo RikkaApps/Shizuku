@@ -48,7 +48,7 @@ android.applicationVariants.all { variant ->
                 from file
                 into dexPath
                 rename { String fileName ->
-                    fileName.replace(file.getName(), "bsh_shizuku.dex")
+                    fileName.replace(file.getName(), "rish_shizuku.dex")
                 }
             }
         }

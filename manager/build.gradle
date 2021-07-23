@@ -141,7 +141,7 @@ dependencies {
     //compileOnly project(':hidden-api-common')
     implementation project(':hidden-api-common-bridge')
     implementation project(':server')
-    implementation project(':bsh')
+    implementation project(':rish')
     implementation project(':starter')
     implementation project(':api')
     implementation project(':provider')

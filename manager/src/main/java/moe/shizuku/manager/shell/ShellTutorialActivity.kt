@@ -12,6 +12,12 @@ import rikka.widget.borderview.BorderView
 
 class ShellTutorialActivity : AppBarActivity() {
 
+    companion object {
+
+        private val SH_NAME = "rish"
+        private val DEX_NAME = "rish_shizuku.dex"
+    }
+
     private val openDocumentsTree = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { tree: Uri? ->
         if (tree == null) return@registerForActivityResult
 
@@ -23,7 +29,7 @@ class ShellTutorialActivity : AppBarActivity() {
             while (it.moveToNext()) {
                 val id = it.getString(0)
                 val name = it.getString(1)
-                if (name == "bsh" || name == "bsh_shizuku.dex") {
+                if (name == SH_NAME || name == DEX_NAME) {
                     DocumentsContract.deleteDocument(cr, DocumentsContract.buildDocumentUriUsingTree(tree, id))
                 }
             }
@@ -35,8 +41,8 @@ class ShellTutorialActivity : AppBarActivity() {
             }
         }
 
-        writeToDocument("bsh")
-        writeToDocument("bsh_shizuku.dex")
+        writeToDocument(SH_NAME)
+        writeToDocument(DEX_NAME)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +56,8 @@ class ShellTutorialActivity : AppBarActivity() {
         binding.apply {
             scrollView.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar?.setRaised(!top) }
 
-            val shizukuName = "<font face=\"monospace\">bsh</font>"
-            val shizukuDexName = "<font face=\"monospace\">bsh_shizuku.dex</font>"
+            val shizukuName = "<font face=\"monospace\">$SH_NAME</font>"
+            val shizukuDexName = "<font face=\"monospace\">$DEX_NAME</font>"
 
             text1.text = getString(R.string.terminal_tutorial_1, shizukuName, shizukuDexName).toHtml()
 
@@ -66,7 +72,7 @@ class ShellTutorialActivity : AppBarActivity() {
 
             text3.text = getString(
                     R.string.terminal_tutorial_3,
-                    "<font face=\"monospace\">sh bsh</font>",
+                    "<font face=\"monospace\">sh $SH_NAME</font>",
             ).toHtml()
             summary3.text = getString(R.string.terminal_tutorial_3_description,
                     shizukuName, "<font face=\"monospace\">PATH</font>"

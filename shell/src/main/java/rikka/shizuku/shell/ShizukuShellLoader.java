@@ -100,9 +100,9 @@ public class ShizukuShellLoader {
         if (Os.getuid() == 2000) {
             packageName = "com.android.shell";
         } else {
-            packageName = System.getenv("BSH_APPLICATION_ID");
+            packageName = System.getenv("RISH_APPLICATION_ID");
             if (TextUtils.isEmpty(packageName) || "PKG".equals(packageName)) {
-                abort("BSH_APPLICATION_ID is not set, set this environment variable to the id of current application (package name)");
+                abort("RISH_APPLICATION_ID is not set, set this environment variable to the id of current application (package name)");
                 System.exit(1);
             }
         }

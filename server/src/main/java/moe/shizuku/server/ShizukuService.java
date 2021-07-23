@@ -50,8 +50,8 @@ import moe.shizuku.server.config.ConfigManager;
 import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.UserHandleCompat;
 import moe.shizuku.starter.ServiceStarter;
-import rikka.bsh.BSHConfig;
-import rikka.bsh.BSHService;
+import rikka.rish.RishConfig;
+import rikka.rish.RishService;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.shizuku.ShizukuApiConstants;
 
@@ -77,7 +77,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
     public static void main(String[] args) {
         DdmHandleAppName.setAppName("shizuku_server", 0);
-        BSHConfig.init(ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
+        RishConfig.init(ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
 
         Looper.prepare();
         new ShizukuService();
@@ -107,7 +107,7 @@ public class ShizukuService extends IShizukuService.Stub {
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
-    private final BSHService bshService = new BSHService() {
+    private final RishService rishService = new RishService() {
 
         @Override
         public void enforceCallingPermission(String func) {
@@ -918,7 +918,7 @@ public class ShizukuService extends IShizukuService.Stub {
             reply.writeNoException();
             result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
             return true;
-        } else if (bshService.onTransact(code, data, reply, flags)) {
+        } else if (rishService.onTransact(code, data, reply, flags)) {
             return true;
         }
         return super.onTransact(code, data, reply, flags);

@@ -3,14 +3,13 @@ package moe.shizuku.manager.shell;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.IBinder;
-import android.system.Os;
 
-import rikka.bsh.BSH;
-import rikka.bsh.BSHConfig;
+import rikka.rish.Rish;
+import rikka.rish.RishConfig;
 import rikka.shizuku.Shizuku;
 import rikka.shizuku.ShizukuApiConstants;
 
-public class Shell extends BSH {
+public class Shell extends Rish {
 
     @Override
     public void requestPermission(Runnable onGrantedRunnable) {
@@ -40,12 +39,12 @@ public class Shell extends BSH {
     }
 
     public static void main(String[] args, String packageName, IBinder binder, Handler handler) {
-        BSHConfig.init(binder, ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
+        RishConfig.init(binder, ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
         Shizuku.onBinderReceived(binder, packageName);
         Shizuku.addBinderReceivedListenerSticky(() -> {
             int version = Shizuku.getVersion();
             if (version < 12) {
-                System.err.println("BSH requires server 12 (running " + version + ")");
+                System.err.println("Rish requires server 12 (running " + version + ")");
                 System.err.flush();
                 System.exit(1);
             }
