@@ -42,6 +42,14 @@ public class Shell extends BSH {
     public static void main(String[] args, String packageName, IBinder binder, Handler handler) {
         BSHConfig.init(binder, ShizukuApiConstants.BINDER_DESCRIPTOR, 30000);
         Shizuku.onBinderReceived(binder, packageName);
-        new Shell().main(args);
+        Shizuku.addBinderReceivedListenerSticky(() -> {
+            int version = Shizuku.getVersion();
+            if (version < 12) {
+                System.err.println("BSH requires server 12 (running " + version + ")");
+                System.err.flush();
+                System.exit(1);
+            }
+            new Shell().main(args);
+        });
     }
 }

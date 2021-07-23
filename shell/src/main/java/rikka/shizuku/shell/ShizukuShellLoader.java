@@ -34,9 +34,11 @@ public class ShizukuShellLoader {
 
                     String sourceDir = data.readString();
                     if (binder != null) {
-                            handler.post(() -> onBinderReceived(binder, sourceDir));
-                     } else {
-
+                        handler.post(() -> onBinderReceived(binder, sourceDir));
+                    } else {
+                        System.err.println("Server is not running");
+                        System.err.flush();
+                        System.exit(1);
                     }
                     return true;
                 }
@@ -79,6 +81,11 @@ public class ShizukuShellLoader {
             Class<?> cls = classLoader.loadClass("moe.shizuku.manager.shell.Shell");
             cls.getDeclaredMethod("main", String[].class, String.class, IBinder.class, Handler.class)
                     .invoke(null, args, callingPackage, binder, handler);
+        } catch (ClassNotFoundException tr) {
+            System.err.println("Class not found");
+            System.err.println("Make sure you have Shizuku v12.0.0 or above installed");
+            System.err.flush();
+            System.exit(1);
         } catch (Throwable tr) {
             tr.printStackTrace(System.err);
             System.err.flush();
