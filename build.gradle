@@ -2,7 +2,6 @@ apply plugin: 'idea'
 
 idea.module {
     excludeDirs += file('out')
-    resourceDirs += file('magisk-shizuku-starter')
 }
 
 buildscript {
@@ -37,7 +36,7 @@ task clean(type: Delete) {
 
 def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-def baseVersionName = "${api_version_major}.7.0"
+def baseVersionName = "${api_version_major}.0.0"
 ext {
     minSdkVersion = 23
     targetSdkVersion = 30
