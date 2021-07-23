@@ -91,8 +91,11 @@ tasks.whenTaskAdded { task ->
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
+        def variantCapped = variant.name.capitalize()
+
         outputFileName = "shizuku-v${variant.versionName}-${variant.name}.apk"
 
+        variant.assembleProvider.get().dependsOn(":shell:assemble$variantCapped")
         variant.assembleProvider.get().doLast {
             def outDir = new File(rootDir, "out")
             def mappingDir = new File(outDir, "mapping").absolutePath
