@@ -87,15 +87,18 @@ tasks.whenTaskAdded { task ->
     if (task.name == 'processReleaseResources') {
         task.finalizedBy optimizeReleaseResources
     }
+
+    if (task.name == 'preReleaseBuild') {
+        task.dependsOn(':shell:assembleRelease')
+    } else if (task.name == 'preDebugBuild') {
+        task.dependsOn(':shell:assembleDebug')
+    }
 }
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
-        def variantCapped = variant.name.capitalize()
-
         outputFileName = "shizuku-v${variant.versionName}-${variant.name}.apk"
 
-        variant.assembleProvider.get().dependsOn(":shell:assemble$variantCapped")
         variant.assembleProvider.get().doLast {
             def outDir = new File(rootDir, "out")
             def mappingDir = new File(outDir, "mapping").absolutePath
