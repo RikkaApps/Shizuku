@@ -97,4 +97,8 @@
     <string name="terminal_tutorial_3">最后，将文件移动到终端应用可以访问的位置，您便可使用 %1$s 来通过 Shizuku 运行命令。</string>
     <string name="terminal_tutorial_3_description">一些技巧：将执行权限授予 %1$s 并将其添加到 %2$s，您将可以直接使用 %1$s。</string>
     <string name="settings_translation_summary_percentage">" （已翻译 %s）"</string>
+    <string name="rish_description"><![CDATA[
+通过 %1$s，您可以在任何终端应用中连接到由 Shizuku 运行的 shell 并与之交互。
+<p>有关 %1$s 的具体使用方式，点按以阅读文档。
+]]></string>
 </resources>

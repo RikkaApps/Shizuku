@@ -10,6 +10,7 @@ public class Helps {
     public static final MultiLocaleEntity HOME = new MultiLocaleEntity();
     public static final MultiLocaleEntity DOWNLOAD = new MultiLocaleEntity();
     public static final MultiLocaleEntity SUI = new MultiLocaleEntity();
+    public static final MultiLocaleEntity RISH = new MultiLocaleEntity();
 
     static {
         ADB.put("zh-CN", "https://shizuku.rikka.app/zh-hans/guide/setup/");
@@ -33,5 +34,7 @@ public class Helps {
         DOWNLOAD.put("en", "https://shizuku.rikka.app/download/");
 
         SUI.put("en", "https://github.com/RikkaApps/Sui");
+
+        RISH.put("en", "https://github.com/RikkaApps/Shizuku-API/tree/master/rish");
     }
 }

@@ -23,9 +23,58 @@
         app:fitsSystemWindowsInsets="bottom|top">
 
         <LinearLayout
+            android:id="@android:id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/card_background"
+            android:backgroundTint="?appColorPrimary"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:duplicateParentState="true"
+            android:elevation="4dp"
+            android:foreground="?selectableItemBackground"
+            android:orientation="horizontal"
+            android:outlineAmbientShadowColor="?appColorPrimary"
+            android:outlineSpotShadowColor="?appColorPrimary"
+            android:paddingStart="16dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_help_outline_24dp"
+                android:tint="?android:textColorSecondaryInverse"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@android:id/summary"
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:textColor="?android:textColorSecondaryInverse"
+                    tools:text="@string/rish_description" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="horizontal">
@@ -111,8 +160,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
-                    tools:text="@string/terminal_tutorial_2_description"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?android:textColorSecondary"
+                    tools:text="@string/terminal_tutorial_2_description" />
 
             </LinearLayout>
 
@@ -153,8 +202,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
-                    tools:text="@string/terminal_tutorial_3_description"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?android:textColorSecondary"
+                    tools:text="@string/terminal_tutorial_3_description" />
 
             </LinearLayout>
 

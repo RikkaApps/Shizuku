@@ -4,16 +4,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Build;
-import android.util.TypedValue;
 
-import androidx.annotation.AttrRes;
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AlertDialog;
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 
 import moe.shizuku.manager.R;
 import rikka.core.util.ClipboardUtils;
@@ -35,30 +29,14 @@ public class CustomTabsHelper {
         sOnCreateIntentBuilderListener = onCreateIntentBuilderListener;
     }
 
-    private static TypedValue getTypedValue(Resources.Theme theme, int attrId) {
-        TypedValue typedValue = new TypedValue();
-        theme.resolveAttribute(attrId, typedValue, true);
-        return typedValue;
-    }
-
-    private static @ColorInt
-    int getColorIntFromAttr(Context context, @AttrRes int attrId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getTheme().getResources().getColor(getTypedValue(context.getTheme(), attrId).resourceId, context.getTheme());
-        } else {
-            return ContextCompat.getColor(context, getTypedValue(context.getTheme(), attrId).resourceId);
-        }
-    }
-
-    public static CustomTabsIntent.Builder createBuilder(Context context) {
+    public static CustomTabsIntent.Builder createBuilder() {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        builder.setToolbarColor(getColorIntFromAttr(context, android.R.attr.colorPrimary));
         builder.setShowTitle(true);
         return builder;
     }
 
     public static boolean launchHelp(Context context, Uri uri) {
-        CustomTabsIntent.Builder builder = createBuilder(context);
+        CustomTabsIntent.Builder builder = createBuilder();
 
         if (sOnCreateIntentBuilderListener != null) {
             sOnCreateIntentBuilderListener.onCreateHelpIntentBuilder(context, builder);
@@ -73,7 +51,7 @@ public class CustomTabsHelper {
     }
 
     public static boolean launchUrl(Context context, Uri uri) {
-        return launchUrl(context, createBuilder(context).build(), uri);
+        return launchUrl(context, createBuilder().build(), uri);
     }
 
     private static boolean launchUrl(Context context, CustomTabsIntent customTabsIntent, Uri uri) {
