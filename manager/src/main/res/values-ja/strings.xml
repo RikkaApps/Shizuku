@@ -101,4 +101,5 @@
     <string name="permission_label">アクセス Shizuku</string>
     <string name="starter">起動</string>
     <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
+    <string name="rish_description">%1$sを使えば、任意のターミナルアプリで、Shizukuが実行するシェルに接続し、対話することができます。&lt;p&gt;詳しい使い方については、%1$sをタップするとドキュメントが表示されます。</string>
 </resources>
