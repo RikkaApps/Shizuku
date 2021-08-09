@@ -102,4 +102,5 @@
     <string name="home_terminal_description">Executar comandos pelo Shizuku no seu app de terminal preferido</string>
     <string name="terminal_tutorial_1">Primeiro, exporte os arquivos para onde quiser. Serão dois arquivos: %1$s e %2$s.</string>
     <string name="home_terminal_title">Usar o Shizuku em apps de terminal</string>
+    <string name="rish_description">Com %1$s, em qualquer aplicativo de terminal, você pode se conectar e interagir com o shell executado pelo Shizuku. &lt;p&gt; Sobre o uso detalhado %1$s, toque para ver o documento.</string>
 </resources>
