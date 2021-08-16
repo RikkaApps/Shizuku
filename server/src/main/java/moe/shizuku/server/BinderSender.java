@@ -1,5 +1,7 @@
 package moe.shizuku.server;
 
+import static moe.shizuku.server.utils.Logger.LOGGER;
+
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,13 +11,11 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import hidden.HiddenApiBridge;
-import hidden.ProcessObserverAdapter;
-import hidden.UidObserverAdapter;
+import $android.app.ActivityManager;
 import kotlin.collections.ArraysKt;
-import moe.shizuku.server.api.SystemService;
-
-import static moe.shizuku.server.utils.Logger.LOGGER;
+import rikka.shizuku.server.api.ProcessObserverAdapter;
+import rikka.shizuku.server.api.UidObserverAdapter;
+import rikka.shizuku.service.api.SystemService;
 
 public class BinderSender {
 
@@ -120,8 +120,8 @@ public class BinderSender {
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 SystemService.registerUidObserver(new UidObserver(),
-                        HiddenApiBridge.getActivityManager_UID_OBSERVER_ACTIVE(),
-                        HiddenApiBridge.getActivityManager_PROCESS_STATE_UNKNOWN(),
+                        ActivityManager.UID_OBSERVER_ACTIVE,
+                        ActivityManager.PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {
                 LOGGER.e(tr, "registerUidObserver");

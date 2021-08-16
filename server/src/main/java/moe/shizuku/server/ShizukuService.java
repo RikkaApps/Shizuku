@@ -44,16 +44,18 @@ import moe.shizuku.api.BinderContainer;
 import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
 import moe.shizuku.server.api.RemoteProcessHolder;
-import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.config.Config;
 import moe.shizuku.server.config.ConfigManager;
-import moe.shizuku.server.ktx.IContentProviderKt;
 import moe.shizuku.server.utils.UserHandleCompat;
 import moe.shizuku.starter.ServiceStarter;
 import rikka.rish.RishConfig;
 import rikka.rish.RishService;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.shizuku.ShizukuApiConstants;
+import rikka.shizuku.server.ShizukuUserServiceManager;
+import rikka.shizuku.server.api.IContentProviderUtils;
+import rikka.shizuku.service.UserServiceManager;
+import rikka.shizuku.service.api.SystemService;
 
 import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static moe.shizuku.server.ServerConstants.PERMISSION;
@@ -95,7 +97,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private static ApplicationInfo getManagerApplicationInfo() {
+    public static ApplicationInfo getManagerApplicationInfo() {
         return SystemService.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
     }
 
@@ -103,7 +105,6 @@ public class ShizukuService extends IShizukuService.Stub {
     private final Handler mainHandler = new Handler(Looper.myLooper());
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
     private final Executor executor = Executors.newSingleThreadExecutor();
-    private final Map<String, UserServiceRecord> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
     private final ClientManager clientManager;
     private final ConfigManager configManager;
     private final int managerAppId;
@@ -114,6 +115,7 @@ public class ShizukuService extends IShizukuService.Stub {
             ShizukuService.this.enforceCallingPermission(func);
         }
     };
+    private final ShizukuUserServiceManager userServiceManager = new ShizukuUserServiceManager(executor);
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -306,294 +308,25 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private class UserServiceRecord {
-
-        private final DeathRecipient deathRecipient;
-        public final boolean standalone;
-        public final int versionCode;
-        public String token;
-        public IBinder service;
-        public final ApkChangedObserver apkChangedObserver;
-        public final RemoteCallbackList<IShizukuServiceConnection> callbacks = new RemoteCallbackList<>();
-
-        public UserServiceRecord(boolean standalone, int versionCode, String apkPath) {
-            this.standalone = standalone;
-            this.versionCode = versionCode;
-            this.token = UUID.randomUUID().toString() + "-" + System.currentTimeMillis();
-            this.apkChangedObserver = ApkChangedObservers.start(apkPath, () -> {
-                LOGGER.v("remove record %s because apk changed", token);
-                removeSelf();
-            });
-            this.deathRecipient = () -> {
-                LOGGER.v("binder in service record %s is dead", token);
-                removeSelf();
-            };
-        }
-
-        public void setBinder(IBinder binder) {
-            LOGGER.v("binder received for service record %s", token);
-
-            service = binder;
-
-            if (standalone) {
-                try {
-                    binder.linkToDeath(deathRecipient, 0);
-                } catch (Throwable tr) {
-                    LOGGER.w(tr, "linkToDeath " + token);
-                }
-            }
-
-            broadcastBinderReceived();
-        }
-
-        public void broadcastBinderReceived() {
-            LOGGER.v("broadcast received for service record %s", token);
-
-            int count = callbacks.beginBroadcast();
-            for (int i = 0; i < count; i++) {
-                try {
-                    callbacks.getBroadcastItem(i).connected(service);
-                } catch (Throwable e) {
-                    LOGGER.w("failed to call connected");
-                }
-            }
-            callbacks.finishBroadcast();
-        }
-
-        public void broadcastBinderDead() {
-            LOGGER.v("broadcast dead for service record %s", token);
-
-            int count = callbacks.beginBroadcast();
-            for (int i = 0; i < count; i++) {
-                try {
-                    callbacks.getBroadcastItem(i).dead();
-                } catch (Throwable e) {
-                    LOGGER.w("failed to call connected");
-                }
-            }
-            callbacks.finishBroadcast();
-        }
-
-        private void removeSelf() {
-            synchronized (ShizukuService.this) {
-                removeUserServiceLocked(UserServiceRecord.this);
-            }
-        }
-
-        public void destroy() {
-            if (standalone) {
-                service.unlinkToDeath(deathRecipient, 0);
-            } else {
-                broadcastBinderDead();
-            }
-
-            ApkChangedObservers.stop(apkChangedObserver);
-
-            if (service != null && service.pingBinder()) {
-                Parcel data = Parcel.obtain();
-                Parcel reply = Parcel.obtain();
-                try {
-                    data.writeInterfaceToken(service.getInterfaceDescriptor());
-                    service.transact(USER_SERVICE_TRANSACTION_destroy, data, reply, Binder.FLAG_ONEWAY);
-                } catch (Throwable e) {
-                    LOGGER.w(e, "failed to destroy");
-                } finally {
-                    data.recycle();
-                    reply.recycle();
-                }
-            }
-
-            callbacks.kill();
-        }
-    }
-
-    private PackageInfo ensureCallingPackageForUserService(String packageName, int appId, int userId) {
-        PackageInfo packageInfo = SystemService.getPackageInfoNoThrow(packageName, 0x00002000 /*PackageManager.MATCH_UNINSTALLED_PACKAGES*/, userId);
-        if (packageInfo == null || packageInfo.applicationInfo == null) {
-            throw new SecurityException("unable to find package " + packageName);
-        }
-        if (UserHandleCompat.getAppId(packageInfo.applicationInfo.uid) != appId) {
-            throw new SecurityException("package " + packageName + " is not owned by " + appId);
-        }
-        return packageInfo;
-    }
-
     @Override
     public int removeUserService(IShizukuServiceConnection conn, Bundle options) {
         enforceCallingPermission("removeUserService");
 
-        ComponentName componentName = Objects.requireNonNull(options.getParcelable(USER_SERVICE_ARG_COMPONENT), "component is null");
-
-        int uid = Binder.getCallingUid();
-        int appId = UserHandleCompat.getAppId(uid);
-        int userId = UserHandleCompat.getUserId(uid);
-
-        String packageName = componentName.getPackageName();
-        ensureCallingPackageForUserService(packageName, appId, userId);
-
-        String className = Objects.requireNonNull(componentName.getClassName(), "class is null");
-        String tag = options.getString(USER_SERVICE_ARG_TAG);
-        String key = packageName + ":" + (tag != null ? tag : className);
-
-        synchronized (this) {
-            UserServiceRecord record = getUserServiceRecordLocked(key);
-            if (record == null) return 1;
-            removeUserServiceLocked(record);
-        }
-        return 0;
-    }
-
-    private void removeUserServiceLocked(UserServiceRecord record) {
-        if (userServiceRecords.values().remove(record)) {
-            record.destroy();
-        }
+        return userServiceManager.removeUserService(conn, options);
     }
 
     @Override
     public int addUserService(IShizukuServiceConnection conn, Bundle options) {
         enforceCallingPermission("addUserService");
 
-        Objects.requireNonNull(conn, "connection is null");
-        Objects.requireNonNull(options, "options is null");
-
-        int uid = Binder.getCallingUid();
-        int appId = UserHandleCompat.getAppId(uid);
-        int userId = UserHandleCompat.getUserId(uid);
-
-        ComponentName componentName = Objects.requireNonNull(options.getParcelable(USER_SERVICE_ARG_COMPONENT), "component is null");
-        String packageName = Objects.requireNonNull(componentName.getPackageName(), "package is null");
-        PackageInfo packageInfo = ensureCallingPackageForUserService(packageName, appId, userId);
-
-        String className = Objects.requireNonNull(componentName.getClassName(), "class is null");
-        String sourceDir = Objects.requireNonNull(packageInfo.applicationInfo.sourceDir, "apk path is null");
-        String nativeLibraryDir = packageInfo.applicationInfo.nativeLibraryDir;
-
-        int versionCode = options.getInt(USER_SERVICE_ARG_VERSION_CODE, 1);
-        String tag = options.getString(USER_SERVICE_ARG_TAG);
-        String processNameSuffix = options.getString(USER_SERVICE_ARG_PROCESS_NAME);
-        boolean debug = options.getBoolean(USER_SERVICE_ARG_DEBUGGABLE, false);
-        boolean standalone = processNameSuffix != null;
-        String key = packageName + ":" + (tag != null ? tag : className);
-
-        synchronized (this) {
-            UserServiceRecord record = getOrCreateUserServiceRecordLocked(key, versionCode, standalone, sourceDir);
-            record.callbacks.register(conn);
-
-            if (record.service != null && record.service.pingBinder()) {
-                record.broadcastBinderReceived();
-            } else {
-                Runnable runnable;
-                if (standalone) {
-                    runnable = () -> startUserServiceNewProcess(key, record.token, packageName, className, processNameSuffix, uid, debug);
-                } else {
-                    runnable = () -> {
-                        /*CancellationSignal cancellationSignal = new CancellationSignal();
-                        cancellationSignal.setOnCancelListener(() -> {
-                            synchronized (ShizukuService.this) {
-                                UserServiceRecord r = getUserServiceRecordLocked(key);
-                                if (r != null) {
-                                    removeUserServiceLocked(r);
-                                    LOGGER.v("remove %s by user", key);
-                                }
-                            }
-                        });
-
-                        startUserServiceLocalProcess(key, record.token, packageName, className, sourceDir, cancellationSignal);*/
-                    };
-                }
-                executor.execute(runnable);
-            }
-            return 0;
-        }
-    }
-
-    private UserServiceRecord getUserServiceRecordLocked(String key) {
-        return userServiceRecords.get(key);
-    }
-
-    private UserServiceRecord getOrCreateUserServiceRecordLocked(String key, int versionCode, boolean standalone, String apkPath) {
-        UserServiceRecord record = getUserServiceRecordLocked(key);
-        if (record != null) {
-            if (record.versionCode != versionCode) {
-                LOGGER.v("remove service record %s (%s) because version code not matched (old=%d, new=%d)", key, record.token, record.versionCode, versionCode);
-            } else if (record.standalone != standalone) {
-                LOGGER.v("remove service record %s (%s) because standalone not matched (old=%s, new=%s)", key, record.token, Boolean.toString(record.standalone), Boolean.toString(standalone));
-            } else if (record.service == null || !record.service.pingBinder()) {
-                LOGGER.v("service in record %s (%s) has dead", key, record.token);
-            } else {
-                LOGGER.i("found existing service record %s (%s)", key, record.token);
-                return record;
-            }
-
-            removeUserServiceLocked(record);
-        }
-
-        record = new UserServiceRecord(standalone, versionCode, apkPath);
-        userServiceRecords.put(key, record);
-        LOGGER.i("new service record %s (%s): version=%d, standalone=%s, apk=%s", key, record.token, versionCode, Boolean.toString(standalone), apkPath);
-        return record;
-    }
-
-    private void startUserServiceLocalProcess(String key, String token, String packageName, String className, String sourceDir, CancellationSignal cancellationSignal) {
-        UserServiceRecord record = userServiceRecords.get(key);
-        if (record == null || !Objects.equals(token, record.token)) {
-            LOGGER.w("unable to find service record %s (%s)", key, token);
-            return;
-        }
-
-        IBinder service;
-        try {
-            ClassLoader classLoader = new PathClassLoader(sourceDir, null, ClassLoader.getSystemClassLoader());
-            Class<?> serviceClass = Objects.requireNonNull(classLoader.loadClass(className));
-            Constructor<?> constructor;
-
-            try {
-                constructor = serviceClass.getConstructor(CancellationSignal.class);
-                service = (IBinder) constructor.newInstance(cancellationSignal);
-            } catch (Throwable e) {
-                LOGGER.w("constructor with CancellationSignal not found");
-                constructor = serviceClass.getConstructor();
-                service = (IBinder) constructor.newInstance();
-            }
-        } catch (Throwable tr) {
-            LOGGER.w(tr, "unable to create service %s/%s", packageName, className);
-            return;
-        }
-
-        record.setBinder(service);
-    }
-
-    private void startUserServiceNewProcess(String key, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
-        LOGGER.v("starting process for service record %s (%s)...", key, token);
-
-        String cmd = ServiceStarter.commandForUserService(getManagerApplicationInfo().sourceDir, token, packageName, classname, processNameSuffix, callingUid, debug);
-        int exitCode;
-        try {
-            java.lang.Process process = Runtime.getRuntime().exec("sh");
-            OutputStream os = process.getOutputStream();
-            os.write(cmd.getBytes());
-            os.flush();
-            os.close();
-
-            exitCode = process.waitFor();
-        } catch (Throwable e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-        if (exitCode != 0) {
-            throw new IllegalStateException("sh exited with " + exitCode);
-        }
+        return userServiceManager.addUserService(conn, options);
     }
 
     @Override
     public void attachUserService(IBinder binder, Bundle options) {
         enforceManager("attachUserService");
 
-        Objects.requireNonNull(binder, "binder is null");
-        String token = Objects.requireNonNull(options.getString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN), "token is null");
-
-        synchronized (this) {
-            sendUserServiceLocked(binder, token);
-        }
+        userServiceManager.attachUserService(binder, options);
     }
 
     @Override
@@ -848,25 +581,6 @@ public class ShizukuService extends IShizukuService.Stub {
         configManager.update(uid, null, mask, value);
     }
 
-    private void sendUserServiceLocked(IBinder binder, String token) {
-        Map.Entry<String, UserServiceRecord> entry = null;
-        for (Map.Entry<String, UserServiceRecord> e : userServiceRecords.entrySet()) {
-            if (e.getValue().token.equals(token)) {
-                entry = e;
-                break;
-            }
-        }
-
-        if (entry == null) {
-            throw new IllegalArgumentException("unable to find token " + token);
-        }
-
-        LOGGER.v("received binder for service record %s", token);
-
-        UserServiceRecord record = entry.getValue();
-        record.setBinder(binder);
-    }
-
     private ParcelableListSlice<PackageInfo> getApplications(int userId) {
         List<PackageInfo> list = new ArrayList<>();
         List<Integer> users = new ArrayList<>();
@@ -985,7 +699,7 @@ public class ShizukuService extends IShizukuService.Stub {
             Bundle extra = new Bundle();
             extra.putParcelable("moe.shizuku.privileged.api.intent.extra.BINDER", new BinderContainer(binder));
 
-            Bundle reply = IContentProviderKt.callCompat(provider, null, name, "sendBinder", null, extra);
+            Bundle reply = IContentProviderUtils.callCompat(provider, null, name, "sendBinder", null, extra);
             if (reply != null) {
                 LOGGER.i("send binder to user app %s in user %d", packageName, userId);
             } else {

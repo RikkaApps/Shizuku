@@ -9,6 +9,7 @@ buildscript {
 
     ext.kotlinVersion = '1.5.21'
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
     }
@@ -16,6 +17,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1'
+        classpath 'dev.rikka.tools:hidden-api-refine:2.0.0'
     }
 }
 
@@ -40,7 +42,6 @@ def baseVersionName = "${api_version_major}.1.0"
 ext {
     minSdkVersion = 23
     targetSdkVersion = 30
-    buildToolsVersion = "30.0.3"
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 }

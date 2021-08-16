@@ -1,11 +1,18 @@
 import java.nio.file.Paths
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id('com.android.application')
+    id('kotlin-android')
+    id('dev.rikka.tools.hidden-api-refine')
+}
+
+hiddenApiRefine {
+    refinePrefix = ['$']
+    log = true
+}
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
         minSdkVersion rootProject.ext.minSdkVersion

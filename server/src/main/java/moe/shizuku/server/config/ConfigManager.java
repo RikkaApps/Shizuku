@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.collections.ArraysKt;
-import moe.shizuku.server.api.SystemService;
 import moe.shizuku.server.ktx.HandlerKt;
+import rikka.shizuku.service.api.SystemService;
 
 import static moe.shizuku.server.ServerConstants.PERMISSION;
 import static moe.shizuku.server.utils.Logger.LOGGER;

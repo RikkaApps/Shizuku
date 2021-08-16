@@ -29,8 +29,7 @@ dependencies {
     compileOnly project(':provider')
     implementation project(':starter')
     implementation project(':rish')
+    implementation project(':server-shared')
+    compileOnly project(':hidden-api-stub')
 
-    compileOnly project(':hidden-api-common')
-    implementation project(':hidden-api-common-bridge')
-    implementation project(':hidden-api-21-bridge')
 }
