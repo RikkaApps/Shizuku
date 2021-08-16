@@ -18,5 +18,5 @@ android {
 }
 
 dependencies {
-    compileOnly project(':hidden-api-common')
+    compileOnly project(':hidden-api-stub')
 }

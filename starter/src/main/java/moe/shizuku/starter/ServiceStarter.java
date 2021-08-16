@@ -1,5 +1,6 @@
 package moe.shizuku.starter;
 
+import android.app.ActivityThread;
 import android.content.Context;
 import android.content.IContentProvider;
 import android.ddm.DdmHandleAppName;
@@ -12,11 +13,11 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import hidden.HiddenApiBridge;
 import moe.shizuku.api.BinderContainer;
-import moe.shizuku.starter.api.SystemService;
 import moe.shizuku.starter.ktx.IContentProviderKt;
 import rikka.shizuku.ShizukuApiConstants;
+import rikka.shizuku.service.api.SystemService;
+import rikka.shizuku.service.util.Unsafe;
 
 public class ServiceStarter {
 
@@ -92,13 +93,14 @@ public class ServiceStarter {
         }
 
         IBinder service = null;
-        Context systemContext = HiddenApiBridge.getSystemContext();
+        Context systemContext = ActivityThread.systemMain().getSystemContext();
 
         DdmHandleAppName.setAppName(name != null ? name : "shizuku_user_service", 0);
 
         try {
-            UserHandle userHandle = HiddenApiBridge.createUserHandle(userId);
-            Context context = HiddenApiBridge.Context_createPackageContextAsUser(systemContext, pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
+            UserHandle userHandle = Unsafe.<UserHandle>unsafeCast($android.os.UserHandle.of(userId));
+            Context context = Unsafe.<Context>unsafeCast(
+                    Unsafe.<$android.content.Context>unsafeCast(systemContext).createPackageContextAsUser(pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle));
             ClassLoader classLoader = context.getClassLoader();
             Class<?> serviceClass = classLoader.loadClass(cls);
             service = (IBinder) serviceClass.newInstance();

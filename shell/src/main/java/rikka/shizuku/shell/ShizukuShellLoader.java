@@ -1,5 +1,6 @@
 package rikka.shizuku.shell;
 
+import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.content.Intent;
 import android.os.Binder;
@@ -17,7 +18,6 @@ import android.text.TextUtils;
 import java.io.File;
 
 import dalvik.system.DexClassLoader;
-import hidden.HiddenApiBridgeV23;
 
 public class ShizukuShellLoader {
 
@@ -63,7 +63,7 @@ public class ShizukuShellLoader {
         if (Build.VERSION.SDK_INT >= 26) {
             am = IActivityManager.Stub.asInterface(amBinder);
         } else {
-            am = HiddenApiBridgeV23.ActivityManagerNative_asInterface(amBinder);
+            am = ActivityManagerNative.asInterface(amBinder);
         }
 
         am.startActivityAsUser(null, callingPackage, intent, null, null, null, 0, 0, null, null, Os.getuid() / 100000);

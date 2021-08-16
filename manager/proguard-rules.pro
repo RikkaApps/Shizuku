@@ -14,11 +14,11 @@
 
 # Missing class android.app.IProcessObserver$Stub
 # Missing class android.app.IUidObserver$Stub
--keepclassmembers class hidden.ProcessObserverAdapter {
+-keepclassmembers class rikka.shizuku.server.api.ProcessObserverAdapter {
     <methods>;
 }
 
--keepclassmembers class hidden.UidObserverAdapter {
+-keepclassmembers class rikka.shizuku.server.api.UidObserverAdapter {
     <methods>;
 }
 

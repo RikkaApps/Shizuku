@@ -62,7 +62,5 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    compileOnly project(':hidden-api-common')
-    implementation project(':hidden-api-common-bridge')
-    implementation project(':hidden-api-21-bridge')
+    compileOnly project(':hidden-api-stub')
 }

@@ -21,8 +21,7 @@ android {
 dependencies {
     implementation project(':common')
     implementation project(':shared')
+    implementation project(':server-shared')
     compileOnly project(':provider')
-    compileOnly project(':hidden-api-common')
-    implementation project(':hidden-api-common-bridge')
-    implementation project(':hidden-api-21-bridge')
+    compileOnly project(':hidden-api-stub')
 }

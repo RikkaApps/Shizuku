@@ -1,8 +1,0 @@
-apply plugin: 'java-library'
-
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
-dependencies {
-    compileOnly project(':hidden-api-21')
-}

@@ -1,4 +1,4 @@
-include ':hidden-api-common', ':hidden-api-common-bridge', ':hidden-api-21', ':hidden-api-21-bridge'
+include ':hidden-api-common', ':hidden-api-common-bridge'
 include ':server', ':starter', ':shell'
 include ':manager'
 include ':common'
@@ -7,20 +7,15 @@ def root = "api"
 
 def propFile = file('local.properties')
 def props = new Properties()
-def apiUseLocal = false
-def apiDir = null
 
 if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
 
     if (props != null) {
-        apiDir = props["api.dir"]
-        apiUseLocal = props["api.useLocal"].equals("true")
+        if (props["api.useLocal"].equals("true")) {
+            root = props["api.dir"]
+        }
     }
-}
-
-if (apiUseLocal) {
-    root = apiDir
 }
 
 include ':aidl'
