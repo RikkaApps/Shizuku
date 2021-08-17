@@ -93,14 +93,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     private final ShizukuClientManager clientManager;
     private final ShizukuConfigManager configManager;
     private final int managerAppId;
-    private final RishService rishService = new RishService() {
-
-        @Override
-        public void enforceCallingPermission(String func) {
-            ShizukuService.this.enforceCallingPermission(func);
-        }
-    };
-    private final ShizukuUserServiceManager userServiceManager = new ShizukuUserServiceManager(executor);
 
     public ShizukuService() {
         LOGGER.i("starting server...");
@@ -181,29 +173,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             return true;
         }
         return false;
-    }
-
-    private void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
-        enforceCallingPermission("transactRemote");
-
-        IBinder targetBinder = data.readStrongBinder();
-        int targetCode = data.readInt();
-
-        LOGGER.d("transact: uid=%d, descriptor=%s, code=%d", Binder.getCallingUid(), targetBinder.getInterfaceDescriptor(), targetCode);
-        Parcel newData = Parcel.obtain();
-        try {
-            newData.appendFrom(data, data.dataPosition(), data.dataAvail());
-        } catch (Throwable tr) {
-            LOGGER.w(tr, "appendFrom");
-            return;
-        }
-        try {
-            long id = Binder.clearCallingIdentity();
-            targetBinder.transact(targetCode, newData, reply, flags);
-            Binder.restoreCallingIdentity(id);
-        } finally {
-            newData.recycle();
-        }
     }
 
     @Override
@@ -499,18 +468,12 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
-        if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
-            data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
-            transactRemote(data, reply, flags);
-            return true;
-        } else if (code == ServerConstants.BINDER_TRANSACTION_getApplications) {
+        if (code == ServerConstants.BINDER_TRANSACTION_getApplications) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
             int userId = data.readInt();
             ParcelableListSlice<PackageInfo> result = getApplications(userId);
             reply.writeNoException();
             result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-            return true;
-        } else if (rishService.onTransact(code, data, reply, flags)) {
             return true;
         }
         return super.onTransact(code, data, reply, flags);
