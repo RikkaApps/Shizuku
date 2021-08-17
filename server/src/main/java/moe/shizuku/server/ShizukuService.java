@@ -31,10 +31,7 @@ import android.os.ServiceManager;
 
 import androidx.annotation.Nullable;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -44,21 +41,19 @@ import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
-import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.config.Config;
 import moe.shizuku.server.config.ShizukuConfigManager;
-import moe.shizuku.server.utils.UserHandleCompat;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.rish.RishConfig;
-import rikka.rish.RishService;
 import rikka.shizuku.ShizukuApiConstants;
-import rikka.shizuku.server.ShizukuUserServiceManager;
-import rikka.shizuku.server.api.IContentProviderUtils;
 import rikka.shizuku.server.ClientRecord;
 import rikka.shizuku.server.ConfigManager;
 import rikka.shizuku.server.Service;
+import rikka.shizuku.server.ShizukuUserServiceManager;
+import rikka.shizuku.server.api.IContentProviderUtils;
 import rikka.shizuku.server.api.SystemService;
 import rikka.shizuku.server.util.Logger;
+import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
 
@@ -183,25 +178,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public IRemoteProcess newProcess(String[] cmd, String[] env, String dir) throws RemoteException {
-        enforceCallingPermission("newProcess");
-
-        LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
-
-        java.lang.Process process;
-        try {
-            process = Runtime.getRuntime().exec(cmd, env, dir != null ? new File(dir) : null);
-        } catch (IOException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-
-        ClientRecord clientRecord = clientManager.findClient(Binder.getCallingUid(), Binder.getCallingPid());
-        IBinder token = clientRecord != null ? clientRecord.client.asBinder() : null;
-
-        return new RemoteProcessHolder(process, token);
-    }
-
-    @Override
     public void attachApplication(IShizukuApplication application, String requestPackageName) {
         if (application == null || requestPackageName == null) {
             return;
@@ -297,7 +273,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 .putExtra("applicationInfo", ai);
         SystemService.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
     }
-
 
 
     @Override
