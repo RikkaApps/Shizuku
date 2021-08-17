@@ -16,8 +16,8 @@ import java.util.Locale;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.starter.ktx.IContentProviderKt;
 import rikka.shizuku.ShizukuApiConstants;
-import rikka.shizuku.service.api.SystemService;
-import rikka.shizuku.service.util.Unsafe;
+import rikka.shizuku.server.api.SystemService;
+import rikka.shizuku.server.util.Unsafe;
 
 public class ServiceStarter {
 

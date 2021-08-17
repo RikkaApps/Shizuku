@@ -9,7 +9,7 @@ import android.os.RemoteException;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import rikka.shizuku.service.util.OsUtils;
+import rikka.shizuku.server.util.OsUtils;
 
 public class IContentProviderUtils {
 

@@ -8,22 +8,18 @@ import java.util.Collections;
 import java.util.List;
 
 import moe.shizuku.server.config.Config;
-import moe.shizuku.server.config.ConfigManager;
+import moe.shizuku.server.config.ShizukuConfigManager;
+import rikka.shizuku.server.ClientManager;
+import rikka.shizuku.server.ClientRecord;
 
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
-public class ClientManager {
+public class ShizukuClientManager extends ClientManager<ShizukuConfigManager> {
 
-    private static ClientManager instance;
-
-    public static ClientManager getInstance() {
-        if (instance == null) {
-            instance = new ClientManager();
-        }
-        return instance;
+    public ShizukuClientManager(ShizukuConfigManager configManager) {
+        super(configManager);
     }
 
-    private final ConfigManager configManager = ConfigManager.getInstance();
     private final List<ClientRecord> clientRecords = Collections.synchronizedList(new ArrayList<>());
 
     public List<ClientRecord> findClients(int uid) {
@@ -50,7 +46,7 @@ public class ClientManager {
     public ClientRecord addClient(int uid, int pid, IShizukuApplication client, String packageName) {
         ClientRecord clientRecord = new ClientRecord(uid, pid, client, packageName);
 
-        Config.PackageEntry entry = configManager.find(uid);
+        Config.PackageEntry entry = getConfigManager().find(uid);
         if (entry != null && entry.isAllowed()) {
             clientRecord.allowed = true;
         }

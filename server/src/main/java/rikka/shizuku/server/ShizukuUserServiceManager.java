@@ -11,8 +11,6 @@ import moe.shizuku.server.ApkChangedObserver;
 import moe.shizuku.server.ApkChangedObservers;
 import moe.shizuku.server.ShizukuService;
 import moe.shizuku.starter.ServiceStarter;
-import rikka.shizuku.service.UserServiceManager;
-import rikka.shizuku.service.UserServiceRecord;
 
 public class ShizukuUserServiceManager extends UserServiceManager {
 

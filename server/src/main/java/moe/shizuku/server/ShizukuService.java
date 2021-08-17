@@ -27,10 +27,9 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.os.SELinux;
 import android.os.ServiceManager;
-import android.os.SystemProperties;
-import android.system.Os;
+
+import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +46,7 @@ import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
 import moe.shizuku.server.api.RemoteProcessHolder;
 import moe.shizuku.server.config.Config;
-import moe.shizuku.server.config.ConfigManager;
+import moe.shizuku.server.config.ShizukuConfigManager;
 import moe.shizuku.server.utils.UserHandleCompat;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.rish.RishConfig;
@@ -55,9 +54,13 @@ import rikka.rish.RishService;
 import rikka.shizuku.ShizukuApiConstants;
 import rikka.shizuku.server.ShizukuUserServiceManager;
 import rikka.shizuku.server.api.IContentProviderUtils;
-import rikka.shizuku.service.api.SystemService;
+import rikka.shizuku.server.ClientRecord;
+import rikka.shizuku.server.ConfigManager;
+import rikka.shizuku.server.Service;
+import rikka.shizuku.server.api.SystemService;
+import rikka.shizuku.server.util.Logger;
 
-public class ShizukuService extends IShizukuService.Stub {
+public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
 
     public static void main(String[] args) {
         DdmHandleAppName.setAppName("shizuku_server", 0);
@@ -87,8 +90,8 @@ public class ShizukuService extends IShizukuService.Stub {
     private final Handler mainHandler = new Handler(Looper.myLooper());
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
     private final Executor executor = Executors.newSingleThreadExecutor();
-    private final ClientManager clientManager;
-    private final ConfigManager configManager;
+    private final ShizukuClientManager clientManager;
+    private final ShizukuConfigManager configManager;
     private final int managerAppId;
     private final RishService rishService = new RishService() {
 
@@ -112,10 +115,11 @@ public class ShizukuService extends IShizukuService.Stub {
             System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
         }
 
+        assert ai != null;
         managerAppId = ai.uid;
 
-        configManager = ConfigManager.getInstance();
-        clientManager = ClientManager.getInstance();
+        configManager = getConfigManager();
+        clientManager = getClientManager();
 
         ApkChangedObservers.start(ai.sourceDir, () -> {
             if (getManagerApplicationInfo() == null) {
@@ -132,9 +136,34 @@ public class ShizukuService extends IShizukuService.Stub {
         });
     }
 
-    private int checkCallingPermission(String permission) {
+    @Override
+    public ShizukuUserServiceManager onCreateUserServiceManager() {
+        return new ShizukuUserServiceManager(executor);
+    }
+
+    @Override
+    public ShizukuClientManager onCreateClientManager() {
+        return new ShizukuClientManager(getConfigManager());
+    }
+
+    @Override
+    public ShizukuConfigManager onCreateConfigManager() {
+        return new ShizukuConfigManager();
+    }
+
+    @Override
+    public Logger onCreateLogger() {
+        return new Logger("ShizukuService");
+    }
+
+    @Override
+    public boolean checkCallerManagerPermission(String func, int callingUid, int callingPid) {
+        return UserHandleCompat.getAppId(callingUid) == managerAppId;
+    }
+
+    private int checkCallingPermission() {
         try {
-            return SystemService.checkPermission(permission,
+            return SystemService.checkPermission(ServerConstants.PERMISSION,
                     Binder.getCallingPid(),
                     Binder.getCallingUid());
         } catch (Throwable tr) {
@@ -143,51 +172,15 @@ public class ShizukuService extends IShizukuService.Stub {
         }
     }
 
-    private void enforceManager(String func) {
-        int callingUid = Binder.getCallingUid();
-        int callingPid = Binder.getCallingPid();
-
-        if (callingPid == Os.getpid() || UserHandleCompat.getAppId(callingUid) == managerAppId) {
-            return;
+    @Override
+    public boolean checkCallerPermission(String func, int callingUid, int callingPid, @Nullable ClientRecord clientRecord) {
+        if (UserHandleCompat.getAppId(callingUid) == managerAppId) {
+            return true;
         }
-
-        String msg = "Permission Denial: " + func + " from pid="
-                + Binder.getCallingPid()
-                + " is not manager ";
-        LOGGER.w(msg);
-        throw new SecurityException(msg);
-    }
-
-    private void enforceCallingPermission(String func) {
-        int callingUid = Binder.getCallingUid();
-        int callingPid = Binder.getCallingPid();
-
-        if (callingUid == OsUtils.getUid() || UserHandleCompat.getAppId(callingUid) == managerAppId) {
-            return;
+        if (clientRecord == null && checkCallingPermission() == PackageManager.PERMISSION_GRANTED) {
+            return true;
         }
-
-        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
-        if (clientRecord != null && clientRecord.allowed) {
-            return;
-        }
-
-        if (clientRecord == null && checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED)
-            return;
-
-        String msg = "Permission Denial: " + func + " from pid="
-                + callingPid
-                + " requires " + PERMISSION;
-        LOGGER.w(msg);
-        throw new SecurityException(msg);
-    }
-
-    private ClientRecord requireClient(int callingUid, int callingPid) {
-        ClientRecord clientRecord = clientManager.findClient(callingUid, callingPid);
-        if (clientRecord == null) {
-            LOGGER.w("Caller (uid %d, pid %d) is not an attached client", callingUid, callingPid);
-            throw new IllegalStateException("Not an attached client");
-        }
-        return clientRecord;
+        return false;
     }
 
     private void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
@@ -215,27 +208,9 @@ public class ShizukuService extends IShizukuService.Stub {
 
     @Override
     public void exit() {
-        enforceManager("exit");
+        enforceManagerPermission("exit");
         LOGGER.i("exit");
         System.exit(0);
-    }
-
-    @Override
-    public int getVersion() {
-        enforceCallingPermission("getVersion");
-        return ShizukuApiConstants.SERVER_VERSION;
-    }
-
-    @Override
-    public int getUid() {
-        enforceCallingPermission("getUid");
-        return Os.getuid();
-    }
-
-    @Override
-    public int checkPermission(String permission) throws RemoteException {
-        enforceCallingPermission("checkPermission");
-        return SystemService.checkPermission(permission, Os.getuid());
     }
 
     @Override
@@ -255,60 +230,6 @@ public class ShizukuService extends IShizukuService.Stub {
         IBinder token = clientRecord != null ? clientRecord.client.asBinder() : null;
 
         return new RemoteProcessHolder(process, token);
-    }
-
-    @Override
-    public String getSELinuxContext() throws RemoteException {
-        enforceCallingPermission("getSELinuxContext");
-
-        try {
-            return SELinux.getContext();
-        } catch (Throwable tr) {
-            throw new IllegalStateException(tr.getMessage());
-        }
-    }
-
-    @Override
-    public String getSystemProperty(String name, String defaultValue) throws RemoteException {
-        enforceCallingPermission("getSystemProperty");
-
-        try {
-            return SystemProperties.get(name, defaultValue);
-        } catch (Throwable tr) {
-            throw new IllegalStateException(tr.getMessage());
-        }
-    }
-
-    @Override
-    public void setSystemProperty(String name, String value) throws RemoteException {
-        enforceCallingPermission("setSystemProperty");
-
-        try {
-            SystemProperties.set(name, value);
-        } catch (Throwable tr) {
-            throw new IllegalStateException(tr.getMessage());
-        }
-    }
-
-    @Override
-    public int removeUserService(IShizukuServiceConnection conn, Bundle options) {
-        enforceCallingPermission("removeUserService");
-
-        return userServiceManager.removeUserService(conn, options);
-    }
-
-    @Override
-    public int addUserService(IShizukuServiceConnection conn, Bundle options) {
-        enforceCallingPermission("addUserService");
-
-        return userServiceManager.addUserService(conn, options);
-    }
-
-    @Override
-    public void attachUserService(IBinder binder, Bundle options) {
-        enforceManager("attachUserService");
-
-        userServiceManager.attachUserService(binder, options);
     }
 
     @Override
@@ -408,32 +329,7 @@ public class ShizukuService extends IShizukuService.Stub {
         SystemService.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
     }
 
-    @Override
-    public boolean checkSelfPermission() {
-        int callingUid = Binder.getCallingUid();
-        int callingPid = Binder.getCallingPid();
 
-        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
-            return true;
-        }
-
-        return requireClient(callingUid, callingPid).allowed;
-    }
-
-    @Override
-    public boolean shouldShowRequestPermissionRationale() {
-        int callingUid = Binder.getCallingUid();
-        int callingPid = Binder.getCallingPid();
-
-        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
-            return true;
-        }
-
-        requireClient(callingUid, callingPid);
-
-        Config.PackageEntry entry = configManager.find(callingUid);
-        return entry != null && entry.isDenied();
-    }
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
@@ -467,7 +363,7 @@ public class ShizukuService extends IShizukuService.Stub {
         }
 
         if (!onetime) {
-            configManager.update(requestUid, packages, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : Config.FLAG_DENIED);
+            configManager.update(requestUid, packages, ConfigManager.MASK_PERMISSION, allowed ? ConfigManager.FLAG_ALLOWED : ConfigManager.FLAG_DENIED);
         }
 
         if (!onetime && allowed) {
@@ -494,7 +390,7 @@ public class ShizukuService extends IShizukuService.Stub {
             return entry.flags & mask;
         }
 
-        if (allowRuntimePermission && (mask & Config.MASK_PERMISSION) != 0) {
+        if (allowRuntimePermission && (mask & ConfigManager.MASK_PERMISSION) != 0) {
             int userId = UserHandleCompat.getUserId(uid);
             for (String packageName : SystemService.getPackagesForUidNoThrow(uid)) {
                 PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
@@ -504,7 +400,7 @@ public class ShizukuService extends IShizukuService.Stub {
 
                 try {
                     if (SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED) {
-                        return Config.FLAG_ALLOWED;
+                        return ConfigManager.FLAG_ALLOWED;
                     }
                 } catch (Throwable e) {
                     LOGGER.w("getFlagsForUid");
@@ -532,9 +428,9 @@ public class ShizukuService extends IShizukuService.Stub {
 
         int userId = UserHandleCompat.getUserId(uid);
 
-        if ((mask & Config.MASK_PERMISSION) != 0) {
-            boolean allowed = (value & Config.FLAG_ALLOWED) != 0;
-            boolean denied = (value & Config.FLAG_DENIED) != 0;
+        if ((mask & ConfigManager.MASK_PERMISSION) != 0) {
+            boolean allowed = (value & ConfigManager.FLAG_ALLOWED) != 0;
+            boolean denied = (value & ConfigManager.FLAG_DENIED) != 0;
 
             List<ClientRecord> records = clientManager.findClients(uid);
             for (ClientRecord record : records) {
@@ -583,7 +479,7 @@ public class ShizukuService extends IShizukuService.Stub {
                 if (entry != null) {
                     if (entry.packages != null && !entry.packages.contains(pi.packageName))
                         continue;
-                    flags = entry.flags & Config.MASK_PERMISSION;
+                    flags = entry.flags & ConfigManager.MASK_PERMISSION;
                 }
 
                 if (flags != 0) {

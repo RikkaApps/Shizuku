@@ -7,13 +7,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import rikka.shizuku.server.ConfigManager;
+import rikka.shizuku.server.ConfigPackageEntry;
+
 public class Config {
 
     public static final int LATEST_VERSION = 2;
-
-    public static final int FLAG_ALLOWED = 1 << 1;
-    public static final int FLAG_DENIED = 1 << 2;
-    public static final int MASK_PERMISSION = FLAG_ALLOWED | FLAG_DENIED;
 
     @SerializedName("version")
     public int version = LATEST_VERSION;
@@ -21,10 +20,7 @@ public class Config {
     @SerializedName("packages")
     public List<PackageEntry> packages = new ArrayList<>();
 
-    /*@SerializedName("uids")
-    public List<UidEntry> uids = new ArrayList<>();*/
-
-    public static class PackageEntry {
+    public static class PackageEntry extends ConfigPackageEntry {
 
         @SerializedName("uid")
         public final int uid;
@@ -41,27 +37,16 @@ public class Config {
             this.packages = new ArrayList<>();
         }
 
+        @Override
         public boolean isAllowed() {
-            return (flags & FLAG_ALLOWED) != 0;
+            return (flags & ConfigManager.FLAG_ALLOWED) != 0;
         }
 
+        @Override
         public boolean isDenied() {
-            return (flags & FLAG_DENIED) != 0;
+            return (flags & ConfigManager.FLAG_DENIED) != 0;
         }
     }
-
-    /*public static class UidEntry {
-
-        @SerializedName("uid")
-        public final int uid;
-
-
-
-        public UidEntry(int uid, List<String> packages) {
-            this.uid = uid;
-            this.packages = packages;
-        }
-    }*/
 
     public Config() {
     }

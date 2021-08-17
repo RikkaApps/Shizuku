@@ -49,5 +49,9 @@
     public *** d(...);
 }
 
+-assumenosideeffects class rikka.shizuku.server.util.Logger {
+    public *** d(...);
+}
+
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile

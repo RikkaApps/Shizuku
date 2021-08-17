@@ -21,12 +21,13 @@ import java.util.List;
 
 import kotlin.collections.ArraysKt;
 import moe.shizuku.server.ktx.HandlerKt;
-import rikka.shizuku.service.api.SystemService;
+import rikka.shizuku.server.ConfigManager;
+import rikka.shizuku.server.api.SystemService;
 
 import static moe.shizuku.server.ServerConstants.PERMISSION;
 import static moe.shizuku.server.utils.Logger.LOGGER;
 
-public class ConfigManager {
+public class ShizukuConfigManager extends ConfigManager {
 
     private static final Gson GSON_IN = new GsonBuilder()
             .create();
@@ -86,15 +87,6 @@ public class ConfigManager {
         }
     }
 
-    private static ConfigManager instance;
-
-    public static ConfigManager getInstance() {
-        if (instance == null) {
-            instance = new ConfigManager();
-        }
-        return instance;
-    }
-
     private final Runnable mWriteRunner = new Runnable() {
 
         @Override
@@ -105,7 +97,7 @@ public class ConfigManager {
 
     private final Config config;
 
-    private ConfigManager() {
+    public ShizukuConfigManager() {
         this.config = load();
 
         boolean changed = false;
@@ -172,7 +164,7 @@ public class ConfigManager {
                 List<String> packages = new ArrayList<>();
                 packages.add(pi.packageName);
 
-                updateLocked(uid, packages, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : 0);
+                updateLocked(uid, packages, ConfigManager.MASK_PERMISSION, allowed ? ConfigManager.FLAG_ALLOWED : 0);
                 changed = true;
             }
         }

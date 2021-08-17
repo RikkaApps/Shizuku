@@ -15,7 +15,7 @@ import $android.app.ActivityManager;
 import kotlin.collections.ArraysKt;
 import rikka.shizuku.server.api.ProcessObserverAdapter;
 import rikka.shizuku.server.api.UidObserverAdapter;
-import rikka.shizuku.service.api.SystemService;
+import rikka.shizuku.server.api.SystemService;
 
 public class BinderSender {
 
