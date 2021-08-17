@@ -45,10 +45,7 @@
     public *** d(...);
 }
 
--assumenosideeffects class moe.shizuku.server.utils.Logger {
-    public *** d(...);
-}
-
+#noinspection ShrinkerUnresolvedReference
 -assumenosideeffects class rikka.shizuku.server.util.Logger {
     public *** d(...);
 }

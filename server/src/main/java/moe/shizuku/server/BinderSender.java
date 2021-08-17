@@ -1,7 +1,5 @@
 package moe.shizuku.server;
 
-import static moe.shizuku.server.utils.Logger.LOGGER;
-
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -16,8 +14,11 @@ import kotlin.collections.ArraysKt;
 import rikka.shizuku.server.api.ProcessObserverAdapter;
 import rikka.shizuku.server.api.UidObserverAdapter;
 import rikka.shizuku.server.api.SystemService;
+import rikka.shizuku.server.util.Logger;
 
 public class BinderSender {
+
+    private static final Logger LOGGER = new Logger("BinderSender");
 
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";

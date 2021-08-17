@@ -25,7 +25,6 @@ import rikka.shizuku.server.ConfigManager;
 import rikka.shizuku.server.api.SystemService;
 
 import static moe.shizuku.server.ServerConstants.PERMISSION;
-import static moe.shizuku.server.utils.Logger.LOGGER;
 
 public class ShizukuConfigManager extends ConfigManager {
 

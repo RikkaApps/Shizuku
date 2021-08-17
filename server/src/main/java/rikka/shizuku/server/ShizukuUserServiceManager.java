@@ -1,7 +1,5 @@
 package rikka.shizuku.server;
 
-import static moe.shizuku.server.utils.Logger.LOGGER;
-
 import android.util.ArrayMap;
 
 import java.io.File;

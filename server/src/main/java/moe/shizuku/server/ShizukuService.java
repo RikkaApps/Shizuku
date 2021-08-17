@@ -2,7 +2,6 @@ package moe.shizuku.server;
 
 import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static moe.shizuku.server.ServerConstants.PERMISSION;
-import static moe.shizuku.server.utils.Logger.LOGGER;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_PATCH_VERSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
@@ -136,11 +135,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     @Override
     public ShizukuConfigManager onCreateConfigManager() {
         return new ShizukuConfigManager();
-    }
-
-    @Override
-    public Logger onCreateLogger() {
-        return new Logger("ShizukuService");
     }
 
     @Override

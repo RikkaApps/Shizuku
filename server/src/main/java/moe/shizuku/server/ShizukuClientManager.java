@@ -12,8 +12,6 @@ import moe.shizuku.server.config.ShizukuConfigManager;
 import rikka.shizuku.server.ClientManager;
 import rikka.shizuku.server.ClientRecord;
 
-import static moe.shizuku.server.utils.Logger.LOGGER;
-
 public class ShizukuClientManager extends ClientManager<ShizukuConfigManager> {
 
     public ShizukuClientManager(ShizukuConfigManager configManager) {
