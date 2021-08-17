@@ -29,6 +29,7 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -225,28 +226,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public void requestPermission(int requestCode) {
-        int callingUid = Binder.getCallingUid();
-        int callingPid = Binder.getCallingPid();
-        int userId = UserHandleCompat.getUserId(callingUid);
-
-        if (callingUid == OsUtils.getUid() || callingPid == OsUtils.getPid()) {
-            return;
-        }
-
-        ClientRecord clientRecord = clientManager.requireClient(callingUid, callingPid);
-
-        if (clientRecord.allowed) {
-            clientRecord.dispatchRequestPermissionResult(requestCode, true);
-            return;
-        }
-
-        Config.PackageEntry entry = configManager.find(callingUid);
-        if (entry != null && entry.isDenied()) {
-            clientRecord.dispatchRequestPermissionResult(requestCode, false);
-            return;
-        }
-
+    public void showPermissionConfirmation(int requestCode, @NonNull ClientRecord clientRecord, int callingUid, int callingPid, int userId) {
         ApplicationInfo ai = SystemService.getApplicationInfoNoThrow(clientRecord.packageName, 0, userId);
         if (ai == null) {
             return;
@@ -272,7 +252,6 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 .putExtra("applicationInfo", ai);
         SystemService.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
     }
-
 
     @Override
     public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
