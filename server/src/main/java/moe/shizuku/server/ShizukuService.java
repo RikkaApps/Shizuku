@@ -34,8 +34,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
@@ -84,12 +82,13 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     @SuppressWarnings({"FieldCanBeLocal"})
     private final Handler mainHandler = new Handler(Looper.myLooper());
     //private final Context systemContext = HiddenApiBridge.getSystemContext();
-    private final Executor executor = Executors.newSingleThreadExecutor();
     private final ShizukuClientManager clientManager;
     private final ShizukuConfigManager configManager;
     private final int managerAppId;
 
     public ShizukuService() {
+        super();
+
         LOGGER.i("starting server...");
 
         waitSystemService("package");
@@ -125,7 +124,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
     @Override
     public ShizukuUserServiceManager onCreateUserServiceManager() {
-        return new ShizukuUserServiceManager(executor);
+        return new ShizukuUserServiceManager();
     }
 
     @Override
@@ -235,7 +234,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             return;
         }
 
-        ClientRecord clientRecord = requireClient(callingUid, callingPid);
+        ClientRecord clientRecord = clientManager.requireClient(callingUid, callingPid);
 
         if (clientRecord.allowed) {
             clientRecord.dispatchRequestPermissionResult(requestCode, true);
