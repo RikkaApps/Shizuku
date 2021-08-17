@@ -5,9 +5,6 @@ import android.util.ArrayMap;
 import java.io.File;
 import java.util.Map;
 
-import moe.shizuku.server.ApkChangedObserver;
-import moe.shizuku.server.ApkChangedObservers;
-import moe.shizuku.server.ShizukuService;
 import moe.shizuku.starter.ServiceStarter;
 
 public class ShizukuUserServiceManager extends UserServiceManager {

@@ -1,4 +1,4 @@
-package moe.shizuku.server.config;
+package rikka.shizuku.server;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -20,18 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.collections.ArraysKt;
-import moe.shizuku.server.ktx.HandlerKt;
-import rikka.shizuku.server.ConfigManager;
+import rikka.shizuku.server.ktx.HandlerKt;
 import rikka.shizuku.server.api.SystemService;
 
-import static moe.shizuku.server.ServerConstants.PERMISSION;
+import static rikka.shizuku.server.ServerConstants.PERMISSION;
 
 public class ShizukuConfigManager extends ConfigManager {
 
     private static final Gson GSON_IN = new GsonBuilder()
             .create();
     private static final Gson GSON_OUT = new GsonBuilder()
-            .setVersion(Config.LATEST_VERSION)
+            .setVersion(ShizukuConfig.LATEST_VERSION)
             .create();
 
     private static final long WRITE_DELAY = 10 * 1000;
@@ -39,18 +38,18 @@ public class ShizukuConfigManager extends ConfigManager {
     private static final File FILE = new File("/data/local/tmp/shizuku/shizuku.json");
     private static final AtomicFile ATOMIC_FILE = new AtomicFile(FILE);
 
-    public static Config load() {
+    public static ShizukuConfig load() {
         FileInputStream stream;
         try {
             stream = ATOMIC_FILE.openRead();
         } catch (FileNotFoundException e) {
             LOGGER.i("no existing config file " + ATOMIC_FILE.getBaseFile() + "; starting empty");
-            return new Config();
+            return new ShizukuConfig();
         }
 
-        Config config = null;
+        ShizukuConfig config = null;
         try {
-            config = GSON_IN.fromJson(new InputStreamReader(stream), Config.class);
+            config = GSON_IN.fromJson(new InputStreamReader(stream), ShizukuConfig.class);
         } catch (Throwable tr) {
             LOGGER.w(tr, "load config");
         } finally {
@@ -63,7 +62,7 @@ public class ShizukuConfigManager extends ConfigManager {
         return config;
     }
 
-    public static void write(Config config) {
+    public static void write(ShizukuConfig config) {
         synchronized (ATOMIC_FILE) {
             FileOutputStream stream;
             try {
@@ -94,7 +93,7 @@ public class ShizukuConfigManager extends ConfigManager {
         }
     };
 
-    private final Config config;
+    private final ShizukuConfig config;
 
     public ShizukuConfigManager() {
         this.config = load();
@@ -107,13 +106,13 @@ public class ShizukuConfigManager extends ConfigManager {
         }
 
         if (config.version < 2) {
-            for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
+            for (ShizukuConfig.PackageEntry entry : new ArrayList<>(config.packages)) {
                 entry.packages = SystemService.getPackagesForUidNoThrow(entry.uid);
             }
             changed = true;
         }
 
-        for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
+        for (ShizukuConfig.PackageEntry entry : new ArrayList<>(config.packages)) {
             if (entry.packages == null) {
                 entry.packages = new ArrayList<>();
             }
@@ -184,8 +183,8 @@ public class ShizukuConfigManager extends ConfigManager {
         HandlerKt.getWorkerHandler().postDelayed(mWriteRunner, WRITE_DELAY);
     }
 
-    private Config.PackageEntry findLocked(int uid) {
-        for (Config.PackageEntry entry : config.packages) {
+    private ShizukuConfig.PackageEntry findLocked(int uid) {
+        for (ShizukuConfig.PackageEntry entry : config.packages) {
             if (uid == entry.uid) {
                 return entry;
             }
@@ -194,16 +193,16 @@ public class ShizukuConfigManager extends ConfigManager {
     }
 
     @Nullable
-    public Config.PackageEntry find(int uid) {
+    public ShizukuConfig.PackageEntry find(int uid) {
         synchronized (this) {
             return findLocked(uid);
         }
     }
 
     private void updateLocked(int uid, List<String> packages, int mask, int values) {
-        Config.PackageEntry entry = findLocked(uid);
+        ShizukuConfig.PackageEntry entry = findLocked(uid);
         if (entry == null) {
-            entry = new Config.PackageEntry(uid, mask & values);
+            entry = new ShizukuConfig.PackageEntry(uid, mask & values);
             config.packages.add(entry);
         } else {
             int newValue = (entry.flags & ~mask) | (mask & values);
@@ -225,7 +224,7 @@ public class ShizukuConfigManager extends ConfigManager {
     }
 
     private void removeLocked(int uid) {
-        Config.PackageEntry entry = findLocked(uid);
+        ShizukuConfig.PackageEntry entry = findLocked(uid);
         if (entry == null) {
             return;
         }

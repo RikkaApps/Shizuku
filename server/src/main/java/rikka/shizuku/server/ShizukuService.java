@@ -1,7 +1,7 @@
-package moe.shizuku.server;
+package rikka.shizuku.server;
 
-import static moe.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
-import static moe.shizuku.server.ServerConstants.PERMISSION;
+import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
+import static rikka.shizuku.server.ServerConstants.PERMISSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_PATCH_VERSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
@@ -39,18 +39,12 @@ import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
-import moe.shizuku.server.config.Config;
-import moe.shizuku.server.config.ShizukuConfigManager;
+import moe.shizuku.server.IShizukuApplication;
 import rikka.parcelablelist.ParcelableListSlice;
 import rikka.rish.RishConfig;
 import rikka.shizuku.ShizukuApiConstants;
-import rikka.shizuku.server.ClientRecord;
-import rikka.shizuku.server.ConfigManager;
-import rikka.shizuku.server.Service;
-import rikka.shizuku.server.ShizukuUserServiceManager;
 import rikka.shizuku.server.api.IContentProviderUtils;
 import rikka.shizuku.server.api.SystemService;
-import rikka.shizuku.server.util.Logger;
 import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
@@ -301,7 +295,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     private int getFlagsForUidInternal(int uid, int mask, boolean allowRuntimePermission) {
-        Config.PackageEntry entry = configManager.find(uid);
+        ShizukuConfig.PackageEntry entry = configManager.find(uid);
         if (entry != null) {
             return entry.flags & mask;
         }
@@ -391,7 +385,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
                 int uid = pi.applicationInfo.uid;
                 int flags = 0;
-                Config.PackageEntry entry = configManager.find(uid);
+                ShizukuConfig.PackageEntry entry = configManager.find(uid);
                 if (entry != null) {
                     if (entry.packages != null && !entry.packages.contains(pi.packageName))
                         continue;

@@ -1,4 +1,4 @@
-package moe.shizuku.server.ktx
+package rikka.shizuku.server.ktx
 
 import android.os.Handler
 import android.os.HandlerThread

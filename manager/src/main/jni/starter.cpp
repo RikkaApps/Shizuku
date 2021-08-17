@@ -32,7 +32,7 @@
 
 #define PACKAGE_NAME "moe.shizuku.privileged.api"
 #define SERVER_NAME "shizuku_server"
-#define SERVER_CLASS_PATH "moe.shizuku.server.ShizukuService"
+#define SERVER_CLASS_PATH "rikka.shizuku.server.ShizukuService"
 
 #if defined(__arm__)
 #define ABI "armeabi-v7a"

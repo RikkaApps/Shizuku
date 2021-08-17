@@ -1,4 +1,4 @@
-package moe.shizuku.server.config;
+package rikka.shizuku.server;
 
 import androidx.annotation.NonNull;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import rikka.shizuku.server.ConfigManager;
 import rikka.shizuku.server.ConfigPackageEntry;
 
-public class Config {
+public class ShizukuConfig {
 
     public static final int LATEST_VERSION = 2;
 
@@ -48,10 +48,10 @@ public class Config {
         }
     }
 
-    public Config() {
+    public ShizukuConfig() {
     }
 
-    public Config(@NonNull List<PackageEntry> packages) {
+    public ShizukuConfig(@NonNull List<PackageEntry> packages) {
         this.version = LATEST_VERSION;
         this.packages = packages;
     }

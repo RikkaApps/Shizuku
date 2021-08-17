@@ -1,4 +1,4 @@
-package moe.shizuku.server;
+package rikka.shizuku.server;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

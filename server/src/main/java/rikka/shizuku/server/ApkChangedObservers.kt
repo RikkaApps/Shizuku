@@ -1,4 +1,4 @@
-package moe.shizuku.server
+package rikka.shizuku.server
 
 import android.os.FileObserver
 import android.util.Log

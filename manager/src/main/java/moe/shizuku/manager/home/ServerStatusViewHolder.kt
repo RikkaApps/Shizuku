@@ -9,7 +9,7 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.widget.MaterialCircleIconView
-import moe.shizuku.server.ServerConstants
+import rikka.shizuku.server.ServerConstants
 import rikka.html.text.HtmlCompat
 import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder

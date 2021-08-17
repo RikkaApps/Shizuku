@@ -1,4 +1,4 @@
-package moe.shizuku.server;
+package rikka.shizuku.server;
 
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import moe.shizuku.server.config.Config;
-import moe.shizuku.server.config.ShizukuConfigManager;
-import rikka.shizuku.server.ClientManager;
-import rikka.shizuku.server.ClientRecord;
+import moe.shizuku.server.IShizukuApplication;
 
 public class ShizukuClientManager extends ClientManager<ShizukuConfigManager> {
 
@@ -44,7 +41,7 @@ public class ShizukuClientManager extends ClientManager<ShizukuConfigManager> {
     public ClientRecord addClient(int uid, int pid, IShizukuApplication client, String packageName) {
         ClientRecord clientRecord = new ClientRecord(uid, pid, client, packageName);
 
-        Config.PackageEntry entry = getConfigManager().find(uid);
+        ShizukuConfig.PackageEntry entry = getConfigManager().find(uid);
         if (entry != null && entry.isAllowed()) {
             clientRecord.allowed = true;
         }

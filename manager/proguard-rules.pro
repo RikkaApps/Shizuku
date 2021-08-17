@@ -23,7 +23,7 @@
 }
 
 # Entrance of Shizuku service
--keep class moe.shizuku.server.ShizukuService {
+-keep class rikka.shizuku.server.ShizukuService {
     public static void main(java.lang.String[]);
 }
 
