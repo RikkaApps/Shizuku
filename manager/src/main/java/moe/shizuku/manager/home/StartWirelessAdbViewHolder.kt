@@ -19,6 +19,7 @@ import rikka.core.util.BuildUtils
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
+import java.net.Inet4Address
 import java.net.InetAddress
 
 class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseViewHolder<Any?>(binding.root) {
@@ -52,7 +53,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
         var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
         if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
         if (port > 0) {
-            val host = InetAddress.getLoopbackAddress().hostName
+            val host = Inet4Address.getLoopbackAddress().hostName
             val intent = Intent(context, StarterActivity::class.java).apply {
                 putExtra(StarterActivity.EXTRA_IS_ROOT, false)
                 putExtra(StarterActivity.EXTRA_HOST, host)
