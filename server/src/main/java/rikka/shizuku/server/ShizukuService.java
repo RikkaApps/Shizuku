@@ -166,6 +166,13 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
+    public void attachUserService(IBinder binder, Bundle options) {
+        enforceManagerPermission("func");
+
+        super.attachUserService(binder, options);
+    }
+
+    @Override
     public void attachApplication(IShizukuApplication application, String requestPackageName) {
         if (application == null || requestPackageName == null) {
             return;
