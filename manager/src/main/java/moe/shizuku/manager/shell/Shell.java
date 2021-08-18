@@ -48,7 +48,7 @@ public class Shell extends Rish {
                 System.err.flush();
                 System.exit(1);
             }
-            new Shell().main(args);
+            new Shell().start(args);
         });
     }
 }
