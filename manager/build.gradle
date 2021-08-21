@@ -90,16 +90,10 @@ def optimizeReleaseResources = task('optimizeReleaseResources').doLast {
     }
 }
 
-tasks.whenTaskAdded { task ->
-    if (task.name == 'processReleaseResources') {
-        task.finalizedBy optimizeReleaseResources
-    }
-
-    if (task.name == 'preReleaseBuild') {
-        task.dependsOn(':shell:assembleRelease')
-    } else if (task.name == 'preDebugBuild') {
-        task.dependsOn(':shell:assembleDebug')
-    }
+afterEvaluate {
+    tasks.getByName('processReleaseResources').finalizedBy(optimizeReleaseResources)
+    tasks.getByName('preReleaseBuild').dependsOn(':shell:assembleRelease')
+    tasks.getByName('preDebugBuild').dependsOn(':shell:assembleDebug')
 }
 
 android.applicationVariants.all { variant ->
