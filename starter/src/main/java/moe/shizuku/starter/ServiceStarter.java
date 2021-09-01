@@ -2,6 +2,7 @@ package moe.shizuku.starter;
 
 import android.app.ActivityThread;
 import android.content.Context;
+import android.content.ContextHidden;
 import android.content.IContentProvider;
 import android.ddm.DdmHandleAppName;
 import android.os.Build;
@@ -9,15 +10,16 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.UserHandle;
+import android.os.UserHandleHidden;
 import android.util.Log;
 
 import java.util.Locale;
 
+import dev.rikka.tools.refine.Refine;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.starter.ktx.IContentProviderKt;
 import rikka.shizuku.ShizukuApiConstants;
 import rikka.shizuku.server.api.SystemService;
-import rikka.shizuku.server.util.Unsafe;
 
 public class ServiceStarter {
 
@@ -98,9 +100,8 @@ public class ServiceStarter {
         DdmHandleAppName.setAppName(name != null ? name : "shizuku_user_service", 0);
 
         try {
-            UserHandle userHandle = Unsafe.<UserHandle>unsafeCast($android.os.UserHandle.of(userId));
-            Context context = Unsafe.<Context>unsafeCast(
-                    Unsafe.<$android.content.Context>unsafeCast(systemContext).createPackageContextAsUser(pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle));
+            UserHandle userHandle = Refine.unsafeCast(UserHandleHidden.of(userId));
+            Context context = Refine.<ContextHidden>unsafeCast(systemContext).createPackageContextAsUser(pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
             ClassLoader classLoader = context.getClassLoader();
             Class<?> serviceClass = classLoader.loadClass(cls);
             service = (IBinder) serviceClass.newInstance();

@@ -7,21 +7,23 @@ idea.module {
 buildscript {
     apply from: 'api/manifest.gradle'
 
-    ext.kotlinVersion = '1.5.21'
+    ext.kotlinVersion = '1.5.30'
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1'
-        classpath 'dev.rikka.tools:hidden-api-refine:1.1.0'
+        classpath 'dev.rikka.tools.refine:gradle-plugin:2.0.0'
     }
 }
 
 allprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
     }

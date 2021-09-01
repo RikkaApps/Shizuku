@@ -24,4 +24,5 @@ dependencies {
     implementation project(':server-shared')
     compileOnly project(':provider')
     compileOnly project(':hidden-api-stub')
+    implementation("dev.rikka.tools.refine:runtime:2.0.0")
 }

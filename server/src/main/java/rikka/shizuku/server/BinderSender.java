@@ -1,5 +1,6 @@
 package rikka.shizuku.server;
 
+import android.app.ActivityManagerHidden;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,11 +10,10 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import $android.app.ActivityManager;
 import kotlin.collections.ArraysKt;
 import rikka.shizuku.server.api.ProcessObserverAdapter;
-import rikka.shizuku.server.api.UidObserverAdapter;
 import rikka.shizuku.server.api.SystemService;
+import rikka.shizuku.server.api.UidObserverAdapter;
 import rikka.shizuku.server.util.Logger;
 
 public class BinderSender {
@@ -121,8 +121,8 @@ public class BinderSender {
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 SystemService.registerUidObserver(new UidObserver(),
-                        ActivityManager.UID_OBSERVER_ACTIVE,
-                        ActivityManager.PROCESS_STATE_UNKNOWN,
+                        ActivityManagerHidden.UID_OBSERVER_ACTIVE,
+                        ActivityManagerHidden.PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {
                 LOGGER.e(tr, "registerUidObserver");
