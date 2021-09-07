@@ -2,12 +2,11 @@ package moe.shizuku.manager.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
+import android.content.pm.*
 import android.os.Build
+import android.os.IUserManager
 import android.os.RemoteException
-import hidden.HiddenApiBridge
-import hidden.UserInfoCompat
+import android.permission.IPermissionManager
 import rikka.core.ktx.unsafeLazy
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
@@ -17,18 +16,16 @@ import java.util.*
 object ShizukuSystemApis {
 
     private val packageManager by unsafeLazy {
-        // If manager depends on hideen-api-common, kotlin & R8 use classes from it. Use HiddenApiBridge to avoid this problem.
-        HiddenApiBridge.IPackageManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")))
+        IPackageManager.Stub.asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package")))
     }
 
     @delegate:SuppressLint("NewApi")
     private val permissionManager by unsafeLazy {
-        // If manager depends on hideen-api-common, kotlin & R8 use classes from it. Use HiddenApiBridge to avoid this problem.
-        HiddenApiBridge.IPermissionManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
+       IPermissionManager.Stub.asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
     }
 
     private val userManager by unsafeLazy {
-        HiddenApiBridge.IUserManager_Stub_asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService(Context.USER_SERVICE)))
+        IUserManager.Stub.asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService(Context.USER_SERVICE)))
     }
 
     private val users = arrayListOf<UserInfoCompat>()
@@ -37,7 +34,16 @@ object ShizukuSystemApis {
         return if (!Shizuku.pingBinder()) {
             arrayListOf(UserInfoCompat(UserHandleCompat.myUserId(), "Owner"))
         } else try {
-            HiddenApiBridge.IUserManager_getUsers(userManager)
+            val list = try {
+                userManager.getUsers(true, true, true)
+            } catch (e: NoSuchMethodError) {
+                userManager.getUsers(true)
+            }
+            val users: MutableList<UserInfoCompat> = ArrayList<UserInfoCompat>()
+            for (ui in list) {
+                users.add(UserInfoCompat(ui.id, ui.name))
+            }
+            return users
         } catch (tr: Throwable) {
             arrayListOf(UserInfoCompat(UserHandleCompat.myUserId(), "Owner"))
         }
@@ -61,7 +67,10 @@ object ShizukuSystemApis {
         return if (!Shizuku.pingBinder()) {
             ArrayList()
         } else try {
-            HiddenApiBridge.IPackageManager_getInstalledPackages(packageManager, flags, userId)
+            val listSlice: ParceledListSlice<PackageInfo>? = packageManager.getInstalledPackages(flags, userId) as ParceledListSlice<PackageInfo>?
+            return if (listSlice != null) {
+                listSlice.list
+            } else ArrayList()
         } catch (tr: RemoteException) {
             throw RuntimeException(tr.message, tr)
         }
@@ -72,11 +81,11 @@ object ShizukuSystemApis {
             PackageManager.PERMISSION_DENIED
         } else try {
             if (Build.VERSION.SDK_INT >= 31 || Build.VERSION.SDK_INT == 30 && Build.VERSION.PREVIEW_SDK_INT > 0) {
-                HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
+                packageManager.checkPermission(permName, pkgName, userId)
             } else if (Build.VERSION.SDK_INT >= 30) {
-                HiddenApiBridge.IPermissionManager_checkPermission(permissionManager, permName, pkgName, userId)
+                permissionManager.checkPermission(permName, pkgName, userId)
             } else {
-                HiddenApiBridge.IPackageManager_checkPermission(packageManager, permName, pkgName, userId)
+                packageManager.checkPermission(permName, pkgName, userId)
             }
         } catch (tr: RemoteException) {
             throw RuntimeException(tr.message, tr)
@@ -89,9 +98,9 @@ object ShizukuSystemApis {
         }
         try {
             if (Build.VERSION.SDK_INT >= 30) {
-                HiddenApiBridge.IPermissionManager_grantRuntimePermission(permissionManager, packageName, permissionName, userId)
+                permissionManager.grantRuntimePermission(packageName, permissionName, userId)
             } else {
-                HiddenApiBridge.IPackageManager_grantRuntimePermission(packageManager, packageName, permissionName, userId)
+                packageManager.grantRuntimePermission( packageName, permissionName, userId)
             }
         } catch (tr: RemoteException) {
             throw RuntimeException(tr.message, tr)
@@ -104,9 +113,9 @@ object ShizukuSystemApis {
         }
         try {
             if (Build.VERSION.SDK_INT >= 30) {
-                HiddenApiBridge.IPermissionManager_revokeRuntimePermission(permissionManager, packageName, permissionName, userId, null)
+                permissionManager.revokeRuntimePermission(packageName, permissionName, userId, null)
             } else {
-                HiddenApiBridge.IPackageManager_revokeRuntimePermission(packageManager, packageName, permissionName, userId)
+                packageManager.revokeRuntimePermission(packageName, permissionName, userId)
             }
         } catch (tr: RemoteException) {
             throw RuntimeException(tr.message, tr)

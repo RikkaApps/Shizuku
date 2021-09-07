@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemProperties
 import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.annotation.RequiresApi
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
-import hidden.HiddenApiBridge
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbMdns
 import moe.shizuku.manager.databinding.AdbDialogBinding
@@ -32,8 +32,8 @@ class AdbDialogFragment : DialogFragment() {
         binding = AdbDialogBinding.inflate(LayoutInflater.from(context))
         adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT, port)
 
-        var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
-        if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
+        var port = SystemProperties.getInt("service.adb.tcp.port", -1)
+        if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
 
         val builder = AlertDialog.Builder(context).apply {
             setTitle(R.string.dialog_adb_discovery)
@@ -69,8 +69,8 @@ class AdbDialogFragment : DialogFragment() {
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
-            var port = HiddenApiBridge.SystemProperties_getInt("service.adb.tcp.port", -1)
-            if (port == -1) port = HiddenApiBridge.SystemProperties_getInt("persist.adb.tcp.port", -1)
+            var port = SystemProperties.getInt("service.adb.tcp.port", -1)
+            if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
             startAndDismiss(port)
         }
 

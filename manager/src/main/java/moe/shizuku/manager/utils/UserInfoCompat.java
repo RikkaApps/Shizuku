@@ -1,4 +1,4 @@
-package hidden;
+package moe.shizuku.manager.utils;
 
 public class UserInfoCompat {
 

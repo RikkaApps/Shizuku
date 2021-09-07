@@ -1,4 +1,3 @@
-include ':hidden-api-common', ':hidden-api-common-bridge'
 include ':server', ':starter', ':shell'
 include ':manager'
 include ':common'

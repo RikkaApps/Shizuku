@@ -3,7 +3,7 @@ package moe.shizuku.manager.adb
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import hidden.HiddenApiBridge.Conscrypt_exportKeyingMaterial
+import com.android.org.conscrypt.Conscrypt
 import java.io.Closeable
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -213,7 +213,7 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
         outputStream = DataOutputStream(sslSocket.outputStream)
 
         val pairCodeBytes = pairCode.toByteArray()
-        val keyMaterial = Conscrypt_exportKeyingMaterial(sslSocket, kExportedKeyLabel, null, kExportedKeySize)
+        val keyMaterial = Conscrypt.exportKeyingMaterial(sslSocket, kExportedKeyLabel, null, kExportedKeySize)
         val passwordBytes = ByteArray(pairCode.length + keyMaterial.size)
         pairCodeBytes.copyInto(passwordBytes)
         keyMaterial.copyInto(passwordBytes, pairCodeBytes.size)
