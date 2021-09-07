@@ -41,6 +41,7 @@ import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
 import moe.shizuku.server.IShizukuApplication;
 import rikka.parcelablelist.ParcelableListSlice;
+import rikka.rish.RishConfig;
 import rikka.shizuku.ShizukuApiConstants;
 import rikka.shizuku.server.api.IContentProviderUtils;
 import rikka.shizuku.server.api.SystemService;
@@ -50,6 +51,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
     public static void main(String[] args) {
         DdmHandleAppName.setAppName("shizuku_server", 0);
+        RishConfig.setLibraryPath(System.getProperty("shizuku.library.path"));
 
         Looper.prepare();
         new ShizukuService();

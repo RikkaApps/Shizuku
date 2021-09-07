@@ -57,14 +57,6 @@ public class ServiceStarter {
                 token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
     }
 
-    private static final String SHIZUKU_CMD_FORMAT = "CLASSPATH=%s /system/bin/app_process%s -Djava.library.path=%s /system/bin " +
-            "--nice-name=shizuku_server moe.shizuku.starter.ServiceStarter";
-
-    public static String commandForShizuku(String managerApkPath, boolean debug) {
-        return String.format(Locale.ENGLISH, SHIZUKU_CMD_FORMAT,
-                managerApkPath, debug ? (" " + ServiceStarter.DEBUG_ARGS) : "", managerApkPath);
-    }
-
     public static void main(String[] args) {
         String name = null;
         String token = null;
