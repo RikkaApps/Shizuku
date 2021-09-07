@@ -25,7 +25,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1'
-        classpath 'dev.rikka.tools.refine:gradle-plugin:3.0.2'
+        classpath 'dev.rikka.tools.refine:gradle-plugin:3.0.3'
     }
 }
 
