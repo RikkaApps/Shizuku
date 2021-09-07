@@ -38,7 +38,7 @@ allprojects {
         maven {
             url("https://s01.oss.sonatype.org/content/repositories/releases/")
             content {
-                includeGroupByRegex("dev\\.rikka\\.*")
+                includeGroupByRegex("dev.rikka.*")
             }
         }
         mavenLocal()
