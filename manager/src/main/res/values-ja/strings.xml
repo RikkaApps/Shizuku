@@ -38,11 +38,11 @@
     <string name="home_root_title">開始(Root化された端末の場合のみ)</string>
     <string name="adb_pairing_requires_multi_window_reason">システムではペアリングダイアログが常に表示されている必要があり、このアプリとシステムダイアログを同時に表示させるには、分割画面を使用するしかありません。</string>
     <string name="adb_error_key_store">ワイヤレスデバッグ用のキーを生成できません。
-\nこれは、お使いのデバイスのKeyStoreの仕組みが壊れているためと思われます。</string>
+\nこれは、お使いのデバイスのキーストアの仕組みが壊れているためと思われます。</string>
     <string name="adb_pairing_requires_multi_window">最初に分割画面（マルチウィンドウ）モードに入ってください。</string>
     <string name="dialog_wireless_adb_not_enabled">ワイヤレスデバッグが有効になっていません。
-\nなお、Android 11以前のバージョンでは、ワイヤレスデバッグを有効にするためには、コンピューターの接続が必要です。</string>
-    <string name="dialog_adb_pairing_message">以下の手順でペアリングを開始してください。開発者向け「オプション」＞「ワイヤレスデバッグ」＞「ペア設定コードによるデバイスのペアの設定」を選択します。
+\nなお、Android 11以前のバージョンでは、ワイヤレスデバッグを有効化するためには、コンピューターの接続が必要です。</string>
+    <string name="dialog_adb_pairing_message">以下の手順でペアリングを開始してください。「開発者向けオプション」＞「ワイヤレスデバッグ」＞「ペア設定コードによるデバイスのペアの設定」を選択します。
 \n
 \nペアリング処理が開始されると、ペアリングコードの入力が可能になります。</string>
     <string name="dialog_adb_pairing_discovery">ペアリングサービスの検索</string>
