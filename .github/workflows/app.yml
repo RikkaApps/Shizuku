@@ -3,7 +3,8 @@ name: App
 on:
   push:
     branches: [ master ]
-  pull_request:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE'
 
 jobs:
   build:
