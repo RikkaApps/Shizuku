@@ -16,6 +16,8 @@ Please report bugs of Shizuku itself.
 - [ ] Shizuku is not running in a virtual environment
 - [ ] (Root users) No Xposed installed / Xposed is not enabled for Shizuku
 
+Change "[ ]" to "[x]" if it meets the requirements.
+
 **Reports not meet the requirements will be immediately closed**.
 
 **Information:**
