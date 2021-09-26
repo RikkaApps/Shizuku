@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_adb_button_view_command">הצג פקודה</string>
+    <string name="home_adb_button_view_help">קראו את דפי העזרה</string>
+    <string name="home_adb_description">עבור מכשירים ללא גישת שורש, עליך להשתמש ב-adb כדי להתחיל את Shizuku (נדרש חיבור למחשב). \u0020עליך לחזור על תהליך זה בכל פעם שמכשירך יופעל מחדש. בבקשה <b> <a href="%1$s">קראו את דפי העזרה</a></b>.</string>
+    <string name="home_adb_title">התחל באמצעות חיבור למחשב</string>
+    <string name="home_status_service_version_update">גירסה %2$s, %1$s&lt;br&gt;התחל מחדש כדי לעדכן לגירסה %3$s</string>
+    <string name="home_status_service_version">גירסה %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s לא פועל</string>
+    <string name="home_status_service_is_running">%1$s פועל</string>
+</resources>
