@@ -1,5 +1,7 @@
 package rikka.shizuku.server;
 
+import static rikka.shizuku.server.ServerConstants.PERMISSION;
+
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -17,13 +19,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import kotlin.collections.ArraysKt;
-import rikka.shizuku.server.ktx.HandlerKt;
 import rikka.shizuku.server.api.SystemService;
-
-import static rikka.shizuku.server.ServerConstants.PERMISSION;
+import rikka.shizuku.server.ktx.HandlerKt;
 
 public class ShizukuConfigManager extends ConfigManager {
 
@@ -134,6 +136,15 @@ public class ShizukuConfigManager extends ConfigManager {
                 }
             }
 
+            final int rawSize = entry.packages.size();
+            Set<String> s = new LinkedHashSet<>(entry.packages);
+            entry.packages.clear();
+            entry.packages.addAll(s);
+            final int shrunkSize = entry.packages.size();
+            if (shrunkSize < rawSize) {
+                LOGGER.w("entry.packages has duplicate! Shrunk. (%d -> %d)", rawSize, shrunkSize);
+            }
+
             if (packagesChanged) {
                 LOGGER.i("remove config for uid %d since the packages for it changed", entry.uid);
                 config.packages.remove(entry);
@@ -211,7 +222,7 @@ public class ShizukuConfigManager extends ConfigManager {
             }
             entry.flags = newValue;
         }
-        if (packages != null) {
+        if (packages != null && !entry.packages.containsAll(packages)) {
             entry.packages.addAll(packages);
         }
         scheduleWriteLocked();
