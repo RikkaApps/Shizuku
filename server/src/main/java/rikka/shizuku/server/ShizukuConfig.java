@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import rikka.shizuku.server.ConfigManager;
-import rikka.shizuku.server.ConfigPackageEntry;
-
 public class ShizukuConfig {
 
     public static final int LATEST_VERSION = 2;

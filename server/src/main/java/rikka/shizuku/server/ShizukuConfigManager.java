@@ -222,8 +222,13 @@ public class ShizukuConfigManager extends ConfigManager {
             }
             entry.flags = newValue;
         }
-        if (packages != null && !entry.packages.containsAll(packages)) {
-            entry.packages.addAll(packages);
+        if (packages != null) {
+            for (String packageName : packages) {
+                if (entry.packages.contains(packageName)) {
+                    continue;
+                }
+                entry.packages.add(packageName);
+            }
         }
         scheduleWriteLocked();
     }
