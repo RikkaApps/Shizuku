@@ -1,7 +1,5 @@
 package rikka.shizuku.server;
 
-import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
-import static rikka.shizuku.server.ServerConstants.PERMISSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_PATCH_VERSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
@@ -10,6 +8,8 @@ import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
 import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
 import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
+import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
+import static rikka.shizuku.server.ServerConstants.PERMISSION;
 
 import android.content.Context;
 import android.content.IContentProvider;
@@ -86,7 +86,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         LOGGER.i("starting server...");
 
         waitSystemService("package");
-        waitSystemService("activity");
+        waitSystemService(Context.ACTIVITY_SERVICE);
         waitSystemService(Context.USER_SERVICE);
         waitSystemService(Context.APP_OPS_SERVICE);
 
