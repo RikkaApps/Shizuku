@@ -58,7 +58,7 @@ def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], pr
 def baseVersionName = "${api_version_major}.3.1"
 ext {
     minSdkVersion = 23
-    targetSdkVersion = 30
+    targetSdkVersion = 31
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 }
