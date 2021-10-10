@@ -119,10 +119,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
-        if (ResourceUtils.isNightMode(context.resources.configuration)) {
+        if (ShizukuSettings.getNightMode() != DayNightDelegate.MODE_NIGHT_NO) {
             blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
             blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-                activity?.recreate()
+                if (ResourceUtils.isNightMode(context.resources.configuration)) {
+                    activity?.recreate()
+                }
                 true
             }
         } else {
