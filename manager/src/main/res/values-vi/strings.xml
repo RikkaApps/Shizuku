@@ -1,2 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_status_service_is_running">%1$s đang chạy</string>
+    <string name="home_status_service_not_running">%1$s đang không chạy</string>
+    <string name="home_status_service_version">Phiên bản %2$s, %1$s</string>
+    <string name="home_adb_title">Bắt đầu bằng cách kết nối với máy tính</string>
+    <string name="home_adb_button_view_help">Đọc trợ giúp</string>
+    <string name="home_adb_button_view_command">Xem lệnh</string>
+    <string name="home_adb_dialog_view_command_copy_button">Sao chép</string>
+    <string name="home_adb_dialog_view_command_button_send">Gửi</string>
+    <string name="home_wireless_adb_title">Bắt đầu thông qua Gỡ lỗi không dây</string>
+    <string name="dialog_adb_discovery">Tìm kiếm dịch vụ gỡ lỗi không dây</string>
+    <string name="dialog_adb_discovery_message">Vui lòng bật \"Gỡ lỗi không dây\" trong \"Tùy chọn nhà phát triển\". \"Gỡ lỗi không dây\" tự động bị tắt khi mạng thay đổi.
+\n
+\nLưu ý, không vô hiệu hóa \"Tùy chọn nhà phát triển\" hoặc \"Gỡ lỗi USB\", nếu không Shizuku sẽ bị dừng.</string>
+    <string name="dialog_adb_port">Cổng</string>
+    <string name="dialog_adb_invalid_port">Cổng là một số nguyên nằm trong khoảng từ 1 đến 65535.</string>
+    <string name="dialog_adb_pairing_title">Ghép nối với thiết bị</string>
+    <string name="dialog_adb_pairing_discovery">Đang tìm kiếm dịch vụ ghép nối</string>
+    <string name="dialog_adb_pairing_paring_code">Mã ghép nối</string>
+    <string name="adb_pairing">Ghép nối</string>
+    <string name="adb_pairing_requires_multi_window">Vui lòng vào chế độ chia đôi màn hình (đa cửa sổ) trước.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Hệ thống yêu cầu hộp thoại ghép nối luôn hiển thị, sử dụng chế độ chia đôi màn hình là cách duy nhất để cho phép ứng dụng này và hộp thoại hệ thống hiển thị cùng một lúc.</string>
+    <string name="home_root_title">Bắt đầu (cho các thiết bị đã root)</string>
+    <string name="home_root_button_start">Bắt đầu</string>
+    <string name="home_root_button_restart">Khởi động lại</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other">Đã ủy quyền %d ứng dụng</item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps">Nhấn để quản lý các ứng dụng được ủy quyền</string>
+    <string name="home_root_description_sui">Nếu bạn đang sử dụng Magisk, bạn có thể thử %1$s (một mô-đun Riru). Đối với người dùng root, nó cuối cùng sẽ thay thế Shizuku. Lưu ý, các ứng dụng hiện có cần thay đổi một chút để sử dụng %2$s.</string>
+    <string name="adb_error_key_store">Không thể tạo khóa để gỡ lỗi không dây.
+\nĐiều này có thể do cơ chế KeyStore của thiết bị này bị hỏng.</string>
+    <string name="adb_pair_required">Vui lòng thực hiện bước ghép nối trước.</string>
+    <string name="development_settings">Tùy chọn nhà phát triển</string>
+    <string name="home_app_management_title">Quản lí ứng dụng</string>
+    <string name="home_learn_more_title">Tìm hiểu Shizuku</string>
+    <string name="home_learn_more_description">Tìm hiểu cách phát triển với Shizuku hoặc tải ứng dụng bằng Shizuku</string>
+    <string name="app_management_menu_get_more">Tải thêm</string>
+    <string name="app_management_dialog_adb_is_limited_title">Quyền của adb bị hạn chế</string>
+    <string name="app_management_item_summary_requires_root">* yêu cầu Shizuku chạy với root</string>
+    <string name="home_terminal_title">Sử dụng Shizuku trong các ứng dụng đầu cuối</string>
+    <string name="home_terminal_description">Chạy lệnh thông qua Shizuku trong các ứng dụng đầu cuối bạn thích</string>
+    <string name="terminal_tutorial_1">Đầu tiên, Xuất tệp sang bất kỳ nơi nào bạn muốn. Bạn sẽ tìm thấy hai tệp, %1$s và %2$s.</string>
+    <string name="terminal_export_files">Xuất tệp</string>
+    <string name="terminal_tutorial_2">Sau đó, sử dụng bất kỳ trình soạn thảo văn bản nào để mở và chỉnh sửa %1$s.</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_black_night_theme">Chủ đề đêm đen</string>
+    <string name="settings_black_night_theme_summary">Sử dụng chủ đề đen tuyền nếu chế độ ban đêm được bật</string>
+    <string name="settings_user_interface">Hiển thị</string>
+    <string name="terminal_tutorial_3">Cuối cùng, di chuyển các tệp đến một nơi nào đó mà ứng dụng đầu cuối của bạn có thể truy cập, bạn sẽ có thể sử dụng %1$s để chạy các lệnh thông qua Shizuku.</string>
+    <string name="rish_description">Với %1$s, trong bất kỳ ứng dụng đầu cuối nào, bạn có thể kết nối và tương tác với shell do Shizuku điều hành. &lt;p&gt;Về cách sử dụng chi tiết %1$s, nhấn để xem tài liệu.</string>
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_startup">Khởi động</string>
+    <string name="settings_start_on_boot">Bắt đầu lúc khởi động (root)</string>
+    <string name="settings_start_on_boot_summary">Đối với các thiết bị đã root, Shizuku có thể tự động khởi động khi khởi động</string>
+    <string name="notification_channel_service_status">Trạng thái khởi động dịch vụ</string>
+    <string name="notification_service_starting">Dịch vụ Shizuku đang khởi động…</string>
+    <string name="notification_service_start_failed">Khởi động dịch vụ Shizuku thất bại.</string>
+    <string name="notification_service_start_no_root">Yêu cầu quyền root thất bại.</string>
+    <string name="starter">Trình khởi động</string>
+    <string name="start_with_root_failed">Không thể bắt đầu dịch vụ vì quyền root chưa được cấp hoặc thiết bị này chưa được root.</string>
+    <string name="dialog_cannot_open_browser_title">Không thể khởi động trình duyệt</string>
+    <string name="settings_translation_summary">Giúp chúng tôi dịch %s sang ngôn ngữ của bạn</string>
+    <string name="settings_translation">Tham gia phiên dịch</string>
+    <string name="settings_translation_contributors">Người đóng góp bản dịch</string>
+    <string name="settings_translation_summary_percentage">" (%s đã được dịch)"</string>
+    <string name="action_about">Về</string>
+    <string name="dialog_stop_message">Dịch vụ Shizuku sẽ ngừng hoạt động.</string>
+    <string name="about_view_source_code">Xem mã nguồn tại %s</string>
+    <string name="action_stop">Dừng Shizuku</string>
+    <string name="notification_working">Đang làm việc…</string>
+    <string name="permission_label">truy cập Shizuku</string>
+    <string name="permission_description">Cho phép ứng dụng sử dụng Shizuku.</string>
+    <string name="permission_warning_template">Cho phép <b>%1$s</b> thành %2$s\?</string>
+    <string name="grant_dialog_button_allow_always">Cho phép mọi lúc</string>
+    <string name="grant_dialog_button_deny">Từ chối</string>
+    <string name="toast_copied_to_clipboard">%s
+\nđã được sao chép vào khay nhớ tạm.</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> đã được sao chép vào khay nhớ tạm.</string>
+    <string name="dialog_legacy_not_support_title">%1$s không hỗ trợ Shizuku hiện đại</string>
+    <string name="dialog_legacy_not_support_message">Shizuku cũ không được dùng nữa kể từ tháng 3 năm 2019. Ngoài ra, Shizuku cũ không hoạt động trên các hệ thống Android mới hơn.&lt;p&gt;Vui lòng yêu cầu nhà phát triển của &lt;b&gt;%1$s&lt;/b&gt; cập nhật.</string>
+    <string name="dialog_requesting_legacy_title">%1$s đang yêu cầu Shizuku cũ</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; có hỗ trợ Shizuku hiện đại, nhưng nó yêu cầu Shizuku cũ. Điều này có thể do Shizuku đang không chạy, vui lòng kiểm tra ứng dụng Shizuku.&lt;p&gt;Shizuku cũ không được dùng nữa kể từ tháng 3 năm 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Mở Shizuku</string>
+    <string name="translation_contributors">The Primal Pea</string>
+    <string name="home_status_service_version_update">Phiên bản %2$s, %1$s&lt;br&gt;Bắt đầu lại để cập nhật lên phiên bản %3$s</string>
+    <string name="home_adb_description">Đối với thiết bị không có root, bạn cần sử dụng adb để khởi động Shizuku (yêu cầu kết nối máy tính). Quá trình này cần được lặp lại mỗi khi thiết bị được khởi động lại. Vui lòng <b><a href="%1$s">đọc phần trợ giúp</a></b>.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Có một số cân nhắc khác, vui lòng xác nhận rằng bạn đã đọc phần trợ giúp trước.</string>
+    <string name="home_wireless_adb_description">Trong Android 11, Gỡ lỗi không dây là một tính năng được tích hợp sẵn. Vui lòng tham khảo &lt;b&gt;&lt;a href=\"%1$s\"&gt;tài liệu trợ giúp này&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Cách này hoạt động cho tất cả các phiên bản hệ thống. Nhưng trước Android 11, gỡ lỗi không dây không thể được kích hoạt trực tiếp.</string>
+    <string name="paring_code_is_wrong">Mã ghép nối sai.</string>
+    <string name="cannot_connect_port">Không thể kết nối với dịch vụ gỡ lỗi không dây.</string>
+    <string name="dialog_wireless_adb_not_enabled">Gỡ lỗi không dây không được kích hoạt.
+\nLưu ý, trước Android 11, để kích hoạt tính năng gỡ lỗi không dây, kết nối máy tính là điều bắt buộc.</string>
+    <string name="dialog_adb_pairing_message">Vui lòng bắt đầu ghép nối theo các bước sau: \"Tùy chọn nhà phát triển\" - \"Gỡ lỗi không dây\" - \"Ghép nối thiết bị bằng mã ghép nối\".
+\n
+\nSau khi quá trình ghép nối bắt đầu, bạn sẽ có thể nhập mã ghép nối.</string>
+    <string name="home_root_description">Ngoài ra, Shizuku có thể được khởi động tự động khi khởi động. Nếu không, vui lòng kiểm tra xem hệ thống của bạn hoặc các công cụ của bên thứ ba có hạn chế Shizuku hay không.&lt;br&gt;Bạn có thể tham khảo %s.</string>
+    <string name="terminal_tutorial_1_description">Nếu có các tệp trùng tên trong thư mục đã chọn, chúng sẽ bị xóa.
+\n
+\nChức năng xuất sử dụng SAF (Khung Truy cập Bộ nhớ). Có báo cáo rằng MIUI phá vỡ các chức năng của SAF. Nếu bạn đang sử dụng MIUI, bạn có thể phải giải nén tệp từ apk của Shizuku hoặc tải xuống từ GitHub.</string>
+    <string name="app_management_dialog_adb_is_limited_message">Rất có thể nhà sản xuất thiết bị của bạn giới hạn quyền của adb.&lt;p&gt;Có thể có giải pháp cho hệ thống của bạn trong &lt;b&gt;&lt;a href=\"%1$s\"&gt;tài liệu này&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="terminal_tutorial_2_description">Ví dụ, nếu bạn muốn sử dụng Shizuku trong %1$s, bạn nên thay thế %2$s bằng %3$s (%4$s là tên gói của %1$s).</string>
+    <string name="terminal_tutorial_3_description">Một số mẹo: cấp quyền thực thi cho %1$s và thêm quyền đó vào %2$s, bạn sẽ có thể sử dụng %1$s trực tiếp.</string>
+</resources>
