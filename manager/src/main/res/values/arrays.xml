@@ -33,6 +33,7 @@
         <item>ru</item>
         <item>tr</item>
         <item>uk</item>
+        <item>vi</item>
         <item>zh-Hans</item>
         <item>zh-Hant</item>
     </string-array>
@@ -57,6 +58,7 @@
         <item>ru-RU</item>
         <item>tr</item>
         <item>uk</item>
+        <item>vi</item>
         <item>zh-CN</item>
         <item>zh-TW</item>
     </string-array>
