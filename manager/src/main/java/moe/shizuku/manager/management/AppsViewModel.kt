@@ -2,7 +2,6 @@ package moe.shizuku.manager.management
 
 import android.content.Context
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
@@ -14,9 +13,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.authorization.AuthorizationManager
-import moe.shizuku.manager.viewmodel.Resource
-import moe.shizuku.manager.viewmodel.activitySharedViewModels
-import moe.shizuku.manager.viewmodel.sharedViewModels
+import rikka.lifecycle.Resource
+import rikka.lifecycle.activitySharedViewModels
+import rikka.lifecycle.sharedViewModels
 import java.util.*
 
 @MainThread
@@ -62,7 +61,11 @@ class AppsViewModel(context: Context) : ViewModel() {
                 val packages: MutableList<String> = ArrayList()
                 for (pi in AuthorizationManager.getPackages()) {
                     list.add(pi)
-                    if (AuthorizationManager.granted(pi.packageName, pi.applicationInfo.uid)) packages.add(pi.packageName)
+                    if (AuthorizationManager.granted(
+                            pi.packageName,
+                            pi.applicationInfo.uid
+                        )
+                    ) packages.add(pi.packageName)
                 }
             } catch (e: CancellationException) {
 

@@ -2,7 +2,6 @@ package moe.shizuku.manager.starter
 
 import android.content.Context
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,9 +21,9 @@ import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.application
 import moe.shizuku.manager.databinding.StarterActivityBinding
-import moe.shizuku.manager.viewmodel.Resource
-import moe.shizuku.manager.viewmodel.Status
-import moe.shizuku.manager.viewmodel.viewModels
+import rikka.lifecycle.Resource
+import rikka.lifecycle.Status
+import rikka.lifecycle.viewModels
 import rikka.shizuku.Shizuku
 import rikka.widget.borderview.BorderView
 import java.net.ConnectException
@@ -35,10 +34,12 @@ private class NotRootedException : Exception()
 class StarterActivity : AppBarActivity() {
 
     private val viewModel by viewModels {
-        ViewModel(this,
-                intent.getBooleanExtra(EXTRA_IS_ROOT, true),
-                intent.getStringExtra(EXTRA_HOST),
-                intent.getIntExtra(EXTRA_PORT, 0))
+        ViewModel(
+            this,
+            intent.getBooleanExtra(EXTRA_IS_ROOT, true),
+            intent.getStringExtra(EXTRA_HOST),
+            intent.getIntExtra(EXTRA_PORT, 0)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,9 +90,9 @@ class StarterActivity : AppBarActivity() {
 
                 if (message != 0) {
                     AlertDialog.Builder(this)
-                            .setMessage(message)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show()
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
                 }
             }
             binding.text1.text = output
@@ -205,9 +206,9 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
              */
             if (sb.contains("/Android/data/${BuildConfig.APPLICATION_ID}/start.sh: Permission denied")) {
                 sb.append('\n')
-                        .appendLine("adb have no permission to access Android/data, how could this possible ?!")
-                        .appendLine("try /data/user_de instead...")
-                        .appendLine()
+                    .appendLine("adb have no permission to access Android/data, how could this possible ?!")
+                    .appendLine("try /data/user_de instead...")
+                    .appendLine()
                 postResult()
 
                 Starter.writeDataFiles(application, true)

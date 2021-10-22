@@ -1,7 +1,6 @@
 package moe.shizuku.manager.management
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
@@ -10,7 +9,7 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AppsActivityBinding
 import moe.shizuku.manager.utils.CustomTabsHelper
-import moe.shizuku.manager.viewmodel.Status
+import rikka.lifecycle.Status
 import rikka.recyclerview.addVerticalPadding
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
@@ -65,7 +64,10 @@ class ApplicationManagementActivity : AppBarActivity() {
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
         recyclerView.addVerticalPadding()
-        recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> appBar?.setRaised(!top) }
+        recyclerView.borderViewDelegate.borderVisibilityChangedListener =
+            BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
+                appBar?.setRaised(!top)
+            }
 
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {

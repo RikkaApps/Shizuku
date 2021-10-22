@@ -13,7 +13,7 @@ import moe.shizuku.manager.Manifest
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.utils.Logger.LOGGER
 import moe.shizuku.manager.utils.ShizukuSystemApis
-import moe.shizuku.manager.viewmodel.Resource
+import rikka.lifecycle.Resource
 import rikka.shizuku.Shizuku
 
 class HomeViewModel : ViewModel() {
@@ -37,7 +37,8 @@ class HomeViewModel : ViewModel() {
                 null
             }
         } else null
-        val permissionTest = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
+        val permissionTest =
+            Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
 
         // Before a526d6bb, server will not exit on uninstall, manager installed later will get not permission
         // Run a random remote transaction here, report no permission as not running
