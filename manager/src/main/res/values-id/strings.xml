@@ -21,13 +21,13 @@
     <string name="action_stop">Hentikan Shizuku</string>
     <string name="notification_service_start_no_root">Gagal mendapat izin root.</string>
     <string name="start_with_root_failed">Layanan tidak bisa dimulai karena aplikasi tidak mendapat izin root atau perangkat tidak memiliki akses root.</string>
-    <string name="translation_contributors">Amfakh</string>
+    <string name="translation_contributors">Ian</string>
     <string name="home_status_service_is_running">%1$s aktif</string>
     <string name="home_status_service_not_running">%1$s tidak aktif</string>
     <string name="home_status_service_version">Versi %2$s, %1$s</string>
     <string name="home_adb_title">Mulai dengan menghubungkan ke komputer</string>
     <string name="home_adb_button_view_help">Baca dokumentasi</string>
-    <string name="home_adb_button_view_command">Lihat perintah adb</string>
+    <string name="home_adb_button_view_command">Lihat perintah</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Terdapat beberapa pertimbangan tambahan, harap pastikan bahwa Anda telah membaca dokumentasi.</string>
     <string name="home_adb_dialog_view_command_copy_button">Salin</string>
     <string name="home_adb_dialog_view_command_button_send">Kirim ke...</string>
@@ -101,4 +101,5 @@
     <string name="dialog_requesting_legacy_title">%1$s meminta akses Shizuku kuno</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; memiliki dukungan Shizuku modern, namun meminta akses Shizuku kuno. Hal ini bisa terjadi karena Shizuku tidak aktif, harap periksa di aplikasi Shizuku. &lt;p&gt;Shizuku Kuno sudah dihentikan sejak Maret 2019.</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Buka Shizuku</string>
+    <string name="rish_description">Dengan %1$s, di aplikasi terminal mana pun, Anda dapat terhubung dan berinteraksi dengan shell yang dijalankan oleh Shizuku. &lt;p&gt;Tentang detail penggunaan %1$s, ketuk untuk melihat dokumen.</string>
 </resources>
