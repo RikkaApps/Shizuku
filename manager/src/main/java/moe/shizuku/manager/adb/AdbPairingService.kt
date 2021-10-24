@@ -185,6 +185,7 @@ class AdbPairingService : Service() {
         getSystemService(NotificationManager::class.java).notify(
             notificationId,
             Notification.Builder(this, notificationChannel)
+                .setColor(getColor(R.color.notification))
                 .setSmallIcon(R.drawable.ic_system_icon)
                 .setContentTitle(title)
                 .setContentText(text)
@@ -262,6 +263,7 @@ class AdbPairingService : Service() {
 
     private val searchingNotification by unsafeLazy {
         Notification.Builder(this, notificationChannel)
+            .setColor(getColor(R.color.notification))
             .setSmallIcon(R.drawable.ic_system_icon)
             .setContentTitle(getString(R.string.notification_adb_pairing_searching_for_service_title))
             .addAction(stopNotificationAction)
@@ -270,6 +272,7 @@ class AdbPairingService : Service() {
 
     private val inputNotification by unsafeLazy {
         Notification.Builder(this, notificationChannel)
+            .setColor(getColor(R.color.notification))
             .setContentTitle(getString(R.string.notification_adb_pairing_service_found_title))
             .setSmallIcon(R.drawable.ic_system_icon)
             .addAction(replyNotificationAction)
@@ -278,6 +281,7 @@ class AdbPairingService : Service() {
 
     private val workingNotification by unsafeLazy {
         Notification.Builder(this, notificationChannel)
+            .setColor(getColor(R.color.notification))
             .setContentTitle(getString(R.string.notification_adb_pairing_working_title))
             .setSmallIcon(R.drawable.ic_system_icon)
             .build()
