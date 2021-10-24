@@ -44,7 +44,7 @@
     <string name="adb_pairing_tutorial_title">Pair Shizuku with your device</string>
     <string name="adb_pairing_tutorial_content_start_service">Please start pairing service from \"Developer options\" - \"Wireless debugging\".</string>
     <string name="adb_pairing_tutorial_content_input_pairing_code">Tap \"Pair device with pairing code\", the system will show a dialog with a six-digit pairing code. You will be able to enter the code in Shizuku\'s notification to complete pairing.</string>
-    <string name="adb_pairing_tutorial_content_bad_system">On some system, you may not find how to enter the \"Wireless debugging\" page. This is because your system removes the divider that implies the left part of the option is clickable.</string>
+    <string name="adb_pairing_tutorial_content_bad_system">On some systems, the divider of the \"Wireless debugging\" option is removed, so you may not know you can to enter the \"Wireless debugging\" page by tapping the left part of the option.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
