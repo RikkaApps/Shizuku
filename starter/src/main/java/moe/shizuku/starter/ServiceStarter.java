@@ -92,7 +92,10 @@ public class ServiceStarter {
         DdmHandleAppName.setAppName(name != null ? name : "shizuku_user_service", 0);
 
         try {
-            UserHandle userHandle = Refine.unsafeCast(UserHandleHidden.of(userId));
+            UserHandle userHandle = Refine.unsafeCast(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                            ? UserHandleHidden.of(userId)
+                            : new UserHandleHidden(userId));
             Context context = Refine.<ContextHidden>unsafeCast(systemContext).createPackageContextAsUser(pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
             ClassLoader classLoader = context.getClassLoader();
             Class<?> serviceClass = classLoader.loadClass(cls);
