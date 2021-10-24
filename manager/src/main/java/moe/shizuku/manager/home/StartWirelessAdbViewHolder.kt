@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
+import moe.shizuku.manager.adb.AdbPairingService
 import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
@@ -75,6 +76,14 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
 
     @SuppressLint("NewApi")
     private fun onPairClicked(context: Context) {
-        AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+        if (context.display?.displayId ?: -1 > 0) {
+            // Running in a multi-display environment (e.g., Windows Subsystem for Android),
+            // pairing dialog can be displayed simultaneously with Shizuku.
+            // Input from notification is harder to use under this situation
+            AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+        } else {
+            AdbPairTutorialDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+            context.startForegroundService(AdbPairingService.startIntent(context))
+        }
     }
 }

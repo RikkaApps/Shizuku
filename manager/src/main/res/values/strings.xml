@@ -41,6 +41,10 @@
     <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
     <string name="adb_pair_required">Please go through the pairing step first.</string>
     <string name="development_settings">Developer options</string>
+    <string name="adb_pairing_tutorial_title">Pair Shizuku with your device</string>
+    <string name="adb_pairing_tutorial_content_start_service">Please start pairing service from \"Developer options\" - \"Wireless debugging\".</string>
+    <string name="adb_pairing_tutorial_content_input_pairing_code">Tap \"Pair device with pairing code\", the system will show a dialog with a six-digit pairing code. At this time, you will be able to enter the code to Shizuku\'s notification and finishing pairing.</string>
+    <string name="adb_pairing_tutorial_content_bad_system">On some system, you may not find how to enter the \"Wireless debugging\" page. This is because your system removes the divider that implies the left part of the option is clickable.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
@@ -110,6 +114,16 @@ With %1$s, in any terminal app, you can connect to and interact with the shell r
     <string name="notification_service_start_failed">Start Shizuku service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
     <string name="notification_working">Working…</string>
+    <string name="notification_channel_adb_pairing">Wireless debugging pairing</string>
+    <string name="notification_adb_pairing_input_paring_code">Enter pairing code</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Searching for pairing service</string>
+    <string name="notification_adb_pairing_service_found_title">Pairing service found</string>
+    <string name="notification_adb_pairing_stop_searching">Stop searching</string>
+    <string name="notification_adb_pairing_working_title">Pairing in progress</string>
+    <string name="notification_adb_pairing_succeed_title">Pairing successful</string>
+    <string name="notification_adb_pairing_succeed_text">You can start Shizuku service now.</string>
+    <string name="notification_adb_pairing_failed_title">Pairing failed</string>
+    <string name="notification_adb_pairing_retry">Retry</string>
 
     <!-- Permission related, appears in system permission UI -->
     <string name="permission_group_label" translatable="false">Shizuku</string>

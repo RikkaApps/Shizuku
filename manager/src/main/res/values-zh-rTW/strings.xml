@@ -102,4 +102,18 @@
 透過 %1$s，您可以在任何終端程式中連線到由 Shizuku 執行的 shell 並與之互動。
 <p>有關 %1$s 的具體使用方式，點按以閱讀檔案。
 ]]></string>
+    <string name="adb_pairing_tutorial_title">將 Shizuku 與您的裝置配對</string>
+    <string name="adb_pairing_tutorial_content_start_service">請從「開發人員選項」-「無線偵錯」開始配配對服務。</string>
+    <string name="adb_pairing_tutorial_content_input_pairing_code">輕觸「使用配對碼配對裝置」，系統將顯示一個帶有六位數配對程式碼的對話方塊。此時即可在 Shizuku 的通知中輸入配對碼來完成配對。</string>
+    <string name="adb_pairing_tutorial_content_bad_system">在某些系統上，您可能找不到如何進入「無線偵錯」頁面。這是因為您的系統刪除了暗示選項左側部分可點選的分隔符。</string>
+    <string name="notification_channel_adb_pairing">無線偵錯配對</string>
+    <string name="notification_adb_pairing_input_paring_code">輸入配對碼</string>
+    <string name="notification_adb_pairing_searching_for_service_title">正在搜尋配對服務</string>
+    <string name="notification_adb_pairing_service_found_title">已找到配對服務</string>
+    <string name="notification_adb_pairing_stop_searching">停止搜尋</string>
+    <string name="notification_adb_pairing_working_title">正在進行配對</string>
+    <string name="notification_adb_pairing_succeed_title">配對成功</string>
+    <string name="notification_adb_pairing_succeed_text">您現在可以啟動 Shizuku 服務了。</string>
+    <string name="notification_adb_pairing_failed_title">配對失敗</string>
+    <string name="notification_adb_pairing_retry">重試</string>
 </resources>

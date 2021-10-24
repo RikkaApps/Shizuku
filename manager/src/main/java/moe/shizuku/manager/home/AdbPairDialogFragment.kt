@@ -113,12 +113,13 @@ class AdbPairDialogFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val context = requireContext()
-        val inMultiScreen = requireActivity().isInMultiWindowMode
+        val inMultiScreenOrDisplay = requireActivity().isInMultiWindowMode
+                || requireActivity().window?.decorView?.display?.displayId ?: -1 > 0
 
-        binding.text1.isVisible = inMultiScreen
-        binding.text2.isVisible = !inMultiScreen
+        binding.text1.isVisible = inMultiScreenOrDisplay
+        binding.text2.isVisible = !inMultiScreenOrDisplay
 
-        if (inMultiScreen) {
+        if (inMultiScreenOrDisplay) {
             dialog?.setTitle(R.string.dialog_adb_pairing_discovery)
         } else {
             dialog?.setTitle(R.string.dialog_adb_pairing_title)

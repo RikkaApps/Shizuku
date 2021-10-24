@@ -22,6 +22,7 @@ class AdbMdns(context: Context, private val serviceType: String,
     private val nsdManager: NsdManager = context.getSystemService(NsdManager::class.java)
 
     fun start() {
+        if (running) return
         running = true
         if (!registered) {
             nsdManager.discoverServices(serviceType, NsdManager.PROTOCOL_DNS_SD, listener)
@@ -29,6 +30,7 @@ class AdbMdns(context: Context, private val serviceType: String,
     }
 
     fun stop() {
+        if (!running) return
         running = false
         if (registered) {
             nsdManager.stopServiceDiscovery(listener)
