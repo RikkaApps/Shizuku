@@ -103,7 +103,7 @@
 ]]></string>
     <string name="adb_pairing_tutorial_title">将 Shizuku 与您的设备配对</string>
     <string name="adb_pairing_tutorial_content_start_service">请从“开发者选项”-“无线调试”开始配配对服务。</string>
-    <string name="adb_pairing_tutorial_content_input_pairing_code">点按“使用配对码配对设备”，系统将显示一个带有六位数配对代码的对话框。此时即可在 Shizuku 的通知中输入配对码来完成配对。</string>
+    <string name="adb_pairing_tutorial_content_input_pairing_code">点按“使用配对码配对设备”，系统将显示一个带有六位数配对代码的对话框。然后你就可以在 Shizuku 的通知中输入配对码来完成配对。</string>
     <string name="adb_pairing_tutorial_content_bad_system">在某些系统上，您可能找不到如何进入“无线调试”页面。这是因为您的系统删除了暗示选项左侧部分可点击的分隔符。</string>
     <string name="notification_channel_adb_pairing">无线调试配对</string>
     <string name="notification_adb_pairing_input_paring_code">输入配对码</string>

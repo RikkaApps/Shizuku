@@ -104,7 +104,7 @@
 ]]></string>
     <string name="adb_pairing_tutorial_title">將 Shizuku 與您的裝置配對</string>
     <string name="adb_pairing_tutorial_content_start_service">請從「開發人員選項」-「無線偵錯」開始配配對服務。</string>
-    <string name="adb_pairing_tutorial_content_input_pairing_code">輕觸「使用配對碼配對裝置」，系統將顯示一個帶有六位數配對程式碼的對話方塊。此時即可在 Shizuku 的通知中輸入配對碼來完成配對。</string>
+    <string name="adb_pairing_tutorial_content_input_pairing_code">輕觸「使用配對碼配對裝置」，系統將顯示一個帶有六位數配對程式碼的對話方塊。然後你就可以在 Shizuku 的通知中輸入配對碼來完成配對。</string>
     <string name="adb_pairing_tutorial_content_bad_system">在某些系統上，您可能找不到如何進入「無線偵錯」頁面。這是因為您的系統刪除了暗示選項左側部分可點選的分隔符。</string>
     <string name="notification_channel_adb_pairing">無線偵錯配對</string>
     <string name="notification_adb_pairing_input_paring_code">輸入配對碼</string>
