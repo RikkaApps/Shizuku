@@ -14,7 +14,7 @@ buildscript {
 
         // In case newly published library not yet synced with maven central
         maven {
-            url("https://s01.oss.sonatype.org/content/repositories/releases/")
+            url("https://s01.oss.sonatype.org/content/repositories/staging/")
             content {
                 includeGroup("dev.rikka.tools.refine")
             }
@@ -36,9 +36,9 @@ allprojects {
 
         // In case newly published library not yet synced with maven central
         maven {
-            url("https://s01.oss.sonatype.org/content/repositories/releases/")
+            url("https://s01.oss.sonatype.org/content/repositories/staging/")
             content {
-                includeGroupByRegex("dev.rikka.*")
+                includeGroupByRegex("dev\\.rikka\\.*")
             }
         }
         mavenLocal()
