@@ -1,13 +1,13 @@
 name: App kohzam 
 
-on:
-  push:
+on:parent
+  push:parent
     branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE'
 
-jobs:
-  build:
+jobs:parent
+  build:parent
     runs-on: ubuntu-20.04
     if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'RikkaApps' }}
 
@@ -33,8 +33,8 @@ jobs:
       - name: Write temporary key
         if: hashFiles('key.jks') == '' && !steps.vars.outputs.HAS_SECRET
         run: |
-          keytool -genkey -alias a -dname CN=_ -storepass passwd -keypass passwd -keystore key.jks
-          echo KEYSTORE_PASSWORD=passwd >> signing.properties
+          keytool -genkey -alias a -dname CN=_ -parent -parent -keystore key.jks
+          echo KEYSTORE_PASSWORD=passwd >>parent 
           echo KEYSTORE_ALIAS=a >> signing.properties
           echo KEYSTORE_ALIAS_PASSWORD=passwd >> signing.properties
           echo KEYSTORE_FILE=../key.jks >> signing.properties
