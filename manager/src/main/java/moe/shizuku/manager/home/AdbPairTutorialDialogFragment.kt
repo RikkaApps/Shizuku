@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbPairingService
 import moe.shizuku.manager.databinding.AdbPairTutorialDialogBinding
+import rikka.compatibility.DeviceCompatibility
 
 @RequiresApi(VERSION_CODES.R)
 class AdbPairTutorialDialogFragment : DialogFragment() {
@@ -30,12 +31,16 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
 
         binding = AdbPairTutorialDialogBinding.inflate(LayoutInflater.from(context))
 
+        if (DeviceCompatibility.isMIUI()) {
+            binding.miui.isVisible = true
+        }
+
         notificationEnabled = isNotificationEnabled()
 
         if (notificationEnabled) {
             context.startForegroundService(AdbPairingService.startIntent(context))
         }
-        updateDialogView()
+        syncNotificationEnabled()
 
         val builder = AlertDialog.Builder(context).apply {
             setTitle(R.string.adb_pairing_tutorial_title)
@@ -76,7 +81,7 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
         return if (notificationEnabled) R.string.development_settings else R.string.notification_settings
     }
 
-    private fun updateDialogView() {
+    private fun syncNotificationEnabled() {
         dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setText(getButtonText())
         binding.text1.isVisible = notificationEnabled
         binding.text2.isGone = notificationEnabled
@@ -97,7 +102,7 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
         val newNotificationEnabled = isNotificationEnabled()
         if (newNotificationEnabled != notificationEnabled) {
             notificationEnabled = newNotificationEnabled
-            updateDialogView()
+            syncNotificationEnabled()
 
             if (newNotificationEnabled) {
                 requireContext().startForegroundService(AdbPairingService.startIntent(requireContext()))

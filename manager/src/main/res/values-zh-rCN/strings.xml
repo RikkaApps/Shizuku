@@ -117,4 +117,5 @@
     <string name="notification_adb_pairing_retry">重试</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">配对过程需要您与 Shizuku 的通知交互。请允许 Shizuku 发布通知。</string>
     <string name="notification_settings">通知设置</string>
+    <string name="adb_pairing_tutorial_content_miui">您正在使用 MIUI。如果通知上没有输入按钮，您需要在系统设置中从“通知管理”-“通知显示设置”将通知样式切换为“原生样式”。</string>
 </resources>
