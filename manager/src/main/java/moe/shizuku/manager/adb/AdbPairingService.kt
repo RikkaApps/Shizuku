@@ -23,9 +23,10 @@ class AdbPairingService : Service() {
 
     companion object {
 
+        const val notificationChannel = "adb_pairing"
+
         private const val tag = "AdbPairingService"
 
-        private const val notificationChannel = "adb_pairing"
         private const val notificationId = 1
         private const val replyRequestId = 1
         private const val stopRequestId = 2

@@ -116,4 +116,6 @@
     <string name="notification_adb_pairing_succeed_text">您現在可以啟動 Shizuku 服務了。</string>
     <string name="notification_adb_pairing_failed_title">配對失敗</string>
     <string name="notification_adb_pairing_retry">重試</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">配對過程需要您與 Shizuku 的通知互動。請允許 Shizuku 發布通知。</string>
+    <string name="notification_settings">通知設定</string>
 </resources>

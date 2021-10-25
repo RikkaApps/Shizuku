@@ -41,10 +41,12 @@
     <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
     <string name="adb_pair_required">Please go through the pairing step first.</string>
     <string name="development_settings">Developer options</string>
+    <string name="notification_settings">Notification options</string>
     <string name="adb_pairing_tutorial_title">Pair Shizuku with your device</string>
     <string name="adb_pairing_tutorial_content_start_service">Please start pairing service from \"Developer options\" - \"Wireless debugging\".</string>
-    <string name="adb_pairing_tutorial_content_input_pairing_code">Tap \"Pair device with pairing code\", the system will show a dialog with a six-digit pairing code. You will be able to enter the code in Shizuku\'s notification to complete pairing.</string>
+    <string name="adb_pairing_tutorial_content_input_pairing_code">Tap \"Pair device with pairing code\", the system will show a dialog with a six-digit pairing code. You will be able to enter the code in the notification to complete pairing.</string>
     <string name="adb_pairing_tutorial_content_bad_system">On some systems, the divider of the \"Wireless debugging\" option is removed, so you may not know you can to enter the \"Wireless debugging\" page by tapping the left part of the option.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notification from Shizuku. Please allow Shizuku to post notifications.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>

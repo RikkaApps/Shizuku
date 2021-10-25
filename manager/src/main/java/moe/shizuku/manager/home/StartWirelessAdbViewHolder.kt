@@ -83,7 +83,6 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
             AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
         } else {
             AdbPairTutorialDialogFragment().show((context as FragmentActivity).supportFragmentManager)
-            context.startForegroundService(AdbPairingService.startIntent(context))
         }
     }
 }
