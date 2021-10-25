@@ -81,6 +81,7 @@
 \n
 \n配对过程开始后，您将能够输入配对码。</string>
     <string name="development_settings">开发者选项</string>
+    <string name="notification_settings">通知设置</string>
     <string name="home_root_description_sui"><![CDATA[如果您正在使用 Magisk，可以尝试 %1$s（一个 Riru 模块）。对于 root 用户，它将最终取代 Shizuku。注意，已有的应用需要一点点修改来使用 %2$s。]]></string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
@@ -102,6 +103,7 @@
 <p>有关 %1$s 的具体使用方式，点按以阅读文档。
 ]]></string>
     <string name="adb_pairing_tutorial_title">将 Shizuku 与您的设备配对</string>
+    <string name="adb_pairing_tutorial_content_enable_notification">请启用Shizuku的通知权限以确保通知能正常显示。</string>
     <string name="adb_pairing_tutorial_content_start_service">请从“开发者选项”-“无线调试”开始配配对服务。</string>
     <string name="adb_pairing_tutorial_content_input_pairing_code">点按“使用配对码配对设备”，系统将显示一个带有六位数配对代码的对话框。然后你就可以在 Shizuku 的通知中输入配对码来完成配对。</string>
     <string name="adb_pairing_tutorial_content_bad_system">在某些系统上，“无线调试”选项的分隔符被删除了，您可能因此不知道点按选项的左边部分可以进入“无线调试”页面。</string>
