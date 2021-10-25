@@ -1,6 +1,7 @@
 package moe.shizuku.manager.home
 
 import android.app.Dialog
+import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build.VERSION_CODES
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.getSystemService
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import moe.shizuku.manager.R
@@ -19,11 +21,13 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
+        val enabled = context.getSystemService<NotificationManager>()?.areNotificationsEnabled()
 
         val builder = AlertDialog.Builder(context).apply {
             setTitle(R.string.adb_pairing_tutorial_title)
             setMessage(
-                (getString(R.string.adb_pairing_tutorial_content_start_service) + "<p>" +
+                ((if (enabled == false) "<b>" + getString(R.string.adb_pairing_tutorial_content_enable_notification) + "</b><p>" else "") +
+                        getString(R.string.adb_pairing_tutorial_content_start_service) + "<p>" +
                         getString(R.string.adb_pairing_tutorial_content_input_pairing_code) + "<p>" +
                         "<small>" + getString(R.string.adb_pairing_tutorial_content_bad_system) + "</small>").toHtml(
                     HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE
