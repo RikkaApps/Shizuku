@@ -31,7 +31,7 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
 
         binding = AdbPairTutorialDialogBinding.inflate(LayoutInflater.from(context))
 
-        if (DeviceCompatibility.isMIUI()) {
+        if (DeviceCompatibility.isMiui()) {
             binding.miui.isVisible = true
         }
 
