@@ -103,9 +103,8 @@
 <p>有關 %1$s 的具體使用方式，點按以閱讀檔案。
 ]]></string>
     <string name="adb_pairing_tutorial_title">將 Shizuku 與您的裝置配對</string>
-    <string name="adb_pairing_tutorial_content_start_service">請從「開發人員選項」-「無線偵錯」開始配配對服務。</string>
-    <string name="adb_pairing_tutorial_content_input_pairing_code">輕觸「使用配對碼配對裝置」，系統將顯示一個帶有六位數配對程式碼的對話方塊。然後你就可以在 Shizuku 的通知中輸入配對碼來完成配對。</string>
-    <string name="adb_pairing_tutorial_content_bad_system">在某些系統上，「無線偵錯」選項的分隔符被刪除了，您可能因此不知道輕觸選項的左邊部分可以進入「無線偵錯」頁面。</string>
+    <string name="adb_pairing_tutorial_content_steps">進入「開發人員選項」-「無線偵錯」。輕觸「使用配對碼配對裝置」，您將看到一個六位數字代碼。</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">在通知中輸入代碼來完成配對。</string>
     <string name="notification_channel_adb_pairing">無線偵錯配對</string>
     <string name="notification_adb_pairing_input_paring_code">輸入配對碼</string>
     <string name="notification_adb_pairing_searching_for_service_title">正在搜尋配對服務</string>
@@ -118,5 +117,6 @@
     <string name="notification_adb_pairing_retry">重試</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">配對過程需要您與 Shizuku 的通知互動。請允許 Shizuku 發布通知。</string>
     <string name="notification_settings">通知設定</string>
-    <string name="adb_pairing_tutorial_content_miui">您正在使用 MIUI。如果通知上沒有輸入按鈕，您需要在系統設定中從「通知管理」-「通知顯示設定」將通知樣式切換為「原生樣式」。</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI 使用者可能需要在系統設定中從「通知管理」-「通知顯示設定」將通知樣式切換為「原生樣式」。</string>
+    <string name="adb_pairing_tutorial_content_notification">一條來自 Shizuku 的通知將幫助您完成配對。</string>
 </resources>

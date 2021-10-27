@@ -28,14 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2sp"
-                android:text="@string/adb_pairing_tutorial_content_start_service" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/adb_pairing_tutorial_content_input_pairing_code" />
+                android:text="@string/adb_pairing_tutorial_content_notification" />
 
             <TextView
                 android:id="@+id/miui"
@@ -55,8 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
                 android:lineSpacingExtra="2sp"
-                android:text="@string/adb_pairing_tutorial_content_bad_system"
-                android:textSize="12sp" />
+                android:text="@string/adb_pairing_tutorial_content_steps" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/adb_pairing_tutorial_content_enter_pairing_code" />
 
         </LinearLayout>
 
