@@ -27,9 +27,9 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/version_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/versionName"
             android:textSize="14sp" />
 
         <TextView

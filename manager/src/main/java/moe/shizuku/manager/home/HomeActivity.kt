@@ -131,6 +131,7 @@ abstract class HomeActivity : AppBarActivity() {
                         resources.getDimensionPixelOffset(R.dimen.default_app_icon_size)
                     )
                 )
+                binding.versionName.text = packageManager.getPackageInfo(packageName, 0).versionName
                 AlertDialog.Builder(this)
                     .setView(binding.root)
                     .show()
