@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rikka.widget.borderview.BorderNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    app:borderBottomVisibility="never"
+    app:borderTopDrawable="@null"
+    app:borderTopVisibility="whenTop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingStart="?android:listPreferredItemPaddingStart"
+        android:paddingTop="?actionBarSize"
+        android:paddingEnd="?android:listPreferredItemPaddingEnd"
+        android:paddingBottom="16dp"
+        app:fitsSystemWindowsInsets="bottom|top">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/view_help"
+            style="?materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/adb_pairing_tutorial_open_website"
+            app:icon="@drawable/ic_outline_open_in_new_24"
+            app:iconPadding="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="?outlineButtonBackground"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:foreground="?outlineButtonForeground"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@android:id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_outline_arrow_upward_24"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/notification_enabled_text"
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adb_pairing_tutorial_content_notification" />
+
+                <TextView
+                    android:id="@+id/notification_disabled_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/adb_pairing_tutorial_content_notification_blocked"
+                    android:textColor="?colorError" />
+
+                <Button
+                    android:id="@+id/notification_options"
+                    style="?materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="-8dp"
+                    android:text="@string/notification_settings"
+                    app:icon="@drawable/ic_outline_open_in_new_24"
+                    app:iconPadding="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/miui"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?outlineButtonBackground"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:foreground="?outlineButtonForeground"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_warning_24"
+                android:tint="?colorWarning"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="@string/adb_pairing_tutorial_content_miui"
+                    android:textColor="?colorWarning" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:importantForAccessibility="no"
+                android:padding="4dp"
+                android:src="@drawable/ic_numeric_1_circle_outline_24"
+                android:tint="?android:textColorSecondary"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adb_pairing_tutorial_content_steps" />
+
+                <TextView
+                    android:id="@+id/samsuing"
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:text="@string/adb_pairing_tutorial_content_samsung"
+                    android:textColor="?colorWarning"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <Button
+                    android:id="@+id/developer_options"
+                    style="?materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="-8dp"
+                    android:text="@string/development_settings"
+                    app:icon="@drawable/ic_outline_open_in_new_24"
+                    app:iconPadding="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:importantForAccessibility="no"
+                android:padding="4dp"
+                android:src="@drawable/ic_numeric_2_circle_outline_24"
+                android:tint="?android:textColorSecondary"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adb_pairing_tutorial_content_enter_pairing_code" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:importantForAccessibility="no"
+                android:padding="4dp"
+                android:src="@drawable/ic_numeric_3_circle_outline_24"
+                android:tint="?android:textColorSecondary"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adb_pairing_tutorial_content_finish" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</rikka.widget.borderview.BorderNestedScrollView>

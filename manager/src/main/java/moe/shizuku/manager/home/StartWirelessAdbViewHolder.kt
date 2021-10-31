@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbPairingService
+import moe.shizuku.manager.adb.AdbPairingTutorialActivity
 import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
@@ -82,7 +83,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
             // Input from notification is harder to use under this situation
             AdbPairDialogFragment().show((context as FragmentActivity).supportFragmentManager)
         } else {
-            AdbPairTutorialDialogFragment().show((context as FragmentActivity).supportFragmentManager)
+            context.startActivity(Intent(context, AdbPairingTutorialActivity::class.java))
         }
     }
 }
