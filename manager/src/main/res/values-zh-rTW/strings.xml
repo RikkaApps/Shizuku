@@ -119,4 +119,5 @@
     <string name="notification_settings">通知設定</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI 使用者可能需要在系統設定中從「通知管理」-「通知顯示設定」將通知樣式切換為「原生樣式」。</string>
     <string name="adb_pairing_tutorial_content_notification">一條來自 Shizuku 的通知將幫助您完成配對。</string>
+    <string name="adb_pairing_tutorial_content_samsung">Samung 使用者可能無法發現，輕觸「無線偵錯」選項的左側可以進入「無線偵錯」頁面。</string>
 </resources>

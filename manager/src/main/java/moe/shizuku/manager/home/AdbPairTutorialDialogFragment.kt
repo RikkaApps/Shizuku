@@ -33,6 +33,8 @@ class AdbPairTutorialDialogFragment : DialogFragment() {
 
         if (DeviceCompatibility.isMiui()) {
             binding.miui.isVisible = true
+        } else if (DeviceCompatibility.isSamsung()) {
+            binding.samsuing.isVisible = true
         }
 
         notificationEnabled = isNotificationEnabled()

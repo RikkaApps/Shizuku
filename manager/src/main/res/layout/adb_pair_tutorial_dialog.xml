@@ -39,7 +39,6 @@
                 android:text="@string/adb_pairing_tutorial_content_miui"
                 android:textColor="?colorWarning"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -49,6 +48,18 @@
                 android:layout_marginTop="8sp"
                 android:lineSpacingExtra="2sp"
                 android:text="@string/adb_pairing_tutorial_content_steps" />
+
+            <TextView
+                android:id="@+id/samsuing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/adb_pairing_tutorial_content_samsung"
+                android:textColor="?colorWarning"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <TextView
                 android:layout_width="wrap_content"
