@@ -5,7 +5,9 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -49,6 +51,7 @@ class AdbPairingService : Service() {
         }
     }
 
+    private val handler = Handler(Looper.getMainLooper())
     private val port = MutableLiveData<Int>()
     private var adbMdns: AdbMdns? = null
 
@@ -98,11 +101,33 @@ class AdbPairingService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    private fun startSearch() {
+        if (started) return
+        started = true
+        adbMdns = AdbMdns(this, AdbMdns.TLS_PAIRING, port).apply { start() }
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            port.observeForever(observer)
+        } else {
+            handler.post { port.observeForever(observer) }
+        }
+    }
+
+    private fun stopSearch() {
+        if (!started) return
+        started = false
+        adbMdns?.stop()
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            port.removeObserver(observer)
+        } else {
+            handler.post { port.removeObserver(observer) }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-
-        adbMdns?.stop()
-        port.removeObserver(observer)
+        stopSearch()
     }
 
     private fun getNotificationByPort(): Notification {
@@ -115,12 +140,7 @@ class AdbPairingService : Service() {
     }
 
     private fun onStart(): Notification {
-        if (started) return getNotificationByPort()
-
-        started = true
-        adbMdns = AdbMdns(this, AdbMdns.TLS_PAIRING, port).apply { start() }
-        port.observeForever(observer)
-
+        startSearch()
         return getNotificationByPort()
     }
 
@@ -158,6 +178,8 @@ class AdbPairingService : Service() {
 
             title = getString(R.string.notification_adb_pairing_succeed_title)
             text = getString(R.string.notification_adb_pairing_succeed_text)
+
+            stopSearch()
         } else {
             title = getString(R.string.notification_adb_pairing_failed_title)
 
