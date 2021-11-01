@@ -101,4 +101,8 @@
     <string name="starter">起動</string>
     <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
     <string name="rish_description">%1$sを使えば、任意のターミナルアプリで、Shizukuが実行するシェルに接続し、対話することができます。&lt;p&gt;詳しい使い方については、%1$sをタップするとドキュメントが表示されます。</string>
+    <string name="home_wireless_adb_description">Android 11以上では、ワイヤレスデバッグを有効にして、コンピュータに接続することなく、デバイスから直接Shizukuを起動することができます。&lt;p&gt;まず、ガイドをご覧ください。</string>
+    <string name="notification_settings">通知オプション</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11以前では、ワイヤレスデバッグを有効にするためにパソコンとの接続が必要です。</string>
+    <string name="home_wireless_adb_view_guide_button">ガイド</string>
 </resources>
