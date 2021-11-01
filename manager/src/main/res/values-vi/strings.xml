@@ -87,7 +87,6 @@
     <string name="home_status_service_version_update">Phiên bản %2$s, %1$s&lt;br&gt;Bắt đầu lại để cập nhật lên phiên bản %3$s</string>
     <string name="home_adb_description">Đối với thiết bị không có root, bạn cần sử dụng adb để khởi động Shizuku (yêu cầu kết nối máy tính). Quá trình này cần được lặp lại mỗi khi thiết bị được khởi động lại. Vui lòng <b><a href="%1$s">đọc phần trợ giúp</a></b>.</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Có một số cân nhắc khác, vui lòng xác nhận rằng bạn đã đọc phần trợ giúp trước.</string>
-    <string name="home_wireless_adb_description">Trong Android 11, Gỡ lỗi không dây là một tính năng được tích hợp sẵn. Vui lòng tham khảo &lt;b&gt;&lt;a href=\"%1$s\"&gt;tài liệu trợ giúp này&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Cách này hoạt động cho tất cả các phiên bản hệ thống. Nhưng trước Android 11, gỡ lỗi không dây không thể được kích hoạt trực tiếp.</string>
     <string name="paring_code_is_wrong">Mã ghép nối sai.</string>
     <string name="cannot_connect_port">Không thể kết nối với dịch vụ gỡ lỗi không dây.</string>
     <string name="dialog_wireless_adb_not_enabled">Gỡ lỗi không dây không được kích hoạt.

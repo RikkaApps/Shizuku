@@ -22,5 +22,4 @@
     <string name="home_adb_title">Empiece por conectarse a su computador</string>
     <string name="translation_contributors">—Peter Cuevas</string>
     <string name="home_status_service_version_update">Versión %2$s, %1$s&lt;br&gt;Reinicie para actualizar a la versión %3$s</string>
-    <string name="home_wireless_adb_description">En Android 11, la depuración inalámbrica es una característica incorporada. Por favor, consulte &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Esto funciona para todas las versiones del sistema. Pero antes de Android 11, la depuración inalámbrica no se puede habilitar directamente.</string>
 </resources>

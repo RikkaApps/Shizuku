@@ -1,23 +1,23 @@
 package moe.shizuku.manager.home
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.SystemProperties
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
-import moe.shizuku.manager.adb.AdbPairingService
 import moe.shizuku.manager.adb.AdbPairingTutorialActivity
 import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
-import rikka.core.util.BuildUtils
+import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
@@ -41,21 +41,30 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
         binding.button1.setOnClickListener { v: View ->
             onAdbClicked(v.context)
         }
-        binding.text1.movementMethod = LinkMovementMethod.getInstance()
-        binding.text1.text = context.getString(R.string.home_wireless_adb_description, Helps.ADB_ANDROID11.get())
-            .toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
-        if (BuildUtils.atLeast30) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.button3.setOnClickListener { v: View ->
+                CustomTabsHelper.launchUrlOrCopy(v.context, Helps.ADB_ANDROID11.get())
+            }
             binding.button2.setOnClickListener { v: View ->
                 onPairClicked(v.context)
             }
+            binding.text1.movementMethod = LinkMovementMethod.getInstance()
+            binding.text1.text = context.getString(R.string.home_wireless_adb_description)
+                .toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
         } else {
+            binding.text1.text = context.getString(R.string.home_wireless_adb_description_pre_11)
+                .toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
             binding.button2.isVisible = false
         }
     }
 
-    @SuppressLint("NewApi")
+    override fun onBind(payloads: MutableList<Any>) {
+        super.onBind(payloads)
+    }
+
     private fun onAdbClicked(context: Context) {
-        if (BuildUtils.atLeast30) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             AdbDialogFragment().show((context as FragmentActivity).supportFragmentManager)
             return
         }
@@ -75,7 +84,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
         }
     }
 
-    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun onPairClicked(context: Context) {
         if (context.display?.displayId ?: -1 > 0) {
             // Running in a multi-display environment (e.g., Windows Subsystem for Android),

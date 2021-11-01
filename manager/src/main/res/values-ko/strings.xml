@@ -78,7 +78,6 @@
     <string name="notification_service_start_failed">Shizuku 서비스를 시작할 수 없습니다.</string>
     <string name="home_status_service_version">%1$s, 버전 %2$s</string>
     <string name="home_adb_description">루트 없이 Shizuku를 시작하기 위해 adb가 필요합니다. (컴퓨터 연결 필수) 이 작업은 다시 시작 시 마다 필요로 합니다. 자세한 정보는 &lt;b&gt;&lt;a href=\"%1$s\"&gt;도움말&lt;/a&gt;&lt;/b&gt;을 확인하세요.</string>
-    <string name="home_wireless_adb_description">안드로이드 11부터, 무선 디버깅은 기본으로 제공되는 기능입니다. &lt;b&gt;&lt;a href=\"%1$s\"&gt;도움말&lt;/a&gt;&lt;/b&gt;를 참조하세요.&lt;p&gt;모든 시스템 버전에서 작동하나, 안드로이드 11 이전은 무선 디버깅을 직접 사용 설정할 수 없습니다.</string>
     <string name="home_status_service_version_update">%1$s, 버전 %2$s&lt;br&gt;다시 시작하여 버전 %3$s로 업데이트</string>
     <string name="app_management_dialog_adb_is_limited_title">ADB의 권한이 제한됨</string>
     <string name="app_management_dialog_adb_is_limited_message">높은 가능성으로, 기기 제조사에서 ADB의 권한을 제한한 것 입니다.&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;문서&lt;/a&gt;&lt;/b&gt;에 시스템에 대한 해결 방안이 있을 수 있습니다.</string>

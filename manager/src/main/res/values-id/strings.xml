@@ -2,7 +2,6 @@
 <resources>
     <string name="home_status_service_version_update">Versi %2$s, %1$s &lt;br&gt; Mulai ulang untuk upgrade ke versi %3$s</string>
     <string name="home_adb_description">Untuk perangkat tanpa akses root, Anda harus menggunakan adb untuk memulai Shizuku (perlu terhubung dengan komputer). Proses ini harus diulang setiap kali perangkat di-restart. Harap <b><a href="%1$s">baca dokumentasi</a></b> untuk info lebih lanjut.</string>
-    <string name="home_wireless_adb_description">Pada Android 11, Debug Nirkabel merupakan fitur bawaan. Bisa dilihat pada &lt;b&gt;&lt;a href=\"%1$s\"&gt;dokumen ini&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Metode ini bekerja pada seluruh versi Android. Namun, sebelum Android 11, Debug Nirkabel tidak bisa diaktifkan secara langsung.</string>
     <string name="dialog_adb_discovery_message">Harap aktifkan \"Debug Nirkabel (Wireless Debugging)\" pada \"Pilihan Pengembang (Developer Option)\". Opsi \"Debug Nirkabel\" akan nonaktif otomatis saat koneksi berubah.
 \n
 \nSebagai catatan, jangan nonaktifkan \"Pilihan Pengembang\" atau \"Debug USB\", karena Shizuku akan terhenti.</string>

@@ -89,14 +89,13 @@
 \n
 \nUna vez iniciado el proceso de emparejamiento, podrá introducir el código de emparejamiento.</string>
     <string name="adb_pairing">‎Emparejamiento‎</string>
-    <string name="home_wireless_adb_description">En Android 11, la depuración inalámbrica es una característica incorporada. Por favor, consulte &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento de ayuda&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Esto funciona para todas las versiones del sistema. Pero antes de Android 11, la depuración inalámbrica no se puede habilitar directamente.</string>
     <string name="settings_translation_summary">Ayúdanos a traducir %s a tu idioma</string>
     <string name="terminal_tutorial_3_description">Algunos consejos: conceda permiso de ejecución a %1$s y agréguelo a %2$s , podrá usar %1$s directamente.</string>
     <string name="terminal_tutorial_3">Finalmente, mueva los archivos a un lugar donde su aplicación de terminal pueda acceder, podrá usar %1$s para ejecutar comandos a través de Shizuku.</string>
     <string name="terminal_tutorial_2_description">Por ejemplo, si desea usar Shizuku en %1$s, debe reemplazar %2$s con %3$s (%4$s es el nombre del paquete de %1$s).</string>
     <string name="terminal_tutorial_2">Luego, use cualquier editor de texto para abrir y editar %1$s.</string>
     <string name="terminal_export_files">Exportar archivos</string>
-    <string name="terminal_tutorial_1_description">Si hay archivos con el mismo nombre en la carpeta seleccionada, se eliminarán. 
+    <string name="terminal_tutorial_1_description">Si hay archivos con el mismo nombre en la carpeta seleccionada, se eliminarán.
 \n
 \nLa función de exportación utiliza SAF (Storage Access Framework). Se informa que MIUI rompe las funciones de SAF. Si está utilizando MIUI, es posible que deba extraer el archivo de la apk de Shizuku o descargarlo de GitHub.</string>
     <string name="home_terminal_title">Utilice Shizuku en apps de terminal</string>

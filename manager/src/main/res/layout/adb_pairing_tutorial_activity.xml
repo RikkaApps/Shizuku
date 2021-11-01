@@ -22,20 +22,10 @@
         android:paddingBottom="16dp"
         app:fitsSystemWindowsInsets="bottom|top">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/view_help"
-            style="?materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/adb_pairing_tutorial_open_website"
-            app:icon="@drawable/ic_outline_open_in_new_24"
-            app:iconPadding="16dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:background="?outlineButtonBackground"
             android:clipChildren="false"
             android:clipToPadding="false"

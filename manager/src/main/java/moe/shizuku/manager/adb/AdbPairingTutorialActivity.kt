@@ -9,11 +9,9 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AdbPairingTutorialActivityBinding
-import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.compatibility.DeviceCompatibility
 import rikka.widget.borderview.BorderView
 
@@ -45,10 +43,6 @@ class AdbPairingTutorialActivity : AppBarActivity() {
                 miui.isVisible = true
             } else if (DeviceCompatibility.isSamsung()) {
                 samsuing.isVisible = true
-            }
-
-            viewHelp.setOnClickListener {
-                CustomTabsHelper.launchUrlOrCopy(it.context, Helps.ADB_ANDROID11.get())
             }
 
             developerOptions.setOnClickListener {

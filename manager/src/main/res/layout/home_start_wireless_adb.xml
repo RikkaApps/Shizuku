@@ -49,6 +49,12 @@
         tools:text="@string/home_adb_description" />
 
     <TextView
+        android:id="@android:id/button3"
+        style="@style/CardButton"
+        android:drawableStart="@drawable/ic_outline_open_in_new_24"
+        android:text="@string/home_wireless_adb_view_guide_button" />
+
+    <TextView
         android:id="@android:id/button2"
         style="@style/CardButton"
         android:drawableStart="@drawable/ic_baseline_link_24"

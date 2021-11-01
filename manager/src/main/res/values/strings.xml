@@ -21,7 +21,9 @@
 
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[In Android 11, Wireless debugging is a built-in feature. Please refer to <b><a href=\"%1$s\">this help document</a></b>.<p>This works for all system versions. But before Android 11, wireless debugging cannot be directly enabled.]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[On Android 11 or above, you can enable Wireless debugging and start Shizuku directly from your device, without connecting to a computer.<p>Please view the step-by-step guide first.]]></string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[Before Android 11, connecting to a computer is required to enable Wireless debugging.]]></string>
+    <string name="home_wireless_adb_view_guide_button">Step-by-step guide</string>
 
     <!-- Adb -->
     <string name="dialog_adb_discovery">Searching for wireless debugging service</string>
@@ -49,7 +51,6 @@
     <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notification from Shizuku. Please allow Shizuku to post notifications.</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI users may need to switch notification style to \"Android\" from \"Notification\" - \"Notification shade\" in system settings.</string>
     <string name="adb_pairing_tutorial_content_samsung">Samsung users may not able to find that tapping the left part of the \"Wireless debugging\" option will open \"Wireless debugging\" page.</string>
-    <string name="adb_pairing_tutorial_open_website">Step-by-step guide</string>
     <string name="adb_pairing_tutorial_content_finish">Back to Shizuku and start Shizuku.</string>
 
     <!-- Home - Root -->

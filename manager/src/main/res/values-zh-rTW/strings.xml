@@ -59,7 +59,7 @@
     <string name="dialog_adb_invalid_port">通訊埠是一個 1 至 65535 的整數。</string>
     <string name="dialog_adb_pairing_paring_code">配對碼</string>
     <string name="home_wireless_adb_title">通過無線偵錯啟動</string>
-    <string name="home_wireless_adb_description">對於 Android 11，無線偵錯是一個內建功能請參考&lt;b&gt;&lt;a href=\"%1$s\"&gt;此幫助文件&lt;/a&gt;&lt;/b&gt;。&lt;p&gt;此功能可在所有系統版本上工作。但在 Android 11 以前，無線偵錯無法直接啟用。</string>
+    <string name="home_wireless_adb_description"><![CDATA[在 Android 11 或更高版本上，您可以直接從您的裝置啟用無線偵錯並啟動 Shizuku，無需連線到計算機。<p>請先檢視分步驟指南。]]></string>
     <string name="dialog_adb_pairing_title">與裝置配對</string>
     <string name="paring_code_is_wrong">配對碼錯誤。</string>
     <string name="cannot_connect_port">無法連線至無線除錯服務。</string>
@@ -120,4 +120,5 @@
     <string name="adb_pairing_tutorial_content_miui">MIUI 使用者可能需要在系統設定中從「通知管理」-「通知顯示設定」將通知樣式切換為「原生樣式」。</string>
     <string name="adb_pairing_tutorial_content_notification">一條來自 Shizuku 的通知將幫助您完成配對。</string>
     <string name="adb_pairing_tutorial_content_samsung">Samung 使用者可能無法發現，輕觸「無線偵錯」選項的左側可以進入「無線偵錯」頁面。</string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[在 Android 11 之前，需要連線到計算機才能啟用無線偵錯。]]></string>
 </resources>

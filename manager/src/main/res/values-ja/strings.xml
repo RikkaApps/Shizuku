@@ -53,7 +53,6 @@
     <string name="dialog_adb_invalid_port">ポートは1から65535までの整数です。</string>
     <string name="adb_pairing">ペアリング</string>
     <string name="dialog_adb_pairing_title">デバイスとのペアリング</string>
-    <string name="home_wireless_adb_description">Android 11では、ワイヤレスデバッグ機能が内蔵されています。&lt;b&gt;&lt;a href=\"%1$s\"&gt;このヘルプ文書&lt;/a&gt;&lt;/b&gt;を参照してください。&lt;p&gt;これは、すべてのシステムバージョンで動作します。しかし、Android 11以前のバージョンでは、ワイヤレスデバッグを直接有効にすることはできません。</string>
     <string name="dialog_adb_discovery">ワイヤレスデバッグサービスの検索</string>
     <string name="home_adb_dialog_view_command_button_send">送信</string>
     <string name="home_wireless_adb_title">ワイヤレスデバッグで開始</string>

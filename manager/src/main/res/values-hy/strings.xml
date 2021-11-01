@@ -69,7 +69,6 @@
 \n
 \nՉանջատեք «Ծրագրավորողի կարգավորումներ»-ը կամ «USB-ով կարգաբերում»-ը, թե չէ Shizuku-ն կանջատվի։</string>
     <string name="dialog_adb_discovery">Որոնվում է անլար կարգաբերման ծառայությունը</string>
-    <string name="home_wireless_adb_description">Android 11 համակարգում Անլար կարգավորումը դա համակարգային առանձնահատկություն է։ Կարդացեք այս &lt;b&gt;&lt;a href=\"%1$s\"&gt;օգնության փաստաթուղթը&lt;/a&gt;&lt;/b&gt;։&lt;p&gt;Այս տարբերակը աշխատում է բոլոր համակարգի փոփոխակներում, սակայն Android 11-ից առաջ անլար կարգաբերումը իսկույն ձևով չի միանալու։</string>
     <string name="home_wireless_adb_title">Միացնել Անլար կարգաբերման օգնությամբ</string>
     <string name="home_adb_dialog_view_command_button_send">Ուղարկել</string>
     <string name="home_adb_dialog_view_command_copy_button">Պատճենել</string>

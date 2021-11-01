@@ -89,7 +89,6 @@
 \n
 \nNe feledje, ne tiltsa le ezeket \"Fejlesztői beállítások\" vagy \"USB hibakeresés\", mert a Shizuku le fog állni.</string>
     <string name="dialog_adb_discovery">Vezeték nélküli hibakeresési szolgáltatás keresése</string>
-    <string name="home_wireless_adb_description">Az Android 11-ben a vezeték nélküli hibakeresés beépített szolgáltatás. Lásd: &lt;b&gt;&lt;a href=\"%1$s\"&gt;ezt a súgó dokumentumot&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Ez minden rendszerverziónál működik. De az Android 11 előtt a vezeték nélküli hibakeresést közvetlenül nem lehet engedélyezni.</string>
     <string name="home_wireless_adb_title">Indítás vezeték nélküli hibakereséssel</string>
     <string name="home_adb_dialog_view_command_button_send">Küld</string>
     <string name="home_adb_dialog_view_command_copy_button">Másol</string>

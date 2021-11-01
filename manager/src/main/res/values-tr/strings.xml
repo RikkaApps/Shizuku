@@ -14,7 +14,6 @@
 \n
 \nNot, \"Geliştirici seçenekleri\" veya \"USB hata ayıklama\" devre dışı bırakmayın, Shizuku durdurulur.</string>
     <string name="dialog_adb_discovery">Kablosuz hata ayıklama hizmeti aranıyor</string>
-    <string name="home_wireless_adb_description">Android 11\'de Kablosuz hata ayıklama sisteme entegre bir özelliktir. Lütfen &lt;b&gt;&lt;a href=\"%1$s\"&gt;bu yardım belgesine bakın&lt;/a&gt;&lt;/b&gt;. &lt;p&gt;Bu tüm sistem sürümleri için çalışır. Ancak Android 11\'den önce kablosuz hata ayıklama doğrudan etkinleştirilemez.</string>
     <string name="home_wireless_adb_title">Kablosuz hata ayıklama ile başlat</string>
     <string name="home_adb_dialog_view_command_button_send">Gönder</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopyala</string>

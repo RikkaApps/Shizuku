@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dialog_adb_discovery">Suche nach drahtlosem Debugging-Dienst</string>
-    <string name="home_wireless_adb_description">In Android 11 ist Wireless Debugging eine integrierte Funktion. Bitte beziehen Sie sich auf &lt;b&gt;&lt;a href=\"%1$s\"&gt;dieses Hilfsdokument&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Dies funktioniert mit allen Systemversionen. In Versionen vor Android 11 kann Wireless Debugging jedoch nicht direkt aktiviert werden.</string>
     <string name="home_wireless_adb_title">Per Wireless Debugging starten</string>
     <string name="home_adb_dialog_view_command_button_send">Senden</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopieren</string>
@@ -31,8 +30,8 @@
     <string name="home_root_description">Zusätzlich kann Shizuku beim Booten automatisch gestartet werden. Falls nicht, bitte überprüfen, ob Shizuku durch Ihr System oder Tools von Drittanbietern eingeschränkt ist.&lt;br&gt;Sie können sich auf %s beziehen.</string>
     <string name="development_settings">Entwickleroptionen</string>
     <string name="adb_pairing_requires_multi_window">Bitte zuerst mit geteiltem Bildschirm öffnen (Mehrfenstermodus).</string>
-    <string name="dialog_adb_discovery_message">Bitte \"Debugging über WLAN\" in Entwickleroptionen aktivieren. \"Debugging über WLAN\" wird automatisch deaktiviert, wenn sich das Netzwerk ändert. 
-\n 
+    <string name="dialog_adb_discovery_message">Bitte \"Debugging über WLAN\" in Entwickleroptionen aktivieren. \"Debugging über WLAN\" wird automatisch deaktiviert, wenn sich das Netzwerk ändert.
+\n
 \nHinweis: Deaktivieren Sie die Entwickleroptionen oder USB-Debugging nicht oder Shizuku wird gestoppt.</string>
     <string name="grant_dialog_button_deny">Ablehnen</string>
     <string name="grant_dialog_button_allow_always">Immer zulassen</string>
@@ -79,7 +78,7 @@
     <string name="home_root_button_start">Start</string>
     <string name="home_root_title">Start (für gerootete Geräte)</string>
     <string name="adb_pair_required">Bitte gehen Sie die Kopplungsschritte zuerst durch.</string>
-    <string name="adb_error_key_store">Fehler bei Generierung eines Schlüssels für drahtloses Debugging. 
+    <string name="adb_error_key_store">Fehler bei Generierung eines Schlüssels für drahtloses Debugging.
 \nVielleicht ist der KeyStore-Mechanismus des Gerätes beschädigt.</string>
     <string name="adb_pairing_requires_multi_window_reason">Der Kopplungsdialog muss immer sichtbar sein. Den Split-Screen Modus zu benutzen, ist der einzige Weg diese App und den Systemdialog zur selben Zeit sichtbar zu lassen.</string>
     <string name="dialog_adb_pairing_paring_code">Kopplungscode</string>

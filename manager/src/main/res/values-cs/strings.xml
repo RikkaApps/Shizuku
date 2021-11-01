@@ -82,7 +82,6 @@
     <string name="home_adb_dialog_view_command_copy_button">Kopírovat</string>
     <string name="translation_contributors">JohanyXcz</string>
     <string name="dialog_adb_discovery">Hledání služby bezdrátového ladění</string>
-    <string name="home_wireless_adb_description">V systému Android 11 je bezdrátové ladění integrovanou funkcí. Přečtěte si prosím &lt;b&gt; &lt;a href=\"%1$s\"&gt; tento dokument nápovědy &lt;/a&gt; &lt;/b&gt;. &lt;p&gt; Funguje to pro všechny verze systému. Ale před Androidem 11 nelze bezdrátové ladění přímo povolit.</string>
     <string name="home_wireless_adb_title">Spustit pomocí WiFi debuging</string>
     <string name="home_adb_dialog_view_command_button_send">Odeslat</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Existuje několik dalších úvah, nejprve si prosím přečtěte nápovědu.</string>

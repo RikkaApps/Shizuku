@@ -61,7 +61,7 @@
     <string name="starter">启动程序</string>
     <string name="dialog_adb_invalid_port">端口号是一个 1 至 65535 的整数。</string>
     <string name="home_wireless_adb_title"><![CDATA[通过无线调试启动]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[对于 Android 11，无线调试是一个内置功能。请参考<b><a href=\"%1$s\">此帮助文档</a></b>。<p>此功能可在所有系统版本上工作。但在 Android 11 以前，无线调试无法直接启用。]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[在 Android 11 或更高版本上，您可以直接从您的设备启用无线调试并启动 Shizuku，无需连接到计算机。<p>请先查看分步骤指南。]]></string>
     <string name="action_stop">停止 Shizuku</string>
     <string name="dialog_stop_message">Shizuku 服务将被停止。</string>
     <string name="paring_code_is_wrong">配对码错误。</string>
@@ -119,4 +119,5 @@
     <string name="adb_pairing_tutorial_content_miui">MIUI 用户可能需要在系统设置中从“通知管理”-“通知显示设置”将通知样式切换为“原生样式”。</string>
     <string name="adb_pairing_tutorial_content_notification">一条来自 Shizuku 的通知将帮助您完成配对。</string>
     <string name="adb_pairing_tutorial_content_samsung">三星用户可能无法发现，点按“无线调试”选项的左侧可以进入“无线调试”页面。</string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[在 Android 11 之前，需要连接到计算机才能启用无线调试。]]></string>
 </resources>

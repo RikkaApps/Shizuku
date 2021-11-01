@@ -83,7 +83,6 @@
 \nObserve, não desative \"Opções do Desenvolvedor\" ou \"Depuração via USB\", ou o Shizuku será interrompido.</string>
     <string name="dialog_adb_discovery">Procurando o serviço de Depuração via Wireless</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Existem algumas outras considerações, por favor confirme se você leu o documento de ajuda primeiro.</string>
-    <string name="home_wireless_adb_description">No Android 11, a Depuração via Wireless é um recurso nativo. Por favor, consulte &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento de ajuda&lt;/a&gt;&lt;/b&gt;.&lt;p&gt;Isso funciona para todas as versões do Android. Mas antes do Android 11, a Depuração via Wireless não podia ser ativada diretamente.</string>
     <string name="home_wireless_adb_title">Começar pela Depuração via Wireless</string>
     <string name="home_adb_dialog_view_command_button_send">Enviar</string>
     <string name="home_adb_dialog_view_command_copy_button">Copiar</string>
