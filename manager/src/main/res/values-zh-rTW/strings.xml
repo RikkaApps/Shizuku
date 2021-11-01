@@ -121,4 +121,5 @@
     <string name="adb_pairing_tutorial_content_notification">一條來自 Shizuku 的通知將幫助您完成配對。</string>
     <string name="adb_pairing_tutorial_content_samsung">Samung 使用者可能無法發現，輕觸「無線偵錯」選項的左側可以進入「無線偵錯」頁面。</string>
     <string name="home_wireless_adb_description_pre_11"><![CDATA[在 Android 11 之前，需要連線到計算機才能啟用無線偵錯。]]></string>
+    <string name="home_wireless_adb_view_guide_button">分步驟指南</string>
 </resources>
