@@ -44,7 +44,8 @@
     <string name="dialog_adb_pairing_message">Lütfen aşağıdaki adımları izleyerek eşleştirme işlemine başlayın: \"Geliştirici Seçenekleri\" - \"Kablosuz hata ayıklama\" - \"Cihazı eşleme kodu kullanarak eşleştir\".
 \n
 \nEşleştirme işlemi başladıktan sonra eşleştirme kodunu girebilirsiniz.</string>
-    <string name="translation_contributors">İlker Binzet (ilker.binzet@gmail.com)</string>
+    <string name="translation_contributors">İlker Binzet (ilker.binzet@gmail.com)
+\nUmut Songur (umutsongur19@gmail.com)</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku\'yu aç</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; yeni Shizuku desteğine sahip, ama mevcut Shizuku talep ediyor. Shizuku çalışmıyor çünkü Shizuku uygulaması&lt;p&gt;Mart 2019\'dan bu yana kaldırılmıştır.</string>
     <string name="dialog_requesting_legacy_title">%1$s, mevcut Shizuku gerektiriyor</string>
@@ -88,4 +89,40 @@
     <string name="grant_dialog_button_allow_always">Her zaman izin ver</string>
     <string name="grant_dialog_button_deny">Reddet</string>
     <string name="permission_warning_template"><b>%1$s</b> uygulamasına %2$s için izin verilsin mi\?</string>
+    <string name="terminal_tutorial_3_description">Bazı ipuçları: %1$s\'e yürütme izni verin ve %2$s\'a ekleyin, %1$s\'i doğrudan kullanabileceksiniz.</string>
+    <string name="home_wireless_adb_description">Android 11 ve üzeri sürümlerde, Kablosuz hata ayıklama ve Shizuku\'yu cihazınızdan bir bilgisayara bağlanmadan direkt aktif edebilirsiniz.&lt;p&gt;Lütfen öncelikle adım adım kılavuz\'u inceleyin.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI kullanıcılarının sistem ayarlarında \"Bildirim\" - \"Bildirim gölgesi\"nden bildirim stilini \"Android\" olarak değiştirmeleri gerekebilir.</string>
+    <string name="home_terminal_title">Shizuku\'yu terminal uygulamalarında kullanın</string>
+    <string name="home_terminal_description">Sevdiğiniz terminal uygulamalarında Shizuku aracılığıyla komutları çalıştırın</string>
+    <string name="terminal_tutorial_1">İlk olarak, dosyaları istediğiniz yere dışa aktarın. İki dosya bulacaksınız, %1$s ve %2$s.</string>
+    <string name="terminal_tutorial_1_description">Seçilen klasörde aynı ada sahip dosyalar varsa bunlar silinecektir.
+\n
+\nDışa aktarma işlevi SAF\'yi (Depolama Erişim Çerçevesi) kullanır. MIUI\'nin SAF işlevlerini bozduğu bildirildi. MIUI kullanıyorsanız, dosyayı Shizuku\'nun apk\'sinden çıkarmanız veya GitHub\'dan indirmeniz gerekebilir.</string>
+    <string name="terminal_export_files">Dosyaları dışa aktar</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizuku\'dan bir bildirim eşleştirmeyi tamamlamanıza yardım edecek.</string>
+    <string name="adb_pairing_tutorial_content_steps">\"Geliştirici Seçenekleri\" - \"Kablosuz hata ayıklama\" girin. \"Cihazı eşleştirme kodu ile eşleştir\"e dokunun, altı haneli bir kod göreceksiniz.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Eşleştirmeyi tamamlamak için kodu bildirime girin.</string>
+    <string name="rish_description">%1$s ile herhangi bir terminal uygulamasında Shizuku\'nun shell run\'larına bağlanabilir ve bunlarla etkileşim kurabilirsiniz. &lt;p&gt;%1$s ayrıntılı kullanımı hakkında, belgeyi görüntülemek için dokunun.</string>
+    <string name="adb_pairing_tutorial_content_samsung">Samsung kullanıcıları, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmına dokunmanın \"Kablosuz hata ayıklama\" sayfasını açacağını bulamayabilir.</string>
+    <string name="adb_pairing_tutorial_title">Shizuku\'yu cihazınızla eşleştirin</string>
+    <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s\'yi (bir Riru modülü) deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku\'nun yerini alacak. %2$s\'yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
+    <string name="notification_settings">Bildirim seçenekleri</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Eşleştirme işlemi, Shizuku\'dan gelen bir bildirimle etkileşim kurmanızı gerektirir. Lütfen Shizuku\'nun bildirim göndermesine izin verin.</string>
+    <string name="terminal_tutorial_2">Ardından, %1$s\'i açıp düzenlemek için herhangi bir metin düzenleyiciyi kullanın.</string>
+    <string name="terminal_tutorial_2_description">Örneğin, Shizuku\'yu %1$s içinde kullanmak istiyorsanız, %2$s\'yi %3$s ile değiştirmelisiniz (%4$s, %1$s paketinin adıdır).</string>
+    <string name="terminal_tutorial_3">Son olarak, dosyaları terminal uygulamanızın erişebileceği bir yere taşıyın, Shizuku aracılığıyla komutları çalıştırmak için %1$s kullanabileceksiniz.</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 ve önceki sürümlerde, Kablosuz hata ayıklama\'yı aktif etmek için bir bilgisayara bağlanmak gereklidir.</string>
+    <string name="home_wireless_adb_view_guide_button">Adım adım kılavuz</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizuku\'ya geri dönün ve Shizuku\'yu başlatın.</string>
+    <string name="notification_channel_adb_pairing">Kablosuz hata ayıklama eşleştirmesi</string>
+    <string name="notification_adb_pairing_input_paring_code">Eşleştirme kodunu girin</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Eşleştirme hizmeti aranıyor</string>
+    <string name="notification_adb_pairing_service_found_title">Eşleştirme hizmeti bulundu</string>
+    <string name="notification_adb_pairing_stop_searching">Aramayı durdur</string>
+    <string name="notification_adb_pairing_working_title">Eşleştirme devam ediyor</string>
+    <string name="notification_adb_pairing_succeed_title">Eşleştirme başarılı</string>
+    <string name="notification_adb_pairing_succeed_text">Shizuku hizmetini şimdi başlatabilirsiniz.</string>
+    <string name="notification_adb_pairing_failed_title">Eşleştirme başarısız</string>
+    <string name="notification_adb_pairing_retry">Yeniden dene</string>
+    <string name="permission_description">Uygulamanın Shizuku\'yu kullanmasına izin verin.</string>
 </resources>
