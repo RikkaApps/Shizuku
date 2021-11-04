@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_adb_button_view_help">Aiuto</string>
+    <string name="home_adb_description">Per i dispositivi non rootati occorre usare adb per avviare Shizuku (serve una connessione ad un computer). Questo processo deve essere ripetuto ogni volta che il dispositivo viene riavviato. <b><a href="%1$s">Leggi il manuale</a></b>.</string>
+    <string name="home_adb_title">Avvia tramite un computer</string>
+    <string name="home_status_service_version_update">Versione %2$sm%1$s&lt;br&gt;Riavvia per aggiornare alla versione %3$s</string>
+    <string name="home_status_service_version">Versione %2$s,%1$s</string>
+    <string name="home_status_service_not_running">%1$s non è attivo</string>
+    <string name="home_status_service_is_running">%1$s è attivo</string>
+</resources>
