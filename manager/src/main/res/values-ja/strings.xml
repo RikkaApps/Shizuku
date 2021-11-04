@@ -105,4 +105,23 @@
     <string name="notification_settings">通知オプション</string>
     <string name="home_wireless_adb_description_pre_11">Android 11以前では、ワイヤレスデバッグを有効にするためにパソコンとの接続が必要です。</string>
     <string name="home_wireless_adb_view_guide_button">ガイド</string>
+    <string name="notification_adb_pairing_working_title">ペアリング中</string>
+    <string name="notification_adb_pairing_succeed_title">ペアリングしました</string>
+    <string name="adb_pairing_tutorial_content_steps">開発者向けオプション→ワイヤレスデバックを選択すると、ペア設定コードによるデバイスのペア設定をタップすると、6桁の
+\nコードが表示されます。</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizukuからの通知でペアリングが完了します。</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">通知にコードを入力してペアリングします。</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUIユーザーはシステムの設定から「通知」→「通知のシェード」から通知スタイルを「Android」に変更する必要がある場合があります。</string>
+    <string name="adb_pairing_tutorial_content_samsung">Samsungユーサーは、「ワイヤレスデバッグ」オプションの左側をタップすることで「ワイヤレスデバッグ」ページが開けることに気づけないかもしれない場合があります。</string>
+    <string name="notification_channel_adb_pairing">ワイヤレスデバックペアリング</string>
+    <string name="notification_adb_pairing_input_paring_code">ペアリングコードを入力</string>
+    <string name="notification_adb_pairing_searching_for_service_title">ペアリングサービスを探しています</string>
+    <string name="notification_adb_pairing_stop_searching">探すことを停止しています</string>
+    <string name="notification_adb_pairing_succeed_text">あなたはShizukuサービスをスタートさせることができます。</string>
+    <string name="notification_adb_pairing_failed_title">ペアリングに失敗しました</string>
+    <string name="notification_adb_pairing_retry">再試行</string>
+    <string name="adb_pairing_tutorial_title">お使いのデバイスとShizukuをペアリングする</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">ペアリング手順はShizukuからの通知を操作する必要があります。Shizukuからの通知を許可してください。</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizukuに戻り、スタートします。</string>
+    <string name="notification_adb_pairing_service_found_title">ペアリングサービスを見つけました</string>
 </resources>
