@@ -85,7 +85,7 @@
     <string name="home_status_service_is_running">%1$s запущен</string>
     <string name="translation_contributors">sermart1234, ruvlad</string>
     <string name="settings_start_on_boot_summary">На устройствах с root правами Shizuku может автоматически запускаться после загрузки системы</string>
-    <string name="settings_start_on_boot">Автозагрузка (root права)</string>
+    <string name="settings_start_on_boot">Автозапуск (с root правами)</string>
     <string name="settings_translation_summary_percentage">" (%s переведено)"</string>
     <string name="grant_dialog_button_allow_always">Разрешить всегда</string>
     <string name="grant_dialog_button_deny">Запретить</string>
@@ -103,4 +103,27 @@
     <string name="terminal_tutorial_1">Сначала экспортируйте файлы в любое место на свое усмотрение. Там появятся два файла: %1$s и %2$s.</string>
     <string name="home_terminal_description">Запуск команд через Shizuku прямиком из любимых приложений-терминалов</string>
     <string name="home_terminal_title">Применение Shizuku в эмуляторах терминала</string>
+    <string name="home_wireless_adb_description">Начиная с Android 11 и выше, включать отладку по Wi-Fi и запускать Shizuku можно прямо с этого устройства, без соединения с компьютером.&lt;p&gt;Подробнее в пошаговой инструкции.</string>
+    <string name="adb_pairing_tutorial_content_miui">На оболочке MIUI может потребоваться сменить параметр в пункте системных настроек «Уведомления» – «Стиль уведомлений» на «Android».</string>
+    <string name="adb_pairing_tutorial_content_steps">Перейдите в «Для разработчиков» – «Отладка по Wi-Fi». Нажмите на «Подключить устройство с помощью кода подключения» и увидите шестизначный код.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Введите код в уведомление для завершения процедуры.</string>
+    <string name="adb_pairing_tutorial_content_notification">Уведомление от Shizuku поможет завершить процедуру сопряжения.</string>
+    <string name="rish_description">Посредством %1$s из любого приложения-терминала можно подключаться и взаимодействовать с shell, запущенной Shizuku. &lt;p&gt;Нажмите здесь для просмотра инструкции по работе с %1$s.</string>
+    <string name="adb_pairing_tutorial_content_samsung">На устройствах Samsung иная структура: для перехода в необходимые настройки нужно в разделе «Параметры разработчика» нажать по левой части пункта «Отладка по Wi-Fi».</string>
+    <string name="notification_adb_pairing_working_title">Выполняется сопряжение</string>
+    <string name="notification_adb_pairing_succeed_title">Сопряжение выполнено</string>
+    <string name="notification_adb_pairing_succeed_text">Теперь можете запустить службу Shizuku.</string>
+    <string name="notification_adb_pairing_failed_title">Не удалось выполнить сопряжение</string>
+    <string name="notification_adb_pairing_retry">Повторить попытку</string>
+    <string name="adb_pairing_tutorial_title">Сопряжение Shizuku с вашим устройством</string>
+    <string name="home_wireless_adb_description_pre_11">Для отладки по Wi-Fi на Android до 11 версии не обойтись без соединения с компьютером.</string>
+    <string name="home_wireless_adb_view_guide_button">Пошаговая инструкция</string>
+    <string name="notification_settings">Настройки уведомлений</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Процедура сопряжения подразумевает взаимодействие с уведомлением от программы. Для продолжения выдайте Shizuku разрешение на показ уведомлений.</string>
+    <string name="adb_pairing_tutorial_content_finish">Вернитесь в приложение Shizuku и запустите его.</string>
+    <string name="notification_channel_adb_pairing">Сопряжение с отладкой по Wi-Fi</string>
+    <string name="notification_adb_pairing_input_paring_code">Введите код подключения</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Ожидание службы сопряжения</string>
+    <string name="notification_adb_pairing_service_found_title">Служба найдена</string>
+    <string name="notification_adb_pairing_stop_searching">Прекратить поиск</string>
 </resources>
