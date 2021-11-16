@@ -15,7 +15,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'en', 'ar', 'cs', 'de', 'es-rCL', 'b+es+419', 'eo', 'he', 'hu', 'hy', 'id', 'ja', 'ko', 'pl', 'pt-rBR', 'ru', 'tr', 'uk', 'vi', 'zh-rCN', 'zh-rTW'
+        resConfigs 'en', 'ar', 'cs', 'de', 'es-rCL', 'b+es+419', 'eo', 'fr', 'he', 'hu', 'hy', 'id', 'ja', 'ko', 'pl', 'pt-rBR', 'ru', 'tr', 'uk', 'vi', 'zh-rCN', 'zh-rTW'
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=none'
