@@ -56,6 +56,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding) : BaseVie
             binding.text1.text = context.getString(R.string.home_wireless_adb_description_pre_11)
                 .toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
             binding.button2.isVisible = false
+            binding.button3.isVisible = false
         }
     }
 
