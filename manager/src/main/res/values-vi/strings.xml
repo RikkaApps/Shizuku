@@ -101,4 +101,26 @@
     <string name="app_management_dialog_adb_is_limited_message">Rất có thể nhà sản xuất thiết bị của bạn giới hạn quyền của adb.&lt;p&gt;Có thể có giải pháp cho hệ thống của bạn trong &lt;b&gt;&lt;a href=\"%1$s\"&gt;tài liệu này&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="terminal_tutorial_2_description">Ví dụ, nếu bạn muốn sử dụng Shizuku trong %1$s, bạn nên thay thế %2$s bằng %3$s (%4$s là tên gói của %1$s).</string>
     <string name="terminal_tutorial_3_description">Một số mẹo: cấp quyền thực thi cho %1$s và thêm quyền đó vào %2$s, bạn sẽ có thể sử dụng %1$s trực tiếp.</string>
+    <string name="home_wireless_adb_description_pre_11">Trước Android 11, kết nối với máy tính là yêu cầu bắt buộc để bật Gỡ lỗi không dây.</string>
+    <string name="notification_adb_pairing_stop_searching">Dừng tìm kiếm</string>
+    <string name="adb_pairing_tutorial_content_miui">Người dùng MIUI có thể cần chuyển kiểu thông báo sang \"Android\" từ \"Thông báo\" - \"Bóng thông báo\" trong cài đặt hệ thống.</string>
+    <string name="notification_adb_pairing_succeed_text">Bạn có thể khởi động dịch vụ Shizuku ngay bây giờ.</string>
+    <string name="notification_adb_pairing_failed_title">Ghép nối thất bại</string>
+    <string name="notification_adb_pairing_retry">Thử lại</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Nhập mã vào thông báo để hoàn tất quá trình ghép nối.</string>
+    <string name="adb_pairing_tutorial_content_notification">Một thông báo từ Shizuku sẽ giúp bạn hoàn thành việc ghép nối.</string>
+    <string name="adb_pairing_tutorial_content_steps">Nhập \"Tùy chọn nhà phát triển\" - \"Gỡ lỗi qua Wi-Fi\". Nhấn vào \"Ghép nối thiết bị bằng mã ghép nối\", bạn sẽ thấy một mã gồm sáu chữ số.</string>
+    <string name="adb_pairing_tutorial_content_samsung">Người dùng Samsung có thể không tìm thấy phần nhấn vào bên trái của tùy chọn \"Gỡ lỗi qua Wi-Fi\" sẽ mở trang \"Gỡ lỗi qua Wi-Fi\".</string>
+    <string name="adb_pairing_tutorial_title">Ghép nối Shizuku với thiết bị của bạn</string>
+    <string name="notification_settings">Tùy chọn thông báo</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Quá trình ghép nối cần bạn tương tác với thông báo từ Shizuku. Vui lòng cho phép Shizuku đăng thông báo.</string>
+    <string name="notification_channel_adb_pairing">Ghép nối gỡ lỗi qua Wi-Fi</string>
+    <string name="notification_adb_pairing_input_paring_code">Nhập mã ghép nối</string>
+    <string name="home_wireless_adb_view_guide_button">Hướng dẫn từng bước</string>
+    <string name="adb_pairing_tutorial_content_finish">Quay lại với Shizuku và khởi động Shizuku.</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Đang tìm kiếm dịch vụ ghép nối</string>
+    <string name="notification_adb_pairing_service_found_title">Đã tìm thấy dịch vụ ghép nối</string>
+    <string name="notification_adb_pairing_working_title">Đang trong quá trình ghép nối</string>
+    <string name="notification_adb_pairing_succeed_title">Ghép nối thành công</string>
+    <string name="home_wireless_adb_description">Trên Android 11 trở lên, bạn có thể bật tính năng Gỡ lỗi không dây và khởi động Shizuku trực tiếp từ thiết bị của mình mà không cần kết nối với máy tính.&lt;p&gt;Vui lòng xem hướng dẫn từng bước trước.</string>
 </resources>
