@@ -102,4 +102,26 @@
     <string name="terminal_tutorial_1">Primeiro, exporte os arquivos para onde quiser. Serão dois arquivos: %1$s e %2$s.</string>
     <string name="home_terminal_title">Usar o Shizuku em apps de terminal</string>
     <string name="rish_description">Com %1$s, em qualquer aplicativo de terminal, você pode se conectar e interagir com o shell executado pelo Shizuku. &lt;p&gt; Sobre o uso detalhado %1$s, toque para ver o documento.</string>
+    <string name="notification_adb_pairing_failed_title">Falha no pareamento</string>
+    <string name="adb_pairing_tutorial_content_miui">Os usuários da MIUI podem precisar mudar o estilo de notificação de \"MIUI\" para \"Android\". Para isso, acesse \"Configurações\", em seguida toque em \"Notificações\", em seguida toque em \"Área de Notificação\". Se você não usa MIUI, ignore isso.</string>
+    <string name="notification_adb_pairing_succeed_title">Pareamento concluído</string>
+    <string name="adb_pairing_tutorial_content_steps">Acesse as \"Opções do desenvolvedor\", em seguida \"Depuração por Wi-Fi\". Toque em \"Parear o dispositivo com código de pareamento\", você verá um código de seis dígitos.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Digite o código de 6 dígitos na notificação para concluir o pareamento.</string>
+    <string name="adb_pairing_tutorial_content_notification">Uma notificação do Shizuku ajudará você a concluir o pareamento.</string>
+    <string name="notification_adb_pairing_service_found_title">Serviço de pareamento encontrado</string>
+    <string name="notification_adb_pairing_stop_searching">Parar de procurar</string>
+    <string name="notification_adb_pairing_working_title">Processando pareamento</string>
+    <string name="notification_adb_pairing_succeed_text">Agora, você pode iniciar o serviço do Shizuku.</string>
+    <string name="adb_pairing_tutorial_title">Parear Shizuku com seu dispositivo</string>
+    <string name="home_wireless_adb_description">No Android 11 ou superior, você pode ativar a Depuração via Wireless e iniciar o Shizuku diretamente do seu dispositivo, sem se conectar a um computador. &lt;p&gt; Primeiro, consulte esse guia passo a passo.</string>
+    <string name="home_wireless_adb_description_pre_11">Antes do Android 11, é necessário conectar-se a um computador para habilitar a Depuração via Wireless.</string>
+    <string name="home_wireless_adb_view_guide_button">Guia passo a passo</string>
+    <string name="adb_pairing_tutorial_content_samsung">Os usuários da Samsung podem não descobrir que tocar na parte esquerda da opção \"Depuração sem fio\" abrirá a página \"Depuração sem fio\".</string>
+    <string name="adb_pairing_tutorial_content_finish">Volte para Shizuku e inicie o Shizuku.</string>
+    <string name="notification_settings">Opções de notificações</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">O processo de pareamento precisa que você interaja com uma notificação do Shizuku. Por favor, permita que o Shizuku envie notificações.</string>
+    <string name="notification_channel_adb_pairing">Pareamento da Depuração via Wireless</string>
+    <string name="notification_adb_pairing_input_paring_code">Digite o código de pareamento</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Procurando serviço de pareamento</string>
+    <string name="notification_adb_pairing_retry">Tentar novamente</string>
 </resources>
