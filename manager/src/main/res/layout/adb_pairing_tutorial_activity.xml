@@ -123,6 +123,16 @@
                     android:text="@string/adb_pairing_tutorial_content_miui"
                     android:textColor="?colorWarning" />
 
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/adb_pairing_tutorial_content_miui_2"
+                    android:textColor="?colorWarning" />
+
             </LinearLayout>
 
         </LinearLayout>
