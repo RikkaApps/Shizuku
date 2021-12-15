@@ -124,4 +124,5 @@
     <string name="home_status_service_version">Version %2$s, %1$s</string>
     <string name="home_status_service_version_update">Version %2$s, %1$s&lt;br&gt;Relancez pour mettre à jour vers la version %3$s</string>
     <string name="home_adb_title">Lancer par connection à un ordinateur</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Sinon, vous ne pourrez peut-être pas saisir le code d\'association depuis la notification.</string>
 </resources>
