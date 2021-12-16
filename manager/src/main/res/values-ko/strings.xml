@@ -86,5 +86,42 @@
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;는 지금의 Shizuku를 지원하나, 구형 Shizuku를 요청하고 있습니다. Shizuku가 실행 중이지 않아서 발생할 수 있는 문제로, Shizuku 앱에서 확인하세요.&lt;p&gt;구형 Shizuku는 2019년 3월 부터 지원이 중단되었습니다.</string>
     <string name="grant_dialog_button_allow_always">항상 허용</string>
     <string name="grant_dialog_button_deny">거부</string>
-    <string name="permission_warning_template"><![CDATA[&lt;b&gt;%1$s&lt;/b&gt;에서 %2$s하도록 허용하시겠습니까?]]></string>
+    <string name="permission_warning_template"><b>%1$s</b>을(를) %2$s에 허용하시겠습니까\?</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizuku의 알림이 페어링을 완료하는 데 도움이 될 수도 있습니다.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">알림에 코드를 입력하면 페어링이 완료됩니다.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI 사용자는 시스템 설정의 \"알림\" - \"알림 창\"에서 알림 스타일을 \"Android\"로 전환해야 합니다.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">그렇지 않으면 알림에서 페어링 코드를 입력하지 못할 수 있습니다.</string>
+    <string name="terminal_tutorial_1_description">선택한 폴더에 같은 이름의 파일이 있으면 삭제됩니다.
+\n
+\n내보내기 기능은 SAF(Storage Access Framework)를 사용합니다. MIUI가 SAF의 기능을 중단시키는 것으로 보고되었습니다. MIUI를 사용하는 경우 Shizuku의 apk에서 파일을 추출하거나 GitHub에서 다운로드해야 할 수 있습니다.</string>
+    <string name="terminal_export_files">파일 내보내기</string>
+    <string name="notification_adb_pairing_searching_for_service_title">페어링 서비스 검색중</string>
+    <string name="notification_adb_pairing_failed_title">페어링 실패</string>
+    <string name="permission_description">앱이 Shizuku를 사용하도록 허용합니다.</string>
+    <string name="adb_pairing_tutorial_content_samsung">삼성 갤럭시 사용자는 \"무선 디버깅\" 옵션의 왼쪽 부분을 누르면 \"무선 디버깅\" 페이지가 열리는 것을 찾지 못할 수 있습니다.</string>
+    <string name="terminal_tutorial_2_description">예를 들어, %1$s에서 Shizuku를 사용하려면 %2$s를 %3$s로 바꿔야 합니다(%4$s는 %1$s의 패키지 이름).</string>
+    <string name="rish_description">%1$s를 사용하면 모든 터미널 앱에서 Shizuku가 실행하는 셸에 연결하고 상호 작용할 수 있습니다. &lt;p&gt;자세한 사용법 %1$s에 대해 문서를 보려면 탭하세요.</string>
+    <string name="terminal_tutorial_2">그런 다음 텍스트 편집기를 사용하여 %1$s을 열고 편집하십시오.</string>
+    <string name="terminal_tutorial_3">마지막으로 터미널 앱이 액세스할 수 있는 위치로 파일을 이동하면 %1$s를 사용하여 Shizuku를 통해 명령을 실행할 수 있습니다.</string>
+    <string name="terminal_tutorial_3_description">몇 가지 팁: %1$s에 실행 권한을 부여하고 %2$s에 추가하면 %1$s를 직접 사용할 수 있습니다.</string>
+    <string name="notification_channel_adb_pairing">무선 디버깅 페어링</string>
+    <string name="notification_adb_pairing_input_paring_code">페어링 코드 입력</string>
+    <string name="adb_pairing_tutorial_title">기기와 Shizuku 페어링</string>
+    <string name="notification_adb_pairing_working_title">페어링 진행 중</string>
+    <string name="notification_adb_pairing_succeed_title">페어링 성공</string>
+    <string name="notification_adb_pairing_succeed_text">지금 Shizuku 서비스를 시작할 수 있습니다.</string>
+    <string name="adb_pairing_tutorial_content_steps">\"개발자 옵션\" - \"무선 디버깅\"을 선택합니다. \"페어링 코드로 장치 페어링\"을 탭하면 6자리 코드가 표시됩니다.</string>
+    <string name="home_wireless_adb_description">Android 11 이상에서 컴퓨터에 연결하지 않고 무선 디버깅을 활성화하하여 기기에서 직접 Shizuku를 시작할 수 있습니다.&lt;p&gt;단계별 가이드를 먼저 확인하세요.</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 이전에는 무선 디버깅을 활성화하기 위해 컴퓨터에 연결해야 합니다.</string>
+    <string name="home_wireless_adb_view_guide_button">단계별 가이드</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizuku로 돌아가서 Shizuku를 시작하세요.</string>
+    <string name="notification_adb_pairing_service_found_title">페어링 서비스를 찾았습니다</string>
+    <string name="notification_adb_pairing_stop_searching">검색 중지</string>
+    <string name="notification_adb_pairing_retry">재시도</string>
+    <string name="notification_settings">알림 옵션</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">페어링 프로세스에서는 Shizuku의 알림과 상호 작용해야 합니다. Shizuku가 알림을 게시하도록 허용하십시오.</string>
+    <string name="home_root_description_sui">Magisk를 사용하는 경우 %1$s(Riru 모듈)을 사용해 볼 수 있습니다. 루트 사용자의 경우 결국 Shizuku를 대체합니다. %2$s를 사용하려면 기존 응용 프로그램을 약간 변경해야 합니다.</string>
+    <string name="home_terminal_title">터미널에서 Shizuku 사용</string>
+    <string name="home_terminal_description">선호하는 터미널 앱에서 Shizuku를 통해 명령 실행</string>
+    <string name="terminal_tutorial_1">먼저 원하는 곳으로 파일을 내보냅니다. %1$s 및 %2$s의 두 파일을 찾을 수 있습니다.</string>
 </resources>
