@@ -39,7 +39,7 @@
     <string name="notification_channel_service_status">Statut du démarrage du service</string>
     <string name="dialog_stop_message">Le service Shizuku sera arrêté.</string>
     <string name="action_stop">Arrêter Shizuku</string>
-    <string name="about_view_source_code">Voir le code source à %s</string>
+    <string name="about_view_source_code">Voir le code source sur %s</string>
     <string name="action_about">À propos</string>
     <string name="settings_start_on_boot_summary">Pour les appareils rootés, Shizuku peut se lancer automatiquement au démarrage</string>
     <string name="settings_start_on_boot">Lancer au démarrage de l\'appareil (root)</string>
@@ -56,12 +56,12 @@
     <string name="rish_description">Avec %1$s, dans n\'importe quelle appli de terminal, vous pouvez vous connecter et interagir avec le shell lancé par Shizuku. &lt;p&gt;À propos de l\'usage détaillé de %1$s, appuyez pour voir le document.</string>
     <string name="terminal_tutorial_3_description">Quelques astuces : accordez la permission d\'exécution à %1$s et ajoutez le au %2$s, vous pourrez utiliser %1$s directement.</string>
     <string name="terminal_tutorial_3">Enfin, déplacez les fichiers quelque part où votre appli de terminal a accès, vous pourrez utiliser %1$s pour exécuter des commandes à travers Shizuku.</string>
-    <string name="terminal_tutorial_2_description">Par exemple, si vous voulez utiliser Shizuku dans %1$s, vous devriez remplacer %2$s par %3$s (%4$s est le nom de package de%1$s).</string>
+    <string name="terminal_tutorial_2_description">Par exemple, si vous voulez utiliser Shizuku dans %1$s, vous devriez remplacer %2$s par %3$s (%4$s est le nom de package de %1$s).</string>
     <string name="terminal_tutorial_2">Ensuite, utilisez un éditeur de texte pour ouvrir et éditer %1$s.</string>
     <string name="terminal_export_files">Exporter les fichiers</string>
     <string name="terminal_tutorial_1_description">Si il y a des fichiers avec le même nom dans le dossier sélectionné, ils seront supprimés.
 \n
-\nLa fonction exporter utilise le SAF (Framework d\'Accès aux Fichiers). Il est connu que MIUI casse les fonctions du SAF. Si vous utilisez MIUI, vous pourriez devoir extraire les fichiers depuis l\'apk de Shizuku ou les télécharger depuis GitHub.</string>
+\nLa fonction exporter utilise le SAF (Framework d\'Accès au Stockage). Nous savons que MIUI casse les fonctions du SAF. Si vous utilisez MIUI, vous pourriez devoir extraire les fichiers depuis l\'apk de Shizuku ou les télécharger depuis GitHub.</string>
     <string name="terminal_tutorial_1">D\'abord, exportez les fichiers oú vous voulez. Vous trouverez deux fichiers, %1$s et %2$s.</string>
     <string name="home_terminal_description">Exécuter des commandes à travers Shizuku dans les applis de terminal que vous aimez</string>
     <string name="home_terminal_title">Utiliser Shizuku dans les applis de terminal</string>
@@ -79,10 +79,10 @@
     <string name="home_app_management_title">Gestion d\'application</string>
     <string name="home_root_button_restart">Redémarrer</string>
     <string name="home_root_button_start">Démarrer</string>
-    <string name="home_root_description_sui">Si vous utilisez Magisk, vous pouvez essayer %1$s ( un module Riru). Pour les utilisateurs root, il pourrait éventuellement remplacer Shizuku. Note, les applications existantes nécessiteraient de changer un petit peu pour utiliser %2$s.</string>
+    <string name="home_root_description_sui">Si vous utilisez Magisk, vous pouvez essayer %1$s (un module Riru). Pour les utilisateurs root, il pourrait éventuellement remplacer Shizuku. Note, les applications existantes nécessiteraient de changer un petit peu pour utiliser %2$s.</string>
     <string name="home_root_description">De plus, Shizuku peut être démarré automatiquement au démarrage. Si non, merci de vérifier si votre système ou un outil tiers a restreint Shizuku. &lt;br&gt;Vous pouvez vous référer à %s.</string>
     <string name="home_root_title">Démarrer (pour les appareils rootés)</string>
-    <string name="adb_pairing_tutorial_content_finish">Retour sur Shizuku et lancer Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_finish">Retournez dans Shizuku et lancez le.</string>
     <string name="adb_pairing_tutorial_content_samsung">Les utilisateurs de Samsung pourraient ne pas trouver qu\'appuyer sur la partie gauche de l\'option \"Débogage sans fil\" ouvrira la page \"Débogage sans fil\".</string>
     <string name="adb_pairing_tutorial_content_miui">Les utilisateurs de MIUI pourraient devoir changer le style de notifications vers \"Android\" dans \"Notifications\" - \"Style de notification\" dans les paramètres système.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Le processus d\'association requiert que vous interagissez avec une notification de Shizuku. Merci d\'autoriser Shizuku à envoyer les notifications.</string>
