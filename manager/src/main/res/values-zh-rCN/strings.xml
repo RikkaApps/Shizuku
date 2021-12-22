@@ -104,6 +104,7 @@
     <string name="adb_pairing_tutorial_title">将 Shizuku 与您的设备配对</string>
     <string name="adb_pairing_tutorial_content_steps">进入“开发者选项”-“无线调试”。点按“使用配对码配对设备”，您将看到一个六位数字代码。</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">在通知中输入代码来完成配对。</string>
+    <string name="adb_pairing_tutorial_content_finish">返回到 Shizuku 并启动 Shizuku。</string>
     <string name="notification_channel_adb_pairing">无线调试配对</string>
     <string name="notification_adb_pairing_input_paring_code">输入配对码</string>
     <string name="notification_adb_pairing_searching_for_service_title">正在搜索配对服务</string>
