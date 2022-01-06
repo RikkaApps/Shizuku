@@ -95,9 +95,7 @@
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingBottom="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"
