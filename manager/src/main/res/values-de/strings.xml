@@ -4,14 +4,14 @@
     <string name="home_wireless_adb_title">Per Wireless Debugging starten</string>
     <string name="home_adb_dialog_view_command_button_send">Senden</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopieren</string>
-    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Es gibt noch einige andere Möglichkeiten. Bitte bestätigen Sie, dass Sie das Hilfsdokument bereits gelesen haben.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Es gibt noch einige andere Überlegungen, bitte vergewissern, dass Sie zuerst die Hilfe gelesen haben.</string>
     <string name="home_adb_button_view_command">Befehl anzeigen</string>
-    <string name="home_adb_description">Für Geräte ohne Root-Zugriff müssen Sie ADB verwenden, um Shizuku zu starten (erfordert eine Computerverbindung). Dieser Vorgang muss nach jedem Neustart des Geräts wiederholt werden. Bitte <b><a href="%1$s">lesen Sie das Hilfsdokument</a></b>.</string>
-    <string name="home_adb_button_view_help">Lesen Sie das Hilfe-Dokument</string>
-    <string name="home_adb_title">Starten, indem Sie eine Verbindung zu einem Computer herstellen</string>
-    <string name="home_status_service_version_update">Version %2$s, %1$s&lt;br&gt;Starten Sie erneut, um auf Version %3$s zu aktualisieren</string>
+    <string name="home_adb_description">Bei Geräten ohne Root müssen Sie adb verwenden, um Shizuku zu starten (erfordert Computerverbindung). Dieser Vorgang muss bei jedem Neustart des Geräts wiederholt werden. Bitte <b><a href="%1$s">die Hilfe lesen</a></b>.</string>
+    <string name="home_adb_button_view_help">Hilfe lesen</string>
+    <string name="home_adb_title">Verbindung mit dem Compter herstellen</string>
+    <string name="home_status_service_version_update">Version %2$s, %1$s&lt;br&gt;Erneut starten, um auf Version %3$s zu aktualisieren</string>
     <string name="home_status_service_version">Version %2$s, %1$s</string>
-    <string name="home_status_service_not_running">%1$s beendet</string>
+    <string name="home_status_service_not_running">%1$s wird nicht ausgeführt</string>
     <string name="home_status_service_is_running">%1$s läuft</string>
     <string name="app_management_dialog_adb_is_limited_title">Die ADB-Berechtigungen sind beschränkt</string>
     <string name="app_management_menu_get_more">Mehr beziehen</string>
@@ -101,4 +101,28 @@
     <string name="home_terminal_description">Befehle durch Shizuku in beliebigen Terminal Anwendungen ausführen</string>
     <string name="home_terminal_title">Shizuku in Terminal-Anwendungen verwenden</string>
     <string name="terminal_tutorial_3_description">Einige Tipps: Gewähre %1$s Ausführungszugriff und füge es zu %2$s hinzu, damit du %1$s direkt verwenden kannst.</string>
+    <string name="home_wireless_adb_description">Unter Android 11 oder höher können Sie Wireless Debugging aktivieren und Shizuku direkt von Ihrem Gerät aus starten, ohne eine Verbindung zu einem Computer herzustellen.&lt;p&gt;Bitte zuerst die Schritt-für-Schritt-Anleitung ansehen.</string>
+    <string name="notification_adb_pairing_service_found_title">Kopplungsdienst gefunden</string>
+    <string name="adb_pairing_tutorial_title">Shizuku mit Ihrem Gerät koppeln</string>
+    <string name="adb_pairing_tutorial_content_steps">\"Entwickleroptionen\" - \"Kabelloses Debugging\". Auf \"Gerät mit Pairing-Code koppeln\", ein sechsstelligen Code ist zusehen.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Code aus der Benachrichtigung eingeben, um die Kopplung abzuschließen.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Andernfalls können Sie den Paring-Code möglicherweise nicht über die Meldung eingeben.</string>
+    <string name="notification_adb_pairing_stop_searching">Suche beenden</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Nach Kopplungsdienst suchen</string>
+    <string name="notification_adb_pairing_succeed_title">Erfolgreich gekoppelt</string>
+    <string name="notification_adb_pairing_succeed_text">Sie können den Shizuku-Dienst jetzt starten.</string>
+    <string name="notification_adb_pairing_failed_title">Koppeln fehlgeschlagen</string>
+    <string name="notification_adb_pairing_retry">Wiederholen</string>
+    <string name="notification_channel_adb_pairing">Kabelloses Debugging-Kopplung</string>
+    <string name="notification_adb_pairing_input_paring_code">Kopplungs-Code eingeben</string>
+    <string name="notification_adb_pairing_working_title">Koppeln läuft</string>
+    <string name="adb_pairing_tutorial_content_samsung">Samsung-Benutzer können möglicherweise nicht feststellen, dass das Tippen auf den linken Teil der Option \"Wireless Debugging\" die Seite \"Wireless Debugging\" öffnet.</string>
+    <string name="adb_pairing_tutorial_content_notification">Eine Benachrichtigung von Shizuku wird Ihnen helfen, die Kopplung abzuschließen.</string>
+    <string name="home_wireless_adb_description_pre_11">Vor Android 11 ist eine Verbindung zu einem Computer erforderlich, um Wireless Debugging zu aktivieren.</string>
+    <string name="home_wireless_adb_view_guide_button">Schritt-für-Schritt-Anleitung</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI-Nutzer müssen in den Systemeinstellungen unter \"Benachrichtigung\" - \"Benachrichtigungsleiste\" möglicherweise den Benachrichtigungsstil auf \"Android\" umstellen.</string>
+    <string name="adb_pairing_tutorial_content_finish">Zurück zu Shizuku und Shizuku starten.</string>
+    <string name="rish_description">Mit %1$s können Sie in jeder Terminal-App eine Verbindung zur Shell von Shizuku herstellen und mit ihr interagieren. &lt;p&gt;Zur detaillierten Verwendung von %1$s tippen, um das Dokument anzuzeigen.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Für den Kopplungssprozess müssen Sie mit einer Benachrichtigung von Shizuku interagieren. Bitte Shizuku erlauben, Benachrichtigungen zu posten.</string>
+    <string name="notification_settings">Benachrichtigungsoptionen</string>
 </resources>
