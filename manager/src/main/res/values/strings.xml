@@ -53,6 +53,8 @@
     <string name="adb_pairing_tutorial_content_miui_2">Otherwise, you may not able to enter paring code from the notification.</string>
     <string name="adb_pairing_tutorial_content_samsung">Samsung users may not able to find that tapping the left part of the \"Wireless debugging\" option will open \"Wireless debugging\" page.</string>
     <string name="adb_pairing_tutorial_content_finish">Back to Shizuku and start Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku needs to access local network. It is controlled by the network permission.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Some systems (such as MIUI) disallow apps to access the network when they are not visible, even if the app uses foreground service as standard. Please disable battery optimization features for Shizuku on such systems.</string>
 
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>

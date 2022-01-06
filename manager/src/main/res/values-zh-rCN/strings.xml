@@ -123,4 +123,7 @@
     <string name="adb_pairing_tutorial_content_samsung">三星用户可能无法发现，点按“无线调试”选项的左侧可以进入“无线调试”页面。</string>
     <string name="home_wireless_adb_description_pre_11"><![CDATA[在 Android 11 之前，需要连接到计算机才能启用无线调试。]]></string>
     <string name="home_wireless_adb_view_guide_button">分步骤指南</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku 需要访问本地网络。它由网络权限控制。</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系统（例如 MIUI）不允许应用在不可见时访问网络，即使应用已按标准使用前台服务。请在此类系统上为 Shizuku 禁用电池优化功能。</string>
+
 </resources>

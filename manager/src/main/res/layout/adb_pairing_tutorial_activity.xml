@@ -83,6 +83,58 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?outlineButtonBackground"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:foreground="?outlineButtonForeground"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_outline_info_24"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="@string/adb_pairing_tutorial_content_network" />
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:duplicateParentState="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/adb_pairing_tutorial_content_network_limation_not_foreground" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/miui"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,8 +179,8 @@
                     style="@style/TerminalTutorialText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
                     android:layout_marginTop="8dp"
+                    android:duplicateParentState="true"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/adb_pairing_tutorial_content_miui_2"
                     android:textColor="?colorWarning" />

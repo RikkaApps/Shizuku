@@ -121,4 +121,6 @@
     <string name="adb_pairing_tutorial_content_samsung">Samung 使用者可能無法發現，輕觸「無線偵錯」選項的左側可以進入「無線偵錯」頁面。</string>
     <string name="home_wireless_adb_description_pre_11">在 Android 11 之前，必須與電腦連線才能啟用無線偵錯。</string>
     <string name="home_wireless_adb_view_guide_button">分步驟指南</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku 需要訪問本地網路。它由網路權限控制。</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系統（例如 MIUI）不允許應用程式在不可見時訪問網路，即使應用程式已按標準使用前臺服務。請在此類系統上為 Shizuku 禁用電池最佳化功能。</string>
 </resources>

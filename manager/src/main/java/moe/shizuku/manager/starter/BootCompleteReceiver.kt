@@ -20,6 +20,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
         }
         if (Process.myUid() / 100000 > 0) return
 
+        // TODO Record if receiver is called
         if (ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(AppConstants.TAG, "start on boot, action=" + intent.action)
             if (Shizuku.pingBinder()) {
