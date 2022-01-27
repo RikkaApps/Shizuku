@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_discovery_message">"Molimo Vas omogućite rad režima \"Bežično otklanjanje  grešaka\" u sekciji \"Opcije programera\". Režim  \"Bežično otklanjanje grešaka\" se automatski onemogućava pri svakoj promeni mrežne konekcije..
+\n
+\nPrimetićete, onemogućavanjem sekcije \"Opcije programera\" ili režima \"USB otklanjanje grešaka\", proces rada aplikacije Shizuku se prekida."</string>
+    <string name="dialog_adb_discovery">Traženje servisa Bežično otklanjanje grešaka</string>
+    <string name="home_wireless_adb_view_guide_button">Vodič Korak-po-korak</string>
+    <string name="home_wireless_adb_description_pre_11">"Pre Android verzije softvera 11, konekcija sa računarom bila je neophodna  u cilju omogućavanja rada režima Bežično otklanjanja grešaka."</string>
+    <string name="home_wireless_adb_description">"Za Android verziju softvera 11 i više, možete omogućavanjem rada režima Bežičnog otklanjanja grešaka pokrenuti Shizuku aplikaciju direktno sa Vašeg  telefona, zaobilazeći konekciju sa računarom.&lt;p&gt; Molimo Vas, najpre pogledajte vodič Korak-po-korak."</string>
+    <string name="home_wireless_adb_title">Pokreni preko Bežičnog otklanjanja grešaka</string>
+    <string name="home_adb_dialog_view_command_button_send">Pošalji</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiraj</string>
+    <string name="home_adb_button_view_command">Pregled komande</string>
+    <string name="home_adb_button_view_help">Pročitajte pomoć</string>
+    <string name="home_adb_description">Za uređaje koji nisu root-ovani, potrebno je izvršiti adb komandu radi pokretanja Shizuku aplikacije (zahteva konekciju sa računarom). Ovaj proces je neophodno svaki put ponoviti nakon restarta uređaja. Molim Vas <b><a href="%1$s">pročitajte pomoć </a></b>.</string>
+    <string name="home_adb_title">Pokreni uz pomoć konekcije preko računara</string>
+    <string name="home_status_service_version_update">Verzija %2$s, %1$s&lt;br&gt;Počni ispočetka zbog ažuriranja na verziju%3$s</string>
+    <string name="home_status_service_version">Verzija %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s se ne izvršava</string>
+    <string name="home_status_service_is_running">%1$s se izvršava</string>
+</resources>
