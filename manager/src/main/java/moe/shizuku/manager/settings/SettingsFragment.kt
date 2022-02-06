@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -23,8 +24,7 @@ import rikka.core.util.ResourceUtils
 import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
-import rikka.preference.SimpleMenuPreference
-import rikka.recyclerview.addVerticalPadding
+import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
 import rikka.widget.borderview.BorderRecyclerView
 import rikka.widget.borderview.BorderView
@@ -62,24 +62,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
 
         startOnBootPreference.isChecked = context.packageManager.isComponentEnabled(componentName)
-        startOnBootPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
-            if (newValue is Boolean) {
-                context.packageManager.setComponentEnabled(componentName, newValue)
-                context.packageManager.isComponentEnabled(componentName) == newValue
-            } else false
-        }
-        languagePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
-            if (newValue is String) {
-                val locale: Locale = if ("SYSTEM" == newValue) {
-                    LocaleDelegate.systemLocale
-                } else {
-                    Locale.forLanguageTag(newValue)
-                }
-                LocaleDelegate.defaultLocale = locale
-                activity?.recreate()
+        startOnBootPreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+                if (newValue is Boolean) {
+                    context.packageManager.setComponentEnabled(componentName, newValue)
+                    context.packageManager.isComponentEnabled(componentName) == newValue
+                } else false
             }
-            true
-        }
+        languagePreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+                if (newValue is String) {
+                    val locale: Locale = if ("SYSTEM" == newValue) {
+                        LocaleDelegate.systemLocale
+                    } else {
+                        Locale.forLanguageTag(newValue)
+                    }
+                    LocaleDelegate.defaultLocale = locale
+                    activity?.recreate()
+                }
+                true
+            }
 
         val tag = languagePreference.value
         val index = listOf(*languagePreference.entryValues).indexOf(tag)
@@ -88,16 +90,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val userLocale = ShizukuSettings.getLocale()
         for (i in 1 until languagePreference.entries.size) {
             val locale = Locale.forLanguageTag(languagePreference.entries[i].toString())
-            localeName.add(if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(locale) else locale.getDisplayName(locale))
-            localeNameUser.add(if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(userLocale) else locale.getDisplayName(userLocale))
+            localeName.add(
+                if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(locale) else locale.getDisplayName(
+                    locale
+                )
+            )
+            localeNameUser.add(
+                if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(userLocale) else locale.getDisplayName(
+                    userLocale
+                )
+            )
         }
 
         for (i in 1 until languagePreference.entries.size) {
             if (index != i) {
-                languagePreference.entries[i] = HtmlCompat.fromHtml(String.format("%s - %s",
+                languagePreference.entries[i] = HtmlCompat.fromHtml(
+                    String.format(
+                        "%s - %s",
                         localeName[i - 1],
                         localeNameUser[i - 1]
-                ))
+                    )
+                )
             } else {
                 languagePreference.entries[i] = localeNameUser[i - 1]
             }
@@ -110,28 +123,31 @@ class SettingsFragment : PreferenceFragmentCompat() {
             languagePreference.summary = name
         }
         nightModePreference.value = ShizukuSettings.getNightMode()
-        nightModePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
-            if (value is Int) {
-                if (ShizukuSettings.getNightMode() != value) {
-                    DayNightDelegate.setDefaultNightMode(value)
-                    activity?.recreate()
-                }
-            }
-            true
-        }
-        if (ShizukuSettings.getNightMode() != DayNightDelegate.MODE_NIGHT_NO) {
-            blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
-            blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-                if (ResourceUtils.isNightMode(context.resources.configuration)) {
-                    activity?.recreate()
+        nightModePreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
+                if (value is Int) {
+                    if (ShizukuSettings.getNightMode() != value) {
+                        DayNightDelegate.setDefaultNightMode(value)
+                        activity?.recreate()
+                    }
                 }
                 true
             }
+        if (ShizukuSettings.getNightMode() != DayNightDelegate.MODE_NIGHT_NO) {
+            blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
+            blackNightThemePreference.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
+                    if (ResourceUtils.isNightMode(context.resources.configuration)) {
+                        activity?.recreate()
+                    }
+                    true
+                }
         } else {
             blackNightThemePreference.isVisible = false
         }
 
-        translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
+        translationPreference.summary =
+            context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
         translationPreference.setOnPreferenceClickListener {
             CustomTabsHelper.launchUrlOrCopy(context, context.getString(R.string.translation_url))
             true
@@ -146,22 +162,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val translationPercentage = resources.getInteger(R.integer.translation_percentage)
         val translationShowPercentageOverride = resources.getBoolean(R.bool.translation_show_percentage_override)
-        translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name)) +
-                if (translationShowPercentageOverride || translationPercentage != 100) {
-                    val percent = translationPercentage.toFloat() / 100
-                    val percentFormatter = NumberFormat.getPercentInstance(ShizukuSettings.getLocale())
-                    val percentOut = percentFormatter.format(percent)
+        translationPreference.summary =
+            context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name)) +
+                    if (translationShowPercentageOverride || translationPercentage != 100) {
+                        val percent = translationPercentage.toFloat() / 100
+                        val percentFormatter = NumberFormat.getPercentInstance(ShizukuSettings.getLocale())
+                        val percentOut = percentFormatter.format(percent)
 
-                    context.getString(R.string.settings_translation_summary_percentage, percentOut)
-                } else {
-                    ""
-                }
+                        context.getString(R.string.settings_translation_summary_percentage, percentOut)
+                    } else {
+                        ""
+                    }
     }
 
-    override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {
+    override fun onCreateRecyclerView(
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        savedInstanceState: Bundle?
+    ): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState) as BorderRecyclerView
         recyclerView.fixEdgeEffect()
-        recyclerView.addVerticalPadding(0, 8)
+        recyclerView.addEdgeSpacing(bottom = 8f, unit = TypedValue.COMPLEX_UNIT_DIP)
 
         val lp = recyclerView.layoutParams
         if (lp is FrameLayout.LayoutParams) {
@@ -169,7 +190,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             lp.leftMargin = lp.rightMargin
         }
 
-        recyclerView.borderViewDelegate.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean -> (activity as SettingsActivity?)?.appBar?.setRaised(!top) }
+        recyclerView.borderViewDelegate.borderVisibilityChangedListener =
+            BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
+                (activity as SettingsActivity?)?.appBar?.setRaised(!top)
+            }
         return recyclerView
     }
 }
