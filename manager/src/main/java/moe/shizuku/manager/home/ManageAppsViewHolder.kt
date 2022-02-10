@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
+import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeManageAppsItemBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.ApplicationManagementActivity
@@ -15,14 +16,19 @@ import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 
-class ManageAppsViewHolder(private val binding: HomeManageAppsItemBinding) : BaseViewHolder<Pair<ServiceStatus, Int>>(binding.root), View.OnClickListener {
+class ManageAppsViewHolder(private val binding: HomeManageAppsItemBinding, root: View) :
+    BaseViewHolder<Pair<ServiceStatus, Int>>(root), View.OnClickListener {
 
     companion object {
-        val CREATOR = Creator<Pair<ServiceStatus, Int>> { inflater: LayoutInflater, parent: ViewGroup? -> ManageAppsViewHolder(HomeManageAppsItemBinding.inflate(inflater, parent, false)) }
+        val CREATOR = Creator<Pair<ServiceStatus, Int>> { inflater: LayoutInflater, parent: ViewGroup? ->
+            val outer = HomeItemContainerBinding.inflate(inflater, parent, false)
+            val inner = HomeManageAppsItemBinding.inflate(inflater, outer.root, true)
+            ManageAppsViewHolder(inner, outer.root)
+        }
     }
 
     init {
-        itemView.setOnClickListener(this)
+        root.setOnClickListener(this)
     }
 
     private inline val title get() = binding.text1
@@ -33,10 +39,21 @@ class ManageAppsViewHolder(private val binding: HomeManageAppsItemBinding) : Bas
         if (!data.first.isRunning) {
             itemView.isEnabled = false
             title.setText(R.string.home_app_management_title)
-            summary.setHtmlText(context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name)))
+            summary.setHtmlText(
+                context.getString(
+                    R.string.home_status_service_not_running,
+                    context.getString(R.string.app_name)
+                )
+            )
         } else if (data.first.permission) {
             itemView.isEnabled = true
-            title.setHtmlText(context.resources.getQuantityString(R.plurals.home_app_management_authorized_apps_count, data.second, data.second))
+            title.setHtmlText(
+                context.resources.getQuantityString(
+                    R.plurals.home_app_management_authorized_apps_count,
+                    data.second,
+                    data.second
+                )
+            )
             summary.setHtmlText(context.getString(R.string.home_app_management_view_authorized_apps))
         } else {
             itemView.isEnabled = false

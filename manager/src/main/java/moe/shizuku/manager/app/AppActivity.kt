@@ -6,16 +6,25 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import moe.shizuku.manager.R
+import rikka.core.res.isNight
 import rikka.core.res.resolveColor
 import rikka.material.app.MaterialActivity
 
 abstract class AppActivity : MaterialActivity() {
 
     override fun computeUserThemeKey(): String {
-        return ThemeHelper.getTheme(this)
+        return ThemeHelper.getTheme(this) + ThemeHelper.isUsingSystemColor()
     }
 
     override fun onApplyUserThemeResource(theme: Theme, isDecorView: Boolean) {
+        if (ThemeHelper.isUsingSystemColor()) {
+            if (resources.configuration.isNight())
+                theme.applyStyle(R.style.ThemeOverlay_Rikka_Material3_DynamicColors_Dark, true)
+            else
+                theme.applyStyle(R.style.ThemeOverlay_Rikka_Material3_DynamicColors_Light, true)
+        }
+
         theme.applyStyle(ThemeHelper.getThemeStyleRes(this), true)
     }
 
@@ -29,7 +38,8 @@ abstract class AppActivity : MaterialActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window?.decorView?.post {
                 if (window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0 >= Resources.getSystem().displayMetrics.density * 40) {
-                    window.navigationBarColor = theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or -0x20000000
+                    window.navigationBarColor =
+                        theme.resolveColor(android.R.attr.navigationBarColor) and 0x00ffffff or -0x20000000
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         window.isNavigationBarContrastEnforced = false
                     }

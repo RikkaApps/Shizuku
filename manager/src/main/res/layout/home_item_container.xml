@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/materialCardViewFilledStyle"
+    app:cardBackgroundColor="?attr/colorSurface2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="24dp"
+    tools:layout_height="100dp"
+    tools:layout_margin="24dp" />

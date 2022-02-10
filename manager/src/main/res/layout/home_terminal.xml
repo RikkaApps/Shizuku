@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/home_icon_padding"
         android:duplicateParentState="true"
         android:orientation="vertical">
 

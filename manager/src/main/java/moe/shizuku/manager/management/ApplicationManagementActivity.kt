@@ -14,7 +14,6 @@ import rikka.lifecycle.Status
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
-import rikka.widget.borderview.BorderView
 import java.util.*
 
 class ApplicationManagementActivity : AppBarActivity() {
@@ -39,7 +38,7 @@ class ApplicationManagementActivity : AppBarActivity() {
         val binding = AppsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        appBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.packages.observe(this) {
             when (it.status) {
@@ -65,10 +64,6 @@ class ApplicationManagementActivity : AppBarActivity() {
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
         recyclerView.addEdgeSpacing(top = 8f, bottom = 8f, unit = TypedValue.COMPLEX_UNIT_DIP)
-        recyclerView.borderViewDelegate.borderVisibilityChangedListener =
-            BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
-                appBar?.setRaised(!top)
-            }
 
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {

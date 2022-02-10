@@ -28,15 +28,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/card_background"
-            android:backgroundTint="?appColorPrimary"
+            android:backgroundTint="?colorPrimaryContainer"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:duplicateParentState="true"
             android:elevation="4dp"
             android:foreground="?selectableItemBackground"
             android:orientation="horizontal"
-            android:outlineAmbientShadowColor="?appColorPrimary"
-            android:outlineSpotShadowColor="?appColorPrimary"
+            android:outlineAmbientShadowColor="?colorPrimaryContainer"
+            android:outlineSpotShadowColor="?colorPrimaryContainer"
             android:paddingStart="16dp"
             android:paddingTop="24dp"
             android:paddingEnd="16dp"
@@ -48,7 +48,7 @@
                 android:layout_marginStart="-4dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_help_outline_24dp"
-                android:tint="?android:textColorSecondaryInverse"
+                android:tint="?colorOnPrimaryContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
-                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textColor="?colorOnPrimaryContainer"
                     tools:text="@string/rish_description" />
 
             </LinearLayout>

@@ -16,9 +16,14 @@ public class ThemeHelper {
 
     public static final String KEY_LIGHT_THEME = "light_theme";
     public static final String KEY_BLACK_NIGHT_THEME = "black_night_theme";
+    public static final String KEY_USE_SYSTEM_COLOR = "use_system_color";
 
     public static boolean isBlackNightTheme(Context context) {
         return ShizukuSettings.getPreferences().getBoolean(KEY_BLACK_NIGHT_THEME, EnvironmentUtils.isWatch(context));
+    }
+
+    public static boolean isUsingSystemColor() {
+        return ShizukuSettings.getPreferences().getBoolean(KEY_USE_SYSTEM_COLOR, false);
     }
 
     public static String getTheme(Context context) {

@@ -15,15 +15,15 @@
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:contentDescription="@null"
         tools:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -32,9 +32,8 @@
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
             android:textAppearance="@android:style/TextAppearance.Material"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="Shizuku" />
 
         <TextView

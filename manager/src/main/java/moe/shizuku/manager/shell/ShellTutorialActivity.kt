@@ -12,7 +12,6 @@ import moe.shizuku.manager.databinding.TerminalTutorialActivityBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.html.text.HtmlCompat
-import rikka.widget.borderview.BorderView
 
 class ShellTutorialActivity : AppBarActivity() {
 
@@ -61,14 +60,9 @@ class ShellTutorialActivity : AppBarActivity() {
         val binding = TerminalTutorialActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        appBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.apply {
-            scrollView.borderVisibilityChangedListener =
-                BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
-                    appBar?.setRaised(!top)
-                }
-
             val shName = "<font face=\"monospace\">$SH_NAME</font>"
             val dexName = "<font face=\"monospace\">$DEX_NAME</font>"
 

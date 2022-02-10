@@ -17,4 +17,6 @@
 
     <dimen name="default_app_icon_size">40dp</dimen>
 
+    <dimen name="home_icon_padding">16dp</dimen>
+
 </resources>

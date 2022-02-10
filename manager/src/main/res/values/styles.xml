@@ -3,14 +3,9 @@
     <style name="AppTheme" parent="Theme.Light" />
 
     <style name="Card">
+        <item name="android:duplicateParentState">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
-        <item name="android:foreground">@drawable/material_button_outline_foreground</item>
-        <item name="android:background">@drawable/material_button_outline_background_dark</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">24dp</item>
@@ -18,35 +13,24 @@
     </style>
 
     <style name="Card.Light">
-        <item name="android:background">@drawable/material_button_outline_background</item>
     </style>
 
-    <style name="CardButton">
-        <item name="android:background">@drawable/card_btn_background</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">28dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:drawablePadding">28dp</item>
-        <item name="android:textColor">?appColorPrimary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:drawableTint">?appColorPrimary</item>
-        <item name="android:drawableTintMode">src_in</item>
+    <style name="CardButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="iconPadding">12dp</item>
     </style>
 
     <style name="CardTitle">
-        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textAppearance">?textAppearanceBodyLarge</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
     <style name="CardSummary">
-        <item name="android:textAppearance">?textAppearanceBody2</item>
+        <item name="android:textAppearance">?textAppearanceBodyMedium</item>
         <item name="android:textColor">?android:textColorSecondary</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">1sp</item>
     </style>
 

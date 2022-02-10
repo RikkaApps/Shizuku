@@ -13,7 +13,6 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AdbPairingTutorialActivityBinding
 import rikka.compatibility.DeviceCompatibility
-import rikka.widget.borderview.BorderView
 
 @RequiresApi(Build.VERSION_CODES.R)
 class AdbPairingTutorialActivity : AppBarActivity() {
@@ -28,7 +27,7 @@ class AdbPairingTutorialActivity : AppBarActivity() {
 
         binding = AdbPairingTutorialActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        appBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         notificationEnabled = isNotificationEnabled()
 
@@ -62,11 +61,6 @@ class AdbPairingTutorialActivity : AppBarActivity() {
                 } catch (e: ActivityNotFoundException) {
                 }
             }
-
-            scrollView.borderVisibilityChangedListener =
-                BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
-                    appBar?.setRaised(!top)
-                }
         }
     }
 

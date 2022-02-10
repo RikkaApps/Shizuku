@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:key="startup"
@@ -9,8 +8,7 @@
         <SwitchPreference
             android:key="start_on_boot"
             android:summary="@string/settings_start_on_boot_summary"
-            android:title="@string/settings_start_on_boot"
-            app:icon="@drawable/ic_outline_play_arrow_24" />
+            android:title="@string/settings_start_on_boot" />
 
     </PreferenceCategory>
 
@@ -22,8 +20,7 @@
             android:entryValues="@array/language_value"
             android:key="language"
             android:summary="%s"
-            android:title="@string/settings_language"
-            app:icon="@drawable/ic_outline_translate_24" />
+            android:title="@string/settings_language" />
 
         <Preference
             style="?preferenceInformationStyle"
@@ -45,13 +42,16 @@
             android:entryValues="@array/night_mode_value"
             android:key="night_mode"
             android:summary="%s"
-            android:title="@string/dark_theme"
-            app:icon="@drawable/ic_outline_dark_mode_24" />
+            android:title="@string/dark_theme" />
 
         <SwitchPreference
             android:key="black_night_theme"
             android:summary="@string/settings_black_night_theme_summary"
             android:title="@string/settings_black_night_theme" />
+
+        <SwitchPreference
+            android:key="use_system_color"
+            android:title="@string/settings_use_system_color" />
 
     </PreferenceCategory>
 

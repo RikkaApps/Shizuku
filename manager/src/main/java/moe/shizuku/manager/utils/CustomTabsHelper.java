@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.browser.customtabs.CustomTabsIntent;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import moe.shizuku.manager.R;
 import rikka.core.util.ClipboardUtils;
@@ -75,7 +76,7 @@ public class CustomTabsHelper {
                 try {
                     ClipboardUtils.put(context, url);
 
-                    new AlertDialog.Builder(context)
+                    new MaterialAlertDialogBuilder(context)
                             .setTitle(R.string.dialog_cannot_open_browser_title)
                             .setMessage(HtmlCompat.fromHtml(context.getString(R.string.toast_copied_to_clipboard_with_text, url)))
                             .setPositiveButton(android.R.string.ok, null)

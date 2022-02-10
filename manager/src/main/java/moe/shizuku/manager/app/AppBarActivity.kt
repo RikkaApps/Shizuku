@@ -9,9 +9,9 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.appbar.AppBarLayout
 import moe.shizuku.manager.R
 import rikka.core.ktx.unsafeLazy
-import rikka.material.widget.AppBarLayout
 
 abstract class AppBarActivity : AppActivity() {
 
@@ -31,7 +31,7 @@ abstract class AppBarActivity : AppActivity() {
         super.onCreate(savedInstanceState)
         super.setContentView(getLayoutId())
 
-        setAppBar(toolbarContainer, toolbar)
+        setSupportActionBar(toolbar)
     }
 
     @LayoutRes

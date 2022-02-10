@@ -5,18 +5,13 @@
     style="?homeCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingStart="0dp"
-    android:paddingEnd="0dp"
-    android:paddingBottom="8dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:orientation="horizontal">
 
         <moe.shizuku.manager.widget.MaterialCircleIconView
             android:id="@android:id/icon"
@@ -31,7 +26,7 @@
             style="@style/CardTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/home_icon_padding"
             android:layout_weight="1"
             android:text="@string/home_wireless_adb_title" />
 
@@ -42,28 +37,26 @@
         style="@style/CardSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         tools:text="@string/home_adb_description" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@android:id/button3"
         style="@style/CardButton"
-        android:drawableStart="@drawable/ic_outline_open_in_new_24"
-        android:text="@string/home_wireless_adb_view_guide_button" />
+        android:text="@string/home_wireless_adb_view_guide_button"
+        app:icon="@drawable/ic_outline_open_in_new_24" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@android:id/button2"
         style="@style/CardButton"
-        android:drawableStart="@drawable/ic_baseline_link_24"
-        android:text="@string/adb_pairing" />
+        android:text="@string/adb_pairing"
+        app:icon="@drawable/ic_baseline_link_24" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@android:id/button1"
         style="@style/CardButton"
-        android:drawableStart="@drawable/ic_server_start_24dp"
-        android:text="@string/home_root_button_start" />
+        android:text="@string/home_root_button_start"
+        app:icon="@drawable/ic_server_start_24dp" />
 
 </LinearLayout>

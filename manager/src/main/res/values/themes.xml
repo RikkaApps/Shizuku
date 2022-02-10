@@ -1,97 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Base.AppTheme.Light" parent="Theme.Material.Light.LightStatusBar">
+    <style name="Base.AppTheme.Light" parent="Theme.Material3.Light.Rikka">
         <item name="android:statusBarColor">?android:colorBackground</item>
 
-        <item name="colorPrimary">@color/app_color_light</item>
-        <item name="colorPrimaryVariant">@color/app_color_light</item>
-        <item name="colorSecondary">@color/app_color_light</item>
-        <item name="colorSecondaryVariant">@color/app_color_light</item>
-        <item name="colorOnSecondary">@android:color/white</item>
-
-        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
-        <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
+        <item name="colorSurface2">@color/surface2_color_light</item>
 
         <item name="appColorPrimary">@color/app_color_light</item>
-        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card.Light</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
-
-        <item name="appBarStyle">@style/Widget.AppBar.Surface.Raisable</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <!-- Preference title -->
-        <item name="android:textAppearanceListItem">?textAppearanceSubtitle1</item>
+        <!-- MDC Material 3 colors -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <!--<item name="colorInversePrimary">@color/md_theme_light_inversePrimary</item>
+        <item name="colorShadow">@color/md_theme_light_shadow</item>-->
+        <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
+
+        <!-- Material 3 color tokens -->
+        <!-- Generated form #3F51B5 -->
+        <item name="palettePrimary100">#ffffffff</item>
+        <item name="palettePrimary99">#fffefbff</item>
+        <item name="palettePrimary95">#ffefefff</item>
+        <item name="palettePrimary90">#ffdde0ff</item>
+        <item name="palettePrimary80">#ffb9c3ff</item>
+        <item name="palettePrimary70">#ff95a5ff</item>
+        <item name="palettePrimary60">#ff7789f0</item>
+        <item name="palettePrimary50">#ff5d6fd4</item>
+        <item name="palettePrimary40">#ff4355b9</item>
+        <item name="palettePrimary30">#ff293ca0</item>
+        <item name="palettePrimary20">#ff08218a</item>
+        <item name="palettePrimary10">#ff000d61</item>
+        <item name="palettePrimary0">#ff000000</item>
+        <item name="paletteSecondary100">#ffffffff</item>
+        <item name="paletteSecondary99">#fffefbff</item>
+        <item name="paletteSecondary95">#ffefefff</item>
+        <item name="paletteSecondary90">#ffe0e1fa</item>
+        <item name="paletteSecondary80">#ffc4c5dd</item>
+        <item name="paletteSecondary70">#ffa8aac1</item>
+        <item name="paletteSecondary60">#ff8d8fa6</item>
+        <item name="paletteSecondary50">#ff74768b</item>
+        <item name="paletteSecondary40">#ff5b5d71</item>
+        <item name="paletteSecondary30">#ff43465a</item>
+        <item name="paletteSecondary20">#ff2d2f42</item>
+        <item name="paletteSecondary10">#ff171a2c</item>
+        <item name="paletteSecondary0">#ff000000</item>
+        <item name="paletteTertiary100">#ffffffff</item>
+        <item name="paletteTertiary99">#fffcfcfc</item>
+        <item name="paletteTertiary95">#ffffebf7</item>
+        <item name="paletteTertiary90">#ffffd7f3</item>
+        <item name="paletteTertiary80">#ffe5bad7</item>
+        <item name="paletteTertiary70">#ffc99fbc</item>
+        <item name="paletteTertiary60">#ffad85a1</item>
+        <item name="paletteTertiary50">#ff916b86</item>
+        <item name="paletteTertiary40">#ff77536d</item>
+        <item name="paletteTertiary30">#ff5d3c55</item>
+        <item name="paletteTertiary20">#ff45263e</item>
+        <item name="paletteTertiary10">#ff2d1228</item>
+        <item name="paletteTertiary0">#ff000000</item>
+        <item name="paletteError100">#ffffffff</item>
+        <item name="paletteError99">#fffcfcfc</item>
+        <item name="paletteError95">#ffffede9</item>
+        <item name="paletteError90">#ffffdad4</item>
+        <item name="paletteError80">#ffffb4a9</item>
+        <item name="paletteError70">#ffff897a</item>
+        <item name="paletteError60">#ffff5449</item>
+        <item name="paletteError50">#ffdd3730</item>
+        <item name="paletteError40">#ffba1b1b</item>
+        <item name="paletteError30">#ff930006</item>
+        <item name="paletteError20">#ff680003</item>
+        <item name="paletteError10">#ff410001</item>
+        <item name="paletteError0">#ff000000</item>
+        <item name="paletteNeutral100">#ffffffff</item>
+        <item name="paletteNeutral99">#fffefbff</item>
+        <item name="paletteNeutral95">#fff3f0f5</item>
+        <item name="paletteNeutral90">#ffe4e1e6</item>
+        <item name="paletteNeutral80">#ffc8c6ca</item>
+        <item name="paletteNeutral70">#ffacaaaf</item>
+        <item name="paletteNeutral60">#ff929094</item>
+        <item name="paletteNeutral50">#ff77767a</item>
+        <item name="paletteNeutral40">#ff5f5e62</item>
+        <item name="paletteNeutral30">#ff47464a</item>
+        <item name="paletteNeutral20">#ff303034</item>
+        <item name="paletteNeutral10">#ff1b1b1f</item>
+        <item name="paletteNeutral0">#ff000000</item>
+        <item name="paletteNeutralVariant100">#ffffffff</item>
+        <item name="paletteNeutralVariant99">#fffefbff</item>
+        <item name="paletteNeutralVariant95">#fff1effa</item>
+        <item name="paletteNeutralVariant90">#ffe3e1ec</item>
+        <item name="paletteNeutralVariant80">#ffc6c5d0</item>
+        <item name="paletteNeutralVariant70">#ffabaab5</item>
+        <item name="paletteNeutralVariant60">#ff90909a</item>
+        <item name="paletteNeutralVariant50">#ff767680</item>
+        <item name="paletteNeutralVariant40">#ff5e5e67</item>
+        <item name="paletteNeutralVariant30">#ff46464f</item>
+        <item name="paletteNeutralVariant20">#ff2f3038</item>
+        <item name="paletteNeutralVariant10">#ff1a1b23</item>
+        <item name="paletteNeutralVariant0">#ff000000</item>
     </style>
 
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
-    <style name="Base.AppTheme" parent="Theme.Material">
-        <item name="colorPrimary">@color/app_color_dark</item>
-        <item name="colorPrimaryVariant">@color/app_color_dark</item>
-        <item name="colorSecondary">@color/app_color_dark</item>
-        <item name="colorSecondaryVariant">@color/app_color_dark</item>
-        <item name="colorOnSecondary">@android:color/black</item>
-
-        <item name="actionBarStyle">@style/Widget.Material.ActionBar.Surface</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.ActionBar</item>
-        <item name="toolbarStyle">@style/Widget.Material.Toolbar</item>
+    <style name="Base.AppTheme" parent="Theme.Material3.Dark.Rikka">
+        <item name="colorSurface2">#30000000</item>
 
         <item name="appColorPrimary">@color/app_color_dark</item>
-        <item name="preferenceTheme">@style/ThemeOverlay.Preference</item>
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
-
-        <item name="appBarStyle">@style/Widget.AppBar.Surface.Raisable</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <!-- Preference title -->
-        <item name="android:textAppearanceListItem">?textAppearanceSubtitle1</item>
+        <!-- MDC Material 3 colors -->
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <!--<item name="colorInversePrimary">@color/md_theme_dark_inversePrimary</item>
+        <item name="colorShadow">@color/md_theme_dark_shadow</item>-->
+        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+
+        <!-- Material 3 color tokens -->
+        <!-- Generated form #3F51B5 -->
+        <item name="palettePrimary100">#ffffffff</item>
+        <item name="palettePrimary99">#fffefbff</item>
+        <item name="palettePrimary95">#ffefefff</item>
+        <item name="palettePrimary90">#ffdde0ff</item>
+        <item name="palettePrimary80">#ffb9c3ff</item>
+        <item name="palettePrimary70">#ff95a5ff</item>
+        <item name="palettePrimary60">#ff7789f0</item>
+        <item name="palettePrimary50">#ff5d6fd4</item>
+        <item name="palettePrimary40">#ff4355b9</item>
+        <item name="palettePrimary30">#ff293ca0</item>
+        <item name="palettePrimary20">#ff08218a</item>
+        <item name="palettePrimary10">#ff000d61</item>
+        <item name="palettePrimary0">#ff000000</item>
+        <item name="paletteSecondary100">#ffffffff</item>
+        <item name="paletteSecondary99">#fffefbff</item>
+        <item name="paletteSecondary95">#ffefefff</item>
+        <item name="paletteSecondary90">#ffe0e1fa</item>
+        <item name="paletteSecondary80">#ffc4c5dd</item>
+        <item name="paletteSecondary70">#ffa8aac1</item>
+        <item name="paletteSecondary60">#ff8d8fa6</item>
+        <item name="paletteSecondary50">#ff74768b</item>
+        <item name="paletteSecondary40">#ff5b5d71</item>
+        <item name="paletteSecondary30">#ff43465a</item>
+        <item name="paletteSecondary20">#ff2d2f42</item>
+        <item name="paletteSecondary10">#ff171a2c</item>
+        <item name="paletteSecondary0">#ff000000</item>
+        <item name="paletteTertiary100">#ffffffff</item>
+        <item name="paletteTertiary99">#fffcfcfc</item>
+        <item name="paletteTertiary95">#ffffebf7</item>
+        <item name="paletteTertiary90">#ffffd7f3</item>
+        <item name="paletteTertiary80">#ffe5bad7</item>
+        <item name="paletteTertiary70">#ffc99fbc</item>
+        <item name="paletteTertiary60">#ffad85a1</item>
+        <item name="paletteTertiary50">#ff916b86</item>
+        <item name="paletteTertiary40">#ff77536d</item>
+        <item name="paletteTertiary30">#ff5d3c55</item>
+        <item name="paletteTertiary20">#ff45263e</item>
+        <item name="paletteTertiary10">#ff2d1228</item>
+        <item name="paletteTertiary0">#ff000000</item>
+        <item name="paletteError100">#ffffffff</item>
+        <item name="paletteError99">#fffcfcfc</item>
+        <item name="paletteError95">#ffffede9</item>
+        <item name="paletteError90">#ffffdad4</item>
+        <item name="paletteError80">#ffffb4a9</item>
+        <item name="paletteError70">#ffff897a</item>
+        <item name="paletteError60">#ffff5449</item>
+        <item name="paletteError50">#ffdd3730</item>
+        <item name="paletteError40">#ffba1b1b</item>
+        <item name="paletteError30">#ff930006</item>
+        <item name="paletteError20">#ff680003</item>
+        <item name="paletteError10">#ff410001</item>
+        <item name="paletteError0">#ff000000</item>
+        <item name="paletteNeutral100">#ffffffff</item>
+        <item name="paletteNeutral99">#fffefbff</item>
+        <item name="paletteNeutral95">#fff3f0f5</item>
+        <item name="paletteNeutral90">#ffe4e1e6</item>
+        <item name="paletteNeutral80">#ffc8c6ca</item>
+        <item name="paletteNeutral70">#ffacaaaf</item>
+        <item name="paletteNeutral60">#ff929094</item>
+        <item name="paletteNeutral50">#ff77767a</item>
+        <item name="paletteNeutral40">#ff5f5e62</item>
+        <item name="paletteNeutral30">#ff47464a</item>
+        <item name="paletteNeutral20">#ff303034</item>
+        <item name="paletteNeutral10">#ff1b1b1f</item>
+        <item name="paletteNeutral0">#ff000000</item>
+        <item name="paletteNeutralVariant100">#ffffffff</item>
+        <item name="paletteNeutralVariant99">#fffefbff</item>
+        <item name="paletteNeutralVariant95">#fff1effa</item>
+        <item name="paletteNeutralVariant90">#ffe3e1ec</item>
+        <item name="paletteNeutralVariant80">#ffc6c5d0</item>
+        <item name="paletteNeutralVariant70">#ffabaab5</item>
+        <item name="paletteNeutralVariant60">#ff90909a</item>
+        <item name="paletteNeutralVariant50">#ff767680</item>
+        <item name="paletteNeutralVariant40">#ff5e5e67</item>
+        <item name="paletteNeutralVariant30">#ff46464f</item>
+        <item name="paletteNeutralVariant20">#ff2f3038</item>
+        <item name="paletteNeutralVariant10">#ff1a1b23</item>
+        <item name="paletteNeutralVariant0">#ff000000</item>
     </style>
 
     <style name="Theme" parent="Base.AppTheme" />
-
-    <style name="ThemeOverlay.Preference" parent="PreferenceThemeOverlay">
-        <item name="simpleMenuPreferenceStyle">@style/Preference.SimpleMenuPreference</item>
-    </style>
-
-    <style name="Widget.AppBar" parent="">
-        <item name="android:background">?toolbarColor</item>
-        <item name="android:theme">?actionBarTheme</item>
-        <item name="android:stateListAnimator">@animator/raise_animator</item>
-        <item name="android:elevation">2dp</item>
-    </style>
-
-    <style name="Widget.Material.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">?android:colorBackground</item>
-    </style>
-
-    <style name="Widget.AppBar.Surface">
-        <item name="android:background">?android:colorBackground</item>
-        <item name="android:stateListAnimator">@animator/alpha_animator</item>
-        <item name="android:elevation">@dimen/app_bar_elevation</item>
-    </style>
-
-    <style name="Widget.AppBar.Surface.Raisable">
-        <item name="android:elevation">0dp</item>
-        <item name="android:stateListAnimator">@animator/raise_animator</item>
-    </style>
-
-    <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
-        <item name="elevation">0dp</item>
-        <item name="titleTextAppearance">@android:style/TextAppearance.Material.Widget.Toolbar.Title</item>
-        <item name="subtitleTextAppearance">@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle</item>
-    </style>
-
 
 </resources>

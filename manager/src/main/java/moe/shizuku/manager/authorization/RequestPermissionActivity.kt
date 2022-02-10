@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
@@ -41,7 +42,7 @@ class RequestPermissionActivity : AppActivity() {
         val icon = getDrawable(R.drawable.ic_system_icon)
         icon?.setTint(theme.resolveColor(android.R.attr.colorAccent))
 
-        val dialog = AlertDialog.Builder(this)
+        val dialog = MaterialAlertDialogBuilder(this)
                 .setIcon(icon)
                 .setTitle("Shizuku: ${getString(R.string.app_management_dialog_adb_is_limited_title)}")
                 .setMessage(getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
@@ -93,7 +94,7 @@ class RequestPermissionActivity : AppActivity() {
                     label, getString(R.string.permission_group_description)))
         }
 
-        dialog = AlertDialog.Builder(this)
+        dialog = MaterialAlertDialogBuilder(this)
                 .setView(binding.root)
                 .setCancelable(false)
                 .setOnDismissListener { finish() }

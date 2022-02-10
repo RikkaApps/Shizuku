@@ -19,6 +19,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +42,7 @@ class AdbPairDialogFragment : DialogFragment() {
         val context = requireContext()
         binding = AdbPairDialogBinding.inflate(LayoutInflater.from(context))
 
-        val builder = AlertDialog.Builder(context).apply {
+        val builder = MaterialAlertDialogBuilder(context).apply {
             setTitle(R.string.dialog_adb_pairing_title)
             setView(binding.root)
             setNegativeButton(android.R.string.cancel, null)

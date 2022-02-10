@@ -1,15 +1,12 @@
 package moe.shizuku.manager.home
 
 import android.os.Process
-import moe.shizuku.manager.ShizukuSettings
-import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.management.AppsViewModel
 import rikka.core.util.BuildUtils
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
 import rikka.shizuku.Shizuku
 import java.io.File
-import java.util.*
 
 class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: AppsViewModel) : IdBasedRecyclerViewAdapter(ArrayList()) {
 

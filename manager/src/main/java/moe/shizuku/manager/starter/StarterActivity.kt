@@ -2,9 +2,9 @@ package moe.shizuku.manager.starter
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +25,6 @@ import rikka.lifecycle.Resource
 import rikka.lifecycle.Status
 import rikka.lifecycle.viewModels
 import rikka.shizuku.Shizuku
-import rikka.widget.borderview.BorderView
 import java.net.ConnectException
 import javax.net.ssl.SSLProtocolException
 
@@ -45,15 +44,11 @@ class StarterActivity : AppBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appBar?.setDisplayHomeAsUpEnabled(true)
-        appBar?.setHomeAsUpIndicator(R.drawable.ic_close_24)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24)
 
         val binding = StarterActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.list.borderVisibilityChangedListener = BorderView.OnBorderVisibilityChangedListener { top, _, _, _ ->
-            appBar?.setRaised(!top)
-        }
 
         viewModel.output.observe(this) {
             val output = it.data!!.trim()
@@ -89,7 +84,7 @@ class StarterActivity : AppBarActivity() {
                 }
 
                 if (message != 0) {
-                    AlertDialog.Builder(this)
+                    MaterialAlertDialogBuilder(this)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok, null)
                         .show()

@@ -3,6 +3,7 @@
     <attr name="homeCardStyle" format="reference" />
     <attr name="appColorPrimary" format="reference" />
     <attr name="materialCircleIconViewStyle" format="reference" />
+    <attr name="colorSurface2" format="color" />
 
     <declare-styleable name="MaterialCircleIconView">
         <attr name="iconBackgroundChroma" format="string" />

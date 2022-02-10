@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbMdns
 import moe.shizuku.manager.databinding.AdbDialogBinding
@@ -35,7 +36,7 @@ class AdbDialogFragment : DialogFragment() {
         var port = SystemProperties.getInt("service.adb.tcp.port", -1)
         if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
 
-        val builder = AlertDialog.Builder(context).apply {
+        val builder = MaterialAlertDialogBuilder(context).apply {
             setTitle(R.string.dialog_adb_discovery)
             setView(binding.root)
             setNegativeButton(android.R.string.cancel, null)

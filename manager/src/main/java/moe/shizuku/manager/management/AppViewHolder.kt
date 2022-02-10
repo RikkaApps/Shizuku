@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Job
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
@@ -61,7 +63,7 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
                 return
             }
             if (uid != 0) {
-                val dialog = AlertDialog.Builder(context)
+                val dialog = MaterialAlertDialogBuilder(context)
                         .setTitle(R.string.app_management_dialog_adb_is_limited_title)
                         .setMessage(context.getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                         .setPositiveButton(android.R.string.ok, null)

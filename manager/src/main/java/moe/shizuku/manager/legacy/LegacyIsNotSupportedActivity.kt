@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
@@ -51,7 +51,7 @@ class LegacyIsNotSupportedActivity : AppActivity() {
 
         val v3Support = ai.metaData?.getBoolean("moe.shizuku.client.V3_SUPPORT") == true
         if (v3Support) {
-            AlertDialog.Builder(this)
+            MaterialAlertDialogBuilder(this)
                     .setTitle(getString(R.string.dialog_requesting_legacy_title, label))
                     .setMessage(getString(R.string.dialog_requesting_legacy_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                     .setPositiveButton(android.R.string.ok, null)
@@ -66,7 +66,7 @@ class LegacyIsNotSupportedActivity : AppActivity() {
                     .setCancelable(false)
                     .show()
         } else {
-            AlertDialog.Builder(this)
+            MaterialAlertDialogBuilder(this)
                     .setTitle(getString(R.string.dialog_legacy_not_support_title, label))
                     .setMessage(getString(R.string.dialog_legacy_not_support_message, label).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                     .setPositiveButton(android.R.string.ok, null)

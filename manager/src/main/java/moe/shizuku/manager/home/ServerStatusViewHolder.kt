@@ -6,20 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import moe.shizuku.manager.R
+import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.widget.MaterialCircleIconView
-import rikka.shizuku.server.ServerConstants
 import rikka.html.text.HtmlCompat
 import rikka.html.widget.HtmlCompatTextView
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 import rikka.shizuku.Shizuku
+import rikka.shizuku.server.ServerConstants
 
-class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : BaseViewHolder<ServiceStatus>(binding.root) {
+class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root: View) :
+    BaseViewHolder<ServiceStatus>(root) {
 
     companion object {
-        val CREATOR = Creator<ServiceStatus> { inflater: LayoutInflater, parent: ViewGroup? -> ServerStatusViewHolder(HomeServerStatusBinding.inflate(inflater, parent, false)) }
+        val CREATOR = Creator<ServiceStatus> { inflater: LayoutInflater, parent: ViewGroup? ->
+            val outer = HomeItemContainerBinding.inflate(inflater, parent, false)
+            val inner = HomeServerStatusBinding.inflate(inflater, outer.root, true)
+            ServerStatusViewHolder(inner, outer.root)
+        }
     }
 
     private inline val textView: HtmlCompatTextView get() = binding.text1
@@ -48,16 +54,21 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding) : Bas
         }
         val summary = if (ok) {
             if (apiVersion != Shizuku.getLatestServiceVersion() || status.patchVersion != ServerConstants.PATCH_VERSION) {
-                context.getString(R.string.home_status_service_version_update, user,
-                        "${apiVersion}.${patchVersion}",
-                        "${Shizuku.getLatestServiceVersion()}.${ServerConstants.PATCH_VERSION}")
+                context.getString(
+                    R.string.home_status_service_version_update, user,
+                    "${apiVersion}.${patchVersion}",
+                    "${Shizuku.getLatestServiceVersion()}.${ServerConstants.PATCH_VERSION}"
+                )
             } else {
                 context.getString(R.string.home_status_service_version, user, "${apiVersion}.${patchVersion}")
             }
         } else {
             ""
         }
-        textView.setHtmlText(String.format("<font face=\"sans-serif-medium\">%1\$s</font>", title), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+        textView.setHtmlText(
+            String.format("%1\$s", title),
+            HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE
+        )
         summaryView.setHtmlText(String.format("%1\$s", summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
         if (TextUtils.isEmpty(summaryView.text)) {
             summaryView.visibility = View.GONE

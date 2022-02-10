@@ -2,6 +2,7 @@ package moe.shizuku.manager.settings
 
 import android.content.ComponentName
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
@@ -15,6 +16,7 @@ import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
 import moe.shizuku.manager.app.ThemeHelper
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
+import moe.shizuku.manager.app.ThemeHelper.KEY_USE_SYSTEM_COLOR
 import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
@@ -27,7 +29,6 @@ import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
 import rikka.widget.borderview.BorderRecyclerView
-import rikka.widget.borderview.BorderView
 import java.text.NumberFormat
 import java.util.*
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
@@ -42,6 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
+    private lateinit var useSystemColorPreference: SwitchPreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = requireContext()
@@ -58,6 +60,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         startupPreference = findPreference("startup")!!
         translationPreference = findPreference("translation")!!
         translationContributorsPreference = findPreference("translation_contributors")!!
+        useSystemColorPreference = findPreference(KEY_USE_SYSTEM_COLOR)!!
 
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
 
@@ -146,6 +149,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             blackNightThemePreference.isVisible = false
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            useSystemColorPreference.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
+                    if (value is Boolean) {
+                        if (ThemeHelper.isUsingSystemColor() != value) {
+                            activity?.recreate()
+                        }
+                    }
+                    true
+                }
+        } else {
+            useSystemColorPreference.isVisible = false
+        }
+
         translationPreference.summary =
             context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
         translationPreference.setOnPreferenceClickListener {
@@ -190,10 +207,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             lp.leftMargin = lp.rightMargin
         }
 
-        recyclerView.borderViewDelegate.borderVisibilityChangedListener =
-            BorderView.OnBorderVisibilityChangedListener { top: Boolean, _: Boolean, _: Boolean, _: Boolean ->
-                (activity as SettingsActivity?)?.appBar?.setRaised(!top)
-            }
         return recyclerView
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
+import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeStartRootBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
@@ -16,10 +17,15 @@ import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 import rikka.shizuku.Shizuku
 
-class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewHolder<Boolean>(binding.root) {
+class StartRootViewHolder(private val binding: HomeStartRootBinding, root: View) :
+    BaseViewHolder<Boolean>(root) {
 
     companion object {
-        val CREATOR = Creator<Boolean> { inflater: LayoutInflater, parent: ViewGroup? -> StartRootViewHolder(HomeStartRootBinding.inflate(inflater, parent, false)) }
+        val CREATOR = Creator<Boolean> { inflater: LayoutInflater, parent: ViewGroup? ->
+            val outer = HomeItemContainerBinding.inflate(inflater, parent, false)
+            val inner = HomeStartRootBinding.inflate(inflater, outer.root, true)
+            StartRootViewHolder(inner, outer.root)
+        }
     }
 
     private inline val start get() = binding.button1
@@ -54,9 +60,20 @@ class StartRootViewHolder(private val binding: HomeStartRootBinding) : BaseViewH
         }
 
         val sb = StringBuilder()
-                .append(context.getString(R.string.home_root_description, "<b><a href=\"https://dontkillmyapp.com/\">Don\'t kill my app!</a></b>"))
+            .append(
+                context.getString(
+                    R.string.home_root_description,
+                    "<b><a href=\"https://dontkillmyapp.com/\">Don\'t kill my app!</a></b>"
+                )
+            )
         if (Shizuku.pingBinder()) {
-            sb.append("<p>").append(context.getString(R.string.home_root_description_sui, "<b><a href=\"${Helps.SUI.get()}\">Sui</a></b>", "Sui"))
+            sb.append("<p>").append(
+                context.getString(
+                    R.string.home_root_description_sui,
+                    "<b><a href=\"${Helps.SUI.get()}\">Sui</a></b>",
+                    "Sui"
+                )
+            )
         }
 
         binding.text1.text = sb.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)

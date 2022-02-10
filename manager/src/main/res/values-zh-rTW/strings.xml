@@ -123,4 +123,5 @@
     <string name="home_wireless_adb_view_guide_button">分步驟指南</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku 需要訪問本地網路。它由網路權限控制。</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系統（例如 MIUI）不允許應用程式在不可見時訪問網路，即使應用程式已按標準使用前臺服務。請在此類系統上為 Shizuku 禁用電池最佳化功能。</string>
+    <string name="settings_use_system_color">使用系統主題顏色</string>
 </resources>
