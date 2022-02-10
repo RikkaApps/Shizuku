@@ -174,7 +174,7 @@ dependencies {
     implementation 'io.github.vvb2060.ndk:boringssl:2.1'
     implementation 'dev.rikka.ndk.thirdparty:cxx:1.2.0'
 
-    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.2'
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
 

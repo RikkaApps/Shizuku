@@ -21,7 +21,7 @@ class ShizukuApplication : Application() {
 
             Shell.setDefaultBuilder(Shell.Builder.create().setFlags(Shell.FLAG_REDIRECT_STDERR))
             if (Build.VERSION.SDK_INT >= 28) {
-                HiddenApiBypass.setHiddenApiExemptions("L")
+                HiddenApiBypass.setHiddenApiExemptions("")
             }
             if (atLeast30) {
                 System.loadLibrary("adb")

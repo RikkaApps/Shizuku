@@ -39,6 +39,7 @@ allprojects {
             url("https://s01.oss.sonatype.org/content/repositories/releases/")
             content {
                 includeGroupByRegex("dev.rikka.*")
+                includeGroup("org.lsposed.hiddenapibypass")
             }
         }
         mavenLocal()
