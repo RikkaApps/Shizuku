@@ -45,9 +45,9 @@ public class ServiceStarter {
         }
     }
 
-    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH=%s %s%s /system/bin " +
-            "--nice-name=%s moe.shizuku.starter.ServiceStarter " +
-            "--token=%s --package=%s --class=%s --uid=%d%s)&";
+    private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH='%s' %s%s /system/bin " +
+            "--nice-name='%s' moe.shizuku.starter.ServiceStarter " +
+            "--token='%s' --package='%s' --class='%s' --uid=%d%s)&";
 
     public static String commandForUserService(String appProcess, String managerApkPath, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
         String processName = String.format("%s:%s", packageName, processNameSuffix);
