@@ -90,7 +90,55 @@ afterEvaluate {
     tasks.getByName('preReleaseBuild').dependsOn(':shell:assembleRelease')
     tasks.getByName('preDebugBuild').dependsOn(':shell:assembleDebug')
 
+    def stream = Files.list(Paths.get(projectDir.getAbsolutePath(), "src/main/res"))
+    def rawLocales = stream
+            .filter(file -> Files.isDirectory(file)
+                    && file.toFile().getName().startsWith("values-")
+                    && Files.exists(file.resolve("strings.xml"))
+                    && Files.size(file.resolve("strings.xml")) > 62)
+            .map(java.nio.file.Path::getFileName)
+            .map(path -> path.toFile().getName().substring("values-".length()))
+            .collect(Collectors.toList())
+    stream.close()
+
+    rawLocales.add('en')
+
+    def locales = rawLocales.stream()
+            .map(name -> name.split("-", 2))
+            .map { String[] names ->
+                if (names.length == 1 && names[0] == "b+es+419") {
+                    return new Locale("es", "419", "")
+                } else {
+                    if (names.length == 1)
+                        return new Locale(names[0])
+                    else
+                        return new Locale(names[0], names[1].substring("r".length()))
+                }
+            }
+            .map { locale -> locale.toLanguageTag() }
+            .collect(Collectors.toList())
+    stream.close()
+
+    locales.sort(String.CASE_INSENSITIVE_ORDER)
+
+    def displayLocaleMapping = [
+            "zh-CN": "zh-Hans",
+            "zh-TW": "zh-Hant",
+    ]
+
+    def displayLocales = locales.stream()
+            .map(s -> displayLocaleMapping.get(s) ?: s)
+            .collect(Collectors.toList())
+
+    println "Locales $locales"
+    println "Display locales $displayLocales"
+
+    def localesString = String.join(",", locales.stream().map(s -> "\"$s\"").collect(Collectors.toList()))
+    def displayLocalesString = String.join(",", displayLocales.stream().map(s -> "\"$s\"").collect(Collectors.toList()))
+
     android.applicationVariants.forEach { variant ->
+        variant.mergedFlavor.setResourceConfigurations(rawLocales)
+
         def variantNameCapitalized = variant.name.capitalize()
         def outSrcDir = file("$buildDir/generated/source/locales/${variant.name}")
         def outSrc = file("$outSrcDir/rikka/shizuku/manager/ShizukuLocales.java")
@@ -98,48 +146,6 @@ afterEvaluate {
             inputs.files("src/main/res")
             outputs.file(outSrc)
             doLast {
-                def stream = Files.list(Paths.get(projectDir.getAbsolutePath(), "src/main/res"))
-                def locales = stream
-                        .filter(file -> Files.isDirectory(file)
-                                && file.toFile().getName().startsWith("values-")
-                                && Files.exists(file.resolve("strings.xml"))
-                                && Files.size(file.resolve("strings.xml")) > 62)
-                        .map(java.nio.file.Path::getFileName)
-                        .map(path -> path.toFile().getName().substring("values-".length()))
-                        .map(name -> name.split("-", 2))
-                        .map { String[] names ->
-                            if (names.length == 1 && names[0] == "b+es+419") {
-                                println "b+es+419"
-                                return new Locale("es", "419", "")
-                            } else {
-                                if (names.length == 1)
-                                    return new Locale(names[0])
-                                else
-                                    return new Locale(names[0], names[1].substring("r".length()))
-                            }
-                        }
-                        .map { locale -> locale.toLanguageTag() }
-                        .collect(Collectors.toList())
-                stream.close()
-
-                locales.add("en-US")
-                locales.sort(String.CASE_INSENSITIVE_ORDER)
-
-                def displayLocaleMapping = [
-                        "zh-CN": "zh-Hans",
-                        "zh-TW": "zh-Hant",
-                ]
-
-                def displayLocales = locales.stream()
-                        .map(s -> displayLocaleMapping.get(s) ?: s)
-                        .collect(Collectors.toList())
-
-                println "Locales $locales"
-                println "Display locales $displayLocales"
-
-                def localesString = String.join(",", locales.stream().map(s -> "\"$s\"").collect(Collectors.toList()))
-                def displayLocalesString = String.join(",", displayLocales.stream().map(s -> "\"$s\"").collect(Collectors.toList()))
-
                 def outSteam = new PrintStream(outSrc)
                 outSteam.print(
                         """package rikka.shizuku.manager;
