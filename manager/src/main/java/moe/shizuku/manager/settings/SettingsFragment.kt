@@ -23,13 +23,12 @@ import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.core.util.ResourceUtils
-import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
+import rikka.shizuku.manager.ShizukuLocales
 import rikka.widget.borderview.BorderRecyclerView
-import java.text.NumberFormat
 import java.util.*
 import moe.shizuku.manager.ShizukuSettings.LANGUAGE as KEY_LANGUAGE
 import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
@@ -86,45 +85,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 true
             }
 
-        val tag = languagePreference.value
-        val index = listOf(*languagePreference.entryValues).indexOf(tag)
-        val localeName: MutableList<String> = ArrayList()
-        val localeNameUser: MutableList<String> = ArrayList()
-        val userLocale = ShizukuSettings.getLocale()
-        for (i in 1 until languagePreference.entries.size) {
-            val locale = Locale.forLanguageTag(languagePreference.entries[i].toString())
-            localeName.add(
-                if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(locale) else locale.getDisplayName(
-                    locale
-                )
-            )
-            localeNameUser.add(
-                if (!TextUtils.isEmpty(locale.script)) locale.getDisplayScript(userLocale) else locale.getDisplayName(
-                    userLocale
-                )
-            )
-        }
+        setupLocalePreference()
 
-        for (i in 1 until languagePreference.entries.size) {
-            if (index != i) {
-                languagePreference.entries[i] = HtmlCompat.fromHtml(
-                    String.format(
-                        "%s - %s",
-                        localeName[i - 1],
-                        localeNameUser[i - 1]
-                    )
-                )
-            } else {
-                languagePreference.entries[i] = localeNameUser[i - 1]
-            }
-        }
-
-        if (TextUtils.isEmpty(tag) || "SYSTEM" == tag) {
-            languagePreference.summary = getString(R.string.follow_system)
-        } else if (index != -1) {
-            val name = localeNameUser[index - 1]
-            languagePreference.summary = name
-        }
         nightModePreference.value = ShizukuSettings.getNightMode()
         nightModePreference.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
@@ -194,5 +156,64 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         return recyclerView
+    }
+
+    private fun setupLocalePreference() {
+        val localeTags = ShizukuLocales.LOCALES
+        val displayLocaleTags = ShizukuLocales.DISPLAY_LOCALES
+
+        languagePreference.entries = displayLocaleTags
+        languagePreference.entryValues = localeTags
+
+        val currentLocaleTag = languagePreference.value
+        val currentLocaleIndex = localeTags.indexOf(currentLocaleTag)
+        val currentLocale = ShizukuSettings.getLocale()
+        val localizedLocales = mutableListOf<CharSequence>()
+
+        for ((index, displayLocale) in displayLocaleTags.withIndex()) {
+            if (index == 0) {
+                localizedLocales.add(getString(R.string.follow_system))
+                continue
+            }
+
+            val locale = Locale.forLanguageTag(displayLocale.toString())
+            val localeName = if (!TextUtils.isEmpty(locale.script))
+                locale.getDisplayScript(locale)
+            else
+                locale.getDisplayName(locale)
+
+            val localizedLocaleName = if (!TextUtils.isEmpty(locale.script))
+                locale.getDisplayScript(currentLocale)
+            else
+                locale.getDisplayName(currentLocale)
+
+            localizedLocales.add(
+                if (index != currentLocaleIndex) {
+                    "$localeName<br><small>$localizedLocaleName<small>".toHtml()
+                } else {
+                    localizedLocaleName
+                }
+            )
+        }
+
+        languagePreference.entries = localizedLocales.toTypedArray()
+
+        languagePreference.summary = when {
+            TextUtils.isEmpty(currentLocaleTag) || "SYSTEM" == currentLocaleTag -> {
+                getString(R.string.follow_system)
+            }
+            currentLocaleIndex != -1 -> {
+                val localizedLocale = localizedLocales[currentLocaleIndex]
+                val newLineIndex = localizedLocale.indexOf('\n')
+                if (newLineIndex == -1) {
+                    localizedLocale.toString()
+                } else {
+                    localizedLocale.subSequence(0, newLineIndex).toString()
+                }
+            }
+            else -> {
+                ""
+            }
+        }
     }
 }

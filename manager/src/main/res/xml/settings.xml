@@ -16,8 +16,6 @@
 
         <rikka.preference.SimpleMenuPreference
             android:defaultValue="SYSTEM"
-            android:entries="@array/language"
-            android:entryValues="@array/language_value"
             android:key="language"
             android:summary="%s"
             android:title="@string/settings_language" />
