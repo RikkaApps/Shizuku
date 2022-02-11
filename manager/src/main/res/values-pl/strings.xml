@@ -96,7 +96,6 @@
     <string name="starter">Uruchamiacz</string>
     <string name="home_root_description">W dodatku, Shizuku może wystartować automatycznie przy starcie systemu. Jeśli nie, sprawdź czy system lub inne narzędzia zablokowały Shizuku.&lt;br&gt;Możesz odwołać się do%s.</string>
     <string name="settings_translation">Przyłącz się do tłumaczenia</string>
-    <string name="settings_translation_summary_percentage">" -(%s jest przetłumaczone)"</string>
     <string name="settings_start_on_boot_summary">W urządzeniach zrootowanych, Shizuku może się uruchamiać automatycznie</string>
     <string name="about_view_source_code">Zobacz kod źródłowy na %s</string>
     <string name="adb_error_key_store">Nie można wygenerować klucza debugowania bezprzewodowego.

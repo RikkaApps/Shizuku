@@ -25,7 +25,6 @@
     <string name="action_about">O Shizuku</string>
     <string name="settings_start_on_boot_summary">U rootovaných zařízení je Shizuku schopen automaticky spustit při spuštění</string>
     <string name="settings_start_on_boot">Spustit při spuštění (root)</string>
-    <string name="settings_translation_summary_percentage">" (%s je přeloženo)"</string>
     <string name="settings_translation_summary">Pomozte nám přeložit %s do vašeho jazyka</string>
     <string name="settings_translation">Podílet se na překladu</string>
     <string name="settings_translation_contributors">Přispěvatelé překladu</string>

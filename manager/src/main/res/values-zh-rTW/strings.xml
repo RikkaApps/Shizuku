@@ -98,7 +98,6 @@
     <string name="terminal_tutorial_2_description">例如，如果要在 %1$s 中使用 Shizuku，則應將 %2$s 替換為 %3$s（%4$s 是 %1$s 的套件名稱）。</string>
     <string name="terminal_tutorial_3">最後，將檔案移動到終端程式可以存取的位置，您便可使用 %1$s 來透過 Shizuku 執行命令。</string>
     <string name="terminal_tutorial_3_description">一些技巧：將執行權限授予 %1$s 並將其新增到 %2$s，您就能直接使用 %1$s。</string>
-    <string name="settings_translation_summary_percentage">" （已翻譯 %s）"</string>
     <string name="rish_description">透過 %1$s，您可以在任何終端程式中連線到由 Shizuku 執行的 shell 並與之互動。 &lt;p&gt;有關 %1$s 的具體使用方式，請輕觸以閱讀說明。</string>
     <string name="adb_pairing_tutorial_title">將 Shizuku 與您的裝置配對</string>
     <string name="adb_pairing_tutorial_content_steps">進入「開發人員選項」-「無線偵錯」。輕觸「使用配對碼配對裝置」，您將看到一個六位數字代碼。</string>

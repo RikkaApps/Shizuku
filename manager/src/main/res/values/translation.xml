@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="translation_percentage">100</integer>
-    <bool name="translation_show_percentage_override">false</bool>
-</resources>

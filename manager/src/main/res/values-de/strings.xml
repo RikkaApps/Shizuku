@@ -18,7 +18,6 @@
     <string name="about_view_source_code">Quelltext auf %s anzeigen</string>
     <string name="action_about">Über</string>
     <string name="action_stop">Shizuku anhalten</string>
-    <string name="settings_translation_summary_percentage">" (%s sind übersetzt)"</string>
     <string name="settings_black_night_theme_summary">Das rein schwarze Thema verwenden, wenn der Nachtmodus aktiviert ist</string>
     <string name="settings_black_night_theme">Schwarzes Thema</string>
     <plurals name="home_app_management_authorized_apps_count">

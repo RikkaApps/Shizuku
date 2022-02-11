@@ -85,7 +85,6 @@
     <string name="settings_translation_contributors">翻訳協力者</string>
     <string name="settings_translation">翻訳作業に参加</string>
     <string name="settings_translation_summary">%sをあなたの言語に翻訳するのを手伝ってください</string>
-    <string name="settings_translation_summary_percentage">" (%sは翻訳されています)"</string>
     <string name="settings_start_on_boot">起動時にスタート（要root)</string>
     <string name="settings_start_on_boot_summary">root化された端末では、起動時に自動的にShizukuを起動することができます</string>
     <string name="action_about">このアプリについて</string>

@@ -43,7 +43,6 @@
     <string name="action_about">À propos</string>
     <string name="settings_start_on_boot_summary">Pour les appareils rootés, Shizuku peut se lancer automatiquement au démarrage</string>
     <string name="settings_start_on_boot">Lancer au démarrage de l\'appareil (root)</string>
-    <string name="settings_translation_summary_percentage">" (%s sont traduits)"</string>
     <string name="settings_translation_summary">Aidez-nous à traduire %s dans votre langue</string>
     <string name="settings_translation">Participer à la traduction</string>
     <string name="settings_translation_contributors">Contributeurs à la traduction</string>

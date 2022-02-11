@@ -176,20 +176,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         } else {
             translationContributorsPreference.isVisible = false
         }
-
-        val translationPercentage = resources.getInteger(R.integer.translation_percentage)
-        val translationShowPercentageOverride = resources.getBoolean(R.bool.translation_show_percentage_override)
-        translationPreference.summary =
-            context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name)) +
-                    if (translationShowPercentageOverride || translationPercentage != 100) {
-                        val percent = translationPercentage.toFloat() / 100
-                        val percentFormatter = NumberFormat.getPercentInstance(ShizukuSettings.getLocale())
-                        val percentOut = percentFormatter.format(percent)
-
-                        context.getString(R.string.settings_translation_summary_percentage, percentOut)
-                    } else {
-                        ""
-                    }
     }
 
     override fun onCreateRecyclerView(

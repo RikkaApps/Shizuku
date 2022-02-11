@@ -75,7 +75,6 @@
     <string name="settings_translation_contributors">Kontributor penerjemah</string>
     <string name="settings_translation">Ikut menerjemahkan</string>
     <string name="settings_translation_summary">Bantu kami menerjemahkan %s dengan bahasa Anda</string>
-    <string name="settings_translation_summary_percentage">" (%s sudah diterjemahkan)"</string>
     <string name="settings_start_on_boot">Mulai saat boot (root)</string>
     <string name="settings_start_on_boot_summary">Untuk perangkat root, Shizuku bisa mulai otomatis saat boot</string>
     <string name="action_about">Tentang</string>

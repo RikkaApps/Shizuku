@@ -106,7 +106,6 @@ With %1$s, in any terminal app, you can connect to and interact with the shell r
     <string name="settings_translation_contributors">Translation contributors</string>
     <string name="settings_translation">Participate in translation</string>
     <string name="settings_translation_summary">Help us translate %s into your language</string>
-    <string name="settings_translation_summary_percentage">" (%s are translated)"</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>
     <string name="settings_start_on_boot_summary">For rooted devices, Shizuku is able to start automatically on boot</string>
     <string name="settings_use_system_color">Use system theme color</string>

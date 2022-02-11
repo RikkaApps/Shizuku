@@ -29,7 +29,6 @@
     <string name="action_about">Rólunk</string>
     <string name="settings_start_on_boot_summary">Rootolt eszközön a Shizuku képes auto. elindulni bootolást követően</string>
     <string name="settings_start_on_boot">Induljon boot után (root)</string>
-    <string name="settings_translation_summary_percentage">" (%s lefordítva)"</string>
     <string name="settings_translation_summary">Segítse %s fordítását a saját nyelvére</string>
     <string name="settings_translation">Vegyen részt a fordításban</string>
     <string name="settings_translation_contributors">Fordításban közreműködők</string>

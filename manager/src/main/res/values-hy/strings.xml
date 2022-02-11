@@ -21,7 +21,6 @@
     <string name="action_about">Ծրագրի մասին</string>
     <string name="settings_start_on_boot_summary">Root թույլտվություն ունեցող սարքերում Shizuku-ն ավտոմատացված ձևով կարող է միանալ սարքի հետ</string>
     <string name="settings_start_on_boot">Միանալ սարքի հետ (root-ով)</string>
-    <string name="settings_translation_summary_percentage">" (թարգմանված է %s-ով)"</string>
     <string name="settings_translation_summary">Օգնեք մեզ թարգմանել %s-ը Ձեր լեզվով</string>
     <string name="settings_translation">Մասնակցել թարգմանության մեջ</string>
     <string name="settings_translation_contributors">Թարգմանության աջակցողներ</string>

@@ -86,7 +86,6 @@
     <string name="translation_contributors">sermart1234, ruvlad</string>
     <string name="settings_start_on_boot_summary">На устройствах с root правами Shizuku может автоматически запускаться после загрузки системы</string>
     <string name="settings_start_on_boot">Автозапуск (с root правами)</string>
-    <string name="settings_translation_summary_percentage">" (%s переведено)"</string>
     <string name="grant_dialog_button_allow_always">Разрешить всегда</string>
     <string name="grant_dialog_button_deny">Запретить</string>
     <string name="permission_warning_template">Разрешить <b>%1$s</b> следующее: %2$s\?</string>

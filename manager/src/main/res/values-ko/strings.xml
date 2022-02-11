@@ -44,7 +44,6 @@
     <string name="settings_startup">시작</string>
     <string name="settings_translation_contributors">번역 기여자</string>
     <string name="settings_translation">번역 참여</string>
-    <string name="settings_translation_summary_percentage">" (%s 번역 됨)"</string>
     <string name="action_about">정보</string>
     <string name="about_view_source_code">%s에서 소스코드 보기</string>
     <string name="action_stop">Shizuku 중지</string>

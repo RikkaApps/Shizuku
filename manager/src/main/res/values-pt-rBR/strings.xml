@@ -32,7 +32,6 @@
     <string name="action_about">Sobre</string>
     <string name="settings_start_on_boot_summary">Para dispositivos com acesso root, o Shizuku é capaz de abrir automaticamente na inicialização do sistema</string>
     <string name="settings_start_on_boot">Iniciar APP no boot (apenas com root)</string>
-    <string name="settings_translation_summary_percentage">" (%s já foi traduzido)"</string>
     <string name="settings_translation_summary">Ajude-nos à traduzir %s para o seu idioma</string>
     <string name="settings_translation">Contribua com a tradução</string>
     <string name="settings_translation_contributors">Tradutores deste APP</string>

@@ -64,7 +64,6 @@
     <string name="settings_translation_summary">Giúp chúng tôi dịch %s sang ngôn ngữ của bạn</string>
     <string name="settings_translation">Tham gia phiên dịch</string>
     <string name="settings_translation_contributors">Người đóng góp bản dịch</string>
-    <string name="settings_translation_summary_percentage">" (%s đã được dịch)"</string>
     <string name="action_about">Về</string>
     <string name="dialog_stop_message">Dịch vụ Shizuku sẽ ngừng hoạt động.</string>
     <string name="about_view_source_code">Xem mã nguồn tại %s</string>

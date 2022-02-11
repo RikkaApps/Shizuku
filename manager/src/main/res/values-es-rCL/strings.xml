@@ -12,7 +12,6 @@
     <string name="home_status_service_is_running">%1$s está activo</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Abrir Shizuku</string>
     <string name="action_about">Acerca de</string>
-    <string name="settings_translation_summary_percentage">" (%s están traducidos)"</string>
     <string name="development_settings">Opciones de desarrollador</string>
     <string name="adb_pairing_requires_multi_window_reason">El sistema requiere que el cuadro de diálogo de emparejamiento esté siempre visible, el uso del modo de pantalla dividida es la única forma de permitir que esta aplicación y el cuadro de diálogo del sistema estén visibles al mismo tiempo.</string>
     <string name="adb_pairing_requires_multi_window">Ingrese primero al modo de pantalla dividida (ventanas múltiples).</string>
