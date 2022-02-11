@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
+project("shizuku")
+
 set(CMAKE_CXX_STANDARD 17)
 
 set(C_FLAGS "-Werror=format -fdata-sections -ffunction-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics")
