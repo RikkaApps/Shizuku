@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.Light" />
 
     <style name="Card">
@@ -12,8 +13,7 @@
         <item name="android:paddingBottom">24dp</item>
     </style>
 
-    <style name="Card.Light">
-    </style>
+    <style name="Card.Light"></style>
 
     <style name="CardButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">wrap_content</item>
@@ -63,6 +63,28 @@
     <style name="TerminalTutorialText">
         <item name="android:textAppearance">?textAppearanceBody2</item>
         <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="FilledCard" parent="@style/Widget.Material3.CardView.Filled">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">-4dp</item>
+        <item name="android:layout_marginEnd">-4dp</item>
+        <item name="android:checkable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="cardCornerRadius">28dp</item>
+        <item name="contentPaddingStart">24dp</item>
+        <item name="contentPaddingEnd">24dp</item>
+        <item name="contentPaddingLeft">24dp</item>
+        <item name="contentPaddingRight">24dp</item>
+        <item name="contentPaddingTop">20dp</item>
+        <item name="contentPaddingBottom">20dp</item>
+        <item name="cardBackgroundColor">?colorPrimaryContainer</item>
     </style>
 
 </resources>

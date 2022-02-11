@@ -22,68 +22,92 @@
         android:paddingBottom="16dp"
         app:fitsSystemWindowsInsets="bottom|top">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notification"
+            style="@style/FilledCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="?outlineButtonBackground"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:foreground="?outlineButtonForeground"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:layout_marginTop="8dp">
 
             <ImageView
-                android:id="@android:id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-4dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_outline_arrow_upward_24"
+                android:src="@drawable/ic_outline_notifications_active_24"
+                android:tint="?colorOnPrimaryContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="36dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/notification_enabled_text"
                     style="@style/TerminalTutorialText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/adb_pairing_tutorial_content_notification" />
+                    android:text="@string/adb_pairing_tutorial_content_notification"
+                    android:textColor="?colorOnPrimaryContainer" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notification_disabled"
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="?colorErrorContainer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_outline_info_24"
+                android:tint="?colorOnErrorContainer"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="36dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/notification_disabled_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2sp"
                     android:text="@string/adb_pairing_tutorial_content_notification_blocked"
-                    android:textColor="?colorError" />
+                    android:textColor="?colorOnErrorContainer" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/notification_options"
-                    style="?materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="-8dp"
                     android:text="@string/notification_settings"
+                    android:textColor="?colorOnError"
+                    app:backgroundTint="?colorError"
                     app:icon="@drawable/ic_outline_open_in_new_24"
                     app:iconPadding="16dp" />
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/network"
+            style="@style/FilledCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -100,16 +124,18 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-4dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_outline_info_24"
+                android:src="@drawable/ic_help_outline_24dp"
+                android:tint="?colorOnPrimaryContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="36dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -117,7 +143,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
-                    android:text="@string/adb_pairing_tutorial_content_network" />
+                    android:text="@string/adb_pairing_tutorial_content_network"
+                    android:textColor="?colorOnPrimaryContainer" />
 
                 <TextView
                     style="@style/TerminalTutorialText"
@@ -126,43 +153,36 @@
                     android:layout_marginTop="8dp"
                     android:duplicateParentState="true"
                     android:fontFamily="sans-serif-medium"
-                    android:text="@string/adb_pairing_tutorial_content_network_limation_not_foreground" />
+                    android:text="@string/adb_pairing_tutorial_content_network_limation_not_foreground"
+                    android:textColor="?colorOnPrimaryContainer" />
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/miui"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FilledCard"
             android:layout_marginTop="8dp"
-            android:background="?outlineButtonBackground"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:foreground="?outlineButtonForeground"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
             android:visibility="gone"
+            app:cardBackgroundColor="?colorErrorContainer"
             tools:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-4dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_warning_24"
-                android:tint="?colorWarning"
+                android:tint="?colorOnErrorContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="36dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -171,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
                     android:text="@string/adb_pairing_tutorial_content_miui"
-                    android:textColor="?colorWarning" />
+                    android:textColor="?colorOnErrorContainer" />
 
                 <TextView
                     style="@style/TerminalTutorialText"
@@ -181,14 +201,14 @@
                     android:duplicateParentState="true"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/adb_pairing_tutorial_content_miui_2"
-                    android:textColor="?colorWarning" />
+                    android:textColor="?colorOnErrorContainer" />
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
-            android:id="@+id/text1"
+            android:id="@+id/step1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -199,6 +219,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_marginStart="8dp"
                 android:importantForAccessibility="no"
                 android:padding="4dp"
                 android:src="@drawable/ic_numeric_1_circle_outline_24"
@@ -208,7 +229,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:clipChildren="false"
                 android:clipToPadding="false"
@@ -227,13 +248,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
                     android:text="@string/adb_pairing_tutorial_content_samsung"
-                    android:textColor="?colorWarning"
+                    android:textColor="?colorError"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
                 <Button
                     android:id="@+id/developer_options"
-                    style="?materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -247,15 +267,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/text2"
+            android:id="@+id/step2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_marginStart="8dp"
                 android:importantForAccessibility="no"
                 android:padding="4dp"
                 android:src="@drawable/ic_numeric_2_circle_outline_24"
@@ -265,7 +286,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -280,7 +301,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/text3"
+            android:id="@+id/step3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -289,6 +310,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_marginStart="8dp"
                 android:importantForAccessibility="no"
                 android:padding="4dp"
                 android:src="@drawable/ic_numeric_3_circle_outline_24"
@@ -298,7 +320,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 

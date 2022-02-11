@@ -9,7 +9,6 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AdbPairingTutorialActivityBinding
 import rikka.compatibility.DeviceCompatibility
@@ -66,20 +65,12 @@ class AdbPairingTutorialActivity : AppBarActivity() {
 
     private fun syncNotificationEnabled() {
         binding.apply {
-            notificationEnabledText.isVisible = notificationEnabled
-            text1.isVisible = notificationEnabled
-            text2.isVisible = notificationEnabled
-            text3.isVisible = notificationEnabled
-            notificationDisabledText.isGone = notificationEnabled
-            notificationOptions.isGone = notificationEnabled
-            icon.setImageDrawable(
-                getDrawable(
-                    if (notificationEnabled)
-                        R.drawable.ic_outline_arrow_upward_24
-                    else
-                        R.drawable.ic_outline_notifications_active_24
-                )
-            )
+            step1.isVisible = notificationEnabled
+            step2.isVisible = notificationEnabled
+            step3.isVisible = notificationEnabled
+            network.isVisible = notificationEnabled
+            notification.isVisible = notificationEnabled
+            notificationDisabled.isGone = notificationEnabled
         }
     }
 
