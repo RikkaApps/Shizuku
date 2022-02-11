@@ -4,8 +4,6 @@
     <style name="Base.AppTheme.Light" parent="Theme.Material3.Light.Rikka">
         <item name="android:statusBarColor">?android:colorBackground</item>
 
-        <item name="colorSurface2">@color/surface2_color_light</item>
-
         <item name="appColorPrimary">@color/app_color_light</item>
         <item name="homeCardStyle">@style/Card.Light</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
@@ -130,8 +128,6 @@
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
     <style name="Base.AppTheme" parent="Theme.Material3.Dark.Rikka">
-        <item name="colorSurface2">#30000000</item>
-
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>

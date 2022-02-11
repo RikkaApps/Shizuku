@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:alpha="0.30"
-        android:color="@color/md_theme_light_surfaceVariant"/>
+    <item android:alpha="0.04" android:color="?attr/elevationOverlayColor" />
 </selector>
