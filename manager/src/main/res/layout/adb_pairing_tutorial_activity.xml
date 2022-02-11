@@ -36,7 +36,7 @@
                 android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_outline_notifications_active_24"
-                android:tint="?colorOnPrimaryContainer"
+                android:tint="?colorOnSecondaryContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/adb_pairing_tutorial_content_notification"
-                    android:textColor="?colorOnPrimaryContainer" />
+                    android:textColor="?colorOnSecondaryContainer" />
 
             </LinearLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_help_outline_24dp"
-                android:tint="?colorOnPrimaryContainer"
+                android:tint="?colorOnSecondaryContainer"
                 android:tintMode="src_in" />
 
             <LinearLayout
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
                     android:text="@string/adb_pairing_tutorial_content_network"
-                    android:textColor="?colorOnPrimaryContainer" />
+                    android:textColor="?colorOnSecondaryContainer" />
 
                 <TextView
                     style="@style/TerminalTutorialText"
@@ -154,7 +154,7 @@
                     android:duplicateParentState="true"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/adb_pairing_tutorial_content_network_limation_not_foreground"
-                    android:textColor="?colorOnPrimaryContainer" />
+                    android:textColor="?colorOnSecondaryContainer" />
 
             </LinearLayout>
 

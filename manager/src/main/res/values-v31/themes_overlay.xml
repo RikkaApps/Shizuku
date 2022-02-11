@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ThemeOverlay.DynamicColors.Light" parent="ThemeOverlay.Material3.DynamicColors.Light.Rikka">
+        <item name="android:colorBackground">@android:color/system_neutral1_50</item>
+        <item name="colorSurface">@android:color/system_neutral1_50</item>
+    </style>
+
+    <style name="ThemeOverlay.DynamicColors.Dark" parent="ThemeOverlay.Material3.DynamicColors.Dark.Rikka">
+        <item name="android:colorBackground">@android:color/system_neutral1_900</item>
+        <item name="colorSurface">@android:color/system_neutral1_900</item>
+    </style>
+</resources>

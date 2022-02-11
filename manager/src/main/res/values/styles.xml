@@ -84,7 +84,7 @@
         <item name="contentPaddingRight">24dp</item>
         <item name="contentPaddingTop">20dp</item>
         <item name="contentPaddingBottom">20dp</item>
-        <item name="cardBackgroundColor">?colorPrimaryContainer</item>
+        <item name="cardBackgroundColor">?colorSecondaryContainer</item>
     </style>
 
 </resources>

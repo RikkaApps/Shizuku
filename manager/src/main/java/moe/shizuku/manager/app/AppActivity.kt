@@ -4,7 +4,6 @@ import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.os.Build
-import android.os.Bundle
 import androidx.annotation.RequiresApi
 import moe.shizuku.manager.R
 import rikka.core.res.isNight
@@ -20,9 +19,9 @@ abstract class AppActivity : MaterialActivity() {
     override fun onApplyUserThemeResource(theme: Theme, isDecorView: Boolean) {
         if (ThemeHelper.isUsingSystemColor()) {
             if (resources.configuration.isNight())
-                theme.applyStyle(R.style.ThemeOverlay_Rikka_Material3_DynamicColors_Dark, true)
+                theme.applyStyle(R.style.ThemeOverlay_DynamicColors_Dark, true)
             else
-                theme.applyStyle(R.style.ThemeOverlay_Rikka_Material3_DynamicColors_Light, true)
+                theme.applyStyle(R.style.ThemeOverlay_DynamicColors_Light, true)
         }
 
         theme.applyStyle(ThemeHelper.getThemeStyleRes(this), true)

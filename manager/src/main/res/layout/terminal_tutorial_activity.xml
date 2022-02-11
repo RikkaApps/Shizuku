@@ -33,7 +33,7 @@
                 android:layout_marginTop="4dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_help_outline_24dp"
-                android:tint="?colorOnPrimaryContainer"
+                android:tint="?colorOnSecondaryContainer"
                 android:tintMode="src_in" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:duplicateParentState="true"
-                android:textColor="?colorOnPrimaryContainer"
+                android:textColor="?colorOnSecondaryContainer"
                 tools:text="@string/rish_description" />
 
         </com.google.android.material.card.MaterialCardView>

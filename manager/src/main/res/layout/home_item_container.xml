@@ -8,7 +8,9 @@
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/home_card_overlay_color"
+    android:foreground="@drawable/home_card_foreground"
+    app:cardBackgroundColor="@color/home_card_background_color"
     app:cardCornerRadius="28dp"
+    app:cardElevation="0dp"
     tools:layout_height="100dp"
     tools:layout_margin="24dp" />
