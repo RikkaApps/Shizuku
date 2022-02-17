@@ -8,7 +8,6 @@
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/home_card_foreground"
     app:cardBackgroundColor="@color/home_card_background_color"
     app:cardCornerRadius="28dp"
     app:cardElevation="0dp"

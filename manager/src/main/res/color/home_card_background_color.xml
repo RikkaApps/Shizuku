@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:alpha="0.73" android:color="?attr/paletteNeutral99" />
+    <item android:alpha="0.05" android:color="?attr/elevationOverlayColor" />
 </selector>

@@ -31,7 +31,7 @@
         <item name="colorOnError">@color/md_theme_light_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
         <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/palette_neutral_95</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
         <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
         <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
@@ -42,7 +42,7 @@
 
         <!-- On lower Android versions, android:colorBackground must be a color resource,
              neither raw color string (#xxxxxx) nor attribute (?attr) will not work -->
-        <item name="android:colorBackground">@color/palette_neutral_95</item>
+        <item name="android:colorBackground">@color/md_theme_light_surface</item>
 
         <!-- Material 3 color tokens -->
         <!-- Generated form #3F51B5 -->
@@ -155,9 +155,9 @@
         <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
         <item name="colorOnError">@color/md_theme_dark_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
-        <item name="android:colorBackground">@color/palette_neutral_10</item>
+        <item name="android:colorBackground">@color/md_theme_dark_surface</item>
         <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
-        <item name="colorSurface">@color/palette_neutral_10</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
         <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
         <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
