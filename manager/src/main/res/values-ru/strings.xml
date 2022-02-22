@@ -125,4 +125,8 @@
     <string name="notification_adb_pairing_searching_for_service_title">Ожидание службы сопряжения</string>
     <string name="notification_adb_pairing_service_found_title">Служба найдена</string>
     <string name="notification_adb_pairing_stop_searching">Прекратить поиск</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Иначе вы, вероятнее всего, не сможете ввести код сопряжения из уведомления.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizukuv требуется доступ к локальной сети. Он контролируется сетевым разрешением.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Некоторые системы (та же MIUI) не разрешают приложениям доступ к сети, когда они не на экране, даже если те в основе задействуют службу переднего плана. Пожалуйста, добавьте Shizuku в исключения алгоритмов оптимизации заряда батареи на таких системах.</string>
+    <string name="settings_use_system_color">Палитра цветов из системы</string>
 </resources>
