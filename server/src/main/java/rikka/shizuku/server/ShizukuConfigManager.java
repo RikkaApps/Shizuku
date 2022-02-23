@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import kotlin.collections.ArraysKt;
-import rikka.shizuku.server.api.SystemService;
+import rikka.hidden.compat.SystemService;
 import rikka.shizuku.server.ktx.HandlerKt;
 
 public class ShizukuConfigManager extends ConfigManager {

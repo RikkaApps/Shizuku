@@ -18,8 +18,8 @@ import java.util.Locale;
 import dev.rikka.tools.refine.Refine;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.starter.ktx.IContentProviderKt;
+import rikka.hidden.compat.SystemService;
 import rikka.shizuku.ShizukuApiConstants;
-import rikka.shizuku.server.api.SystemService;
 
 public class ServiceStarter {
 

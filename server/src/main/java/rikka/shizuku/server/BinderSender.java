@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.collections.ArraysKt;
-import rikka.shizuku.server.api.ProcessObserverAdapter;
-import rikka.shizuku.server.api.SystemService;
-import rikka.shizuku.server.api.UidObserverAdapter;
+import rikka.hidden.compat.SystemService;
+import rikka.hidden.compat.adapter.ProcessObserverAdapter;
+import rikka.hidden.compat.adapter.UidObserverAdapter;
 import rikka.shizuku.server.util.Logger;
 
 public class BinderSender {
