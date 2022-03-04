@@ -17,6 +17,7 @@ buildscript {
             url("https://s01.oss.sonatype.org/content/repositories/releases/")
             content {
                 includeGroup("dev.rikka.tools.refine")
+                includeGroup("dev.rikka.tools.autoresconfig")
             }
         }
         mavenLocal()
