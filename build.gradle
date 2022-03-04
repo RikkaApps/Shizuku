@@ -22,10 +22,11 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
         classpath 'dev.rikka.tools.refine:gradle-plugin:3.0.3'
+        classpath 'dev.rikka.tools.autoresconfig:gradle-plugin:1.0.0'
     }
 }
 
