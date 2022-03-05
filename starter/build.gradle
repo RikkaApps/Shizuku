@@ -23,7 +23,7 @@ dependencies {
     implementation project(':shared')
     implementation project(':server-shared')
     compileOnly project(':provider')
-    implementation 'dev.rikka.hidden:compat:1.0.0'
-    compileOnly 'dev.rikka.hidden:stub:1.0.0'
+    implementation 'dev.rikka.hidden:compat:2.1.0'
+    compileOnly 'dev.rikka.hidden:stub:2.1.0'
     implementation("dev.rikka.tools.refine:runtime:3.0.3")
 }

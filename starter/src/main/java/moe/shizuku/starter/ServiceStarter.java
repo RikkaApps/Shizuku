@@ -18,7 +18,7 @@ import java.util.Locale;
 import dev.rikka.tools.refine.Refine;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.starter.ktx.IContentProviderKt;
-import rikka.hidden.compat.SystemService;
+import rikka.hidden.compat.ActivityManagerApis;
 import rikka.shizuku.ShizukuApiConstants;
 
 public class ServiceStarter {
@@ -122,7 +122,7 @@ public class ServiceStarter {
         IContentProvider provider = null;
 
         try {
-            provider = SystemService.getContentProviderExternal(name, userId, null, name);
+            provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
             if (provider == null) {
                 Log.e(TAG, String.format("provider is null %s %d", name, userId));
                 return false;
@@ -158,7 +158,7 @@ public class ServiceStarter {
         } finally {
             if (provider != null) {
                 try {
-                    SystemService.removeContentProviderExternal(name, null);
+                    ActivityManagerApis.removeContentProviderExternal(name, null);
                 } catch (Throwable tr) {
                     Log.w(TAG, "removeContentProviderExternal", tr);
                 }

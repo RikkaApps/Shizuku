@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 import kotlin.collections.ArraysKt;
-import rikka.hidden.compat.SystemService;
+import rikka.hidden.compat.PackageManagerApis;
+import rikka.hidden.compat.PermissionManagerApis;
+import rikka.hidden.compat.UserManagerApis;
 import rikka.shizuku.server.ktx.HandlerKt;
 
 public class ShizukuConfigManager extends ConfigManager {
@@ -109,7 +111,7 @@ public class ShizukuConfigManager extends ConfigManager {
 
         if (config.version < 2) {
             for (ShizukuConfig.PackageEntry entry : new ArrayList<>(config.packages)) {
-                entry.packages = SystemService.getPackagesForUidNoThrow(entry.uid);
+                entry.packages = PackageManagerApis.getPackagesForUidNoThrow(entry.uid);
             }
             changed = true;
         }
@@ -119,7 +121,7 @@ public class ShizukuConfigManager extends ConfigManager {
                 entry.packages = new ArrayList<>();
             }
 
-            List<String> packages = SystemService.getPackagesForUidNoThrow(entry.uid);
+            List<String> packages = PackageManagerApis.getPackagesForUidNoThrow(entry.uid);
             if (packages.isEmpty()) {
                 LOGGER.i("remove config for uid %d since it has gone", entry.uid);
                 config.packages.remove(entry);
@@ -152,8 +154,8 @@ public class ShizukuConfigManager extends ConfigManager {
             }
         }
 
-        for (int userId : SystemService.getUserIdsNoThrow()) {
-            for (PackageInfo pi : SystemService.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
+        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null
                         || pi.applicationInfo == null
                         || pi.requestedPermissions == null
@@ -164,7 +166,7 @@ public class ShizukuConfigManager extends ConfigManager {
                 int uid = pi.applicationInfo.uid;
                 boolean allowed;
                 try {
-                    allowed = SystemService.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED;
+                    allowed = PermissionManagerApis.checkPermission(PERMISSION, uid) == PackageManager.PERMISSION_GRANTED;
                 } catch (Throwable e) {
                     LOGGER.w("checkPermission");
                     continue;

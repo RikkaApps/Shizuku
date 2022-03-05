@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.collections.ArraysKt;
-import rikka.hidden.compat.SystemService;
+import rikka.hidden.compat.ActivityManagerApis;
+import rikka.hidden.compat.PackageManagerApis;
+import rikka.hidden.compat.PermissionManagerApis;
 import rikka.hidden.compat.adapter.ProcessObserverAdapter;
 import rikka.hidden.compat.adapter.UidObserverAdapter;
 import rikka.shizuku.server.util.Logger;
@@ -79,7 +81,7 @@ public class BinderSender {
     }
 
     private static void onActive(int uid, int pid) throws RemoteException {
-        List<String> packages = SystemService.getPackagesForUidNoThrow(uid);
+        List<String> packages = PackageManagerApis.getPackagesForUidNoThrow(uid);
         if (packages.isEmpty())
             return;
 
@@ -87,16 +89,16 @@ public class BinderSender {
 
         int userId = uid / 100000;
         for (String packageName : packages) {
-            PackageInfo pi = SystemService.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
+            PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
             if (pi == null || pi.requestedPermissions == null)
                 continue;
 
             if (ArraysKt.contains(pi.requestedPermissions, PERMISSION_MANAGER)) {
                 boolean granted;
                 if (pid == -1)
-                    granted = SystemService.checkPermission(PERMISSION_MANAGER, uid) == PackageManager.PERMISSION_GRANTED;
+                    granted = PermissionManagerApis.checkPermission(PERMISSION_MANAGER, uid) == PackageManager.PERMISSION_GRANTED;
                 else
-                    granted = SystemService.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED;
+                    granted = ActivityManagerApis.checkPermission(PERMISSION_MANAGER, pid, uid) == PackageManager.PERMISSION_GRANTED;
 
                 if (granted) {
                     ShizukuService.sendBinderToManger(sShizukuService, userId);
@@ -113,14 +115,14 @@ public class BinderSender {
         sShizukuService = shizukuService;
 
         try {
-            SystemService.registerProcessObserver(new ProcessObserver());
+            ActivityManagerApis.registerProcessObserver(new ProcessObserver());
         } catch (Throwable tr) {
             LOGGER.e(tr, "registerProcessObserver");
         }
 
         if (Build.VERSION.SDK_INT >= 26) {
             try {
-                SystemService.registerUidObserver(new UidObserver(),
+                ActivityManagerApis.registerUidObserver(new UidObserver(),
                         ActivityManagerHidden.UID_OBSERVER_ACTIVE,
                         ActivityManagerHidden.PROCESS_STATE_UNKNOWN,
                         null);
