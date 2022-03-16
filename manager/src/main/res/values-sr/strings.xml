@@ -19,4 +19,23 @@
     <string name="home_status_service_version">Verzija %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s se ne izvršava</string>
     <string name="home_status_service_is_running">%1$s se izvršava</string>
+    <string name="dialog_adb_pairing_title">Upari sa uređajem</string>
+    <string name="dialog_adb_pairing_discovery">Traženje uređaja za uparivanje</string>
+    <string name="dialog_adb_pairing_paring_code">Kód za uparivanje</string>
+    <string name="paring_code_is_wrong">Kód za uparivanje je pogrešan.</string>
+    <string name="cannot_connect_port">Nemoguće je povezivanje sa uslugom bežičnog otklanjanje grešaka.</string>
+    <string name="dialog_wireless_adb_not_enabled">Bežično otklanjanje grešaka nije omogućeno.
+\nPrimedba: Pre Android-a 11, omogućavanje bežičnog otklanjanja grešaka bilo je uslovljeno postojanjem konekcije sa računarom.</string>
+    <string name="dialog_adb_pairing_message">"Molim Vas, započnite proces uparivanja prateći sledeće korake: \"Razvojne opcije programera\" - \"Bežično otklanjanje grešaka\" - \"Uparivanje  uređaja pomoću kóda za uparivanje\".
+\n
+\nNakon uspešno izvršenog početka procesa uparivanja, moći ćete da unesete kód za uparivanje."</string>
+    <string name="adb_pairing_requires_multi_window">Molim Vas, najpre izaberite režim podeljenog ekrana, odnosno režim više prozora.</string>
+    <string name="adb_error_key_store">Neuspešno generisanje ključa za bežično otklanjanje grešaka.
+\nOvo je možda iz razloga što je mehanizam skladišta ključeva ovog uređaja neispravan.</string>
+    <string name="adb_pair_required">Molim Vas, najpre prođite kroz korake za uparivanje uređaja.</string>
+    <string name="development_settings">Razvojne opcije programera</string>
+    <string name="notification_settings">Opcije obaveštenja</string>
+    <string name="adb_pairing_tutorial_title">Uparite Shizuku sa Vašim uređajem</string>
+    <string name="adb_pairing_tutorial_content_notification">Notifikacija iz Shizuku aplikacije će Vam pomoći da dovršite uparivanje.</string>
+    <string name="adb_pairing_tutorial_content_steps">Otvorite sekciju \"Razvojne opcije programera\" - \"Bežično otklanjanje grešaka\". Dodirnite \"Uparivanje uređaja pomoću kóda za uparivanje\" i pojaviće Vam se 6-cifreni kód.</string>
 </resources>
