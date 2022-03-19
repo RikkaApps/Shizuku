@@ -7,4 +7,54 @@
     <string name="home_status_service_version">Versione %2$s,%1$s</string>
     <string name="home_status_service_not_running">%1$s non è attivo</string>
     <string name="home_status_service_is_running">%1$s è attivo</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Ci sono altre considerazioni, per favore conferma di aver letto prima la guida.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Copia</string>
+    <string name="home_adb_dialog_view_command_button_send">Invia</string>
+    <string name="home_wireless_adb_title">Avvia tramite debug wireless</string>
+    <string name="home_wireless_adb_description">Su Android 11 o versioni successive, puoi abilitare il debug Wireless e avviare Shizuku direttamente dal tuo dispositivo, senza collegarti a un computer.&lt;p&gt;Per prima cosa, consulta la guida dettagliata.</string>
+    <string name="home_wireless_adb_description_pre_11">Per le versioni più recenti di Android 11, è necessaria la connessione a un computer per abilitare il debug wireless.</string>
+    <string name="home_wireless_adb_view_guide_button">Guida passo per passo</string>
+    <string name="dialog_adb_discovery_message">Abilita \"Debug wireless\" in \"Opzioni sviluppatore\". \"Debug wireless\" viene automaticamente disabilitato quando la rete cambia.
+\n
+\n
+\nNota, non disabilitare \"Opzioni sviluppatore\" o \"Debug USB\", altrimenti Shizuku verrà interrotto.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="adb_pairing">Accoppiamento</string>
+    <string name="dialog_adb_pairing_title">Accoppia con il dispositivo</string>
+    <string name="dialog_adb_pairing_discovery">Ricerca servizio di abbinamento</string>
+    <string name="dialog_adb_pairing_paring_code">Codice di abbinamento</string>
+    <string name="paring_code_is_wrong">Il codice di associazione è errato.</string>
+    <string name="cannot_connect_port">Impossibile connettersi al servizio di debug wireless.</string>
+    <string name="adb_pairing_requires_multi_window">Entra prima in modalità schermo diviso (multi-finestra).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Il sistema richiede che la finestra di dialogo di associazione sia sempre visibile, l\'utilizzo della modalità schermo diviso è l\'unico modo per rendere visibili contemporaneamente questa app e la finestra di dialogo di sistema.</string>
+    <string name="adb_error_key_store">Impossibile generare la chiave per il debug wireless.
+\nCiò potrebbe essere dovuto al fatto che il meccanismo KeyStore di questo dispositivo è rotto.</string>
+    <string name="adb_pair_required">Si prega di eseguire prima la fase di associazione.</string>
+    <string name="development_settings">Opzioni per gli sviluppatori</string>
+    <string name="adb_pairing_tutorial_title">Associa Shizuku al tuo dispositivo</string>
+    <string name="adb_pairing_tutorial_content_notification">Una notifica da Shizuku ti aiuterà a completare l\'abbinamento.</string>
+    <string name="adb_pairing_tutorial_content_steps">Inserisci \"Opzioni sviluppatore\" - \"Debug wireless\". Seleziona \"Associa dispositivo con codice di associazione\", vedrai un codice a sei cifre.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Inserisci il codice nella notifica per completare l\'associazione.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Il processo di associazione richiede che tu interagisca con una notifica da Shizuku. Per favore, consenti a Shizuku di pubblicare notifiche.</string>
+    <string name="adb_pairing_tutorial_content_miui">Gli utenti MIUI potrebbero dover cambiare lo stile di notifica su \"Android\" da \"Notifiche\" - \"Sfumatura notifiche\" nelle impostazioni di sistema.</string>
+    <string name="adb_pairing_tutorial_content_samsung">Gli utenti Samsung potrebbero non riuscire a scoprire che toccando la parte sinistra dell\'opzione \"Debug wireless\" si aprirà la pagina \"Debug wireless\".</string>
+    <string name="adb_pairing_tutorial_content_finish">Torna a Shizuku e avvia Shizuku.</string>
+    <string name="home_root_title">Avvia (per dispositivi rooted)</string>
+    <string name="home_adb_button_view_command">Visualizza comando</string>
+    <string name="dialog_adb_discovery">Ricerca del servizio di debug wireless</string>
+    <string name="dialog_adb_invalid_port">Port è un numero intero compreso tra 1 e 65535.</string>
+    <string name="dialog_wireless_adb_not_enabled">Il debug wireless non è abilitato.
+\nNota, per versioni anteriori ad Android 11, per abilitare il debug wireless, è necessaria la connessione al computer.</string>
+    <string name="dialog_adb_pairing_message">Inizia l\'associazione con i seguenti passaggi: \"Opzioni sviluppatore\" - \"Debug wireless\" - \"Associazione del dispositivo tramite codice di associazione\".
+\n
+\nDopo l\'avvio del processo di associazione, potrai inserire il codice di associazione.</string>
+    <string name="notification_settings">Opzioni di notifica</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Alcuni sistemi (come MIUI) non consentono alle app di accedere alla rete quando non sono visibili, anche se l\'app utilizza il servizio in primo piano come standard. Disattiva le funzioni di ottimizzazione della batteria per Shizuku su tali sistemi.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">In caso contrario, potresti non essere in grado di inserire il codice di associazione dalla notifica.</string>
+    <string name="home_root_description">Inoltre, Shizuku può essere avviato automaticamente all\'avvio. In caso contrario, controlla se il tuo sistema o strumenti di terze parti hanno limitato Shizuku.&lt;br&gt;Puoi fare riferimento a %s.</string>
+    <string name="home_root_button_start">Avvia</string>
+    <string name="home_root_description_sui">Se stai usando Magisk, puoi provare %1$s (un modulo Riru). Per gli utenti root, alla fine sostituirà Shizuku. Nota, le applicazioni esistenti devono essere leggermente modificate per utilizzare %2$s.</string>
+    <string name="home_root_button_restart">Ricomincia</string>
+    <string name="home_app_management_title">Gestione dell\'applicazione</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku ha bisogno di accedere alla rete locale. È controllato dal permesso di rete.</string>
 </resources>
