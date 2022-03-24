@@ -7,10 +7,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import java.io.IOException
-import java.net.InetAddress
-import java.net.InetSocketAddress
-import java.net.NetworkInterface
-import java.net.ServerSocket
+import java.net.*
 
 @RequiresApi(Build.VERSION_CODES.R)
 class AdbMdns(context: Context, private val serviceType: String,
@@ -69,7 +66,7 @@ class AdbMdns(context: Context, private val serviceType: String,
 
     private fun isPortAvailable(port: Int) = try {
         ServerSocket().use {
-            it.bind(InetSocketAddress(InetAddress.getLoopbackAddress(), port), 1)
+            it.bind(InetSocketAddress("127.0.0.1", port), 1)
             false
         }
     } catch (e: IOException) {

@@ -72,7 +72,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding, root: Vie
         var port = SystemProperties.getInt("service.adb.tcp.port", -1)
         if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
         if (port > 0) {
-            val host = Inet4Address.getLoopbackAddress().hostName
+            val host = "127.0.0.1"
             val intent = Intent(context, StarterActivity::class.java).apply {
                 putExtra(StarterActivity.EXTRA_IS_ROOT, false)
                 putExtra(StarterActivity.EXTRA_HOST, host)

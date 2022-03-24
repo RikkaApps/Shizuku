@@ -146,7 +146,7 @@ class AdbPairingService : Service() {
 
     private fun onInput(code: String): Notification {
         GlobalScope.launch(Dispatchers.IO) {
-            val host = Inet4Address.getLoopbackAddress().hostName
+            val host = "127.0.0.1"
 
             val key = try {
                 AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
