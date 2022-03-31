@@ -97,7 +97,6 @@
     <string name="notification_adb_pairing_searching_for_service_title">페어링 서비스 검색중</string>
     <string name="notification_adb_pairing_failed_title">페어링 실패</string>
     <string name="permission_description">앱이 Shizuku를 사용하도록 허용합니다.</string>
-    <string name="adb_pairing_tutorial_content_samsung">삼성 갤럭시 사용자는 \"무선 디버깅\" 옵션의 왼쪽 부분을 누르면 \"무선 디버깅\" 페이지가 열리는 것을 찾지 못할 수 있습니다.</string>
     <string name="terminal_tutorial_2_description">예를 들어, %1$s에서 Shizuku를 사용하려면 %2$s를 %3$s로 바꿔야 합니다(%4$s는 %1$s의 패키지 이름).</string>
     <string name="rish_description">%1$s를 사용하면 모든 터미널 앱에서 Shizuku가 실행하는 셸에 연결하고 상호 작용할 수 있습니다. &lt;p&gt;자세한 사용법 %1$s에 대해 문서를 보려면 탭하세요.</string>
     <string name="terminal_tutorial_2">그런 다음 텍스트 편집기를 사용하여 %1$s을 열고 편집하십시오.</string>

@@ -242,15 +242,12 @@
                     android:text="@string/adb_pairing_tutorial_content_steps" />
 
                 <TextView
-                    android:id="@+id/samsuing"
                     style="@style/TerminalTutorialText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
-                    android:text="@string/adb_pairing_tutorial_content_samsung"
-                    android:textColor="?colorError"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:text="@string/adb_pairing_tutorial_content_left_is_clickable"
+                    android:textColor="?colorError" />
 
                 <Button
                     android:id="@+id/developer_options"

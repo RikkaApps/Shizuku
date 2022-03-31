@@ -39,8 +39,6 @@ class AdbPairingTutorialActivity : AppBarActivity() {
 
             if (DeviceCompatibility.isMiui()) {
                 miui.isVisible = true
-            } else if (DeviceCompatibility.isSamsung()) {
-                samsuing.isVisible = true
             }
 
             developerOptions.setOnClickListener {

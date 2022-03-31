@@ -111,7 +111,6 @@
     <string name="adb_pairing_tutorial_content_notification">Shizukuからの通知でペアリングが完了します。</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">通知にコードを入力してペアリングします。</string>
     <string name="adb_pairing_tutorial_content_miui">MIUIユーザーはシステムの設定から「通知」→「通知のシェード」から通知スタイルを「Android」に変更する必要がある場合があります。</string>
-    <string name="adb_pairing_tutorial_content_samsung">Samsungユーサーは、「ワイヤレスデバッグ」オプションの左側をタップすることで「ワイヤレスデバッグ」ページが開けることに気づけないかもしれない場合があります。</string>
     <string name="notification_channel_adb_pairing">ワイヤレスデバックペアリング</string>
     <string name="notification_adb_pairing_input_paring_code">ペアリングコードを入力</string>
     <string name="notification_adb_pairing_searching_for_service_title">ペアリングサービスを探しています</string>

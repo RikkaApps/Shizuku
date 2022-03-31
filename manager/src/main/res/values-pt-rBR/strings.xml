@@ -115,7 +115,6 @@
     <string name="home_wireless_adb_description">No Android 11 ou superior, você pode ativar a Depuração via Wireless e iniciar o Shizuku diretamente do seu dispositivo, sem se conectar a um computador. &lt;p&gt; Primeiro, consulte esse guia passo a passo.</string>
     <string name="home_wireless_adb_description_pre_11">Antes do Android 11, é necessário conectar-se a um computador para habilitar a Depuração via Wireless.</string>
     <string name="home_wireless_adb_view_guide_button">Guia passo a passo</string>
-    <string name="adb_pairing_tutorial_content_samsung">Os usuários da Samsung podem não descobrir que tocar na parte esquerda da opção \"Depuração sem fio\" abrirá a página \"Depuração sem fio\".</string>
     <string name="adb_pairing_tutorial_content_finish">Volte para Shizuku e inicie o Shizuku.</string>
     <string name="notification_settings">Opções de notificações</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">O processo de pareamento precisa que você interaja com uma notificação do Shizuku. Por favor, permita que o Shizuku envie notificações.</string>

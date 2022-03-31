@@ -108,7 +108,6 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Введите код в уведомление для завершения процедуры.</string>
     <string name="adb_pairing_tutorial_content_notification">Уведомление от Shizuku поможет завершить процедуру сопряжения.</string>
     <string name="rish_description">Посредством %1$s из любого приложения-терминала можно подключаться и взаимодействовать с shell, запущенной Shizuku. &lt;p&gt;Нажмите здесь для просмотра инструкции по работе с %1$s.</string>
-    <string name="adb_pairing_tutorial_content_samsung">На устройствах Samsung иная структура: для перехода в необходимые настройки нужно в разделе «Параметры разработчика» нажать по левой части пункта «Отладка по Wi-Fi».</string>
     <string name="notification_adb_pairing_working_title">Выполняется сопряжение</string>
     <string name="notification_adb_pairing_succeed_title">Сопряжение выполнено</string>
     <string name="notification_adb_pairing_succeed_text">Теперь можете запустить службу Shizuku.</string>

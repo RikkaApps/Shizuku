@@ -115,7 +115,6 @@
     <string name="notification_channel_adb_pairing">Kabellose Debugging-Kopplung</string>
     <string name="notification_adb_pairing_input_paring_code">Kopplungscode eingeben</string>
     <string name="notification_adb_pairing_working_title">Koppeln läuft</string>
-    <string name="adb_pairing_tutorial_content_samsung">Samsung-Benutzer können möglicherweise nicht feststellen, dass das Tippen auf den linken Teil der Option \"Wireless Debugging\" die Seite \"Wireless Debugging\" öffnet.</string>
     <string name="adb_pairing_tutorial_content_notification">Eine Benachrichtigung von Shizuku wird Ihnen helfen, die Kopplung abzuschließen.</string>
     <string name="home_wireless_adb_description_pre_11">Vor Android 11 ist eine Verbindung zu einem Computer erforderlich, um Wireless Debugging zu aktivieren.</string>
     <string name="home_wireless_adb_view_guide_button">Schritt-für-Schritt-Anleitung</string>

@@ -112,7 +112,6 @@
     <string name="adb_pairing_tutorial_content_steps">Accesează „Opțiuni dezvoltator” - „Depanare wireless”. Atinge „Asociere dispozitiv cu codul de asociere”, vei vedea un cod din șase cifre.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Introdu codul în notificare pentru a finaliza asocierea.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Procesul de asociere necesită să interacționarea cu o notificare de la Shizuku. Permite lui Shizuku să afișeze notificări.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Este posibil ca utilizatorii Samsung să nu poată ști că atingând partea din stânga a opțiunii „Depanare wireless” se va deschide pagina „Depanare wireless”.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Unele sisteme (cum ar fi MIUI) nu permit aplicațiilor să acceseze rețeaua atunci când nu sunt vizibile, chiar dacă aplicația folosește serviciul din prim-plan ca standard. Dezactivarea funcțiilor de optimizare a bateriei pentru Shizuku pe astfel de sisteme este necesară.</string>
     <string name="home_learn_more_description">Află cum să dezvolți cu Shizuku sau să obții aplicații folosind Shizuku</string>
     <string name="app_management_dialog_adb_is_limited_message">Este foarte posibil ca producătorul dispozitivului să limiteze permisiunea adb.&lt;p&gt;Este posibil să existe o soluție pentru acest sistem în &lt;b&gt;&lt;a href=\"%1$s\"&gt;acest document&lt;/a&gt;&lt;/b&gt;.</string>

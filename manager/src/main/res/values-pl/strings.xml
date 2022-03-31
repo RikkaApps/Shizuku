@@ -111,7 +111,6 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Wprowadź kod parowania w okienku powiadomienia aby ukończyć parowanie.</string>
     <string name="adb_pairing_tutorial_content_notification">Powiadomienie od Shizuku pomoże w dokończeniu parowania.</string>
     <string name="adb_pairing_tutorial_content_steps">Wejdź w menu \"Opcje programistyczne\" - \"Debugowanie bezprzewodowe\". Tapnij \"Sparuj urządzenie przy pomocy kodu parowania\" i zobaczysz 6-cio cyfrowy kod parowania.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Użytkownicy urządzeń Samsunga mogą nie zauważyć że tąpnięcie na lewą część opcji \"Debugowanie bezprzewodowe\" otwiera dodatkowe menu ustawień.</string>
     <string name="notification_adb_pairing_retry">Ponów</string>
     <string name="notification_adb_pairing_failed_title">Parowanie nie powiodło się</string>
     <string name="adb_pairing_tutorial_title">Sparuj Shizuku ze swoim urządzeniem</string>

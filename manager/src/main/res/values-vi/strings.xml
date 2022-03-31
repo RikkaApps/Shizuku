@@ -109,7 +109,6 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Nhập mã vào thông báo để hoàn tất quá trình ghép nối.</string>
     <string name="adb_pairing_tutorial_content_notification">Một thông báo từ Shizuku sẽ giúp bạn hoàn thành việc ghép nối.</string>
     <string name="adb_pairing_tutorial_content_steps">Nhập \"Tùy chọn nhà phát triển\" - \"Gỡ lỗi qua Wi-Fi\". Nhấn vào \"Ghép nối thiết bị bằng mã ghép nối\", bạn sẽ thấy một mã gồm sáu chữ số.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Người dùng Samsung có thể không tìm thấy phần nhấn vào bên trái của tùy chọn \"Gỡ lỗi qua Wi-Fi\" sẽ mở trang \"Gỡ lỗi qua Wi-Fi\".</string>
     <string name="adb_pairing_tutorial_title">Ghép nối Shizuku với thiết bị của bạn</string>
     <string name="notification_settings">Tùy chọn thông báo</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Quá trình ghép nối cần bạn tương tác với thông báo từ Shizuku. Vui lòng cho phép Shizuku đăng thông báo.</string>

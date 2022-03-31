@@ -106,7 +106,6 @@
     <string name="adb_pairing_tutorial_content_notification">Notifikasi dari Shizuku akan membantu Anda untuk menyelesaikan pemasangan.</string>
     <string name="adb_pairing_tutorial_content_steps">Masuk \"Opsi developer\" - \"Debug nirkabel\". Sentuh \"Sambungkan perangkat dengan kode penghubung\", Anda akan melihat enam digit kode.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Masukkan kode di notifikasi untuk menyelesaikan penyambungan.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Pengguna Samsung mungkin tidak dapat menemukan bahwa mengetuk bagian kiri opsi \"Debug nirkabel\" akan membuka halaman \"Debug nirkabel\".</string>
     <string name="notification_channel_adb_pairing">Pemasangan debug nirkabel</string>
     <string name="notification_adb_pairing_input_paring_code">Masukkan kode penyambungan</string>
     <string name="notification_adb_pairing_searching_for_service_title">Mencari layanan penyambungan</string>

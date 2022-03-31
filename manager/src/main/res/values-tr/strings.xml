@@ -102,7 +102,6 @@
     <string name="adb_pairing_tutorial_content_steps">\"Geliştirici Seçenekleri\" - \"Kablosuz hata ayıklama\" girin. \"Cihazı eşleştirme kodu ile eşleştir\"e dokunun, altı haneli bir kod göreceksiniz.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Eşleştirmeyi tamamlamak için kodu bildirime girin.</string>
     <string name="rish_description">%1$s ile herhangi bir terminal uygulamasında Shizuku\'nun shell run\'larına bağlanabilir ve bunlarla etkileşim kurabilirsiniz. &lt;p&gt;%1$s ayrıntılı kullanımı hakkında, belgeyi görüntülemek için dokunun.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Samsung kullanıcıları, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmına dokunmanın \"Kablosuz hata ayıklama\" sayfasını açacağını bulamayabilir.</string>
     <string name="adb_pairing_tutorial_title">Shizuku\'yu cihazınızla eşleştirin</string>
     <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s\'yi (bir Riru modülü) deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku\'nun yerini alacak. %2$s\'yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
     <string name="notification_settings">Bildirim seçenekleri</string>

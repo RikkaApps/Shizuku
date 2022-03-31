@@ -37,7 +37,6 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Inserisci il codice nella notifica per completare l\'associazione.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Il processo di associazione richiede che tu interagisca con una notifica da Shizuku. Per favore, consenti a Shizuku di pubblicare notifiche.</string>
     <string name="adb_pairing_tutorial_content_miui">Gli utenti MIUI potrebbero dover cambiare lo stile di notifica su \"Android\" da \"Notifiche\" - \"Sfumatura notifiche\" nelle impostazioni di sistema.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Gli utenti Samsung potrebbero non riuscire a scoprire che toccando la parte sinistra dell\'opzione \"Debug wireless\" si aprirà la pagina \"Debug wireless\".</string>
     <string name="adb_pairing_tutorial_content_finish">Torna a Shizuku e avvia Shizuku.</string>
     <string name="home_root_title">Avvia (per dispositivi rooted)</string>
     <string name="home_adb_button_view_command">Visualizza comando</string>

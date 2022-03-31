@@ -82,7 +82,6 @@
     <string name="home_root_description">De plus, Shizuku peut être démarré automatiquement au démarrage. Si non, merci de vérifier si votre système ou un outil tiers a restreint Shizuku. &lt;br&gt;Vous pouvez vous référer à %s.</string>
     <string name="home_root_title">Démarrer (pour les appareils rootés)</string>
     <string name="adb_pairing_tutorial_content_finish">Retournez dans Shizuku et lancez le.</string>
-    <string name="adb_pairing_tutorial_content_samsung">Les utilisateurs de Samsung pourraient ne pas trouver qu\'appuyer sur la partie gauche de l\'option \"Débogage sans fil\" ouvrira la page \"Débogage sans fil\".</string>
     <string name="adb_pairing_tutorial_content_miui">Les utilisateurs de MIUI pourraient devoir changer le style de notifications vers \"Android\" dans \"Notifications\" - \"Style de notification\" dans les paramètres système.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Le processus d\'association requiert que vous interagissez avec une notification de Shizuku. Merci d\'autoriser Shizuku à envoyer les notifications.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Entrez le code dans la notification pour compléter l\'association.</string>
