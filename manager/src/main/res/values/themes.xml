@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Base.AppTheme.Light" parent="Theme.Material3.Light.Rikka">
+    <style name="Base.AppTheme.Light" parent="Theme.Material3.Light.Shizuku">
         <item name="android:statusBarColor">?android:colorBackground</item>
 
         <item name="appColorPrimary">@color/app_color_light</item>
@@ -12,123 +12,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
-        <!-- MDC Material 3 colors -->
-        <item name="colorPrimary">@color/md_theme_light_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/md_theme_light_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
-        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
-        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
-        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
-        <item name="colorError">@color/md_theme_light_error</item>
-        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
-        <item name="colorOnError">@color/md_theme_light_onError</item>
-        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
-        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/md_theme_light_surface</item>
-        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
-        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
-        <item name="colorOutline">@color/md_theme_light_outline</item>
-        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
-        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
-        <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
-
-        <!-- On lower Android versions, android:colorBackground must be a color resource,
-             neither raw color string (#xxxxxx) nor attribute (?attr) will not work -->
-        <item name="android:colorBackground">@color/md_theme_light_surface</item>
-
-        <!-- Material 3 color tokens -->
-        <!-- Generated form #3F51B5 -->
-        <item name="palettePrimary100">@color/palette_primary_100</item>
-        <item name="palettePrimary99">@color/palette_primary_99</item>
-        <item name="palettePrimary95">@color/palette_primary_95</item>
-        <item name="palettePrimary90">@color/palette_primary_90</item>
-        <item name="palettePrimary80">@color/palette_primary_80</item>
-        <item name="palettePrimary70">@color/palette_primary_70</item>
-        <item name="palettePrimary60">@color/palette_primary_60</item>
-        <item name="palettePrimary50">@color/palette_primary_50</item>
-        <item name="palettePrimary40">@color/palette_primary_40</item>
-        <item name="palettePrimary30">@color/palette_primary_30</item>
-        <item name="palettePrimary20">@color/palette_primary_20</item>
-        <item name="palettePrimary10">@color/palette_primary_10</item>
-        <item name="palettePrimary0">@color/palette_primary_0</item>
-        <item name="paletteSecondary100">@color/palette_secondary_100</item>
-        <item name="paletteSecondary99">@color/palette_secondary_99</item>
-        <item name="paletteSecondary95">@color/palette_secondary_95</item>
-        <item name="paletteSecondary90">@color/palette_secondary_90</item>
-        <item name="paletteSecondary80">@color/palette_secondary_80</item>
-        <item name="paletteSecondary70">@color/palette_secondary_70</item>
-        <item name="paletteSecondary60">@color/palette_secondary_60</item>
-        <item name="paletteSecondary50">@color/palette_secondary_50</item>
-        <item name="paletteSecondary40">@color/palette_secondary_40</item>
-        <item name="paletteSecondary30">@color/palette_secondary_30</item>
-        <item name="paletteSecondary20">@color/palette_secondary_20</item>
-        <item name="paletteSecondary10">@color/palette_secondary_10</item>
-        <item name="paletteSecondary0">@color/palette_secondary_0</item>
-        <item name="paletteTertiary100">@color/palette_tertiary_100</item>
-        <item name="paletteTertiary99">@color/palette_tertiary_99</item>
-        <item name="paletteTertiary95">@color/palette_tertiary_95</item>
-        <item name="paletteTertiary90">@color/palette_tertiary_90</item>
-        <item name="paletteTertiary80">@color/palette_tertiary_80</item>
-        <item name="paletteTertiary70">@color/palette_tertiary_70</item>
-        <item name="paletteTertiary60">@color/palette_tertiary_60</item>
-        <item name="paletteTertiary50">@color/palette_tertiary_50</item>
-        <item name="paletteTertiary40">@color/palette_tertiary_40</item>
-        <item name="paletteTertiary30">@color/palette_tertiary_30</item>
-        <item name="paletteTertiary20">@color/palette_tertiary_20</item>
-        <item name="paletteTertiary10">@color/palette_tertiary_10</item>
-        <item name="paletteTertiary0">@color/palette_tertiary_0</item>
-        <item name="paletteError100">@color/palette_error_100</item>
-        <item name="paletteError99">@color/palette_error_99</item>
-        <item name="paletteError95">@color/palette_error_95</item>
-        <item name="paletteError90">@color/palette_error_90</item>
-        <item name="paletteError80">@color/palette_error_80</item>
-        <item name="paletteError70">@color/palette_error_70</item>
-        <item name="paletteError60">@color/palette_error_60</item>
-        <item name="paletteError50">@color/palette_error_50</item>
-        <item name="paletteError40">@color/palette_error_40</item>
-        <item name="paletteError30">@color/palette_error_30</item>
-        <item name="paletteError20">@color/palette_error_20</item>
-        <item name="paletteError10">@color/palette_error_10</item>
-        <item name="paletteError0">@color/palette_error_0</item>
-        <item name="paletteNeutral100">@color/palette_neutral_100</item>
-        <item name="paletteNeutral99">@color/palette_neutral_99</item>
-        <item name="paletteNeutral95">@color/palette_neutral_95</item>
-        <item name="paletteNeutral90">@color/palette_neutral_90</item>
-        <item name="paletteNeutral80">@color/palette_neutral_80</item>
-        <item name="paletteNeutral70">@color/palette_neutral_70</item>
-        <item name="paletteNeutral60">@color/palette_neutral_60</item>
-        <item name="paletteNeutral50">@color/palette_neutral_50</item>
-        <item name="paletteNeutral40">@color/palette_neutral_40</item>
-        <item name="paletteNeutral30">@color/palette_neutral_30</item>
-        <item name="paletteNeutral20">@color/palette_neutral_20</item>
-        <item name="paletteNeutral10">@color/palette_neutral_10</item>
-        <item name="paletteNeutral0">@color/palette_neutral_0</item>
-        <item name="paletteNeutralVariant100">@color/palette_neutral_variant_100</item>
-        <item name="paletteNeutralVariant99">@color/palette_neutral_variant_99</item>
-        <item name="paletteNeutralVariant95">@color/palette_neutral_variant_95</item>
-        <item name="paletteNeutralVariant90">@color/palette_neutral_variant_90</item>
-        <item name="paletteNeutralVariant80">@color/palette_neutral_variant_80</item>
-        <item name="paletteNeutralVariant70">@color/palette_neutral_variant_70</item>
-        <item name="paletteNeutralVariant60">@color/palette_neutral_variant_60</item>
-        <item name="paletteNeutralVariant50">@color/palette_neutral_variant_50</item>
-        <item name="paletteNeutralVariant40">@color/palette_neutral_variant_40</item>
-        <item name="paletteNeutralVariant30">@color/palette_neutral_variant_30</item>
-        <item name="paletteNeutralVariant20">@color/palette_neutral_variant_20</item>
-        <item name="paletteNeutralVariant10">@color/palette_neutral_variant_10</item>
-        <item name="paletteNeutralVariant0">@color/palette_neutral_variant_0</item>
     </style>
 
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
-    <style name="Base.AppTheme" parent="Theme.Material3.Dark.Rikka">
+    <style name="Base.AppTheme" parent="Theme.Material3.Dark.Shizuku">
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="homeCardStyle">@style/Card</item>
         <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
@@ -137,115 +25,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
-        <!-- MDC Material 3 colors -->
-        <item name="colorPrimary">@color/md_theme_dark_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
-        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
-        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
-        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
-        <item name="colorError">@color/md_theme_dark_error</item>
-        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
-        <item name="colorOnError">@color/md_theme_dark_onError</item>
-        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_dark_surface</item>
-        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
-        <item name="colorSurface">@color/md_theme_dark_surface</item>
-        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
-        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
-        <item name="colorOutline">@color/md_theme_dark_outline</item>
-        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
-        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
-        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
-
-        <!-- Material 3 color tokens -->
-        <!-- Generated form #3F51B5 -->
-        <item name="palettePrimary100">@color/palette_primary_100</item>
-        <item name="palettePrimary99">@color/palette_primary_99</item>
-        <item name="palettePrimary95">@color/palette_primary_95</item>
-        <item name="palettePrimary90">@color/palette_primary_90</item>
-        <item name="palettePrimary80">@color/palette_primary_80</item>
-        <item name="palettePrimary70">@color/palette_primary_70</item>
-        <item name="palettePrimary60">@color/palette_primary_60</item>
-        <item name="palettePrimary50">@color/palette_primary_50</item>
-        <item name="palettePrimary40">@color/palette_primary_40</item>
-        <item name="palettePrimary30">@color/palette_primary_30</item>
-        <item name="palettePrimary20">@color/palette_primary_20</item>
-        <item name="palettePrimary10">@color/palette_primary_10</item>
-        <item name="palettePrimary0">@color/palette_primary_0</item>
-        <item name="paletteSecondary100">@color/palette_secondary_100</item>
-        <item name="paletteSecondary99">@color/palette_secondary_99</item>
-        <item name="paletteSecondary95">@color/palette_secondary_95</item>
-        <item name="paletteSecondary90">@color/palette_secondary_90</item>
-        <item name="paletteSecondary80">@color/palette_secondary_80</item>
-        <item name="paletteSecondary70">@color/palette_secondary_70</item>
-        <item name="paletteSecondary60">@color/palette_secondary_60</item>
-        <item name="paletteSecondary50">@color/palette_secondary_50</item>
-        <item name="paletteSecondary40">@color/palette_secondary_40</item>
-        <item name="paletteSecondary30">@color/palette_secondary_30</item>
-        <item name="paletteSecondary20">@color/palette_secondary_20</item>
-        <item name="paletteSecondary10">@color/palette_secondary_10</item>
-        <item name="paletteSecondary0">@color/palette_secondary_0</item>
-        <item name="paletteTertiary100">@color/palette_tertiary_100</item>
-        <item name="paletteTertiary99">@color/palette_tertiary_99</item>
-        <item name="paletteTertiary95">@color/palette_tertiary_95</item>
-        <item name="paletteTertiary90">@color/palette_tertiary_90</item>
-        <item name="paletteTertiary80">@color/palette_tertiary_80</item>
-        <item name="paletteTertiary70">@color/palette_tertiary_70</item>
-        <item name="paletteTertiary60">@color/palette_tertiary_60</item>
-        <item name="paletteTertiary50">@color/palette_tertiary_50</item>
-        <item name="paletteTertiary40">@color/palette_tertiary_40</item>
-        <item name="paletteTertiary30">@color/palette_tertiary_30</item>
-        <item name="paletteTertiary20">@color/palette_tertiary_20</item>
-        <item name="paletteTertiary10">@color/palette_tertiary_10</item>
-        <item name="paletteTertiary0">@color/palette_tertiary_0</item>
-        <item name="paletteError100">@color/palette_error_100</item>
-        <item name="paletteError99">@color/palette_error_99</item>
-        <item name="paletteError95">@color/palette_error_95</item>
-        <item name="paletteError90">@color/palette_error_90</item>
-        <item name="paletteError80">@color/palette_error_80</item>
-        <item name="paletteError70">@color/palette_error_70</item>
-        <item name="paletteError60">@color/palette_error_60</item>
-        <item name="paletteError50">@color/palette_error_50</item>
-        <item name="paletteError40">@color/palette_error_40</item>
-        <item name="paletteError30">@color/palette_error_30</item>
-        <item name="paletteError20">@color/palette_error_20</item>
-        <item name="paletteError10">@color/palette_error_10</item>
-        <item name="paletteError0">@color/palette_error_0</item>
-        <item name="paletteNeutral100">@color/palette_neutral_100</item>
-        <item name="paletteNeutral99">@color/palette_neutral_99</item>
-        <item name="paletteNeutral95">@color/palette_neutral_95</item>
-        <item name="paletteNeutral90">@color/palette_neutral_90</item>
-        <item name="paletteNeutral80">@color/palette_neutral_80</item>
-        <item name="paletteNeutral70">@color/palette_neutral_70</item>
-        <item name="paletteNeutral60">@color/palette_neutral_60</item>
-        <item name="paletteNeutral50">@color/palette_neutral_50</item>
-        <item name="paletteNeutral40">@color/palette_neutral_40</item>
-        <item name="paletteNeutral30">@color/palette_neutral_30</item>
-        <item name="paletteNeutral20">@color/palette_neutral_20</item>
-        <item name="paletteNeutral10">@color/palette_neutral_10</item>
-        <item name="paletteNeutral0">@color/palette_neutral_0</item>
-        <item name="paletteNeutralVariant100">@color/palette_neutral_variant_100</item>
-        <item name="paletteNeutralVariant99">@color/palette_neutral_variant_99</item>
-        <item name="paletteNeutralVariant95">@color/palette_neutral_variant_95</item>
-        <item name="paletteNeutralVariant90">@color/palette_neutral_variant_90</item>
-        <item name="paletteNeutralVariant80">@color/palette_neutral_variant_80</item>
-        <item name="paletteNeutralVariant70">@color/palette_neutral_variant_70</item>
-        <item name="paletteNeutralVariant60">@color/palette_neutral_variant_60</item>
-        <item name="paletteNeutralVariant50">@color/palette_neutral_variant_50</item>
-        <item name="paletteNeutralVariant40">@color/palette_neutral_variant_40</item>
-        <item name="paletteNeutralVariant30">@color/palette_neutral_variant_30</item>
-        <item name="paletteNeutralVariant20">@color/palette_neutral_variant_20</item>
-        <item name="paletteNeutralVariant10">@color/palette_neutral_variant_10</item>
-        <item name="paletteNeutralVariant0">@color/palette_neutral_variant_0</item>
     </style>
 
     <style name="Theme" parent="Base.AppTheme" />

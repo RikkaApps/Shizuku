@@ -18,6 +18,7 @@ buildscript {
             content {
                 includeGroup("dev.rikka.tools.refine")
                 includeGroup("dev.rikka.tools.autoresconfig")
+                includeGroup("dev.rikka.tools.materialthemebuilder")
             }
         }
         mavenLocal()
@@ -28,6 +29,7 @@ buildscript {
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
         classpath 'dev.rikka.tools.refine:gradle-plugin:3.0.3'
         classpath 'dev.rikka.tools.autoresconfig:gradle-plugin:1.0.0'
+        classpath 'dev.rikka.tools.materialthemebuilder:dev.rikka.tools.materialthemebuilder.gradle.plugin:1.0.0'
     }
 }
 

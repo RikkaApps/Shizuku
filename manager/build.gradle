@@ -5,6 +5,7 @@ plugins {
     id('kotlin-android')
     id('dev.rikka.tools.refine.gradle-plugin')
     id('dev.rikka.tools.autoresconfig')
+    id('dev.rikka.tools.materialthemebuilder')
 }
 
 android {
@@ -70,6 +71,22 @@ autoResConfig {
     generatedClassFullName = "rikka.shizuku.manager.ShizukuLocales"
     generateRes = false
     generatedArrayFirstItem = "SYSTEM"
+}
+
+materialThemeBuilder {
+    themes = [
+            theme {
+                name = "shizuku"
+                primaryColor = "#3F51B5"
+                //secondaryColor = "#00FF00"
+                //tertiaryColor = "#0000FF"
+                //neutralColor = "#000000"
+                lightThemeFormat = "Theme.Material3.Light.%s"
+                lightThemeParent = "Theme.Material3.Light.Rikka"
+                darkThemeFormat = "Theme.Material3.Dark.%s"
+                darkThemeParent = "Theme.Material3.Dark.Rikka"
+            }
+    ]
 }
 
 def optimizeReleaseResources = task('optimizeReleaseResources').doLast {
