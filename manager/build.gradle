@@ -74,19 +74,16 @@ autoResConfig {
 }
 
 materialThemeBuilder {
-    themes = [
-            theme {
-                name = "shizuku"
-                primaryColor = "#3F51B5"
-                //secondaryColor = "#00FF00"
-                //tertiaryColor = "#0000FF"
-                //neutralColor = "#000000"
-                lightThemeFormat = "Theme.Material3.Light.%s"
-                lightThemeParent = "Theme.Material3.Light.Rikka"
-                darkThemeFormat = "Theme.Material3.Dark.%s"
-                darkThemeParent = "Theme.Material3.Dark.Rikka"
-            }
-    ]
+    themes {
+        shizuku {
+            primaryColor = "#3F51B5"
+            lightThemeFormat = "Theme.Material3.Light.%s"
+            lightThemeParent = "Theme.Material3.Light.Rikka"
+            darkThemeFormat = "Theme.Material3.Dark.%s"
+            darkThemeParent = "Theme.Material3.Dark.Rikka"
+        }
+    }
+    generatePalette = true
 }
 
 def optimizeReleaseResources = task('optimizeReleaseResources').doLast {
