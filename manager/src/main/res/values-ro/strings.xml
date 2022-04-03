@@ -127,4 +127,5 @@
     <string name="notification_adb_pairing_stop_searching">Oprire căutare</string>
     <string name="notification_adb_pairing_succeed_text">Poți porni serviciul Shizuku acum.</string>
     <string name="start_with_root_failed">Nu se poate porni serviciul deoarece permisiunea root nu este acordată sau acest dispozitiv nu este root-at.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Va rugăm să luați la cunoştință că pe partea din stănga a opțiunii \"Depanare Wireless\" este click-abilă, apăsarea acesteia va deschide o pagina nouă. Este incorect să porneşti doar comutatorul din dreapta.</string>
 </resources>
