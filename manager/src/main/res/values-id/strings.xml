@@ -105,7 +105,7 @@
     <string name="home_wireless_adb_description">Pada Android 11 atau yang lebih baru, Anda dapat mengaktifkan debug Nirkabel dan memulai Shizuku langsung dari perangkat Anda, tanpa menyambungkan ke komputer.&lt;p&gt;Silakan lihat panduan langkah demi langkah terlebih dahulu.</string>
     <string name="adb_pairing_tutorial_content_notification">Notifikasi dari Shizuku akan membantu Anda untuk menyelesaikan pemasangan.</string>
     <string name="adb_pairing_tutorial_content_steps">Masuk \"Opsi developer\" - \"Debug nirkabel\". Sentuh \"Sambungkan perangkat dengan kode penghubung\", Anda akan melihat enam digit kode.</string>
-    <string name="adb_pairing_tutorial_content_enter_pairing_code">Masukkan kode di notifikasi untuk menyelesaikan penyambungan.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Masukkan kode pada notifikasi untuk menyelesaikan penyambungan.</string>
     <string name="notification_channel_adb_pairing">Pemasangan debug nirkabel</string>
     <string name="notification_adb_pairing_input_paring_code">Masukkan kode penyambungan</string>
     <string name="notification_adb_pairing_searching_for_service_title">Mencari layanan penyambungan</string>
@@ -121,4 +121,9 @@
     <string name="adb_pairing_tutorial_content_notification_blocked">Proses penyambungan membutuhkan Anda untuk berinteraksi dengan notifikasi dari Shizuku. Mohon izinkan Shizuku untuk mengirim pemberitahuan.</string>
     <string name="home_wireless_adb_view_guide_button">Panduan langkah demi langkah</string>
     <string name="adb_pairing_tutorial_content_finish">Kembali ke Shizuku dan mulai Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Harap dicatat, bagian kiri dari opsi \"Debug nirkabel \" dapat diklik, mengetuknya akan membuka halaman baru. Hanya menyalakan sakelar di sebelah kanan yang salah.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Jika tidak, Anda mungkin tidak dapat memasukkan kode penghubung dari notifikasi.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku perlu mengakses jaringan lokal. Itu dikendalikan oleh izin jaringan.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Beberapa sistem (seperti MIUI) melarang aplikasi mengakses jaringan saat tidak terlihat, meskipun aplikasi menggunakan layanan latar depan sebagai standar. Harap nonaktifkan fitur pengoptimalan baterai untuk Shizuku pada sistem tersebut.</string>
+    <string name="settings_use_system_color">Gunakan warna tema sistem</string>
 </resources>
