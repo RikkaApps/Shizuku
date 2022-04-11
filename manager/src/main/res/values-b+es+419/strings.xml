@@ -101,4 +101,14 @@
     <string name="home_terminal_description">Ejecute comandos a través de Shizuku en las aplicaciones de terminal que le gusten</string>
     <string name="terminal_tutorial_1">Primero, exporte archivos a cualquier lugar que desee. Encontrará dos archivos,%1$s y %2$s.</string>
     <string name="rish_description">Con %1$s, en cualquier aplicación de terminal, puede conectarse e interactuar con el shell que ejecuta Shizuku. &lt;p&gt;Acerca del uso detallado %1$s, toca para ver el documento.</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizuku te enviará una notificación para completar la vinculación</string>
+    <string name="home_wireless_adb_description">A partir de Android 11 o menor, puedes activar la opción de depuración inalámbrica y ejecutar Shizuku desde tu dispositivo, sin necesidad de conectar a una computadora.&lt;p&gt;Por favor revisa la primera guía de paso a paso.</string>
+    <string name="home_wireless_adb_view_guide_button">Guía paso a paso</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Digita el código en la notificación para completar el emparejamiento.</string>
+    <string name="notification_adb_pairing_input_paring_code">Ingresar código de emparejamiento</string>
+    <string name="adb_pairing_tutorial_title">Vincula Shizuku con tu dispositivo</string>
+    <string name="home_wireless_adb_description_pre_11">Versiones anteriores a Android 11, es necesario conectar a una computadora para activar la depuración inalámbrica.</string>
+    <string name="notification_settings">Opciones de Notificacion</string>
+    <string name="notification_adb_pairing_failed_title">¡Hubo un problema al emparejar!</string>
+    <string name="notification_adb_pairing_retry">Reintentar</string>
 </resources>
