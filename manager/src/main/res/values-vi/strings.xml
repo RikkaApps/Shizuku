@@ -121,4 +121,9 @@
     <string name="notification_adb_pairing_working_title">Đang trong quá trình ghép nối</string>
     <string name="notification_adb_pairing_succeed_title">Ghép nối thành công</string>
     <string name="home_wireless_adb_description">Trên Android 11 trở lên, bạn có thể bật tính năng Gỡ lỗi không dây và khởi động Shizuku trực tiếp từ thiết bị của mình mà không cần kết nối với máy tính.&lt;p&gt;Vui lòng xem hướng dẫn từng bước trước.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Nếu không, bạn có thể không nhập được mã ghép nối từ thông báo.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Xin lưu ý, phần bên trái của tùy chọn \"Gỡ lỗi không dây\" có thể nhấn được, nhấn vào nó sẽ mở ra một trang mới. Chỉ điều chỉnh công tắc ở bên phải là không chính xác.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku cần truy cập mạng cục bộ. Nó được kiểm soát bởi sự cho phép của mạng.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Một số hệ thống (chẳng hạn như MIUI) không cho phép ứng dụng truy cập mạng khi chúng không hiển thị, ngay cả khi ứng dụng sử dụng dịch vụ nền trước làm tiêu chuẩn. Vui lòng tắt các tính năng tối ưu hóa pin cho Shizuku trên các hệ thống như vậy.</string>
+    <string name="settings_use_system_color">Sử dụng màu chủ đề hệ thống</string>
 </resources>
