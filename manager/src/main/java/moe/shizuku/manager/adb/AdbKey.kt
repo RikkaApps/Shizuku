@@ -88,6 +88,7 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
                 BigInteger.ONE,
                 Date(0),
                 Date(2461449600 * 1000),
+                Locale.ROOT,
                 X500Name("CN=00"),
                 SubjectPublicKeyInfo.getInstance(publicKey.encoded)
         ).build(signer)
