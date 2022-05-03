@@ -94,7 +94,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".shell.ShellRequestHandlerActivity"
+            android:name=".legacy.ShellRequestHandlerActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -125,7 +125,7 @@
             android:foregroundServiceType="connectedDevice" />
 
         <receiver
-            android:name=".starter.BootCompleteReceiver"
+            android:name=".receiver.ShizukuReceiver"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true">
@@ -134,6 +134,9 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="rikka.shizuku.intent.action.REQUEST_BINDER" />
             </intent-filter>
         </receiver>
 

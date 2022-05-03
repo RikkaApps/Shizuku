@@ -49,14 +49,10 @@ public class ShizukuShellLoader {
         Bundle data = new Bundle();
         data.putBinder("binder", binder);
 
-        Intent intent = Intent.createChooser(
-                new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
-                        .putExtra("data", data),
-                "Request binder from Shizuku"
-        );
+        Intent intent = new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
+                .setPackage("moe.shizuku.privileged.api")
+                .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+                .putExtra("data", data);
 
         IBinder amBinder = ServiceManager.getService("activity");
         IActivityManager am;
@@ -66,7 +62,8 @@ public class ShizukuShellLoader {
             am = ActivityManagerNative.asInterface(amBinder);
         }
 
-        am.startActivityAsUser(null, callingPackage, intent, null, null, null, 0, 0, null, null, Os.getuid() / 100000);
+        am.broadcastIntent(null, intent, null, null, 0, null, null,
+                null, -1, null, true, false, 0);
     }
 
     private static void onBinderReceived(IBinder binder, String sourceDir) {
@@ -122,6 +119,13 @@ public class ShizukuShellLoader {
             System.err.flush();
             System.exit(1);
         }
+
+        handler.postDelayed(() -> abort(
+                String.format(
+                        "Request timeout. The connection between the current app (%1$s) and Shizuku app may be blocked by your system. " +
+                                "Please disable all battery optimization features for both current app (%1$s) and Shizuku app.",
+                        packageName)
+        ), 5000);
 
         Looper.loop();
         System.exit(0);
