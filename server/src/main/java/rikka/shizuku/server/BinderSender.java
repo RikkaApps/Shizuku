@@ -77,15 +77,18 @@ public class BinderSender {
         private static final List<Integer> UID_LIST = new ArrayList<>();
 
         @Override
-        public void onUidGone(int uid, boolean disabled) throws RemoteException {
-            LOGGER.d("onUidGone: uid=%d, disabled=%s", uid, Boolean.toString(disabled));
+        public void onUidActive(int uid) throws RemoteException {
+            LOGGER.d("onUidCachedChanged: uid=%d", uid);
 
-            synchronized (UID_LIST) {
-                int index = UID_LIST.indexOf(uid);
-                if (index != -1) {
-                    UID_LIST.remove(index);
-                    LOGGER.v("Uid %d is gone", uid);
-                }
+            uidStarts(uid);
+        }
+
+        @Override
+        public void onUidCachedChanged(int uid, boolean cached) throws RemoteException {
+            LOGGER.d("onUidCachedChanged: uid=%d, cached=%s", uid, Boolean.toString(cached));
+
+            if (!cached) {
+                uidStarts(uid);
             }
         }
 
@@ -93,18 +96,37 @@ public class BinderSender {
         public void onUidIdle(int uid, boolean disabled) throws RemoteException {
             LOGGER.d("onUidIdle: uid=%d, disabled=%s", uid, Boolean.toString(disabled));
 
-            if (disabled) return;
+            uidStarts(uid);
+        }
 
+        @Override
+        public void onUidGone(int uid, boolean disabled) throws RemoteException {
+            LOGGER.d("onUidGone: uid=%d, disabled=%s", uid, Boolean.toString(disabled));
+
+            uidGone(uid);
+        }
+
+        private void uidStarts(int uid) throws RemoteException {
             synchronized (UID_LIST) {
                 if (UID_LIST.contains(uid)) {
-                    LOGGER.v("Uid %d is idle", uid);
+                    LOGGER.v("Uid %d already starts", uid);
                     return;
                 }
                 UID_LIST.add(uid);
-                LOGGER.v("Uid %d is idle for the first time", uid);
+                LOGGER.v("Uid %d starts", uid);
             }
 
             sendBinder(uid, -1);
+        }
+
+        private void uidGone(int uid) {
+            synchronized (UID_LIST) {
+                int index = UID_LIST.indexOf(uid);
+                if (index != -1) {
+                    UID_LIST.remove(index);
+                    LOGGER.v("Uid %d dead", uid);
+                }
+            }
         }
     }
 
@@ -151,7 +173,7 @@ public class BinderSender {
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 ActivityManagerApis.registerUidObserver(new UidObserver(),
-                        1 << 2 | 1 << 1,
+                        1 << 1 | 1 << 2 | ActivityManagerHidden.UID_OBSERVER_ACTIVE | 1 << 4,
                         ActivityManagerHidden.PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {
