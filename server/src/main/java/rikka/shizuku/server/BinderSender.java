@@ -25,31 +25,35 @@ public class BinderSender {
     private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
     private static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";
 
-    private static final List<Integer> PID_LIST = new ArrayList<>();
-
     private static ShizukuService sShizukuService;
 
     private static class ProcessObserver extends ProcessObserverAdapter {
+
+        private static final List<Integer> PID_LIST = new ArrayList<>();
 
         @Override
         public void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities) throws RemoteException {
             LOGGER.d("onForegroundActivitiesChanged: pid=%d, uid=%d, foregroundActivities=%s", pid, uid, foregroundActivities ? "true" : "false");
 
-            if (PID_LIST.contains(pid) || !foregroundActivities) {
-                return;
+            synchronized (PID_LIST) {
+                if (PID_LIST.contains(pid) || !foregroundActivities) {
+                    return;
+                }
+                PID_LIST.add(pid);
             }
-            PID_LIST.add(pid);
 
-            onActive(uid, pid);
+            sendBinder(uid, pid);
         }
 
         @Override
         public void onProcessDied(int pid, int uid) {
             LOGGER.d("onProcessDied: pid=%d, uid=%d", pid, uid);
 
-            int index = PID_LIST.indexOf(pid);
-            if (index != -1) {
-                PID_LIST.remove(index);
+            synchronized (PID_LIST) {
+                int index = PID_LIST.indexOf(pid);
+                if (index != -1) {
+                    PID_LIST.remove(index);
+                }
             }
         }
 
@@ -57,35 +61,59 @@ public class BinderSender {
         public void onProcessStateChanged(int pid, int uid, int procState) throws RemoteException {
             LOGGER.d("onProcessStateChanged: pid=%d, uid=%d, procState=%d", pid, uid, procState);
 
-            if (PID_LIST.contains(pid)) {
-                return;
+            synchronized (PID_LIST) {
+                if (PID_LIST.contains(pid)) {
+                    return;
+                }
+                PID_LIST.add(pid);
             }
-            PID_LIST.add(pid);
 
-            onActive(uid, pid);
+            sendBinder(uid, pid);
         }
     }
 
     private static class UidObserver extends UidObserverAdapter {
 
-        @Override
-        public void onUidActive(int uid) throws RemoteException {
-            LOGGER.d("onUidActive: uid=%d", uid);
+        private static final List<Integer> UID_LIST = new ArrayList<>();
 
-            onActive(uid);
+        @Override
+        public void onUidGone(int uid, boolean disabled) throws RemoteException {
+            LOGGER.d("onUidGone: uid=%d, disabled=%s", uid, Boolean.toString(disabled));
+
+            synchronized (UID_LIST) {
+                int index = UID_LIST.indexOf(uid);
+                if (index != -1) {
+                    UID_LIST.remove(index);
+                    LOGGER.v("Uid %d is gone", uid);
+                }
+            }
+        }
+
+        @Override
+        public void onUidIdle(int uid, boolean disabled) throws RemoteException {
+            LOGGER.d("onUidIdle: uid=%d, disabled=%s", uid, Boolean.toString(disabled));
+
+            if (disabled) return;
+
+            synchronized (UID_LIST) {
+                if (UID_LIST.contains(uid)) {
+                    LOGGER.v("Uid %d is idle", uid);
+                    return;
+                }
+                UID_LIST.add(uid);
+                LOGGER.v("Uid %d is idle for the first time", uid);
+            }
+
+            sendBinder(uid, -1);
         }
     }
 
-    private static void onActive(int uid) throws RemoteException {
-        onActive(uid, -1);
-    }
-
-    private static void onActive(int uid, int pid) throws RemoteException {
+    private static void sendBinder(int uid, int pid) throws RemoteException {
         List<String> packages = PackageManagerApis.getPackagesForUidNoThrow(uid);
         if (packages.isEmpty())
             return;
 
-        LOGGER.d("onActive: uid=%d, packages=%s", uid, TextUtils.join(", ", packages));
+        LOGGER.d("sendBinder to uid %d: packages=%s", uid, TextUtils.join(", ", packages));
 
         int userId = uid / 100000;
         for (String packageName : packages) {
@@ -123,7 +151,7 @@ public class BinderSender {
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 ActivityManagerApis.registerUidObserver(new UidObserver(),
-                        ActivityManagerHidden.UID_OBSERVER_ACTIVE,
+                        1 << 2 | 1 << 1,
                         ActivityManagerHidden.PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {
