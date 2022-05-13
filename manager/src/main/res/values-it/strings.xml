@@ -16,7 +16,6 @@
     <string name="home_wireless_adb_view_guide_button">Guida passo-passo</string>
     <string name="dialog_adb_discovery_message">Abilita \"Debug wireless\" in \"Opzioni sviluppatore\". \"Debug wireless\" viene automaticamente disabilitato quando la rete cambia.
 \n
-\n
 \nNota, non disabilitare \"Opzioni sviluppatore\" o \"Debug USB\", altrimenti Shizuku verrà interrotto.</string>
     <string name="dialog_adb_port">Porta</string>
     <string name="adb_pairing">Accoppiamento</string>
@@ -75,7 +74,7 @@
     <string name="home_learn_more_title">Impara Shizuku</string>
     <string name="home_learn_more_description">Impara a sviluppare con Shizuku o scarica apps che usano Shizuku</string>
     <string name="home_terminal_title">Utilizza Shizuku nell\'app terminale</string>
-    <string name="translation_contributors">xDonatello</string>
+    <string name="translation_contributors">Contribuenti alla traduzione</string>
     <string name="action_stop">Interrompi Shizuku</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; ha il supporto al Shizuku moderno, ma sta richiedendo Shizuku legacy. Questo potrebbe essere perché Shizuku non è in esecuzione, controlla nell\'app Shizuku.&lt;p&gt;Shizuku legacy è stato deprecato a marzo 2019.</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Apri Shizuku</string>
