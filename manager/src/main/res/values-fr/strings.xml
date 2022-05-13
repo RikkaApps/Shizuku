@@ -125,4 +125,6 @@
     <string name="adb_pairing_tutorial_content_miui_2">Sinon, vous ne pourrez peut-être pas saisir le code d\'association depuis la notification.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku requiert l\'accès au réseau local. C\'est contrôlé par l\'autorisation réseau.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Certains systèmes (tels que MIUI) interdisent aux applis d\'accéder au réseau quand elles ne sont pas visibles, même si l\'appli utilise un service de premier plan comme standard. Merci de désactiver l\'optimisation de la batterie pour Shizuku sur de tels systèmes.</string>
+    <string name="settings_use_system_color">Utiliser la couleur du thème système</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Veuillez noter que la partie gauche de l\'option \"Débogage sans fil\" est clickable, la tapper va ouvrir une nouvelle page. Seulement activer le commutateur à droite est incorrect.</string>
 </resources>
