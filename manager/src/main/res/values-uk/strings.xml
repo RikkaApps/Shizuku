@@ -45,4 +45,36 @@
     <string name="grant_dialog_button_allow_always">Завжди дозволяти</string>
     <string name="grant_dialog_button_deny">Заборонити</string>
     <string name="permission_warning_template">Дозволити додатку <b>%1$s</b> таке: %2$s\?</string>
+    <string name="home_wireless_adb_title">Запуск за допомогою налагоджування через Wi-Fi</string>
+    <string name="adb_pairing_tutorial_content_notification">Повідомлення від Shizuku допоможе вам закінчити парування.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Введіть код в повідомленні щоб завершити парування.</string>
+    <string name="adb_pairing_tutorial_title">Парувати Shizuku з вашим пристроєм</string>
+    <string name="notification_settings">Налаштування повідомлень</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Процес парування потребує, щоб ви взаємодіяли із сповіщенням від Shizuku. Будь ласка, дозвольте Shizuku публікувати сповіщення.</string>
+    <string name="home_wireless_adb_description">Від Android 11 та вище, ви можете ввімкнути налагодження через WiFi та запустити Shizuku прямо з вашого пристрою, не під\'єднуючись до комп\'ютеру.&lt;p&gt;Будь ласка, спочатку перегляньте інструкцію.</string>
+    <string name="home_wireless_adb_view_guide_button">Покрокова інструкція</string>
+    <string name="dialog_adb_discovery">Пошук сервісу бездротового налагодження</string>
+    <string name="dialog_adb_discovery_message">Будь ласка, увімкніть \"Налагодження через Wi-Fi\" в \"Параметрах розробника\". \"Налагодження через Wi-Fi\" автоматично вимикається при зміні мереж.
+\n
+\nЗверніть увагу, не вимикайте \"Параметри розробника\" чи \"Налагодження USB\", інакше Shizuku буде зупинено.</string>
+    <string name="dialog_adb_port">Порт</string>
+    <string name="dialog_adb_invalid_port">Порт – це ціле число від 1 до 65535.</string>
+    <string name="adb_pairing">Спарування</string>
+    <string name="dialog_adb_pairing_title">Спарувати з пристроєм</string>
+    <string name="dialog_adb_pairing_discovery">Пошук сервісу парування</string>
+    <string name="dialog_adb_pairing_paring_code">Код парування</string>
+    <string name="paring_code_is_wrong">Код парування неправильний.</string>
+    <string name="cannot_connect_port">Неможливо під\'єднатися до сервісу бездротового налагодження.</string>
+    <string name="dialog_wireless_adb_not_enabled">Налагодження через Wi-Fi не ввімкнено.
+\nЗверніть увагу, до Android 11, щоб ввімкнути налагодження через Wi-Fi, під\'єднання до комп\'ютеру обов\'язкове.</string>
+    <string name="dialog_adb_pairing_message">Будь ласка, почніть парування, виконавши такі кроки: \"Параметри розробника\" - \"Налагодження через Wi-Fi\" - \"Підключати пристрій за допомогою коду підключення\".
+\n
+\nПісля початку процесу парування, ви зможете ввести код парування.</string>
+    <string name="adb_pairing_requires_multi_window">Спершу увійдіть в режим розділеного екрана (багатьох вікон).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Системі потрібно, щоб діалогове вікно парування завжди було видимим. Використання режиму розділеного екрана — єдиний спосіб, щоб ця програма та системне діалогове вікно були видимими одночасно.</string>
+    <string name="adb_pair_required">Будь ласка, спочатку пройдіть етап парування.</string>
+    <string name="development_settings">Параметри розробника</string>
+    <string name="adb_error_key_store">Неможливо генерувати ключ для налагодження через Wi-Fi.
+\nМожливо, механізм KeyStore цього пристрою зламаний.</string>
+    <string name="adb_pairing_tutorial_content_steps">Зайдіть в \"Параметри розробника\" - \"Налагодження через Wi-Fi\". Натисніть на \"Підключати пристрій за допомогою коду підключення\", ви побачите шестизначний код.</string>
 </resources>
