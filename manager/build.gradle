@@ -161,7 +161,7 @@ dependencies {
     implementation project(':starter')
     implementation project(':api')
     implementation project(':provider')
-    compileOnly 'dev.rikka.hidden:stub:2.1.0'
+    compileOnly 'dev.rikka.hidden:stub:2.3.1'
 
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.core:core-ktx:1.7.0'
