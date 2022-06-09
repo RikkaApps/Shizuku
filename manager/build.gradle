@@ -3,7 +3,7 @@ import java.nio.file.Paths
 plugins {
     id('com.android.application')
     id('kotlin-android')
-    id('dev.rikka.tools.refine.gradle-plugin')
+    id('dev.rikka.tools.refine')
     id('dev.rikka.tools.autoresconfig')
     id('dev.rikka.tools.materialthemebuilder')
 }

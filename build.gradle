@@ -26,8 +26,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
-        classpath 'dev.rikka.tools.refine:gradle-plugin:3.0.3'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0'
+        classpath 'dev.rikka.tools.refine:gradle-plugin:3.1.1'
         classpath 'dev.rikka.tools.autoresconfig:gradle-plugin:1.1.1'
         classpath 'dev.rikka.tools.materialthemebuilder:gradle-plugin:1.3.2'
     }
