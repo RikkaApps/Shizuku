@@ -23,7 +23,7 @@ public class ThemeHelper {
     }
 
     public static boolean isUsingSystemColor() {
-        return ShizukuSettings.getPreferences().getBoolean(KEY_USE_SYSTEM_COLOR, false);
+        return ShizukuSettings.getPreferences().getBoolean(KEY_USE_SYSTEM_COLOR, true);
     }
 
     public static String getTheme(Context context) {
