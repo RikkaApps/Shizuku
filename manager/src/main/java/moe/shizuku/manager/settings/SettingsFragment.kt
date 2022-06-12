@@ -20,7 +20,7 @@ import moe.shizuku.manager.app.ThemeHelper.KEY_USE_SYSTEM_COLOR
 import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
-import moe.shizuku.manager.starter.BootCompleteReceiver
+import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.core.util.ResourceUtils
 import rikka.material.app.DayNightDelegate

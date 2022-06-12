@@ -1,5 +1,6 @@
-package moe.shizuku.manager.starter
+package moe.shizuku.manager.receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Process
@@ -8,11 +9,17 @@ import com.topjohnwu.superuser.Shell
 import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.LaunchMethod
+import moe.shizuku.manager.starter.Starter
 import rikka.shizuku.Shizuku
 
-object BootCompleteReceiver {
+class BootCompleteReceiver : BroadcastReceiver() {
 
-    fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (Intent.ACTION_LOCKED_BOOT_COMPLETED != intent.action
+            && Intent.ACTION_BOOT_COMPLETED != intent.action) {
+            return
+        }
+
         if (Process.myUid() / 100000 > 0) return
 
         // TODO Record if receiver is called
