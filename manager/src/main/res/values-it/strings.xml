@@ -63,8 +63,8 @@
 \nLa funzione di esportazione usa SAF (Storage Access Framework). Si segnala che MIUI impedisce la funzione SAF. Se utilizzate MIUI, dovrete probabilmente estrarre il file dall\'apk Shizuku o scaricarlo da GitHub.</string>
     <string name="home_terminal_description">Esegui comandi attraverso Shizuku nelle apps terminale che desiderate</string>
     <plurals name="home_app_management_authorized_apps_count">
-        <item quantity="one">Applicazione %d autorizzata</item>
-        <item quantity="other">Applicazioni %d autorizzate</item>
+        <item quantity="one">%d applicazione autorizzata</item>
+        <item quantity="other">%d applicazioni autorizzate</item>
     </plurals>
     <string name="home_app_management_view_authorized_apps">Premere per gestire le app autorizzate</string>
     <string name="app_management_menu_get_more">Scarica di più</string>
