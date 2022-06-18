@@ -23,7 +23,7 @@
     <string name="home_status_service_is_running">%1$s працює</string>
     <string name="home_adb_dialog_view_command_button_send">Відправити</string>
     <string name="settings_language">Мова</string>
-    <string name="home_root_button_start">Заупск</string>
+    <string name="home_root_button_start">Запуск</string>
     <string name="home_status_service_version">версія %2$s, %1$s</string>
     <string name="settings_user_interface">Зовнішній вигляд</string>
     <string name="settings_startup">Стартап</string>
@@ -33,7 +33,7 @@
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
     <string name="app_management_dialog_adb_is_limited_message">Можливо, ваш виробник пристрою лімітує дозвіл adb.&lt;p&gt;Можливо, є рішення для вашої системи у &lt;b&gt;&lt;a href=\"%1$s\"&gt;цьому документі&lt;/a&gt;&lt;/b&gt;.</string>
-    <string name="home_adb_description">Для пристроїв без root не потрібно використовувати adb для запуску Shizuku (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка <b><a href="%1$s">прочитайте довідку</a></b>.</string>
+    <string name="home_adb_description">Для пристроїв без root потрібно використовувати adb для запуску Shizuku (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка, <b><a href="%1$s">прочитайте довідку</a></b>.</string>
     <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
     <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> скопійовано в буфер обміну.</string>
@@ -51,7 +51,7 @@
     <string name="adb_pairing_tutorial_title">Парувати Shizuku з вашим пристроєм</string>
     <string name="notification_settings">Налаштування повідомлень</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Процес парування потребує, щоб ви взаємодіяли із сповіщенням від Shizuku. Будь ласка, дозвольте Shizuku публікувати сповіщення.</string>
-    <string name="home_wireless_adb_description">Від Android 11 та вище, ви можете ввімкнути налагодження через WiFi та запустити Shizuku прямо з вашого пристрою, не під\'єднуючись до комп\'ютеру.&lt;p&gt;Будь ласка, спочатку перегляньте інструкцію.</string>
+    <string name="home_wireless_adb_description">Починаючи з Android 11 та вище, ви можете ввімкнути налагодження через WiFi та запустити Shizuku прямо з вашого пристрою, не під\'єднуючись до комп\'ютеру.&lt;p&gt;Будь ласка, спочатку перегляньте інструкцію.</string>
     <string name="home_wireless_adb_view_guide_button">Покрокова інструкція</string>
     <string name="dialog_adb_discovery">Пошук сервісу бездротового налагодження</string>
     <string name="dialog_adb_discovery_message">Будь ласка, увімкніть \"Налагодження через Wi-Fi\" в \"Параметрах розробника\". \"Налагодження через Wi-Fi\" автоматично вимикається при зміні мереж.
@@ -59,7 +59,7 @@
 \nЗверніть увагу, не вимикайте \"Параметри розробника\" чи \"Налагодження USB\", інакше Shizuku буде зупинено.</string>
     <string name="dialog_adb_port">Порт</string>
     <string name="dialog_adb_invalid_port">Порт – це ціле число від 1 до 65535.</string>
-    <string name="adb_pairing">Спарування</string>
+    <string name="adb_pairing">Парування</string>
     <string name="dialog_adb_pairing_title">Спарувати з пристроєм</string>
     <string name="dialog_adb_pairing_discovery">Пошук сервісу парування</string>
     <string name="dialog_adb_pairing_paring_code">Код парування</string>
@@ -82,8 +82,8 @@
     <string name="adb_pairing_tutorial_content_miui">Користувачам MIUI, иожливо, доведеться змінити стіль сповіщень на \"Android\" із \"Сповіщення\" - \"Панель сповіщень\" в системних налаштуваннях.</string>
     <string name="settings_title">Налаштування</string>
     <string name="adb_pairing_tutorial_content_miui_2">В іншому випадку, ви, можливо, не зможете увести код парування з повідомлення.</string>
-    <string name="home_terminal_title">Використовувати Shizuku в термінальних програмах</string>
-    <string name="home_terminal_description">Виконуйте команди через Shizuku у термінальних програмах, які вам подобаються</string>
+    <string name="home_terminal_title">Використовувати Shizuku в програмах терміналу</string>
+    <string name="home_terminal_description">Виконуйте команди через Shizuku у програмах терміналу, які вам подобаються</string>
     <string name="terminal_tutorial_2">Тоді, використайте будь-який текстовий редактор та редагуйте %1$s.</string>
     <string name="terminal_tutorial_3">Нарешті, перемістіть файли туди, де програма терміналу матиме доступ до них, ви зможете використовувати %1$s для запуску команд через Shizuku.</string>
     <string name="settings_translation">Беріть участь у перекладі</string>
@@ -97,11 +97,11 @@
     <string name="action_stop">Зупинити Shizuku</string>
     <string name="dialog_stop_message">Сервіс Shizuku буде зупинено.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku потрібен доступ до локальної мережі. Це контролюється дозволом мережі.</string>
-    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Деякі системи (такі як MIUI) забороняють програмам мати доступ до мережі коли їх не видно, навіть якщо програма використовує фоновий сервіс за замовчуванням. Будь ласка, вимкніть оптимізацію батареї для Shizuku на таких системах.</string>
-    <string name="settings_start_on_boot_summary">Для рутованих пристроїв, Shizuku має можливість автоматично запускатися при увімкненні</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Деякі системи (наприклад, MIUI) забороняють програмам доступ до мережі коли їх не видно, навіть якщо програма використовує фоновий сервіс за замовчуванням. Будь ласка, вимкніть оптимізацію батареї для Shizuku на таких системах.</string>
+    <string name="settings_start_on_boot_summary">Для рутованих пристроїв, Shizuku має можливість автоматично запускатися при завантаженні системи</string>
     <string name="home_wireless_adb_description_pre_11">До Android 11, потрібно під\'єднатися до комп\'ютеру щоб ввімкнути налагодження через Wi-FI.</string>
     <string name="adb_pairing_tutorial_content_finish">Поверніться до Shizuku та запустіть Shizuku.</string>
-    <string name="home_root_description">В додаток, Shizuku може бути запущене автоматично при запуску. Якщо ні, будь ласка, перевірте якщо ваша система або сторонні інструменти обмежили Shizuku.&lt;br&gt;Ви можете переглянути більше на %s.</string>
+    <string name="home_root_description">В додаток, Shizuku можна автоматично запустити при завантаженні. Якщо цього не трапляється, будь ласка, перевірте чи ваша не обмежили Shizuku система чи сторонні інструменти.&lt;br&gt;Ви можете переглянути більше на %s.</string>
     <string name="home_root_description_sui">Якщо ви користуєтесь Magisk, ви можете спробувати %1$s (модуль Riru). Для користувачів root, він колись замінить Shizuku. Увага, існуючі програми мають трохи змінитися щоб можна було користуватися %2$s.</string>
     <string name="dialog_legacy_not_support_title">%1$s не підтримує сучасну версію Shizuku</string>
     <string name="dialog_requesting_legacy_title">%1$s просить стару версію Shizuku</string>
@@ -127,6 +127,6 @@
     <string name="terminal_tutorial_3_description">Деякі поради: надайте %1$s дозвіл на виконання та додайте його в %2$s, ви зможете використовувати %1$s відразу.</string>
     <string name="rish_description">З %1$s, в будь-якій програмі терміналу, ви можете під\'єднатися та взаємодіяти із запуском оболонки за допомогою Shizuku. &lt;p&gt;Про детальне використання %1$s, натисніть щоб переглянути документ.</string>
     <string name="settings_translation_contributors">Співробітники перекладу</string>
-    <string name="settings_start_on_boot">Запуск при увімкнені (root)</string>
+    <string name="settings_start_on_boot">Запуск при завантаженні системи (root)</string>
     <string name="dialog_legacy_not_support_message">Підтримка старої версії Shizuku завершилася у березні 2019 року. Також, стара версія Shizuku не працює на нових версіях Android.&lt;p&gt;Будь ласка, попросіть оновитися у розробника &lt;b&gt;%1$s&lt;/b&gt;.</string>
 </resources>
