@@ -111,4 +111,5 @@
     <string name="notification_settings">Opciones de Notificacion</string>
     <string name="notification_adb_pairing_failed_title">¡Hubo un problema al emparejar!</string>
     <string name="notification_adb_pairing_retry">Reintentar</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notificación from Shizuku. Please allow Shizuku to post notifications.El proceso de emparejamiento necesita que interactúes con una notificación de Shizuku. Permita que Shizuku publique notificaciones.El proceso de emparejamiento necesita que interactúes con una notificación de Shizuku. Permita que Shizuku publique notificaciones.</string>
 </resources>
