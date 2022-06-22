@@ -37,12 +37,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: IntegerSimpleMenuPreference
-    private lateinit var blackNightThemePreference: SwitchPreference
-    private lateinit var startOnBootPreference: SwitchPreference
+    private lateinit var blackNightThemePreference: TwoStatePreference
+    private lateinit var startOnBootPreference: TwoStatePreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
-    private lateinit var useSystemColorPreference: SwitchPreference
+    private lateinit var useSystemColorPreference: TwoStatePreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = requireContext()

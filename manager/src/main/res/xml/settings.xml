@@ -5,7 +5,7 @@
         android:key="startup"
         android:title="@string/settings_startup">
 
-        <SwitchPreference
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="start_on_boot"
             android:summary="@string/settings_start_on_boot_summary"
             android:title="@string/settings_start_on_boot" />
@@ -42,12 +42,12 @@
             android:summary="%s"
             android:title="@string/dark_theme" />
 
-        <SwitchPreference
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="black_night_theme"
             android:summary="@string/settings_black_night_theme_summary"
             android:title="@string/settings_black_night_theme" />
 
-        <SwitchPreference
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="use_system_color"
             android:title="@string/settings_use_system_color" />
 
