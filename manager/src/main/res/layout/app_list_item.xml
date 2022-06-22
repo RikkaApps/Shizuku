@@ -61,11 +61,10 @@
 
     </LinearLayout>
 
-    <Switch
+    <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/switch_widget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
         android:clickable="false"
         android:focusable="false" />
 
