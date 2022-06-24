@@ -122,4 +122,7 @@
     <string name="home_terminal_title">터미널에서 Shizuku 사용</string>
     <string name="home_terminal_description">선호하는 터미널 앱에서 Shizuku를 통해 명령 실행</string>
     <string name="terminal_tutorial_1">먼저 원하는 곳으로 파일을 내보냅니다. %1$s 및 %2$s의 두 파일을 찾을 수 있습니다.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">\"무선 디버깅\" 옵션의 왼쪽 부분은 클릭할 수 있으며 탭하면 새 페이지가 열립니다. 오른쪽의 스위치만 켜는 것은 잘못된 것입니다.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku는 로컬 네트워크에 액세스해야 합니다. 네트워크 권한에 의해 제어됩니다.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">일부 시스템(예: MIUI)은 앱이 포그라운드 서비스를 표준으로 사용하더라도 앱이 보이지 않을 때 네트워크에 액세스하는 것을 허용하지 않습니다. 이러한 시스템에서 Shizuku의 배터리 최적화 기능을 비활성화하세요.</string>
 </resources>
