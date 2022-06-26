@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_adb_title">Inicie conectándose a una computadora</string>
+    <string name="home_status_service_version_update">Versión %2$s, %1$s&lt;br&gt;Inicie nuevamente para actualizar a la versión %3$s</string>
+    <string name="home_status_service_version">Versión %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s no se está ejecutando</string>
+    <string name="home_status_service_is_running">%1$s se está ejecutando</string>
+    <string name="translation_contributors">Nápoles</string>
+</resources>
