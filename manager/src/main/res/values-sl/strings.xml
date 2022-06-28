@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="notification_adb_pairing_succeed_title">Seznanitev uspešna</string>
+    <string name="notification_adb_pairing_working_title">Seznanitev v teku</string>
+    <string name="notification_adb_pairing_stop_searching">Ustavi iskanje</string>
+    <string name="notification_adb_pairing_service_found_title">Storitev za seznanjanje najdena</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Iskanje storitve za seznanjanje</string>
+    <string name="notification_adb_pairing_input_paring_code">Vnesite seznantitveno kodo</string>
+    <string name="notification_channel_adb_pairing">Seznanjanje brezžičnega razhroščevanja</string>
+    <string name="notification_working">V teku…</string>
+    <string name="notification_service_start_no_root">Neuspešna zahteva za root dovoljenje.</string>
+    <string name="notification_service_start_failed">Zagon storitve Shizuku ni uspel.</string>
+    <string name="notification_service_starting">Storitev Shizuku se zaganja…</string>
+    <string name="notification_channel_service_status">Status zagona storitve</string>
+    <string name="dialog_stop_message">Storitev Shizuku bo bila ustavljena.</string>
+    <string name="action_stop">Ustavi Shizuku</string>
+    <string name="about_view_source_code">Poglej izvorno kodo na %s</string>
+    <string name="action_about">O</string>
+    <string name="settings_use_system_color">Uporabi sistemsko barvo teme</string>
+    <string name="settings_start_on_boot_summary">Za naprave z rootom, se lahko Shizuku zažene avtomatsko na zagonu</string>
+    <string name="settings_start_on_boot">Zaženi na zagonu (root)</string>
+    <string name="settings_translation_summary">Pomagajte nam prevajati %s v vaš jezik</string>
+    <string name="dialog_adb_pairing_message">Prosimo, začnite z seznanitvijo po teh korakih: \"Nastavitve za razvijalce\" - \"Seznanjanje naprave z seznantitveno kodo\".
+\n
+\nKo se proces seznanjanja začne, boste lahko vnesli kodo za seznanitev.</string>
+    <string name="dialog_wireless_adb_not_enabled">Brezžično razhroščevanje ni omogočeno.
+\nPozor! Pred Androidom 11, je za omogočanje brezžičnega razhroščevanja potreben računalnik.</string>
+    <string name="cannot_connect_port">Povezava z storitvijo za brezžično razhroščevanje se ne more vzpostaviti.</string>
+    <string name="paring_code_is_wrong">Koda za seznanitev je napačna.</string>
+    <string name="dialog_adb_pairing_paring_code">Koda za seznanitev</string>
+    <string name="dialog_adb_pairing_discovery">Iskanje storitve za seznanjanje</string>
+    <string name="dialog_adb_pairing_title">Seznani z napravo</string>
+    <string name="adb_pairing">Seznanjanje</string>
+    <string name="dialog_adb_invalid_port">Vrata so število v obsegu od 1 do 65535.</string>
+    <string name="home_adb_description">Za naprave brez root-a, potrebujete adb, da zaženete Shizuku (potrebna je računalniška povezava). Ta proces je potrebno ponoviti vsakič, ko se naprava ponovno zažene. Prosimo <b><a href="%1$s">preberite pomoč</a></b>.</string>
+    <string name="dialog_adb_port">Vrata</string>
+    <string name="dialog_adb_discovery_message">Prosimo omogočite \"Brezžično razhroščevanje\" v \"Nastavitvah za razvijalce\". \"Brezžično razhroščevanje\" je avtomatsko onemogočeno, ko se spremeni omrežje.
+\n
+\nPozor! Ne onemogočajte \"Nastavitev za razvijalce\" ali \"USB razhroščevanja\", drugače bo Shizuku ustavljen.</string>
+    <string name="dialog_adb_discovery">Iskanje storitve za Brezžično razhroščevanje</string>
+    <string name="home_wireless_adb_view_guide_button">Vodnik po korakih</string>
+    <string name="home_wireless_adb_description_pre_11">Pred Androidom 11, je povezava z računalnikom potrebna, da omogočite Brezžično razhroščevanje.</string>
+    <string name="home_wireless_adb_description">Na Androidu 11 ali več, lahko vklopite Brezžično razhroščevanje in začnete Shizuku direktno iz vaše naprave, brez povezovanja na računalnik.&lt;p&gt;Prosimo, najprej poglejte vodnik po korakih.</string>
+    <string name="home_wireless_adb_title">Začni preko Brezžičnega razhroščevanja</string>
+    <string name="home_adb_dialog_view_command_button_send">Pošlji</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiraj</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Obstaja nekaj premislekov. Prosimo, potrdite, da ste najprej prebrali pomoč.</string>
+    <string name="home_adb_button_view_command">Pokaži ukaz</string>
+    <string name="home_adb_button_view_help">Preberite pomoč</string>
+    <string name="home_adb_title">Začni z povezovanjem na računalnik</string>
+    <string name="home_status_service_version_update">Verzija %2$s, %1$s&lt;br&gt;Začni znova za posodobitev na verzijo %3$s</string>
+    <string name="home_status_service_version">Verzija %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s ne teče</string>
+    <string name="home_status_service_is_running">%1$s teče</string>
+</resources>
