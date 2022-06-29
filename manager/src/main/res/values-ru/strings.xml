@@ -128,4 +128,5 @@
     <string name="adb_pairing_tutorial_content_network">Shizuku требуется доступ к локальной сети. Он управляется сетевым разрешением.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Некоторые системы (та же MIUI) не разрешают приложениям доступ к сети, когда они не на экране, даже если те в основе задействуют службу переднего плана. Пожалуйста, добавьте Shizuku в исключения алгоритмов оптимизации заряда батареи на таких системах.</string>
     <string name="settings_use_system_color">Палитра цветов из системы</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Обратите внимание, что левая часть опции \"Беспроводная отладка\" является кликабельной, нажатие на нее открывает новую страницу. Нажатие только на переключатель (справа) является неправильным.</string>
 </resources>
