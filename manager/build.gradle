@@ -55,15 +55,18 @@ android {
         useIR = true
     }
     packagingOptions {
-        exclude '/META-INF/*.version'
-        exclude '/META-INF/*.kotlin_module'
-        exclude '/kotlin/**'
-    }
-    lintOptions {
-        checkReleaseBuilds false
+        jniLibs {
+            excludes += ['/kotlin/**']
+        }
+        resources {
+            excludes += ['/META-INF/*.version', '/META-INF/*.kotlin_module', '/kotlin/**']
+        }
     }
     dependenciesInfo {
         includeInApk false
+    }
+    lint {
+        checkReleaseBuilds false
     }
 }
 
@@ -153,8 +156,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
 
     implementation project(':server')
     implementation project(':rish')
