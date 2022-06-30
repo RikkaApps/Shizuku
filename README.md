@@ -76,7 +76,7 @@ The `:manager:assembleDebug` task generates a debuggable server. You can attach 
 
 ## License
 
-This code for this project is available under the Apache-2.0 license.
+The code for this project is available under the Apache-2.0 license.
 
 ### Exceptions
 
@@ -98,6 +98,6 @@ This code for this project is available under the Apache-2.0 license.
   ```
 
 * For the project as a whole, it is not free.
-You are **FORBIDDEN** to distribute the apk compiled by **you** 
-(including modified, e.g., rename app name "Shizuku" to something else) 
+You are **FORBIDDEN** to distribute the apk compiled by **you**
+(including modified, e.g., rename app name "Shizuku" to something else)
 to any store (IBNLT Google Play Store, F-Droid, Amazon Appstore etc.).

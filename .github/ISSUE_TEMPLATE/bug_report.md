@@ -13,7 +13,7 @@ Please report bugs of Shizuku itself.
 
 - [ ] Shizuku version is up-to-date
 - [ ] Shizuku is downloaded from official channels (GitHub release or Google Play)
-- [ ] Shizuku is not running in a virtual environment
+- [ ] Shizuku is not running in a virtual environment or broken ROM (GrapheneOS)
 - [ ] (Root users) No Xposed installed / Xposed is not enabled for Shizuku
 
 Change "[ ]" to "[x]" if it meets the requirements.
