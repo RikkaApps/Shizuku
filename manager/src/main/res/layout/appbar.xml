@@ -9,13 +9,14 @@
     app:liftOnScroll="true"
     tools:viewBindingIgnore="true">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@null"
         android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
         app:layout_collapseMode="pin"
         tools:title="Title" />
 
