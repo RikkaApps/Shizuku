@@ -11,6 +11,7 @@
     app:borderTopVisibility="whenTop">
 
     <LinearLayout
+        android:id="@android:id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
