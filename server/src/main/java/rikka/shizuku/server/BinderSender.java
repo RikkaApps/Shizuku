@@ -1,11 +1,18 @@
 package rikka.shizuku.server;
 
+import static android.app.ActivityManagerHidden.UID_OBSERVER_ACTIVE;
+import static android.app.ActivityManagerHidden.UID_OBSERVER_CACHED;
+import static android.app.ActivityManagerHidden.UID_OBSERVER_GONE;
+import static android.app.ActivityManagerHidden.UID_OBSERVER_IDLE;
+
 import android.app.ActivityManagerHidden;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.RemoteException;
 import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +79,7 @@ public class BinderSender {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static class UidObserver extends UidObserverAdapter {
 
         private static final List<Integer> UID_LIST = new ArrayList<>();
@@ -171,9 +179,12 @@ public class BinderSender {
         }
 
         if (Build.VERSION.SDK_INT >= 26) {
+            int flags = UID_OBSERVER_GONE | UID_OBSERVER_IDLE | UID_OBSERVER_ACTIVE;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                flags |= UID_OBSERVER_CACHED;
+            }
             try {
-                ActivityManagerApis.registerUidObserver(new UidObserver(),
-                        1 << 1 | 1 << 2 | ActivityManagerHidden.UID_OBSERVER_ACTIVE | 1 << 4,
+                ActivityManagerApis.registerUidObserver(new UidObserver(), flags,
                         ActivityManagerHidden.PROCESS_STATE_UNKNOWN,
                         null);
             } catch (Throwable tr) {

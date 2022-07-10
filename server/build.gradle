@@ -20,8 +20,8 @@ android {
 
 dependencies {
     implementation "androidx.annotation:annotation:1.2.0"
-    implementation 'com.google.code.gson:gson:2.8.8'
-    api 'dev.rikka.rikkax.parcelablelist:parcelablelist:1.0.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    api 'dev.rikka.rikkax.parcelablelist:parcelablelist:2.0.0'
 
     implementation project(':aidl')
     implementation project(':common')
@@ -30,6 +30,6 @@ dependencies {
     implementation project(':starter')
     implementation project(':rish')
     implementation project(':server-shared')
-    implementation 'dev.rikka.hidden:compat:2.3.1'
-    compileOnly 'dev.rikka.hidden:stub:2.3.1'
+    implementation 'dev.rikka.hidden:compat:3.0.0'
+    compileOnly 'dev.rikka.hidden:stub:3.0.0'
 }
