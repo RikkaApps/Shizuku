@@ -1,12 +1,5 @@
 # Shizuku
 
-**NOTE:** There is no such a simple way to "use Shizuku as `su`" (Yep, you can still achieve this by yourself if you want). It is recommended to implement your application with Shizuku in the correct way.
-
-As you can already use Shizuku to execute any codes with ADB permission (or ROOT permission when using Sui), we won't waste our time providing a method to "use Shizuku as `su`".
-
-> shizuku is a tool for professional developers that provides comprehensive access to the Android framework. If you only use command line, we don't recommend you to use shizuku, you can choose libsu.
-> — @vvb2060 [Shizuku#229](https://github.com/RikkaApps/Shizuku/issues/229#issuecomment-1179687217)
-
 ## Background
 
 When developing apps that requires root, the most common method is to run some commands in the su shell. For example, there is an app that uses the `pm enable/disable` command to enable/disable components.
