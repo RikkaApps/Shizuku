@@ -41,6 +41,7 @@ import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
 import moe.shizuku.server.IShizukuApplication;
 import rikka.hidden.compat.ActivityManagerApis;
+import rikka.hidden.compat.DeviceIdleControllerApis;
 import rikka.hidden.compat.PackageManagerApis;
 import rikka.hidden.compat.PermissionManagerApis;
 import rikka.hidden.compat.UserManagerApis;
@@ -466,6 +467,14 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
+        try {
+            DeviceIdleControllerApis.addPowerSaveTempWhitelistApp(packageName, 30 * 1000, userId,
+                    316/* PowerExemptionManager#REASON_SHELL */, "shell");
+            LOGGER.v("Add %d:%s to power save temp whitelist for 30s", userId, packageName);
+        } catch (Throwable tr) {
+            LOGGER.e(tr, "Failed to add %d:%s to power save temp whitelist", userId, packageName);
+        }
+
         String name = packageName + ".shizuku";
         IContentProvider provider = null;
 
