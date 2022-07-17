@@ -4,14 +4,20 @@ import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import java.io.IOException
-import java.net.*
+import java.net.InetSocketAddress
+import java.net.NetworkInterface
+import java.net.ServerSocket
 
 @RequiresApi(Build.VERSION_CODES.R)
-class AdbMdns(context: Context, private val serviceType: String,
-              private val port: MutableLiveData<Int>) {
+class AdbMdns(
+    context: Context, private val serviceType: String,
+    private val port: MutableLiveData<Int>
+) {
+
     private var registered = false
     private var running = false
     private var serviceName: String? = null
@@ -52,13 +58,14 @@ class AdbMdns(context: Context, private val serviceType: String,
 
     private fun onServiceResolved(resolvedService: NsdServiceInfo) {
         if (running && NetworkInterface.getNetworkInterfaces()
+                .asSequence()
+                .any { networkInterface ->
+                    networkInterface.inetAddresses
                         .asSequence()
-                        .any { networkInterface ->
-                            networkInterface.inetAddresses
-                                    .asSequence()
-                                    .any { resolvedService.host.hostAddress == it.hostAddress }
-                        }
-                && isPortAvailable(resolvedService.port)) {
+                        .any { resolvedService.host.hostAddress == it.hostAddress }
+                }
+            && isPortAvailable(resolvedService.port)
+        ) {
             serviceName = resolvedService.serviceName
             port.postValue(resolvedService.port)
         }
@@ -74,29 +81,40 @@ class AdbMdns(context: Context, private val serviceType: String,
     }
 
     internal class DiscoveryListener(private val adbMdns: AdbMdns) : NsdManager.DiscoveryListener {
-        override fun onDiscoveryStarted(str: String) {
+        override fun onDiscoveryStarted(serviceType: String) {
+            Log.v(TAG, "onDiscoveryStarted: $serviceType")
+
             adbMdns.onDiscoveryStart()
         }
 
-        override fun onStartDiscoveryFailed(str: String, i: Int) {}
+        override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
+            Log.v(TAG, "onStartDiscoveryFailed: $serviceType, $errorCode")
+        }
 
-        override fun onDiscoveryStopped(str: String) {
+        override fun onDiscoveryStopped(serviceType: String) {
+            Log.v(TAG, "onDiscoveryStopped: $serviceType")
+
             adbMdns.onDiscoveryStop()
         }
 
-        override fun onStopDiscoveryFailed(str: String, i: Int) {}
-
-        override fun onServiceFound(nsdServiceInfo: NsdServiceInfo) {
-            adbMdns.onServiceFound(nsdServiceInfo)
+        override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
+            Log.v(TAG, "onStopDiscoveryFailed: $serviceType, $errorCode")
         }
 
-        override fun onServiceLost(nsdServiceInfo: NsdServiceInfo) {
-            adbMdns.onServiceLost(nsdServiceInfo)
+        override fun onServiceFound(serviceInfo: NsdServiceInfo) {
+            Log.v(TAG, "onServiceFound: ${serviceInfo.serviceName}")
+
+            adbMdns.onServiceFound(serviceInfo)
+        }
+
+        override fun onServiceLost(serviceInfo: NsdServiceInfo) {
+            Log.v(TAG, "onServiceLost: ${serviceInfo.serviceName}")
+
+            adbMdns.onServiceLost(serviceInfo)
         }
     }
 
-    internal class ResolveListener(private val adbMdns: AdbMdns)
-        : NsdManager.ResolveListener {
+    internal class ResolveListener(private val adbMdns: AdbMdns) : NsdManager.ResolveListener {
         override fun onResolveFailed(nsdServiceInfo: NsdServiceInfo, i: Int) {}
 
         override fun onServiceResolved(nsdServiceInfo: NsdServiceInfo) {
@@ -108,6 +126,7 @@ class AdbMdns(context: Context, private val serviceType: String,
     companion object {
         const val TLS_CONNECT = "_adb-tls-connect._tcp"
         const val TLS_PAIRING = "_adb-tls-pairing._tcp"
+        const val TAG = "AdbMdns"
     }
 
     init {
