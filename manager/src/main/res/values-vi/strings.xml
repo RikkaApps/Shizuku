@@ -45,15 +45,15 @@
     <string name="terminal_export_files">Xuất tệp</string>
     <string name="terminal_tutorial_2">Sau đó, sử dụng bất kỳ trình soạn thảo văn bản nào để mở và chỉnh sửa %1$s.</string>
     <string name="settings_language">Ngôn ngữ</string>
-    <string name="settings_black_night_theme">Chủ đề đêm đen</string>
+    <string name="settings_black_night_theme">Chủ đề đen</string>
     <string name="settings_black_night_theme_summary">Sử dụng chủ đề đen tuyền nếu chế độ ban đêm được bật</string>
     <string name="settings_user_interface">Hiển thị</string>
     <string name="terminal_tutorial_3">Cuối cùng, di chuyển các tệp đến một nơi nào đó mà ứng dụng đầu cuối của bạn có thể truy cập, bạn sẽ có thể sử dụng %1$s để chạy các lệnh thông qua Shizuku.</string>
     <string name="rish_description">Với %1$s, trong bất kỳ ứng dụng đầu cuối nào, bạn có thể kết nối và tương tác với shell do Shizuku điều hành. &lt;p&gt;Về cách sử dụng chi tiết %1$s, nhấn để xem tài liệu.</string>
     <string name="settings_title">Cài đặt</string>
     <string name="settings_startup">Khởi động</string>
-    <string name="settings_start_on_boot">Bắt đầu lúc khởi động (root)</string>
-    <string name="settings_start_on_boot_summary">Đối với các thiết bị đã root, Shizuku có thể tự động khởi động khi khởi động</string>
+    <string name="settings_start_on_boot">Tự khởi động (root)</string>
+    <string name="settings_start_on_boot_summary">Đối với các thiết bị đã root, Shizuku có thể tự khởi động khi thiết bị khởi động</string>
     <string name="notification_channel_service_status">Trạng thái khởi động dịch vụ</string>
     <string name="notification_service_starting">Dịch vụ Shizuku đang khởi động…</string>
     <string name="notification_service_start_failed">Khởi động dịch vụ Shizuku thất bại.</string>
@@ -64,7 +64,7 @@
     <string name="settings_translation_summary">Giúp chúng tôi dịch %s sang ngôn ngữ của bạn</string>
     <string name="settings_translation">Tham gia phiên dịch</string>
     <string name="settings_translation_contributors">Người đóng góp bản dịch</string>
-    <string name="action_about">Về</string>
+    <string name="action_about">Giới thiệu</string>
     <string name="dialog_stop_message">Dịch vụ Shizuku sẽ ngừng hoạt động.</string>
     <string name="about_view_source_code">Xem mã nguồn tại %s</string>
     <string name="action_stop">Dừng Shizuku</string>
@@ -82,7 +82,7 @@
     <string name="dialog_requesting_legacy_title">%1$s đang yêu cầu Shizuku cũ</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; có hỗ trợ Shizuku hiện đại, nhưng nó yêu cầu Shizuku cũ. Điều này có thể do Shizuku đang không chạy, vui lòng kiểm tra ứng dụng Shizuku.&lt;p&gt;Shizuku cũ không được dùng nữa kể từ tháng 3 năm 2019.</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Mở Shizuku</string>
-    <string name="translation_contributors">The Primal Pea</string>
+    <string name="translation_contributors">The Primal Pea, ngatngay</string>
     <string name="home_status_service_version_update">Phiên bản %2$s, %1$s&lt;br&gt;Bắt đầu lại để cập nhật lên phiên bản %3$s</string>
     <string name="home_adb_description">Đối với thiết bị không có root, bạn cần sử dụng adb để khởi động Shizuku (yêu cầu kết nối máy tính). Quá trình này cần được lặp lại mỗi khi thiết bị được khởi động lại. Vui lòng <b><a href="%1$s">đọc phần trợ giúp</a></b>.</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Có một số cân nhắc khác, vui lòng xác nhận rằng bạn đã đọc phần trợ giúp trước.</string>
