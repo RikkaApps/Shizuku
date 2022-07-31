@@ -1,2 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="translation_contributors">By3lish</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopyala</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizukunu aç</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; müasir Shizuku dəstəyinə malikdir, lakin o, köhnə Şizuku tələb edir. Bu, Shizuku işləmədiyinə görə ola bilər, lütfən, Shizuku proqramında yoxlayın.&lt;p&gt;Legacy Shizuku 2019-cu ilin mart ayından etibarən köhnəlib</string>
+    <string name="dialog_requesting_legacy_title">%1$s köhnə Şizuku tələb edir</string>
+    <string name="dialog_legacy_not_support_message">Köhnə Shizuku 2019-cu ilin mart ayından ləğv edilib. Həmçinin, köhnə Shizuku daha yeni Android sistemlərində işləmir.&lt;p&gt;Lütfən, &lt;b&gt;%1$s&lt;/b&gt; tərtibatçısından yeniləməsini xahiş edin.</string>
+    <string name="dialog_legacy_not_support_title">%1$s müasir Shizukunu dəstəkləmir</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> kopyalandı.</string>
+    <string name="toast_copied_to_clipboard">%s
+\nkopyalandı.</string>
+    <string name="dialog_cannot_open_browser_title">Brauzeri başlatmaq mümkün deyil</string>
+    <string name="start_with_root_failed">Root icazəsi verilmədiyi və ya bu cihaz rootlu olmadığı üçün xidməti başlatmaq mümkün deyil.</string>
+    <string name="starter">Başlanğıc</string>
+    <string name="grant_dialog_button_deny">Ləğv et</string>
+    <string name="grant_dialog_button_allow_always">Hər zaman icazə ver</string>
+    <string name="permission_warning_template"><b>%1$s</b> - ya %2$s üçün icazə verilsin\?</string>
+    <string name="permission_description">Proqramın Shizukudan istifadə etməsinə icazə verin</string>
+    <string name="permission_label">Shizukuya daxil olun</string>
+    <string name="notification_adb_pairing_retry">Yenidən cəhd edin</string>
+    <string name="notification_adb_pairing_failed_title">Qoşulma uğursuz oldu</string>
+    <string name="notification_adb_pairing_succeed_text">Siz indi Shizuku xidmətini başlata bilərsiniz.</string>
+    <string name="notification_adb_pairing_succeed_title">Qoşulma uğurludur</string>
+    <string name="notification_adb_pairing_working_title">Axtarış davam edir</string>
+    <string name="notification_adb_pairing_stop_searching">Axtarışı dayandırın</string>
+    <string name="notification_adb_pairing_service_found_title">Qoşulma xidməti tapıldı</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Qoşulma xidməti axtarılır</string>
+    <string name="notification_adb_pairing_input_paring_code">Cütləşmə kodunu daxil edin</string>
+    <string name="notification_channel_adb_pairing">Simsiz debaq qoşulur...</string>
+    <string name="notification_working">İşləyir…</string>
+    <string name="notification_service_start_no_root">Root icazəsini tələb etmək alınmadı.</string>
+    <string name="notification_service_start_failed">Shizuku servisini başlatmaq mümkün olmadı</string>
+    <string name="notification_service_starting">Shizuku servisi başladılır…</string>
+    <string name="notification_channel_service_status">Xidmətin başlama statusu</string>
+    <string name="dialog_stop_message">Shizuku xidməti dayandırılacaq.</string>
+    <string name="action_stop">Shizikunu dayandır</string>
+    <string name="about_view_source_code">Qaynaq kodlarına buradan baxın %s</string>
+    <string name="action_about">Haqqında</string>
+    <string name="settings_use_system_color">Sistem teması rəngindən istifadə edin</string>
+    <string name="settings_start_on_boot_summary">Rootlu cihazlar üçün, Shizuku boot zamanı avtomatik başlaya bilir</string>
+    <string name="settings_start_on_boot">Boot anında başlatın (Root lazımdır)</string>
+    <string name="settings_translation_summary">%s dilini öz dilinizə tərcümə etməkdə bizə kömək edin</string>
+    <string name="settings_translation">Tərcümədə iştirak et</string>
+    <string name="settings_translation_contributors">Tərcümədə iştirak edənlər</string>
+    <string name="settings_startup">başlamaq</string>
+    <string name="settings_black_night_theme_summary">Gecə rejimi aktivdirsə, saf qara temasından istifadə edin</string>
+    <string name="settings_black_night_theme">Qara gecə teması</string>
+    <string name="settings_user_interface">Görünüş</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_title">Parametrlər</string>
+    <string name="rish_description">%1$s ilə istənilən terminal proqramında siz Shizuku tərəfindən hazırlanmış shell-lərə qoşula və onlarla əlaqə saxlaya bilərsiniz. &lt;p&gt;Ətraflı istifadə %1$s haqqında sənədə baxmaq üçün toxunun.</string>
+    <string name="terminal_tutorial_3_description">Bəzi məsləhətlər: %1$s-a icra icazəsi verin və onu %2$s-a əlavə edin, siz birbaşa %1$s-dan istifadə edə biləcəksiniz.</string>
+    <string name="terminal_tutorial_3">Nəhayət, faylları terminal proqramınızın daxil ola biləcəyi yerə köçürün, Shizuku vasitəsilə əmrləri yerinə yetirmək üçün %1$s-dan istifadə edə biləcəksiniz.</string>
+    <string name="terminal_tutorial_2_description">Məsələn, %1$s-da Shizuku-dan istifadə etmək istəyirsinizsə, %2$s-ı %3$s ilə əvəz etməlisiniz (%4$s %1$s paketinin adıdır).</string>
+    <string name="terminal_tutorial_2">Sonra %1$s-ı açmaq və redaktə etmək üçün istənilən mətn redaktorundan istifadə edin.</string>
+    <string name="terminal_export_files">Faylları ixrac edin</string>
+    <string name="terminal_tutorial_1_description">Seçilmiş qovluqda eyni adlı fayllar varsa, onlar silinəcək.
+\n
+\nİxrac funksiyası SAF (Storage Access Framework) istifadə edir. MIUI-nin SAF funksiyalarını pozduğu bildirilir. MIUI istifadə edirsinizsə, faylı Shizuku-nun apk-dan çıxarmalı və ya GitHub-dan yükləməli ola bilərsiniz.</string>
+    <string name="terminal_tutorial_1">Birincisi, faylları istədiyiniz yerə ixrac edin. Siz iki fayl tapacaqsınız, %1$s və %2$s.</string>
+    <string name="home_terminal_description">İstədiyiniz terminal proqramlarında Shizuku vasitəsilə əmrləri işə salın</string>
+    <string name="home_terminal_title">Shizikunu terminal proqramlarında istifadə edin</string>
+    <string name="app_management_item_summary_requires_root">* Shizuku rootla işləməsini tələb edir</string>
+    <string name="app_management_dialog_adb_is_limited_message">Çox güman ki, cihazınızın istehsalçısı adb icazəsini məhdudlaşdırır.&lt;p&gt;Sisteminiz üçün &lt;b&gt;&lt;a href=\"%1$s\"&gt;bu sənəddə&lt;/a&gt;&lt;/b&gt; həll yolu ola bilər.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb icazəsi məhduddur</string>
+    <string name="app_management_menu_get_more">Daha çox</string>
+    <string name="home_learn_more_description">Necə Shizuku dəstəkli proqram hazırlaya biləcəyinizi öyrənin və ya Shizuku dəstəkli proqramları əldə edin</string>
+    <string name="home_learn_more_title">Shizuku haqqında</string>
+    <string name="home_app_management_view_authorized_apps">İcazə verilmiş proqramları idarə etmək üçün toxunun</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">İcazə verilmiş %d proqram</item>
+        <item quantity="other">İcazə verilmiş %d proqramlar</item>
+    </plurals>
+    <string name="home_app_management_title">tətbiqin idarə edilməsi</string>
+    <string name="home_root_button_restart">Yenidən Başlat</string>
+    <string name="home_root_button_start">Başlat</string>
+    <string name="home_root_description_sui">Magisk istifadə edirsinizsə, %1$s (Riru modulu) istifadə edə bilərsiniz. Root istifadəçiləri üçün o, nəticədə Shizuku əvəz edəcək. Qeyd edək ki, %2$s-dan istifadə etmək üçün mövcud proqramlar bir az dəyişməlidir.</string>
+    <string name="home_root_description">Bundan əlavə, Shizuku yüklənərkən avtomatik olaraq işə salına bilər. Əks-təqdirdə , sisteminizin və ya üçüncü tərəf alətlərin Shizuku-nu məhdudlaşdırıb-məhdudlaşdırdığını yoxlayın.&lt;br&gt;Siz %s-ə müraciət edə bilərsiniz.</string>
+    <string name="home_root_title">Başlat (root edilmiş cihazlar üçün)</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Bəzi sistemlər (məsələn, MIUI) proqramlar görünmədikdə şəbəkəyə daxil olmağa icazə vermir, hətta proqram standart olaraq ön plan xidmətindən istifadə edir. Zəhmət olmasa Shizuku üçün batareyanın optimallaşdırılması xüsusiyyətlərini deaktiv edin</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku lokal şəbəkəyə daxil olmalıdır. Şəbəkə icazəsi ilə idarə olunur.</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizikuya geri dön və Shizikunu başlat</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Nəzərə alın ki, \"Simsiz debaq\" seçiminin sol hissəsi tıklana bilər, ona toxunmaq yeni səhifə açacaq. Yalnız sağdakı açara basmaq düzgün deyil.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Əks təqdirdə siz bildirişdə olan cütləşdirmə kodunu daxil edə bilməyəcəksiniz</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI istifadəçiləri sistem parametrlərində bildiriş tərzini \"Bildiriş\" - \"Bildiriş kölgəsi\"ndən \"Android\"ə keçirməli ola bilərlər</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Cütləşmə prosesi Shizukudan gələn bildirişi görməyinizi tələb edir. Zəhmət olmasa, Shizuku-ya bildirişlər göndərməyə icazə verin.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Cütləşdirməni tamamlamaq üçün bildirişdəki kodu daxil edin</string>
+    <string name="adb_pairing_tutorial_content_steps">\"Tərtibatçı seçimləri\" - \"Simsiz debaq\" daxil olun. \"Cihazı cütləşdirmə kodu ilə cütləşdir\" klikləyin, altı rəqəmli kod görəcəksiniz.</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizukudan gələn bildiriş cütləşdirməni tamamlamağınız üçün sizə kömək edə bilər</string>
+    <string name="adb_pairing_tutorial_title">Shizuku-nu cihazınızla cütləşdirin</string>
+    <string name="notification_settings">Bildiriş seçimləri</string>
+    <string name="development_settings">Tərtibatçı seçimləri</string>
+    <string name="adb_pair_required">Lütfən, əvvəlcə cütləşmə mərhələsini keçin.</string>
+    <string name="adb_error_key_store">Simsiz debaq üçün açar yaratmaq mümkün deyil.
+\nBunun səbəbi bu cihazın KeyStore mexanizminin xarab olması ola bilər.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem cütləşmə dialoqunun həmişə görünməsini tələb edir, bölünmüş ekran rejimindən istifadə bu proqram və sistem dialoqunun eyni vaxtda görünməsinə imkan verən yeganə yoldur.</string>
+    <string name="adb_pairing_requires_multi_window">Əvvəlcə bölünmüş ekran (çoxu pəncərə) rejiminə daxil olun.</string>
+    <string name="dialog_adb_pairing_message">Zəhmət olmasa, aşağıdakı addımlarla cütləşdirmə etməyə başlayın: \"Tərtibatçı Seçimləri\" - \"Simsiz debaq\" - \"Cütləşdirmə kodundan istifadə edərək cihazın cütləşdirilməsi\".
+\n
+\nCütləşdirmə prosesi başladıqdan sonra siz cütləşdirmə kodunu daxil edə biləcəksiniz</string>
+    <string name="dialog_wireless_adb_not_enabled">Simsiz debaq aktiv edilməyib.
+\nQeyd edək ki, Android 11-dən əvvəl simsiz debaqı aktivləşdirmək üçün kompüter bağlantısı mütləqdir.</string>
+    <string name="cannot_connect_port">Simsiz debaq cihazına qoşulmaq mümkün olmadı</string>
+    <string name="paring_code_is_wrong">Cütləşmə kodu yanlışdır</string>
+    <string name="dialog_adb_pairing_paring_code">Cütləşmə kodu</string>
+    <string name="dialog_adb_pairing_discovery">Cütləşdirmə servisi axtarılır</string>
+    <string name="dialog_adb_pairing_title">Cihaz ilə cütləşdir</string>
+    <string name="adb_pairing">Cütləşmə</string>
+    <string name="dialog_adb_invalid_port">Port 1 ilə 65535 arasında dəyişən tam ədəddir.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_discovery_message">Lütfən, \"Tərtibatçı seçimləri\"ndə \"Simsiz Debaq\" funksiyasını aktivləşdirin. Şəbəkə dəyişdikdə \"Simsiz Debaq\" avtomatik olaraq söndürülür. 
+\n
+\nQeyd edək ki, Tərtibatçı seçimlərini, USB Debaqı və ya Shizuku-nu söndürməyin</string>
+    <string name="dialog_adb_discovery">Simsiz debaq cihazı axtarılır</string>
+    <string name="home_wireless_adb_view_guide_button">Addım-Addım Təlimat</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 - dən aşağı android versiyalarında simsiz debaq üçün kompüterə bağlanmaq mütləqdir</string>
+    <string name="home_wireless_adb_description">Android 11 və ya daha yuxarı versiyalarda siz Simsiz debaqı aktivləşdirə və kompüterə qoşulmadan Shizuku-nu birbaşa cihazınızdan başlada bilərsiniz.&lt;p&gt;Lütfən, əvvəlcə addım-addım təlimata baxın.</string>
+    <string name="home_wireless_adb_title">Simsiz debaq ilə başladın</string>
+    <string name="home_adb_dialog_view_command_button_send">Göndər</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Bəzi başqa mülahizələr də var, lütfən, əvvəlcə yardımı oxuduğunuzu təsdiqləyin.</string>
+    <string name="home_adb_button_view_command">Əmirə baxın</string>
+    <string name="home_adb_button_view_help">Yardım</string>
+    <string name="home_adb_description">Root olmayan cihazlarda Shizuku-nu işə salmaq üçün adb-dən istifadə etməlisiniz (kompüter bağlantısı tələb olunur). Cihaz hər dəfə yenidən işə salındıqda bu proses təkrarlanmalıdır. Lütfən, <b><a href="%1$s">yardımı oxuyun</a></b>.</string>
+    <string name="home_adb_title">Kompüterə qoşularaq başlayın</string>
+    <string name="home_status_service_version_update">Versiya %2$s, %1$s &lt;br&gt; %3$s Versiyasına güncəlləmək üçün proqramı yenidən başladın</string>
+    <string name="home_status_service_version">Versiya %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s davam etmir</string>
+    <string name="home_status_service_is_running">%1$s davam edir</string>
+</resources>
