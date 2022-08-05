@@ -1,47 +1,47 @@
 package moe.shizuku.manager.home
 
-import android.os.Process
+import android.os.Build
 import moe.shizuku.manager.management.AppsViewModel
-import rikka.core.util.BuildUtils
+import moe.shizuku.manager.utils.EnvironmentUtils
+import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
 import rikka.shizuku.Shizuku
-import java.io.File
 
-class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: AppsViewModel) : IdBasedRecyclerViewAdapter(ArrayList()) {
+class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: AppsViewModel) :
+    IdBasedRecyclerViewAdapter(ArrayList()) {
 
     override fun onCreateCreatorPool(): IndexCreatorPool {
         return IndexCreatorPool()
-    }
-
-    private fun isRooted(): Boolean {
-        return System.getenv("PATH")?.split(File.pathSeparatorChar)?.find { File("$it/su").exists() } != null
     }
 
     fun updateData() {
         val status = homeModel.serviceStatus.value?.data ?: return
         val grantedCount = appsModel.grantedCount.value?.data ?: 0
         val running = Shizuku.pingBinder()
+        val isPrimaryUser = UserHandleCompat.myUserId() == 0
 
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, 0)
+
         addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, 1)
         addItem(TerminalViewHolder.CREATOR, status, 1)
-        if (Process.myUid() / 100000 == 0) {
-            val root = isRooted()
+
+        if (isPrimaryUser) {
+            val root = EnvironmentUtils.isRooted()
             val rootRestart = running && status.uid == 0
             when {
-                root && BuildUtils.atLeast30 -> {
+                root && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
                     addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
                     addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
                     addItem(StartAdbViewHolder.CREATOR, null, 2)
                 }
-                root && !BuildUtils.atLeast30 -> {
+                root && Build.VERSION.SDK_INT < Build.VERSION_CODES.R -> {
                     addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
                     addItem(StartAdbViewHolder.CREATOR, null, 2)
                     addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
                 }
-                BuildUtils.atLeast30 -> {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
                     addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
                     addItem(StartAdbViewHolder.CREATOR, null, 2)
                     addItem(StartRootViewHolder.CREATOR, rootRestart, 3)

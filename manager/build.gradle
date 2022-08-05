@@ -87,6 +87,7 @@ materialThemeBuilder {
         }
     }
     generatePalette = true
+    generateTextColors = true
 }
 
 def optimizeReleaseResources = task('optimizeReleaseResources').doLast {
