@@ -13,6 +13,7 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
         super();
 
         getCreatorPool().putRule(PackageInfo.class, AppViewHolder.CREATOR);
+        getCreatorPool().putRule(Object.class, EmptyViewHolder.CREATOR);
         setHasStableIds(true);
     }
 
@@ -28,7 +29,11 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
 
     public void updateData(List<PackageInfo> data) {
         getItems().clear();
-        getItems().addAll(data);
+        if (data.isEmpty()) {
+            getItems().add(new Object());
+        } else {
+            getItems().addAll(data);
+        }
         notifyDataSetChanged();
     }
 }

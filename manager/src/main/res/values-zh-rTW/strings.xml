@@ -126,4 +126,6 @@
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系統 (例如 MIUI) 不允許應用程式在不可見時存取網路，即使應用程式已按標準使用前臺服務。請在此類系統上為 Shizuku 停用電池最佳化功能。</string>
     <string name="settings_use_system_color">使用系統主題顏色</string>
     <string name="adb_pairing_tutorial_content_finish">回到 Shizuku 並啟動 Shizuku。</string>
+    <string name="home_app_management_empty">已請求或宣告 Shizuku 的應用程式將顯示在此處。</string>
+
 </resources>
