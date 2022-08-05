@@ -9,9 +9,8 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
 import moe.shizuku.manager.model.ServiceStatus
-import moe.shizuku.manager.widget.MaterialCircleIconView
 import rikka.html.text.HtmlCompat
-import rikka.html.widget.HtmlCompatTextView
+import rikka.html.text.toHtml
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 import rikka.shizuku.Shizuku
@@ -28,9 +27,9 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root:
         }
     }
 
-    private inline val textView: HtmlCompatTextView get() = binding.text1
-    private inline val summaryView: HtmlCompatTextView get() = binding.text2
-    private inline val iconView: MaterialCircleIconView get() = binding.icon
+    private inline val textView get() = binding.text1
+    private inline val summaryView get() = binding.text2
+    private inline val iconView get() = binding.icon
 
     override fun onBind() {
         val context = itemView.context
@@ -65,11 +64,8 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root:
         } else {
             ""
         }
-        textView.setHtmlText(
-            String.format("%1\$s", title),
-            HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE
-        )
-        summaryView.setHtmlText(String.format("%1\$s", summary), HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+        textView.text = title.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+        summaryView.text = summary.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
         if (TextUtils.isEmpty(summaryView.text)) {
             summaryView.visibility = View.GONE
         } else {

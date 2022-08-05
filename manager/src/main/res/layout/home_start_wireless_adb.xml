@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@android:id/text1"
-        style="@style/CardSummary"
+        style="@style/CardContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

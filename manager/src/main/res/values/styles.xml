@@ -24,14 +24,19 @@
     <style name="CardTitle">
         <item name="android:textAppearance">?textAppearanceBodyLarge</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
     <style name="CardSummary">
         <item name="android:textAppearance">?textAppearanceBodyMedium</item>
         <item name="android:textColor">?android:textColorSecondary</item>
-        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:layout_marginTop">4sp</item>
+    </style>
+
+    <style name="CardContent">
+        <item name="android:textAppearance">?textAppearanceBodyMedium</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="GrantPermissions" parent="@style/AppTheme">

@@ -21,7 +21,7 @@
         android:duplicateParentState="true"
         android:orientation="vertical">
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@android:id/text1"
             style="@style/CardTitle"
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:lineSpacingExtra="2dp"
             tools:text="Running (version 10)" />
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@android:id/text2"
             style="@style/CardSummary"
             android:layout_width="match_parent"
