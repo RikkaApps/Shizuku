@@ -32,14 +32,16 @@
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textSize="18sp"
+            android:textAppearance="?textAppearanceBodyLarge"
             tools:text="Shizuku" />
 
         <TextView
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyMedium"
+            android:layout_marginTop="2sp"
+            android:textColor="?textColorOnSurfaceHighEmphasis"
             android:textSize="14sp"
             tools:text="moe.shizuku.manager" />
 
@@ -52,10 +54,9 @@
             <TextView
                 android:id="@+id/requires_root"
                 android:layout_width="wrap_content"
+                android:textAppearance="?textAppearanceBodyMedium"
                 android:layout_height="wrap_content"
-                android:text="@string/app_management_item_summary_requires_root"
-                android:textSize="12sp"
-                android:textStyle="italic" />
+                android:text="@string/app_management_item_summary_requires_root" />
 
         </LinearLayout>
 
