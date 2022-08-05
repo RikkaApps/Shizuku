@@ -17,7 +17,7 @@ import java.util.Locale;
 
 import dev.rikka.tools.refine.Refine;
 import moe.shizuku.api.BinderContainer;
-import moe.shizuku.starter.ktx.IContentProviderKt;
+import moe.shizuku.starter.util.IContentProviderCompat;
 import rikka.hidden.compat.ActivityManagerApis;
 import rikka.shizuku.ShizukuApiConstants;
 
@@ -132,7 +132,7 @@ public class ServiceStarter {
             extra.putParcelable(EXTRA_BINDER, new BinderContainer(binder));
             extra.putString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN, token);
 
-            Bundle reply = IContentProviderKt.callCompat(provider, null, null, name, "sendUserService", null, extra);
+            Bundle reply = IContentProviderCompat.call(provider, null, null, name, "sendUserService", null, extra);
 
             if (reply != null) {
                 reply.setClassLoader(BinderContainer.class.getClassLoader());
