@@ -30,6 +30,6 @@ dependencies {
     implementation project(':starter')
     implementation project(':rish')
     implementation project(':server-shared')
-    implementation 'dev.rikka.hidden:compat:3.0.0'
-    compileOnly 'dev.rikka.hidden:stub:3.0.0'
+    implementation 'dev.rikka.hidden:compat:3.2.0'
+    compileOnly 'dev.rikka.hidden:stub:3.2.0'
 }

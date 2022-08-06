@@ -62,5 +62,5 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    compileOnly 'dev.rikka.hidden:stub:3.0.0'
+    compileOnly 'dev.rikka.hidden:stub:3.2.0'
 }
