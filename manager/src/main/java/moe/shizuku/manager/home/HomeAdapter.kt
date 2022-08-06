@@ -30,27 +30,19 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         if (isPrimaryUser) {
             val root = EnvironmentUtils.isRooted()
             val rootRestart = running && status.uid == 0
-            when {
-                root && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
-                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
-                    addItem(StartAdbViewHolder.CREATOR, null, 2)
-                }
-                root && Build.VERSION.SDK_INT < Build.VERSION_CODES.R -> {
-                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
-                    addItem(StartAdbViewHolder.CREATOR, null, 2)
-                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
-                }
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
-                    addItem(StartAdbViewHolder.CREATOR, null, 2)
-                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
-                }
-                else -> {
-                    addItem(StartAdbViewHolder.CREATOR, null, 2)
-                    addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
-                    addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
-                }
+
+            if (root) {
+                addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R || EnvironmentUtils.getAdbTcpPort() > 0) {
+                addItem(StartWirelessAdbViewHolder.CREATOR, null, 4)
+            }
+
+            addItem(StartAdbViewHolder.CREATOR, null, 2)
+
+            if (!root) {
+                addItem(StartRootViewHolder.CREATOR, rootRestart, 3)
             }
         }
         addItem(LearnMoreViewHolder.CREATOR, null, 100)

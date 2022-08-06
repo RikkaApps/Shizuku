@@ -33,7 +33,6 @@
     <string name="app_management_item_summary_requires_root">* Shizuku-ն root թույլտվություն պետք է ունենա</string>
     <string name="app_management_dialog_adb_is_limited_message">Շատ հնարավոր է, որ Ձեր սարքի արտադրողը սահմանափակել է adb-ի թույլտվությունները։ &lt;p&gt;Հնարավոր լուծումները գտեք &lt;b&gt;&lt;a href=\"%1$s\"&gt;այստեղ&lt;/a&gt;&lt;/b&gt;։</string>
     <string name="app_management_dialog_adb_is_limited_title">Adb-ի թույլտվությունները սահմանափակված են</string>
-    <string name="app_management_menu_get_more">Ստանալ ավելին</string>
     <string name="home_learn_more_description">Սովորեք ծրագրավորել Shizuku-ով կամ Shizuku-ն ուրիշ ծրագրերի հետ օգտագործել</string>
     <string name="home_learn_more_title">Սովորել Shizuku</string>
     <string name="home_app_management_view_authorized_apps">Սեղմեք, որպեսզի վավերացված ծրագրերը տիրապետելու համար</string>

@@ -62,7 +62,6 @@
     <string name="app_management_item_summary_requires_root">* requer que o Shizuku seja executado com root</string>
     <string name="app_management_dialog_adb_is_limited_message">É altamente possível que o fabricante do seu dispositivo limite a permissão do adb.&lt;p&gt;Pode haver uma solução para o seu sistema &lt;b&gt;&lt;a href=\"%1$s\"&gt;neste documento&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">A permissão do adb é limitada</string>
-    <string name="app_management_menu_get_more">Pegue mais</string>
     <string name="home_learn_more_description">Aprenda a desenvolver com o Shizuku ou obter aplicativos usando o Shizuku</string>
     <string name="home_learn_more_title">Aprender sobre Shizuku</string>
     <string name="home_app_management_view_authorized_apps">Toque para gerenciar aplicativos autorizados</string>

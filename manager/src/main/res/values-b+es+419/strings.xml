@@ -66,7 +66,6 @@
     <string name="notification_channel_service_status">Estado de inicio del servicio</string>
     <string name="dialog_stop_message">El servicio de Shizuku se detendrá.</string>
     <string name="settings_startup">Inicio</string>
-    <string name="app_management_menu_get_more">Más</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="one">Aplicación %d autorizada</item>
         <item quantity="other">Aplicaciones %d autorizadas</item>

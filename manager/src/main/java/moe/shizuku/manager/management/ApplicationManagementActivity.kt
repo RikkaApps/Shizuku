@@ -84,12 +84,4 @@ class ApplicationManagementActivity : AppBarActivity() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_view_apps) {
-            CustomTabsHelper.launchUrlOrCopy(this, Helps.APPS.get())
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

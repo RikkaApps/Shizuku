@@ -52,7 +52,6 @@
     <string name="app_management_item_summary_requires_root">* megköveteli, hogy Shizuku roottal fusson</string>
     <string name="app_management_dialog_adb_is_limited_message">Nagyon is lehetséges, hogy az eszköz gyártója korlátozza az ADB engedélyét.&lt;p&gt;Lehet, hogy van megoldás a rendszerére &lt;b&gt;&lt;a href=\"%1$s\"&gt;ez a dokumentum&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">Az adb engedélye korlátozott</string>
-    <string name="app_management_menu_get_more">Szerezz többet</string>
     <string name="home_learn_more_description">Ismerje meg, hogyan lehet fejleszteni, vagy hogyan lehet appokat szerezni a Shizuku használatával</string>
     <string name="home_learn_more_title">Tanulja meg a Shizukut</string>
     <string name="home_app_management_view_authorized_apps">Érintse az engedélyezett appok kezeléséhez</string>

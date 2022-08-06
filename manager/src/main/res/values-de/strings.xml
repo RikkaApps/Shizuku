@@ -14,7 +14,6 @@
     <string name="home_status_service_not_running">%1$s wird nicht ausgeführt</string>
     <string name="home_status_service_is_running">%1$s läuft</string>
     <string name="app_management_dialog_adb_is_limited_title">ADB-Berechtigungen sind begrenzt</string>
-    <string name="app_management_menu_get_more">Mehr erfahren</string>
     <string name="about_view_source_code">Quelltext auf %s anzeigen</string>
     <string name="action_about">Über</string>
     <string name="action_stop">Shizuku anhalten</string>

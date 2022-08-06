@@ -64,7 +64,6 @@
     <string name="app_management_item_summary_requires_root">* Shizuku rootla işləməsini tələb edir</string>
     <string name="app_management_dialog_adb_is_limited_message">Çox güman ki, cihazınızın istehsalçısı adb icazəsini məhdudlaşdırır.&lt;p&gt;Sisteminiz üçün &lt;b&gt;&lt;a href=\"%1$s\"&gt;bu sənəddə&lt;/a&gt;&lt;/b&gt; həll yolu ola bilər.</string>
     <string name="app_management_dialog_adb_is_limited_title">adb icazəsi məhduddur</string>
-    <string name="app_management_menu_get_more">Daha çox</string>
     <string name="home_learn_more_description">Necə Shizuku dəstəkli proqram hazırlaya biləcəyinizi öyrənin və ya Shizuku dəstəkli proqramları əldə edin</string>
     <string name="home_learn_more_title">Shizuku haqqında</string>
     <string name="home_app_management_view_authorized_apps">İcazə verilmiş proqramları idarə etmək üçün toxunun</string>
@@ -109,7 +108,7 @@
     <string name="adb_pairing">Cütləşmə</string>
     <string name="dialog_adb_invalid_port">Port 1 ilə 65535 arasında dəyişən tam ədəddir.</string>
     <string name="dialog_adb_port">Port</string>
-    <string name="dialog_adb_discovery_message">Lütfən, \"Tərtibatçı seçimləri\"ndə \"Simsiz Debaq\" funksiyasını aktivləşdirin. Şəbəkə dəyişdikdə \"Simsiz Debaq\" avtomatik olaraq söndürülür. 
+    <string name="dialog_adb_discovery_message">Lütfən, \"Tərtibatçı seçimləri\"ndə \"Simsiz Debaq\" funksiyasını aktivləşdirin. Şəbəkə dəyişdikdə \"Simsiz Debaq\" avtomatik olaraq söndürülür.
 \n
 \nQeyd edək ki, Tərtibatçı seçimlərini, USB Debaqı və ya Shizuku-nu söndürməyin</string>
     <string name="dialog_adb_discovery">Simsiz debaq cihazı axtarılır</string>

@@ -45,7 +45,6 @@
     </plurals>
     <string name="home_app_management_view_authorized_apps">Atinge pentru a gestiona aplicațiile autorizate</string>
     <string name="home_learn_more_title">Învață Shizuku</string>
-    <string name="app_management_menu_get_more">Obține mai mult</string>
     <string name="app_management_dialog_adb_is_limited_title">Permisiunea adb este limitată</string>
     <string name="app_management_item_summary_requires_root">* necesită Shizuku să rulează cu root</string>
     <string name="home_terminal_title">Utilizează Shizuku în aplicații terminale</string>

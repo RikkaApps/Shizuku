@@ -3,7 +3,6 @@
     <string name="action_about">Про додаток</string>
     <string name="home_adb_button_view_command">Переглянути adb команду</string>
     <string name="home_adb_button_view_help">Прочитати онлайн довідку</string>
-    <string name="app_management_menu_get_more">Отримати більше</string>
     <string name="app_management_dialog_adb_is_limited_title">Дозвіл на adb обмежений</string>
     <string name="home_app_management_title">Авторизовані додатки</string>
     <string name="settings_black_night_theme">Чорна темна тема</string>

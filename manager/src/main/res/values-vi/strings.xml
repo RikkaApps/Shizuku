@@ -36,7 +36,6 @@
     <string name="home_app_management_title">Quản lí ứng dụng</string>
     <string name="home_learn_more_title">Tìm hiểu Shizuku</string>
     <string name="home_learn_more_description">Tìm hiểu cách phát triển với Shizuku hoặc tải ứng dụng bằng Shizuku</string>
-    <string name="app_management_menu_get_more">Tải thêm</string>
     <string name="app_management_dialog_adb_is_limited_title">Quyền của adb bị hạn chế</string>
     <string name="app_management_item_summary_requires_root">* yêu cầu Shizuku chạy với root</string>
     <string name="home_terminal_title">Sử dụng Shizuku trong các ứng dụng đầu cuối</string>

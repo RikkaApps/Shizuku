@@ -42,14 +42,13 @@
     <string name="settings_black_night_theme">黑色夜間主題</string>
     <string name="settings_black_night_theme_summary">當夜間模式啟用時使用純黑色主題</string>
     <string name="settings_startup">啟動</string>
-    <string name="app_management_menu_get_more">取得更多</string>
     <string name="app_management_dialog_adb_is_limited_title">adb 權限受限</string>
     <string name="app_management_dialog_adb_is_limited_message">這極有可能是你的裝置製造商限制了 adb 的權限。&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;此文件&lt;/a&gt;&lt;/b&gt;中可能有針對你的系統的解決方案。</string>
     <string name="home_adb_button_view_help">閱讀說明</string>
     <string name="dialog_cannot_open_browser_title">無法啟動瀏覽器</string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> 已複製到剪貼簿。</string>
     <string name="home_learn_more_title">瞭解 Shizuku</string>
-    <string name="home_learn_more_description">瞭解如何使用 Shizuku 開發或檢視使用 Shizuku 的程式</string>
+    <string name="home_learn_more_description">瞭解如何使用 Shizuku 開發</string>
     <string name="app_management_item_summary_requires_root">* 需要以 root 運作的 Shizuku</string>
     <string name="settings_translation_contributors">翻譯貢獻者</string>
     <string name="translation_contributors"/>

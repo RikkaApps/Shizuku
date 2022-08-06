@@ -70,7 +70,6 @@
     <string name="home_status_service_version_update">バージョン %2$s, %1$s&lt;br&gt;バージョン %3$s にアップデートするには、再度起動してください</string>
     <string name="translation_contributors">MES-mitutti</string>
     <string name="home_learn_more_description">Shizukuでの開発方法や、Shizukuを使ったアプリの取得方法をご紹介します</string>
-    <string name="app_management_menu_get_more">もっと見る</string>
     <string name="app_management_dialog_adb_is_limited_title">adbの権限が制限されています</string>
     <string name="app_management_dialog_adb_is_limited_message">端末の製造元がadbの権限を制限している可能性が高いです。&lt;p&gt; &lt;b&gt;&lt;a href=\"%1$s\"&gt;このドキュメント&lt;/a&gt;&lt;/b&gt;の中に、あなたのシステムに合った解決策があるかもしれません。</string>
     <string name="app_management_item_summary_requires_root">* Shizukuはrootで実行する必要があります</string>

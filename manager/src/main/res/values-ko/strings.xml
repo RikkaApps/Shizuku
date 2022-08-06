@@ -38,7 +38,6 @@
     <string name="home_learn_more_title">Shizuku 알아보기</string>
     <string name="settings_title">설정</string>
     <string name="home_learn_more_description">Shizuku와 개발하거나 Shizuku를 사용하는 앱 알아보기</string>
-    <string name="app_management_menu_get_more">더보기</string>
     <string name="app_management_item_summary_requires_root">* 루트로 실행된 Shizuku 필요</string>
     <string name="notification_working">진행 중…</string>
     <string name="settings_startup">시작</string>

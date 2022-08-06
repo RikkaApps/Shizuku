@@ -19,6 +19,7 @@ import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.starter.StarterActivity
 import moe.shizuku.manager.utils.CustomTabsHelper
+import moe.shizuku.manager.utils.EnvironmentUtils
 import rikka.core.content.asActivity
 import rikka.html.text.HtmlCompat
 import rikka.recyclerview.BaseViewHolder
@@ -69,8 +70,7 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding, root: Vie
             return
         }
 
-        var port = SystemProperties.getInt("service.adb.tcp.port", -1)
-        if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
+        val port = EnvironmentUtils.getAdbTcpPort()
         if (port > 0) {
             val host = "127.0.0.1"
             val intent = Intent(context, StarterActivity::class.java).apply {

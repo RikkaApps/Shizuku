@@ -4,7 +4,6 @@
     <string name="settings_user_interface">Aspekto</string>
     <string name="settings_language">Lingvo</string>
     <string name="settings_title">Agordoj</string>
-    <string name="app_management_menu_get_more">Ricevi pli</string>
     <string name="home_learn_more_title">Lerni Shizuku</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="one">Rajtigis %d aplikaĵon</item>
