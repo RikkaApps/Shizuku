@@ -39,33 +39,18 @@ class ManageAppsViewHolder(private val binding: HomeManageAppsItemBinding, root:
         if (!data.first.isRunning) {
             itemView.isEnabled = false
             title.setText(R.string.home_app_management_title)
-            summary.setHtmlText(
-                context.getString(
-                    R.string.home_status_service_not_running,
-                    context.getString(R.string.app_name)
-                )
+            summary.text = context.getString(
+                R.string.home_status_service_not_running,
+                context.getString(R.string.app_name)
             )
-        } else if (data.first.permission) {
-            itemView.isEnabled = true
-            title.setHtmlText(
-                context.resources.getQuantityString(
-                    R.plurals.home_app_management_authorized_apps_count,
-                    data.second,
-                    data.second
-                )
-            )
-            summary.setHtmlText(context.getString(R.string.home_app_management_view_authorized_apps))
         } else {
-            itemView.isEnabled = false
-            title.setText(R.string.home_app_management_title)
-
-            val sb = StringBuilder()
-            sb.append(context.getString(R.string.app_management_dialog_adb_is_limited_title))
-            sb.append("<br>")
-            sb.append(context.getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()))
-
-            summary.movementMethod = LinkMovementMethod.getInstance()
-            summary.text = sb.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
+            itemView.isEnabled = true
+            title.text = context.resources.getQuantityString(
+                R.plurals.home_app_management_authorized_apps_count,
+                data.second,
+                data.second
+            )
+            summary.text = context.getString(R.string.home_app_management_view_authorized_apps)
         }
     }
 

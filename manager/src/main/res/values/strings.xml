@@ -76,6 +76,10 @@
     <string name="home_learn_more_title">Learn Shizuku</string>
     <string name="home_learn_more_description">Learn how to develop with Shizuku</string>
 
+    <!-- Home - Adb permissions limited -->
+    <string name="home_adb_is_limited_title">Extra step is required</string>
+    <string name="home_adb_is_limited_description">Your device manufacturer has restricted adb permissions and apps using Shizuku will not work properly.\n\nUsually, this limitation can be lifted by adjusting some options in \"Developer options\". Please read the help for details on how to do this.\n\nYou may need to restart Shizuku for the operation to take effect.</string>
+
     <!-- Application management -->
     <string name="app_management_dialog_adb_is_limited_title">The permission of adb is limited</string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[It\'s highly possible that your device manufacturer limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>

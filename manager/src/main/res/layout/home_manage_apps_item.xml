@@ -22,21 +22,21 @@
         android:duplicateParentState="true"
         android:orientation="vertical">
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@android:id/text1"
             style="@style/CardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            tools:htmlText="@plurals/authorized_apps_count" />
+            tools:text="@plurals/authorized_apps_count" />
 
-        <rikka.html.widget.HtmlCompatTextView
+        <TextView
             android:id="@android:id/text2"
             style="@style/CardSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            app:htmlText="@string/home_app_management_view_authorized_apps" />
+            android:text="@string/home_app_management_view_authorized_apps" />
 
     </LinearLayout>
 

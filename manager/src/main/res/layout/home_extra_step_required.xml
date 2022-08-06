@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?homeCardStyle"
+    android:background="?colorErrorContainer"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <moe.shizuku.manager.widget.MaterialCircleIconView
+            android:id="@android:id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_warning_24"
+            app:iconColorName="red" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/home_icon_padding"
+            android:duplicateParentState="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@android:id/title"
+                style="@style/CardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="@string/home_adb_is_limited_title"
+                android:textColor="?colorOnErrorContainer" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@android:id/text1"
+        style="@style/CardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/home_adb_is_limited_description"
+        android:textColor="?colorOnErrorContainer" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@android:id/button1"
+        style="@style/CardButton"
+        android:text="@string/home_adb_button_view_help"
+        android:textColor="?colorOnError"
+        app:backgroundTint="?colorError"
+        app:icon="@drawable/ic_outline_open_in_new_24" />
+
+
+</LinearLayout>

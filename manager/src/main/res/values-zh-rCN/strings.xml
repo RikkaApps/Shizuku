@@ -125,5 +125,6 @@
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系统（例如 MIUI）不允许应用在不可见时访问网络，即使应用已按标准使用前台服务。请在此类系统上为 Shizuku 禁用电池优化功能。</string>
     <string name="settings_use_system_color">使用系统主题颜色</string>
     <string name="home_app_management_empty">已请求或声明 Shizuku 的应用程序将显示在此处。</string>
-
+    <string name="home_adb_is_limited_title">需要进行额外的步骤</string>
+    <string name="home_adb_is_limited_description">您的设备制造商限制了 adb 的权限，使用 Shizuku 的应用无法正常工作。\n\n通常，在“开发者选项”中调整一些选项即可解除此限制。请阅读帮助来了解具体的操作方式。\n\n您可能需要重新启动 Shizuku 以使操作生效。</string>
 </resources>
