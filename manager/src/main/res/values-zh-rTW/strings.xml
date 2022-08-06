@@ -126,6 +126,6 @@
     <string name="settings_use_system_color">使用系統主題顏色</string>
     <string name="adb_pairing_tutorial_content_finish">回到 Shizuku 並啟動 Shizuku。</string>
     <string name="home_app_management_empty">已請求或宣告 Shizuku 的應用程式將顯示在此處。</string>
-    <string name="home_adb_is_limited_title">需要進行額外的步驟</string>
+    <string name="home_adb_is_limited_title">您需要進行額外的步驟</string>
     <string name="home_adb_is_limited_description">您的裝置製造商限制了 adb 的權限，使用 Shizuku 的應用程式無法正常工作。\n\n通常，在「開發人員選項」中調整一些選項即可解除此限制。請閱讀幫助來瞭解具體的操作方式。\n\n您可能需要重新啟動 Shizuku 以使操作生效。</string>
 </resources>
