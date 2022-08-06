@@ -67,7 +67,7 @@
     <string name="app_management_item_summary_requires_root">* nécessite que Shizuku fonctionne avec le root</string>
     <string name="app_management_dialog_adb_is_limited_message">Il est fortement possible que le fabricant de votre appareil limite la permission de adb.&lt;p&gt;Il pourrait avoir une solution pour votre système dans &lt;b&gt;&lt;a href=\"%1$s\"&gt;ce document&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">La permission de adb est limitée</string>
-    <string name="home_learn_more_description">Apprenez comment développer avec Shizuku ou trouvez des applis utilisant Shizuku</string>
+    <string name="home_learn_more_description">Apprenez comment développer avec Shizuku</string>
     <string name="home_learn_more_title">Apprendre Shizuku</string>
     <string name="home_app_management_view_authorized_apps">Appuyez pour gérer les applis autorisées</string>
     <plurals name="home_app_management_authorized_apps_count">
@@ -126,4 +126,11 @@
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Certains systèmes (tels que MIUI) interdisent aux applis d\'accéder au réseau quand elles ne sont pas visibles, même si l\'appli utilise un service de premier plan comme standard. Merci de désactiver l\'optimisation de la batterie pour Shizuku sur de tels systèmes.</string>
     <string name="settings_use_system_color">Utiliser la couleur du thème système</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Veuillez noter que la partie gauche de l\'option \"Débogage sans fil\" est clickable, la tapper va ouvrir une nouvelle page. Seulement activer le commutateur à droite est incorrect.</string>
+    <string name="home_adb_is_limited_description">Le fabricant de votre appareil a restreint les permissions adb et les applis utilisant Shizuku ne fonctionneront pas bien.
+\n
+\nGénéralement, cette limitation peut être levée en ajustant certaines options dans les \"Options développeur\". Merci de lire l\'aide pour des détails sur la façon de procéder.
+\n
+\nVous devrez sûrement redémarrer Shizuku pour que l\'opération prenne effet.</string>
+    <string name="home_adb_is_limited_title">Une étape supplémentaire est nécessaire</string>
+    <string name="home_app_management_empty">Les applications qui ont demandé ou déclaré l\'accès à Shizuku apparaîtront ici.</string>
 </resources>
