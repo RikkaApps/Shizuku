@@ -211,11 +211,10 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         reply.putInt(ATTACH_REPLY_SERVER_UID, OsUtils.getUid());
         reply.putInt(ATTACH_REPLY_SERVER_VERSION, ShizukuApiConstants.SERVER_VERSION);
         reply.putString(ATTACH_REPLY_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
+        reply.putInt(ATTACH_REPLY_SERVER_PATCH_VERSION, ServerConstants.PATCH_VERSION);
         if (!isManager) {
             reply.putBoolean(ATTACH_REPLY_PERMISSION_GRANTED, clientRecord.allowed);
             reply.putBoolean(ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
-        } else {
-            reply.putInt(ATTACH_REPLY_SERVER_PATCH_VERSION, ServerConstants.PATCH_VERSION);
         }
         try {
             application.bindApplication(reply);
