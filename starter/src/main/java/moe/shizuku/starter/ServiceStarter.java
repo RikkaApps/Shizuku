@@ -49,6 +49,11 @@ public class ServiceStarter {
             "--nice-name='%s' moe.shizuku.starter.ServiceStarter " +
             "--token='%s' --package='%s' --class='%s' --uid=%d%s)&";
 
+    // DeathRecipient will automatically be unlinked when all references to the
+    // binder is dropped, so we hold the reference here.
+    @SuppressWarnings("FieldCanBeLocal")
+    private static IBinder shizukuBinder;
+
     public static String commandForUserService(String appProcess, String managerApkPath, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
         String processName = String.format("%s:%s", packageName, processNameSuffix);
         return String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
@@ -141,7 +146,8 @@ public class ServiceStarter {
                 BinderContainer container = reply.getParcelable(EXTRA_BINDER);
 
                 if (container != null && container.binder != null && container.binder.pingBinder()) {
-                    container.binder.linkToDeath(() -> {
+                    shizukuBinder = container.binder;
+                    shizukuBinder.linkToDeath(() -> {
                         Log.i(TAG, "exiting...");
                         System.exit(0);
                     }, 0);
