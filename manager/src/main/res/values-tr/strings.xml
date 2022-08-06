@@ -122,4 +122,5 @@
     <string name="notification_adb_pairing_failed_title">Eşleştirme başarısız</string>
     <string name="notification_adb_pairing_retry">Yeniden dene</string>
     <string name="permission_description">Uygulamanın Shizuku\'yu kullanmasına izin verin.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Aksi takdirde, bildirimden eşleştirme kodunu giremeyebilirsiniz.</string>
 </resources>
