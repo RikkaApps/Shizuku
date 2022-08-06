@@ -114,8 +114,8 @@ class AdbPairDialogFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val context = requireContext()
-        val inMultiScreenOrDisplay = requireActivity().isInMultiWindowMode
-                || requireActivity().window?.decorView?.display?.displayId ?: -1 > 0
+        val inMultiScreenOrDisplay = (requireActivity().isInMultiWindowMode
+                || (requireActivity().window?.decorView?.display?.displayId ?: -1) > 0)
 
         binding.text1.isVisible = inMultiScreenOrDisplay
         binding.text2.isVisible = !inMultiScreenOrDisplay
