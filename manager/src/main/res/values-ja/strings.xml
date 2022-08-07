@@ -105,8 +105,7 @@
     <string name="home_wireless_adb_view_guide_button">ガイド</string>
     <string name="notification_adb_pairing_working_title">ペアリング中</string>
     <string name="notification_adb_pairing_succeed_title">ペアリングしました</string>
-    <string name="adb_pairing_tutorial_content_steps">「開発者向けオプション」&gt;「ワイヤレスデバック」を選択し、ペア設定コードによるデバイスのペア設定をタップすると、6桁の
-\nコードが表示されます。</string>
+    <string name="adb_pairing_tutorial_content_steps">「開発者向けオプション」&gt;「ワイヤレスデバック」を選択し、ペア設定コードによるデバイスのペア設定をタップすると、6桁のコードが表示されます。</string>
     <string name="adb_pairing_tutorial_content_notification">Shizukuからの通知でペアリングが完了します。</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">通知にコードを入力してペアリングします。</string>
     <string name="adb_pairing_tutorial_content_miui">MIUIユーザーはシステムの設定から「通知」→「通知のシェード」から通知スタイルを「Android」に変更する必要がある場合があります。</string>
@@ -128,4 +127,9 @@
     <string name="adb_pairing_tutorial_content_network">Shizukuはローカルネットワークにアクセスする必要があります。ネットワーク権限で管理されています。</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">なお、「ワイヤレスデバッグ」オプションの左側はクリック可能で、タップすると新しいページが表示されます。右側のスイッチだけをオンにするのは誤りです。</string>
     <string name="adb_pairing_tutorial_content_miui_2">場合によっては、通知からペアリングコードを入力できないことがあります。</string>
+    <string name="home_adb_is_limited_description">お使いの端末製造元は adb 権限を制限しており､ Shizuku を使用するアプリは正しく動作しません。
+\n
+\n通常､ この制限は「開発者向けオプション」のいくつかの項目を調整することで解除できます。これを行う方法の詳細については､ ヘルプをお読みください。
+\n
+\n操作を有効にするために､ Shizukuを再起動する必要がある場合があります。</string>
 </resources>
