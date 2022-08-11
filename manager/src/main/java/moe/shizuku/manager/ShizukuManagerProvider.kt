@@ -6,6 +6,9 @@ import moe.shizuku.manager.utils.Logger.LOGGER
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_TOKEN
 import rikka.shizuku.ShizukuProvider
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 class ShizukuManagerProvider : ShizukuProvider() {
 
@@ -29,13 +32,32 @@ class ShizukuManagerProvider : ShizukuProvider() {
                 val token = extras.getString(USER_SERVICE_ARG_TOKEN) ?: return null
                 val binder = extras.getParcelable<BinderContainer>(EXTRA_BINDER)?.binder ?: return null
 
-                Shizuku.attachUserService(binder, Bundle().apply {
-                    putString(USER_SERVICE_ARG_TOKEN, token)
-                })
-
+                val countDownLatch = CountDownLatch(1)
                 val reply = Bundle()
-                reply.putParcelable(EXTRA_BINDER, BinderContainer(Shizuku.getBinder()))
-                reply
+
+                val listener = object : Shizuku.OnBinderReceivedListener {
+
+                    override fun onBinderReceived() {
+                        Shizuku.attachUserService(binder, Bundle().apply {
+                            putString(USER_SERVICE_ARG_TOKEN, token)
+                        })
+                        reply.putParcelable(EXTRA_BINDER, BinderContainer(Shizuku.getBinder()))
+
+                        Shizuku.removeBinderReceivedListener(this)
+
+                        countDownLatch.countDown()
+                    }
+                }
+
+                Shizuku.addBinderReceivedListenerSticky(listener)
+
+                return try {
+                    countDownLatch.await(5, TimeUnit.SECONDS)
+                    reply
+                } catch (e: TimeoutException) {
+                    LOGGER.e(e, "Binder not received in 5s")
+                    null
+                }
             } catch (e: Throwable) {
                 LOGGER.e(e, "sendUserService")
                 null
