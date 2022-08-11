@@ -36,7 +36,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         val status = homeModel.serviceStatus.value?.data ?: return
         val grantedCount = appsModel.grantedCount.value?.data ?: 0
         val adbPermission = status.permission
-        val running = Shizuku.pingBinder()
+        val running = status.isRunning
         val isPrimaryUser = UserHandleCompat.myUserId() == 0
 
         clear()
