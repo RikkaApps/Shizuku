@@ -2,22 +2,22 @@
 <resources>
     <string name="translation_contributors">gidano | sympda.blog.hu</string>
     <string name="home_root_button_start">Indítás</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku megnyitása</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; modern Shizuku támogatással rendelkezik, de ez örökölt Shizukut kéri. Ennek oka lehet, hogy a Shizuku nem fut, kérjük ellenőrizze a Shizuku alkalmazást.&lt;p&gt;Az örökölt Shizuku 2019 márciusa óta elavult.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">A Shizuku megnyitása</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; modern Shizuku támogatással rendelkezik, de ez örökölt Shizukut kér. Ennek oka lehet, hogy a Shizuku nem fut, kérjük ellenőrizze a Shizuku alkalmazást.&lt;p&gt;Az örökölt Shizuku 2019 márciusa óta elavult.</string>
     <string name="dialog_requesting_legacy_title">%1$s az örökölt Shizukut kéri</string>
-    <string name="dialog_legacy_not_support_message">Az örökölt Shizuku 2019 márciusa óta elavult. Ezenkívül a régi Shizuku nem működik újabb Android rendszereken.&lt;p&gt;Kérje fel &lt;b&gt;%1$s&lt;/b&gt; fejlesztőjét a frissítésre.</string>
+    <string name="dialog_legacy_not_support_message">Az örökölt Shizuku 2019 márciusa óta elavult. Ezenkívül a régi Shizuku nem működik újabb Android rendszereken.&lt;p&gt;Kérje fel a &lt;b&gt;%1$s&lt;/b&gt; fejlesztőjét a frissítésre.</string>
     <string name="dialog_legacy_not_support_title">%1$s nem támogatja a modern Shizukut</string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> vágólapra másolva.</string>
     <string name="toast_copied_to_clipboard">%s
 \nvágólapra másolva.</string>
     <string name="dialog_cannot_open_browser_title">Nem lehet elindítani a böngészőt</string>
-    <string name="start_with_root_failed">Nem lehet elindítani a szolgáltatást, mert a root jogosultság nincs megadva, vagy ez az eszköz nem rootolt.</string>
+    <string name="start_with_root_failed">Nem lehet elindítani a szolgáltatást, mert a root jogosultság nincs megadva vagy ez az eszköz nem rootolt.</string>
     <string name="starter">Indító</string>
     <string name="grant_dialog_button_deny">Megtagad</string>
     <string name="grant_dialog_button_allow_always">Mindig engedje</string>
     <string name="permission_warning_template">Megengedi <b>%1$s</b> - %2$s\?</string>
     <string name="permission_description">Engedélyezze az alkalmazás számára a Shizuku használatát.</string>
-    <string name="permission_label">hozzáférés Shizuku-hoz</string>
+    <string name="permission_label">hozzáférés a Shizuku-hoz</string>
     <string name="notification_working">Dolgozom…</string>
     <string name="notification_service_start_no_root">Nem sikerült root jogosultságot kérni.</string>
     <string name="notification_service_start_failed">A Shizuku szolgáltatás indítása nem sikerült.</string>
@@ -45,7 +45,7 @@
     <string name="terminal_export_files">Fájlok exportálása</string>
     <string name="terminal_tutorial_1_description">Ha a kiválasztott mappában vannak azonos nevű fájlok, akkor azok törlődnek.
 \n
-\nAz exportálási funkció az SAF-ot (Storage Access Framework) használja. Jelentések szerint a MIUI megtöri az SAF funkcióit. Ha MIUI-t használ előfordulhat, hogy ki kell vonnia a fájlt a Shizuku apk-ból, vagy le kell töltenie a GitHub-ról.</string>
+\nAz exportálási funkció a SAF-ot (Storage Access Framework) használja. Jelentések szerint a MIUI megtöri az SAF funkcióit. Ha MIUI-t használ előfordulhat, hogy ki kell vonnia a fájlt a Shizuku apk-ból, vagy le kell töltenie a GitHub-ról.</string>
     <string name="terminal_tutorial_1">Először exportálja a fájlokat bárhová, ahová csak akarja. Két fájlt talál, %1$s és %2$s.</string>
     <string name="home_terminal_description">Futtassa a parancsokat a Shizukun keresztül a használt terminál appokban</string>
     <string name="home_terminal_title">Használja a Shizukut a terminál appokban</string>
@@ -83,7 +83,7 @@
     <string name="adb_pairing">Párosítás</string>
     <string name="dialog_adb_invalid_port">A Port 1 és 65535 közötti egész szám.</string>
     <string name="dialog_adb_port">Port</string>
-    <string name="dialog_adb_discovery_message">Please enable \"Vezeték nélküli hibakeresés\" a \"Fejlesztői beállításoknál\". A \"Vezeték nélküli hibakeresés\" automatikusan kikapcsol, ha a hálózat megváltozik.
+    <string name="dialog_adb_discovery_message">Engedélyezze a \"Vezeték nélküli hibakeresés\"t a \"Fejlesztői beállításoknál\". A \"Vezeték nélküli hibakeresés\" automatikusan kikapcsol, ha a hálózat megváltozik.
 \n
 \nNe feledje, ne tiltsa le ezeket \"Fejlesztői beállítások\" vagy \"USB hibakeresés\", mert a Shizuku le fog állni.</string>
     <string name="dialog_adb_discovery">Vezeték nélküli hibakeresési szolgáltatás keresése</string>
