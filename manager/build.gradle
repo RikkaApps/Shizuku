@@ -173,7 +173,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    implementation 'com.google.android.material:material:1.7.0-alpha03'
+    implementation 'com.google.android.material:material:1.7.0-beta01'
 
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
 
