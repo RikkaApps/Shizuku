@@ -54,6 +54,25 @@ allprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin("com.android.library") ||
+                plugins.hasPlugin("com.android.application")) {
+            android {
+                compileSdkVersion(33)
+                defaultConfig {
+                    minSdkVersion(23)
+                    targetSdkVersion(32)
+                }
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_1_8
+                    targetCompatibility = JavaVersion.VERSION_1_8
+                }
+            }
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

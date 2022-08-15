@@ -4,17 +4,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion rootProject.ext.targetSdkVersion
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-    }
     buildFeatures {
         buildConfig = false
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
