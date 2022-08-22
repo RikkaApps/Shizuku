@@ -171,7 +171,7 @@ dependencies {
 
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
 
-    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.5.0'
+    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.5.0.1'
     implementation 'dev.rikka.rikkax.compatibility:compatibility:2.0.0'
     implementation 'dev.rikka.rikkax.core:core-ktx:1.4.1'
     implementation 'dev.rikka.rikkax.material:material:2.5.1'
