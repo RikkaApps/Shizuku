@@ -184,7 +184,7 @@ dependencies {
     implementation 'dev.rikka.rikkax.widget:borderview:1.1.0'
     implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.3'
     implementation 'dev.rikka.rikkax.lifecycle:lifecycle-resource-livedata:1.0.1'
-    implementation 'dev.rikka.rikkax.lifecycle:lifecycle-shared-viewmodel:1.0.0'
+    implementation 'dev.rikka.rikkax.lifecycle:lifecycle-shared-viewmodel:1.0.1'
     implementation 'dev.rikka.rikkax.lifecycle:lifecycle-viewmodel-lazy:2.0.0'
 
     implementation 'io.github.vvb2060.ndk:boringssl:2.1'
