@@ -15,13 +15,8 @@ public class IContentProviderUtils {
 
     public static Bundle callCompat(@NonNull IContentProvider provider, @Nullable String callingPkg, @Nullable String authority, @Nullable String method, @Nullable String arg, @Nullable Bundle extras) throws RemoteException {
         Bundle result;
-        if (Build.VERSION.SDK_INT >= 31) {
-            try {
-                result = provider.call((new AttributionSource.Builder(OsUtils.getUid())).setPackageName(callingPkg).build(), authority, method, arg, extras);
-            } catch (Throwable tr) {
-                tr.printStackTrace();
-                result = provider.call(callingPkg, (String) null, authority, method, arg, extras);
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            result = provider.call((new AttributionSource.Builder(OsUtils.getUid())).setPackageName(callingPkg).build(), authority, method, arg, extras);
         } else if (Build.VERSION.SDK_INT >= 30) {
             result = provider.call(callingPkg, (String) null, authority, method, arg, extras);
         } else if (Build.VERSION.SDK_INT >= 29) {
