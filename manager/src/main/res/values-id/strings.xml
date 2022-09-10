@@ -10,7 +10,7 @@
 \nSetelah penyambungan dimulai, Anda akan diminta untuk memasukkan kode penghubung.</string>
     <string name="adb_pairing_requires_multi_window_reason">Sistem mengharuskan dialog penyambungan untuk selalu terlihat, hal ini hanya bisa diakali dengan mode layar pisah (split-screen) untuk membuat Shizuku dan dialog sistem muncul secara bersamaan.</string>
     <string name="home_root_description">Sebagai tambahan, Shizuku bisa dimulai secara otomatis saat perangkat dimulai. Kalau hal ini tak bisa dilakukan, harap cek apakah sistem Anda atau aplikasi pihak-ketiga telah membatasi Shizuku.&lt;br&gt;Lebih lanjut, cek %s.</string>
-    <string name="home_learn_more_description">Pelajari cara mengembangkan aplikasi dengan akses Shizuku atau cari aplikasi yang menggunakan Shizuku</string>
+    <string name="home_learn_more_description">Pelajari cara mengembangkan dengan Shizuku</string>
     <string name="terminal_tutorial_1">Pertama, Ekspor file ke tempat mana pun yang Anda mau. Anda akan mendapatkan dua file, yaitu %1$s dan %2$s.</string>
     <string name="terminal_tutorial_1_description">Jika ada file bernama sama pada folder tersebut, maka file tersebut akan ditimpa.
 \n
@@ -22,7 +22,7 @@
     <string name="start_with_root_failed">Layanan tidak bisa dimulai karena aplikasi tidak mendapat izin root atau perangkat tidak memiliki akses root.</string>
     <string name="translation_contributors">Ian</string>
     <string name="home_status_service_is_running">%1$s aktif</string>
-    <string name="home_status_service_not_running">%1$s tidak aktif</string>
+    <string name="home_status_service_not_running">%1$s tidak berjalan</string>
     <string name="home_status_service_version">Versi %2$s, %1$s</string>
     <string name="home_adb_title">Mulai dengan menghubungkan ke komputer</string>
     <string name="home_adb_button_view_help">Baca dokumentasi</string>
@@ -121,8 +121,15 @@
     <string name="home_wireless_adb_view_guide_button">Panduan langkah demi langkah</string>
     <string name="adb_pairing_tutorial_content_finish">Kembali ke Shizuku dan mulai Shizuku.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Harap dicatat, bagian kiri dari opsi \"Debug nirkabel \" dapat diklik, mengetuknya akan membuka halaman baru. Hanya menyalakan sakelar di sebelah kanan yang salah.</string>
-    <string name="adb_pairing_tutorial_content_miui_2">Jika tidak, Anda mungkin tidak dapat memasukkan kode penghubung dari notifikasi.</string>
-    <string name="adb_pairing_tutorial_content_network">Shizuku perlu mengakses jaringan lokal. Itu dikendalikan oleh izin jaringan.</string>
-    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Beberapa sistem (seperti MIUI) melarang aplikasi mengakses jaringan saat tidak terlihat, meskipun aplikasi menggunakan layanan latar depan sebagai standar. Harap nonaktifkan fitur pengoptimalan baterai untuk Shizuku pada sistem tersebut.</string>
-    <string name="settings_use_system_color">Gunakan warna tema sistem</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Jika tidak, Anda mungkin tidak dapat memasukan kode penyandingan dari notifikasi.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku membutuhkan akses ke jaringan lokal. Itu dikontrol oleh izin jaringan.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Beberapa sistem (seperti MIUI) melarang aplikasi untuk mengakses jaringan ketika tidak terlihat, bahkan jika aplikasi berjalan dilatar depan. Tolong matikan fitur optimisasi baterai untuk Shizuku pada sistem tersebut.</string>
+    <string name="settings_use_system_color">Gunakan tema warna sistem</string>
+    <string name="home_adb_is_limited_description">Produsen perangkat Anda telah membatasi izin adb dan aplikasi yang menggunakan Shizuku tidak akan berfungsi dengan baik.
+\n
+\nBiasanya, batasan ini dapat dihilangkan dengan menyesuaikan beberapa opsi di \"Opsi pengembang\". Silakan baca bantuan untuk detail tentang cara melakukan ini.
+\n
+\nAnda mungkin perlu memulai ulang Shizuku agar operasi dapat diterapkan.</string>
+    <string name="home_adb_is_limited_title">Anda perlu mengambil langkah ekstra</string>
+    <string name="home_app_management_empty">Aplikasi yang telah meminta atau mendeklarasikan Shizuku akan ditampilkan di sini.</string>
 </resources>
