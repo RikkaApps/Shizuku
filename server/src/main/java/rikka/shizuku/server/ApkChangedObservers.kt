@@ -24,13 +24,21 @@ object ApkChangedObservers {
     fun start(apkPath: String, listener: ApkChangedListener): ApkChangedObserver {
         return cache.getOrPut(apkPath) {
             if (File(apkPath).parent == "/data/app") {
-                ApkChangedObserver(apkPath, FileObserver.MODIFY or FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF or FileObserver.MOVE_SELF)
+                ApkChangedObserver(
+                    apkPath,
+                    FileObserver.MODIFY or FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF or FileObserver.MOVE_SELF,
+                    apkPath
+                )
             } else {
-                ApkChangedObserver(findRoot(apkPath), FileObserver.CREATE or FileObserver.CLOSE_WRITE or FileObserver.DELETE or FileObserver.DELETE_SELF or FileObserver.MOVED_TO or FileObserver.MOVED_FROM)
+                ApkChangedObserver(
+                    findRoot(apkPath),
+                    FileObserver.CREATE or FileObserver.CLOSE_WRITE or FileObserver.DELETE or FileObserver.DELETE_SELF or FileObserver.MOVED_TO or FileObserver.MOVED_FROM,
+                    apkPath
+                )
+            }.apply {
+                addListener(listener)
+                startWatching()
             }
-        }.apply {
-            addListener(listener)
-            startWatching()
         }
     }
 
@@ -45,7 +53,7 @@ interface ApkChangedListener {
     fun onApkChanged()
 }
 
-class ApkChangedObserver internal constructor(private val path: String, mask: Int)
+class ApkChangedObserver internal constructor(private val path: String, mask: Int, private val apkPath: String)
     : FileObserver(path, mask) {
 
     private val listeners = mutableSetOf<ApkChangedListener>()
@@ -56,6 +64,13 @@ class ApkChangedObserver internal constructor(private val path: String, mask: In
 
     override fun onEvent(event: Int, path: String?) {
         Log.d("ShizukuServer", "onEvent: $event $path")
+
+        if (this.path != path && this.apkPath != path) {
+            // Ignore the event if path is not the folder itself or the apk
+            // For example, Android 9 has "base.apk.arm64.flock" in /data/app/../.. folder
+            Log.d("ShizukuServer", "Ignore event: $event $path")
+            return
+        }
         if ((event and 0x00008000) != 0) return
         stopWatching()
         listeners.forEach { it.onApkChanged() }
