@@ -12,7 +12,7 @@
     <string name="start_with_root_failed">ไม่สามารถเริ่มบริการเนื่องจากไม่ได้รับการอนุญาตรูทหรืออุปกรณ์ไม่ได้ถูกรูท</string>
     <string name="starter">ตัวเริ่ม</string>
     <string name="grant_dialog_button_deny">ปฏิเสธ</string>
-    <string name="grant_dialog_button_allow_always">อนุญาตตลอดเวลา</string>
+    <string name="grant_dialog_button_allow_always">อนุญาตเสมอ</string>
     <string name="permission_warning_template">อนุญาต <b>%1$s</b> ให้ %2$s ไหม\?</string>
     <string name="permission_description">อนุญาตให้แอปใช้งาน Shizuku</string>
     <string name="permission_label">เข้าถึง Shizuku</string>
@@ -62,7 +62,7 @@
     <string name="app_management_item_summary_requires_root">* จำเป็นต้องให้ Shizuku ทำงานผ่านรูท</string>
     <string name="app_management_dialog_adb_is_limited_message">เป็นไปได้สูงที่ผู้ผลิตอุปกรณ์ของคุณจะจำกัดการอนุญาตของ adb &lt;p&gt;อาจมีวิธีแก้ไขสำหรับอุปกรณ์ของคุณใน&lt;b&gt;&lt;a href=\"%1$s\"&gt;เอกสารนี้&lt;/a&gt;&lt;/b&gt;</string>
     <string name="app_management_dialog_adb_is_limited_title">การอนุญาตของ adb นั้นจำกัด</string>
-    <string name="home_learn_more_description">เรียนรู้การพัฒนาเพื่อใช้ร่วมกันกับ Shizuku หรือรับแอปที่ใช้ Shizuku</string>
+    <string name="home_learn_more_description">เรียนรู้การพัฒนาเพื่อใช้ร่วมกันกับ Shizuku</string>
     <string name="home_learn_more_title">เรียนรู้ Shizuku</string>
     <string name="home_app_management_view_authorized_apps">แตะเพื่อจัดการแอปที่ได้รับอนุญาต</string>
     <plurals name="home_app_management_authorized_apps_count">
@@ -71,8 +71,8 @@
     <string name="home_app_management_title">การจัดการแอปพลิเคชัน</string>
     <string name="home_root_button_restart">เริ่มใหม่</string>
     <string name="home_root_button_start">เริ่ม</string>
-    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s (โมดูล Riru) สำหรับผู้ใช้งานรูท สุดท้ายมันก็จะมาแทนที่ Shizuku หมายเหตุ แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
-    <string name="home_root_description">ในเพิ่มเติม Shizuku สามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizuku&lt;br&gt;หรืออาจเรียกได้ว่า %s</string>
+    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s (เป็นโมดูล Riru) สำหรับผู้ใช้งานรูท จะเป็นตัวที่ใช้แทนที่ Shizuku แต่โปรดทราบว่า แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
+    <string name="home_root_description">นอกจากนี้ Shizuku ยังสามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizuku&lt;br&gt;หรือดูตาม %s</string>
     <string name="home_root_title">เริ่ม (สำหรับอุปกรณ์ที่รูทแล้ว)</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">บางระบบ (เช่น MIUI) จะไม่อนุญาตให้แอปเข้าถึงเครือข่ายเมื่อไม่แสดง แม้แอปจะใช้บริการเบื้องหน้าตามปกติ โปรดเปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ของ Shizuku บนระบบที่เป็นเช่นนั้น</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku จำเป็นต้องเข้าถึงเครือข่ายท้องถิ่น ซึ่งกำลังควบคุมอยู่โดยการอนุญาตเครือข่าย</string>
@@ -122,7 +122,14 @@
     <string name="home_status_service_is_running">%1$s กำลังทำงาน</string>
     <string name="home_adb_description">สำหรับอุปกรณ์ที่ไม่ได้ติดตั้งรูท จะต้องใช้ adb เพื่อเริ่ม Shizuku (จำเป็นต้องเชื่อมต่อกับคอมพิวเตอร์) กระบวนการนี้จะต้องทำทุกครั้งที่อุปกรณ์ปิดและเปิดใหม่ กรุณา<b><a href="%1$s">อ่านการช่วยเหลือ</a></b></string>
     <string name="home_status_service_version_update">เวอร์ชัน %2$s, %1$s&lt;br&gt;เริ่มใหม่อีกครั้งเพื่ออัปเดตเป็นเวอร์ชัน %3$s</string>
-    <string name="home_status_service_version">เวอร์ชัน %2$s, %1$s</string>
-    <string name="home_status_service_not_running">%1$s ไม่ทำงาน</string>
+    <string name="home_status_service_version">เวอร์ชัน %2$s ผ่าน %1$s</string>
+    <string name="home_status_service_not_running">%1$s ไม่ได้กำลังทำงาน</string>
     <string name="translation_contributors">altinat</string>
+    <string name="home_adb_is_limited_description">ผู้ผลิตอุปกรณ์ของคุณ จำกัดการอนุญาต adb ทำให้แอปที่ใช้ Shizuku จะไม่ทำงานอย่างถูกต้อง
+\n
+\nโดยปกติ ข้อจำกัดนี้สามารถจัดการได้โดยการปรับตัวเลือกใน \"ตัวเลือกสำหรับนักพัฒนาซอฟต์แวร์\" โปรดอ่าน การช่วยเหลือสำหรับรายละเอียดวิธีการแก้ไข
+\n
+\nคุณอาจต้องรีสตาร์ท Shizuku เพื่อให้การดำเนินการมีผล</string>
+    <string name="home_adb_is_limited_title">คุณต้องทำขั้นตอนเพิ่มเติม</string>
+    <string name="home_app_management_empty">แอปที่ขอร้องหรือขอใช้ Shizuku จะแสดงที่นี่</string>
 </resources>
