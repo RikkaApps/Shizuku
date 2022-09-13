@@ -37,11 +37,13 @@
 
     <application
         android:name=".ShizukuApplication"
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:autoRevokePermissions="allowed"
         android:banner="@drawable/ic_launcher"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:directBootAware="true"
         android:extractNativeLibs="false"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"
