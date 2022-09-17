@@ -132,6 +132,10 @@ public class ServiceStarter {
                 Log.e(TAG, String.format("provider is null %s %d", name, userId));
                 return false;
             }
+            if (!provider.asBinder().pingBinder()) {
+                Log.e(TAG, String.format("provider is dead %s %d", name, userId));
+                return false;
+            }
 
             Bundle extra = new Bundle();
             extra.putParcelable(EXTRA_BINDER, new BinderContainer(binder));
