@@ -19,10 +19,17 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:lineSpacingExtra="2sp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyMedium"
             android:text="@string/dialog_adb_discovery_message" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyMedium"
+            android:layout_marginTop="16sp"
+            android:textStyle="bold"
+            android:text="@string/dialog_adb_discovery_message_toggle_wireless_debugging" />
 
     </LinearLayout>
 

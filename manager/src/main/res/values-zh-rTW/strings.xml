@@ -75,6 +75,7 @@
     <string name="dialog_adb_discovery_message">請在「開發人員選項」中啟用「無線偵錯」功能。在切換網路時，「無線偵錯」會自動停用。
 \n
 \n注意：請不要停用「開發人員選項」或「USB 偵錯」，否則 Shizuku 會被停止。</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">如果一直搜尋，請嘗試禁用並啟用「無線偵錯」。</string>
     <string name="dialog_wireless_adb_not_enabled">無線偵錯未啟用。
 \n請注意，在 Android 11 之前，要啟用無線偵錯必須先與電腦連線。</string>
     <string name="dialog_adb_pairing_message">請跟隨下面的步驟開始配對：「開發人員選項」 - 「無線偵錯」- 「使用配對碼配對裝置」。
