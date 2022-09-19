@@ -88,7 +88,7 @@
     <string name="grant_dialog_button_allow_always">Разрешить всегда</string>
     <string name="grant_dialog_button_deny">Запретить</string>
     <string name="permission_warning_template">Разрешить <b>%1$s</b> следующее: %2$s\?</string>
-    <string name="home_root_description_sui">Если вы пользуетесь Magisk, можете попробовать %1$s (модуль Riru). Для пользователей с root правами он в конечном итоге заменит Shizuku. Обратите внимание, что в уже вышедшие приложения должны внести небольшие изменения, чтобы они заработали с %2$s.</string>
+    <string name="home_root_description_sui">Если вы пользуетесь Magisk, можете попробовать %1$s. Для пользователей с root правами он в конечном итоге заменит Shizuku. Обратите внимание, что в уже вышедшие приложения должны внести небольшие изменения, чтобы они заработали с %2$s.</string>
     <string name="permission_description">Разрешить приложению использовать Shizuku.</string>
     <string name="terminal_tutorial_3_description">Небольшой совет: выдайте %1$s права на выполнение и пропишите в %2$s, чтобы обращаться к %1$s напрямую.</string>
     <string name="terminal_tutorial_3">И последнее: переместите файлы туда, куда сможет обращаться ваше приложение-терминал, и отныне станет возможным запускать команды через Shizuku посредством %1$s.</string>

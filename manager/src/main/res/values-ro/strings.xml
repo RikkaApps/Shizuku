@@ -34,7 +34,7 @@
     <string name="adb_pairing_tutorial_content_network">Shizuku trebuie să acceseze rețeaua locală. Este controlat de permisiunea de rețea.</string>
     <string name="home_root_title">Pornire (pentru dispozitive root-ate)</string>
     <string name="home_root_description">În plus, Shizuku poate fi pornit automat la pornire. Dacă nu, verifică dacă sistemul sau instrumente terțe au restricționat Shizuku.&lt;br&gt;Poți consulta %s.</string>
-    <string name="home_root_description_sui">Dacă utilizezi Magisk, poți încerca %1$s (modul Riru). Pentru utilizatorii root, acesta va înlocui în cele din urmă Shizuku. Reține că aplicațiile existente trebuie să se modifice puțin pentru a fi utilizate %2$s.</string>
+    <string name="home_root_description_sui">Dacă utilizezi Magisk, poți încerca %1$s. Pentru utilizatorii root, acesta va înlocui în cele din urmă Shizuku. Reține că aplicațiile existente trebuie să se modifice puțin pentru a fi utilizate %2$s.</string>
     <string name="home_root_button_start">Pornire</string>
     <string name="home_root_button_restart">Repornire</string>
     <string name="home_app_management_title">Gestionare aplicație</string>

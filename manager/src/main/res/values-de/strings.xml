@@ -38,7 +38,7 @@
     <string name="notification_service_start_failed">Shizuku-Dienst starten fehlgeschlagen.</string>
     <string name="notification_channel_service_status">Status des Dienststarts</string>
     <string name="app_management_dialog_adb_is_limited_message">Es ist sehr wahrscheinlich, dass Ihr Gerätehersteller die Berechtigung von adb einschränkt. &lt;p&gt;Vielleicht finden Sie in &lt;b&gt;&lt;a href=\"%1$s\"&gt;diesem Dokument&lt;/a&gt;&lt;/b&gt; eine Lösung für Ihr System.</string>
-    <string name="home_root_description_sui">Wenn Sie Magisk verwenden, können Sie %1$s (ein Riru-Modul) ausprobieren. Für Root-Nutzer wird es irgendwann Shizuku ersetzen. Beachten Sie, dass bestehende Apps ein wenig geändert werden müssen, um %2$s zu verwenden.</string>
+    <string name="home_root_description_sui">Wenn Sie Magisk verwenden, können Sie %1$s ausprobieren. Für Root-Nutzer wird es irgendwann Shizuku ersetzen. Beachten Sie, dass bestehende Apps ein wenig geändert werden müssen, um %2$s zu verwenden.</string>
     <string name="adb_pairing">Kopplung</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku öffnen</string>

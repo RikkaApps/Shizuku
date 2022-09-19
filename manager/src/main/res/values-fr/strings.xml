@@ -77,7 +77,7 @@
     <string name="home_app_management_title">Gestion d\'application</string>
     <string name="home_root_button_restart">Redémarrer</string>
     <string name="home_root_button_start">Démarrer</string>
-    <string name="home_root_description_sui">Si vous utilisez Magisk, vous pouvez essayer %1$s (un module Riru). Pour les utilisateurs root, il pourrait éventuellement remplacer Shizuku. Note, les applications existantes nécessiteraient de changer un petit peu pour utiliser %2$s.</string>
+    <string name="home_root_description_sui">Si vous utilisez Magisk, vous pouvez essayer %1$s. Pour les utilisateurs root, il pourrait éventuellement remplacer Shizuku. Note, les applications existantes nécessiteraient de changer un petit peu pour utiliser %2$s.</string>
     <string name="home_root_description">De plus, Shizuku peut être démarré automatiquement au démarrage. Si non, merci de vérifier si votre système ou un outil tiers a restreint Shizuku. &lt;br&gt;Vous pouvez vous référer à %s.</string>
     <string name="home_root_title">Démarrer (pour les appareils rootés)</string>
     <string name="adb_pairing_tutorial_content_finish">Retournez dans Shizuku et lancez le.</string>

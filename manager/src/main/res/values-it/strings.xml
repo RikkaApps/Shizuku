@@ -51,7 +51,7 @@
     <string name="adb_pairing_tutorial_content_miui_2">In caso contrario, potresti non essere in grado di inserire il codice di accoppiamento dalla notifica.</string>
     <string name="home_root_description">Inoltre, Shizuku può essere avviato automaticamente all\'avvio. In caso contrario, controlla se il tuo sistema o l\'opzione app esterne hanno limitato Shizuku.&lt;br&gt;Puoi fare riferimento a %s.</string>
     <string name="home_root_button_start">Avvia</string>
-    <string name="home_root_description_sui">Se stai usando Magisk, puoi provare %1$s (un modulo Riru). Per gli utenti root, alla fine sostituirà Shizuku. Nota, le applicazioni esistenti devono essere leggermente modificate per poter usare %2$s.</string>
+    <string name="home_root_description_sui">Se stai usando Magisk, puoi provare %1$s. Per gli utenti root, alla fine sostituirà Shizuku. Nota, le applicazioni esistenti devono essere leggermente modificate per poter usare %2$s.</string>
     <string name="home_root_button_restart">Riavvia</string>
     <string name="home_app_management_title">Gestione dell\'applicazione</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku ha bisogno di accedere alla rete locale. È controllato dal permesso di rete.</string>

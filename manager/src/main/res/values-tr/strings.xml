@@ -102,7 +102,7 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Eşleştirmeyi tamamlamak için kodu bildirime girin.</string>
     <string name="rish_description">%1$s ile herhangi bir terminal uygulamasında Shizuku\'nun shell run\'larına bağlanabilir ve bunlarla etkileşim kurabilirsiniz. &lt;p&gt;%1$s ayrıntılı kullanımı hakkında, belgeyi görüntülemek için dokunun.</string>
     <string name="adb_pairing_tutorial_title">Shizuku\'yu cihazınızla eşleştirin</string>
-    <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s\'yi (bir Riru modülü) deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku\'nun yerini alacak. %2$s\'yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
+    <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s\'yi deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku\'nun yerini alacak. %2$s\'yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
     <string name="notification_settings">Bildirim seçenekleri</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Eşleştirme işlemi, Shizuku\'dan gelen bir bildirimle etkileşim kurmanızı gerektirir. Lütfen Shizuku\'nun bildirim göndermesine izin verin.</string>
     <string name="terminal_tutorial_2">Ardından, %1$s\'i açıp düzenlemek için herhangi bir metin düzenleyiciyi kullanın.</string>

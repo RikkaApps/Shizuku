@@ -28,7 +28,7 @@
         <item quantity="other">Đã ủy quyền %d ứng dụng</item>
     </plurals>
     <string name="home_app_management_view_authorized_apps">Nhấn để quản lý các ứng dụng được ủy quyền</string>
-    <string name="home_root_description_sui">Nếu bạn đang sử dụng Magisk, bạn có thể thử %1$s (một mô-đun Riru). Đối với người dùng root, nó cuối cùng sẽ thay thế Shizuku. Lưu ý, các ứng dụng hiện có cần thay đổi một chút để sử dụng %2$s.</string>
+    <string name="home_root_description_sui">Nếu bạn đang sử dụng Magisk, bạn có thể thử %1$s. Đối với người dùng root, nó cuối cùng sẽ thay thế Shizuku. Lưu ý, các ứng dụng hiện có cần thay đổi một chút để sử dụng %2$s.</string>
     <string name="adb_error_key_store">Không thể tạo khóa để gỡ lỗi không dây.
 \nĐiều này có thể do cơ chế KeyStore của thiết bị này bị hỏng.</string>
     <string name="adb_pair_required">Vui lòng thực hiện bước ghép nối trước.</string>

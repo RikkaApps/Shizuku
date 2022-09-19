@@ -64,7 +64,7 @@
 \nPo rozpoczęciu procesu parowania będziesz w stanie wpisać kod parowania.</string>
     <string name="adb_pairing_requires_multi_window">Proszę, uruchom najpierw tryb podzielonego ekranu.</string>
     <string name="settings_user_interface">Wygląd</string>
-    <string name="home_root_description_sui">Jeśli używasz Magisk, możesz spróbować %1$s (moduł Riru). Dla użytkowników roota, zamieni to Shizuku. Uwaga, istniejące aplikację muszą się dostosować by używać %2$s.</string>
+    <string name="home_root_description_sui">Jeśli używasz Magisk, możesz spróbować %1$s. Dla użytkowników roota, zamieni to Shizuku. Uwaga, istniejące aplikację muszą się dostosować by używać %2$s.</string>
     <string name="home_terminal_title">Używaj Shizuku w aplikacjach terminala</string>
     <string name="home_terminal_description">Uruchamiaj komendy przez Shizuku w aplikacjach terminala jakie lubisz</string>
     <string name="home_learn_more_description">Dowiedz się, jak programować za pomocą Shizuku lub używać aplikacji z Shizuku</string>

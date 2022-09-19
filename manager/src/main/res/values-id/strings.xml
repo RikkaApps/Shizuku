@@ -48,7 +48,7 @@
     <string name="adb_pair_required">Harap lakukan penyambungan terlebih dahulu.</string>
     <string name="development_settings">Pilihan pengembang</string>
     <string name="home_root_title">Mulai (untuk perangkat dengan root)</string>
-    <string name="home_root_description_sui">Jika Anda menggunakan Magisk, Anda bisa coba %1$s (modul Riru). Untuk pengguna root, hal ini perlahan akan menggantikan Shizuku. Sebagai catatan, aplikasi yang sudah ada harus disesuaikan sedikit untuk menggunakan %2$s.</string>
+    <string name="home_root_description_sui">Jika Anda menggunakan Magisk, Anda bisa coba %1$s. Untuk pengguna root, hal ini perlahan akan menggantikan Shizuku. Sebagai catatan, aplikasi yang sudah ada harus disesuaikan sedikit untuk menggunakan %2$s.</string>
     <string name="home_root_button_start">Mulai</string>
     <string name="home_root_button_restart">Mulai ulang</string>
     <string name="home_app_management_title">Manajemen Aplikasi</string>

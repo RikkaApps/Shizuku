@@ -72,7 +72,7 @@
     <string name="home_app_management_title">Gerenciamento de aplicativos</string>
     <string name="home_root_button_restart">Reiniciar</string>
     <string name="home_root_button_start">Iniciar</string>
-    <string name="home_root_description_sui">Se você estiver usando Magisk, você pode tentar %1$s (um módulo Riru). Para usuários root, ele substituirá o Shizuku. Observe que os aplicativos existentes precisam mudar um pouco para usar %2$s.</string>
+    <string name="home_root_description_sui">Se você estiver usando Magisk, você pode tentar %1$s. Para usuários root, ele substituirá o Shizuku. Observe que os aplicativos existentes precisam mudar um pouco para usar %2$s.</string>
     <string name="home_root_description">Além disso, o Shizuku pode ser iniciado automaticamente na inicialização. Caso contrário, verifique se o seu sistema ou ferramentas de terceiros restringiram o Shizuku.&lt;br&gt;Você pode consultar %s.</string>
     <string name="home_root_title">Iniciar (para dispositivos com root)</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Alguns sistemas (como o MIUI) não permitem que aplicativos acessem a rede quando não estiverem visíveis, mesmo que o aplicativo use o serviço em primeiro plano como padrão. Desative os recursos de otimização de bateria para Shizuku sistemas.</string>

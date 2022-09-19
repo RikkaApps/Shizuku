@@ -70,7 +70,7 @@
         <item quantity="one">Aplicación %d autorizada</item>
         <item quantity="other">Aplicaciones %d autorizadas</item>
     </plurals>
-    <string name="home_root_description_sui">Si estás usando Magisk, puedes probar %1$s (un módulo de Riru). Para los usuarios root, eventualmente reemplazará a Shizuku. Tenga en cuenta que las aplicaciones existentes deben cambiar un poco para utilizar %2$s.</string>
+    <string name="home_root_description_sui">Si estás usando Magisk, puedes probar %1$s. Para los usuarios root, eventualmente reemplazará a Shizuku. Tenga en cuenta que las aplicaciones existentes deben cambiar un poco para utilizar %2$s.</string>
     <string name="dialog_legacy_not_support_title">%1$s no soporta el Shizuku moderno</string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> se ha copiado en el portapapeles.</string>
     <string name="toast_copied_to_clipboard">%s

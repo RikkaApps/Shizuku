@@ -59,7 +59,7 @@
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (rootolt eszközökhöz)]]></string>
     <string name="home_root_description"><![CDATA[Ezenkívül a Shizuku automatikusan elindítható rendszerindításkor. Ha nem, ellenőrizze, hogy rendszere vagy harmadik féltől származó eszközei nem korlátozták-e a Shizukut.<br>A következőre hivatkozhat: %s.]]></string>
-    <string name="home_root_description_sui"><![CDATA[Ha Magisk-et használ, megpróbálhatja a %1$s-t (egy Riru modult). A root felhasználók számára végül felváltja a Shizukut. Megj.: a meglévő alkalmazásokat kissé módosítani kell a %2$s használatához.]]></string>
+    <string name="home_root_description_sui"><![CDATA[Ha Magisk-et használ, megpróbálhatja a %1$s-t. A root felhasználók számára végül felváltja a Shizukut. Megj.: a meglévő alkalmazásokat kissé módosítani kell a %2$s használatához.]]></string>
     <string name="home_root_button_start">Indítás</string>
     <string name="home_root_button_restart">Újraindítás</string>
 

@@ -74,7 +74,7 @@
     <string name="home_app_management_title">tətbiqin idarə edilməsi</string>
     <string name="home_root_button_restart">Yenidən Başlat</string>
     <string name="home_root_button_start">Başlat</string>
-    <string name="home_root_description_sui">Magisk istifadə edirsinizsə, %1$s (Riru modulu) istifadə edə bilərsiniz. Root istifadəçiləri üçün o, nəticədə Shizuku əvəz edəcək. Qeyd edək ki, %2$s-dan istifadə etmək üçün mövcud proqramlar bir az dəyişməlidir.</string>
+    <string name="home_root_description_sui">Magisk istifadə edirsinizsə, %1$s istifadə edə bilərsiniz. Root istifadəçiləri üçün o, nəticədə Shizuku əvəz edəcək. Qeyd edək ki, %2$s-dan istifadə etmək üçün mövcud proqramlar bir az dəyişməlidir.</string>
     <string name="home_root_description">Bundan əlavə, Shizuku yüklənərkən avtomatik olaraq işə salına bilər. Əks-təqdirdə , sisteminizin və ya üçüncü tərəf alətlərin Shizuku-nu məhdudlaşdırıb-məhdudlaşdırdığını yoxlayın.&lt;br&gt;Siz %s-ə müraciət edə bilərsiniz.</string>
     <string name="home_root_title">Başlat (root edilmiş cihazlar üçün)</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Bəzi sistemlər (məsələn, MIUI) proqramlar görünmədikdə şəbəkəyə daxil olmağa icazə vermir, hətta proqram standart olaraq ön plan xidmətindən istifadə edir. Zəhmət olmasa Shizuku üçün batareyanın optimallaşdırılması xüsusiyyətlərini deaktiv edin</string>

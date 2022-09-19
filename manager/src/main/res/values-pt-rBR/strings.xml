@@ -54,7 +54,7 @@
     <string name="home_app_management_title">Gerenciador de aplicativos</string>
     <string name="home_root_button_restart">Reiniciar</string>
     <string name="home_root_button_start">Começar</string>
-    <string name="home_root_description_sui">Se você estiver usando Magisk, você pode tentar %1$s (um módulo Riru). Para usuários rooteados, ele eventualmente substituirá Shizuku. Observe: os aplicativos existentes precisam mudar um pouco para usar %2$s.</string>
+    <string name="home_root_description_sui">Se você estiver usando Magisk, você pode tentar %1$s. Para usuários rooteados, ele eventualmente substituirá Shizuku. Observe: os aplicativos existentes precisam mudar um pouco para usar %2$s.</string>
     <string name="home_root_description">Além disso, o Shizuku pode ser iniciado automaticamente ao ligar o aparelho. Caso contrário, verifique se o seu sistema ou ferramentas de terceiros restringem Shizuku.&lt;br&gt;Você pode se referir a %s.</string>
     <string name="home_root_title">Começar (para aparelhos rooteados)</string>
     <string name="development_settings">Opções do Desenvolvedor</string>

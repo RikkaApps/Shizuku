@@ -117,7 +117,7 @@
     <string name="notification_adb_pairing_retry">재시도</string>
     <string name="notification_settings">알림 옵션</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">페어링 프로세스에서는 Shizuku의 알림과 상호 작용해야 합니다. Shizuku가 알림을 게시하도록 허용하십시오.</string>
-    <string name="home_root_description_sui">Magisk를 사용하는 경우 %1$s(Riru 모듈)을 사용해 볼 수 있습니다. 루트 사용자의 경우 결국 Shizuku를 대체합니다. %2$s를 사용하려면 기존 응용 프로그램을 약간 변경해야 합니다.</string>
+    <string name="home_root_description_sui">Magisk를 사용하는 경우 %1$s 을 사용해 볼 수 있습니다. 루트 사용자의 경우 결국 Shizuku를 대체합니다. %2$s를 사용하려면 기존 응용 프로그램을 약간 변경해야 합니다.</string>
     <string name="home_terminal_title">터미널에서 Shizuku 사용</string>
     <string name="home_terminal_description">선호하는 터미널 앱에서 Shizuku를 통해 명령 실행</string>
     <string name="terminal_tutorial_1">먼저 원하는 곳으로 파일을 내보냅니다. %1$s 및 %2$s의 두 파일을 찾을 수 있습니다.</string>

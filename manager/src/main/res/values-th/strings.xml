@@ -71,7 +71,7 @@
     <string name="home_app_management_title">การจัดการแอปพลิเคชัน</string>
     <string name="home_root_button_restart">เริ่มใหม่</string>
     <string name="home_root_button_start">เริ่ม</string>
-    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s (โมดูล Riru) สำหรับผู้ใช้งานรูท สุดท้ายมันก็จะมาแทนที่ Shizuku หมายเหตุ แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
+    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s สำหรับผู้ใช้งานรูท สุดท้ายมันก็จะมาแทนที่ Shizuku หมายเหตุ แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
     <string name="home_root_description">ในเพิ่มเติม Shizuku สามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizuku&lt;br&gt;หรืออาจเรียกได้ว่า %s</string>
     <string name="home_root_title">เริ่ม (สำหรับอุปกรณ์ที่รูทแล้ว)</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">บางระบบ (เช่น MIUI) จะไม่อนุญาตให้แอปเข้าถึงเครือข่ายเมื่อไม่แสดง แม้แอปจะใช้บริการเบื้องหน้าตามปกติ โปรดเปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ของ Shizuku บนระบบที่เป็นเช่นนั้น</string>

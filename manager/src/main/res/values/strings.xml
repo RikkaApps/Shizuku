@@ -60,7 +60,7 @@
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
     <string name="home_root_description"><![CDATA[In addition, Shizuku can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizuku.<br>You can refer to %s.]]></string>
-    <string name="home_root_description_sui"><![CDATA[If you are using Magisk, you can try %1$s (a Riru module). For root users, it will eventually replace Shizuku. Note, existing applications needs to change a little to use %2$s.]]></string>
+    <string name="home_root_description_sui"><![CDATA[If you are using Magisk, you can try %1$s. For root users, it will eventually replace Shizuku. Note, existing applications needs to change a little to use %2$s.]]></string>
     <string name="home_root_button_start">Start</string>
     <string name="home_root_button_restart">Restart</string>
 

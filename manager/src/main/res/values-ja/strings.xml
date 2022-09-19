@@ -60,7 +60,7 @@
     <string name="home_adb_button_view_help">ヘルプ</string>
     <string name="home_adb_button_view_command">コマンドを表示する</string>
     <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizukuを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。<b><a href="%1$s">ヘルプをお読みください</a></b>。</string>
-    <string name="home_root_description_sui">Magiskをお使いの方は、%1$s(a Riru module)をお試しください。rootユーザにとっては、最終的にShizukuを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
+    <string name="home_root_description_sui">Magiskをお使いの方は、%1$sをお試しください。rootユーザにとっては、最終的にShizukuを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
     <string name="dialog_adb_discovery_message">「開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。
 \n
 \n注意:「開発者向けオプション」や「USBデバッグ」を無効にしないでください。無効にすると、Shizukuが停止してしまいます。</string>

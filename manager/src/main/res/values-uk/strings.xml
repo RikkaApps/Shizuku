@@ -101,7 +101,7 @@
     <string name="home_wireless_adb_description_pre_11">До Android 11, потрібно під\'єднатися до комп\'ютеру щоб ввімкнути налагодження через Wi-FI.</string>
     <string name="adb_pairing_tutorial_content_finish">Поверніться до Shizuku та запустіть Shizuku.</string>
     <string name="home_root_description">В додаток, Shizuku можна автоматично запустити при завантаженні. Якщо цього не трапляється, будь ласка, перевірте чи ваша не обмежили Shizuku система чи сторонні інструменти.&lt;br&gt;Ви можете переглянути більше на %s.</string>
-    <string name="home_root_description_sui">Якщо ви користуєтесь Magisk, ви можете спробувати %1$s (модуль Riru). Для користувачів root, він колись замінить Shizuku. Увага, існуючі програми мають трохи змінитися щоб можна було користуватися %2$s.</string>
+    <string name="home_root_description_sui">Якщо ви користуєтесь Magisk, ви можете спробувати %1$s. Для користувачів root, він колись замінить Shizuku. Увага, існуючі програми мають трохи змінитися щоб можна було користуватися %2$s.</string>
     <string name="dialog_legacy_not_support_title">%1$s не підтримує сучасну версію Shizuku</string>
     <string name="dialog_requesting_legacy_title">%1$s просить стару версію Shizuku</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; має підтримку нової версії Shizuku, але просить стару версію Shizuku. Це може трапитися тому, що Shizuku не запущено, будь ласка, перевірте у програмі Shizuku.&lt;p&gt;Підтримка старої версії Shizuku завершилася у березні 2019 року.</string>
