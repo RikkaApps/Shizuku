@@ -1,6 +1,7 @@
 package moe.shizuku.manager
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import moe.shizuku.api.BinderContainer
 import moe.shizuku.manager.utils.Logger.LOGGER
 import rikka.shizuku.Shizuku
@@ -33,15 +34,20 @@ class ShizukuManagerProvider : ShizukuProvider() {
                 val binder = extras.getParcelable<BinderContainer>(EXTRA_BINDER)?.binder ?: return null
 
                 val countDownLatch = CountDownLatch(1)
-                val reply = Bundle()
+                var reply: Bundle? = Bundle()
 
                 val listener = object : Shizuku.OnBinderReceivedListener {
 
                     override fun onBinderReceived() {
-                        Shizuku.attachUserService(binder, Bundle().apply {
-                            putString(USER_SERVICE_ARG_TOKEN, token)
-                        })
-                        reply.putParcelable(EXTRA_BINDER, BinderContainer(Shizuku.getBinder()))
+                        try {
+                            Shizuku.attachUserService(binder, bundleOf(
+                                USER_SERVICE_ARG_TOKEN to token
+                            ))
+                            reply!!.putParcelable(EXTRA_BINDER, BinderContainer(Shizuku.getBinder()))
+                        } catch (e: Throwable) {
+                            LOGGER.e(e, "attachUserService $token")
+                            reply = null
+                        }
 
                         Shizuku.removeBinderReceivedListener(this)
 
