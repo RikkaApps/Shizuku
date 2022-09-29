@@ -18,7 +18,6 @@ import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import rikka.core.ktx.unsafeLazy
 import java.net.ConnectException
-import java.net.Inet4Address
 
 @TargetApi(Build.VERSION_CODES.R)
 class AdbPairingService : Service() {
@@ -88,17 +87,17 @@ class AdbPairingService : Service() {
                 onInput(code.toString())
             }
             stopAction -> {
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
                 null
             }
             else -> {
-                throw IllegalArgumentException("Bad intent $intent")
+                return START_REDELIVER_INTENT
             }
         }
         if (notification != null) {
             startForeground(notificationId, notification)
         }
-        return super.onStartCommand(intent, flags, startId)
+        return START_REDELIVER_INTENT
     }
 
     private fun startSearch() {
@@ -168,7 +167,7 @@ class AdbPairingService : Service() {
     }
 
     private fun handleResult(success: Boolean, exception: Throwable?) {
-        stopForeground(false)
+        stopForeground(STOP_FOREGROUND_REMOVE)
 
         val title: String
         val text: String?
