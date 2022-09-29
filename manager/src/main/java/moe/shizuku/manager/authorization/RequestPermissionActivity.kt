@@ -19,6 +19,9 @@ import rikka.html.text.HtmlCompat
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
 import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 class RequestPermissionActivity : AppActivity() {
 
@@ -59,8 +62,33 @@ class RequestPermissionActivity : AppActivity() {
         return false
     }
 
+    private fun waitForBinder(): Boolean {
+        val countDownLatch = CountDownLatch(1)
+
+        val listener = object : Shizuku.OnBinderReceivedListener {
+            override fun onBinderReceived() {
+                countDownLatch.countDown()
+                Shizuku.removeBinderReceivedListener(this)
+            }
+        }
+
+        Shizuku.addBinderReceivedListenerSticky(listener)
+
+        return try {
+            countDownLatch.await(5, TimeUnit.SECONDS)
+            true
+        } catch (e: TimeoutException) {
+            LOGGER.e(e, "Binder not received in 5s")
+            false
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (!waitForBinder()) {
+            finish()
+            return
+        }
 
         val uid = intent.getIntExtra("uid", -1)
         val pid = intent.getIntExtra("pid", -1)
