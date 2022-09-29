@@ -57,7 +57,7 @@ class AdbPairingService : Service() {
     private val observer = Observer<Int> { port ->
         Log.i(tag, "Pairing service port: $port")
 
-        startForeground(notificationId, getNotificationByPort())
+        getSystemService(NotificationManager::class.java).notify(notificationId, getNotificationByPort())
     }
 
     private var started = false
