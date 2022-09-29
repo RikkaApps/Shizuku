@@ -132,4 +132,5 @@
 \nคุณอาจต้องรีสตาร์ท Shizuku เพื่อให้การดำเนินการมีผล</string>
     <string name="home_adb_is_limited_title">คุณต้องทำขั้นตอนเพิ่มเติม</string>
     <string name="home_app_management_empty">แอปที่ขอร้องหรือขอใช้ Shizuku จะแสดงที่นี่</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">โปรดลองปิดและเปิดใช้งาน \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" ใหม่ หากระบบยังคงค้นหาอยู่</string>
 </resources>
