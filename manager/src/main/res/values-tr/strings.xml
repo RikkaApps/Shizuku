@@ -123,4 +123,6 @@
     <string name="notification_adb_pairing_retry">Yeniden dene</string>
     <string name="permission_description">Uygulamanın Shizuku\'yu kullanmasına izin verin.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Aksi takdirde, bildirimden eşleştirme kodunu giremeyebilirsiniz.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku\'nun yerel ağa erişmesi gerekiyor. Ağ izni tarafından kontrol edilir.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Lütfen, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmının tıklanabilir olduğunu, dokunulduğunda yeni bir sayfa açılacağını unutmayın. Yalnızca sağdaki düğmeyi açmak yanlıştır.</string>
 </resources>
