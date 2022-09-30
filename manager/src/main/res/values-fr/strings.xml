@@ -133,4 +133,5 @@
 \nVous devrez sûrement redémarrer Shizuku pour que l\'opération prenne effet.</string>
     <string name="home_adb_is_limited_title">Une étape supplémentaire est nécessaire</string>
     <string name="home_app_management_empty">Les applications qui ont demandé ou déclaré l\'accès à Shizuku apparaîtront ici.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Merci d\'essayer de désactiver et de réactiver le \"Débogage sans-fil\" si ça continue à chercher.</string>
 </resources>
