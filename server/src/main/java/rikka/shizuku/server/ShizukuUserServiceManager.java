@@ -9,7 +9,7 @@ import moe.shizuku.starter.ServiceStarter;
 
 public class ShizukuUserServiceManager extends UserServiceManager {
 
-    private final Map<UserServiceRecord, ApkChangedObserver> apkChangedObservers = new ArrayMap<>();
+    private final Map<UserServiceRecord, ApkChangedListener> apkChangedListeners = new ArrayMap<>();
 
     public ShizukuUserServiceManager() {
         super();
@@ -33,19 +33,21 @@ public class ShizukuUserServiceManager extends UserServiceManager {
     @Override
     public void onUserServiceRecordCreated(UserServiceRecord record, String apkPath) {
         super.onUserServiceRecordCreated(record, apkPath);
-        apkChangedObservers.put(record, ApkChangedObservers.start(apkPath, () -> {
+        ApkChangedListener listener = () -> {
             LOGGER.v("remove record %s because apk changed", record.token);
             record.removeSelf();
-        }));
+        };
+        ApkChangedObservers.start(apkPath, listener);
+        apkChangedListeners.put(record, listener);
     }
 
     @Override
     public void onUserServiceRecordRemoved(UserServiceRecord record) {
         super.onUserServiceRecordRemoved(record);
-        ApkChangedObserver observer = apkChangedObservers.get(record);
-        if (observer != null) {
-            observer.stopWatching();
-            apkChangedObservers.remove(record);
+        ApkChangedListener listener = apkChangedListeners.get(record);
+        if (listener != null) {
+            ApkChangedObservers.stop(listener);
+            apkChangedListeners.remove(record);
         }
     }
 }
