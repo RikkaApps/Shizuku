@@ -9,7 +9,7 @@ interface ApkChangedListener {
     fun onApkChanged()
 }
 
-private val listeners = Collections.synchronizedMap(HashMap<String, ApkChangedObserver>())
+private val observers = Collections.synchronizedMap(HashMap<String, ApkChangedObserver>())
 
 object ApkChangedObservers {
 
@@ -19,7 +19,7 @@ object ApkChangedObservers {
         // so we need to watch the parent folder
 
         val path = File(apkPath).parent!!
-        val observer = listeners.getOrPut(path) {
+        val observer = observers.getOrPut(path) {
             ApkChangedObserver(path).apply {
                 startWatching()
             }
@@ -31,7 +31,7 @@ object ApkChangedObservers {
     fun stop(listener: ApkChangedListener) {
         val pathToRemove = mutableListOf<String>()
 
-        for ((path, observer) in listeners) {
+        for ((path, observer) in observers) {
             observer.removeListener(listener)
 
             if (!observer.hasListeners()) {
@@ -40,7 +40,7 @@ object ApkChangedObservers {
         }
 
         for (path in pathToRemove) {
-            listeners.remove(path)?.stopWatching()
+            observers.remove(path)?.stopWatching()
         }
     }
 }

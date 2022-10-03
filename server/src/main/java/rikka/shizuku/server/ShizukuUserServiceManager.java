@@ -1,11 +1,14 @@
 package rikka.shizuku.server;
 
+import android.content.pm.PackageInfo;
 import android.util.ArrayMap;
 
 import java.io.File;
 import java.util.Map;
 
 import moe.shizuku.starter.ServiceStarter;
+import rikka.hidden.compat.PackageManagerApis;
+import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuUserServiceManager extends UserServiceManager {
 
@@ -31,13 +34,27 @@ public class ShizukuUserServiceManager extends UserServiceManager {
     }
 
     @Override
-    public void onUserServiceRecordCreated(UserServiceRecord record, String apkPath) {
-        super.onUserServiceRecordCreated(record, apkPath);
-        ApkChangedListener listener = () -> {
-            LOGGER.v("remove record %s because apk changed", record.token);
-            record.removeSelf();
+    public void onUserServiceRecordCreated(UserServiceRecord record, PackageInfo packageInfo) {
+        super.onUserServiceRecordCreated(record, packageInfo);
+
+        int userId = UserHandleCompat.getUserId(packageInfo.applicationInfo.uid);
+        String packageName = packageInfo.packageName;
+        ApkChangedListener listener = new ApkChangedListener() {
+            @Override
+            public void onApkChanged() {
+                PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, 0, userId);
+                if (pi == null) {
+                    LOGGER.v("remove record %s because package %d:%s has been removed", record.token, userId, packageName);
+                    record.removeSelf();
+                } else {
+                    LOGGER.v("update apk listener for record %s since package %d:%s is upgrading", record.token, userId, packageName);
+                    ApkChangedObservers.stop(this);
+                    ApkChangedObservers.start(pi.applicationInfo.sourceDir, this);
+                }
+            }
         };
-        ApkChangedObservers.start(apkPath, listener);
+
+        ApkChangedObservers.start(packageInfo.applicationInfo.sourceDir, listener);
         apkChangedListeners.put(record, listener);
     }
 
