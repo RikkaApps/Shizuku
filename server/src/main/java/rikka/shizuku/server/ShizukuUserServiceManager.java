@@ -8,6 +8,7 @@ import java.util.Map;
 
 import moe.shizuku.starter.ServiceStarter;
 import rikka.hidden.compat.PackageManagerApis;
+import rikka.hidden.compat.UserManagerApis;
 import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuUserServiceManager extends UserServiceManager {
@@ -37,19 +38,27 @@ public class ShizukuUserServiceManager extends UserServiceManager {
     public void onUserServiceRecordCreated(UserServiceRecord record, PackageInfo packageInfo) {
         super.onUserServiceRecordCreated(record, packageInfo);
 
-        int userId = UserHandleCompat.getUserId(packageInfo.applicationInfo.uid);
         String packageName = packageInfo.packageName;
         ApkChangedListener listener = new ApkChangedListener() {
             @Override
             public void onApkChanged() {
-                PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, 0, userId);
-                if (pi == null) {
-                    LOGGER.v("remove record %s because package %d:%s has been removed", record.token, userId, packageName);
+                String newSourceDir = null;
+
+                for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+                    PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, 0, userId);
+                    if (pi != null && pi.applicationInfo != null && pi.applicationInfo.sourceDir != null) {
+                        newSourceDir = pi.applicationInfo.sourceDir;
+                        break;
+                    }
+                }
+
+                if (newSourceDir == null) {
+                    LOGGER.v("remove record %s because package %s has been removed", record.token, packageName);
                     record.removeSelf();
                 } else {
-                    LOGGER.v("update apk listener for record %s since package %d:%s is upgrading", record.token, userId, packageName);
+                    LOGGER.v("update apk listener for record %s since package %s is upgrading", record.token, packageName);
                     ApkChangedObservers.stop(this);
-                    ApkChangedObservers.start(pi.applicationInfo.sourceDir, this);
+                    ApkChangedObservers.start(newSourceDir, this);
                 }
             }
         };
