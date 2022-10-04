@@ -1,6 +1,7 @@
 package moe.shizuku.manager.app;
 
 import android.content.Context;
+import android.os.Build;
 
 import androidx.annotation.StyleRes;
 
@@ -23,7 +24,8 @@ public class ThemeHelper {
     }
 
     public static boolean isUsingSystemColor() {
-        return ShizukuSettings.getPreferences().getBoolean(KEY_USE_SYSTEM_COLOR, true);
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                && ShizukuSettings.getPreferences().getBoolean(KEY_USE_SYSTEM_COLOR, true);
     }
 
     public static String getTheme(Context context) {
