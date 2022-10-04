@@ -105,7 +105,16 @@ class AdbPairingService : Service() {
             }
         }
         if (notification != null) {
-            startForeground(notificationId, notification)
+            try {
+                startForeground(notificationId, notification)
+            } catch (e: Throwable) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                    && e is ForegroundServiceStartNotAllowedException) {
+
+                    Log.e(tag, "startForeground failed", e)
+                    getSystemService(NotificationManager::class.java).notify(notificationId, notification)
+                }
+            }
         }
         return START_REDELIVER_INTENT
     }

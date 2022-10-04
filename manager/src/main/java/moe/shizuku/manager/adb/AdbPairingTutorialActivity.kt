@@ -1,14 +1,19 @@
 package moe.shizuku.manager.adb
 
+import android.app.AppOpsManager
+import android.app.ForegroundServiceStartNotAllowedException
 import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.AdbPairingTutorialActivityBinding
 import rikka.compatibility.DeviceCompatibility
@@ -31,7 +36,7 @@ class AdbPairingTutorialActivity : AppBarActivity() {
         notificationEnabled = isNotificationEnabled()
 
         if (notificationEnabled) {
-            context.startForegroundService(AdbPairingService.startIntent(context))
+            startPairingService()
         }
 
         binding.apply {
@@ -84,16 +89,38 @@ class AdbPairingTutorialActivity : AppBarActivity() {
     override fun onResume() {
         super.onResume()
 
-        val context = this
-
         val newNotificationEnabled = isNotificationEnabled()
         if (newNotificationEnabled != notificationEnabled) {
             notificationEnabled = newNotificationEnabled
             syncNotificationEnabled()
 
             if (newNotificationEnabled) {
-                context.startForegroundService(AdbPairingService.startIntent(context))
+                startPairingService()
             }
         }
+    }
+
+    private fun startPairingService() {
+        val intent = AdbPairingService.startIntent(this)
+        try {
+            startForegroundService(intent)
+        } catch (e: Throwable) {
+            Log.e(AppConstants.TAG, "startForegroundService", e)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                && e is ForegroundServiceStartNotAllowedException
+            ) {
+                val mode = getSystemService(AppOpsManager::class.java)
+                    .noteOpNoThrow("android:start_foreground", android.os.Process.myUid(), packageName, null, null)
+                if (mode == AppOpsManager.MODE_ERRORED) {
+                    Toast.makeText(this, "OP_START_FOREGROUND is denied. What are you doing?", Toast.LENGTH_LONG).show()
+                }
+                startService(intent)
+            }
+        }
+
+        val mode = getSystemService(AppOpsManager::class.java)
+            .noteOpNoThrow("android:start_foreground", android.os.Process.myUid(), packageName, null, null)
+
     }
 }
