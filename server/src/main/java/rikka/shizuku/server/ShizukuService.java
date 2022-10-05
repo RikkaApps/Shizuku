@@ -359,6 +359,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 } else {
                     record.allowed = false;
                     ActivityManagerApis.forceStopPackageNoThrow(record.packageName, UserHandleCompat.getUserId(record.uid));
+                    onPermissionRevoked(record.packageName);
                 }
             }
 
@@ -373,10 +374,17 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 } else {
                     PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
                 }
+
+                // TODO kill user service using
             }
         }
 
         configManager.update(uid, null, mask, value);
+    }
+
+    private void onPermissionRevoked(String packageName) {
+        // TODO add runtime permission listener
+        getUserServiceManager().removeUserServicesForPackage(packageName);
     }
 
     private ParcelableListSlice<PackageInfo> getApplications(int userId) {

@@ -4,6 +4,9 @@ import android.content.pm.PackageInfo;
 import android.util.ArrayMap;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import moe.shizuku.starter.ServiceStarter;
@@ -14,6 +17,7 @@ import rikka.shizuku.server.util.UserHandleCompat;
 public class ShizukuUserServiceManager extends UserServiceManager {
 
     private final Map<UserServiceRecord, ApkChangedListener> apkChangedListeners = new ArrayMap<>();
+    private final Map<String, List<UserServiceRecord>> userServiceRecords = Collections.synchronizedMap(new ArrayMap<>());
 
     public ShizukuUserServiceManager() {
         super();
