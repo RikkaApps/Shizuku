@@ -92,4 +92,27 @@
         <item name="cardBackgroundColor">?colorSecondaryContainer</item>
     </style>
 
+    <style name="GrantPermissionsButtons">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?textColorOnPrimaryContainer</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="GrantPermissionsButtons.Top">
+        <item name="android:background">@drawable/grant_permissions_buttons_top</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="GrantPermissionsButtons.Buttom">
+        <item name="android:background">@drawable/grant_permissions_buttons_bottom</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
 </resources>

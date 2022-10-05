@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:ignore="PrivateResource">
+    <item android:alpha="@dimen/m3_ripple_pressed_alpha" android:color="?attr/colorOnPrimaryContainer" android:state_checkable="false" android:state_pressed="true" />
+    <item android:alpha="@dimen/m3_ripple_focused_alpha" android:color="?attr/colorOnPrimaryContainer" android:state_checkable="false" android:state_focused="true" />
+    <item android:alpha="@dimen/m3_ripple_hovered_alpha" android:color="?attr/colorOnPrimaryContainer" android:state_checkable="false" android:state_hovered="true" />
+    <item android:alpha="@dimen/m3_ripple_default_alpha" android:color="?attr/colorOnPrimaryContainer" android:state_checkable="false" />
+
+    <item android:alpha="@dimen/m3_ripple_selectable_pressed_alpha" android:color="?attr/colorOnSurface" android:state_checked="true" android:state_pressed="true" />
+    <item android:alpha="@dimen/m3_ripple_focused_alpha" android:color="?attr/colorOnSecondaryContainer" android:state_checked="true" android:state_focused="true" />
+    <item android:alpha="@dimen/m3_ripple_hovered_alpha" android:color="?attr/colorOnSecondaryContainer" android:state_checked="true" android:state_hovered="true" />
+    <item android:alpha="@dimen/m3_ripple_default_alpha" android:color="?attr/colorOnSecondaryContainer" android:state_checked="true" />
+
+    <item android:alpha="@dimen/m3_ripple_selectable_pressed_alpha" android:color="?attr/colorPrimaryContainer" android:state_pressed="true" />
+    <item android:alpha="@dimen/m3_ripple_focused_alpha" android:color="?attr/colorOnSurface" android:state_focused="true" />
+    <item android:alpha="@dimen/m3_ripple_hovered_alpha" android:color="?attr/colorOnSurface" android:state_hovered="true" />
+    <item android:alpha="@dimen/m3_ripple_default_alpha" android:color="?attr/colorOnSurface" />
+</selector>

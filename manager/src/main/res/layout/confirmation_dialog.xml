@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_system_icon"
         android:tint="?android:colorAccent"
@@ -21,47 +22,21 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingStart="24dp"
-        android:paddingTop="8dp"
+        android:paddingTop="16dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="24dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
         tools:text="@string/permission_warning_template" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:dividerVertical" />
-
     <TextView
         android:id="@android:id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:minHeight="56dp"
-        android:padding="16dp"
-        android:text="@string/grant_dialog_button_allow_always"
-        android:textColor="?android:colorAccent"
-        android:textSize="14sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:dividerVertical" />
+        style="@style/GrantPermissionsButtons.Top"
+        android:text="@string/grant_dialog_button_allow_always" />
 
     <TextView
         android:id="@android:id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:minHeight="56dp"
-        android:padding="16dp"
-        android:text="@string/grant_dialog_button_deny"
-        android:textColor="?android:colorAccent"
-        android:textSize="14sp" />
+        style="@style/GrantPermissionsButtons.Buttom"
+        android:text="@string/grant_dialog_button_deny" />
 
 </LinearLayout>
