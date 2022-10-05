@@ -68,7 +68,7 @@ abstract class HomeActivity : AppBarActivity() {
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
         recyclerView.addItemSpacing(top = 4f, bottom = 4f, unit = TypedValue.COMPLEX_UNIT_DIP)
-        recyclerView.addEdgeSpacing(top = 4f, bottom = 4f, left = 8f, right = 8f, unit = TypedValue.COMPLEX_UNIT_DIP)
+        recyclerView.addEdgeSpacing(top = 4f, bottom = 4f, left = 16f, right = 16f, unit = TypedValue.COMPLEX_UNIT_DIP)
 
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
         Shizuku.addBinderDeadListener(binderDeadListener)

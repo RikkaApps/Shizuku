@@ -6,7 +6,6 @@
 
         <item name="appColorPrimary">@color/app_color_light</item>
         <item name="homeCardStyle">@style/Card.Light</item>
-        <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewLight</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -19,7 +18,6 @@
     <style name="Base.AppTheme" parent="Theme.Material3.Dark.Shizuku">
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="homeCardStyle">@style/Card</item>
-        <item name="materialCircleIconViewStyle">@style/MaterialCircleIconViewDark</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>

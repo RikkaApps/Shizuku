@@ -40,10 +40,8 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root:
         val patchVersion = status.patchVersion
         if (ok) {
             iconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_ok_24dp))
-            iconView.colorName = "blue"
         } else {
             iconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_server_error_24dp))
-            iconView.colorName = "blue_grey"
         }
         val user = if (isRoot) "root" else "adb"
         val title = if (ok) {

@@ -13,14 +13,12 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <moe.shizuku.manager.widget.MaterialCircleIconView
+        <ImageView
             android:id="@android:id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/CardIcon"
             android:duplicateParentState="true"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_wadb_24"
-            app:iconColorName="cyan" />
+            android:src="@drawable/ic_wadb_24" />
 
         <TextView
             style="@style/CardTitle"

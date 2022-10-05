@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="?homeCardStyle"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <moe.shizuku.manager.widget.MaterialCircleIconView
+    <ImageView
         android:id="@android:id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/CardIcon"
         android:duplicateParentState="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_settings_outline_24dp"
-        app:iconColorName="indigo" />
+        android:src="@drawable/ic_settings_outline_24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            tools:text="@plurals/authorized_apps_count" />
+            android:text="@string/home_app_management_view_authorized_apps" />
 
         <TextView
             android:id="@android:id/text2"

@@ -9,11 +9,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingTop">24dp</item>
-        <item name="android:paddingBottom">24dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
     </style>
 
-    <style name="Card.Light"></style>
+    <style name="Card.Light" />
 
     <style name="CardButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">wrap_content</item>
@@ -39,6 +39,16 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
+    <style name="CardIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_circle_icon_background</item>
+        <item name="android:tint">?colorOnPrimaryContainer</item>
+        <item name="android:tintMode">src_in</item>
+        <item name="android:backgroundTint">?colorPrimaryContainer</item>
+        <item name="android:backgroundTintMode">src_in</item>
+    </style>
+
     <style name="GrantPermissions" parent="@style/AppTheme">
         <item name="android:colorBackground">?colorBackgroundFloating</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -49,25 +59,8 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 
-    <style name="MaterialCircleIconViewLight">
-        <item name="iconForegroundChroma">600</item>
-        <item name="iconBackgroundChroma">50</item>
-        <item name="android:background">@drawable/shape_circle_icon_background</item>
-        <item name="android:tintMode">src_in</item>
-        <item name="android:backgroundTintMode">src_in</item>
-    </style>
-
-    <style name="MaterialCircleIconViewDark">
-        <item name="iconForegroundChroma">100</item>
-        <item name="iconBackgroundChroma">600</item>
-        <item name="android:background">@drawable/shape_circle_icon_background</item>
-        <item name="android:tintMode">src_in</item>
-        <item name="android:backgroundTintMode">src_in</item>
-    </style>
-
     <style name="TerminalTutorialText">
-        <item name="android:textAppearance">?textAppearanceBody2</item>
-        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textAppearance">?textAppearanceBodyMedium</item>
         <item name="android:minHeight">32dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
