@@ -293,16 +293,10 @@ class AdbPairingService : Service() {
             .build()
     }
 
-    private val searchingNotification by unsafeLazy {
-        Notification.Builder(this, notificationChannel)
-            .setColor(getColor(R.color.notification))
-            .setSmallIcon(R.drawable.ic_system_icon)
-            .setContentTitle(getString(R.string.notification_adb_pairing_searching_for_service_title))
-            .addAction(stopNotificationAction)
-            .build()
-    }
+    private fun replyNotificationAction(port: Int): Notification.Action {
+        // Ensure pending intent is created
+        val action = replyNotificationAction
 
-    private fun createInputNotification(port: Int): Notification {
         PendingIntent.getForegroundService(
             this,
             replyRequestId,
@@ -313,11 +307,24 @@ class AdbPairingService : Service() {
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        return action
+    }
+
+    private val searchingNotification by unsafeLazy {
+        Notification.Builder(this, notificationChannel)
+            .setColor(getColor(R.color.notification))
+            .setSmallIcon(R.drawable.ic_system_icon)
+            .setContentTitle(getString(R.string.notification_adb_pairing_searching_for_service_title))
+            .addAction(stopNotificationAction)
+            .build()
+    }
+
+    private fun createInputNotification(port: Int): Notification {
         return Notification.Builder(this, notificationChannel)
             .setColor(getColor(R.color.notification))
             .setContentTitle(getString(R.string.notification_adb_pairing_service_found_title))
             .setSmallIcon(R.drawable.ic_system_icon)
-            .addAction(replyNotificationAction)
+            .addAction(replyNotificationAction(port))
             .build()
     }
 
