@@ -71,7 +71,7 @@
     <string name="app_management_dialog_adb_is_limited_message">È molto probabile che il fabbricante del tuo dispositivo limiti i permessi di adb.&lt;p&gt;Ci potrebbe essere una soluzione per il vostro dispositivo in &lt;b&gt;&lt;a href=\"%1$s\"&gt;questo documento&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_item_summary_requires_root">* richiede Shizuku in modalità root</string>
     <string name="home_learn_more_title">Impara Shizuku</string>
-    <string name="home_learn_more_description">Impara a sviluppare con Shizuku o scarica app che usano Shizuku</string>
+    <string name="home_learn_more_description">Impara a sviluppare con Shizuku</string>
     <string name="home_terminal_title">Utilizza Shizuku nell\'app terminale</string>
     <string name="translation_contributors">Dany-coder778, xDonatello</string>
     <string name="action_stop">Interrompi Shizuku</string>
@@ -126,4 +126,12 @@
     <string name="dialog_cannot_open_browser_title">Impossibile avviare il browser</string>
     <string name="dialog_legacy_not_support_title">%1$s non supporta il moderno Shizuku</string>
     <string name="dialog_legacy_not_support_message">Shizuku legacy è stato deprecato a marzo 2019. Inoltre, Shizuku legacy non funziona sui sistemi Android più recenti.&lt;p&gt;Chiedi allo sviluppatore&lt;b&gt;%1$s&lt;/b&gt; di aggiornare.</string>
+    <string name="home_adb_is_limited_title">Devi fare un passo in più</string>
+    <string name="home_adb_is_limited_description">Il produttore del dispositivo dispone di autorizzazioni adb limitate e le app che utilizzano Shizuku non funzioneranno correttamente.
+\n
+\nDi solito, questa limitazione può essere rimossa regolando alcune opzioni in \"Opzioni sviluppatore\". Si prega di leggere la guida per i dettagli su come eseguire questa operazione.
+\n
+\nPotrebbe essere necessario riavviare Shizuku per rendere effettiva l\'operazione.</string>
+    <string name="home_app_management_empty">Le app che hanno richiesto o dichiarato Shizuku verranno visualizzate qui</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Prova a disabilitare e abilitare \"Debug wireless\" se continua a cercare.</string>
 </resources>
