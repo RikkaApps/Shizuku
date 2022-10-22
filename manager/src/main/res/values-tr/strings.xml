@@ -79,7 +79,7 @@
     <string name="app_management_item_summary_requires_root">Shizuku\'nun root ile çalıştırılması gerekli</string>
     <string name="app_management_dialog_adb_is_limited_message">Cihaz üreticinizin adb iznini sınırlaması son derece olasıdır. &lt;p&gt;Bu belgede&lt;b&gt;&lt;a href=\"%1$s\"&gt;sisteminiz için bir çözüm olabilir&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">ADB\'nin izni sınırlandırıldı</string>
-    <string name="home_learn_more_description">Shizuku ile nasıl uygulamalar geliştireceğinizi öğrenin veya Shizuku kullanarak uygulamalar edinin</string>
+    <string name="home_learn_more_description">Shizuku ile nasıl uygulama geliştireceğinizi öğrenin.</string>
     <string name="home_learn_more_title">Daha fazlasını öğren</string>
     <string name="home_app_management_view_authorized_apps">Yetkilendirilmiş uygulamaları yönetmek için dokunun</string>
     <string name="settings_start_on_boot_summary">Rootlu cihazlar için, Shizuku sistem açılışı sırasında otomatik olarak başlayabilir</string>
@@ -125,4 +125,8 @@
     <string name="adb_pairing_tutorial_content_miui_2">Aksi takdirde, bildirimden eşleştirme kodunu giremeyebilirsiniz.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku\'nun yerel ağa erişmesi gerekiyor. Ağ izni tarafından kontrol edilir.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Lütfen, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmının tıklanabilir olduğunu, dokunulduğunda yeni bir sayfa açılacağını unutmayın. Yalnızca sağdaki düğmeyi açmak yanlıştır.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Bazı sistemler (MIUI gibi), uygulama standart olarak ön plan hizmetini kullansa bile, arka planda çalıştıklarında ağa erişmesine izin vermez. Lütfen bu tür sistemlerde Shizuku için pil optimizasyon özelliklerini devre dışı bırakın.</string>
+    <string name="settings_use_system_color">Sistem tema rengini kullan</string>
+    <string name="home_adb_is_limited_title">Fazladan bi adım daha yapmanız gerekiyor</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Eğer sürekli arıyorsa lütfen \"Wireless Debugging\" ayarını kapatıp açmayı deneyin.</string>
 </resources>
