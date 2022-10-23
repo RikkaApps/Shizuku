@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">Shizuku HU</string>
     <!-- To translators: you can leave your here -->
-    <string name="translation_contributors"/>
+    <string name="translation_contributors">gidano - sympda.blog.hu</string>
     <!-- Home - Status -->
     <string name="home_status_service_is_running">A %1$s fut</string>
     <string name="home_status_service_not_running">A %1$s nem fut</string>
