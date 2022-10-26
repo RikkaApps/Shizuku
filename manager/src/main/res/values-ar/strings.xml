@@ -19,10 +19,83 @@
     <string name="home_wireless_adb_title">البدء باستخدام التصحيح اللاسلكي</string>
     <string name="home_wireless_adb_description">على أندرويد ١١ وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء شيزوكو مباشرة من جهازك ، بدون الاتصال بالكمبيوتر.&lt;p&gt;يرجى الاطلاع على الدليل المفصل خطوة بخطوة أولاً.</string>
     <string name="dialog_adb_discovery">البحث عن خدمة التصحيح اللاسلكي</string>
-    <string name="dialog_adb_invalid_port">المنفذ هو عدد صحيح يتراوح من ١ إلى ٦٥٥٣٥.</string>
+    <string name="dialog_adb_invalid_port">المنفذ هو عدد صحيح يتراوح من 1 إلى 65535.</string>
     <string name="home_wireless_adb_view_guide_button">‌دليل خطوة بخطوة</string>
     <string name="dialog_adb_pairing_title">إقران مع الجهاز</string>
     <string name="home_wireless_adb_description_pre_11">على الأجهزة الأقدم من أندرويد ١١ ، يلزم الاتصال بجهاز كمبيوتر لتمكين تصحيح الأخطاء اللاسلكي.</string>
     <string name="dialog_adb_pairing_discovery">جاري البحث على جهاز للإتصال</string>
     <string name="translation_contributors">‮المشاركين في الترجمة</string>
+    <string name="settings_startup">بدء</string>
+    <string name="settings_black_night_theme_summary">استخدم السمة السوداء الخالصة للوضع الليلي ممكّنة</string>
+    <string name="settings_black_night_theme">موضوع ليلة سوداء</string>
+    <string name="settings_user_interface">مظهر</string>
+    <string name="settings_language">لـغة</string>
+    <string name="settings_title">إعــدادات</string>
+    <string name="rish_description">باستخدام %1$s ، في أي تطبيق طرفي ، يمكنك الاتصال والتفاعل مع عمليات تشغيل shell بواسطة Shizuku. &lt;p&gt; حول الاستخدام التفصيلي %1$s ، انقر لعرض المستند.</string>
+    <string name="terminal_tutorial_3_description">بعض النصائح: امنح إذن التنفيذ لـ %1$s وأضفه إلى%2$s ، ستتمكن من استخدام %1$s مباشرةً.</string>
+    <string name="terminal_tutorial_3">أخيرًا ، انقل الملفات إلى مكان يمكن لتطبيقك الطرفي الوصول إليه ، وستتمكن من استخدام %1$s لتشغيل الأوامر من خلال Shizuku.</string>
+    <string name="terminal_tutorial_2_description">على سبيل المثال ، إذا كنت تريد استخدام Shizuku في %1$s ، فيجب استبدال %2$s بـ %3$s (%4$s هو اسم الحزمة %1$s).</string>
+    <string name="terminal_tutorial_2">بعد ذلك ، استخدم أي محرر نصوص لفتح %1$s وتعديله.</string>
+    <string name="terminal_export_files">تصدير الملفات</string>
+    <string name="terminal_tutorial_1_description">إذا كانت هناك ملفات بنفس الاسم في المجلد المحدد ، فسيتم حذفها.
+\n
+\nتستخدم وظيفة التصدير SAF (إطار عمل الوصول إلى التخزين). يُذكر أن MIUI يكسر وظائف SAF. إذا كنت تستخدم MIUI ، فقد تضطر إلى استخراج الملف من APK Shizuku أو تنزيله من GitHub.</string>
+    <string name="terminal_tutorial_1">أولاً ، قم بتصدير الملفات إلى أي مكان تريده. ستجد ملفين, %1$s و %2$s.</string>
+    <string name="home_terminal_description">قم بتشغيل الأوامر من خلال Shizuku في تطبيقات المحطة التي تريدها</string>
+    <string name="home_terminal_title">استخدم Shizuku في تطبيقات المحطة</string>
+    <string name="app_management_item_summary_requires_root">* يطلب Shizuku الجذر للعمل</string>
+    <string name="app_management_dialog_adb_is_limited_message">من المحتمل جدًا أن تحدد الشركة المصنعة للجهاز إذن adb. &lt;p&gt; قد يكون هناك حل لنظامك في &lt;b&gt;&lt;a href=\"%1$s\"&gt;هذا المستند&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_dialog_adb_is_limited_title">إذن ADB محدود</string>
+    <string name="home_adb_is_limited_description">قامت الشركة المصنعة لجهازك بتقييد أذونات adb ولن تعمل التطبيقات التي تستخدم Shizuku بشكل صحيح.
+\n
+\nعادة ، يمكن رفع هذا القيد عن طريق تعديل بعض الخيارات في \"خيارات المطور\". يرجى قراءة التعليمات للحصول على تفاصيل حول كيفية القيام بذلك.
+\n
+\nقد تحتاج إلى إعادة تشغيل Shizuku حتى تدخل العملية حيز التنفيذ.</string>
+    <string name="home_adb_is_limited_title">أنت بحاجة إلى اتخاذ خطوة إضافية</string>
+    <string name="home_learn_more_description">تعلم كيف تتطور مع Shizuku</string>
+    <string name="home_learn_more_title">معلومات عن Shizuku</string>
+    <string name="home_app_management_empty">ستظهر هنا التطبيقات التي طلبت Shizuku.</string>
+    <string name="home_app_management_view_authorized_apps">انقر لإدارة التطبيقات المصرح بها</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="zero">تطبيق %d معتمد</item>
+        <item quantity="one"></item>
+        <item quantity="two"></item>
+        <item quantity="few"></item>
+        <item quantity="many">تطبيقات %d معتمدة</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="home_app_management_title">الإدارة التطبيقية</string>
+    <string name="home_root_button_restart">إعادة بدء تشغيل</string>
+    <string name="home_root_button_start">بداء في تشغيل</string>
+    <string name="home_root_description_sui">إذا كنت تستخدم Magisk ، فيمكنك تجربة %1$s. بالنسبة لمستخدمي الجذر ، سيحل في النهاية محل Shizuku. ملاحظة ، تحتاج التطبيقات الحالية إلى التغيير قليلاً لاستخدام %2$s.</string>
+    <string name="home_root_description">بالإضافة إلى ذلك ، يمكن بدء تشغيل Shizuku تلقائيًا عند الإقلاع. إذا لم يكن الأمر كذلك ، فيرجى التحقق مما إذا كان نظامك أو أدوات الجهات الخارجية قد قيدتShizuku.
+\n&lt;br&gt; يمكنك الرجوع إلى %s.</string>
+    <string name="home_root_title">ابدأ (للأجهزة الجذر)</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">بعض الأنظمة (مثل MIUI) لا تسمح للتطبيقات بالوصول إلى الشبكة عندما لا تكون مرئية ، حتى إذا كان التطبيق يستخدم الخدمة الأمامية كمعيار. يرجى تعطيل ميزات تحسين البطارية لـ Shizuku على هذه الأنظمة.</string>
+    <string name="adb_pairing_tutorial_content_network">يحتاج Shizuku للوصول إلى الشبكة المحلية. يتم التحكم فيه عن طريق إذن الشبكة.</string>
+    <string name="adb_pairing_tutorial_content_finish">إرجع إلى Shizuku وقم بتشغيل Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">يرجى ملاحظة أن الجزء الأيسر من خيار \"التصحيح اللاسلكي\" قابل للنقر عليه ، وسيؤدي النقر عليه إلى فتح صفحة جديدة. فقط turing على المفتاح على اليمين غير صحيح.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">بخلاف ذلك ، قد لا تتمكن من إدخال رمز الاقتران من الإشعار.</string>
+    <string name="adb_pairing_tutorial_content_miui">قد يحتاج مستخدمو MIUI إلى تبديل نمط الإعلام إلى \"Android\" من \"Notification\" - \"Notification Shade\" في إعدادات النظام.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">تحتاج عملية الاقتران إلى التفاعل مع إشعار من Shizuku. يرجى السماح لشيزوكو بنشر الإخطارات.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">أدخل الرمز في الإشعار لإكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_content_steps">أدخل \"خيارات المطور\" - \"التصحيح اللاسلكي\". انقر على \"إقران الجهاز برمز الإقران\" ، وسترى رمزًا مكونًا من ستة أرقام.</string>
+    <string name="adb_pairing_tutorial_content_notification">سيساعدك إشعار من Shizuku على إكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_title">قم بإقران Shizuku بجهازك</string>
+    <string name="notification_settings">إعداد الإشعارات</string>
+    <string name="development_settings">خيارات للمطور</string>
+    <string name="adb_pair_required">يرجى المرور بخطوة الاقتران أولاً.</string>
+    <string name="adb_error_key_store">تعذر إنشاء مفتاح لتصحيح الأخطاء اللاسلكية.
+\nقد يكون هذا بسبب تعطل آلية KeyStore لهذا الجهاز.</string>
+    <string name="adb_pairing_requires_multi_window_reason">يتطلب النظام أن يكون مربع حوار الاقتران مرئيًا دائمًا ، واستخدام وضع تقسيم الشاشة هو الطريقة الوحيدة للسماح لهذا التطبيق ومربع حوار النظام بالظهور في نفس الوقت.</string>
+    <string name="adb_pairing_requires_multi_window">الرجاء إدخال وضع تقسيم الشاشة (متعدد النوافذ) أولاً.</string>
+    <string name="dialog_adb_pairing_message">يرجى بدء الاقتران بالخطوات التالية: \"خيارات المطور\" - \"التصحيح اللاسلكي\" - \"إقران الجهاز باستخدام رمز الاقتران\".
+\n
+\nبعد بدء عملية الاقتران ، ستتمكن من إدخال رمز الاقتران.</string>
+    <string name="dialog_wireless_adb_not_enabled">التصحيح اللاسلكي غير ممكّن.
+\nملاحظة ، قبل Android 11 ، لتمكين التصحيح اللاسلكي ، يجب أن يكون الاتصال بالكمبيوتر أمرًا ضروريًا.</string>
+    <string name="cannot_connect_port">لا يمكن الاتصال بخدمة تصحيح الأخطاء اللاسلكية.</string>
+    <string name="paring_code_is_wrong">رمز الاقتران خاطئ.</string>
+    <string name="dialog_adb_pairing_paring_code">كود الاقتران</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">يرجى محاولة تعطيل \"التصحيح اللاسلكي\" وتمكينه إذا استمر في البحث.</string>
 </resources>
