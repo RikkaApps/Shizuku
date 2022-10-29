@@ -1,25 +1,20 @@
 package moe.shizuku.starter;
 
-import android.app.ActivityThread;
-import android.content.Context;
-import android.content.ContextHidden;
 import android.content.IContentProvider;
-import android.ddm.DdmHandleAppName;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.UserHandle;
-import android.os.UserHandleHidden;
 import android.util.Log;
+import android.util.Pair;
 
 import java.util.Locale;
 
-import dev.rikka.tools.refine.Refine;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.starter.util.IContentProviderCompat;
 import rikka.hidden.compat.ActivityManagerApis;
 import rikka.shizuku.ShizukuApiConstants;
+import rikka.shizuku.server.UserService;
 
 public class ServiceStarter {
 
@@ -63,52 +58,23 @@ public class ServiceStarter {
     }
 
     public static void main(String[] args) {
-        String name = null;
-        String token = null;
-        String pkg = null;
-        String cls = null;
-        int uid = -1;
-
-        for (String arg : args) {
-            if (arg.startsWith("--debug-name=")) {
-                name = arg.substring(13);
-            } else if (arg.startsWith("--token=")) {
-                token = arg.substring(8);
-            } else if (arg.startsWith("--package=")) {
-                pkg = arg.substring(10);
-            } else if (arg.startsWith("--class=")) {
-                cls = arg.substring(8);
-            } else if (arg.startsWith("--uid=")) {
-                uid = Integer.parseInt(arg.substring(6));
-            }
-        }
-
-        int userId = uid / 100000;
-
-        Log.i(TAG, String.format("starting service %s/%s...", pkg, cls));
-
         if (Looper.getMainLooper() == null) {
             Looper.prepareMainLooper();
         }
 
-        IBinder service = null;
-        Context systemContext = ActivityThread.systemMain().getSystemContext();
+        IBinder service;
+        String token;
 
-        DdmHandleAppName.setAppName(name != null ? name : "shizuku_user_service", 0);
+        UserService.setTag(TAG);
+        Pair<IBinder, String> result = UserService.create(args);
 
-        try {
-            UserHandle userHandle = Refine.unsafeCast(
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                            ? UserHandleHidden.of(userId)
-                            : new UserHandleHidden(userId));
-            Context context = Refine.<ContextHidden>unsafeCast(systemContext).createPackageContextAsUser(pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
-            ClassLoader classLoader = context.getClassLoader();
-            Class<?> serviceClass = classLoader.loadClass(cls);
-            service = (IBinder) serviceClass.newInstance();
-        } catch (Throwable tr) {
-            Log.w(TAG, String.format("unable to start service %s/%s...", pkg, cls), tr);
+        if (result == null) {
             System.exit(1);
+            return;
         }
+
+        service = result.first;
+        token = result.second;
 
         if (!sendBinder(service, token)) {
             System.exit(1);
@@ -117,7 +83,7 @@ public class ServiceStarter {
         Looper.loop();
         System.exit(0);
 
-        Log.i(TAG, String.format("service %s/%s exited", pkg, cls));
+        Log.i(TAG, "service exited");
     }
 
     private static boolean sendBinder(IBinder binder, String token) {

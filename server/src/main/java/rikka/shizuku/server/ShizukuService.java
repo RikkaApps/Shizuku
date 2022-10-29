@@ -1,11 +1,13 @@
 package rikka.shizuku.server;
 
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_PERMISSION_GRANTED;
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_PATCH_VERSION;
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_SECONTEXT;
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_UID;
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SERVER_VERSION;
-import static rikka.shizuku.ShizukuApiConstants.ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_APPLICATION_API_VERSION;
+import static rikka.shizuku.ShizukuApiConstants.ATTACH_APPLICATION_PACKAGE_NAME;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_PERMISSION_GRANTED;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_SERVER_PATCH_VERSION;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_SERVER_SECONTEXT;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_SERVER_UID;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_SERVER_VERSION;
+import static rikka.shizuku.ShizukuApiConstants.BIND_APPLICATION_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE;
 import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED;
 import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
 import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
@@ -177,10 +179,16 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public void attachApplication(IShizukuApplication application, String requestPackageName) {
-        if (application == null || requestPackageName == null) {
+    public void attachApplication(IShizukuApplication application, Bundle args) {
+        if (application == null || args == null) {
             return;
         }
+
+        String requestPackageName = args.getString(ATTACH_APPLICATION_PACKAGE_NAME);
+        if (requestPackageName == null) {
+            return;
+        }
+        int apiVersion = args.getInt(ATTACH_APPLICATION_API_VERSION, -1);
 
         int callingPid = Binder.getCallingPid();
         int callingUid = Binder.getCallingUid();
@@ -197,7 +205,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
         if (!isManager && clientManager.findClient(callingUid, callingPid) == null) {
             synchronized (this) {
-                clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName);
+                clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName, apiVersion);
             }
             if (clientRecord == null) {
                 LOGGER.w("Add client failed");
@@ -208,13 +216,13 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         LOGGER.d("attachApplication: %s %d %d", requestPackageName, callingUid, callingPid);
 
         Bundle reply = new Bundle();
-        reply.putInt(ATTACH_REPLY_SERVER_UID, OsUtils.getUid());
-        reply.putInt(ATTACH_REPLY_SERVER_VERSION, ShizukuApiConstants.SERVER_VERSION);
-        reply.putString(ATTACH_REPLY_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
-        reply.putInt(ATTACH_REPLY_SERVER_PATCH_VERSION, ServerConstants.PATCH_VERSION);
+        reply.putInt(BIND_APPLICATION_SERVER_UID, OsUtils.getUid());
+        reply.putInt(BIND_APPLICATION_SERVER_VERSION, ShizukuApiConstants.SERVER_VERSION);
+        reply.putString(BIND_APPLICATION_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
+        reply.putInt(BIND_APPLICATION_SERVER_PATCH_VERSION, ServerConstants.PATCH_VERSION);
         if (!isManager) {
-            reply.putBoolean(ATTACH_REPLY_PERMISSION_GRANTED, clientRecord.allowed);
-            reply.putBoolean(ATTACH_REPLY_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
+            reply.putBoolean(BIND_APPLICATION_PERMISSION_GRANTED, clientRecord.allowed);
+            reply.putBoolean(BIND_APPLICATION_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
         }
         try {
             application.bindApplication(reply);
