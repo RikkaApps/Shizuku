@@ -93,7 +93,7 @@ A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku �
     <string name="settings_title">Beállítások</string>
     <string name="settings_language">Nyelv</string>
     <string name="settings_user_interface">Megjelenés</string>
-    <string name="settings_black_night_theme">Black night téma</string>
+    <string name="settings_black_night_theme">Sötét éj téma</string>
     <string name="settings_black_night_theme_summary">Használja a tiszta fekete témát, ha az éjszakai mód be van kapcsolva</string>
     <string name="settings_startup">Üzembe helyezés</string>
     <string name="settings_translation_contributors">Fordítási közreműködők</string>
