@@ -5,9 +5,6 @@ import android.os.Build
 import android.os.UserManager
 import android.system.ErrnoException
 import android.system.Os
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ktx.createDeviceProtectedStorageContextCompat
 import moe.shizuku.manager.ktx.logd
@@ -27,11 +24,7 @@ object Starter {
     val adbCommand: String
         get() = "adb shell $sdcardCommand"
 
-    fun writeSdcardFilesAsync(context: Context) {
-        GlobalScope.launch(Dispatchers.IO) { writeSdcardFiles(context.applicationContext) }
-    }
-
-    private fun writeSdcardFiles(context: Context) {
+    fun writeSdcardFiles(context: Context) {
         if (commandInternal[1] != null) {
             logd("already written")
             return
@@ -39,17 +32,16 @@ object Starter {
 
         val um = context.getSystemService(UserManager::class.java)!!
         val unlocked = Build.VERSION.SDK_INT < 24 || um.isUserUnlocked
-        if (!unlocked) return
-
-        try {
-            val dir = context.getExternalFilesDir(null)?.parentFile ?: return
-            val starter = copyStarter(context, File(dir, "starter"))
-            val sh = writeScript(context, File(dir, "start.sh"), starter)
-            commandInternal[1] = "sh $sh"
-            logd(commandInternal[1]!!)
-        } catch (e: IOException) {
-            loge("write files", e)
+        if (!unlocked) {
+            throw IllegalStateException("User is locked")
         }
+
+        val filesDir = context.getExternalFilesDir(null) ?: throw IOException("getExternalFilesDir() returns null")
+        val dir = filesDir.parentFile ?: throw IOException("$filesDir parentFile returns null")
+        val starter = copyStarter(context, File(dir, "starter"))
+        val sh = writeScript(context, File(dir, "start.sh"), starter)
+        commandInternal[1] = "sh $sh"
+        logd(commandInternal[1]!!)
     }
 
     fun writeDataFiles(context: Context, permission: Boolean = false) {
