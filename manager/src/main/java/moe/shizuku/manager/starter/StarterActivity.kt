@@ -2,6 +2,7 @@ package moe.shizuku.manager.starter
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -175,7 +176,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
             } catch (e: Throwable) {
                 e.printStackTrace()
-                sb.append('\n').append(e.toString())
+                sb.append('\n').append(Log.getStackTraceString(e))
 
                 postResult(AdbKeyException(e))
                 return@launch
@@ -191,7 +192,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
             }.onFailure {
                 it.printStackTrace()
 
-                sb.append('\n').append(it.toString())
+                sb.append('\n').append(Log.getStackTraceString(it))
                 postResult(it)
             }
 
@@ -218,7 +219,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 }.onFailure {
                     it.printStackTrace()
 
-                    sb.append('\n').append(it.toString())
+                    sb.append('\n').append(Log.getStackTraceString(it))
                     postResult(it)
                 }
             }
