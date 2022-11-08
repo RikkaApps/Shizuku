@@ -59,7 +59,7 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* 他にもいくつか注意点がありますので、まずはヘルプを読んで確認してください。</string>
     <string name="home_adb_button_view_help">ヘルプ</string>
     <string name="home_adb_button_view_command">コマンドを表示する</string>
-    <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizukuを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。<b><a href="%1$s">ヘルプをお読みください</a></b>。</string>
+    <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizukuを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。<b><a href="%1$s">詳しくはヘルプをお読みください</a></b>。</string>
     <string name="home_root_description_sui">Magiskをお使いの方は、%1$sをお試しください。rootユーザにとっては、最終的にShizukuを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
     <string name="dialog_adb_discovery_message">「開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。
 \n
@@ -68,11 +68,11 @@
     <string name="dialog_legacy_not_support_message">古いバージョンのShizukuは2019年3月より非推奨となりました。また、古いバージョンのShizukuは新しいAndroidシステムでは動作しません。&lt;p&gt;&lt;b&gt;%1$s&lt;/b&gt;の開発者にアップデートを依頼してください。</string>
     <string name="home_status_service_not_running">%1$s は停止中</string>
     <string name="home_status_service_version_update">バージョン %2$s, %1$s&lt;br&gt;バージョン %3$s にアップデートするには、再度起動してください</string>
-    <string name="translation_contributors">MES-mitutti</string>
+    <string name="translation_contributors">IMES-mitutti</string>
     <string name="home_learn_more_description">Shizukuを使った開発方法、Shizukuを使ったアプリの入手方法について学ぶことができます</string>
     <string name="app_management_dialog_adb_is_limited_title">adbの権限が制限されています</string>
     <string name="app_management_dialog_adb_is_limited_message">端末の製造元がadbの権限を制限している可能性が高いです。&lt;p&gt; &lt;b&gt;&lt;a href=\"%1$s\"&gt;このドキュメント&lt;/a&gt;&lt;/b&gt;の中に、あなたのシステムに合った解決策があるかもしれません。</string>
-    <string name="app_management_item_summary_requires_root">* Shizukuはrootで実行する必要があります</string>
+    <string name="app_management_item_summary_requires_root">* root権限でShizukuを実行する必要があります</string>
     <string name="about_view_source_code">%sでソースコードを見る</string>
     <string name="action_stop">Shizukuを停止する</string>
     <string name="settings_title">設定</string>
@@ -95,7 +95,7 @@
     <string name="notification_working">実行中…</string>
     <string name="permission_description">アプリでShizukuの使用を許可する。</string>
     <string name="start_with_root_failed">root権限が付与されていないか、端末がroot化されていないため、サービスを開始できません。</string>
-    <string name="permission_label">アクセス Shizuku</string>
+    <string name="permission_label">Shizukuにアクセスする</string>
     <string name="starter">起動</string>
     <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
     <string name="rish_description">%1$sを使えば、任意のターミナルアプリで、Shizukuが実行するシェルに接続し、対話することができます。&lt;p&gt;詳しい使い方については、%1$sをタップするとドキュメントが表示されます。</string>
@@ -105,7 +105,7 @@
     <string name="home_wireless_adb_view_guide_button">ガイド</string>
     <string name="notification_adb_pairing_working_title">ペアリング中</string>
     <string name="notification_adb_pairing_succeed_title">ペアリングしました</string>
-    <string name="adb_pairing_tutorial_content_steps">「開発者向けオプション」&gt;「ワイヤレスデバック」を選択し、ペア設定コードによるデバイスのペア設定をタップすると、6桁のコードが表示されます。</string>
+    <string name="adb_pairing_tutorial_content_steps">「開発者向けオプション」&gt;「ワイヤレスデバック」を選択し、「ペア設定コードによるデバイスのペア設定」をタップすると、6桁のコードが表示されます。</string>
     <string name="adb_pairing_tutorial_content_notification">Shizukuからの通知でペアリングが完了します。</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">通知にコードを入力してペアリングします。</string>
     <string name="adb_pairing_tutorial_content_miui">MIUIユーザーはシステムの設定から「通知」→「通知のシェード」から通知スタイルを「Android」に変更する必要がある場合があります。</string>
@@ -132,4 +132,5 @@
 \n通常､ この制限は「開発者向けオプション」のいくつかの項目を調整することで解除できます。これを行う方法の詳細については､ ヘルプをお読みください。
 \n
 \n操作を有効にするために､ Shizukuを再起動する必要がある場合があります。</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">検索され続ける場合は、「ワイヤレスデバッグ」の無効化と有効化を切り替えることを試してください。</string>
 </resources>
