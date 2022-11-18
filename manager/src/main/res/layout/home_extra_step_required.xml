@@ -15,11 +15,11 @@
         <ImageView
             android:id="@android:id/icon"
             style="@style/CardIcon"
+            android:backgroundTint="?colorOnErrorContainer"
             android:duplicateParentState="true"
             android:importantForAccessibility="no"
-            android:tint="?colorErrorContainer"
-            android:backgroundTint="?colorOnErrorContainer"
-            android:src="@drawable/ic_warning_24" />
+            android:src="@drawable/ic_warning_24"
+            android:tint="?colorErrorContainer" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,8 @@
         android:text="@string/home_adb_button_view_help"
         android:textColor="?colorOnError"
         app:backgroundTint="?colorError"
-        app:icon="@drawable/ic_outline_open_in_new_24" />
+        app:icon="@drawable/ic_outline_open_in_new_24"
+        app:iconTint="?colorOnError" />
 
 
 </LinearLayout>
