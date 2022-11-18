@@ -147,8 +147,8 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
 
@@ -157,17 +157,17 @@ dependencies {
     implementation project(':starter')
     implementation project(':api')
     implementation project(':provider')
-    compileOnly 'dev.rikka.hidden:stub:3.2.0'
+    compileOnly 'dev.rikka.hidden:stub:3.4.3'
 
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.3'
+    implementation 'androidx.fragment:fragment-ktx:1.5.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    implementation 'com.google.android.material:material:1.7.0-rc01'
+    implementation 'com.google.android.material:material:1.7.0'
 
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
 
@@ -194,7 +194,7 @@ dependencies {
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
 
-    implementation 'me.zhanghai.android.appiconloader:appiconloader:1.3.1'
+    implementation 'me.zhanghai.android.appiconloader:appiconloader:1.5.0'
 }
 
 apply from: rootProject.file('signing.gradle')
