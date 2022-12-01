@@ -2,7 +2,7 @@
 <resources>
     <string name="home_status_service_version">الإصدار %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s ليس قيد التشغيل</string>
-    <string name="home_status_service_is_running">%1$s قيد التشغيل</string>
+    <string name="home_status_service_is_running">الإصدار %2$s, %1$s&lt;br&gt;البدء من جديد للتحديث إلى الإصدار %3$s</string>
     <string name="home_adb_title">البدء في الإتصال بالكمبيوتر</string>
     <string name="home_adb_button_view_help">قراءة التعليمات</string>
     <string name="home_adb_button_view_command">عرض الأمر</string>
@@ -58,11 +58,11 @@
     <string name="home_app_management_view_authorized_apps">انقر لإدارة التطبيقات المصرح بها</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="zero">تطبيق %d معتمد</item>
-        <item quantity="one"></item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="one"/>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">تطبيقات %d معتمدة</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="home_app_management_title">الإدارة التطبيقية</string>
     <string name="home_root_button_restart">إعادة بدء تشغيل</string>
@@ -98,4 +98,6 @@
     <string name="paring_code_is_wrong">رمز الاقتران خاطئ.</string>
     <string name="dialog_adb_pairing_paring_code">كود الاقتران</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">يرجى محاولة تعطيل \"التصحيح اللاسلكي\" وتمكينه إذا استمر في البحث.</string>
+    <string name="dialog_stop_message">Shizuku service will be stopped.</string>
+    <string name="action_stop">Stop Shizuku</string>
 </resources>
