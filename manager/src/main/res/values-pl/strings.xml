@@ -37,7 +37,7 @@
     <string name="home_app_management_title">Zarządzanie aplikacjami</string>
     <string name="home_root_button_restart">Restart</string>
     <string name="home_root_button_start">Start</string>
-    <string name="translation_contributors">"Gabriel Markowski "</string>
+    <string name="translation_contributors">Gabriel Markowski, Piotr Pietrzak (YT:IeFHC233)</string>
     <string name="dialog_adb_discovery">Szukanie usługi bezprzewodowego debugowania</string>
     <string name="home_adb_button_view_help">Przeczytaj pomoc</string>
     <string name="toast_copied_to_clipboard">%s
@@ -123,4 +123,17 @@
     <string name="notification_adb_pairing_succeed_text">Możesz teraz wystartować usługę Shizuku.</string>
     <string name="notification_settings">Ustawienia powiadomień</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Proces parowania wymaga twojej interakcji z powiadomieniem od Shizuku. Zezwol Shizuku na wyświetlanie powiadomień.</string>
+    <string name="home_adb_is_limited_description">Producent Twojego urządzenia ograniczył uprawnienia adb, a aplikacje korzystające z Shizuku nie będą działać poprawnie.
+\n
+\nZwykle to ograniczenie można znieść, dostosowując niektóre opcje w „Opcjach programisty”. Przeczytaj pomoc, aby dowiedzieć się, jak to zrobić.
+\n
+\nMoże być konieczne ponowne uruchomienie Shizuku, aby operacja zaczęła obowiązywać.</string>
+    <string name="home_adb_is_limited_title">Musisz zrobić dodatkowy krok</string>
+    <string name="home_app_management_empty">Tutaj pojawią się aplikacje, które zażądały lub zadeklarowały Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Niektóre systemy (takie jak MIUI) nie zezwalają aplikacjom na dostęp do sieci, gdy nie są one widoczne, nawet jeśli aplikacja standardowo korzysta z usługi pierwszego planu. Proszę wyłączyć funkcje optymalizacji baterii dla Shizuku w takich systemach.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku potrzebuje dostęp do sieci lokalnej. Jest kontrolowany przez pozwolenie sieciowe.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Należy pamiętać, że lewą część opcji „Debugowanie sieci bezprzewodowej” można kliknąć, dotknięcie jej spowoduje otwarcie nowej strony. Jedynie włączenie przełącznika po prawej stronie jest nieprawidłowe.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">W przeciwnym razie wprowadzenie kodu parowania z powiadomienia może nie być możliwe.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Proszę spróbować wyłączyć i włączyć ponownie \"Debugowanie bezprzewodowe\" jeśli nadal szuka.</string>
+    <string name="settings_use_system_color">Użyj systemowego motywu kolorystycznego</string>
 </resources>
