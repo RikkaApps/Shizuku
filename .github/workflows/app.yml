@@ -51,7 +51,7 @@ jobs:
           restore-keys: |
             gradle-deps
       - name: Cache Gradle Build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches/build-cache-*
@@ -67,21 +67,21 @@ jobs:
           echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
           ./gradlew :manager:assembleRelease :manager:assembleDebug
           releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
-          debugName=`ls manager/build/outputs/apk/release/shizuku*-v*-debug.apk | awk -F '(/|.apk)' '{print $6}'` && echo "debugName=$debugName" >> $GITHUB_OUTPUT
+          debugName=`ls manager/build/outputs/apk/debug/shizuku*-v*-debug.apk | awk -F '(/|.apk)' '{print $6}'` && echo "debugName=$debugName" >> $GITHUB_OUTPUT
       - name: Upload release
         if: success()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.buildWithGradle.outputs.releaseName }}
           path: "manager/build/outputs/apk/release/*.apk"
       - name: Upload debug
         if: success()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.buildWithGradle.outputs.debugName }}
           path: "manager/build/outputs/apk/debug/*.apk"
       - name: Upload mappings
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: mappings
           path: "manager/build/outputs/mapping/release"
