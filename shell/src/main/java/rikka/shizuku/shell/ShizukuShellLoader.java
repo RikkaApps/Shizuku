@@ -16,6 +16,7 @@ import android.system.Os;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.util.Objects;
 
 import dalvik.system.DexClassLoader;
 
@@ -62,8 +63,34 @@ public class ShizukuShellLoader {
             am = ActivityManagerNative.asInterface(amBinder);
         }
 
-        am.broadcastIntent(null, intent, null, null, 0, null, null,
-                null, -1, null, true, false, 0);
+        // broadcastIntent will fail on Android 8.0
+        //  com.android.server.am.ActivityManagerService.isInstantApp(ActivityManagerService.java:18547)
+        //  com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:18972)
+        //  com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:19703)
+        //
+        try {
+            am.broadcastIntent(null, intent, null, null, 0, null, null,
+                    null, -1, null, true, false, 0);
+        } catch (Throwable e) {
+            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O
+                    || !Objects.equals(e.getMessage(), "Calling application did not provide package name")) {
+                throw e;
+            }
+
+            System.err.println("broadcastIntent fails on Android 8.0, fallback to startActivity");
+            System.err.flush();
+            
+            Intent activityIntent = Intent.createChooser(
+                    new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                            .putExtra("data", data),
+                    "Request binder from Shizuku"
+            );
+
+            am.startActivityAsUser(null, callingPackage, activityIntent, null, null, null, 0, 0, null, null, Os.getuid() / 100000);
+        }
     }
 
     private static void onBinderReceived(IBinder binder, String sourceDir) {
