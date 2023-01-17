@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="cannot_connect_port">اتصال به سرویس wireless debugging ناموفق بود.</string>
+    <string name="dialog_adb_invalid_port">پورت یک عدد از 1 تا 65535 است.</string>
+    <string name="dialog_adb_port">پورت</string>
+    <string name="dialog_adb_discovery_message">لطفا «Wireless debugging» را در «Developer options» فعال کنید. «Wireless debugging» به‌طور خودکار هنگام تغییر شبکه غیرفعال می‌شود.
+\n
+\nتوجه داشته باشید، «Developer options» یا «USB debugging» را غیرفعال نکنید، در غیر این صورت Shizuku متوقف خواهد شد.</string>
+    <string name="dialog_adb_discovery">جستجو برای سرویس wireless debugging</string>
+    <string name="home_wireless_adb_view_guide_button">راهنما گام-به-گام</string>
+    <string name="home_wireless_adb_description_pre_11">قبل از اندروید 11، برای فعال سازی Wireless debugging نیاز به اتصال به کامپیوتر میباشد.</string>
+    <string name="home_wireless_adb_description">از اندروید 11 به بالا، میتوانید با روشن کردن Wireless debugging، Shizuku را مستقیم از دستگاه خود، بدون نیاز به کامپیوتر، راه اندازی کنید. &lt;p&gt;لطفا ابتدا راهنمای گام به گام را مطالعه کنید.</string>
+    <string name="home_wireless_adb_title">از طریق Wireless debugging راه اندازی کنید</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* ملاحظات دیگری نیز وجود دارد، لطفا تایید کنید که ابتدا راهنما را خوانده اید.</string>
+    <string name="home_adb_button_view_command">مشاهده دستور</string>
+    <string name="home_adb_button_view_help">خواندن راهنما</string>
+    <string name="home_adb_description">برای دستگاه های بدون روت، باید از adb برای راه اندازی Shizuku استفاده کنید (نیاز به کامپیوتر). این پروسه، باید بعد از هر بار ری استارت دستگاه تکرار شود. لطفا <b><a href="%1$s">راهنما را مطالعه کنید</a></b>.</string>
+    <string name="home_adb_title">با اتصال به کامپیوتر راه اندازی کنید</string>
+    <string name="home_status_service_version_update">ورژن %2$s، %1$s &lt;br&gt; دوباره راه اندازی کنید تا به ورژن %3$s اپدیت شود</string>
+    <string name="home_status_service_version">ورژن%2$s، %1$s</string>
+    <string name="home_status_service_not_running">%1$s در حال اجرا نمی باشد</string>
+    <string name="home_status_service_is_running">%1$s در حال اجرا است</string>
+    <string name="translation_contributors">parsa-alidoust.ir</string>
+    <string name="home_adb_dialog_view_command_button_send">ارسال</string>
+    <string name="home_adb_dialog_view_command_copy_button">کپی</string>
+</resources>
