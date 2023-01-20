@@ -117,4 +117,10 @@
     <string name="settings_language">Wika</string>
     <string name="settings_title">Mga Setting</string>
     <string name="rish_description">Gamit ang %1$s, makakakonekta ka sa shell ng Shizuku gamit ang anumang terminal app. &lt;p&gt;Pindutin para makita ang detalyadong impormasyon tungkol sa %1$s.</string>
+    <string name="grant_dialog_button_deny">Tanggihan</string>
+    <string name="grant_dialog_button_allow_always">Laging payagan</string>
+    <string name="permission_warning_template">Payagan ang <b>%1$s</b> na %2$s\?</string>
+    <string name="permission_description">Payagan ang app na gamitin ang Shizuku.</string>
+    <string name="permission_label">ma-access ang Shizuku</string>
+    <string name="notification_adb_pairing_retry">Subukan ulit</string>
 </resources>
