@@ -29,6 +29,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -482,6 +483,10 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     static void sendBinderToUserApp(Binder binder, String packageName, int userId) {
+        sendBinderToUserApp(binder, packageName, userId, true);
+    }
+
+    static void sendBinderToUserApp(Binder binder, String packageName, int userId, boolean retry) {
         try {
             DeviceIdleControllerApis.addPowerSaveTempWhitelistApp(packageName, 30 * 1000, userId,
                     316/* PowerExemptionManager#REASON_SHELL */, "shell");
@@ -510,6 +515,23 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             if (provider == null) {
                 LOGGER.e("provider is null %s %d", name, userId);
                 return;
+            }
+            if (!provider.asBinder().pingBinder()) {
+                LOGGER.e("provider is dead %s %d", name, userId);
+
+                if (retry) {
+                    // For unknown reason, sometimes this could happens
+                    // Kill Shizuku app and try again could work
+                    ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
+                    LOGGER.e("kill %s in user %d and try again", packageName, userId);
+                    Thread.sleep(1000);
+                    sendBinderToUserApp(binder, packageName, userId, false);
+                }
+                return;
+            }
+
+            if (!retry) {
+                LOGGER.e("retry works");
             }
 
             Bundle extra = new Bundle();

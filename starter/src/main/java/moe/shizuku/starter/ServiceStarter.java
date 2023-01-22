@@ -1,6 +1,7 @@
 package moe.shizuku.starter;
 
 import android.content.IContentProvider;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -87,6 +88,10 @@ public class ServiceStarter {
     }
 
     private static boolean sendBinder(IBinder binder, String token) {
+        return sendBinder(binder, token, true);
+    }
+
+    private static boolean sendBinder(IBinder binder, String token, boolean retry) {
         String packageName = "moe.shizuku.privileged.api";
         String name = packageName + ".shizuku";
         int userId = 0;
@@ -100,7 +105,20 @@ public class ServiceStarter {
             }
             if (!provider.asBinder().pingBinder()) {
                 Log.e(TAG, String.format("provider is dead %s %d", name, userId));
+
+                if (retry) {
+                    // For unknown reason, sometimes this could happens
+                    // Kill Shizuku app and try again could work
+                    ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
+                    Log.e(TAG, String.format("kill %s in user %d and try again", packageName, userId));
+                    Thread.sleep(1000);
+                    return sendBinder(binder, token, false);
+                }
                 return false;
+            }
+
+            if (!retry) {
+                Log.e(TAG, "retry works");
             }
 
             Bundle extra = new Bundle();
