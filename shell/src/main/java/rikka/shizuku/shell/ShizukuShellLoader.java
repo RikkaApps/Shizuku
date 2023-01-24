@@ -63,7 +63,7 @@ public class ShizukuShellLoader {
             am = ActivityManagerNative.asInterface(amBinder);
         }
 
-        // broadcastIntent will fail on Android 8.0
+        // broadcastIntent will fail on Android 8.x
         //  com.android.server.am.ActivityManagerService.isInstantApp(ActivityManagerService.java:18547)
         //  com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:18972)
         //  com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:19703)
@@ -72,14 +72,14 @@ public class ShizukuShellLoader {
             am.broadcastIntent(null, intent, null, null, 0, null, null,
                     null, -1, null, true, false, 0);
         } catch (Throwable e) {
-            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O
+            if ((Build.VERSION.SDK_INT != Build.VERSION_CODES.O && Build.VERSION.SDK_INT != Build.VERSION_CODES.O_MR1)
                     || !Objects.equals(e.getMessage(), "Calling application did not provide package name")) {
                 throw e;
             }
 
-            System.err.println("broadcastIntent fails on Android 8.0, fallback to startActivity");
+            System.err.println("broadcastIntent fails on Android 8.0 or 8.1, fallback to startActivity");
             System.err.flush();
-            
+
             Intent activityIntent = Intent.createChooser(
                     new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
