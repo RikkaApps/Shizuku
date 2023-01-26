@@ -67,7 +67,7 @@
     <string name="home_root_description_sui">Jeśli używasz Magisk, możesz spróbować %1$s. Dla użytkowników roota, zamieni to Shizuku. Uwaga, istniejące aplikację muszą się dostosować by używać %2$s.</string>
     <string name="home_terminal_title">Używaj Shizuku w aplikacjach terminala</string>
     <string name="home_terminal_description">Uruchamiaj komendy przez Shizuku w aplikacjach terminala jakie lubisz</string>
-    <string name="home_learn_more_description">Dowiedz się, jak programować za pomocą Shizuku lub używać aplikacji z Shizuku</string>
+    <string name="home_learn_more_description">Dowiedz się, jak programować za pomocą Shizuku</string>
     <string name="terminal_tutorial_1">Po pierwsze, Wyeksportuj pliki gdzie chcesz. Znajdziesz tam dwa pliki, %1$s i %2$s.</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="one">Autoryzowano aplikację %d</item>
