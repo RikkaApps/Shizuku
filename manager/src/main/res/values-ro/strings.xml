@@ -2,8 +2,8 @@
 <resources>
     <string name="home_status_service_is_running">%1$s rulează</string>
     <string name="home_status_service_not_running">%1$s nu rulează</string>
-    <string name="home_status_service_version_update">Versiune %2$s, %1$s&lt;br&gt;Porniți din nou pentru a actualiza la versiunea %3$s</string>
-    <string name="home_adb_title">Începeți prin a vă conecta la un computer</string>
+    <string name="home_status_service_version_update">Versiune %2$s, %1$s&lt;br&gt;Pornește din nou pentru a actualiza la versiunea %3$s</string>
+    <string name="home_adb_title">Începe prin a te conecta la un computer</string>
     <string name="home_adb_button_view_help">Citește ajutorul</string>
     <string name="home_adb_button_view_command">Vizualizare comandă</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Există și alte considerații, mai întâi confirmă că ai citit ajutorul.</string>
@@ -11,7 +11,7 @@
     <string name="home_adb_dialog_view_command_button_send">Trimitere</string>
     <string name="home_wireless_adb_title">Pornește prin depanare fără fir</string>
     <string name="home_wireless_adb_description_pre_11">Înainte de Android 11, este necesară conectarea la un computer pentru a activa depanarea fără fir.</string>
-    <string name="home_wireless_adb_view_guide_button">Ghid pas cu pas</string>
+    <string name="home_wireless_adb_view_guide_button">Ghidul pas cu pas</string>
     <string name="dialog_adb_discovery">Se caută serviciul de depanare fără fir</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_adb_invalid_port">Portul este un număr întreg cuprins între 1 și 65535.</string>
@@ -26,7 +26,7 @@
     <string name="adb_pair_required">Parcurge mai întâi procesul de asociere.</string>
     <string name="development_settings">Opțiuni dezvoltator</string>
     <string name="notification_settings">Opțiuni de notificare</string>
-    <string name="adb_pairing_tutorial_title">Asociați Shizuku cu acest dispozitiv</string>
+    <string name="adb_pairing_tutorial_title">Asociază Shizuku cu acest dispozitiv</string>
     <string name="adb_pairing_tutorial_content_notification">O notificare de la Shizuku te va ajuta să finalizezi asocierea.</string>
     <string name="adb_pairing_tutorial_content_miui">Este posibil ca utilizatorii MIUI să fie nevoiți să schimbe stilul de notificare la „Android” în „Notificări” - „Panou de notificare” în setările sistemului.</string>
     <string name="adb_pairing_tutorial_content_miui_2">În caz contrar, este posibil să nu poți introduce codul de asociere din notificare.</string>
@@ -112,7 +112,7 @@
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Introdu codul în notificare pentru a finaliza asocierea.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Procesul de asociere necesită să interacționarea cu o notificare de la Shizuku. Permite lui Shizuku să afișeze notificări.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Unele sisteme (cum ar fi MIUI) nu permit aplicațiilor să acceseze rețeaua atunci când nu sunt vizibile, chiar dacă aplicația folosește serviciul din prim-plan ca standard. Dezactivarea funcțiilor de optimizare a bateriei pentru Shizuku pe astfel de sisteme este necesară.</string>
-    <string name="home_learn_more_description">Află cum să dezvolți cu Shizuku sau să obții aplicații folosind Shizuku</string>
+    <string name="home_learn_more_description">Află cum să dezvolți cu Shizuku</string>
     <string name="app_management_dialog_adb_is_limited_message">Este foarte posibil ca producătorul dispozitivului să limiteze permisiunea adb.&lt;p&gt;Este posibil să existe o soluție pentru acest sistem în &lt;b&gt;&lt;a href=\"%1$s\"&gt;acest document&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="terminal_tutorial_1_description">Dacă există fișiere cu același nume în dosarul selectat, acestea vor fi șterse.
 \n
@@ -122,9 +122,17 @@
     <string name="rish_description">Cu %1$s, în orice aplicație de terminal, vei putea conecta și interacționa cu shell-urile rulate de Shizuku. &lt;p&gt;Despre utilizarea detaliată %1$s, atinge pentru a vizualiza documentul.</string>
     <string name="settings_translation_contributors">Colaboratori de traduceri</string>
     <string name="settings_start_on_boot_summary">Pentru dispozitivele root-ate, Shizuku poate porni automat la pornire</string>
-    <string name="notification_channel_adb_pairing">Asociere de depanare fără fir</string>
+    <string name="notification_channel_adb_pairing">Asociere prin depanare fără fir</string>
     <string name="notification_adb_pairing_stop_searching">Oprire căutare</string>
     <string name="notification_adb_pairing_succeed_text">Poți porni serviciul Shizuku acum.</string>
     <string name="start_with_root_failed">Nu se poate porni serviciul deoarece permisiunea root nu este acordată sau acest dispozitiv nu este root-at.</string>
-    <string name="adb_pairing_tutorial_content_left_is_clickable">Va rugăm să luați la cunoştință că pe partea din stănga a opțiunii \"Depanare Wireless\" este click-abilă, apăsarea acesteia va deschide o pagina nouă. Este incorect să porneşti doar comutatorul din dreapta.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Reține că partea din stânga a opțiunii \"Depanare fără fir\" este click-abilă, apăsarea acesteia va deschide o pagina nouă. Este incorect să pornești doar comutatorul din dreapta.</string>
+    <string name="home_app_management_empty">Aplicațiile care au solicitat sau au declarat Shizuku se vor afișa aici.</string>
+    <string name="home_adb_is_limited_description">Producătorul dispozitivului are permisiuni adb limitate, iar aplicațiile care folosesc Shizuku nu vor funcționa corect. 
+\n
+\nDe obicei, această limitare poate fi ridicată prin ajustarea unor opțiuni din „Opțiuni pentru dezvoltatori”. Citește ajutorul pentru detalii despre cum să faci acest lucru.
+\n
+\nPoate fi necesar să repornești Shizuku pentru ca operațiunea să intre în vigoare.</string>
+    <string name="home_adb_is_limited_title">Trebuie să faci un pas suplimentar</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Încearcă să dezactivezi și să activezi „Depanare fără fir” dacă caută în continuare.</string>
 </resources>
