@@ -19,6 +19,7 @@ import rikka.html.text.HtmlCompat
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
 import rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME
+import rikka.shizuku.server.ktx.workerHandler
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -72,7 +73,7 @@ class RequestPermissionActivity : AppActivity() {
             }
         }
 
-        Shizuku.addBinderReceivedListenerSticky(listener)
+        Shizuku.addBinderReceivedListenerSticky(listener, workerHandler)
 
         return try {
             countDownLatch.await(5, TimeUnit.SECONDS)
@@ -82,6 +83,7 @@ class RequestPermissionActivity : AppActivity() {
             false
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

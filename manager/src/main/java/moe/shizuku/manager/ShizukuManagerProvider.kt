@@ -7,6 +7,7 @@ import moe.shizuku.manager.utils.Logger.LOGGER
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants.USER_SERVICE_ARG_TOKEN
 import rikka.shizuku.ShizukuProvider
+import rikka.shizuku.server.ktx.workerHandler
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -55,7 +56,7 @@ class ShizukuManagerProvider : ShizukuProvider() {
                     }
                 }
 
-                Shizuku.addBinderReceivedListenerSticky(listener)
+                Shizuku.addBinderReceivedListenerSticky(listener, workerHandler)
 
                 return try {
                     countDownLatch.await(5, TimeUnit.SECONDS)
