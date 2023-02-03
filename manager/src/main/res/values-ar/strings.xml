@@ -2,7 +2,7 @@
 <resources>
     <string name="home_status_service_version">الإصدار %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s ليس قيد التشغيل</string>
-    <string name="home_status_service_is_running">الإصدار %2$s, %1$s&lt;br&gt;البدء من جديد للتحديث إلى الإصدار %3$s</string>
+    <string name="home_status_service_is_running">%1$s قيد التشغيل</string>
     <string name="home_adb_title">البدء في الإتصال بالكمبيوتر</string>
     <string name="home_adb_button_view_help">قراءة التعليمات</string>
     <string name="home_adb_button_view_command">عرض الأمر</string>
