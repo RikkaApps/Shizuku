@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="terminal_tutorial_3_description">Tip: bigyan ng pahintulot na ma-execute ang %1$s at idagdag ito sa %2$s, pwede mong magamit nang direkta ang %1$s.</string>
+    <string name="terminal_tutorial_3_description">Tip: bigyan ng pahintulot na ma-execute ang %1$s at idagdag ito sa %2$s, pwede mong direktang magamit ang %1$s.</string>
     <string name="terminal_tutorial_3">At, ilipat ang mga file sa kung saan ito pwedeng ma-access ng terminal app mo, magagamit mo ang %1$s para magpaandar ng mga utos papuntang Shizuku.</string>
     <string name="terminal_tutorial_2_description">Halimbawa, kung gusto mong gamitin ang Shizuku sa %1$s, dapat palitan mo ang %2$s ng %3$s (ang package name ng %1$s ay %4$s).</string>
     <string name="terminal_tutorial_2">Tapos, guamit ng anumang editor ng teksto para buksan at baguhin ang %1$s.</string>
@@ -12,7 +12,7 @@
     <string name="home_terminal_description">Magpatakbo ng mga utos papuntang Shizuku gamit ang terminal app mo</string>
     <string name="home_terminal_title">Gamitin ang Shizuku sa mga terminal app</string>
     <string name="app_management_item_summary_requires_root">* kailangang patakbuhin ang Shizuku gamit ang root</string>
-    <string name="app_management_dialog_adb_is_limited_message">Posibleng nilimitahan ng gumawa ng device mo ang kakayahan ng adb.&lt;p&gt;Maaaring may solusyon para sa sistema mo sa &lt;b&gt;&lt;a href=\"%1$s\"&gt;sistemang ito&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_dialog_adb_is_limited_message">Posibleng nilimitahan ng gumawa ng device mo ang kakayahan ng adb.&lt;p&gt;Maaaring may solusyon para sa sistema mo sa &lt;b&gt;&lt;a href=\"%1$s\"&gt;dokumentong ito&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">Limitado ang pahintulot ng adb</string>
     <string name="home_adb_is_limited_description">Pinaghigpitan ng gumawa ng device mo ang kakayahan ng adb, kaya hindi gagana nang maayos ang mga app na gumagamit ng Shizuku.
 \n
@@ -21,7 +21,7 @@
 \nMaaaring kailanganin mong isara at buksan ulit ang Shizuku para umepekto ang opersayon.</string>
     <string name="home_adb_is_limited_title">May mga karagdagang hakbang kang dapat gawin</string>
     <string name="home_learn_more_description">Matuto kung paano mag-develop gamit ang Shizuku</string>
-    <string name="home_learn_more_title">Matutunan ang Shizuku</string>
+    <string name="home_learn_more_title">Matuto Pa Tungkol sa Shizuku</string>
     <string name="home_app_management_empty">Lalabas dito ang mga app na hiniling o idineklara ang Shizuku.</string>
     <string name="home_app_management_view_authorized_apps">Pindutin para pamahalaan ang mga awtorisadong app</string>
     <plurals name="home_app_management_authorized_apps_count">
@@ -38,7 +38,7 @@
     <string name="adb_pairing_tutorial_content_network">Kailangang ma-access ng Shizuku ang lokal na network. Kinokontrol ito ng pahintulot sa network.</string>
     <string name="adb_pairing_tutorial_content_finish">Bumalik sa Shizuku at simulan ang Shizuku.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Tandaan, ang kaliwang bahagi ng \"Wireless na pag-debug\" ay napipindot, nagbubukas ito ng bagong pahina. Mali kung pipindutin mo lang ang switch sa kanan.</string>
-    <string name="adb_pairing_tutorial_content_miui_2">Kung hindi, maaaring hindi mo mailalagay ang code ng pagpapares sa notipikasyon.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Kung hindi mo ito gagawin, maaaring hindi mo mailalagay ang code ng pagpapares sa notipikasyon.</string>
     <string name="adb_pairing_tutorial_content_miui">Maaaring kailangan ng mga gumagamit ng MIUI na gawing \"Android\" ang estilo ng notipikasyon sa \"Notification\" - \"Notification shade\" sa system settings.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Kailangan mong makisalamuha sa isang notipikasyon mula sa Shizuku para makumpleto ang proseso sa pagpapares. Mangyaring payagan ang Shizuku na magpadala ng mga notipikasyon.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Ilagay ang code sa notipikasyon para makumpleto ang pagpapares.</string>
@@ -66,22 +66,22 @@
     <string name="dialog_adb_invalid_port">Ang port ay isang integer mula 1 hanggang 65535.</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Mangyaring patayin at buksan ulit ang \"Wireless na pag-debug\" kung sige lang ito sa paghahanap.</string>
-    <string name="dialog_adb_discovery_message">Buksan ang \"Wireless na pag-debug\" sa \"Mga opsyon ng developer\". Awtomatikong namamatay ang \"Wireless na pag-debug\" kapag may pagbabago sa network.
+    <string name="dialog_adb_discovery_message">Buksan ang \"Wireless na pag-debug\" sa \"Mga opsyon ng developer\". Awtomatikong namamatay ang \"Wireless na pag-debug\" kapag may nagbago sa network.
 \n
 \nTandaan, huwag patayin ang \"Mga opsyon ng developer\" o \"Pag-debug ng USB\", mahihinto ang Shizuku.</string>
     <string name="dialog_adb_discovery">Hinahanap ang serbisyo ng wireless na pag-debug</string>
     <string name="home_wireless_adb_view_guide_button">Hakbang-hakbang na gabay</string>
     <string name="home_wireless_adb_description_pre_11">Kailangang kumonekta sa kompyuter para mabuksan ang Wireless na pag-debug sa Android 10 pababa.</string>
-    <string name="home_wireless_adb_description">Pwede mong buksan ang Wireless na pag-debug at simulan ang Shizuku direkta sa iyong device nang hindi kumokonekta sa kompyuter, sa Android 11 pataas.&lt;p&gt;Mangyaring sumangguni muna sa gabay.</string>
+    <string name="home_wireless_adb_description">Pwede mong buksan ang Wireless na pag-debug at simulan ang Shizuku direkta sa iyong device nang hindi kumokonekta sa kompyuter sa Android 11 pataas.&lt;p&gt;Mangyaring sumangguni muna sa gabay.</string>
     <string name="home_wireless_adb_title">Simulan gamit ang Wireless na pag-debug</string>
     <string name="home_adb_dialog_view_command_button_send">Ipadala</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopyahin</string>
-    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* May iba pang mga dapat maikonsidera, siguraduhin munang nabasa mo na ang gabay.</string>
-    <string name="home_adb_button_view_command">Tingnan ang utos</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* May iba pang mga dapat ikonsidera, siguraduhin munang nabasa mo na ang gabay.</string>
+    <string name="home_adb_button_view_command">Tingnan ang command</string>
     <string name="home_adb_button_view_help">Sumangguni sa gabay</string>
     <string name="home_adb_description">Kailngan mong gumamit ng adb para masimulan ang Shizuku kung walang root ang device mo (kailangang kumonekta sa kompyuter). Dapat ulitin ito tuwing nare-restart ang device mo. Mangyaring <b><a href="%1$s">sumangguni sa gabay</a></b>.</string>
     <string name="home_adb_title">Magsimula sa pamamagitan ng pagkonekta sa kompyuter</string>
-    <string name="home_status_service_version_update">Bersyon %2$s, %1$s&lt;br&gt;Ilunsad muli para maka-update patungong bersyon %3$s</string>
+    <string name="home_status_service_version_update">Bersyon %2$s, %1$s&lt;br&gt;Simulan ulit para maka-update patungong bersyon %3$s</string>
     <string name="home_status_service_version">Bersyon %2$s, %1$s</string>
     <string name="home_status_service_not_running">Hindi tumatakbo ang %1$s</string>
     <string name="home_status_service_is_running">Tumatakbo ang %1$s</string>
@@ -123,4 +123,15 @@
     <string name="permission_description">Payagan ang app na gamitin ang Shizuku.</string>
     <string name="permission_label">ma-access ang Shizuku</string>
     <string name="notification_adb_pairing_retry">Subukan ulit</string>
+    <string name="starter">Panimula</string>
+    <string name="start_with_root_failed">Hindi masimulan ang serbisyo sapagkat walang pahintulot sa root o hindi na-root ang device na ito.</string>
+    <string name="dialog_cannot_open_browser_title">Hindi mabuksan ang browser</string>
+    <string name="toast_copied_to_clipboard">Nakopya sa clipboard ang
+\n%s</string>
+    <string name="toast_copied_to_clipboard_with_text">Nakopya ang <b>%s</b> sa clipboard.</string>
+    <string name="dialog_legacy_not_support_title">Hindi sinusuportahan ng %1$s ang makabagong Shizuku (API v11+)</string>
+    <string name="dialog_legacy_not_support_message">Inihinto na ang suporta sa makalumang Shizuku (API v10-). Hindi na rin gagana ang makalumang Shizuku sa mga mas bagong bersyon ng Android.&lt;p&gt;Mangyaring ipaalam sa may-akda ng &lt;b&gt;%1$s&lt;/b&gt; na kailangan na nitong mag-update.</string>
+    <string name="dialog_requesting_legacy_title">Humihiling ng makalumang Shizuku ang %1$s</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Buksan ang Shizuku</string>
+    <string name="dialog_requesting_legacy_message">Suportado ng &lt;b&gt;%1$s&lt;/b&gt; ang makabagong Shizuku, pero humihiling ito nang makalumang Shizuku. Pakitingnan sa Shizuku app kung tumatakbo ba nang maayos ang Shizuku dahil baka ito ay dahil nagkakaproblema ang Shizuku.&lt;p&gt;Hindi na suportado ang makalumang Shizuku simula Marso 2019.</string>
 </resources>
