@@ -33,7 +33,7 @@
     <string name="app_management_item_summary_requires_root">* требуется Shizuku, запущенный с root правами</string>
     <string name="app_management_dialog_adb_is_limited_message">Возможно, что производитель вашего устройства ограничивает доступ к adb.&lt;p&gt;Решение для вашей системы может быть описано &lt;b&gt;&lt;a href=\"%1$s\"&gt;здесь&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">Доступ к adb ограничен</string>
-    <string name="home_learn_more_description">Узнайте, как начать разрабатывать с Shizuku или посмотрите примеры уже вышедших приложений, использующих Shizuku</string>
+    <string name="home_learn_more_description">Узнайте, как начать разрабатывать с Shizuku</string>
     <string name="home_learn_more_title">Узнать больше о Shizuku</string>
     <string name="home_app_management_view_authorized_apps">Нажмите для управления списком допущенных приложений</string>
     <plurals name="home_app_management_authorized_apps_count">
@@ -101,7 +101,7 @@
     <string name="terminal_tutorial_1">Сначала экспортируйте файлы в любое место на свое усмотрение. Там появятся два файла: %1$s и %2$s.</string>
     <string name="home_terminal_description">Запуск команд через Shizuku прямиком из любимых приложений-терминалов</string>
     <string name="home_terminal_title">Применение Shizuku в эмуляторах терминала</string>
-    <string name="home_wireless_adb_description">Начиная с Android 11 и выше, включать отладку по Wi-Fi и запускать Shizuku можно прямо с этого устройства, без соединения с компьютером.&lt;p&gt;Подробнее в пошаговой инструкции.</string>
+    <string name="home_wireless_adb_description">На Android 11 или выше Вы можете включить отладку по Wi-Fi без дополнительного ПО, без подключения к компьютеру. Пожалуйста, сперва просмотрите инструкцию</string>
     <string name="adb_pairing_tutorial_content_miui">На оболочке MIUI может потребоваться сменить параметр в пункте системных настроек «Уведомления» – «Стиль уведомлений» на «Android».</string>
     <string name="adb_pairing_tutorial_content_steps">Перейдите в «Для разработчиков» – «Отладка по Wi-Fi». Нажмите на «Подключить устройство с помощью кода подключения» и увидите шестизначный код.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Введите код в уведомление для завершения процедуры.</string>
@@ -128,4 +128,12 @@
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Некоторые системы (та же MIUI) не разрешают приложениям доступ к сети, когда они не на экране, даже если те в основе задействуют службу переднего плана. Пожалуйста, добавьте Shizuku в исключения алгоритмов оптимизации заряда батареи на таких системах.</string>
     <string name="settings_use_system_color">Палитра цветов из системы</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Обратите внимание, что левая часть опции \"Беспроводная отладка\" является кликабельной, нажатие на нее открывает новую страницу. Нажатие только на переключатель (справа) является неправильным.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Попробуй выключить и снова включить \"Отладка по Wi-Fi\", если поиск продолжается.</string>
+    <string name="home_app_management_empty">Приложения, которые запросили или задекларировали использование Shizuku будут отображаться здесь.</string>
+    <string name="home_adb_is_limited_description">Производитель вашего устройства ограничил права ADB, приложения использующие Shizuku будут работать не корректно.
+\n
+\nОбычно эти ограничения можно снять в настройках для разработчиков. Пожалуйста, прочитай раздел помощи, чтобы узнать как это сделать.
+\n
+\nВозможно Вам понадобится перезапустить Shizuku для применения изменений.</string>
+    <string name="home_adb_is_limited_title">Нужен дополнительный шаг</string>
 </resources>
