@@ -12,7 +12,7 @@
     <string name="home_adb_dialog_view_command_copy_button">Копіювати</string>
     <string name="dialog_cannot_open_browser_title">Не вдається запустити браузер</string>
     <string name="home_learn_more_title">Вивчіть Shizuku</string>
-    <string name="home_learn_more_description">Дізнайтеся, як розвиватися за допомогою Shizuku або отримувати додатки за допомогою Shizuku</string>
+    <string name="home_learn_more_description">Дізнайтеся, як розробляти з Shizuku</string>
     <string name="notification_service_start_failed">Помилка запуску служби Shizuku.</string>
     <string name="notification_service_start_no_root">Помилка запиту на root доступ.</string>
     <string name="notification_service_starting">Сервіс Shizuku запущено…</string>
@@ -32,8 +32,8 @@
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
     <string name="app_management_dialog_adb_is_limited_message">Можливо, ваш виробник пристрою лімітує дозвіл adb.&lt;p&gt;Можливо, є рішення для вашої системи у &lt;b&gt;&lt;a href=\"%1$s\"&gt;цьому документі&lt;/a&gt;&lt;/b&gt;.</string>
-    <string name="home_adb_description">Для пристроїв без root потрібно використовувати adb для запуску Shizuku (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка, <b><a href="%1$s">прочитайте довідку</a></b>.</string>
-    <string name="home_adb_title"><![CDATA[Запустіть/оновіть сервіс для adb]]></string>
+    <string name="home_adb_description">Для пристроїв без root потрібно використовувати ADB для запуску Shizuku (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка, <b><a href="%1$s">прочитайте довідку</a></b>.</string>
+    <string name="home_adb_title">Почніть з підключення до ПК</string>
     <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> скопійовано в буфер обміну.</string>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Натисніть для перегляду авторизованих додатків]]></string>
@@ -63,9 +63,9 @@
     <string name="dialog_adb_pairing_discovery">Пошук сервісу парування</string>
     <string name="dialog_adb_pairing_paring_code">Код парування</string>
     <string name="paring_code_is_wrong">Код парування неправильний.</string>
-    <string name="cannot_connect_port">Неможливо під\'єднатися до сервісу бездротового налагодження.</string>
+    <string name="cannot_connect_port">Неможливо під\'\'єднатися до сервісу бездротового налагодження.</string>
     <string name="dialog_wireless_adb_not_enabled">Налагодження через Wi-Fi не ввімкнено.
-\nЗверніть увагу, до Android 11, щоб ввімкнути налагодження через Wi-Fi, під\'єднання до комп\'ютеру обов\'язкове.</string>
+\nЗверніть увагу, до Android 11, щоб увімкнути налагодження через Wi-Fi, під\'\'єднання до ПК обов\'\'язкове.</string>
     <string name="dialog_adb_pairing_message">Будь ласка, почніть парування, виконавши такі кроки: \"Параметри розробника\" - \"Налагодження через Wi-Fi\" - \"Підключати пристрій за допомогою коду підключення\".
 \n
 \nПісля початку процесу парування, ви зможете ввести код парування.</string>
@@ -88,9 +88,9 @@
     <string name="settings_translation">Беріть участь у перекладі</string>
     <string name="settings_translation_summary">Допоможіть нам перекласти %s на вашу мову</string>
     <string name="notification_adb_pairing_succeed_title">Парування успішне</string>
-    <string name="terminal_tutorial_1_description">Якщо знайдено файли з таким же ім\'ям у вибраній папці, їх буде видалено. Функція експорту використовує SAF (Storage Access Framework).
+    <string name="terminal_tutorial_1_description">Файли з такою ж назвою у вибраній папці буде видалено.
 \n
-\nФункція експорту використовує SAF (Storage Access Framework). Були скарги на те, що MIUI ламає функції SAF. Якщо ви користуєтесь MIUI, вам потрібно розпакувати файл з apk-файлу Shizuku або завантажити з GitHub.</string>
+\nФункція експорту використовує SAF (Storage Access Framework). Були скарги на те, що MIUI ламає функції SAF. Якщо ви користуєтесь MIUI, вам потрібно розпакувати файл з apk-файлу Shizuku або завантажити його з GitHub.</string>
     <string name="notification_adb_pairing_retry">Спробувати ще раз</string>
     <string name="notification_adb_pairing_failed_title">Парування невдале</string>
     <string name="action_stop">Зупинити Shizuku</string>
@@ -122,10 +122,18 @@
         <item quantity="other">Авторизовано %d програм</item>
     </plurals>
     <string name="terminal_tutorial_1">Спочатку, експортуйте файли де вам потрібно. Ви побачите два файли, %1$s та %2$s.</string>
-    <string name="terminal_tutorial_2_description">Наприклад, якщо ви хочете використати Shizuku в %1$s, вам потрібно замінити %2$s на %3$s (%4$s це ім\'я пакету %1$s).</string>
+    <string name="terminal_tutorial_2_description">Наприклад, якщо ви хочете використати Shizuku в %1$s, вам потрібно замінити %2$s на %3$s (%4$s це назва пакету %1$s).</string>
     <string name="terminal_tutorial_3_description">Деякі поради: надайте %1$s дозвіл на виконання та додайте його в %2$s, ви зможете використовувати %1$s відразу.</string>
-    <string name="rish_description">З %1$s, в будь-якій програмі терміналу, ви можете під\'єднатися та взаємодіяти із запуском оболонки за допомогою Shizuku. &lt;p&gt;Про детальне використання %1$s, натисніть щоб переглянути документ.</string>
+    <string name="rish_description">З %1$s, в будь-якій програмі терміналу, ви зможете під\'\'єднатися та взаємодіяти з Shizuku. &lt;p&gt;Ви можете дізнатися більше про використання %1$s, натисніть тут щоб перегляньте документацію.</string>
     <string name="settings_translation_contributors">Співробітники перекладу</string>
     <string name="settings_start_on_boot">Запуск при завантаженні системи (root)</string>
     <string name="dialog_legacy_not_support_message">Підтримка старої версії Shizuku завершилася у березні 2019 року. Також, стара версія Shizuku не працює на нових версіях Android.&lt;p&gt;Будь ласка, попросіть оновитися у розробника &lt;b&gt;%1$s&lt;/b&gt;.</string>
+    <string name="home_app_management_empty">Додатки, що запросили або декларували використання Shizuku будуть відображені тут.</string>
+    <string name="home_adb_is_limited_description">Виробник вашого пристрою обмежив права ADB, додатки що використовую Shizuku будуть працювати некорректно.
+\n
+\nЗазвичай ці обмеження можна зняти змінивши налаштування в параметрах розробника. Будь ласка, прочитайте як це зробити в розділі \"Допомога\".
+\n
+\nМожливо потрібно буде перезапустити Shizuku.</string>
+    <string name="home_adb_is_limited_title">Потрібен ще один крок</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Будь ласка, спробуйте вимкнути та увімкнути \"Налагодження через Wi-Fi\", якщо пошук продовжується.</string>
 </resources>
