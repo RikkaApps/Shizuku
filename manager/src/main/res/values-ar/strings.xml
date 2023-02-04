@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_status_service_version">الإصدار %2$s, %1$s</string>
-    <string name="home_status_service_not_running">%1$s ليس قيد التشغيل</string>
-    <string name="home_status_service_is_running">%1$s قيد التشغيل</string>
-    <string name="home_adb_title">البدء في الإتصال بالكمبيوتر</string>
+    <string name="home_status_service_not_running">%1$s لا يعمل</string>
+    <string name="home_status_service_is_running">%1$s يعمل بنجاح</string>
+    <string name="home_adb_title">ابدأ بالاتصال بجهاز كمبيوتر</string>
     <string name="home_adb_button_view_help">قراءة التعليمات</string>
     <string name="home_adb_button_view_command">عرض الأمر</string>
     <string name="home_adb_dialog_view_command_copy_button">نسخ</string>
     <string name="home_adb_dialog_view_command_button_send">إرسال</string>
     <string name="home_status_service_version_update">الإصدار %2$s, %1$s&lt;br&gt;البدء من جديد للتحديث إلى الإصدار %3$s</string>
-    <string name="home_adb_description">للأجهزة التي ليس بها روت ، تحتاج إلى استخدام ADB لبدء شيزوكو (يتطلب اتصال الكمبيوتر). وتحتاج هذه العملية لتكرارها في كل مرة يتم إعادة تشغيل الجهاز. يرجى &lt;ب&gt; &lt;a href=\"٪1$s\"&gt; قراءة المساعدة &lt;/a&gt; &lt;/ B&gt;.</string>
+    <string name="home_adb_description">بالنسبة للأجهزة التي لا تحتوي على جذر ، تحتاج إلى استخدام adb لبدء Shizuku (يتطلب اتصال الكمبيوتر). يجب تكرار هذه العملية في كل مرة يتم فيها إعادة تشغيل الجهاز. يرجى <b><a href="%1$s"> قراءة التعليمات </a></b>.</string>
     <string name="dialog_adb_discovery_message">يرجى تمكين \"التصحيح اللاسلكي\" في \"خيارات المطور\". \"تصحيح لاسلكي\" يتم تعطيلها عندما تتغير الشبكة تلقائيا.
 \n
 \n ملاحظة، لا تعطل \"خيارات المطور\" أو \"تصحيح USB\"، أو سيتم إيقاف شيزوكو</string>
@@ -17,12 +17,12 @@
     <string name="adb_pairing">الاقتران</string>
     <string name="home_adb_dialog_view_command_message">font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* هناك بعض الاعتبارات الأخرى، يرجى تأكيد أنك قرأت التعليمات أولا.</string>
     <string name="home_wireless_adb_title">البدء باستخدام التصحيح اللاسلكي</string>
-    <string name="home_wireless_adb_description">على أندرويد ١١ وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء شيزوكو مباشرة من جهازك ، بدون الاتصال بالكمبيوتر.&lt;p&gt;يرجى الاطلاع على الدليل المفصل خطوة بخطوة أولاً.</string>
+    <string name="home_wireless_adb_description">على أندرويد 11 وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء شيزوكو مباشرة من جهازك ، بدون الاتصال بالكمبيوتر.&lt;p&gt;يرجى الاطلاع على الدليل المفصل خطوة بخطوة أولاً.</string>
     <string name="dialog_adb_discovery">البحث عن خدمة التصحيح اللاسلكي</string>
     <string name="dialog_adb_invalid_port">المنفذ هو عدد صحيح يتراوح من 1 إلى 65535.</string>
     <string name="home_wireless_adb_view_guide_button">‌دليل خطوة بخطوة</string>
     <string name="dialog_adb_pairing_title">إقران مع الجهاز</string>
-    <string name="home_wireless_adb_description_pre_11">على الأجهزة الأقدم من أندرويد ١١ ، يلزم الاتصال بجهاز كمبيوتر لتمكين تصحيح الأخطاء اللاسلكي.</string>
+    <string name="home_wireless_adb_description_pre_11">على الأجهزة الأقدم من أندرويد 11 ، يلزم الاتصال بجهاز كمبيوتر لتمكين تصحيح الأخطاء اللاسلكي.</string>
     <string name="dialog_adb_pairing_discovery">جاري البحث على جهاز للإتصال</string>
     <string name="translation_contributors">‮المشاركين في الترجمة</string>
     <string name="settings_startup">بدء</string>
@@ -58,11 +58,11 @@
     <string name="home_app_management_view_authorized_apps">انقر لإدارة التطبيقات المصرح بها</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="zero">تطبيق %d معتمد</item>
-        <item quantity="one"/>
-        <item quantity="two"/>
-        <item quantity="few"/>
+        <item quantity="one">تطبيقات %d معتمدة</item>
+        <item quantity="two">تطبيقات %d معتمدة</item>
+        <item quantity="few">تطبيقات %d معتمدة</item>
         <item quantity="many">تطبيقات %d معتمدة</item>
-        <item quantity="other"/>
+        <item quantity="other">تطبيقات %d معتمدة</item>
     </plurals>
     <string name="home_app_management_title">الإدارة التطبيقية</string>
     <string name="home_root_button_restart">إعادة بدء تشغيل</string>
@@ -98,6 +98,45 @@
     <string name="paring_code_is_wrong">رمز الاقتران خاطئ.</string>
     <string name="dialog_adb_pairing_paring_code">كود الاقتران</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">يرجى محاولة تعطيل \"التصحيح اللاسلكي\" وتمكينه إذا استمر في البحث.</string>
-    <string name="dialog_stop_message">Shizuku service will be stopped.</string>
-    <string name="action_stop">Stop Shizuku</string>
+    <string name="dialog_stop_message">سيتم إيقاف خدمة Shizuku.</string>
+    <string name="action_stop">إيقاف Shizuku</string>
+    <string name="notification_service_starting">بدأت خدمة Shizuku…</string>
+    <string name="notification_adb_pairing_service_found_title">تم العثور على خدمة الاقتران</string>
+    <string name="permission_label">الوصول إلى Shizuku</string>
+    <string name="permission_description">اسمح للتطبيق باستخدام Shizuku.</string>
+    <string name="permission_warning_template">هل تريد السماح لـ <b>%1$s</b> بـ %2$s؟</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">افتح Shizuku</string>
+    <string name="settings_start_on_boot">ابدأ عند التمهيد (الجذر)</string>
+    <string name="action_about">حـول</string>
+    <string name="notification_adb_pairing_succeed_title">تم الاقتران بنجاح</string>
+    <string name="dialog_requesting_legacy_message">يحتوي &lt;b&gt; %1$s &lt;/b&gt; على دعم Shizuku الحديث ، لكنه يتطلب شيزوكو القديمة. قد يكون هذا بسبب عدم تشغيل Shizuku ، يرجى التحقق في تطبيق Shizuku. &lt;p&gt; تم إيقاف Legacy Shizuku منذ آذار (مارس) 2019.</string>
+    <string name="settings_translation_summary">ساعدنا في ترجمة %s إلى لغتك</string>
+    <string name="settings_start_on_boot_summary">بالنسبة للأجهزة ذات الجذور ، يمكن لـ Shizuku البدء تلقائيًا عند التمهيد</string>
+    <string name="settings_use_system_color">استخدم لون سمة النظام</string>
+    <string name="notification_service_start_no_root">فشل في طلب إذن الجذر.</string>
+    <string name="notification_adb_pairing_searching_for_service_title">البحث عن خدمة الاقتران</string>
+    <string name="notification_adb_pairing_succeed_text">يمكنك بدء خدمة Shizuku الآن.</string>
+    <string name="toast_copied_to_clipboard_with_text">تم نسخ <b>%s</b> إلى الحافظة.</string>
+    <string name="notification_channel_service_status">بدء حالة الخدمة</string>
+    <string name="notification_service_start_failed">فشل بدء تشغيل خدمة Shizuku.</string>
+    <string name="notification_working">يعمل…</string>
+    <string name="start_with_root_failed">لا يمكن بدء الخدمة لأنه لم يتم منح إذن الجذر أو أن هذا الجهاز ليس مزوّدًا بحق الوصول إلى الجذر.</string>
+    <string name="dialog_requesting_legacy_title">يطلب %1$s تطبيق Shizuku القديم</string>
+    <string name="dialog_legacy_not_support_message">تم إهمال Legacy Shizuku منذ آذار (مارس) 2019. أيضًا ، لا يعمل Shizuku القديم على أنظمة Android الأحدث. &lt;p&gt; يُرجى مطالبة مطور &lt;b&gt; %1$s &lt;/b&gt; بالتحديث.</string>
+    <string name="settings_translation_contributors">المساهمون في الترجمة</string>
+    <string name="settings_translation">شارك في الترجمة</string>
+    <string name="about_view_source_code">عرض التعليمات البرمجية المصدر في %s</string>
+    <string name="notification_channel_adb_pairing">اقتران التصحيح اللاسلكي</string>
+    <string name="notification_adb_pairing_input_paring_code">أدخل رمز الاقتران</string>
+    <string name="notification_adb_pairing_stop_searching">توقف عن البحث</string>
+    <string name="notification_adb_pairing_working_title">الاقتران قيد التقدم</string>
+    <string name="notification_adb_pairing_failed_title">فشل الاقتران</string>
+    <string name="notification_adb_pairing_retry">أعد المحاولة</string>
+    <string name="grant_dialog_button_allow_always">السماح في كل وقت</string>
+    <string name="grant_dialog_button_deny">منع</string>
+    <string name="starter">مفتاح التشغيل</string>
+    <string name="dialog_cannot_open_browser_title">لا يمكن بدء المتصفح</string>
+    <string name="toast_copied_to_clipboard">%s
+\n تم نسخه إلى الحافظة.</string>
+    <string name="dialog_legacy_not_support_title">%1$s لا يدعم Shizuku الحديثة</string>
 </resources>
