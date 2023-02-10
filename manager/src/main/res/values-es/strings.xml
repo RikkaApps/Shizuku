@@ -6,4 +6,6 @@
     <string name="home_status_service_not_running">%1$s no se está ejecutando</string>
     <string name="home_status_service_is_running">%1$s se está ejecutando</string>
     <string name="translation_contributors">Nápoles</string>
+    <string name="home_wireless_adb_description">En Android 11 o superior, se puede habilitar Depuración inalámbrica e iniciar Shizuku directamente desde el dispositivo sin la necesidad de una computadora.&lt;p&gt;Por favor revisa la Guía paso a paso.</string>
+    <string name="home_adb_description">Para dispositivos sin acceso root, se necesita ADB para ejecutar Shizuku (requiere conexión a una computadora). Este proceso debe repetirse cada vez que el dispositivo sea reiniciado.Favor <b><a href="%1$s">leer la guía</a></b>.</string>
 </resources>
