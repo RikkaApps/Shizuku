@@ -20,7 +20,7 @@
     <string name="action_stop">Hentikan Shizuku</string>
     <string name="notification_service_start_no_root">Gagal mendapat izin root.</string>
     <string name="start_with_root_failed">Layanan tidak bisa dimulai karena aplikasi tidak mendapat izin root atau perangkat tidak memiliki akses root.</string>
-    <string name="translation_contributors"></string>
+    <string name="translation_contributors">laymoth</string>
     <string name="home_status_service_is_running">%1$s aktif</string>
     <string name="home_status_service_not_running">%1$s tidak berjalan</string>
     <string name="home_status_service_version">Versi %2$s, %1$s</string>
@@ -132,5 +132,5 @@
 \nAnda mungkin perlu memulai ulang Shizuku agar operasi dapat diterapkan.</string>
     <string name="home_adb_is_limited_title">Anda perlu mengambil langkah ekstra</string>
     <string name="home_app_management_empty">Aplikasi yang telah meminta atau mendeklarasikan Shizuku akan ditampilkan di sini.</string>
-    <string name="dialog_adb_discovery_message_toggle_wireless_debugging"></string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Coba untuk matikan dan hidupkan kembali \"Debug nirkabel\" jika terus mencari.</string>
 </resources>
