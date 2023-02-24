@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dialog_wireless_adb_not_enabled">Kablosuz hata ayıklama etkin değil.
-\nNot, Android 11\'den önce kablosuz hata ayıklamayı etkinleştirmek için bilgisayar bağlantısının şart olduğunu unutmayın.</string>
+\nNot, Android 11’den önce kablosuz hata ayıklamayı etkinleştirmek için bilgisayar bağlantısının şart olduğunu unutmayın.</string>
     <string name="cannot_connect_port">Kablosuz hata ayıklama hizmeti bağlanamıyor.</string>
     <string name="paring_code_is_wrong">Eşleme kodu yanlış.</string>
     <string name="dialog_adb_pairing_paring_code">Eşleşme kodu</string>
@@ -20,7 +20,7 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Başka hususlar da var, lütfen önce yardımı okuduğunuzu onaylayın.</string>
     <string name="home_adb_button_view_command">Komutu görüntüle</string>
     <string name="home_adb_button_view_help">Yardımı oku</string>
-    <string name="home_adb_description">Rootsuz cihazlar için Shizuku\'yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlem, cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen &lt;b&gt;&lt;a href=\"%1$s\"&gt;yardımı okuyun&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_description">Rootsuz cihazlar için Shizuku’yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlemin cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen <b><a href="%1$s">yardımı okuyun</a></b>.</string>
     <string name="home_adb_title">Bilgisayara bağlanarak başlatın</string>
     <string name="home_status_service_version_update">Sürüm %2$s, %1$s&lt;br&gt;Sürüm %3$s, güncelleştirmek için yeniden başlatın</string>
     <string name="home_status_service_version">Sürüm %2$s, %1$s</string>
@@ -45,7 +45,8 @@
 \n
 \nEşleştirme işlemi başladıktan sonra eşleştirme kodunu girebilirsiniz.</string>
     <string name="translation_contributors">İlker Binzet (ilker.binzet@gmail.com)
-\nUmut Songur (umutsongur19@gmail.com)</string>
+\nUmut Songur (umutsongur19@gmail.com)
+\ncroxz900 (croxz.900@gmail.com)</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku\'yu aç</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; yeni Shizuku desteğine sahip, ama mevcut Shizuku talep ediyor. Shizuku çalışmıyor çünkü Shizuku uygulaması&lt;p&gt;Mart 2019\'dan bu yana kaldırılmıştır.</string>
     <string name="dialog_requesting_legacy_title">%1$s, mevcut Shizuku gerektiriyor</string>
@@ -76,10 +77,10 @@
     <string name="settings_user_interface">Görünüm</string>
     <string name="settings_language">Dil</string>
     <string name="settings_title">Ayarlar</string>
-    <string name="app_management_item_summary_requires_root">Shizuku\'nun root ile çalıştırılması gerekli</string>
+    <string name="app_management_item_summary_requires_root">* Shizuku’nun root ile çalıştırılması gerekli</string>
     <string name="app_management_dialog_adb_is_limited_message">Cihaz üreticinizin adb iznini sınırlaması son derece olasıdır. &lt;p&gt;Bu belgede&lt;b&gt;&lt;a href=\"%1$s\"&gt;sisteminiz için bir çözüm olabilir&lt;/a&gt;&lt;/b&gt;.</string>
-    <string name="app_management_dialog_adb_is_limited_title">ADB\'nin izni sınırlandırıldı</string>
-    <string name="home_learn_more_description">Shizuku ile nasıl uygulama geliştireceğinizi öğrenin.</string>
+    <string name="app_management_dialog_adb_is_limited_title">ADB’nin izni sınırlıdır</string>
+    <string name="home_learn_more_description">Shizuku ile nasıl uygulama geliştireceğinizi öğrenin</string>
     <string name="home_learn_more_title">Daha fazlasını öğren</string>
     <string name="home_app_management_view_authorized_apps">Yetkilendirilmiş uygulamaları yönetmek için dokunun</string>
     <string name="settings_start_on_boot_summary">Rootlu cihazlar için, Shizuku sistem açılışı sırasında otomatik olarak başlayabilir</string>
@@ -90,25 +91,25 @@
     <string name="terminal_tutorial_3_description">Bazı ipuçları: %1$s\'e yürütme izni verin ve %2$s\'a ekleyin, %1$s\'i doğrudan kullanabileceksiniz.</string>
     <string name="home_wireless_adb_description">Android 11 ve üzeri sürümlerde, Kablosuz hata ayıklama ve Shizuku\'yu cihazınızdan bir bilgisayara bağlanmadan direkt aktif edebilirsiniz.&lt;p&gt;Lütfen öncelikle adım adım kılavuz\'u inceleyin.</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI kullanıcılarının sistem ayarlarında \"Bildirim\" - \"Bildirim gölgesi\"nden bildirim stilini \"Android\" olarak değiştirmeleri gerekebilir.</string>
-    <string name="home_terminal_title">Shizuku\'yu terminal uygulamalarında kullanın</string>
+    <string name="home_terminal_title">Shizuku’yu terminal uygulamalarında kullanın</string>
     <string name="home_terminal_description">Sevdiğiniz terminal uygulamalarında Shizuku aracılığıyla komutları çalıştırın</string>
     <string name="terminal_tutorial_1">İlk olarak, dosyaları istediğiniz yere dışa aktarın. İki dosya bulacaksınız, %1$s ve %2$s.</string>
     <string name="terminal_tutorial_1_description">Seçilen klasörde aynı ada sahip dosyalar varsa bunlar silinecektir.
 \n
-\nDışa aktarma işlevi SAF\'yi (Depolama Erişim Çerçevesi) kullanır. MIUI\'nin SAF işlevlerini bozduğu bildirildi. MIUI kullanıyorsanız, dosyayı Shizuku\'nun apk\'sinden çıkarmanız veya GitHub\'dan indirmeniz gerekebilir.</string>
+\nDışa aktarma işlevi SAF’yi (Depolama Erişim Çerçevesi) kullanır. MIUI’ın SAF işlevlerini bozduğu bildirildi. MIUI kullanıyorsanız, dosyayı Shizuku’nun apk’sinden çıkarmanız veya GitHub’dan indirmeniz gerekebilir.</string>
     <string name="terminal_export_files">Dosyaları dışa aktar</string>
-    <string name="adb_pairing_tutorial_content_notification">Shizuku\'dan bir bildirim eşleştirmeyi tamamlamanıza yardım edecek.</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizuku’dan bir bildirim eşleştirmeyi tamamlamanıza yardım edecek.</string>
     <string name="adb_pairing_tutorial_content_steps">\"Geliştirici Seçenekleri\" - \"Kablosuz hata ayıklama\" girin. \"Cihazı eşleştirme kodu ile eşleştir\"e dokunun, altı haneli bir kod göreceksiniz.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">Eşleştirmeyi tamamlamak için kodu bildirime girin.</string>
     <string name="rish_description">%1$s ile herhangi bir terminal uygulamasında Shizuku\'nun shell run\'larına bağlanabilir ve bunlarla etkileşim kurabilirsiniz. &lt;p&gt;%1$s ayrıntılı kullanımı hakkında, belgeyi görüntülemek için dokunun.</string>
-    <string name="adb_pairing_tutorial_title">Shizuku\'yu cihazınızla eşleştirin</string>
-    <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s\'yi deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku\'nun yerini alacak. %2$s\'yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
+    <string name="adb_pairing_tutorial_title">Shizuku’yu cihazınızla eşleştirin</string>
+    <string name="home_root_description_sui">Magisk kullanıyorsanız, %1$s’yi deneyebilirsiniz. Kök kullanıcıları için sonunda Shizuku’nun yerini alacak. %2$s’yi kullanmak için mevcut uygulamaların biraz değişmesi gerektiğini unutmayın.</string>
     <string name="notification_settings">Bildirim seçenekleri</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">Eşleştirme işlemi, Shizuku\'dan gelen bir bildirimle etkileşim kurmanızı gerektirir. Lütfen Shizuku\'nun bildirim göndermesine izin verin.</string>
-    <string name="terminal_tutorial_2">Ardından, %1$s\'i açıp düzenlemek için herhangi bir metin düzenleyiciyi kullanın.</string>
+    <string name="terminal_tutorial_2">Ardından, %1$s’i açıp düzenlemek için herhangi bir metin düzenleyiciyi kullanın.</string>
     <string name="terminal_tutorial_2_description">Örneğin, Shizuku\'yu %1$s içinde kullanmak istiyorsanız, %2$s\'yi %3$s ile değiştirmelisiniz (%4$s, %1$s paketinin adıdır).</string>
     <string name="terminal_tutorial_3">Son olarak, dosyaları terminal uygulamanızın erişebileceği bir yere taşıyın, Shizuku aracılığıyla komutları çalıştırmak için %1$s kullanabileceksiniz.</string>
-    <string name="home_wireless_adb_description_pre_11">Android 11 ve önceki sürümlerde, Kablosuz hata ayıklama\'yı aktif etmek için bir bilgisayara bağlanmak gereklidir.</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 ve önceki sürümlerde, Kablosuz hata ayıklama’yı aktif etmek için bir bilgisayara bağlanmak gereklidir.</string>
     <string name="home_wireless_adb_view_guide_button">Adım adım kılavuz</string>
     <string name="adb_pairing_tutorial_content_finish">Shizuku\'ya geri dönün ve Shizuku\'yu başlatın.</string>
     <string name="notification_channel_adb_pairing">Kablosuz hata ayıklama eşleştirmesi</string>
@@ -123,10 +124,16 @@
     <string name="notification_adb_pairing_retry">Yeniden dene</string>
     <string name="permission_description">Uygulamanın Shizuku\'yu kullanmasına izin verin.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Aksi takdirde, bildirimden eşleştirme kodunu giremeyebilirsiniz.</string>
-    <string name="adb_pairing_tutorial_content_network">Shizuku\'nun yerel ağa erişmesi gerekiyor. Ağ izni tarafından kontrol edilir.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku’nun yerel ağa erişmesi gerekiyor. Ağ izni tarafından kontrol edilir.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Lütfen, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmının tıklanabilir olduğunu, dokunulduğunda yeni bir sayfa açılacağını unutmayın. Yalnızca sağdaki düğmeyi açmak yanlıştır.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Bazı sistemler (MIUI gibi), uygulama standart olarak ön plan hizmetini kullansa bile, arka planda çalıştıklarında ağa erişmesine izin vermez. Lütfen bu tür sistemlerde Shizuku için pil optimizasyon özelliklerini devre dışı bırakın.</string>
     <string name="settings_use_system_color">Sistem tema rengini kullan</string>
     <string name="home_adb_is_limited_title">Fazladan bi adım daha yapmanız gerekiyor</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Eğer sürekli arıyorsa lütfen \"Wireless Debugging\" ayarını kapatıp açmayı deneyin.</string>
+    <string name="home_app_management_empty">Shizuku iznine ihtiyaç duyan uygulamalar burada gösterilir.</string>
+    <string name="home_adb_is_limited_description">Cihaz üreticiniz adb izinlerini kısıtladığı için Shizuku kullanan uygulamalar düzgün çalışmayacaktır. 
+\n 
+\nGenellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değiştirilerek kaldırılabilir. Bunun nasıl yapılacağına ilişkin ayrıntılar için lütfen yardımı okuyun. 
+\n 
+\nİşlemin etkili olabilmesi için Shizuku yeniden başlatılmalı.</string>
 </resources>
