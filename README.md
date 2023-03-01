@@ -72,7 +72,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 - Clone with `git clone --recurse-submodules`
 - Run gradle task `:manager:assembleDebug` or `:manager:assembleRelease`
 
-The `:manager:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug the server.
+The `:manager:assembleDebug` task generates a debuggable server. You can attach a debugger to `shizuku_server` to debug the server. Be aware that, in Android Studio, "Run/Debug congfigurations" - "Always install with package manager" should be checked, so that the server will use the latest code.
 
 ## License
 
