@@ -8,4 +8,66 @@
     <string name="translation_contributors">Nápoles</string>
     <string name="home_wireless_adb_description">En Android 11 o superior, se puede habilitar Depuración inalámbrica e iniciar Shizuku directamente desde el dispositivo sin la necesidad de una computadora.&lt;p&gt;Por favor revisa la Guía paso a paso.</string>
     <string name="home_adb_description">Para dispositivos sin acceso root, se necesita ADB para ejecutar Shizuku (requiere conexión a una computadora). Este proceso debe repetirse cada vez que el dispositivo sea reiniciado.Favor <b><a href="%1$s">leer la guía</a></b>.</string>
+    <string name="home_adb_button_view_help">Leer la ayuda</string>
+    <string name="home_adb_button_view_command">Ver comando</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Existen algunas otras consideraciones, por favor confirme que usted haya leído la ayuda primero.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Copiar</string>
+    <string name="home_adb_dialog_view_command_button_send">Enviar</string>
+    <string name="home_wireless_adb_title">Iniciar vía Depuración inalámbrica</string>
+    <string name="home_wireless_adb_view_guide_button">Guía paso-a-paso</string>
+    <string name="dialog_adb_discovery">Buscando servicio de depuración inalámbrica</string>
+    <string name="adb_pairing">Emparejar</string>
+    <string name="home_root_title">Iniciar (solo si tiene root)</string>
+    <string name="home_root_description_sui">Si esta usando Magisk, puedes probar %1$s. Para usuarios de root, esto eventualmente reemplazará Shizuku. Nota, aplicaciones existentes necesitan cambiar un poco para usar %2$s.</string>
+    <string name="home_root_button_start">Iniciar</string>
+    <string name="home_root_button_restart">Reiniciar</string>
+    <string name="home_app_management_title">Gestión de aplicaciones</string>
+    <string name="home_app_management_view_authorized_apps">Toque para administrar aplicaciones autorizadas</string>
+    <string name="home_learn_more_description">Aprenda como desarrollar con Shizuku o consiga aplicaciones con Shizuku</string>
+    <string name="app_management_item_summary_requires_root">* requiere que Shizuku se ejecute con root</string>
+    <string name="app_management_dialog_adb_is_limited_message">Es muy posible que el fabricante de su dispositivo haya limitado el permiso de ADB.&lt;p&gt;Puede que encuentre una solución para su sistema en &lt;b&gt;&lt;a href=\"%1$s\"&gt;este documento&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_is_limited_description">El fabricante de su dispositivo ha restringido los permisos ADB y las aplicaciones que usan Shizuku no funcionarán correctamente.
+\n
+\nUsualmente, estas limitaciones pueden deshacerse con algunos ajustes en \"Opciones para desarrolladores\". Por favor lea la ayuda para mas detalles sobre como hacerlo.
+\n
+\nTal vez necesite reiniciar Shizuku para que la operación surta efecto.</string>
+    <string name="home_terminal_title">Usar Shizuku en apps de terminal</string>
+    <string name="home_terminal_description">Ejecute comandos atravez de Shizuku en las aplicaciones de terminal que mas le gusten</string>
+    <string name="home_adb_is_limited_title">Necesitas dar un paso más</string>
+    <string name="dialog_adb_pairing_title">Emparejar con dispositivo</string>
+    <string name="dialog_adb_pairing_discovery">Buscando servicio de emparejamiento</string>
+    <string name="dialog_adb_pairing_paring_code">Clave de emparejamiento</string>
+    <string name="paring_code_is_wrong">Clave de emparejamiento errónea.</string>
+    <string name="cannot_connect_port">No se pudo conectar al servicio de depuración inalámbrica.</string>
+    <string name="adb_pairing_requires_multi_window">Favor entre en modo de pantalla dividida (multiventana) primero.</string>
+    <string name="adb_pairing_requires_multi_window_reason">El sistema requiere que el dialogo de vinculación este siempre visible, el modo \"pantalla dividida\" es la única forma de tener visible esta aplicación y el dialogo del sistema visible al mismo tiempo.</string>
+    <string name="adb_error_key_store">No fue posible generar la clave de la depuración inalámbrica.
+\nEsto podría ser a causa de que el mecanismo de almacenamiento de claves (KeyStore) de este dispositivo este roto.</string>
+    <string name="adb_pair_required">Por favor, ve al paso de vinculación primero.</string>
+    <string name="development_settings">Opciones para desarrolladores</string>
+    <string name="notification_settings">Opciones de notificación</string>
+    <string name="adb_pairing_tutorial_title">Vincular Shizuku con tu dispositivo</string>
+    <string name="adb_pairing_tutorial_content_steps">Entre en \"Opciones para desarrolladores\" - \"Depuración inalámbrica\". Toque en \"Vincular dispositivo con código de sincronización\", usted verá un código de seis dígitos.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Introduzca el código en la notificación para concretar la vinculación.</string>
+    <string name="adb_pairing_tutorial_content_miui">Usuarios de MIUI podrían necesitar cambiar el estilo de notificaciones por \"Android\" en \"Notificaciones\" - \"Barra de notificaciones\" dentro de los ajustes de sistema.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">De otra manera, tal vez no puedas introducir el código de vinculación en la notificación.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku necesita acceder a la red local. Esto es controlado por el permiso de acceso a la red.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vuelva a Shizuku e inicie Shizuku.</string>
+    <string name="home_wireless_adb_description_pre_11">Para versiones anteriores a Android 11, se necesita conectar a una computadora para habilitar la Depuración inalámbrica.</string>
+    <string name="dialog_adb_discovery_message">Por favor activa \"Depuración inalámbrica\" en \"Opciones de Desarrollador\". \" Depuración inalámbrica\" se desactiva automáticamente cuando la red cambia.
+\n
+\nNota, no deshabilite las \"Opciones de Desarrollador\" o \"Depuración USB\", de lo contrario, Shizuku se detendrá.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Por favor, intente deshabilitar y volver a habilitar \"Depuración inalámbrica\" si es que no deja de seguir en búsqueda.</string>
+    <string name="dialog_wireless_adb_not_enabled">La Depuración inalámbrica no esta habilitada.
+\nNota, versiones anteriores a Android 11, para habilitar depuración inalámbrica, la conexión a una computadora es requerida.</string>
+    <string name="dialog_adb_pairing_message">Por favor empiece el vinculamiento con los siguientes pasos: \"Opciones para desarrolladores\" - \"Depuración inalámbrica\" - \"Vincular dispositivo con código de sincronización\".
+\n
+\nDespués de que el proceso de vinculación empiece, usted podrá introducir el código de sincronización\".</string>
+    <string name="adb_pairing_tutorial_content_notification">Una notificación de Shizuku te ayudará a completar la vinculación.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">El proceso de vinculación requiere que usted interactúe con las notificaciones de Shizuku. Por favor, permita que Shizuku pueda lanzar notificaciones.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Nótese que, la parte izquierda de la opción \"Depuración inalámbrica\" es cliqueable, si lo toca accederá a mas opciones. Solo tocar el interruptor de la derecha no es suficiente.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Algunos sistemas (como MIUI) deshabilitan el acceso a la red de aplicaciones cuando estas no están visibles, aún cuando estas usen servicios en segundo plano como estándar. Por favor deshabilite la Optimización de batería para Shizuku en estos sistemas.</string>
+    <string name="home_root_description">Además, Shizuku puede iniciarse automáticamente al arrancar el sistema. Si no es así, por favor compruebe si su sistema o si herramientas de terceros no han restringido Shizuku. &lt;br&gt;Puede consultar en %s.</string>
+    <string name="home_learn_more_title">Aprenda sobre Shizuku</string>
+    <string name="app_management_dialog_adb_is_limited_title">El permiso de ADB es limitado</string>
 </resources>
