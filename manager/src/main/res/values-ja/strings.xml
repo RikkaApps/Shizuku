@@ -32,7 +32,7 @@
     <string name="home_learn_more_title">Shizukuについて学ぶ</string>
     <string name="home_root_button_start">開始</string>
     <string name="home_root_button_restart">再起動</string>
-    <string name="home_root_description">また、起動時にShizukuを自動的に起動することもできます。もし、起動しない場合は、システムやサードパーティのツールがShizukuを制限していないか確認してください。&lt;br&gt;%sを参照することができます。</string>
+    <string name="home_root_description">また、起動時にShizukuを自動的に起動することもできます。もし、起動しない場合は、システムやサードパーティのツールがShizukuを制限していないか確認してください。&lt;br&gt;一部古い情報ですが%sを参考にしてください。</string>
     <string name="adb_pair_required">まずはペアリングの手順を行ってください。</string>
     <string name="development_settings">開発者向けオプション</string>
     <string name="home_root_title">開始(Root化された端末の場合のみ)</string>
@@ -99,7 +99,7 @@
     <string name="starter">起動</string>
     <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
     <string name="rish_description">%1$sを使えば、任意のターミナルアプリで、Shizukuが実行するシェルに接続し、対話することができます。&lt;p&gt;詳しい使い方については、%1$sをタップするとドキュメントが表示されます。</string>
-    <string name="home_wireless_adb_description">Android 11以上では、ワイヤレスデバッグを有効にして、コンピュータに接続することなく、デバイスから直接Shizukuを起動することができます。&lt;p&gt;詳しくはガイドをご覧ください。</string>
+    <string name="home_wireless_adb_description">Android 11以上ではワイヤレスデバッグを有効にして、コンピュータに接続することなくデバイスから直接Shizukuを起動できます。&lt;p&gt;詳しくはガイドをご覧ください。</string>
     <string name="notification_settings">通知オプション</string>
     <string name="home_wireless_adb_description_pre_11">Android 11以前では、ワイヤレスデバッグを有効にするためにパソコンとの接続が必要です。</string>
     <string name="home_wireless_adb_view_guide_button">ガイド</string>
@@ -132,5 +132,5 @@
 \n通常､ この制限は「開発者向けオプション」のいくつかの項目を調整することで解除できます。これを行う方法の詳細については､ ヘルプをお読みください。
 \n
 \n操作を有効にするために､ Shizukuを再起動する必要がある場合があります。</string>
-    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">検索され続ける場合は、「ワイヤレスデバッグ」の無効化と有効化を切り替えることを試してください。</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">検索され続ける場合は、「ワイヤレスデバッグ」の無効化と有効化をしてみてください。</string>
 </resources>
