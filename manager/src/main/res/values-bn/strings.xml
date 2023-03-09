@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_adb_dialog_view_command_copy_button">নকল</string>
+    <string name="home_adb_button_view_command">কমান্ড প্রদর্শন করুন</string>
+    <string name="home_adb_button_view_help">সহযোগিতা নিন</string>
+    <string name="home_adb_title">একটি কম্পিউটার এ সংযোগ প্রদানের মাধ্যমে শুরু করুন</string>
+    <string name="home_status_service_version_update">সংস্করণ %2$s, %1$s&lt;br&gt; %3$s সংস্করণে নবায়ন করতে আবার শুরু করুন</string>
+    <string name="home_status_service_version">সংস্করণ %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s চলছে না</string>
+    <string name="home_status_service_is_running">%1$s চলমান</string>
+    <string name="translation_contributors">অনুবাদকগণ</string>
+</resources>
