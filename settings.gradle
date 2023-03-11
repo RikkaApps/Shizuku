@@ -35,7 +35,7 @@ dependencyResolutionManagement {
             library('hidden-compat', 'dev.rikka.hidden', 'compat').versionRef('hidden-api')
             library('hidden-stub', 'dev.rikka.hidden', 'stub').versionRef('hidden-api')
 
-            version('refine', '4.2.2')
+            version('refine', '4.3.0')
             library('refine-runtime', 'dev.rikka.tools.refine', 'runtime').versionRef('refine')
             library('refine-annotation', 'dev.rikka.tools.refine', 'annotation').versionRef('refine')
             library('refine-annotation-processor', 'dev.rikka.tools.refine', 'annotation-processor').versionRef('refine')
