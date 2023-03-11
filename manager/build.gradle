@@ -29,6 +29,7 @@ android {
     }
     buildTypes {
         debug {
+            defaultConfig.minSdk 24
             signingConfig signingConfigs.sign
         }
         release {
@@ -134,34 +135,28 @@ configurations.all {
     exclude group: 'androidx.appcompat', module: 'appcompat'
 }
 
-repositories {
-    maven {
-        url 'https://jitpack.io'
-        content {
-            includeGroup('com.github.topjohnwu.libsu')
-        }
-    }
-    mavenLocal()
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.5.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     implementation project(':server')
     implementation project(':rish')
     implementation project(':starter')
     implementation project(':api')
     implementation project(':provider')
-    compileOnly 'dev.rikka.hidden:stub:3.4.3'
 
-    implementation 'androidx.browser:browser:1.4.0'
+    annotationProcessor libs.refine.annotation.processor
+    implementation libs.refine.annotation
+
+    compileOnly libs.hidden.stub
+
+    implementation 'androidx.browser:browser:1.5.0'
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
@@ -171,16 +166,16 @@ dependencies {
 
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
 
-    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.5.0.1'
+    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.6.1'
     implementation 'dev.rikka.rikkax.compatibility:compatibility:2.0.0'
     implementation 'dev.rikka.rikkax.core:core-ktx:1.4.1'
-    implementation 'dev.rikka.rikkax.material:material:2.5.1'
+    implementation 'dev.rikka.rikkax.material:material:2.6.0'
     implementation 'dev.rikka.rikkax.material:material-preference:2.0.0'
     implementation 'dev.rikka.rikkax.html:html-ktx:1.1.2'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-adapter:1.3.0'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.3.1'
     implementation 'dev.rikka.rikkax.insets:insets:1.3.0'
-    implementation 'dev.rikka.rikkax.layoutinflater:layoutinflater:1.2.0'
+    implementation 'dev.rikka.rikkax.layoutinflater:layoutinflater:1.3.0'
     implementation 'dev.rikka.rikkax.widget:borderview:1.1.0'
     implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.3'
     implementation 'dev.rikka.rikkax.lifecycle:lifecycle-resource-livedata:1.0.1'

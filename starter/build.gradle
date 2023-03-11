@@ -14,7 +14,7 @@ dependencies {
     implementation project(':server-shared')
     compileOnly project(':provider')
     implementation 'androidx.annotation:annotation:1.3.0'
-    implementation 'dev.rikka.hidden:compat:3.4.3'
-    compileOnly 'dev.rikka.hidden:stub:3.4.3'
-    implementation("dev.rikka.tools.refine:runtime:3.1.1")
+    implementation libs.hidden.compat
+    compileOnly libs.hidden.stub
+    implementation libs.refine.runtime
 }

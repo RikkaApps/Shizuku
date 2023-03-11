@@ -1,3 +1,49 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url("https://s01.oss.sonatype.org/content/repositories/releases/")
+            content {
+                includeGroup("dev.rikka.tools.refine")
+                includeGroup("dev.rikka.tools.autoresconfig")
+                includeGroup("dev.rikka.tools.materialthemebuilder")
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+        maven {
+            url("https://s01.oss.sonatype.org/content/repositories/releases/")
+            content {
+                includeGroupByRegex("dev.rikka.*")
+                includeGroup("org.lsposed.hiddenapibypass")
+            }
+        }
+    }
+    versionCatalogs {
+        libs {
+            version('hidden-api', '4.1.0')
+            library('hidden-compat', 'dev.rikka.hidden', 'compat').versionRef('hidden-api')
+            library('hidden-stub', 'dev.rikka.hidden', 'stub').versionRef('hidden-api')
+
+            version('refine', '4.2.2')
+            library('refine-runtime', 'dev.rikka.tools.refine', 'runtime').versionRef('refine')
+            library('refine-annotation', 'dev.rikka.tools.refine', 'annotation').versionRef('refine')
+            library('refine-annotation-processor', 'dev.rikka.tools.refine', 'annotation-processor').versionRef('refine')
+            plugin('refine', 'dev.rikka.tools.refine').versionRef('refine')
+        }
+    }
+}
+
 include ':server', ':starter', ':shell'
 include ':manager'
 include ':common'

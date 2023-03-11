@@ -9,5 +9,5 @@ android {
 }
 
 dependencies {
-    compileOnly 'dev.rikka.hidden:stub:3.4.3'
+    compileOnly libs.hidden.stub
 }
