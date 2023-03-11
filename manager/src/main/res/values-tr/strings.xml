@@ -47,26 +47,26 @@
     <string name="translation_contributors">İlker Binzet (ilker.binzet@gmail.com)
 \nUmut Songur (umutsongur19@gmail.com)
 \ncroxz900 (croxz.900@gmail.com)</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku\'yu aç</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; yeni Shizuku desteğine sahip, ama mevcut Shizuku talep ediyor. Shizuku çalışmıyor çünkü Shizuku uygulaması&lt;p&gt;Mart 2019\'dan bu yana kaldırılmıştır.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku’yu aç</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; yeni Shizuku desteğine sahip ama eski Shizuku talep ediyor. Bu Shizuku çalışmadığı zaman meydana gelir, lütfen Shizuku uygulamasını kontrol edin.&lt;p&gt;Eski Shizuku uygulaması Mart 2019’da kullanımdan kaldırılmıştır.</string>
     <string name="dialog_requesting_legacy_title">%1$s, mevcut Shizuku gerektiriyor</string>
-    <string name="dialog_legacy_not_support_message">Mevcut Shizuku, Mart 2019\'dan beri tedavülden kaldırılmıştır. Ayrıca, mevcut Shizuku yeni Android sistemlerinde çalışmaz. &lt;p&gt;Lütfen&lt;b&gt;%1$s&lt;/b&gt; geliştiricisinden güncelleme yapmasını isteyin.</string>
-    <string name="dialog_legacy_not_support_title">%1$s, yeni Shizuku\'yu desteklemiyor</string>
+    <string name="dialog_legacy_not_support_message">Eski Shizuku, Mart 2019’dan beri kullanımdan kaldırılmıştır. Ayrıca, eski Shizuku yeni Android sistemlerinde çalışmaz. &lt;p&gt;Lütfen&lt;b&gt;%1$s&lt;/b&gt; geliştiricisinden güncelleme yapmasını isteyin.</string>
+    <string name="dialog_legacy_not_support_title">%1$s, yeni Shizuku’yu desteklemiyor</string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> panoya kopyalandı.</string>
     <string name="toast_copied_to_clipboard">%s
 \npanoya kopyalanmıştır.</string>
     <string name="dialog_cannot_open_browser_title">Tarayıcı başlatılamıyor</string>
     <string name="start_with_root_failed">Root izni verilmediği veya bu aygıtın rootlu olmadığı için hizmet başlatılamıyor.</string>
     <string name="starter">Başlatıcı</string>
-    <string name="permission_label">Shizuku\'ya erişim</string>
+    <string name="permission_label">Shizuku’ya erişim</string>
     <string name="notification_working">Çalışıyor…</string>
     <string name="notification_service_start_no_root">Kök izni sağlanamadı.</string>
     <string name="notification_service_start_failed">Shizuku hizmeti başlatılamadı.</string>
     <string name="notification_service_starting">Shizuku hizmeti başlıyor…</string>
     <string name="notification_channel_service_status">Hizmet başlangıç durumu</string>
     <string name="dialog_stop_message">Shizuku hizmeti durdurulacak.</string>
-    <string name="action_stop">Shizuku\'yu durdur</string>
-    <string name="about_view_source_code">%s \'de/da kaynak kodunu görüntüle</string>
+    <string name="action_stop">Shizuku’yu durdur</string>
+    <string name="about_view_source_code">%s ’da kaynak kodunu görüntüle</string>
     <string name="action_about">Hakkında</string>
     <string name="settings_translation_summary">%s , dilinize çevirmemize yardımcı olun</string>
     <string name="settings_translation">Çeviriye katılın</string>
@@ -88,7 +88,7 @@
     <string name="grant_dialog_button_allow_always">Her zaman izin ver</string>
     <string name="grant_dialog_button_deny">Reddet</string>
     <string name="permission_warning_template"><b>%1$s</b> uygulamasına %2$s için izin verilsin mi\?</string>
-    <string name="terminal_tutorial_3_description">Bazı ipuçları: %1$s\'e yürütme izni verin ve %2$s\'a ekleyin, %1$s\'i doğrudan kullanabileceksiniz.</string>
+    <string name="terminal_tutorial_3_description">Bazı ipuçları: %1$s’e yürütme izni verin ve %2$s’a ekleyin, %1$s’i doğrudan kullanabileceksiniz.</string>
     <string name="home_wireless_adb_description">Android 11 ve üzeri sürümlerde, Kablosuz hata ayıklama ve Shizuku\'yu cihazınızdan bir bilgisayara bağlanmadan direkt aktif edebilirsiniz.&lt;p&gt;Lütfen öncelikle adım adım kılavuz\'u inceleyin.</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI kullanıcılarının sistem ayarlarında \"Bildirim\" - \"Bildirim gölgesi\"nden bildirim stilini \"Android\" olarak değiştirmeleri gerekebilir.</string>
     <string name="home_terminal_title">Shizuku’yu terminal uygulamalarında kullanın</string>
@@ -122,7 +122,7 @@
     <string name="notification_adb_pairing_succeed_text">Shizuku hizmetini şimdi başlatabilirsiniz.</string>
     <string name="notification_adb_pairing_failed_title">Eşleştirme başarısız</string>
     <string name="notification_adb_pairing_retry">Yeniden dene</string>
-    <string name="permission_description">Uygulamanın Shizuku\'yu kullanmasına izin verin.</string>
+    <string name="permission_description">Uygulamanın Shizuku’yu kullanmasına izin verin.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Aksi takdirde, bildirimden eşleştirme kodunu giremeyebilirsiniz.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku’nun yerel ağa erişmesi gerekiyor. Ağ izni tarafından kontrol edilir.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Lütfen, \"Kablosuz hata ayıklama\" seçeneğinin sol kısmının tıklanabilir olduğunu, dokunulduğunda yeni bir sayfa açılacağını unutmayın. Yalnızca sağdaki düğmeyi açmak yanlıştır.</string>
