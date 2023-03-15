@@ -13,7 +13,7 @@
     <string name="home_adb_dialog_view_command_button_send">보내기</string>
     <string name="home_wireless_adb_title">무선 디버깅으로 시작</string>
     <string name="dialog_adb_discovery">무선 디버깅 서비스 검색 중</string>
-    <string name="adb_pairing_requires_multi_window">먼저 화면 분할 (멀티 윈도우)로 진입하세요.</string>
+    <string name="adb_pairing_requires_multi_window">먼저 화면 분할 (멀티 윈도우) 모드로 진입하세요.</string>
     <string name="adb_error_key_store">무선 디버깅을 위한 키를 생성할 수 없습니다.
 \n기기의 KeyStore 메커니즘 손상이 원인일 수 있습니다.</string>
     <string name="dialog_adb_port">포트 번호</string>
@@ -26,19 +26,19 @@
     <string name="dialog_adb_pairing_discovery">페어링 서비스 검색 중</string>
     <string name="adb_pair_required">페어링 단계를 먼저 진행하세요.</string>
     <string name="development_settings">개발자 옵션</string>
-    <string name="home_root_title">시작 (루트된 기기용)</string>
+    <string name="home_root_title">시작 (루팅된 기기용)</string>
     <string name="home_root_description">Shizuku는 부팅 시 자동으로 시작됩니다. 그렇지 않을 경우, 시스템 또는 제 3자 도구에서 Shizuku를 제한하고 있는지 확인하세요.&lt;br&gt;%s를 참조할 수 있습니다.</string>
     <string name="home_root_button_start">시작</string>
-    <string name="home_root_button_restart">다시 시작</string>
-    <string name="home_app_management_title">앱 관리</string>
+    <string name="home_root_button_restart">재시작</string>
+    <string name="home_app_management_title">어플리케이션 관리</string>
     <string name="home_app_management_view_authorized_apps">탭하여 인증된 앱 관리</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other">%d개 앱 인증됨</item>
     </plurals>
     <string name="home_learn_more_title">Shizuku 알아보기</string>
     <string name="settings_title">설정</string>
-    <string name="home_learn_more_description">Shizuku와 개발하거나 Shizuku를 사용하는 앱 알아보기</string>
-    <string name="app_management_item_summary_requires_root">* 루트로 실행된 Shizuku 필요</string>
+    <string name="home_learn_more_description">Shizuku로 개발하는 방법 알아보기</string>
+    <string name="app_management_item_summary_requires_root">* 루트 권한으로 실행된 Shizuku 필요</string>
     <string name="notification_working">진행 중…</string>
     <string name="settings_startup">시작</string>
     <string name="settings_translation_contributors">번역 기여자</string>
@@ -52,10 +52,10 @@
     <string name="settings_user_interface">화면</string>
     <string name="permission_label">Shizuku에 접근</string>
     <string name="notification_service_start_no_root">루트 권한을 요청하지 못했습니다.</string>
-    <string name="settings_start_on_boot">부팅 시 시작 (루트)</string>
-    <string name="settings_start_on_boot_summary">루트된 기기에서 Shizuku는 부팅 시 자동으로 시작할 수 있음</string>
-    <string name="settings_translation_summary">%s를 현재 언어로 번역할 수 있도록 도와주기</string>
-    <string name="start_with_root_failed">루트 권한이 거부되거나 기기에 없어서 서비스를 시작할 수 없습니다.</string>
+    <string name="settings_start_on_boot">부팅 시 시작 (루팅)</string>
+    <string name="settings_start_on_boot_summary">루팅된 기기의 경우, Shizuku는 부팅 시 자동으로 시작할 수 있습니다</string>
+    <string name="settings_translation_summary">%s를 당신의 언어로 번역할 수 있도록 도와주세요</string>
+    <string name="start_with_root_failed">루트 권한이 부여되지 않았거나 이 기기가 루팅되지 않아서 서비스를 시작할 수 없습니다.</string>
     <string name="dialog_cannot_open_browser_title">브라우저를 실행할 수 없음</string>
     <string name="toast_copied_to_clipboard">%s
 \n클립보드로 복사됨.</string>
@@ -66,7 +66,7 @@
     <string name="dialog_requesting_legacy_button_open_shizuku">Shizuku 열기</string>
     <string name="home_status_service_is_running">%1$s가 실행 중입니다</string>
     <string name="home_adb_title">컴퓨터에 연결하여 시작</string>
-    <string name="dialog_adb_discovery_message">\"개발자 옵션\"에서 \"무선 디버깅\"을 사용으로 설정하세요. \"무선 디버깅\"은 네트워크기 변경될 때 자동으로 사용 안 함으로 변경됩니다.
+    <string name="dialog_adb_discovery_message">\"개발자 옵션\"에서 \"무선 디버깅\"을 사용으로 설정하세요. \"무선 디버깅\"은 네트워크가 변경될 때 자동으로 사용 안 함으로 변경됩니다.
 \n
 \n\"개발자 옵션\"이나 \"USB 디버깅\"을 사용 안 함으로 하면 Shizuku가 중지됩니다.</string>
     <string name="dialog_wireless_adb_not_enabled">무선 디버깅을 사용하고 있지 않습니다.
@@ -75,13 +75,13 @@
     <string name="settings_black_night_theme_summary">어두운 테마가 사용될 때 검은 테마를 사용</string>
     <string name="notification_service_start_failed">Shizuku 서비스를 시작할 수 없습니다.</string>
     <string name="home_status_service_version">%1$s, 버전 %2$s</string>
-    <string name="home_adb_description">루트 없이 Shizuku를 시작하기 위해 adb가 필요합니다. (컴퓨터 연결 필수) 이 작업은 다시 시작 시 마다 필요로 합니다. 자세한 정보는 &lt;b&gt;&lt;a href=\"%1$s\"&gt;도움말&lt;/a&gt;&lt;/b&gt;을 확인하세요.</string>
+    <string name="home_adb_description">루링 없이 Shizuku를 시작하기 위해 adb가 필요합니다. (컴퓨터 연결 필수) 이 작업은 다시 시작 시 마다 필요로 합니다. 자세한 정보는 <b><a href="%1$s">도움말</a></b>을 확인하세요.</string>
     <string name="home_status_service_version_update">%1$s, 버전 %2$s&lt;br&gt;다시 시작하여 버전 %3$s로 업데이트</string>
     <string name="app_management_dialog_adb_is_limited_title">ADB의 권한이 제한됨</string>
-    <string name="app_management_dialog_adb_is_limited_message">높은 가능성으로, 기기 제조사에서 ADB의 권한을 제한한 것 입니다.&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;문서&lt;/a&gt;&lt;/b&gt;에 시스템에 대한 해결 방안이 있을 수 있습니다.</string>
-    <string name="dialog_legacy_not_support_title">%1$s는 지금의 Shizuku를 지원하지 않음</string>
-    <string name="dialog_legacy_not_support_message">구형 Shizuku는 2019년 3월에 지원이 중단되었습니다. 또한, 구형 Shizuku는 새로운 안드로이드 시스템에서 동작하지 않습니다.&lt;p&gt;업데이트하려면 &lt;b&gt;%1$s&lt;/b&gt; 개발자에게 확인하세요.</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;는 지금의 Shizuku를 지원하나, 구형 Shizuku를 요청하고 있습니다. Shizuku가 실행 중이지 않아서 발생할 수 있는 문제로, Shizuku 앱에서 확인하세요.&lt;p&gt;구형 Shizuku는 2019년 3월 부터 지원이 중단되었습니다.</string>
+    <string name="app_management_dialog_adb_is_limited_message">기기 제조사에서 ADB의 권한을 제한하고 있을 가능성이 높습니다.&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;이 문서&lt;/a&gt;&lt;/b&gt;에 시스템에 대한 해결 방안이 있을 수 있습니다.</string>
+    <string name="dialog_legacy_not_support_title">%1$s는 최신 Shizuku를 지원하지 않음</string>
+    <string name="dialog_legacy_not_support_message">구형 Shizuku는 2019년 3월에 지원이 중단되었습니다. 또한, 구형 Shizuku는 새로운 안드로이드 시스템에서 동작하지 않습니다.&lt;p&gt;&lt;b&gt;%1$s&lt;/b&gt; 개발자에게 업데이트를 문의하세요.</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;가 최신 Shizuku를 지원하지만, 구형 Shizuku를 요청하고 있습니다. Shizuku가 실행 중이지 않아서 발생할 수 있으니 Shizuku 앱에서 확인하세요.&lt;p&gt;구형 Shizuku는 2019년 3월 부터 지원이 중단되었습니다.</string>
     <string name="grant_dialog_button_allow_always">항상 허용</string>
     <string name="grant_dialog_button_deny">거부</string>
     <string name="permission_warning_template"><b>%1$s</b>을(를) %2$s에 허용하시겠습니까\?</string>
@@ -96,7 +96,7 @@
     <string name="notification_adb_pairing_searching_for_service_title">페어링 서비스 검색중</string>
     <string name="notification_adb_pairing_failed_title">페어링 실패</string>
     <string name="permission_description">앱이 Shizuku를 사용하도록 허용합니다.</string>
-    <string name="terminal_tutorial_2_description">예를 들어, %1$s에서 Shizuku를 사용하려면 %2$s를 %3$s로 바꿔야 합니다(%4$s는 %1$s의 패키지 이름).</string>
+    <string name="terminal_tutorial_2_description">예를 들어, %1$s에서 Shizuku를 사용하려면 %2$s를 %3$s로 바꿔야 합니다(%4$s는 %1$s의 패키지 이름입니다).</string>
     <string name="rish_description">%1$s를 사용하면 모든 터미널 앱에서 Shizuku가 실행하는 셸에 연결하고 상호 작용할 수 있습니다. &lt;p&gt;자세한 사용법 %1$s에 대해 문서를 보려면 탭하세요.</string>
     <string name="terminal_tutorial_2">그런 다음 텍스트 편집기를 사용하여 %1$s을 열고 편집하십시오.</string>
     <string name="terminal_tutorial_3">마지막으로 터미널 앱이 액세스할 수 있는 위치로 파일을 이동하면 %1$s를 사용하여 Shizuku를 통해 명령을 실행할 수 있습니다.</string>
@@ -108,8 +108,8 @@
     <string name="notification_adb_pairing_succeed_title">페어링 성공</string>
     <string name="notification_adb_pairing_succeed_text">지금 Shizuku 서비스를 시작할 수 있습니다.</string>
     <string name="adb_pairing_tutorial_content_steps">\"개발자 옵션\" - \"무선 디버깅\"을 선택합니다. \"페어링 코드로 장치 페어링\"을 탭하면 6자리 코드가 표시됩니다.</string>
-    <string name="home_wireless_adb_description">Android 11 이상에서 컴퓨터에 연결하지 않고 무선 디버깅을 활성화하하여 기기에서 직접 Shizuku를 시작할 수 있습니다.&lt;p&gt;단계별 가이드를 먼저 확인하세요.</string>
-    <string name="home_wireless_adb_description_pre_11">Android 11 이전에는 무선 디버깅을 활성화하기 위해 컴퓨터에 연결해야 합니다.</string>
+    <string name="home_wireless_adb_description">Android 11 또는 그 이상 버전에서는 컴퓨터에 연결하지 않아도 무선 디버깅을 활성화하하여 기기에서 직접 Shizuku를 시작할 수 있습니다.&lt;p&gt;단계별 가이드를 먼저 확인하세요.</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 이전에서는 무선 디버깅을 활성화하기 위해 컴퓨터에 연결해야 합니다.</string>
     <string name="home_wireless_adb_view_guide_button">단계별 가이드</string>
     <string name="adb_pairing_tutorial_content_finish">Shizuku로 돌아가서 Shizuku를 시작하세요.</string>
     <string name="notification_adb_pairing_service_found_title">페어링 서비스를 찾았습니다</string>
@@ -117,11 +117,20 @@
     <string name="notification_adb_pairing_retry">재시도</string>
     <string name="notification_settings">알림 옵션</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">페어링 프로세스에서는 Shizuku의 알림과 상호 작용해야 합니다. Shizuku가 알림을 게시하도록 허용하십시오.</string>
-    <string name="home_root_description_sui">Magisk를 사용하는 경우 %1$s 을 사용해 볼 수 있습니다. 루트 사용자의 경우 결국 Shizuku를 대체합니다. %2$s를 사용하려면 기존 응용 프로그램을 약간 변경해야 합니다.</string>
+    <string name="home_root_description_sui">Magisk를 사용하는 경우 %1$s 을 사용해 볼 수 있습니다. 루팅 사용자의 경우 결국 Shizuku를 대체하게 됩니다. %2$s를 사용하려면 기존 어플리케이션을 약간 변경해야 합니다.</string>
     <string name="home_terminal_title">터미널에서 Shizuku 사용</string>
-    <string name="home_terminal_description">선호하는 터미널 앱에서 Shizuku를 통해 명령 실행</string>
+    <string name="home_terminal_description">좋아하는 터미널 앱에서 Shizuku를 통해 명령 실행</string>
     <string name="terminal_tutorial_1">먼저 원하는 곳으로 파일을 내보냅니다. %1$s 및 %2$s의 두 파일을 찾을 수 있습니다.</string>
-    <string name="adb_pairing_tutorial_content_left_is_clickable">\"무선 디버깅\" 옵션의 왼쪽 부분은 클릭할 수 있으며 탭하면 새 페이지가 열립니다. 오른쪽의 스위치만 켜는 것은 잘못된 것입니다.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">\"무선 디버깅\" 옵션의 왼쪽 부분을 클릭할 수 있으며, 탭하면 새 페이지가 열립니다. 오른쪽의 스위치를 켜는 것만으로는 올바르지 않습니다.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku는 로컬 네트워크에 액세스해야 합니다. 네트워크 권한에 의해 제어됩니다.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">일부 시스템(예: MIUI)은 앱이 포그라운드 서비스를 표준으로 사용하더라도 앱이 보이지 않을 때 네트워크에 액세스하는 것을 허용하지 않습니다. 이러한 시스템에서 Shizuku의 배터리 최적화 기능을 비활성화하세요.</string>
+    <string name="home_adb_is_limited_description">디바이스 제조업체에서 ADB 권한을 제한하여 Shizuku를 사용하는 앱이 제대로 작동하지 않습니다.
+\n
+\n일반적으로 \'개발자 옵션\'에서 일부 옵션을 조정하여 이 제한을 해제할 수 있습니다. 자세한 방법은 도움말을 참조하세요.
+\n
+\n작업을 적용하려면 Shizuku를 다시 시작해야 할 수도 있습니다.</string>
+    <string name="settings_use_system_color">시스템 테마 색상 사용</string>
+    <string name="home_adb_is_limited_title">추가 단계를 진행해야 합니다</string>
+    <string name="home_app_management_empty">Shizuku에 요청 또는 선언한 앱들이 여기에 표시됩니다.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">\"무선 디버깅\"이 검색중으로 유지된다면 비활성화했다가 다시 활성화해 보세요.</string>
 </resources>
