@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
@@ -23,7 +24,6 @@ import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.core.util.ResourceUtils
-import rikka.material.app.DayNightDelegate
 import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
@@ -92,13 +92,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Preference.OnPreferenceChangeListener { _: Preference?, value: Any? ->
                 if (value is Int) {
                     if (ShizukuSettings.getNightMode() != value) {
-                        DayNightDelegate.setDefaultNightMode(value)
+                        AppCompatDelegate.setDefaultNightMode(value)
                         activity?.recreate()
                     }
                 }
                 true
             }
-        if (ShizukuSettings.getNightMode() != DayNightDelegate.MODE_NIGHT_NO) {
+        if (ShizukuSettings.getNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
             blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
             blackNightThemePreference.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->

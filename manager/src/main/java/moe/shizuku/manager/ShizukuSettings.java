@@ -1,5 +1,6 @@
 package moe.shizuku.manager;
 
+import android.app.ActivityThread;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
@@ -8,14 +9,13 @@ import android.text.TextUtils;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.lang.annotation.Retention;
 import java.util.Locale;
 
 import moe.shizuku.manager.utils.EmptySharedPreferencesImpl;
 import moe.shizuku.manager.utils.EnvironmentUtils;
-import rikka.material.app.DayNightDelegate;
-import rikka.material.app.DayNightDelegate.NightMode;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -84,11 +84,11 @@ public class ShizukuSettings {
         getPreferences().edit().putInt("mode", method).apply();
     }
 
-    @NightMode
+    @AppCompatDelegate.NightMode
     public static int getNightMode() {
-        int defValue = DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-        if (EnvironmentUtils.isWatch(DayNightDelegate.getApplicationContext())) {
-            defValue = DayNightDelegate.MODE_NIGHT_YES;
+        int defValue = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if (EnvironmentUtils.isWatch(ActivityThread.currentActivityThread().getApplication())) {
+            defValue = AppCompatDelegate.MODE_NIGHT_YES;
         }
         return getPreferences().getInt(NIGHT_MODE, defValue);
     }
