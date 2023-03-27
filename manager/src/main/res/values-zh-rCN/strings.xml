@@ -5,7 +5,7 @@
     <string name="home_status_service_is_running">%1$s 正在运行</string>
     <string name="home_status_service_version">版本 %2$s，%1$s</string>
     <string name="home_status_service_version_update"><![CDATA[版本 %2$s，%1$s<br>再次启动来升级到版本 %3$s]]></string>
-    <string name="home_status_service_not_running">%1$s 没有运行</string>
+    <string name="home_status_service_not_running">%1$s未运行</string>
     <string name="home_root_button_start">启动</string>
     <string name="home_root_button_restart">重新启动</string>
     <string name="home_root_title"><![CDATA[启动（针对已 root 设备）]]></string>
