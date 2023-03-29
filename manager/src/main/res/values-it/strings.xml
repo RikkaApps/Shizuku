@@ -10,13 +10,13 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Ci sono altre considerazioni, conferma di aver letto prima la guida.</string>
     <string name="home_adb_dialog_view_command_copy_button">Copia</string>
     <string name="home_adb_dialog_view_command_button_send">Invia</string>
-    <string name="home_wireless_adb_title">Avvia tramite debug wireless</string>
-    <string name="home_wireless_adb_description">Su Android 11 o successivi, puoi abilitare il debug wireless e avviare Shizuku direttamente dal tuo dispositivo, senza doverti collegare a un computer.&lt;p&gt;Consulta prima la guida passo-passo.</string>
-    <string name="home_wireless_adb_description_pre_11">Per le versioni precedenti ad Android 11, è necessario collegarsi ad un computer per abilitare il debug wireless.</string>
+    <string name="home_wireless_adb_title">Avvia tramite Debug Wireless</string>
+    <string name="home_wireless_adb_description">Su Android 11 o successivi, puoi abilitare il Debug Wireless e avviare Shizuku direttamente dal tuo dispositivo, senza doverti collegare a un computer.&lt;p&gt;Consulta prima la guida passo-passo.</string>
+    <string name="home_wireless_adb_description_pre_11">Per le versioni precedenti ad Android 11, è necessario collegarsi ad un computer per abilitare il Debug Wireless.</string>
     <string name="home_wireless_adb_view_guide_button">Guida passo-passo</string>
-    <string name="dialog_adb_discovery_message">Abilita \"Debug wireless\" in \"Opzioni sviluppatore\". \"Debug wireless\" viene automaticamente disabilitato quando la rete cambia.
+    <string name="dialog_adb_discovery_message">Abilita \"Debug Wireless\" in \"Opzioni Sviluppatore\". \"Debug Wireless\" viene automaticamente disabilitato quando la rete cambia.
 \n
-\nNota, non disabilitare \"Opzioni sviluppatore\" o \"Debug USB\", altrimenti Shizuku verrà interrotto.</string>
+\nNota, non disabilitare \"Opzioni Sviluppatore\" o \"Debug USB\", altrimenti Shizuku verrà interrotto.</string>
     <string name="dialog_adb_port">Porta</string>
     <string name="adb_pairing">Accoppiamento</string>
     <string name="dialog_adb_pairing_title">Accoppia con il dispositivo</string>
@@ -29,7 +29,7 @@
     <string name="adb_error_key_store">Impossibile generare la chiave per il debug wireless.
 \nCiò potrebbe essere dovuto ad un malfunzionamento del meccanismo di KeyStore di questo dispositivo.</string>
     <string name="adb_pair_required">Esegui prima la fase di accoppiamento.</string>
-    <string name="development_settings">Modalità sviluppatore</string>
+    <string name="development_settings">Modalitá sviluppatore</string>
     <string name="adb_pairing_tutorial_title">Accoppia Shizuku col tuo dispositivo</string>
     <string name="adb_pairing_tutorial_content_notification">Una notifica da Shizuku ti aiuterà a completare l\'accoppiamento.</string>
     <string name="adb_pairing_tutorial_content_steps">Entra in \"Modalità sviluppatore\" - \"Debug wireless\". Seleziona \"Accoppia dispositivo con codice di associazione\", vedrai un codice a sei cifre.</string>
@@ -39,7 +39,7 @@
     <string name="adb_pairing_tutorial_content_finish">Torna a Shizuku e avvia Shizuku.</string>
     <string name="home_root_title">Avvia (per dispositivi rootati)</string>
     <string name="home_adb_button_view_command">Visualizza comando</string>
-    <string name="dialog_adb_discovery">Ricerca del servizio di debug wireless</string>
+    <string name="dialog_adb_discovery">Ricerca del servizio di Debug Wireless</string>
     <string name="dialog_adb_invalid_port">La porta è un numero intero compreso tra 1 e 65535.</string>
     <string name="dialog_wireless_adb_not_enabled">Il debug wireless non è abilitato.
 \nNota, per versioni precedenti ad Android 11, per abilitare il debug wireless, è necessaria la connessione al computer.</string>
@@ -64,6 +64,7 @@
     <string name="home_terminal_description">Esegui comandi attraverso Shizuku nelle apps terminale che desiderate</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="one">%d applicazione autorizzata</item>
+        <item quantity="many">%d applicazioni autorizzate</item>
         <item quantity="other">%d applicazioni autorizzate</item>
     </plurals>
     <string name="home_app_management_view_authorized_apps">Premere per gestire le app autorizzate</string>
@@ -73,7 +74,7 @@
     <string name="home_learn_more_title">Impara Shizuku</string>
     <string name="home_learn_more_description">Impara a sviluppare con Shizuku</string>
     <string name="home_terminal_title">Utilizza Shizuku nell\'app terminale</string>
-    <string name="translation_contributors">Dany-coder778, xDonatello</string>
+    <string name="translation_contributors">Dany-coder778, xDonatello, cladiotto</string>
     <string name="action_stop">Interrompi Shizuku</string>
     <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; ha il supporto al Shizuku moderno, ma sta richiedendo Shizuku legacy. Questo potrebbe essere perché Shizuku non è in esecuzione, controlla nell\'app Shizuku.&lt;p&gt;Shizuku legacy è stato deprecato a marzo 2019.</string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Apri Shizuku</string>
@@ -133,5 +134,5 @@
 \n
 \nPotrebbe essere necessario riavviare Shizuku per rendere effettiva l\'operazione.</string>
     <string name="home_app_management_empty">Le app che hanno richiesto o dichiarato Shizuku verranno visualizzate qui</string>
-    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Prova a disabilitare e abilitare \"Debug wireless\" se continua a cercare.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Prova a disabilitare e abilitare \"Debug Wireless\" se continua a cercare.</string>
 </resources>
