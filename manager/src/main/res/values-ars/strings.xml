@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="dialog_adb_discovery_message">“ارجوك شغل ”المعالجة اللاسلكية</string>
+    <string name="dialog_adb_discovery">\"عم نشيّك خاصية \"المعالجة اللاسلكية</string>
+    <string name="home_wireless_adb_description">على إصدارات الأندرويد ١١ او اعلى، فيك تشغل \"المعالجة اللاسلكية\" وتشغل معها شيزوكو مباشرا من جهازك، من دون ما تتصل بالكمبيوتر
+\nبحيات ربك، ارجوك شوف التعليمات</string>
+    <string name="home_wireless_adb_title">بلش بـالمعالجة اللاسلكية</string>
+    <string name="home_adb_dialog_view_command_copy_button">نسخ</string>
+    <string name="home_adb_button_view_command">شوف الأمر</string>
+</resources>
