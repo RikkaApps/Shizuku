@@ -79,7 +79,7 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* May iba pang mga dapat ikonsidera, siguraduhin munang nabasa mo na ang gabay.</string>
     <string name="home_adb_button_view_command">Tingnan ang command</string>
     <string name="home_adb_button_view_help">Sumangguni sa gabay</string>
-    <string name="home_adb_description">Kailngan mong gumamit ng adb para masimulan ang Shizuku kung walang root ang device mo (kailangang kumonekta sa kompyuter). Dapat ulitin ito tuwing nare-restart ang device mo. Mangyaring <b><a href="%1$s">sumangguni sa gabay</a></b>.</string>
+    <string name="home_adb_description">Kailangan mong gumamit ng adb para masimulan ang Shizuku kung walang root ang device mo (kailangang kumonekta sa kompyuter). Dapat ulitin ito tuwing nare-restart ang device mo. Mangyaring <b><a href="%1$s">sumangguni sa gabay</a></b>.</string>
     <string name="home_adb_title">Magsimula sa pamamagitan ng pagkonekta sa kompyuter</string>
     <string name="home_status_service_version_update">Bersyon %2$s, %1$s&lt;br&gt;Simulan ulit para maka-update patungong bersyon %3$s</string>
     <string name="home_status_service_version">Bersyon %2$s, %1$s</string>
