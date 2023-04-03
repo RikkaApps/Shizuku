@@ -30,7 +30,7 @@
     <string name="adb_pairing_requires_multi_window">Bitte zuerst in den Modus \"Geteilter Bildschirm\" (Mehrfenster) gehen.</string>
     <string name="dialog_adb_discovery_message">Bitte \"Wireless Debugging\" in den \"Entwickleroptionen\" aktivieren. \"Wireless Debugging\" wird automatisch deaktiviert, wenn sich das Netzwerk ändert.
 \n
-\nHinweis: \"Entwickleroptionen\" oder \"USB-Debugging\" nicht aktivieren, sonst wird Shizuku gestoppt.</string>
+\nHinweis: \"Entwickleroptionen\" oder \"USB-Debugging\" nicht deaktivieren, sonst wird Shizuku gestoppt.</string>
     <string name="grant_dialog_button_deny">Verweigern</string>
     <string name="grant_dialog_button_allow_always">Immer zulassen</string>
     <string name="permission_warning_template"><b>%1$s</b> erlauben %2$s zu verwenden\?</string>
@@ -68,7 +68,7 @@
     <string name="settings_language">Sprache</string>
     <string name="settings_title">Einstellungen</string>
     <string name="app_management_item_summary_requires_root">* erfordert, dass Shizuku mit Root läuft</string>
-    <string name="home_learn_more_description">Lernen, wie Apps mit Shizuku entwickelt werden oder Apps beziehen, die Shizuku nutzen</string>
+    <string name="home_learn_more_description">Lernen Sie, wie Apps mit Shizuku entwickelt werden</string>
     <string name="home_learn_more_title">Shizuku kennenlernen</string>
     <string name="home_app_management_view_authorized_apps">Tippen, um autorisierte Apps zu verwalten</string>
     <string name="home_app_management_title">App-Verwaltung</string>
@@ -124,4 +124,14 @@
     <string name="notification_settings">Benachrichtigungsoptionen</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku muss auf das lokale Netzwerk zugreifen. Dies wird durch die Netzwerkberechtigung gesteuert.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Einige Systeme (z. B. MIUI) verbieten Apps den Netzwerkzugriff, wenn sie nicht sichtbar sind, selbst wenn die App standardmäßig einen Vordergrunddienst verwendet. Bitte auf solchen Systemen die Akku-Optimierungsfunktionen für Shizuku deaktivieren.</string>
+    <string name="settings_use_system_color">Verwende Farbe des Systemdesigns</string>
+    <string name="home_adb_is_limited_description">Ihr Gerätehersteller hat ADB-Berechtigungen eingeschränkt. Dadurch werden Apps, die Shizuku verwenden, nicht ordnungsgemäß funktionieren.
+\n
+\nMeist kann diese Einschränkung aufgehoben werden, wenn bestimmte Einstellungen in den \"Entwicklereinstellungen\" angepasst werden. Bitte lesen Sie die Hilfeseite, um mehr darüber zu erfahren.
+\n
+\nEventuell müssen Sie Shizuku neustarten, damit die Änderungen angewandt werden.</string>
+    <string name="home_adb_is_limited_title">Sie müssen einen zusätzlichen Schritt durchführen</string>
+    <string name="home_app_management_empty">Apps, die Shizuku angefordert oder deklariert haben, werden hier angezeigt.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Bitte beachte, dass der linke Teil der \"Wireless debugging\"-Option anklickbar ist; wird es angetippt öffnet es eine neue Seite. Lediglich den Schalter auf der rechten Seite umzulegen ist falsch.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Bitte versuche \"Wireless debugging\" aus- und einzuschalten, falls es weiterhin sucht.</string>
 </resources>
