@@ -20,7 +20,7 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Başka hususlar da var, lütfen önce yardımı okuduğunuzu onaylayın.</string>
     <string name="home_adb_button_view_command">Komutu görüntüle</string>
     <string name="home_adb_button_view_help">Yardımı oku</string>
-    <string name="home_adb_description">For devices without root, you need to use adb to start Shizuku (requires computer connection). This process needs to be repeated every time the device is restarted. Please <b><a href="%1$s">read the help</a></b>.</string>
+    <string name="home_adb_description">Rootsuz cihazlar için Shizuku’yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlemin cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen <b><a href="%1$s">yardımı okuyun</a></b>.</string>
     <string name="home_adb_title">Bilgisayara bağlanarak başlatın</string>
     <string name="home_status_service_version_update">Sürüm %2$s, %1$s&lt;br&gt;Sürüm %3$s, güncelleştirmek için yeniden başlatın</string>
     <string name="home_status_service_version">Sürüm %2$s, %1$s</string>
