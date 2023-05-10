@@ -12,8 +12,8 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
+    id 'com.android.application' version '8.0.1' apply false
+    id 'com.android.library' version '8.0.1' apply false
     id 'org.jetbrains.kotlin.jvm' version '1.8.0' apply false
     id 'dev.rikka.tools.autoresconfig' version '1.2.1' apply false
     id 'dev.rikka.tools.materialthemebuilder' version '1.3.3' apply false
@@ -27,9 +27,11 @@ idea.module {
 }
 
 allprojects {
-    tasks.withType(Javadoc) {
-        failOnError false
-        options.addStringOption('Xdoclint:none', '-quiet')
+    tasks.withType(Javadoc).tap {
+        configureEach {
+            failOnError false
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
     }
 }
 
@@ -44,14 +46,17 @@ subprojects {
                 targetSdk = 32
             }
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_1_8
-                targetCompatibility = JavaVersion.VERSION_1_8
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
+            }
+            buildFeatures {
+                aidl true
             }
         }
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
 

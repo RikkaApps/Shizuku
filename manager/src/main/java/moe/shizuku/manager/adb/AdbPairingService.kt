@@ -101,17 +101,17 @@ class AdbPairingService : Service() {
                 null
             }
             else -> {
-                return START_REDELIVER_INTENT
+                return START_NOT_STICKY
             }
         }
         if (notification != null) {
             try {
                 startForeground(notificationId, notification)
             } catch (e: Throwable) {
+                Log.e(tag, "startForeground failed", e)
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                     && e is ForegroundServiceStartNotAllowedException) {
-
-                    Log.e(tag, "startForeground failed", e)
                     getSystemService(NotificationManager::class.java).notify(notificationId, notification)
                 }
             }

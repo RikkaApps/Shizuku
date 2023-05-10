@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'rikka.shizuku.shell'
     defaultConfig {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName

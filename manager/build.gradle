@@ -9,6 +9,7 @@ plugins {
 }
 
 android {
+    namespace 'moe.shizuku.manager'
     defaultConfig {
         applicationId "moe.shizuku.privileged.api"
         versionCode rootProject.ext.versionCode
@@ -45,11 +46,12 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     packagingOptions {
         jniLibs {
             excludes += ['/kotlin/**']
+            useLegacyPackaging false
         }
         resources {
             excludes += ['/META-INF/*.version', '/META-INF/*.kotlin_module', '/kotlin/**']
@@ -107,8 +109,8 @@ afterEvaluate {
     tasks.getByName('preDebugBuild').dependsOn(':shell:assembleDebug')
 }
 
-android.applicationVariants.all { variant ->
-    variant.outputs.all {
+android.applicationVariants.configureEach { variant ->
+    variant.outputs.configureEach {
         outputFileName = "shizuku-v${variant.versionName}-${variant.name}.apk"
 
         variant.assembleProvider.get().doLast {
@@ -131,7 +133,7 @@ android.applicationVariants.all { variant ->
     }
 }
 
-configurations.all {
+configurations.configureEach {
     exclude group: 'androidx.appcompat', module: 'appcompat'
 }
 
