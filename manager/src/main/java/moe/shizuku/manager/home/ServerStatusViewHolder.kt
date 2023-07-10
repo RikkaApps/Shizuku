@@ -14,6 +14,7 @@ import rikka.html.text.toHtml
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
 import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuApiConstants
 import rikka.shizuku.server.ServerConstants
 
 class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root: View) :
@@ -50,11 +51,11 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root:
             context.getString(R.string.home_status_service_not_running, context.getString(R.string.app_name))
         }
         val summary = if (ok) {
-            if (apiVersion != Shizuku.getLatestServiceVersion() || status.patchVersion != ServerConstants.PATCH_VERSION) {
+            if (apiVersion != Shizuku.getLatestServiceVersion() || status.patchVersion != ShizukuApiConstants.SERVER_PATCH_VERSION) {
                 context.getString(
                     R.string.home_status_service_version_update, user,
                     "${apiVersion}.${patchVersion}",
-                    "${Shizuku.getLatestServiceVersion()}.${ServerConstants.PATCH_VERSION}"
+                    "${Shizuku.getLatestServiceVersion()}.${ShizukuApiConstants.SERVER_PATCH_VERSION}"
                 )
             } else {
                 context.getString(R.string.home_status_service_version, user, "${apiVersion}.${patchVersion}")
