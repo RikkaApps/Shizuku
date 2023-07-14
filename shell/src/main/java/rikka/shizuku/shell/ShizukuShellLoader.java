@@ -26,29 +26,30 @@ public class ShizukuShellLoader {
     private static String callingPackage;
     private static Handler handler;
 
-    private static void requestForBinder() throws RemoteException {
-        Binder binder = new Binder() {
-            @Override
-            protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-                if (code == 1) {
-                    IBinder binder = data.readStrongBinder();
+    private static final Binder receiverBinder = new Binder() {
 
-                    String sourceDir = data.readString();
-                    if (binder != null) {
-                        handler.post(() -> onBinderReceived(binder, sourceDir));
-                    } else {
-                        System.err.println("Server is not running");
-                        System.err.flush();
-                        System.exit(1);
-                    }
-                    return true;
+        @Override
+        protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+            if (code == 1) {
+                IBinder binder = data.readStrongBinder();
+
+                String sourceDir = data.readString();
+                if (binder != null) {
+                    handler.post(() -> onBinderReceived(binder, sourceDir));
+                } else {
+                    System.err.println("Server is not running");
+                    System.err.flush();
+                    System.exit(1);
                 }
-                return super.onTransact(code, data, reply, flags);
+                return true;
             }
-        };
+            return super.onTransact(code, data, reply, flags);
+        }
+    };
 
+    private static void requestForBinder() throws RemoteException {
         Bundle data = new Bundle();
-        data.putBinder("binder", binder);
+        data.putBinder("binder", receiverBinder);
 
         Intent intent = new Intent("rikka.shizuku.intent.action.REQUEST_BINDER")
                 .setPackage("moe.shizuku.privileged.api")
