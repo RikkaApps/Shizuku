@@ -42,7 +42,7 @@ subprojects {
             compileSdk = 33
             defaultConfig {
                 minSdk = 23
-                targetSdk = 32
+                targetSdk = 33
             }
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
@@ -64,7 +64,7 @@ def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], pr
 def baseVersionName = "${api_version_major}.5.0"
 ext {
     minSdkVersion = 23
-    targetSdkVersion = 32
+    targetSdkVersion = 33
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 }
