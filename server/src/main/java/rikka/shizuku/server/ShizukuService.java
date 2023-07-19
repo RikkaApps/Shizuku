@@ -52,6 +52,7 @@ import rikka.parcelablelist.ParcelableListSlice;
 import rikka.rish.RishConfig;
 import rikka.shizuku.ShizukuApiConstants;
 import rikka.shizuku.server.api.IContentProviderUtils;
+import rikka.shizuku.server.util.HandlerUtil;
 import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
@@ -89,6 +90,8 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
     public ShizukuService() {
         super();
+
+        HandlerUtil.setMainHandler(mainHandler);
 
         LOGGER.i("starting server...");
 
