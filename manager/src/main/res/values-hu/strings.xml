@@ -48,7 +48,7 @@
     <string name="adb_pairing_tutorial_content_miui">Előfordulhat, hogy a MIUI-felhasználóknak át kell váltaniuk az értesítési stílust \"Android\"-ra a \"Értesítés\" - \"Értesítési árnyék\" lehetőségről a rendszerbeállításokban.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Ellenkező esetben előfordulhat, hogy nem tudja megadni a párosítási kódot az értesítésből.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Felhívjuk figyelmét, hogy a \"Vezeték nélküli hibakeresés\" opció bal oldali része kattintható, rákattintva egy új oldal nyílik meg. A jobb oldali kapcsoló bekapcsolása helytelen.</string>
-    <string name="adb_pairing_tutorial_content_finish">Vissza Shizukuba, és indítsa el a Shizukut.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vissza és Shizuku elindítása.</string>
     <string name="adb_pairing_tutorial_content_network">A Shizukunak hozzá kell férnie a helyi hálózathoz. A hálózati engedély vezérli.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Egyes rendszerek (például a MIUI) nem engedélyezik az alkalmazások számára, hogy hozzáférjenek a hálózathoz ha nem láthatók, még akkor sem, ha az alkalmazás alapértelmezés szerint előtérbeli szolgáltatást használ. Kapcsolja ki a Shizuku akku optimalizálási funkcióit az ilyen rendszereken.</string>
     <!-- Home - Root -->
