@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.system.ErrnoException;
 import android.system.Os;
 import android.text.TextUtils;
 
@@ -100,9 +101,21 @@ public class ShizukuShellLoader {
         if (!TextUtils.isEmpty(systemLibrarySearchPath)) {
             librarySearchPath += File.pathSeparatorChar + systemLibrarySearchPath;
         }
+        String optimizedDirectory = ".";
+        File optimizedDirectoryFile = new File(optimizedDirectory);
+        if (!optimizedDirectoryFile.exists() || !optimizedDirectoryFile.isDirectory()  || !optimizedDirectoryFile.canWrite() || !optimizedDirectoryFile.canExecute()) {
+            optimizedDirectory = "/data/local/tmp/rish-shizuku-" + BuildConfig.VERSION_CODE;
+            optimizedDirectoryFile = new File(optimizedDirectory);
+            optimizedDirectoryFile.mkdirs();
+            try {
+                Os.chmod(optimizedDirectory, 00711);
+            } catch (ErrnoException e) {
+                System.err.println(e.getMessage());
+            }
+        }
 
         try {
-            DexClassLoader classLoader = new DexClassLoader(sourceDir, ".", librarySearchPath, ClassLoader.getSystemClassLoader());
+            DexClassLoader classLoader = new DexClassLoader(sourceDir, optimizedDirectory, librarySearchPath, ClassLoader.getSystemClassLoader());
             Class<?> cls = classLoader.loadClass("moe.shizuku.manager.shell.Shell");
             cls.getDeclaredMethod("main", String[].class, String.class, IBinder.class, Handler.class)
                     .invoke(null, args, callingPackage, binder, handler);

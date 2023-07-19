@@ -23,6 +23,9 @@ android {
     lint {
         checkReleaseBuilds false
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 android.applicationVariants.all { variant ->
