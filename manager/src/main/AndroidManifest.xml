@@ -60,7 +60,10 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+
+                <!-- 2023.08.03: Google play enforces that apps with LEANBACK_LAUNCHER Activity must be uploaded with App Bundle format, -->
+                <!-- and possibly additional review steps. To avoid problems, remove it temporarily. -->
+                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
             </intent-filter>
         </activity>
         <activity
