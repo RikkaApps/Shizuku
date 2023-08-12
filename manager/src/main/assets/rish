@@ -7,6 +7,19 @@ if [ ! -f "$DEX" ]; then
   exit 1
 fi
 
+if [ $(getprop ro.build.version.sdk) -ge 34 ]; then
+  if [ -w $DEX ]; then
+    echo "On Android 14+, app_process cannot load writable dex."
+    echo "Attempting to remove the write permission..."
+    chmod 400 $DEX
+  fi
+  if [ -w $DEX ]; then
+    echo "Cannot remove the write permission of $DEX."
+    echo "You can copy to file to terminal app's private directory (/data/data/<package>, so that remove write permission is possible"
+    exit 1
+  fi
+fi
+
 # Replace "PKG" with the application id of your terminal app
 [ -z "$RISH_APPLICATION_ID" ] && export RISH_APPLICATION_ID="PKG"
 /system/bin/app_process -Djava.class.path="$DEX" /system/bin --nice-name=rish rikka.shizuku.shell.ShizukuShellLoader "$@"
