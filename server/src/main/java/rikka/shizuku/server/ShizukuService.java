@@ -61,7 +61,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         DdmHandleAppName.setAppName("shizuku_server", 0);
         RishConfig.setLibraryPath(System.getProperty("shizuku.library.path"));
 
-        Looper.prepare();
+        Looper.prepareMainLooper();
         new ShizukuService();
         Looper.loop();
     }
