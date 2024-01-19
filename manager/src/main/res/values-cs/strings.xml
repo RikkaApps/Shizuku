@@ -78,7 +78,7 @@
     <string name="adb_pairing">Párování</string>
     <string name="dialog_adb_invalid_port">Port je číslo od 1 do 65535.</string>
     <string name="home_adb_dialog_view_command_copy_button">Kopírovat</string>
-    <string name="translation_contributors">JohanyXcz, konggdev (fym35)</string>
+    <string name="translation_contributors">JohanyXcz, konggdev</string>
     <string name="dialog_adb_discovery">Hledání služby bezdrátového ladění</string>
     <string name="home_wireless_adb_title">Spustit pomocí WiFi debuging</string>
     <string name="home_adb_dialog_view_command_button_send">Odeslat</string>
