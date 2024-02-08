@@ -125,4 +125,5 @@
     <string name="adb_pairing_tutorial_content_network">Shizuku cần truy cập mạng cục bộ. Nó được kiểm soát bởi sự cho phép của mạng.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Một số hệ thống (chẳng hạn như MIUI) không cho phép ứng dụng truy cập mạng khi chúng không hiển thị, ngay cả khi ứng dụng sử dụng dịch vụ nền trước làm tiêu chuẩn. Vui lòng tắt các tính năng tối ưu hóa pin cho Shizuku trên các hệ thống như vậy.</string>
     <string name="settings_use_system_color">Sử dụng màu chủ đề hệ thống</string>
+    <string name="home_app_management_empty">Các ứng dụng đã yêu cầu hoặc khai báo Shizuku sẽ hiển thị ở đây.</string>
 </resources>
