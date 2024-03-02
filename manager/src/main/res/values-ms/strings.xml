@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_status_service_version">Versi %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s tidak berjalan</string>
 </resources>
