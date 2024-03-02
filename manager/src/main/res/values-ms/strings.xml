@@ -2,4 +2,7 @@
 <resources>
     <string name="home_status_service_version">Versi %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s tidak berjalan</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem memerlukan dialog berpasangan sentiasa kelihatan, menggunakan mod skrin pisah ialah satu-satunya cara untuk membolehkan apl dan dialog sistem ini kelihatan serentak.</string>
+    <string name="home_adb_dialog_view_command_button_send">Hantar</string>
+    <string name="home_adb_dialog_view_command_copy_button">Salin</string>
 </resources>
