@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_status_service_version">Versie %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s is niet actief</string>
+    <string name="home_status_service_is_running">%1$s is actief</string>
+</resources>
