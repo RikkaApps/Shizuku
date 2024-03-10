@@ -318,15 +318,15 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
                 int deviceId = 0;//Context.DEVICE_ID_DEFAULT
                 if (allowed) {
-                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, deviceId, userId);
+                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
                 } else {
-                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, deviceId, userId);
+                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
                 }
             }
         }
     }
 
-    private int getFlagsForUidInternal(int uid, int mask, boolean allowRuntimePermission) {
+    private int  getFlagsForUidInternal(int uid, int mask, boolean allowRuntimePermission) {
         ShizukuConfig.PackageEntry entry = configManager.find(uid);
         if (entry != null) {
             return entry.flags & mask;
@@ -393,9 +393,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
                 int deviceId = 0;//Context.DEVICE_ID_DEFAULT
                 if (allowed) {
-                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, deviceId, userId);
+                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
                 } else {
-                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, deviceId, userId);
+                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
                 }
 
                 // TODO kill user service using

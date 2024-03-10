@@ -118,9 +118,5 @@ class AdbPairingTutorialActivity : AppBarActivity() {
                 startService(intent)
             }
         }
-
-        val mode = getSystemService(AppOpsManager::class.java)
-            .noteOpNoThrow("android:start_foreground", android.os.Process.myUid(), packageName, null, null)
-
     }
 }

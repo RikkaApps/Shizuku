@@ -154,6 +154,7 @@ dependencies {
     annotationProcessor libs.refine.annotation.processor
     implementation libs.refine.annotation
 
+    implementation libs.hidden.compat
     compileOnly libs.hidden.stub
 
     implementation 'androidx.browser:browser:1.5.0'
