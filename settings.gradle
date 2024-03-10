@@ -31,7 +31,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         libs {
-            version('hidden-api', '4.3.2')
+            version('hidden-api', '4.3.3')
             library('hidden-compat', 'dev.rikka.hidden', 'compat').versionRef('hidden-api')
             library('hidden-stub', 'dev.rikka.hidden', 'stub').versionRef('hidden-api')
 
