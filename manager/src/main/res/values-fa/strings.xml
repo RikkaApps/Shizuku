@@ -23,4 +23,5 @@
     <string name="translation_contributors">parsa-alidoust.ir</string>
     <string name="home_adb_dialog_view_command_button_send">ارسال</string>
     <string name="home_adb_dialog_view_command_copy_button">کپی</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">در صورتی که به جستجو ادامه داد، لطفا یک بار گزینه \" اشکال زدایی اتصال بدون سیم\" ‌‌‌را غیر فعال، و سپس فعال کنید .</string>
 </resources>
