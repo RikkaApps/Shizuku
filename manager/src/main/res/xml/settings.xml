@@ -10,6 +10,11 @@
             android:summary="@string/settings_start_on_boot_summary"
             android:title="@string/settings_start_on_boot" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="start_on_boot_wireless"
+            android:summary="@string/settings_start_on_boot_wireless_summary"
+            android:title="@string/settings_start_on_boot_wireless" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_language">

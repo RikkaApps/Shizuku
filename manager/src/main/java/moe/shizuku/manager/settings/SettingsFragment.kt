@@ -1,20 +1,26 @@
 package moe.shizuku.manager.settings
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
+import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS
 import moe.shizuku.manager.app.ThemeHelper
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.app.ThemeHelper.KEY_USE_SYSTEM_COLOR
@@ -39,6 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var nightModePreference: IntegerSimpleMenuPreference
     private lateinit var blackNightThemePreference: TwoStatePreference
     private lateinit var startOnBootPreference: TwoStatePreference
+    private lateinit var startOnBootWirelessPreference: TwoStatePreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
@@ -56,6 +63,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         nightModePreference = findPreference(KEY_NIGHT_MODE)!!
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME)!!
         startOnBootPreference = findPreference(KEEP_START_ON_BOOT)!!
+        startOnBootWirelessPreference = findPreference(KEEP_START_ON_BOOT_WIRELESS)!!
         startupPreference = findPreference("startup")!!
         translationPreference = findPreference("translation")!!
         translationContributorsPreference = findPreference("translation_contributors")!!
@@ -63,14 +71,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
 
-        startOnBootPreference.isChecked = context.packageManager.isComponentEnabled(componentName)
         startOnBootPreference.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
                 if (newValue is Boolean) {
+                    startOnBootWirelessPreference.isChecked = false
                     context.packageManager.setComponentEnabled(componentName, newValue)
                     context.packageManager.isComponentEnabled(componentName) == newValue
                 } else false
             }
+
+        startOnBootWirelessPreference.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener{ _: Preference?, newValue: Any ->
+                    if (newValue is Boolean) {
+                        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+                            Log.i(ShizukuSettings.NAME, "Start on Boot Wireless without granting WRITE_SECURE_SETTINGS permission")
+                            Toast.makeText(context, "WRITE_SECURE_SETTINGS permission is not granted for Shizuku", Toast.LENGTH_SHORT).show()
+                            startOnBootWirelessPreference.isChecked = false
+                            return@OnPreferenceChangeListener false
+                        }
+                        startOnBootPreference.isChecked = false
+                        context.packageManager.setComponentEnabled(componentName, newValue)
+                        context.packageManager.isComponentEnabled(componentName) == newValue
+                    } else false
+                }
+
         languagePreference.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
                 if (newValue is String) {

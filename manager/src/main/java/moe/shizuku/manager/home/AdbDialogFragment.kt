@@ -17,9 +17,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbMdns
+import moe.shizuku.manager.adb.WirelessADBHelper.callStartAdb
 import moe.shizuku.manager.databinding.AdbDialogBinding
-import moe.shizuku.manager.starter.StarterActivity
-import java.net.InetAddress
+import moe.shizuku.manager.utils.EnvironmentUtils
 
 @RequiresApi(Build.VERSION_CODES.R)
 class AdbDialogFragment : DialogFragment() {
@@ -33,8 +33,7 @@ class AdbDialogFragment : DialogFragment() {
         binding = AdbDialogBinding.inflate(LayoutInflater.from(context))
         adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT, port)
 
-        var port = SystemProperties.getInt("service.adb.tcp.port", -1)
-        if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
+        val port = EnvironmentUtils.getAdbTcpPort()
 
         val builder = MaterialAlertDialogBuilder(context).apply {
             setTitle(R.string.dialog_adb_discovery)
@@ -70,8 +69,7 @@ class AdbDialogFragment : DialogFragment() {
         }
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
-            var port = SystemProperties.getInt("service.adb.tcp.port", -1)
-            if (port == -1) port = SystemProperties.getInt("persist.adb.tcp.port", -1)
+            val port = EnvironmentUtils.getAdbTcpPort()
             startAndDismiss(port)
         }
 
@@ -83,13 +81,7 @@ class AdbDialogFragment : DialogFragment() {
 
     private fun startAndDismiss(port: Int) {
         val host = "127.0.0.1"
-        val intent = Intent(context, StarterActivity::class.java).apply {
-            putExtra(StarterActivity.EXTRA_IS_ROOT, false)
-            putExtra(StarterActivity.EXTRA_HOST, host)
-            putExtra(StarterActivity.EXTRA_PORT, port)
-        }
-        requireContext().startActivity(intent)
-
+        callStartAdb(requireContext(), host, port)
         dismissAllowingStateLoss()
     }
 
