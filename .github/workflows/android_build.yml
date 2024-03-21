@@ -1,0 +1,75 @@
+name: Android CI
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: write
+
+env:
+  GRADLE_OPTS: -Dkotlin.incremental=false -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Forked Repo
+        uses: actions/checkout@v4
+        with:
+          repository: pixincreate/Shizuku
+          ref: master
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Keystore File
+        run: |
+          touch signing.properties
+          echo KEYSTORE_PASSWORD='${{ secrets.KEYSTORE_PASSWORD }}' >> signing.properties
+          echo KEYSTORE_ALIAS='${{ secrets.KEYSTORE_ALIAS_NAME }}' >> signing.properties
+          echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_PASSWORD_ALIAS }}' >> signing.properties
+          echo KEYSTORE_FILE=../key.jks >> signing.properties
+          
+          echo '${{ secrets.KEYSTORE_FILE }}' > keystore.jks.asc
+          gpg -d --passphrase '${{ secrets.KEYSTORE_PASSWORD_GPG }}' --batch keystore.jks.asc > key.jks
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        id: buildWithGradle
+        run: |
+          echo 'org.gradle.caching=true' >> gradle.properties
+          echo 'org.gradle.parallel=true' >> gradle.properties
+          echo 'org.gradle.vfs.watch=true' >> gradle.properties
+          
+          ./gradlew :manager:assembleRelease :manager:assembleDebug
+          releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.buildWithGradle.outputs.releaseName }}
+          path: "manager/build/outputs/apk/release/*.apk"
+          retention-days: 2
+
+      - name: Release APK
+        uses: "dciborow/action-github-releases@v1.0.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ steps.buildWithGradle.outputs.releaseName }}
+          prerelease: false
+          title: ${{ steps.buildWithGradle.outputs.releaseName }}
+          files: |
+            manager/build/outputs/apk/release/*.apk
