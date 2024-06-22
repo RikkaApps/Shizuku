@@ -98,7 +98,7 @@ public class ServiceStarter {
         IContentProvider provider = null;
 
         try {
-            for(int i = 0;i < 10;i++)
+            for(int i = 0;i < 50;i++)
             {
                 provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
                 if (provider == null)
