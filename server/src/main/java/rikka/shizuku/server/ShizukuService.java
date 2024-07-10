@@ -467,14 +467,20 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         }
     }
 
-    private static void sendBinderToClient(Binder binder, int userId) {
+    private void sendBinderToClient(Binder binder, int userId) {
         try {
             for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
                 if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
-                    sendBinderToUserApp(binder, pi.packageName, userId);
+                    int uid = pi.applicationInfo.uid;
+                    ShizukuConfig.PackageEntry entry = configManager.find(uid);
+                    if (entry != null) {
+                        if (entry.packages != null && entry.packages.contains(pi.packageName) && entry.isAllowed()){
+                            sendBinderToUserApp(binder, pi.packageName, userId);
+                        }
+                    }
                 }
             }
         } catch (Throwable tr) {
