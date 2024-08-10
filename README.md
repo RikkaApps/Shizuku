@@ -88,7 +88,7 @@ The code for this project is available under the Apache-2.0 license.
   manager/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
   manager/src/main/res/mipmap-xhdpi/ic_launcher.png
   manager/src/main/res/mipmap-xhdpi/ic_launcher_background.png
-  manager/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
+  manager/src/main/res/mmap-xhdpi/ic_launcher_foreground.png
   manager/src/main/res/mipmap-xxhdpi/ic_launcher.png
   manager/src/main/res/mipmap-xxhdpi/ic_launcher_background.png
   manager/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
