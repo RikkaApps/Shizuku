@@ -7,6 +7,10 @@
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--  this permission is required for autostart on non-root! -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
+
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
         tools:node="remove" />
@@ -83,6 +87,9 @@
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".receiver.LaunchActivity"
+            android:label="" />
         <activity
             android:name=".starter.StarterActivity"
             android:label="@string/starter" />

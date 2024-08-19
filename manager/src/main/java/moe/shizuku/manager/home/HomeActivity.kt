@@ -24,6 +24,7 @@ import moe.shizuku.manager.databinding.AboutDialogBinding
 import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
+import moe.shizuku.manager.receiver.LaunchActivity
 import moe.shizuku.manager.settings.SettingsActivity
 import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.utils.AppIconCache
@@ -54,6 +55,11 @@ abstract class HomeActivity : AppBarActivity() {
         super.onCreate(savedInstanceState)
 
         writeStarterFiles()
+
+        val context = applicationContext
+        val intents = Intent(context, LaunchActivity::class.java)
+        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        //context.startActivity(intents)
 
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
