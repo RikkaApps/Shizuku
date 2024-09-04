@@ -56,11 +56,6 @@ abstract class HomeActivity : AppBarActivity() {
 
         writeStarterFiles()
 
-        val context = applicationContext
-        val intents = Intent(context, LaunchActivity::class.java)
-        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        //context.startActivity(intents)
-
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
