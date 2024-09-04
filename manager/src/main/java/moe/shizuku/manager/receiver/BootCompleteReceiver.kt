@@ -32,9 +32,6 @@ import rikka.shizuku.Shizuku
 @RequiresApi(Build.VERSION_CODES.R)
 class BootCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        Log.i("shizuku", "start shizukuuuuu")
-
-
         // TODO Record if receiver is called
         if (ShizukuSettings.getLastLaunchMode() == LaunchMethod.ROOT) {
             Log.i(AppConstants.TAG, "start on boot, action=" + intent.action)
@@ -47,7 +44,6 @@ class BootCompleteReceiver : BroadcastReceiver() {
     }
 
     private fun start(context: Context) {
-        Log.i("shizuku", "start shizukuuuuu")
         if (!Shell.rootAccess()) {
             Log.i("shizuku", "start non-root sihzuku")
             val intents = Intent(context, LaunchActivity::class.java)
