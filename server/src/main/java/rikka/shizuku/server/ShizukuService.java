@@ -14,6 +14,7 @@ import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONET
 import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static rikka.shizuku.server.ServerConstants.PERMISSION;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.IContentProvider;
 import android.content.Intent;
@@ -475,20 +476,37 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         }
     }
 
+//  MIUI not judging well
+    public boolean isStopped( ApplicationInfo info) {
+        return (info.flags & ApplicationInfo.FLAG_STOPPED) != 0;
+    }
+
     private void sendBinderToClient(Binder binder, int userId) {
         try {
+            var appslist = ActivityManagerApis.getRunningAppProcesses();
             for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
                 if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
-                    int uid = pi.applicationInfo.uid;
-                    ShizukuConfig.PackageEntry entry = configManager.find(uid);
-                    if (entry != null) {
-                        if (entry.packages != null && entry.packages.contains(pi.packageName) && entry.isAllowed()){
-                            sendBinderToUserApp(binder, pi.packageName, userId);
+
+                    boolean stop=false;
+                    ApplicationInfo applicationInfo = pi.applicationInfo;
+                    if (applicationInfo==null || isStopped(applicationInfo) ) stop=true;
+                    if (!stop) {
+                        for (ActivityManager.RunningAppProcessInfo app : appslist) {
+                            if (app.uid == pi.applicationInfo.uid) {
+                                LOGGER.d("sendBinderToUserApp : "+app.processName+" "+app.uid);
+                               sendBinderToUserApp(binder, pi.packageName, userId);
+                                stop = true;
+                                break;
+                            }
                         }
+
+                        if (stop)continue;
+                        LOGGER.d("sendBinderToUserApp : Not actually in operation : "+pi.packageName+" "+pi.applicationInfo.name);
                     }
+
                 }
             }
         } catch (Throwable tr) {
