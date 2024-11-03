@@ -47,11 +47,11 @@
     <string name="home_root_button_start">Запустить</string>
     <string name="home_root_description">В дополнение, Shizuku может запускаться сразу после загрузки системы. Если этого не происходит, проверьте, нет ли ограничений со стороны вашей системы или сторонних инструментов.&lt;br&gt;Вы можете обратиться в %s.</string>
     <string name="home_root_title">Запуск (для устройств с root правами)</string>
-    <string name="development_settings">Для разработчиков</string>
-    <string name="adb_pair_required">Пожалуйста, сперва пройдите процедуру подключения.</string>
+    <string name="development_settings">Параметры разработчика</string>
+    <string name="adb_pair_required">Пожалуйста, сперва пройдите процедуру сопряжения.</string>
     <string name="adb_error_key_store">Не удалось сгенерировать ключ для отладки по Wi-Fi.
 \nВозможно, что механизм KeyStore у данного устройства нерабочий.</string>
-    <string name="adb_pairing_requires_multi_window_reason">Системе нужно постоянно видеть диалоговое окно подключения, и многооконный режим – это единственный способ вывести на экран и это приложение, и системное окно одновременно.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Системе нужно постоянно видеть диалоговое окно сопряжения, и многооконный режим – это единственный способ вывести на экран и это приложение, и системное окно одновременно.</string>
     <string name="adb_pairing_requires_multi_window">Пожалуйста, сначала активируйте режим разделения экрана (многооконный режим).</string>
     <string name="dialog_adb_pairing_message">Пожалуйста, для подключения выполните следующие шаги: «Для разработчиков» – «Отладка по Wi-Fi» – «Подключиться к устройству, используя код».
 \n
@@ -59,11 +59,11 @@
     <string name="dialog_wireless_adb_not_enabled">Отладка по Wi-Fi не включена.
 \nВнимание: на системах старше Android 11 для включения этой отладки необходимо соединение с компьютером.</string>
     <string name="cannot_connect_port">Не удается подключиться к службе отладки по Wi-Fi.</string>
-    <string name="paring_code_is_wrong">Неверный код подключения.</string>
-    <string name="dialog_adb_pairing_paring_code">Код подключения</string>
-    <string name="dialog_adb_pairing_discovery">Ожидание службы соединения</string>
-    <string name="dialog_adb_pairing_title">Подключение к устройству</string>
-    <string name="adb_pairing">Подключение</string>
+    <string name="paring_code_is_wrong">Неверный код сопряжения.</string>
+    <string name="dialog_adb_pairing_paring_code">Код сопряжения</string>
+    <string name="dialog_adb_pairing_discovery">Поиск службы соединения</string>
+    <string name="dialog_adb_pairing_title">Сопряжение с устройством</string>
+    <string name="adb_pairing">Сопряжение</string>
     <string name="dialog_adb_invalid_port">Порт – это целое число в диапазоне от 1 до 65535.</string>
     <string name="dialog_adb_port">Порт</string>
     <string name="dialog_adb_discovery_message">Пожалуйста, включите пункт «Отладка по Wi-Fi» в меню «Для разработчиков». «Отладка по Wi-Fi» автоматически отключается при изменении сети.
@@ -71,14 +71,14 @@
 \nВнимание: не отключайте пункт «Для разработчиков» или «Отладка по USB», иначе Shizuku остановит работу.</string>
     <string name="dialog_adb_discovery">Ожидание службы отладки по Wi-Fi</string>
     <string name="home_wireless_adb_title">Запуск через отладку по Wi-Fi</string>
-    <string name="home_adb_dialog_view_command_button_send">Поделиться</string>
+    <string name="home_adb_dialog_view_command_button_send">Отправить</string>
     <string name="home_adb_dialog_view_command_copy_button">Скопировать</string>
-    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Есть и другие способы; сначала убедитесь, что прочли справку.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Есть и другие способы; сначала убедитесь, что сперва прочли справку.</string>
     <string name="home_adb_button_view_command">Просмотр команды</string>
     <string name="home_adb_button_view_help">Читать справку</string>
     <string name="home_adb_description">Для устройств без root прав потребуется обращаться к adb для запуска Shizuku (не обойтись без соединения с компьютером). Этот процесс нужно повторять каждый раз, когда устройство перезагружается. Пожалуйста, <b><a href="%1$s">прочтите справку</a></b>.</string>
     <string name="home_adb_title">Запуск через соединение с ПК</string>
-    <string name="home_status_service_version_update">Версия %2$s, %1$s&lt;br&gt;Обновитесь до версии %3$s и запустите снова</string>
+    <string name="home_status_service_version_update">Версия %2$s, %1$s&lt;br&gt;Запустите снова что бы обновиться до версии %3$s</string>
     <string name="home_status_service_version">Версия %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s не запущен</string>
     <string name="home_status_service_is_running">%1$s запущен</string>
@@ -103,8 +103,8 @@
     <string name="home_terminal_title">Применение Shizuku в эмуляторах терминала</string>
     <string name="home_wireless_adb_description">На Android 11 или выше Вы можете включить отладку по Wi-Fi без дополнительного ПО, без подключения к компьютеру. Пожалуйста, сперва просмотрите инструкцию</string>
     <string name="adb_pairing_tutorial_content_miui">На оболочке MIUI может потребоваться сменить параметр в пункте системных настроек «Уведомления» – «Стиль уведомлений» на «Android».</string>
-    <string name="adb_pairing_tutorial_content_steps">Перейдите в «Для разработчиков» – «Отладка по Wi-Fi». Нажмите на «Подключить устройство с помощью кода подключения» и увидите шестизначный код.</string>
-    <string name="adb_pairing_tutorial_content_enter_pairing_code">Введите код в уведомление для завершения процедуры.</string>
+    <string name="adb_pairing_tutorial_content_steps">Перейдите в «Параметры разработчика» – «Отладка по Wi-Fi». Нажмите на «Сопряжение устройства с помощью кода сопряжения» и увидите шестизначный код.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Введите код в уведомление для завершения процедуры сопряжения.</string>
     <string name="adb_pairing_tutorial_content_notification">Уведомление от Shizuku поможет завершить процедуру сопряжения.</string>
     <string name="rish_description">Посредством %1$s из любого приложения-терминала можно подключаться и взаимодействовать с shell, запущенной Shizuku. &lt;p&gt;Нажмите здесь для просмотра инструкции по работе с %1$s.</string>
     <string name="notification_adb_pairing_working_title">Выполняется сопряжение</string>
@@ -113,17 +113,17 @@
     <string name="notification_adb_pairing_failed_title">Не удалось выполнить сопряжение</string>
     <string name="notification_adb_pairing_retry">Повторить попытку</string>
     <string name="adb_pairing_tutorial_title">Сопряжение Shizuku с вашим устройством</string>
-    <string name="home_wireless_adb_description_pre_11">Для отладки по Wi-Fi на Android до 11 версии не обойтись без соединения с компьютером.</string>
+    <string name="home_wireless_adb_description_pre_11">"Для отладки по Wi-Fi в Android до 11 версии  потребуется соединения с компьютером."</string>
     <string name="home_wireless_adb_view_guide_button">Пошаговая инструкция</string>
     <string name="notification_settings">Настройки уведомлений</string>
-    <string name="adb_pairing_tutorial_content_notification_blocked">Процедура сопряжения подразумевает взаимодействие с уведомлением от программы. Для продолжения выдайте Shizuku разрешение на показ уведомлений.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Процедура сопряжения подразумевает взаимодействие с уведомлением от Shizuku. Для продолжения выдайте Shizuku разрешение на показ уведомлений.</string>
     <string name="adb_pairing_tutorial_content_finish">Вернитесь в приложение Shizuku и запустите его.</string>
     <string name="notification_channel_adb_pairing">Сопряжение с отладкой по Wi-Fi</string>
     <string name="notification_adb_pairing_input_paring_code">Введите код подключения</string>
     <string name="notification_adb_pairing_searching_for_service_title">Ожидание службы сопряжения</string>
     <string name="notification_adb_pairing_service_found_title">Служба найдена</string>
     <string name="notification_adb_pairing_stop_searching">Прекратить поиск</string>
-    <string name="adb_pairing_tutorial_content_miui_2">Иначе вы, вероятнее всего, не сможете ввести код подключения из уведомления.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Иначе вы, вероятнее всего, не сможете ввести код сопряжения из уведомления.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku требуется доступ к локальной сети. Он управляется сетевым разрешением.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Некоторые системы (та же MIUI) не разрешают приложениям доступ к сети, когда они не на экране, даже если те в основе задействуют службу переднего плана. Пожалуйста, добавьте Shizuku в исключения алгоритмов оптимизации заряда батареи на таких системах.</string>
     <string name="settings_use_system_color">Палитра цветов из системы</string>
