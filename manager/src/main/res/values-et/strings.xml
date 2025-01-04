@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="home_adb_dialog_view_command_button_send">Saada</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopeeri</string>
+    <string name="home_status_service_version">Versioon %2$s, %1$s</string>
+</resources>
