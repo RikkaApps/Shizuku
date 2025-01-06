@@ -1,9 +1,9 @@
 package moe.shizuku.starter;
 
 import android.content.IContentProvider;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
@@ -58,11 +58,16 @@ public class ServiceStarter {
                 token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
     }
 
+    private static final int MAX_RETRIES = 50;
+    private static final int RETRY_DELAY_MS = 200;
+    private static Handler handler;
+
     public static void main(String[] args) {
         if (Looper.getMainLooper() == null) {
             Looper.prepareMainLooper();
         }
-
+        handler = new Handler(Looper.getMainLooper());
+        retryCount = 0;
         IBinder service;
         String token;
 
@@ -77,9 +82,7 @@ public class ServiceStarter {
         service = result.first;
         token = result.second;
 
-        if (!sendBinder(service, token)) {
-            System.exit(1);
-        }
+        sendBinder(service, token);
 
         Looper.loop();
         System.exit(0);
@@ -87,76 +90,111 @@ public class ServiceStarter {
         Log.i(TAG, "service exited");
     }
 
-    private static boolean sendBinder(IBinder binder, String token) {
-        return sendBinder(binder, token, true);
-    }
+    private static int retryCount;
+    static String packageName = "moe.shizuku.privileged.api";
+    static IContentProvider provider = null;
 
-    private static boolean sendBinder(IBinder binder, String token, boolean retry) {
-        String packageName = "moe.shizuku.privileged.api";
+    private static void sendBinder(IBinder binder, String token) {
         String name = packageName + ".shizuku";
         int userId = 0;
-        IContentProvider provider = null;
+        Runnable retryRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
+                    if (provider == null) {
+                        retryCount++;
+                        Log.w(TAG, String.format("provider is null %s %d,try times %d", name, userId, retryCount));
+                        if (retryCount < MAX_RETRIES) {
+                            handler.postDelayed(this, RETRY_DELAY_MS);
+                        } else {
+                            Log.e(TAG, String.format("provider is null %s %d", name, userId));
+                            handler.removeCallbacks(this);
+                            System.exit(1);
+                        }
+                    } else {
+                        processProvider(provider,binder,token,packageName,userId,this);
+                    }
 
+                } catch (Throwable tr) {
+                    Log.e(TAG, String.format("failed send binder to %s in user %d", packageName, userId), tr);
+                    handler.removeCallbacks(this);
+                    System.exit(1);
+                } finally {
+                    if (provider != null) {
+                        try {
+                            ActivityManagerApis.removeContentProviderExternal(name, null);
+                        } catch (Throwable tr) {
+                            Log.w(TAG, "removeContentProviderExternal", tr);
+                        }
+                    }
+                }
+            }
+        };
+        handler.post(retryRunnable);
+    }
+    private static boolean retryProviderPingBinder = true;
+    private static void processProvider(IContentProvider provider, IBinder binder, String token, String packageName, int userId, Runnable retryRunnable) {
+        String name = packageName + ".shizuku";
+        if (!provider.asBinder().pingBinder()) {
+            Log.e(TAG, String.format("provider is dead %s %d", name, userId));
+
+            if (retryProviderPingBinder) {
+                // For unknown reason, sometimes this could happens
+                // Kill Shizuku app and try again could work
+                ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
+                Log.e(TAG, String.format("kill %s in user %d and try again", packageName, userId));
+                handler.postDelayed(retryRunnable, 1000);
+                retryProviderPingBinder = false;
+                return;
+            }
+            handler.removeCallbacks(retryRunnable);
+            System.exit(1);
+        }
+
+        if (!retryProviderPingBinder) {
+            Log.e(TAG, "retry works");
+        }
+
+        Bundle extra = new Bundle();
+        extra.putParcelable(EXTRA_BINDER, new BinderContainer(binder));
+        extra.putString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN, token);
+
+        Bundle reply = null;
         try {
-            provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
-            if (provider == null) {
-                Log.e(TAG, String.format("provider is null %s %d", name, userId));
-                return false;
-            }
-            if (!provider.asBinder().pingBinder()) {
-                Log.e(TAG, String.format("provider is dead %s %d", name, userId));
-
-                if (retry) {
-                    // For unknown reason, sometimes this could happens
-                    // Kill Shizuku app and try again could work
-                    ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
-                    Log.e(TAG, String.format("kill %s in user %d and try again", packageName, userId));
-                    Thread.sleep(1000);
-                    return sendBinder(binder, token, false);
-                }
-                return false;
-            }
-
-            if (!retry) {
-                Log.e(TAG, "retry works");
-            }
-
-            Bundle extra = new Bundle();
-            extra.putParcelable(EXTRA_BINDER, new BinderContainer(binder));
-            extra.putString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN, token);
-
-            Bundle reply = IContentProviderCompat.call(provider, null, null, name, "sendUserService", null, extra);
-
-            if (reply != null) {
-                reply.setClassLoader(BinderContainer.class.getClassLoader());
-
-                Log.i(TAG, String.format("send binder to %s in user %d", packageName, userId));
-                BinderContainer container = reply.getParcelable(EXTRA_BINDER);
-
-                if (container != null && container.binder != null && container.binder.pingBinder()) {
-                    shizukuBinder = container.binder;
-                    shizukuBinder.linkToDeath(() -> {
-                        Log.i(TAG, "exiting...");
-                        System.exit(0);
-                    }, 0);
-                    return true;
-                } else {
-                    Log.w(TAG, "server binder not received");
-                }
-            }
-
-            return false;
+            reply = IContentProviderCompat.call(provider, null, null, name, "sendUserService", null, extra);
         } catch (Throwable tr) {
             Log.e(TAG, String.format("failed send binder to %s in user %d", packageName, userId), tr);
-            return false;
-        } finally {
-            if (provider != null) {
+            handler.removeCallbacks(retryRunnable);
+            System.exit(1);
+        }
+
+        if (reply != null) {
+            reply.setClassLoader(BinderContainer.class.getClassLoader());
+
+            Log.i(TAG, String.format("send binder to %s in user %d", packageName, userId));
+            BinderContainer container = reply.getParcelable(EXTRA_BINDER);
+
+            if (container != null && container.binder != null && container.binder.pingBinder()) {
+                shizukuBinder = container.binder;
                 try {
-                    ActivityManagerApis.removeContentProviderExternal(name, null);
+                    shizukuBinder.linkToDeath(() -> {
+                        Log.i(TAG, "exiting...");
+                        handler.removeCallbacks(retryRunnable);
+                        System.exit(0);
+                    }, 0);
                 } catch (Throwable tr) {
-                    Log.w(TAG, "removeContentProviderExternal", tr);
+                    Log.e(TAG, String.format("failed send binder to %s in user %d", packageName, userId), tr);
+                    handler.removeCallbacks(retryRunnable);
+                    System.exit(1);
                 }
+                return;
+            } else {
+                Log.w(TAG, "server binder not received");
             }
         }
+        handler.removeCallbacks(retryRunnable);
+        System.exit(1);
+
     }
 }
