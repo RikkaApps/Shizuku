@@ -24,6 +24,7 @@ import moe.shizuku.manager.databinding.AboutDialogBinding
 import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
+import moe.shizuku.manager.receiver.LaunchActivity
 import moe.shizuku.manager.settings.SettingsActivity
 import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.utils.AppIconCache
