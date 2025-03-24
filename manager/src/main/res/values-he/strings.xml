@@ -11,4 +11,5 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* יש עדין שיקולים אחרים, בבקשה תאשר שקראת את העזרה לפני.</string>
     <string name="home_adb_dialog_view_command_button_send">שלח</string>
     <string name="home_adb_dialog_view_command_copy_button">העתק</string>
+    <string name="home_wireless_adb_description">באנדרואיד 11 ומעלה, אתם יכולים להפעיל ניפוי באגים אלחוטי ולהתחיל את Shizuku ישירות מהמכשיר שלכם, ללא חיבור למחשב. קודם כל, הביטו בבקשה במדריך.</string>
 </resources>
