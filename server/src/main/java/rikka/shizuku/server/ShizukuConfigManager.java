@@ -12,12 +12,15 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -39,8 +42,33 @@ public class ShizukuConfigManager extends ConfigManager {
 
     private static final long WRITE_DELAY = 10 * 1000;
 
-    private static final File FILE = new File("/data/local/tmp/shizuku/shizuku.json");
-    private static final AtomicFile ATOMIC_FILE = new AtomicFile(FILE);
+    private static final AtomicFile ATOMIC_FILE;
+
+    static {
+        File FILE = null;
+        File directory = new File("/data/local/tmp/");
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.getName().matches("^shizuku-[A-Za-z0-9]{6}$")) {
+                    FILE = file;
+                }
+            }
+        }
+
+        if (FILE == null) {
+            String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            SecureRandom random = new SecureRandom();
+            StringBuilder sb = new StringBuilder(6);
+            for (int i = 0; i < 6; i++) {
+                sb.append(chars.charAt(random.nextInt(chars.length())));
+            }
+            FILE = new File(directory, "shizuku-" + sb);
+        }
+
+        ATOMIC_FILE = new AtomicFile(FILE);
+    }
 
     public static ShizukuConfig load() {
         FileInputStream stream;
