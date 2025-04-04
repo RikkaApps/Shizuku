@@ -183,7 +183,7 @@ std::string find_or_create_shizuku_file() {
         struct dirent* entry;
 
         while ((entry = readdir(dir)) != nullptr) {
-            if (entry->d_type == DT_REG) { // Regular file
+            if (entry->d_type == DT_DIR) { // Regular file
                 std::string filename(entry->d_name);
                 if (std::regex_match(filename, pattern)) {
                     file_path = directory + filename;
