@@ -4,7 +4,6 @@ import android.app.ActivityThread;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.text.TextUtils;
 
 import androidx.annotation.IntDef;
@@ -25,6 +24,7 @@ public class ShizukuSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
+    public static final String KEEP_START_ON_BOOT_WIRELESS = "start_on_boot_wireless";
 
     private static SharedPreferences sPreferences;
 
@@ -35,11 +35,7 @@ public class ShizukuSettings {
     @NonNull
     private static Context getSettingsStorageContext(@NonNull Context context) {
         Context storageContext;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            storageContext = context.createDeviceProtectedStorageContext();
-        } else {
-            storageContext = context;
-        }
+        storageContext = context.createDeviceProtectedStorageContext();
 
         storageContext = new ContextWrapper(storageContext) {
             @Override

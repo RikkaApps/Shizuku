@@ -1,0 +1,68 @@
+name: Update Fork
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * MON" # runs every monday at 05:30 UTC
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  update_fork:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Forked Repo
+        uses: actions/checkout@v4
+        with:
+          repository: pixincreate/Shizuku
+          ref: master
+          fetch-depth: "0"
+          submodules: true
+
+      - name: Setup Git
+        run: git config --global user.email ${{ secrets.EMAIL }} && git config --global user.name PiX
+
+      - name: Fetch from Upstream
+        run: |
+          git remote add upstream https://github.com/RikkaApps/Shizuku.git
+          git fetch upstream master
+          upstream_commit="$(git rev-parse upstream/master)"
+          echo "Upstream latest commit: ${upstream_commit}"
+          for forked_commit in $(git rev-list -n 20 master); do
+            if [ $upstream_commit != $forked_commit ]; then
+              has_new_commits=true
+              continue
+            else
+              has_new_commits=false
+              break
+            fi
+          done
+          if [ $has_new_commits == "true" ]; then
+            git checkout master
+            if ! git rebase upstream/master; then
+              git diff
+              echo "ERROR: Merge conflict encountered during rebase!"
+              git rebase --abort
+              exit 1
+            fi
+            git submodule update --init --recursive  # Update the submodule
+            git push -f origin master
+            echo "Rebase successful!"
+          else
+            echo "ERROR: No commits to be synced!"
+            exit 1
+          fi
+
+  build_app:
+    needs: update_fork
+    uses: ./.github/workflows/android_build.yml
+    secrets: inherit
+
+# References:
+# https://stackoverflow.com/questions/75192546/is-it-possible-to-call-another-workflow-file-from-another-workflow-files-condit/75225285#75225285
+# https://stackoverflow.com/questions/75191443/how-to-check-if-upstreams-head-latest-commit-is-present-in-forked-repo
+# https://stackoverflow.com/questions/75191328/why-does-git-rebase-upstream-main-behaves-differently-when-used-github-actions
+# https://stackoverflow.com/questions/62750603/github-actions-trigger-another-action-after-one-action-is-completed
