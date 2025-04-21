@@ -15,13 +15,9 @@ body:
       label: Requirements
       options:
         - label: Shizuku version is up-to-date
-          required: true
         - label: Shizuku is downloaded from official channels (GitHub release or Google Play)
-          required: true
         - label: Shizuku is not running in a virtual environment or broken ROM (GrapheneOS)
-          required: true
         - label: (Root users) No Xposed installed / Xposed is not enabled for Shizuku
-          required: true
 
   - type: markdown
     attributes:
