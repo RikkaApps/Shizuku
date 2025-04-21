@@ -2,7 +2,7 @@ name: Bug report
 description: Report a bug of Shizuku
 title: "[Bug] "
 labels: ["bug"]
-assignees: ""
+assignees: "
 
 body:
   - type: markdown
