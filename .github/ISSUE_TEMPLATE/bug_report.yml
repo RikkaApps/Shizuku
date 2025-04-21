@@ -9,8 +9,6 @@ body:
       value: |
         **Please report bugs of Shizuku itself.**
 
-        **Requirements:**
-
   - type: checkboxes
     id: requirements
     attributes:
