@@ -1,0 +1,84 @@
+name: Bug report
+description: Report a bug of Shizuku
+title: "[Bug] "
+labels: ["bug"]
+assignees: ""
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Please report bugs of Shizuku itself.**
+
+        **Requirements:**
+
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Requirements
+      options:
+        - label: Shizuku version is up-to-date
+          required: true
+        - label: Shizuku is downloaded from official channels (GitHub release or Google Play)
+          required: true
+        - label: Shizuku is not running in a virtual environment or broken ROM (GrapheneOS)
+          required: true
+        - label: (Root users) No Xposed installed / Xposed is not enabled for Shizuku
+          required: true
+
+  - type: markdown
+    attributes:
+      value: "**Reports not meeting the requirements will be immediately closed**."
+
+  - type: input
+    id: shizuku_version
+    attributes:
+      label: Shizuku version
+      placeholder: "e.g. 13.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - adb
+        - root
+    validations:
+      required: true
+
+  - type: input
+    id: android_version
+    attributes:
+      label: Android version
+      placeholder: "e.g. Android 13"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device (optional)
+      placeholder: "e.g. Google Pixel 7"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Provide related **full logcat**
+      render: text
+
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here
