@@ -90,22 +90,16 @@
     <string name="notification_settings">Options des notifications</string>
     <string name="development_settings">Options pour les développeurs</string>
     <string name="adb_pair_required">Merci d\'aller à l\'étape d\'association d\'abord.</string>
-    <string name="adb_error_key_store">Impossible de générer une clé pour le débogage sans fil.
-\nCela peut être dû au fait que le mécanisme du magasin de clés de l\'appareil est cassé.</string>
+    <string name="adb_error_key_store">Impossible de générer une clé pour le débogage sans fil.\nCela peut être dû au fait que le mécanisme du magasin de clés de l\'appareil est cassé.</string>
     <string name="adb_pairing_requires_multi_window_reason">Le système nécessite que la fenêtre d\'association soit toujours visible, l\'utilisation du mode écran partagé est la seule manière de laisser cette appli et la fenêtre système visibles au même moment.</string>
     <string name="adb_pairing_requires_multi_window">Merci d\'activer le mode écran partagé (mode multi-fenêtres) d\'abord.</string>
-    <string name="dialog_adb_pairing_message">Merci de démarrer l\'association en suivant les étapes suivantes : \"Options pour les développeurs\" - \"Débogage sans fil\" - \"Associer avec un code d\'association\".
-\n
-\nAprès que le processus d\'association ai démarré, vous serez capable d\'entrer le code d\'association.</string>
-    <string name="dialog_wireless_adb_not_enabled">Le débogage sans fil n\'est pas activé.
-\nNote, avant Android 11, pour activer le débogage sans fil, la connexion à un ordinateur est requise.</string>
+    <string name="dialog_adb_pairing_message">Merci de démarrer l\'association en suivant les étapes suivantes : \"Options pour les développeurs\" - \"Débogage sans fil\" - \"Associer avec un code d\'association\".\n\nAprès que le processus d\'association ai démarré, vous serez capable d\'entrer le code d\'association.</string>
+    <string name="dialog_wireless_adb_not_enabled">Le débogage sans fil n\'est pas activé.\nNote, avant Android 11, pour activer le débogage sans fil, la connexion à un ordinateur est requise.</string>
     <string name="cannot_connect_port">Impossible de se connecter au service de débogage sans fil.</string>
     <string name="dialog_adb_pairing_paring_code">Code d\'association</string>
     <string name="dialog_adb_invalid_port">Le port est un entier compris entre 1 et 65535.</string>
     <string name="dialog_adb_port">Port</string>
-    <string name="dialog_adb_discovery_message">Merci d\'activer \"Débogage sans fil\" dans les \"Options pour les développeurs\". Le paramètre \"Débogage sans fil\" est automatiquement désactivé quand la connexion réseau change.
-\n
-\nNote, ne pas désactiver les \"Options pour les développeurs\" ou le \"Débogage USB\", ou Shizuku sera arrêté.</string>
+    <string name="dialog_adb_discovery_message">Merci d\'activer \"Débogage sans fil\" dans les \"Options pour les développeurs\". Le paramètre \"Débogage sans fil\" est automatiquement désactivé quand la connexion réseau change.\n\nNote, ne pas désactiver les \"Options pour les développeurs\" ou le \"Débogage USB\", ou Shizuku sera arrêté.</string>
     <string name="dialog_adb_discovery">Recherche du service de débogage sans fil</string>
     <string name="home_wireless_adb_view_guide_button">Guide étape par étape</string>
     <string name="home_wireless_adb_description_pre_11">Avant Android 11, la connection à un ordinateur est requise pour activer le débogage sans fil.</string>
