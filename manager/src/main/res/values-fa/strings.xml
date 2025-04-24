@@ -1,15 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Shizuku</string>
-
     <!-- To translators: you can leave your here -->
     <string name="translation_contributors">@Fardin_Ahmadyy</string>
-
     <!-- Home - Status -->
     <string name="home_status_service_is_running">%1$s در حال اجرا است</string>
     <string name="home_status_service_not_running">%1$s در حال اجرا نیست</string>
     <string name="home_status_service_version">نسخه %2$s، %1$s</string>
     <string name="home_status_service_version_update"><![CDATA[نسخه %2$s، %1$s<br>برای به‌روزرسانی به نسخه %3$s برنامه را راه‌اندازی مجدد نمایید]]></string>
-
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[با اتصال به رایانه شروع کنید]]></string>
     <string name="home_adb_description"><![CDATA[برای دستگاه‌های بدون دسترسی ریسه، باید از adb برای راه‌اندازی Shizuku استفاده کنید (نیاز به اتصال به رایانه دارد). این فرآیند باید هر بار که دستگاه راه اندازی مجدد می شود تکرار شود. لطفاً <b><a href=\"%1$s\">راهنما را بخوانید</a></b>.]]></string>
@@ -18,13 +16,11 @@
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* ملاحظات دیگری نیز وجود دارد، لطفاً تأیید کنید که ابتدا راهنما را خوانده اید.]]></string>
     <string name="home_adb_dialog_view_command_copy_button">رونوشت</string>
     <string name="home_adb_dialog_view_command_button_send">ارسال</string>
-
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[از طریق اشکال زدایی بی سیم شروع کنید]]></string>
     <string name="home_wireless_adb_description"><![CDATA[در اندروید ۱۱ یا بالاتر، می‌توانید اشکال‌زدایی بی‌سیم را فعال کنید و Shizuku را مستقیماً از دستگاه خود بدون اتصال به رایانه شروع کنید.<p>لطفاً ابتدا راهنمای گام به گام را مطالعه کنید.]]></string>
     <string name="home_wireless_adb_description_pre_11"><![CDATA[قبل از اندروید ۱۱، برای فعال کردن اشکال‌زدایی بی‌سیم، اتصال به رایانه لازم است.]]></string>
     <string name="home_wireless_adb_view_guide_button">راهنمای گام به گام</string>
-
     <!-- Adb -->
     <string name="dialog_adb_discovery">جستجوی خدمات اشکال زدایی بی سیم</string>
     <string name="dialog_adb_discovery_message">لطفاً \"اشکال‌زدایی بی‌سیم\" را در \"گزینه‌های توسعه دهنده\" فعال کنید. وقتی شبکه تغییر می‌کند، \"اشکال‌زدایی بی‌سیم\" به‌طور خودکار غیرفعال می‌شود.\n\nتوجه داشته باشید، \"گزینه‌های توسعه دهنده\" یا \"اشکال‌زدایی USB\" را غیرفعال نکنید، در غیر این صورت Shizuku متوقف خواهد شد.</string>
@@ -56,14 +52,12 @@
     <string name="adb_pairing_tutorial_content_finish">به Shizuku برگردید و Shizuku را راه‌اندازی کنید.</string>
     <string name="adb_pairing_tutorial_content_network">برنامه Shizuku نیاز به دسترسی به شبکه محلی دارد. زیرا توسط مجوز شبکه مدیریت می شود.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">برخی از دستگاه ها (مانند MIUI) به برنامه‌ها اجازه دسترسی به شبکه را زمانی که قابل مشاهده نیستند، نمی‌دهند، حتی اگر برنامه از خدمات پیش‌زمینه به‌عنوان استاندارد استفاده کند. لطفاً ویژگی‌های بهینه‌سازی باتری را برای Shizuku در چنین دستگاه‌هایی غیرفعال کنید.</string>
-
     <!-- Home - Root -->
     <string name="home_root_title"><![CDATA[راه‌اندازی (برای دستگاه‌هایی با دسترسی ریشه)]]></string>
     <string name="home_root_description"><![CDATA[علاوه بر این، Shizuku می تواند به طور خودکار هنگام راه‌اندازی دستگاه راه اندازی شود. اگر نه، لطفاً بررسی کنید که آیا سیستم شما یا ابزارهای شخص ثالث Shizuku را محدود کرده است.<br>می توانید به %s مراجعه کنید.]]></string>
     <string name="home_root_description_sui"><![CDATA[اگر از Magisk استفاده می‌کنید، می‌توانید %1$s را امتحان کنید. برای کاربران دارای امتیازات ریشه، در نهایت جایگزین Shizuku خواهد شد. توجه داشته باشید، برنامه‌های موجود برای استفاده از %2$s باید کمی تغییر کنند.]]></string>
     <string name="home_root_button_start">راه‌اندازی</string>
     <string name="home_root_button_restart">راه‌اندازی مجدد</string>
-
     <!-- Home - Application management -->
     <string name="home_app_management_title">مدیریت برنامه</string>
     <plurals name="home_app_management_authorized_apps_count">
@@ -72,20 +66,16 @@
     </plurals>
     <string name="home_app_management_view_authorized_apps"><![CDATA[برای مدیریت برنامه های مجاز ضربه بزنید]]></string>
     <string name="home_app_management_empty">برنامه‌هایی که Shizuku را درخواست کرده یا اعلام کرده‌اند در اینجا نشان داده می‌شوند.</string>
-
     <!-- Home - Learn more -->
     <string name="home_learn_more_title">یادگیری Shizuku</string>
     <string name="home_learn_more_description">یاد بگیرید که چگونه با Shizuku توسعه دهید</string>
-
     <!-- Home - Adb permissions limited -->
     <string name="home_adb_is_limited_title">شما باید یک قدم اضافی بردارید</string>
     <string name="home_adb_is_limited_description">سازنده دستگاه شما مجوزهای adb را محدود کرده است و برنامه هایی که از Shizuku استفاده می کنند به درستی کار نمی کنند.\n\nمعمولاً با تنظیم برخی از گزینه‌ها در \"گزینه‌های توسعه دهنده\" می‌توان این محدودیت را برطرف کرد. لطفاً راهنما را برای جزئیات نحوه انجام این کار بخوانید.\n\nشاید لازم باشد Shizuku را مجدداً راه اندازی کنید تا عملیات اجرایی شود.</string>
-
     <!-- Application management -->
     <string name="app_management_dialog_adb_is_limited_title">مجوز adb محدود است</string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[این احتمال وجود دارد که سازنده دستگاه شما مجوز adb را محدود کند.<p>ممکن است راه حلی برای دستگاه شما در <b><a href=\"%1$s\">این سند</a></b> وجود داشته باشد.]]></string>
     <string name="app_management_item_summary_requires_root">* نیاز دارد که Shizuku با امتیازات ریشه اجرا شود</string>
-
     <!-- Terminal -->
     <string name="home_terminal_title">از Shizuku در برنامه های پایانه استفاده کنید</string>
     <string name="home_terminal_description">دستورات را از طریق Shizuku در برنامه های پایانه که دوست دارید اجرا کنید</string>
@@ -100,7 +90,6 @@
 با %1$s، در هر برنامه پایانه‌ای، می‌توانید به پوسته‌ای که Shizuku اجرا می‌کند متصل شوید و با آن تعامل داشته باشید.
 <p>درباره استفاده دقیق %1$s، برای مشاهده سند ضربه بزنید.
     ]]></string>
-
     <!-- Settings -->
     <string name="settings_title">تنظیمات</string>
     <string name="settings_language">زبان</string>
@@ -114,21 +103,18 @@
     <string name="settings_start_on_boot">شروع هنگام راه‌اندازی دستگاه (ریشه)</string>
     <string name="settings_start_on_boot_summary">برای دستگاه های ریشه شده، Shizuku می تواند به طور خودکار در هنگام راه‌اندازی دستگاه شروع شود</string>
     <string name="settings_use_system_color">از رنگ طرح زمینه دستگاه استفاده کنید</string>
-
     <!-- About -->
     <string name="action_about">درباره</string>
     <string name="about_view_source_code"><![CDATA[کد منبع را در %s مشاهده کنید]]></string>
-
     <!-- Stop -->
     <string name="action_stop">توقف Shizuku</string>
     <string name="dialog_stop_message">خدمات Shizuku متوقف خواهد شد.</string>
-
     <!-- Notification -->
     <string name="notification_channel_service_status">وضعیت شروع خدمات</string>
     <string name="notification_service_starting">خدمات Shizuku شروع می شود…</string>
     <string name="notification_service_start_failed">راه‌اندازی خدمات Shizuku ناموفق بود.</string>
     <string name="notification_service_start_no_root">درخواست مجوز ریشه انجام نشد.</string>
-    <string name="notification_working">در حال کار کردن...</string>
+    <string name="notification_working">در حال کار کردن…</string>
     <string name="notification_channel_adb_pairing">مرتبط سازی اشکال‌زدایی بی‌سیم</string>
     <string name="notification_adb_pairing_input_paring_code">وارد کردن رمز مرتبط سازی</string>
     <string name="notification_adb_pairing_searching_for_service_title">جستجوی خدمات مرتبط سازی</string>
@@ -139,7 +125,6 @@
     <string name="notification_adb_pairing_succeed_text">اکنون می توانید خدمات Shizuku را راه اندازی کنید.</string>
     <string name="notification_adb_pairing_failed_title">مرتبط سازی انجام نشد</string>
     <string name="notification_adb_pairing_retry">سعی مجدد</string>
-
     <!-- Permission related, appears in system permission UI -->
     <string name="permission_group_label" translatable="false">Shizuku</string>
     <string name="permission_group_description" translatable="false">@string/permission_label</string>
@@ -148,22 +133,18 @@
     <string name="permission_warning_template"><![CDATA[اجازه <b>%1$s</b> برای %2$s؟]]></string>
     <string name="grant_dialog_button_allow_always">همیشه اجازه داده شود</string>
     <string name="grant_dialog_button_deny">"رد"</string>
-
     <!-- Starter -->
     <string name="starter">شروع کننده</string>
     <string name="starting_root_shell" translatable="false">در حال راه‌اندازی پوسته ریشه…</string>
     <string name="start_with_root_failed">نمی‌توان خدمات را راه‌اندازی کرد زیرا مجوز ریشه داده نشده است یا این دستگاه ریشه نشده است.</string>
-
     <!-- Misc -->
     <string name="dialog_cannot_open_browser_title">نمی توان مرورگر را راه اندازی کرد</string>
     <string name="toast_copied_to_clipboard">%s\nدر بریده‌دان رونوشت شده است.</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> در بریده‌دان رونوشت شده است.]]></string>
-
     <!-- Messages for legacy -->
     <string name="dialog_legacy_not_support_title">%1$s از شیزوکوی جدید پشتیبانی نمی کند</string>
     <string name="dialog_legacy_not_support_message"><![CDATA[شیزوکوی قدیمی از مارس ۲۰۱۹ منسوخ شده است. همچنین، Shizuku قدیمی در دستگاه‌های اندروید جدید کار نمی‌کند.<p>لطفاً از توسعه‌دهنده <b>%1$s</b> بخواهید که به‌روزرسانی کند.]]></string>
     <string name="dialog_requesting_legacy_title">%1$s در حال درخواست Shizuku قدیمی است</string>
     <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> پشتیبانی نسخه جدید شیزوکو دارد، اما شیزوکو قدیمی را درخواست می‌کند. این ممکن است به این دلیل باشد که Shizuku در حال اجرا نیست، لطفاً در برنامه Shizuku بررسی کنید.<p>Shizuku قدیمی از مارس ۲۰۱۹ منسوخ شده است.]]></string>
     <string name="dialog_requesting_legacy_button_open_shizuku">باز کردن Shizuku</string>
-
 </resources>
