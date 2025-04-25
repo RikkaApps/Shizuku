@@ -46,6 +46,7 @@ if [ -f $STARTER_PATH ]; then
     else
         echo "info: shizuku_starter exit with 0"
     fi
+    rm -f $STARTER_PATH 2>&1 > /dev/null
 else
     echo "Starter file not exist, please open Shizuku and try again."
 fi

@@ -16,6 +16,11 @@
 #include "cgroup.h"
 #include "logging.h"
 
+#include <vector>
+#include <string>
+#include <regex>
+#include <random>
+
 #ifdef DEBUG
 #define JAVA_DEBUGGABLE
 #endif
@@ -167,6 +172,46 @@ static int switch_cgroup() {
 
 char *context = nullptr;
 
+std::string find_or_create_shizuku_file() {
+    const std::string directory = "/data/local/tmp/";
+    std::string file_path;
+
+    // Try to find existing shizuku file
+    DIR* dir = opendir(directory.c_str());
+    if (dir != nullptr) {
+        std::regex pattern("^shizuku-[A-Za-z0-9]{6}$");
+        struct dirent* entry;
+
+        while ((entry = readdir(dir)) != nullptr) {
+            if (entry->d_type == DT_DIR) { // Regular file
+                std::string filename(entry->d_name);
+                if (std::regex_match(filename, pattern)) {
+                    file_path = directory + filename;
+                    break;
+                }
+            }
+        }
+        closedir(dir);
+    }
+
+    // If not found, create new one
+    if (file_path.empty()) {
+        const std::string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        std::random_device rd;
+        std::mt19937 generator(rd());
+        std::uniform_int_distribution<> distribution(0, chars.size() - 1);
+
+        std::string suffix;
+        for (int i = 0; i < 6; ++i) {
+            suffix += chars[distribution(generator)];
+        }
+
+        file_path = directory + "shizuku-" + suffix;
+    }
+
+    return file_path;
+}
+
 int starter_main(int argc, char *argv[]) {
     char *apk_path = nullptr;
     for (int i = 0; i < argc; ++i) {
@@ -215,11 +260,12 @@ int starter_main(int argc, char *argv[]) {
         }
     }
 
-    mkdir("/data/local/tmp/shizuku", 0707);
-    chmod("/data/local/tmp/shizuku", 0707);
+    std::string file = find_or_create_shizuku_file();
+    mkdir(file.c_str(), 0707);
+    chmod(file.c_str(), 0707);
     if (uid == 0) {
-        chown("/data/local/tmp/shizuku", 2000, 2000);
-        se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
+        chown(file.c_str(), 2000, 2000);
+        se::setfilecon(file.c_str(), "u:object_r:shell_data_file:s0");
     }
 
     printf("info: starter begin\n");
