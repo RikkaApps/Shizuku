@@ -61,8 +61,11 @@ class AdbDialogFragment : DialogFragment() {
         adbMdns.start()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).apply {
+                putExtra(":settings:fragment_args_key", "toggle_adb_wireless")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+
             try {
                 it.context.startActivity(intent)
             } catch (e: ActivityNotFoundException) {
