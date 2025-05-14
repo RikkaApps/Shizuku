@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemProperties
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -44,6 +45,10 @@ class AdbPairingTutorialActivity : AppBarActivity() {
 
             if (DeviceCompatibility.isMiui()) {
                 miui.isVisible = true
+            }
+
+            if (isMtkDuraSpeedOn()) {
+                mtk.isVisible = true
             }
 
             developerOptions.setOnClickListener {
@@ -84,6 +89,14 @@ class AdbPairingTutorialActivity : AppBarActivity() {
         val channel = nm.getNotificationChannel(AdbPairingService.notificationChannel)
         return nm.areNotificationsEnabled() &&
                 (channel == null || channel.importance != NotificationManager.IMPORTANCE_NONE)
+    }
+
+    private fun isMtkDuraSpeedOn(): Boolean {
+        // DuraSpeed may be available only on MTK devices.
+        if (!SystemProperties.get("ro.soc.manufacturer").equals("Mediatek", ignoreCase = true)) {
+            return false
+        }
+        return SystemProperties.getInt("persist.vendor.duraspeed.support", 0) == 1
     }
 
     override fun onResume() {
