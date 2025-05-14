@@ -118,6 +118,8 @@
     <string name="notification_settings">通知設定</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI 使用者可能需要在系統設定中從「通知管理」-「通知顯示設定」將通知樣式切換為「原生樣式」。</string>
     <string name="adb_pairing_tutorial_content_miui_2">否則，您可能會無法從通知輸入配對碼。</string>
+    <string name="adb_pairing_tutorial_content_mtk">對於 MTK 裝置，用戶可能需要在「系統設定」-「快霸」中開啟 Shizuku 以允許其在背景運行。</string>
+    <string name="adb_pairing_tutorial_content_mtk_2">否則，Shizuku 可能會在裝置資源緊張時被凍結，進而影響其他相關應用程式。</string>
     <string name="adb_pairing_tutorial_content_notification">一則來自 Shizuku 的通知將協助您完成配對。</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">請注意，「無線偵錯」選項的左側是可點選的，輕觸它將開啟一個新的頁面。僅開啟右側的開關是錯誤的。</string>
     <string name="home_wireless_adb_description_pre_11">在 Android 11 之前，必須與電腦連線才能啟用無線偵錯。</string>

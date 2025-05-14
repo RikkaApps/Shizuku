@@ -52,6 +52,8 @@
     <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notification from Shizuku. Please allow Shizuku to post notifications.</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI users may need to switch notification style to \"Android\" from \"Notification\" - \"Notification shade\" in system settings.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Otherwise, you may not able to enter paring code from the notification.</string>
+    <string name="adb_pairing_tutorial_content_mtk">On MTK devices, users may need to enable Shizuku to run in the background via Settings - DuraSpeed.</string>
+    <string name="adb_pairing_tutorial_content_mtk_2">Otherwise, Shizuku may freeze when the device runs out of resources, potentially affecting other related apps.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Please note, left part of the \"Wireless debugging\" option is clickable, tapping it will open a new page. Only turing on the switch on the right is incorrect.</string>
     <string name="adb_pairing_tutorial_content_finish">Back to Shizuku and start Shizuku.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku needs to access local network. It is controlled by the network permission.</string>

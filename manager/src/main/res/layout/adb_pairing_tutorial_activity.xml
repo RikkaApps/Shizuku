@@ -215,6 +215,55 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mtk"
+            style="@style/FilledCard"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="?colorErrorContainer"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_warning_24"
+                android:tint="?colorOnErrorContainer"
+                android:tintMode="src_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="36dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="@string/adb_pairing_tutorial_content_mtk"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnErrorContainer" />
+
+                <TextView
+                    style="@style/TerminalTutorialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:duplicateParentState="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/adb_pairing_tutorial_content_mtk_2"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnErrorContainer" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <LinearLayout
             android:id="@+id/step1"
             android:layout_width="match_parent"
