@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
+#include <fcntl.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <ctime>
@@ -35,13 +36,13 @@
 #define SERVER_CLASS_PATH "rikka.shizuku.server.ShizukuService"
 
 #if defined(__arm__)
-#define ABI "armeabi-v7a"
+#define ABI "arm"
 #elif defined(__i386__)
 #define ABI "x86"
 #elif defined(__x86_64__)
 #define ABI "x86_64"
 #elif defined(__aarch64__)
-#define ABI "arm64-v8a"
+#define ABI "arm64"
 #endif
 
 static void run_server(const char *dex_path, const char *main_class, const char *process_name) {
@@ -92,7 +93,7 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
 #endif
 
     char lib_path[PATH_MAX]{0};
-    snprintf(lib_path, PATH_MAX, "%s!/lib/%s", dex_path, ABI);
+    snprintf(lib_path, PATH_MAX, "%s/lib/%s", dirname(dex_path), ABI);
 
     ARG(argv)
     ARG_PUSH(argv, "/system/bin/app_process")
@@ -113,12 +114,30 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
 }
 
 static void start_server(const char *path, const char *main_class, const char *process_name) {
-    if (daemon(false, false) == 0) {
-        LOGD("child");
-        run_server(path, main_class, process_name);
-    } else {
-        perrorf("fatal: can't fork\n");
-        exit(EXIT_FATAL_FORK);
+    pid_t pid = fork();
+    switch (pid) {
+        case -1: {
+            perrorf("fatal: can't fork\n");
+            exit(EXIT_FATAL_FORK);
+        }
+        case 0: {
+            LOGD("child");
+            setsid();
+            chdir("/");
+            int fd = open("/dev/null", O_RDWR);
+            if (fd != -1) {
+                dup2(fd, STDIN_FILENO);
+                dup2(fd, STDOUT_FILENO);
+                dup2(fd, STDERR_FILENO);
+                if (fd > 2) close(fd);
+            }
+            run_server(path, main_class, process_name);
+        }
+        default: {
+            printf("info: shizuku_server pid is %d\n", pid);
+            printf("info: shizuku_starter exit with 0\n");
+            exit(EXIT_SUCCESS);
+        }
     }
 }
 
@@ -167,7 +186,7 @@ static int switch_cgroup() {
 
 char *context = nullptr;
 
-int starter_main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     char *apk_path = nullptr;
     for (int i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--apk=", 6) == 0) {
@@ -184,8 +203,6 @@ int starter_main(int argc, char *argv[]) {
     se::init();
 
     if (uid == 0) {
-        chown("/data/local/tmp/shizuku_starter", 2000, 2000);
-        se::setfilecon("/data/local/tmp/shizuku_starter", "u:object_r:shell_data_file:s0");
         switch_cgroup();
 
         int sdkLevel = 0;
@@ -213,13 +230,6 @@ int starter_main(int argc, char *argv[]) {
             }
             se::freecon(context);
         }
-    }
-
-    mkdir("/data/local/tmp/shizuku", 0707);
-    chmod("/data/local/tmp/shizuku", 0707);
-    if (uid == 0) {
-        chown("/data/local/tmp/shizuku", 2000, 2000);
-        se::setfilecon("/data/local/tmp/shizuku", "u:object_r:shell_data_file:s0");
     }
 
     printf("info: starter begin\n");
@@ -282,25 +292,4 @@ int starter_main(int argc, char *argv[]) {
     fflush(stdout);
     LOGD("start_server");
     start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);
-    exit(EXIT_SUCCESS);
-}
-
-using main_func = int (*)(int, char *[]);
-
-static main_func applet_main[] = {starter_main, nullptr};
-
-int main(int argc, char **argv) {
-    std::string_view base = basename(argv[0]);
-
-    LOGD("applet %s", base.data());
-
-    constexpr const char *applet_names[] = {"shizuku_starter", nullptr};
-
-    for (int i = 0; applet_names[i]; ++i) {
-        if (base == applet_names[i]) {
-            return (*applet_main[i])(argc, argv);
-        }
-    }
-
-    return 1;
 }

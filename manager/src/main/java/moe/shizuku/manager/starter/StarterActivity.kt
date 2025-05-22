@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.AppConstants.EXTRA
-import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
@@ -20,7 +19,6 @@ import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
-import moe.shizuku.manager.application
 import moe.shizuku.manager.databinding.StarterActivityBinding
 import rikka.lifecycle.Resource
 import rikka.lifecycle.Status
@@ -113,7 +111,6 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
     init {
         try {
             if (root) {
-                //Starter.writeFiles(context)
                 startRoot()
             } else {
                 startAdb(host!!, port)
@@ -152,8 +149,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 }
             }
 
-            Starter.writeDataFiles(application)
-            Shell.cmd(Starter.dataCommand).to(object : CallbackList<String?>() {
+            Shell.cmd(Starter.internalCommand).to(object : CallbackList<String?>() {
                 override fun onAddElement(s: String?) {
                     sb.append(s).append('\n')
                     postResult()
@@ -184,7 +180,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
             AdbClient(host, port, key).runCatching {
                 connect()
-                shellCommand(Starter.sdcardCommand) {
+                shellCommand(Starter.internalCommand) {
                     sb.append(String(it))
                     postResult()
                 }
@@ -194,34 +190,6 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
                 sb.append('\n').append(Log.getStackTraceString(it))
                 postResult(it)
-            }
-
-            /* Adb on MIUI Android 11 has no permission to access Android/data.
-               Before MIUI Android 12, we can temporarily use /data/user_de.
-               After that, is better to implement "adb push" and push files directly to /data/local/tmp.
-             */
-            if (sb.contains("/Android/data/${BuildConfig.APPLICATION_ID}/start.sh: Permission denied")) {
-                sb.append('\n')
-                    .appendLine("adb have no permission to access Android/data, how could this possible ?!")
-                    .appendLine("try /data/user_de instead...")
-                    .appendLine()
-                postResult()
-
-                Starter.writeDataFiles(application, true)
-
-                AdbClient(host, port, key).runCatching {
-                    connect()
-                    shellCommand(Starter.dataCommand) {
-                        sb.append(String(it))
-                        postResult()
-                    }
-                    close()
-                }.onFailure {
-                    it.printStackTrace()
-
-                    sb.append('\n').append(Log.getStackTraceString(it))
-                    postResult(it)
-                }
             }
         }
     }

@@ -39,7 +39,6 @@ class BootCompleteReceiver : BroadcastReceiver() {
             return
         }
 
-        Starter.writeDataFiles(context)
-        Shell.cmd(Starter.dataCommand).exec()
+        Shell.cmd(Starter.internalCommand).exec()
     }
 }

@@ -12,14 +12,14 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.system.ErrnoException;
 import android.system.Os;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.util.Objects;
 
-import dalvik.system.DexClassLoader;
+import dalvik.system.BaseDexClassLoader;
+import stub.dalvik.system.VMRuntimeHidden;
 
 public class ShizukuShellLoader {
 
@@ -96,26 +96,15 @@ public class ShizukuShellLoader {
     }
 
     private static void onBinderReceived(IBinder binder, String sourceDir) {
-        String librarySearchPath = sourceDir + "!/lib/" + Build.SUPPORTED_ABIS[0];
+        var base = sourceDir.substring(0, sourceDir.lastIndexOf('/'));
+        String librarySearchPath = base + "/lib/" + VMRuntimeHidden.getRuntime().vmInstructionSet();
         String systemLibrarySearchPath = System.getProperty("java.library.path");
         if (!TextUtils.isEmpty(systemLibrarySearchPath)) {
             librarySearchPath += File.pathSeparatorChar + systemLibrarySearchPath;
         }
-        String optimizedDirectory = ".";
-        File optimizedDirectoryFile = new File(optimizedDirectory);
-        if (!optimizedDirectoryFile.exists() || !optimizedDirectoryFile.isDirectory()  || !optimizedDirectoryFile.canWrite() || !optimizedDirectoryFile.canExecute()) {
-            optimizedDirectory = "/data/local/tmp/rish-shizuku-" + BuildConfig.VERSION_CODE;
-            optimizedDirectoryFile = new File(optimizedDirectory);
-            optimizedDirectoryFile.mkdirs();
-            try {
-                Os.chmod(optimizedDirectory, 00711);
-            } catch (ErrnoException e) {
-                System.err.println(e.getMessage());
-            }
-        }
 
         try {
-            DexClassLoader classLoader = new DexClassLoader(sourceDir, optimizedDirectory, librarySearchPath, ClassLoader.getSystemClassLoader());
+            var classLoader = new BaseDexClassLoader(sourceDir, null, librarySearchPath, ClassLoader.getSystemClassLoader());
             Class<?> cls = classLoader.loadClass("moe.shizuku.manager.shell.Shell");
             cls.getDeclaredMethod("main", String[].class, String.class, IBinder.class, Handler.class)
                     .invoke(null, args, callingPackage, binder, handler);
