@@ -34,12 +34,12 @@ class BootCompleteReceiver : BroadcastReceiver() {
     }
 
     private fun start(context: Context) {
-        if (!Shell.rootAccess()) {
+        if (!Shell.getShell().isRoot) {
             //NotificationHelper.notify(context, AppConstants.NOTIFICATION_ID_STATUS, AppConstants.NOTIFICATION_CHANNEL_STATUS, R.string.notification_service_start_no_root)
             return
         }
 
         Starter.writeDataFiles(context)
-        Shell.su(Starter.dataCommand).exec()
+        Shell.cmd(Starter.dataCommand).exec()
     }
 }

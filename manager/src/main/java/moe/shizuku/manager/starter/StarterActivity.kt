@@ -140,12 +140,12 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         postResult()
 
         GlobalScope.launch(Dispatchers.IO) {
-            if (!Shell.rootAccess()) {
+            if (!Shell.getShell().isRoot) {
                 Shell.getCachedShell()?.close()
                 sb.append('\n').append("Can't open root shell, try again...").append('\n')
 
                 postResult()
-                if (!Shell.rootAccess()) {
+                if (!Shell.getShell().isRoot) {
                     sb.append('\n').append("Still not :(").append('\n')
                     postResult(NotRootedException())
                     return@launch
@@ -153,7 +153,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
             }
 
             Starter.writeDataFiles(application)
-            Shell.su(Starter.dataCommand).to(object : CallbackList<String?>() {
+            Shell.cmd(Starter.dataCommand).to(object : CallbackList<String?>() {
                 override fun onAddElement(s: String?) {
                     sb.append(s).append('\n')
                     postResult()

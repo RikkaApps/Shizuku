@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -106,7 +107,8 @@ class AdbPairingService : Service() {
         }
         if (notification != null) {
             try {
-                startForeground(notificationId, notification)
+                startForeground(notificationId, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST)
             } catch (e: Throwable) {
                 Log.e(tag, "startForeground failed", e)
 

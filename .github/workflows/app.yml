@@ -8,80 +8,48 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'RikkaApps' }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           fetch-depth: 0
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
-          cache: 'gradle'
+          java-version: '21'
       - name: Write key
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         run: |
-          touch signing.properties
-          echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} >> signing.properties
+          echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} > signing.properties
           echo KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }} >> signing.properties
           echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_ALIAS_PASSWORD }}' >> signing.properties
           echo KEYSTORE_FILE=../key.jks >> signing.properties
           echo ${{ secrets.KEYSTORE }} | base64 --decode > key.jks
-      - name: Write temporary key
-        if: hashFiles('key.jks') == '' && !steps.vars.outputs.HAS_SECRET
-        run: |
-          keytool -genkey -alias a -dname CN=_ -storepass passwd -keypass passwd -keystore key.jks
-          echo KEYSTORE_PASSWORD=passwd >> signing.properties
-          echo KEYSTORE_ALIAS=a >> signing.properties
-          echo KEYSTORE_ALIAS_PASSWORD=passwd >> signing.properties
-          echo KEYSTORE_FILE=../key.jks >> signing.properties
-      - name: Cache Gradle Dependencies
-        uses: actions/cache@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            !~/.gradle/caches/build-cache-*
-          key: gradle-deps-app-${{ hashFiles('**/build.gradle') }}
-          restore-keys: |
-            gradle-deps
-      - name: Cache Gradle Build
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches/build-cache-*
-          key: gradle-builds-app-${{ github.sha }}
-          restore-keys: |
-            gradle-builds
+          dependency-graph: generate-and-submit
+          build-scan-publish: true
+          build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-use-agree: "yes"
       - name: Build with Gradle
         id: buildWithGradle
         run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
+          echo 'android.sdk.channel=3' >> gradle.properties
+          echo 'android.native.buildOutput=verbose' >> gradle.properties
           echo 'org.gradle.caching=true' >> gradle.properties
           echo 'org.gradle.parallel=true' >> gradle.properties
-          echo 'org.gradle.vfs.watch=true' >> gradle.properties
-          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-          ./gradlew :manager:assembleRelease :manager:assembleDebug
-          releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
-          debugName=`ls manager/build/outputs/apk/debug/shizuku*-v*-debug.apk | awk -F '(/|.apk)' '{print $6}'` && echo "debugName=$debugName" >> $GITHUB_OUTPUT
+          ./gradlew :manager:assemble
+          releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|-release.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
       - name: Upload release
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.buildWithGradle.outputs.releaseName }}
-          path: "manager/build/outputs/apk/release/*.apk"
-      - name: Upload debug
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.buildWithGradle.outputs.debugName }}
-          path: "manager/build/outputs/apk/debug/*.apk"
-      - name: Upload mappings
-        uses: actions/upload-artifact@v3
-        with:
-          name: mappings
-          path: "manager/build/outputs/mapping/release"
+          path: "manager/build/outputs"
+          compression-level: 9

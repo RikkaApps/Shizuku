@@ -1,13 +1,18 @@
--repackageclasses rikka.shizuku
+-keepclassmembers class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
 
-# Kotlin
+-keepclasseswithmembernames,includedescriptorclasses class * {
+    native <methods>;
+}
 
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-	public static void checkExpressionValueIsNotNull(...);
-	public static void checkNotNullExpressionValue(...);
-	public static void checkReturnedValueIsNotNull(...);
-	public static void checkFieldIsNotNull(...);
-	public static void checkParameterIsNotNull(...);
+	public static void check*(...);
+	public static void throw*(...);
+}
+
+-assumenosideeffects class java.util.Objects{
+    ** requireNonNull(...);
 }
 
 -keepnames class moe.shizuku.api.BinderContainer
@@ -50,5 +55,7 @@
     public *** d(...);
 }
 
+-allowaccessmodification
+-repackageclasses rikka.shizuku
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile

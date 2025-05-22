@@ -14,7 +14,7 @@ android {
         }
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles 'proguard-rules.pro'
         }
     }
     dependenciesInfo {
@@ -30,8 +30,6 @@ android {
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
-        outputFileName = "shizuku-v${versionName}.apk"
-
         def outDir = new File(rootDir, "out")
         def mappingPath = new File(outDir, "mapping").absolutePath
         def dexPath = "${rootProject.rootDir.path}/manager/src/main/assets"
