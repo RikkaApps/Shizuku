@@ -29,7 +29,7 @@ find_package(boringssl REQUIRED CONFIG)
 find_package(cxx REQUIRED CONFIG)
 
 add_executable(libshizuku.so
-        starter.cpp misc.cpp selinux.cpp cgroup.cpp android.cpp)
+        starter.cpp misc.cpp selinux.cpp cgroup.cpp)
 
 target_link_libraries(libshizuku.so ${log-lib} cxx::cxx)
 

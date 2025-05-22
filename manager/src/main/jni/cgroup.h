@@ -2,8 +2,7 @@
 #define CGROUP_H
 
 namespace cgroup {
-    int get_cgroup(int pid, int* cuid, int *cpid);
-    int switch_cgroup(int pid, int cuid, int cpid);
+    bool switch_cgroup(const char *cgroup, int pid);
 }
 
 #endif // CGROUP_H

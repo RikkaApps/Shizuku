@@ -72,12 +72,12 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
 #ifdef JAVA_DEBUGGABLE
 #define ARG_PUSH_DEBUG_ONLY(v, arg) ARG_PUSH(v, arg)
 #define ARG_PUSH_DEBUG_VM_PARAMS(v) \
-    if (android::GetApiLevel() >= 30) { \
+    if (android_get_device_api_level() >= 30) { \
         ARG_PUSH(v, "-Xcompiler-option"); \
         ARG_PUSH(v, "--debuggable"); \
         ARG_PUSH(v, "-XjdwpProvider:adbconnection"); \
         ARG_PUSH(v, "-XjdwpOptions:suspend=n,server=y"); \
-    } else if (android::GetApiLevel() >= 28) { \
+    } else if (android_get_device_api_level() >= 28) { \
         ARG_PUSH(v, "-Xcompiler-option"); \
         ARG_PUSH(v, "--debuggable"); \
         ARG_PUSH(v, "-XjdwpProvider:internal"); \
@@ -155,36 +155,31 @@ static int check_selinux(const char *s, const char *t, const char *c, const char
 }
 
 static int switch_cgroup() {
-    int s_cuid, s_cpid;
-    int spid = getpid();
-
-    if (cgroup::get_cgroup(spid, &s_cuid, &s_cpid) != 0) {
-        printf("warn: can't read cgroup\n");
-        fflush(stdout);
-        return -1;
-    }
-
-    printf("info: cgroup is /uid_%d/pid_%d\n", s_cuid, s_cpid);
-    fflush(stdout);
-
-    if (cgroup::switch_cgroup(spid, -1, -1) != 0) {
-        printf("warn: can't switch cgroup\n");
-        fflush(stdout);
-        return -1;
-    }
-
-    if (cgroup::get_cgroup(spid, &s_cuid, &s_cpid) != 0) {
-        printf("info: switch cgroup succeeded\n");
-        fflush(stdout);
+    int pid = getpid();
+    if (cgroup::switch_cgroup("/acct", pid)) {
+        printf("info: switch cgroup succeeded, cgroup in /acct\n");
         return 0;
     }
-
-    printf("warn: can't switch self, current cgroup is /uid_%d/pid_%d\n", s_cuid, s_cpid);
+    if (cgroup::switch_cgroup("/dev/cg2_bpf", pid)) {
+        printf("info: switch cgroup succeeded, cgroup in /dev/cg2_bpf\n");
+        return 0;
+    }
+    if (cgroup::switch_cgroup("/sys/fs/cgroup", pid)) {
+        printf("info: switch cgroup succeeded, cgroup in /sys/fs/cgroup\n");
+        return 0;
+    }
+    char buf[PROP_VALUE_MAX + 1];
+    if (__system_property_get("ro.config.per_app_memcg", buf) > 0 &&
+        strncmp(buf, "false", 5) != 0) {
+        if (cgroup::switch_cgroup("/dev/memcg/apps", pid)) {
+            printf("info: switch cgroup succeeded, cgroup in /dev/memcg/apps\n");
+            return 0;
+        }
+    }
+    printf("warn: can't switch cgroup\n");
     fflush(stdout);
     return -1;
 }
-
-char *context = nullptr;
 
 int main(int argc, char *argv[]) {
     char *apk_path = nullptr;
@@ -194,7 +189,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    int uid = getuid();
+    uid_t uid = getuid();
     if (uid != 0 && uid != 2000) {
         perrorf("fatal: run Shizuku from non root nor adb user (uid=%d).\n", uid);
         exit(EXIT_FATAL_UID);
@@ -205,18 +200,14 @@ int main(int argc, char *argv[]) {
     if (uid == 0) {
         switch_cgroup();
 
-        int sdkLevel = 0;
-        char buf[PROP_VALUE_MAX + 1];
-        if (__system_property_get("ro.build.version.sdk", buf) > 0)
-            sdkLevel = atoi(buf);
-
-        if (sdkLevel >= 29) {
+        if (android_get_device_api_level() >= 29) {
             printf("info: switching mount namespace to init...\n");
             switch_mnt_ns(1);
         }
     }
 
     if (uid == 0) {
+        char *context = nullptr;
         if (se::getcon(&context) == 0) {
             int res = 0;
 
@@ -245,8 +236,7 @@ int main(int argc, char *argv[]) {
         char name[1024];
         if (get_proc_name(pid, name, 1024) != 0) return;
 
-        if (strcmp(SERVER_NAME, name) != 0
-            && strcmp("shizuku_server_legacy", name) != 0)
+        if (strcmp(SERVER_NAME, name) != 0)
             return;
 
         if (kill(pid, SIGKILL) == 0)
