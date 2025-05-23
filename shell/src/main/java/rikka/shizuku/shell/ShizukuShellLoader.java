@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.Objects;
 
 import dalvik.system.BaseDexClassLoader;
+import rikka.hidden.compat.PackageManagerApis;
 import stub.dalvik.system.VMRuntimeHidden;
 
 public class ShizukuShellLoader {
@@ -124,8 +125,9 @@ public class ShizukuShellLoader {
         ShizukuShellLoader.args = args;
 
         String packageName;
-        if (Os.getuid() == 2000) {
-            packageName = "com.android.shell";
+        var pkg = PackageManagerApis.getPackagesForUidNoThrow(Os.getuid());
+        if (pkg.size() == 1) {
+            packageName = pkg.get(0);
         } else {
             packageName = System.getenv("RISH_APPLICATION_ID");
             if (TextUtils.isEmpty(packageName) || "PKG".equals(packageName)) {

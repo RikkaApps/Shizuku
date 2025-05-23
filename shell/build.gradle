@@ -58,5 +58,6 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
+    implementation libs.hidden.compat
     compileOnly libs.hidden.stub
 }
