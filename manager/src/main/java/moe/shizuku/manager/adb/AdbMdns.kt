@@ -6,7 +6,7 @@ import android.net.nsd.NsdServiceInfo
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.NetworkInterface
@@ -15,13 +15,13 @@ import java.net.ServerSocket
 @RequiresApi(Build.VERSION_CODES.R)
 class AdbMdns(
     context: Context, private val serviceType: String,
-    private val port: MutableLiveData<Int>
+    private val observer: Observer<Int>
 ) {
 
     private var registered = false
     private var running = false
     private var serviceName: String? = null
-    private val listener: DiscoveryListener
+    private val listener = DiscoveryListener(this)
     private val nsdManager: NsdManager = context.getSystemService(NsdManager::class.java)
 
     fun start() {
@@ -53,7 +53,7 @@ class AdbMdns(
     }
 
     private fun onServiceLost(info: NsdServiceInfo) {
-        if (info.serviceName == serviceName) port.postValue(-1)
+        if (info.serviceName == serviceName) observer.onChanged(-1)
     }
 
     private fun onServiceResolved(resolvedService: NsdServiceInfo) {
@@ -67,7 +67,7 @@ class AdbMdns(
             && isPortAvailable(resolvedService.port)
         ) {
             serviceName = resolvedService.serviceName
-            port.postValue(resolvedService.port)
+            observer.onChanged(resolvedService.port)
         }
     }
 
@@ -127,9 +127,5 @@ class AdbMdns(
         const val TLS_CONNECT = "_adb-tls-connect._tcp"
         const val TLS_PAIRING = "_adb-tls-pairing._tcp"
         const val TAG = "AdbMdns"
-    }
-
-    init {
-        listener = DiscoveryListener(this)
     }
 }

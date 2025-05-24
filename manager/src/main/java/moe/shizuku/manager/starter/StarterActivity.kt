@@ -164,7 +164,7 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
     }
 
     private fun startAdb(host: String, port: Int) {
-        sb.append("Starting with wireless adb...").append('\n').append('\n')
+        sb.append("Starting with wireless adb in port $port...").append('\n').append('\n')
         postResult()
 
         GlobalScope.launch(Dispatchers.IO) {
