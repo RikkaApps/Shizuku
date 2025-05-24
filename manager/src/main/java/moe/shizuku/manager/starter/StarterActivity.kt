@@ -55,7 +55,7 @@ class StarterActivity : AppBarActivity() {
                 viewModel.appendOutput("")
                 viewModel.appendOutput("Waiting for service...")
 
-                Shizuku.addBinderReceivedListenerSticky(object : Shizuku.OnBinderReceivedListener {
+                Shizuku.addBinderReceivedListener(object : Shizuku.OnBinderReceivedListener {
                     override fun onBinderReceived() {
                         Shizuku.removeBinderReceivedListener(this)
                         viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
