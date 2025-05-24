@@ -95,6 +95,7 @@ class AdbPairingService : Service() {
             }
             stopAction -> {
                 stopForeground(STOP_FOREGROUND_REMOVE)
+                stopSelf()
                 null
             }
             else -> {
@@ -214,6 +215,7 @@ class AdbPairingService : Service() {
                 }*/
                 .build()
         )
+        stopSelf()
     }
 
     private val stopNotificationAction by unsafeLazy {
