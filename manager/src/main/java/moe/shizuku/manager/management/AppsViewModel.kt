@@ -14,15 +14,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.authorization.AuthorizationManager
 import rikka.lifecycle.Resource
-import rikka.lifecycle.activitySharedViewModels
-import rikka.lifecycle.sharedViewModels
-import java.util.*
+import rikka.lifecycle.activityViewModels
+import rikka.lifecycle.viewModels
 
 @MainThread
-fun ComponentActivity.appsViewModel() = sharedViewModels { AppsViewModel(this) }
+fun ComponentActivity.appsViewModel() = viewModels { AppsViewModel(this) }
 
 @MainThread
-fun Fragment.appsViewModel() = activitySharedViewModels { AppsViewModel(requireContext()) }
+fun Fragment.appsViewModel() = activityViewModels { AppsViewModel(requireContext()) }
 
 class AppsViewModel(context: Context) : ViewModel() {
 
