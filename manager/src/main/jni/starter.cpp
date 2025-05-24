@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <sys/system_properties.h>
 #include <cerrno>
-#include <string_view>
+#include <string>
 #include <termios.h>
 #include "android.h"
 #include "misc.h"
@@ -182,7 +182,7 @@ static int switch_cgroup() {
 }
 
 int main(int argc, char *argv[]) {
-    char *apk_path = nullptr;
+    std::string apk_path;
     for (int i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--apk=", 6) == 0) {
             apk_path = argv[i] + 6;
@@ -249,12 +249,12 @@ int main(int argc, char *argv[]) {
         }
     });
 
-    if (access(apk_path, R_OK) == 0) {
+    if (access(apk_path.c_str(), R_OK) == 0) {
         printf("info: use apk path from argv\n");
         fflush(stdout);
     }
 
-    if (!apk_path) {
+    if (apk_path.empty()) {
         auto f = popen("pm path " PACKAGE_NAME, "r");
         if (f) {
             char line[PATH_MAX]{0};
@@ -267,19 +267,19 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (!apk_path) {
+    if (apk_path.empty()) {
         perrorf("fatal: can't get path of manager\n");
         exit(EXIT_FATAL_PM_PATH);
     }
 
-    printf("info: apk path is %s\n", apk_path);
-    if (access(apk_path, R_OK) != 0) {
-        perrorf("fatal: can't access manager %s\n", apk_path);
+    printf("info: apk path is %s\n", apk_path.c_str());
+    if (access(apk_path.c_str(), R_OK) != 0) {
+        perrorf("fatal: can't access manager %s\n", apk_path.c_str());
         exit(EXIT_FATAL_PM_PATH);
     }
 
     printf("info: starting server...\n");
     fflush(stdout);
     LOGD("start_server");
-    start_server(apk_path, SERVER_CLASS_PATH, SERVER_NAME);
+    start_server(apk_path.c_str(), SERVER_CLASS_PATH, SERVER_NAME);
 }
