@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'RikkaApps' }}
 
     steps:
@@ -70,18 +70,18 @@ jobs:
           debugName=`ls manager/build/outputs/apk/debug/shizuku*-v*-debug.apk | awk -F '(/|.apk)' '{print $6}'` && echo "debugName=$debugName" >> $GITHUB_OUTPUT
       - name: Upload release
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.buildWithGradle.outputs.releaseName }}
           path: "manager/build/outputs/apk/release/*.apk"
       - name: Upload debug
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.buildWithGradle.outputs.debugName }}
           path: "manager/build/outputs/apk/debug/*.apk"
       - name: Upload mappings
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mappings
           path: "manager/build/outputs/mapping/release"
