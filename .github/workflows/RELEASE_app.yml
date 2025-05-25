@@ -1,16 +1,16 @@
-name: App
+name: appRELEASE
 
 on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Release tag (e.g., v1.0.0)'
+        description: 'Enter release tag'
         required: true
       release_title:
-        description: 'Release title'
+        description: 'Enter release title'
         required: true
       release_body:
-        description: 'Content (Markdown format)'
+        description: 'Enter content (Markdown format)'
         required: true
         type: text
 
@@ -56,6 +56,16 @@ jobs:
           echo 'org.gradle.parallel=true' >> gradle.properties
           ./gradlew :manager:assemble
           releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|-release.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+      - name: Create Tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          if ! git rev-parse "refs/tags/${{ github.event.inputs.tag_name }}" > /dev/null 2>&1; then
+            git tag ${{ github.event.inputs.tag_name }}
+            git push origin ${{ github.event.inputs.tag_name }}
+          else
+            echo "Tag ${{ github.event.inputs.tag_name }} already exists, skipping tag creation."
+          fi
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
