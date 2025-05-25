@@ -6,6 +6,11 @@
     <string name="home_adb_title">התחל באמצעות חיבור למחשב</string>
     <string name="home_status_service_version_update">גירסה %2$s, %1$s&lt;br&gt;התחל מחדש כדי לעדכן לגירסה %3$s</string>
     <string name="home_status_service_version">גירסה %2$s, %1$s</string>
-    <string name="home_status_service_not_running">%1$s לא פועל</string>
+    <string name="home_status_service_not_running">%1$s לא רץ</string>
     <string name="home_status_service_is_running">%1$s פועל</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* יש עדין שיקולים אחרים, בבקשה תאשר שקראת את העזרה לפני.</string>
+    <string name="home_adb_dialog_view_command_button_send">שלח</string>
+    <string name="home_adb_dialog_view_command_copy_button">העתק</string>
+    <string name="home_wireless_adb_description">באנדרואיד 11 ומעלה, אתם יכולים להפעיל ניפוי באגים אלחוטי ולהתחיל את Shizuku ישירות מהמכשיר שלכם, ללא חיבור למחשב. קודם כל, הביטו בבקשה במדריך.</string>
+    <string name="home_wireless_adb_title">התחל עם ניפוי באגים אלחוטי</string>
 </resources>

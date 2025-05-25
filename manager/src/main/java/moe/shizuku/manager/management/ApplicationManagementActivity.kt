@@ -67,7 +67,7 @@ class ApplicationManagementActivity : AppBarActivity() {
 
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                viewModel.loadCount()
+                viewModel.load(true)
             }
         })
 

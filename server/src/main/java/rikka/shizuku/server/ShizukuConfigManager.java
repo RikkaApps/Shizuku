@@ -39,7 +39,7 @@ public class ShizukuConfigManager extends ConfigManager {
 
     private static final long WRITE_DELAY = 10 * 1000;
 
-    private static final File FILE = new File("/data/local/tmp/shizuku/shizuku.json");
+    private static final File FILE = new File("/data/user_de/0/com.android.shell/shizuku.json");
     private static final AtomicFile ATOMIC_FILE = new AtomicFile(FILE);
 
     public static ShizukuConfig load() {
@@ -63,7 +63,8 @@ public class ShizukuConfigManager extends ConfigManager {
                 LOGGER.w("failed to close: " + e);
             }
         }
-        return config;
+        if (config != null) return config;
+        return new ShizukuConfig();
     }
 
     public static void write(ShizukuConfig config) {
@@ -106,13 +107,6 @@ public class ShizukuConfigManager extends ConfigManager {
 
         if (config.packages == null) {
             config.packages = new ArrayList<>();
-            changed = true;
-        }
-
-        if (config.version < 2) {
-            for (ShizukuConfig.PackageEntry entry : new ArrayList<>(config.packages)) {
-                entry.packages = PackageManagerApis.getPackagesForUidNoThrow(entry.uid);
-            }
             changed = true;
         }
 

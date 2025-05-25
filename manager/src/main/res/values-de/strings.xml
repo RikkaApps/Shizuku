@@ -84,7 +84,7 @@
     <string name="dialog_adb_pairing_message">Bitte die Kopplung mit den folgenden Schritten straten: \"Entwickleroptionen\" - \"Kabelloses Debugging\" - \"Gerät mit Pairing-Code koppeln\".
 \n
 \nNachdem der Kopplungsrozess gestartet wurde, können Sie den Pairing-Code eingeben.</string>
-    <string name="cannot_connect_port">Verbindung zum kabellosen Debugging-Dienst herstellen nicht möglich.</string>
+    <string name="cannot_connect_port">Verbindung zum kabellosen Debugging-Dienst nicht möglich.</string>
     <string name="dialog_adb_pairing_discovery">Nach Kopplungsdienst suchen</string>
     <string name="dialog_adb_pairing_title">Mit Gerät koppeln</string>
     <string name="dialog_adb_invalid_port">Port ist eine ganze Zahl zwischen 0 und 65536.</string>

@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="cannot_connect_port">Δεν είναι δυνατή η σύνδεση με την υπηρεσία ασύρματου εντοπισμού σφαλμάτων.</string>
+    <string name="paring_code_is_wrong">Ο κωδικός σύζευξης είναι εσφαλμένος.</string>
+    <string name="dialog_adb_pairing_paring_code">Κωδικός σύζευξης</string>
+    <string name="dialog_adb_pairing_discovery">Αναζήτηση για υπηρεσία σύζευξης</string>
+    <string name="dialog_adb_pairing_title">Σύζευξη με συσκευή</string>
+    <string name="adb_pairing">Σύζευξη</string>
+    <string name="dialog_adb_invalid_port">Η θύρα είναι ένας ακέραιος αριθμός μεταξύ 1 και 65535.</string>
+    <string name="dialog_adb_discovery">Αναζήτηση για υπηρεσία ασύρματου εντοπισμού σφαλμάτων</string>
+    <string name="home_wireless_adb_view_guide_button">Αναλυτικός οδηγός</string>
+    <string name="home_wireless_adb_description_pre_11">Πριν από το Android 11, είναι απαραίτητη η σύνδεση με έναν υπολογιστή για την ενεργοποίηση του ασύρματου εντοπισμού σφαλμάτων.</string>
+    <string name="home_adb_button_view_command">Προβολή εντολής</string>
+    <string name="home_adb_button_view_help">Ανάγνωση βοήθειας</string>
+    <string name="home_adb_description">Για συσκευές χωρίς πρόσβαση root, πρέπει να χρησιμοποιήσετε το adb για την εκκίνηση του Shizuku (απαιτεί σύνδεση σε υπολογιστή). Αυτή η διαδικασία θα πρέπει να επαναλαμβάνεται κάθε φορά που επανεκκινείται η συσκευή. <b><a href="%1$s">Διαβάστε τη βοήθεια</a></b>.</string>
+    <string name="home_adb_title">Έναρξη μέσω σύνδεσης με υπολογιστή</string>
+    <string name="home_status_service_version_update">Έκδοση %2$s, %1$s&lt;br&gt;Κάντε ξανά εκκίνηση για ενημέρωση στην έκδοση %3$s</string>
+    <string name="home_status_service_not_running">Το %1$s δεν εκτελείται</string>
+    <string name="home_status_service_is_running">Το %1$s εκτελείται</string>
+    <string name="dialog_adb_port">Θύρα</string>
+    <string name="home_wireless_adb_title">Έναρξη μέσω Ασύρματου εντοπισμού σφαλμάτων</string>
+</resources>

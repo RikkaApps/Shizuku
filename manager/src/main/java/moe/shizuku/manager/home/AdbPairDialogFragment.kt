@@ -29,7 +29,6 @@ import moe.shizuku.manager.adb.*
 import moe.shizuku.manager.databinding.AdbPairDialogBinding
 import rikka.lifecycle.viewModels
 import java.net.ConnectException
-import java.net.Inet4Address
 
 @RequiresApi(VERSION_CODES.R)
 class AdbPairDialogFragment : DialogFragment() {
@@ -67,6 +66,7 @@ class AdbPairDialogFragment : DialogFragment() {
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.putExtra(":settings:fragment_args_key", "toggle_adb_wireless")
             try {
                 it.context.startActivity(intent)
             } catch (e: ActivityNotFoundException) {
@@ -165,7 +165,9 @@ private class ViewModel(context: Context) : androidx.lifecycle.ViewModel() {
     private val _port = MutableLiveData<Int>()
     val port = _port as LiveData<Int>
 
-    private val adbMdns: AdbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING, _port)
+    private val adbMdns: AdbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING) {
+        _port.postValue(it)
+    }
 
     init {
         adbMdns.start()

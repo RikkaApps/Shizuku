@@ -43,7 +43,7 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
     }
 
     private inline val packageName get() = data.packageName
-    private inline val ai get() = data.applicationInfo
+    private inline val ai get() = data.applicationInfo!!
     private inline val uid get() = ai.uid
 
     private var loadIconJob: Job? = null
