@@ -1,18 +1,9 @@
 name: appRELEASE
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag_name:
-        description: 'Enter release tag'
-        required: true
-      release_title:
-        description: 'Enter release title'
-        required: true
-      release_body:
-        description: 'Enter content (Markdown format)'
-        required: true
-        type: text
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -26,19 +17,30 @@ jobs:
         with:
           submodules: 'recursive'
           fetch-depth: 0
+
+      - name: Get Commit Message
+        id: commit_message
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          COMMIT_TITLE=$(echo "$COMMIT_MESSAGE" | head -n 1)
+          COMMIT_BODY=$(echo "$COMMIT_MESSAGE" | tail -n +2)
+          echo "title=$COMMIT_TITLE" >> $GITHUB_OUTPUT
+          echo "body=$COMMIT_BODY" >> $GITHUB_OUTPUT
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Write key
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         run: |
           echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} > signing.properties
           echo KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }} >> signing.properties
           echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_ALIAS_PASSWORD }}' >> signing.properties
           echo KEYSTORE_FILE=../key.jks >> signing.properties
           echo ${{ secrets.KEYSTORE }} | base64 --decode > key.jks
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -46,6 +48,7 @@ jobs:
           build-scan-publish: true
           build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
           build-scan-terms-of-use-agree: "yes"
+
       - name: Build with Gradle
         id: buildWithGradle
         run: |
@@ -56,31 +59,23 @@ jobs:
           echo 'org.gradle.parallel=true' >> gradle.properties
           ./gradlew :manager:assemble
           releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|-release.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
-      - name: Create Tag
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          if ! git rev-parse "refs/tags/${{ github.event.inputs.tag_name }}" > /dev/null 2>&1; then
-            git tag ${{ github.event.inputs.tag_name }}
-            git push origin ${{ github.event.inputs.tag_name }}
-          else
-            echo "Tag ${{ github.event.inputs.tag_name }} already exists, skipping tag creation."
-          fi
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.tag_name }}
-          name: ${{ github.event.inputs.release_title }}
-          body: ${{ github.event.inputs.release_body }}
+          tag_name: ${{ github.ref_name }}
+          name: ${{ steps.commit_message.outputs.title }}
+          body: ${{ steps.commit_message.outputs.body }}
           draft: false
           prerelease: false
+
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.tag_name }}
+          tag_name: ${{ github.ref_name }}
           files: manager/build/outputs/apk/release/shizuku*-v*-release.apk
