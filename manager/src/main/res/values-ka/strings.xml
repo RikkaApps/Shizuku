@@ -2,7 +2,7 @@
 <resources>
     <string name="home_adb_button_view_command">ბრძანების ნახვა</string>
     <string name="home_adb_button_view_help">წაიკითხეთ დახმარება</string>
-    <string name="home_adb_description">არა დარუთული მოწყობილობებისთვის, Shizuku რომ ჩართო შენ გჭირდება ადბ-ს გამოყენება(საჭიროებს კომპიუტერთან კავშირს). ეს პროცესი უნდა გაიმეოროთ თქვენი მოწყობილობის ყოველ გადატვირთვაზე. გთხოვთ <b><a href="%1$s">წაიკითხოთ დახმარება</a></b>.</string>
+    <string name="home_adb_description">არა დარუთული მოწყობილობებისთვის, Shizuku™ რომ ჩართო შენ გჭირდება ადბ-ს გამოყენება(საჭიროებს კომპიუტერთან კავშირს). ეს პროცესი უნდა გაიმეოროთ თქვენი მოწყობილობის ყოველ გადატვირთვაზე. გთხოვთ <b><a href="%1$s">წაიკითხოთ დახმარება</a></b>.</string>
     <string name="home_adb_title">დაიწყე კომპიუტერთან დაკავშირებით</string>
     <string name="home_status_service_version_update">ვერსია %2$, %1$&lt;br&gt;თავიდან ჩართე, რომ განაახლო %3$s ვერსიაზე</string>
     <string name="home_status_service_version">ვერსია</string>

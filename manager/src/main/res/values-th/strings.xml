@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dialog_requesting_legacy_title">%1$s กำลังขอร้อง Shizuku รุ่นเก่า</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">เปิด Shizuku</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; รองรับ Shizuku รุ่นใหม่ แต่กำลังขอร้อง Shizuku รุ่นเก่า นี่อาจเป็นเพราะ Shizuku ไม่ทำงาน โปรดตรวจสอบในแอป Shizuku &lt;p&gt;Shizuku รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคมปี 2019</string>
-    <string name="dialog_legacy_not_support_message">Shizuku รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคม 2019 นอกจากนี้ Shizuku รุ่นเก่ายังใช้งานไม่ได้กับระบบ Android ที่ใหม่กว่า &lt;p&gt;โปรดติดต่อผู้พัฒนาของ &lt;b&gt;%1$s&lt;/b&gt; เพื่ออัปเดตเป็นเวอร์ชันใหม่</string>
-    <string name="dialog_legacy_not_support_title">%1$s ไม่รองรับ Shizuku รุ่นใหม่</string>
+    <string name="dialog_requesting_legacy_title">%1$s กำลังขอร้อง Shizuku™ รุ่นเก่า</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">เปิด Shizuku™</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; รองรับ Shizuku™ รุ่นใหม่ แต่กำลังขอร้อง Shizuku™ รุ่นเก่า นี่อาจเป็นเพราะ Shizuku™ ไม่ทำงาน โปรดตรวจสอบในแอป Shizuku™ &lt;p&gt;Shizuku™ รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคมปี 2019</string>
+    <string name="dialog_legacy_not_support_message">Shizuku™ รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคม 2019 นอกจากนี้ Shizuku™ รุ่นเก่ายังใช้งานไม่ได้กับระบบ Android ที่ใหม่กว่า &lt;p&gt;โปรดติดต่อผู้พัฒนาของ &lt;b&gt;%1$s&lt;/b&gt; เพื่ออัปเดตเป็นเวอร์ชันใหม่</string>
+    <string name="dialog_legacy_not_support_title">%1$s ไม่รองรับ Shizuku™ รุ่นใหม่</string>
     <string name="toast_copied_to_clipboard">%s
 \nได้ถูกคัดลอกไปยังคลิปบอร์ด</string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> ได้ถูกคัดลอกไปยังคลิปบอร์ด</string>
@@ -14,11 +14,11 @@
     <string name="grant_dialog_button_deny">ปฏิเสธ</string>
     <string name="grant_dialog_button_allow_always">อนุญาตเสมอ</string>
     <string name="permission_warning_template">อนุญาต <b>%1$s</b> ให้ %2$s ไหม\?</string>
-    <string name="permission_description">อนุญาตให้แอปใช้งาน Shizuku</string>
-    <string name="permission_label">เข้าถึง Shizuku</string>
+    <string name="permission_description">อนุญาตให้แอปใช้งาน Shizuku™</string>
+    <string name="permission_label">เข้าถึง Shizuku™</string>
     <string name="notification_adb_pairing_retry">ลองใหม่</string>
     <string name="notification_adb_pairing_failed_title">การจับคู่ล้มเหลว</string>
-    <string name="notification_adb_pairing_succeed_text">สามารถเริ่มบริการ Shizuku ได้ทันที</string>
+    <string name="notification_adb_pairing_succeed_text">สามารถเริ่มบริการ Shizuku™ ได้ทันที</string>
     <string name="notification_adb_pairing_succeed_title">การจับคู่สำเร็จ</string>
     <string name="notification_adb_pairing_working_title">กำลังจับคู่</string>
     <string name="notification_adb_pairing_stop_searching">หยุดค้นหา</string>
@@ -28,15 +28,15 @@
     <string name="notification_channel_adb_pairing">การจับคู่การแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
     <string name="notification_working">กำลังทำงาน…</string>
     <string name="notification_service_start_no_root">ล้มเหลวในการขอการอนุญาตรูท</string>
-    <string name="notification_service_start_failed">ล้มเหลวในการเริ่มบริการ Shizuku</string>
-    <string name="notification_service_starting">บริการ Shizuku กำลังเริ่มต้น…</string>
+    <string name="notification_service_start_failed">ล้มเหลวในการเริ่มบริการ Shizuku™</string>
+    <string name="notification_service_starting">บริการ Shizuku™ กำลังเริ่มต้น…</string>
     <string name="notification_channel_service_status">สถานะการเริ่มบริการ</string>
-    <string name="action_stop">หยุดทำงาน Shizuku</string>
-    <string name="dialog_stop_message">บริการ Shizuku จะถูกหยุดทำงาน</string>
+    <string name="action_stop">หยุดทำงาน Shizuku™</string>
+    <string name="dialog_stop_message">บริการ Shizuku™ จะถูกหยุดทำงาน</string>
     <string name="about_view_source_code">ดูซอร์สโค้ดใน %s</string>
     <string name="action_about">เกี่ยวกับ</string>
     <string name="settings_use_system_color">ใช้สีของธีมระบบ</string>
-    <string name="settings_start_on_boot_summary">สำหรับอุปกรณ์ที่รูทแล้ว Shizuku จะสามารถเริ่มได้โดยอัตโนมัติเมื่อเปิดเครื่อง</string>
+    <string name="settings_start_on_boot_summary">สำหรับอุปกรณ์ที่รูทแล้ว Shizuku™ จะสามารถเริ่มได้โดยอัตโนมัติเมื่อเปิดเครื่อง</string>
     <string name="settings_start_on_boot">เริ่มเมื่อเปิดเครื่อง (รูท)</string>
     <string name="settings_translation_summary">ช่วยเราแปล %s เป็นภาษาของคุณ</string>
     <string name="settings_translation">มีส่วนร่วมในการแปล</string>
@@ -47,23 +47,23 @@
     <string name="settings_user_interface">ลักษณะ</string>
     <string name="settings_language">ภาษา</string>
     <string name="settings_title">การตั้งค่า</string>
-    <string name="rish_description">ด้วย %1$s ในแอปเทอร์มินอลใด ๆ คุณจะสามารถเชื่อมต่อและดำเนินการกับ shell ที่รันโดย Shizuku &lt;p&gt;รายละเอียดอื่น ๆ ในการใช้ %1$s แตะเพื่อดูเอกสาร</string>
+    <string name="rish_description">ด้วย %1$s ในแอปเทอร์มินอลใด ๆ คุณจะสามารถเชื่อมต่อและดำเนินการกับ shell ที่รันโดย Shizuku™ &lt;p&gt;รายละเอียดอื่น ๆ ในการใช้ %1$s แตะเพื่อดูเอกสาร</string>
     <string name="terminal_tutorial_3_description">แนะนำนิดหน่อย: ให้การอนุญาตดำเนิดการแก่ %1$s และเพิ่มเข้าไปใน %2$s ก็จะสามารถใช้ %1$s ได้โดยตรง</string>
-    <string name="terminal_tutorial_3">สุดท้าย ย้ายไฟล์ไปสักที่ที่แอปเทอร์มินอลของคุณสามารถเข้าถึงได้ ทีนี้คุณก็จะสามารถใช้ %1$s เพื่อสั่งคำสั่งผ่าน Shizuku</string>
-    <string name="terminal_tutorial_2_description">ยกตัวอย่างเช่น ถ้าคุณต้องการใช้ Shizuku ใน %1$s คุณจะต้องแทนที่ %2$s ด้วย %3$s (%4$s คือชื่อแพ็กเกจของ %1$s)</string>
+    <string name="terminal_tutorial_3">สุดท้าย ย้ายไฟล์ไปสักที่ที่แอปเทอร์มินอลของคุณสามารถเข้าถึงได้ ทีนี้คุณก็จะสามารถใช้ %1$s เพื่อสั่งคำสั่งผ่าน Shizuku™</string>
+    <string name="terminal_tutorial_2_description">ยกตัวอย่างเช่น ถ้าคุณต้องการใช้ Shizuku™ ใน %1$s คุณจะต้องแทนที่ %2$s ด้วย %3$s (%4$s คือชื่อแพ็กเกจของ %1$s)</string>
     <string name="terminal_tutorial_2">จากนั้น ใช้ตัวแก้ไขไฟล์เปิดและแก้ไข %1$s</string>
     <string name="terminal_export_files">ส่งออกไฟล์</string>
     <string name="terminal_tutorial_1_description">หากมีไฟล์ที่มีชื่อเดียวกันในโฟลเดอร์ที่เลือก ไฟล์เหล่านั้นจะถูกลบออก
 \n
-\nใช้ฟังก์ชันการส่งออก SAF (Storage Access Framework) มีรายงานว่า MIUI ทำลายฟังก์ชันของ SAF หากคุณใช้ MIUI คุณอาจจะต้องแตกไฟล์จาก apk ของ Shizuku หรือดาวน์โหลดจาก GitHub</string>
+\nใช้ฟังก์ชันการส่งออก SAF (Storage Access Framework) มีรายงานว่า MIUI ทำลายฟังก์ชันของ SAF หากคุณใช้ MIUI คุณอาจจะต้องแตกไฟล์จาก apk ของ Shizuku™ หรือดาวน์โหลดจาก GitHub</string>
     <string name="terminal_tutorial_1">ก่อนอื่น ส่งออกไฟล์ไปยังที่ใดก็ได้ จะมีอยู่สองไฟล์ %1$s และ %2$s</string>
-    <string name="home_terminal_description">สั่งคำสั่งผ่าน Shizuku ในแอปเทอร์มินอลที่คุณเลือก</string>
-    <string name="home_terminal_title">ใช้ Shizuku ในแอปเทอร์มินอล</string>
-    <string name="app_management_item_summary_requires_root">* จำเป็นต้องให้ Shizuku ทำงานผ่านรูท</string>
+    <string name="home_terminal_description">สั่งคำสั่งผ่าน Shizuku™ ในแอปเทอร์มินอลที่คุณเลือก</string>
+    <string name="home_terminal_title">ใช้ Shizuku™ ในแอปเทอร์มินอล</string>
+    <string name="app_management_item_summary_requires_root">* จำเป็นต้องให้ Shizuku™ ทำงานผ่านรูท</string>
     <string name="app_management_dialog_adb_is_limited_message">เป็นไปได้สูงที่ผู้ผลิตอุปกรณ์ของคุณจะจำกัดการอนุญาตของ adb &lt;p&gt;อาจมีวิธีแก้ไขสำหรับอุปกรณ์ของคุณใน&lt;b&gt;&lt;a href=\"%1$s\"&gt;เอกสารนี้&lt;/a&gt;&lt;/b&gt;</string>
     <string name="app_management_dialog_adb_is_limited_title">การอนุญาตของ adb นั้นจำกัด</string>
-    <string name="home_learn_more_description">เรียนรู้การพัฒนาเพื่อใช้ร่วมกันกับ Shizuku</string>
-    <string name="home_learn_more_title">เรียนรู้ Shizuku</string>
+    <string name="home_learn_more_description">เรียนรู้การพัฒนาเพื่อใช้ร่วมกันกับ Shizuku™</string>
+    <string name="home_learn_more_title">เรียนรู้ Shizuku™</string>
     <string name="home_app_management_view_authorized_apps">แตะเพื่อจัดการแอปที่ได้รับอนุญาต</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="other">อนุญาตแล้ว %d แอปพลิเคชัน</item>
@@ -71,20 +71,20 @@
     <string name="home_app_management_title">การจัดการแอปพลิเคชัน</string>
     <string name="home_root_button_restart">เริ่มใหม่</string>
     <string name="home_root_button_start">เริ่ม</string>
-    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s สำหรับผู้ใช้งานรูท จะเป็นตัวที่ใช้แทนที่ Shizuku แต่โปรดทราบว่า แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
-    <string name="home_root_description">นอกจากนี้ Shizuku ยังสามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizuku&lt;br&gt;หรือดูตาม %s</string>
+    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s สำหรับผู้ใช้งานรูท จะเป็นตัวที่ใช้แทนที่ Shizuku™ แต่โปรดทราบว่า แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
+    <string name="home_root_description">นอกจากนี้ Shizuku™ ยังสามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizuku™&lt;br&gt;หรือดูตาม %s</string>
     <string name="home_root_title">เริ่ม (สำหรับอุปกรณ์ที่รูทแล้ว)</string>
-    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">บางระบบ (เช่น MIUI) จะไม่อนุญาตให้แอปเข้าถึงเครือข่ายเมื่อไม่แสดง แม้แอปจะใช้บริการเบื้องหน้าตามปกติ โปรดเปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ของ Shizuku บนระบบที่เป็นเช่นนั้น</string>
-    <string name="adb_pairing_tutorial_content_network">Shizuku จำเป็นต้องเข้าถึงเครือข่ายท้องถิ่น ซึ่งกำลังควบคุมอยู่โดยการอนุญาตเครือข่าย</string>
-    <string name="adb_pairing_tutorial_content_finish">กลับไปที่ Shizuku เพื่อเริ่ม Shizuku</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">บางระบบ (เช่น MIUI) จะไม่อนุญาตให้แอปเข้าถึงเครือข่ายเมื่อไม่แสดง แม้แอปจะใช้บริการเบื้องหน้าตามปกติ โปรดเปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ของ Shizuku™ บนระบบที่เป็นเช่นนั้น</string>
+    <string name="adb_pairing_tutorial_content_network">Shizuku™ จำเป็นต้องเข้าถึงเครือข่ายท้องถิ่น ซึ่งกำลังควบคุมอยู่โดยการอนุญาตเครือข่าย</string>
+    <string name="adb_pairing_tutorial_content_finish">กลับไปที่ Shizuku™ เพื่อเริ่ม Shizuku™</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">โปรดให้ทราบว่า ส่วนด้านซ้ายของตัวเลือก \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" สามารถกดได้ เมื่อแตะแล้วจะเปิดหน้าใหม่ขึ้นมา การแค่เปิดสวิตช์ที่ด้านขวาอย่างเดียวนั้นไม่ถูกต้อง</string>
     <string name="adb_pairing_tutorial_content_miui_2">ไม่เช่นนั้นจะไม่สามารถป้อนรหัสการจับคู่ลงในการแจ้งเตือน</string>
     <string name="adb_pairing_tutorial_content_miui">ผู้ใช้ MIUI อาจจำเป็นต้องเปลี่ยนสไตล์การแจ้งเตือนเป็น \"Android\" ใน \"การแจ้งเตือน\" -\"เฉดการแจ้งเตือน\" ในการตั้งค่าของระบบ</string>
-    <string name="adb_pairing_tutorial_content_notification_blocked">กระบวนการจับคู่จำเป็นต้องมีการป้อนข้อมูลลงในการแจ้งเตือนของ Shizuku โปรดอนุญาตให้ Shizuku ส่งการแจ้งเตือน</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">กระบวนการจับคู่จำเป็นต้องมีการป้อนข้อมูลลงในการแจ้งเตือนของ Shizuku™ โปรดอนุญาตให้ Shizuku™ ส่งการแจ้งเตือน</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">ป้อนรหัสลงไปในการแจ้งเตือนเพื่อเสร็จสิ้นการจับคู่</string>
     <string name="adb_pairing_tutorial_content_steps">เข้าไปยัง \"ตัวเลือกสำหรับนักพัฒนาแอป\" - \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" แตะ \"จับคู่อุปกรณ์ผ่านรหัสการจับคู่\" ก็จะพบกับรหัสหกตัว</string>
-    <string name="adb_pairing_tutorial_content_notification">การแจ้งเตือนจาก Shizuku จะช่วยให้เสร็จสิ้นกระบวนการจับคู่</string>
-    <string name="adb_pairing_tutorial_title">จับคู่ Shizuku กับอุปกรณ์</string>
+    <string name="adb_pairing_tutorial_content_notification">การแจ้งเตือนจาก Shizuku™ จะช่วยให้เสร็จสิ้นกระบวนการจับคู่</string>
+    <string name="adb_pairing_tutorial_title">จับคู่ Shizuku™ กับอุปกรณ์</string>
     <string name="notification_settings">ตัวเลือกการแจ้งเตือน</string>
     <string name="development_settings">ตัวเลือกสำหรับนักพัฒนาแอป</string>
     <string name="adb_pair_required">โปรดทำขั้นตอนการจับคู่ก่อน</string>
@@ -108,8 +108,8 @@
     <string name="dialog_adb_port">พอร์ต</string>
     <string name="dialog_adb_discovery_message">โปรดเปิดใช้งาน \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" ใน \"ตัวเลือกสำหรับนักพัฒนาแอป\" \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" จะถูกปิดโดยอัตโนมัติเมื่อเปลี่ยนเครือข่าย
 \n
-\nหมายเหตุ ห้ามปิดใช้งาน \"ตัวเลือกสำหรับนักพัฒนาแอป\" หรือ \"การแก้ไขข้อบกพร่อง USB\" ไม่เช่นนั้น Shizuku จะหยุดการทำงาน</string>
-    <string name="home_wireless_adb_description">ตั้งแต่ Android 11 ขึ้นไป สามารถเปิดใช้งานการแก้ไขข้อบกพร่องผ่าน Wi-Fi เพื่อเริ่ม Shizuku ได้โดยตรงผ่านอุปกรณ์ โดยไม่ต้องเชื่อมต่อกับคอมพิวเตอร์ &lt;p&gt;โปรดอ่านคำแนะนำทีละขั้นตอนก่อน</string>
+\nหมายเหตุ ห้ามปิดใช้งาน \"ตัวเลือกสำหรับนักพัฒนาแอป\" หรือ \"การแก้ไขข้อบกพร่อง USB\" ไม่เช่นนั้น Shizuku™ จะหยุดการทำงาน</string>
+    <string name="home_wireless_adb_description">ตั้งแต่ Android 11 ขึ้นไป สามารถเปิดใช้งานการแก้ไขข้อบกพร่องผ่าน Wi-Fi เพื่อเริ่ม Shizuku™ ได้โดยตรงผ่านอุปกรณ์ โดยไม่ต้องเชื่อมต่อกับคอมพิวเตอร์ &lt;p&gt;โปรดอ่านคำแนะนำทีละขั้นตอนก่อน</string>
     <string name="home_wireless_adb_title">เริ่มผ่านการแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
     <string name="dialog_adb_discovery">กำลังค้นหาบริการการแก้ไขข้อบกพร่อง</string>
     <string name="home_wireless_adb_view_guide_button">คำแนะนำทีละขั้นตอน</string>
@@ -120,17 +120,17 @@
     <string name="home_adb_button_view_help">อ่านการช่วยเหลือ</string>
     <string name="home_adb_title">เริ่มโดยเชื่อมต่อกับคอมพิวเตอร์</string>
     <string name="home_status_service_is_running">%1$s กำลังทำงาน</string>
-    <string name="home_adb_description">สำหรับอุปกรณ์ที่ไม่ได้ติดตั้งรูท จะต้องใช้ adb เพื่อเริ่ม Shizuku (จำเป็นต้องเชื่อมต่อกับคอมพิวเตอร์) กระบวนการนี้จะต้องทำทุกครั้งที่อุปกรณ์ปิดและเปิดใหม่ กรุณา<b><a href="%1$s">อ่านการช่วยเหลือ</a></b></string>
+    <string name="home_adb_description">สำหรับอุปกรณ์ที่ไม่ได้ติดตั้งรูท จะต้องใช้ adb เพื่อเริ่ม Shizuku™ (จำเป็นต้องเชื่อมต่อกับคอมพิวเตอร์) กระบวนการนี้จะต้องทำทุกครั้งที่อุปกรณ์ปิดและเปิดใหม่ กรุณา<b><a href="%1$s">อ่านการช่วยเหลือ</a></b></string>
     <string name="home_status_service_version_update">เวอร์ชัน %2$s, %1$s&lt;br&gt;เริ่มใหม่อีกครั้งเพื่ออัปเดตเป็นเวอร์ชัน %3$s</string>
     <string name="home_status_service_version">เวอร์ชัน %2$s ผ่าน %1$s</string>
     <string name="home_status_service_not_running">%1$s ไม่ได้กำลังทำงาน</string>
     <string name="translation_contributors">altinat</string>
-    <string name="home_adb_is_limited_description">ผู้ผลิตอุปกรณ์ของคุณ จำกัดการอนุญาต adb ทำให้แอปที่ใช้ Shizuku จะไม่ทำงานอย่างถูกต้อง
+    <string name="home_adb_is_limited_description">ผู้ผลิตอุปกรณ์ของคุณ จำกัดการอนุญาต adb ทำให้แอปที่ใช้ Shizuku™ จะไม่ทำงานอย่างถูกต้อง
 \n
 \nโดยปกติ ข้อจำกัดนี้สามารถจัดการได้โดยการปรับตัวเลือกใน \"ตัวเลือกสำหรับนักพัฒนาซอฟต์แวร์\" โปรดอ่าน การช่วยเหลือสำหรับรายละเอียดวิธีการแก้ไข
 \n
-\nคุณอาจต้องรีสตาร์ท Shizuku เพื่อให้การดำเนินการมีผล</string>
+\nคุณอาจต้องรีสตาร์ท Shizuku™ เพื่อให้การดำเนินการมีผล</string>
     <string name="home_adb_is_limited_title">คุณต้องทำขั้นตอนเพิ่มเติม</string>
-    <string name="home_app_management_empty">แอปที่ขอร้องหรือขอใช้ Shizuku จะแสดงที่นี่</string>
+    <string name="home_app_management_empty">แอปที่ขอร้องหรือขอใช้ Shizuku™ จะแสดงที่นี่</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">โปรดลองปิดและเปิดใช้งาน \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" ใหม่ หากระบบยังคงค้นหาอยู่</string>
 </resources>

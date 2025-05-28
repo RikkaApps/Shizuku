@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Shizuku HU</string>
+    <string name="app_name" translatable="false">Shizuku™ HU</string>
     <!-- To translators: you can leave your here -->
     <string name="translation_contributors">gidano - sympda.blog.hu</string>
     <!-- Home - Status -->
@@ -10,7 +10,7 @@
     <string name="home_status_service_version_update"><![CDATA[Verzió %2$s, %1$s<br>Kezdje újra a %3$s verzióra való frissítéshez]]></string>
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[Kezdje a számítógéphez való csatlakozással]]></string>
-    <string name="home_adb_description"><![CDATA[Root nélküli eszközök esetén az adb-t kell használnia a Shizuku elindításához (számítógépes kapcsolat szükséges). Ezt a folyamatot minden alkalommal meg kell ismételni az eszköz újraindításakor. Kérem <b><a href=\"%1$s\">olvassa el a súgót</a></b>.]]></string>
+    <string name="home_adb_description"><![CDATA[Root nélküli eszközök esetén az adb-t kell használnia a Shizuku™ elindításához (számítógépes kapcsolat szükséges). Ezt a folyamatot minden alkalommal meg kell ismételni az eszköz újraindításakor. Kérem <b><a href=\"%1$s\">olvassa el a súgót</a></b>.]]></string>
     <string name="home_adb_button_view_help">Olvassa el a súgót</string>
     <string name="home_adb_button_view_command">Parancs megtekintés</string>
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Vannak más szempontok is, kérjük erősítse meg, hogy először elolvasta a súgót.</string>
@@ -18,12 +18,12 @@
     <string name="home_adb_dialog_view_command_button_send">Küldés</string>
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Kezdje a vezeték nélküli hibakereséssel]]></string>
-    <string name="home_wireless_adb_description"><![CDATA[Android 11 vagy újabb rendszeren engedélyezheti a vezeték nélküli hibakeresést, és közvetlenül az eszközéről indíthatja el a Shizukut, anélkül, hogy számítógéphez csatlakozna..<p>Először tekintse meg a lépésről lépésre szóló útmutatót.]]></string>
+    <string name="home_wireless_adb_description"><![CDATA[Android 11 vagy újabb rendszeren engedélyezheti a vezeték nélküli hibakeresést, és közvetlenül az eszközéről indíthatja el a Shizuku™t, anélkül, hogy számítógéphez csatlakozna..<p>Először tekintse meg a lépésről lépésre szóló útmutatót.]]></string>
     <string name="home_wireless_adb_description_pre_11"><![CDATA[Az Android 11 előtt a vezeték nélküli hibakeresés engedélyezéséhez csatlakozni kell egy számítógéphez.]]></string>
     <string name="home_wireless_adb_view_guide_button">Lépésről-lépésre útmutató</string>
     <!-- Adb -->
     <string name="dialog_adb_discovery">Vezeték nélküli hibakereső szolgáltatás keresése</string>
-    <string name="dialog_adb_discovery_message">Engedélyezze a \"Vezeték nélküli hibakeresés\"t a \"Fejlesztői lehetőségek\"nél. A \"Vezeték nélküli hibakeresés\" hálózatváltáskor auto. le van tiltva.\n\nMegj.: ne tiltsa le a \"Fejlesztői lehetőségek\"et vagy az \"USB hibakeresés\"t, ekkor a Shizuku le fog állni.</string>
+    <string name="dialog_adb_discovery_message">Engedélyezze a \"Vezeték nélküli hibakeresés\"t a \"Fejlesztői lehetőségek\"nél. A \"Vezeték nélküli hibakeresés\" hálózatváltáskor auto. le van tiltva.\n\nMegj.: ne tiltsa le a \"Fejlesztői lehetőségek\"et vagy az \"USB hibakeresés\"t, ekkor a Shizuku™ le fog állni.</string>
     <string name="dialog_adb_port">Port</string>
     <string name="dialog_adb_invalid_port">A port egy 1 és 65535 közötti egész szám.</string>
     <string name="adb_pairing">Párosítás</string>
@@ -40,21 +40,21 @@
     <string name="adb_pair_required">Kérjük először végezze el a párosítási lépést.</string>
     <string name="development_settings">Fejlesztői lehetőségek</string>
     <string name="notification_settings">Értesítési lehetőségek</string>
-    <string name="adb_pairing_tutorial_title">Párosítsa a Shizukut készülékével</string>
-    <string name="adb_pairing_tutorial_content_notification">A Shizuku értesítése segít a párosítás befejezésében.</string>
+    <string name="adb_pairing_tutorial_title">Párosítsa a Shizuku™t készülékével</string>
+    <string name="adb_pairing_tutorial_content_notification">A Shizuku™ értesítése segít a párosítás befejezésében.</string>
     <string name="adb_pairing_tutorial_content_steps">Lépjen a \"Fejlesztői lehetőségek\" - \"Vezeték nélküli hibakeresés\" menüpontra. Koppintson az \"Eszköz párosítása párosítási kóddal\" lehetőségre, és megjelenik egy hatjegyű kód.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">A párosítás befejezéséhez írja be az értesítésben lévő kódot.</string>
-    <string name="adb_pairing_tutorial_content_notification_blocked">A párosítási folyamat során kapcsolatba kell lépni Shizuku értesítésével. Kérjük, engedélyezze a Shizukunak, hogy értesítéseket tegyen közzé.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">A párosítási folyamat során kapcsolatba kell lépni Shizuku™ értesítésével. Kérjük, engedélyezze a Shizuku™nak, hogy értesítéseket tegyen közzé.</string>
     <string name="adb_pairing_tutorial_content_miui">Előfordulhat, hogy a MIUI-felhasználóknak át kell váltaniuk az értesítési stílust \"Android\"-ra a \"Értesítés\" - \"Értesítési árnyék\" lehetőségről a rendszerbeállításokban.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Ellenkező esetben előfordulhat, hogy nem tudja megadni a párosítási kódot az értesítésből.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">Felhívjuk figyelmét, hogy a \"Vezeték nélküli hibakeresés\" opció bal oldali része kattintható, rákattintva egy új oldal nyílik meg. A jobb oldali kapcsoló bekapcsolása helytelen.</string>
-    <string name="adb_pairing_tutorial_content_finish">Vissza és Shizuku elindítása.</string>
-    <string name="adb_pairing_tutorial_content_network">A Shizukunak hozzá kell férnie a helyi hálózathoz. A hálózati engedély vezérli.</string>
-    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Egyes rendszerek (például a MIUI) nem engedélyezik az alkalmazások számára, hogy hozzáférjenek a hálózathoz ha nem láthatók, még akkor sem, ha az alkalmazás alapértelmezés szerint előtérbeli szolgáltatást használ. Kapcsolja ki a Shizuku akku optimalizálási funkcióit az ilyen rendszereken.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vissza és Shizuku™ elindítása.</string>
+    <string name="adb_pairing_tutorial_content_network">A Shizuku™nak hozzá kell férnie a helyi hálózathoz. A hálózati engedély vezérli.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Egyes rendszerek (például a MIUI) nem engedélyezik az alkalmazások számára, hogy hozzáférjenek a hálózathoz ha nem láthatók, még akkor sem, ha az alkalmazás alapértelmezés szerint előtérbeli szolgáltatást használ. Kapcsolja ki a Shizuku™ akku optimalizálási funkcióit az ilyen rendszereken.</string>
     <!-- Home - Root -->
     <string name="home_root_title">Indítás (rootolt eszközökhöz)</string>
-    <string name="home_root_description"><![CDATA[Ezenkívül a Shizuku automatikusan elindítható rendszerindításkor. Ha nem, ellenőrizze, hogy rendszere vagy harmadik féltől származó eszközei nem korlátozták-e a Shizukut.<br>A következőre hivatkozhat: %s.]]></string>
-    <string name="home_root_description_sui"><![CDATA[Ha Magisk-et használ, megpróbálhatja a %1$s-t. A root felhasználók számára végül felváltja a Shizukut. Megj.: a meglévő alkalmazásokat kissé módosítani kell a %2$s használatához.]]></string>
+    <string name="home_root_description"><![CDATA[Ezenkívül a Shizuku™ automatikusan elindítható rendszerindításkor. Ha nem, ellenőrizze, hogy rendszere vagy harmadik féltől származó eszközei nem korlátozták-e a Shizuku™t.<br>A következőre hivatkozhat: %s.]]></string>
+    <string name="home_root_description_sui"><![CDATA[Ha Magisk-et használ, megpróbálhatja a %1$s-t. A root felhasználók számára végül felváltja a Shizuku™t. Megj.: a meglévő alkalmazásokat kissé módosítani kell a %2$s használatához.]]></string>
     <string name="home_root_button_start">Indítás</string>
     <string name="home_root_button_restart">Újraindítás</string>
     <!-- Home - Application management -->
@@ -64,29 +64,29 @@
         <item quantity="other"><![CDATA[%d app engedélyezett]]></item>
     </plurals>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Érintse meg az engedélyezett alkalmazások kezeléséhez]]></string>
-    <string name="home_app_management_empty">Itt jelennek meg azok az alkalmazások, amelyek Shizukut kértek vagy bejelentettek.</string>
+    <string name="home_app_management_empty">Itt jelennek meg azok az alkalmazások, amelyek Shizuku™t kértek vagy bejelentettek.</string>
     <!-- Home - Learn more -->
-    <string name="home_learn_more_title">Tanulja a Shizukut</string>
-    <string name="home_learn_more_description">Tanuljon meg fejlődni a Shizukuval</string>
+    <string name="home_learn_more_title">Tanulja a Shizuku™t</string>
+    <string name="home_learn_more_description">Tanuljon meg fejlődni a Shizuku™val</string>
     <!-- Home - Adb permissions limited -->
     <string name="home_adb_is_limited_title">Egy plusz lépést kell tennie</string>
-    <string name="home_adb_is_limited_description">Az eszköz gyártója korlátozta az adb-engedélyeket, és a Shizuku-t használó alkalmazások nem működnek megfelelően.\n\nÁltalában ez a korlátozás bizonyos beállítások módosításával feloldható a \"Fejlesztői lehetőségek\"-nél. Kérjük, olvassa el a súgót ennek részleteiért.\n\nLehet, hogy újra kell indítania a Shizukut, hogy a művelet érvénybe lépjen.</string>
+    <string name="home_adb_is_limited_description">Az eszköz gyártója korlátozta az adb-engedélyeket, és a Shizuku™-t használó alkalmazások nem működnek megfelelően.\n\nÁltalában ez a korlátozás bizonyos beállítások módosításával feloldható a \"Fejlesztői lehetőségek\"-nél. Kérjük, olvassa el a súgót ennek részleteiért.\n\nLehet, hogy újra kell indítania a Shizuku™t, hogy a művelet érvénybe lépjen.</string>
     <!-- Application management -->
     <string name="app_management_dialog_adb_is_limited_title">Az adb engedélye korlátozott</string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Nagyon valószínű, hogy az eszköz gyártója korlátozza az adb engedélyét.<p>Lehet, hogy van megoldás a rendszeréhez ebben a <b><a href=\"%1$s\">dokumentumban</a></b>.]]></string>
-    <string name="app_management_item_summary_requires_root">* szükséges, hogy a Shizuku root-on fusson</string>
+    <string name="app_management_item_summary_requires_root">* szükséges, hogy a Shizuku™ root-on fusson</string>
     <!-- Terminal -->
-    <string name="home_terminal_title">Használja a Shizukut a terminál appokban</string>
-    <string name="home_terminal_description">Futtasson parancsokat a Shizuku-n keresztül a kívánt terminálalkalmazásokban</string>
+    <string name="home_terminal_title">Használja a Shizuku™t a terminál appokban</string>
+    <string name="home_terminal_description">Futtasson parancsokat a Shizuku™-n keresztül a kívánt terminálalkalmazásokban</string>
     <string name="terminal_tutorial_1">Először is exportálja a fájlokat a kívánt helyre. Két fájlt fog találni, %1$s és %2$s.</string>
-    <string name="terminal_tutorial_1_description">Ha a kiválasztott mappában vannak azonos nevű fájlok, akkor azok törlődnek.\n\nAz export funkció SAF-et használ (Storage Access Framework). A jelentések szerint a MIUI megszakítja a SAF funkcióit. Ha MIUI-t használ, előfordulhat, hogy ki kell csomagolnia a fájlt a Shizuku apk-jából, vagy le kell töltenie a GitHubról.</string>
+    <string name="terminal_tutorial_1_description">Ha a kiválasztott mappában vannak azonos nevű fájlok, akkor azok törlődnek.\n\nAz export funkció SAF-et használ (Storage Access Framework). A jelentések szerint a MIUI megszakítja a SAF funkcióit. Ha MIUI-t használ, előfordulhat, hogy ki kell csomagolnia a fájlt a Shizuku™ apk-jából, vagy le kell töltenie a GitHubról.</string>
     <string name="terminal_export_files">Fájlok exportálása</string>
     <string name="terminal_tutorial_2">Ezután bármelyik szövegszerkesztővel nyissa meg és szerkessze a %1$s fájlt.</string>
-    <string name="terminal_tutorial_2_description">Ha például a Shizukut szeretné használni a %1$s alkalmazásban, cserélje ki a %2$s kifejezést a következőre: %3$s (%4$s a csomag neve ennek: %1$s).</string>
-    <string name="terminal_tutorial_3">Végül helyezze át a fájlokat valahova, ahol a terminálalkalmazása hozzáférhet, így a %1$s segítségével parancsokat futtathat a Shizuku-n keresztül..</string>
+    <string name="terminal_tutorial_2_description">Ha például a Shizuku™t szeretné használni a %1$s alkalmazásban, cserélje ki a %2$s kifejezést a következőre: %3$s (%4$s a csomag neve ennek: %1$s).</string>
+    <string name="terminal_tutorial_3">Végül helyezze át a fájlokat valahova, ahol a terminálalkalmazása hozzáférhet, így a %1$s segítségével parancsokat futtathat a Shizuku™-n keresztül..</string>
     <string name="terminal_tutorial_3_description">Néhány tipp: adjon végrehajtási engedélyt a következőnek: %1$s, és adja hozzá a következőhöz: %2$s, így közvetlenül használhatja a %1$s-t.</string>
     <string name="rish_description"><![CDATA[
-A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku által futtatott shellhez, és kommunikálhat vele.
+A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku™ által futtatott shellhez, és kommunikálhat vele.
 <p>A %1$s részletes használatáról, érintse a dokumentum megtekintéséhez.
     ]]></string>
     <!-- Settings -->
@@ -100,18 +100,18 @@ A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku �
     <string name="settings_translation">Vegyen részt a fordításban</string>
     <string name="settings_translation_summary">Segítsen nekünk lefordítani a %s-t az Ön nyelvére</string>
     <string name="settings_start_on_boot">Induljon rendszerindításkor (root)</string>
-    <string name="settings_start_on_boot_summary">Rootolt eszközök esetén a Shizuku képes auto. elindulni rendszerindításkor</string>
+    <string name="settings_start_on_boot_summary">Rootolt eszközök esetén a Shizuku™ képes auto. elindulni rendszerindításkor</string>
     <string name="settings_use_system_color">Használja a rendszertéma színét</string>
     <!-- About -->
     <string name="action_about">Rólunk</string>
     <string name="about_view_source_code"><![CDATA[Forráskód megtekintése itt: %s]]></string>
     <!-- Stop -->
-    <string name="action_stop">A Shizuku leállítása</string>
-    <string name="dialog_stop_message">A Shizuku szolgáltatás leáll.</string>
+    <string name="action_stop">A Shizuku™ leállítása</string>
+    <string name="dialog_stop_message">A Shizuku™ szolgáltatás leáll.</string>
     <!-- Notification -->
     <string name="notification_channel_service_status">Szolgáltatásindítási állapot</string>
-    <string name="notification_service_starting">A Shizuku szolgáltatás indul…</string>
-    <string name="notification_service_start_failed">A Shizuku szolgáltatás indítása nem sikerült.</string>
+    <string name="notification_service_starting">A Shizuku™ szolgáltatás indul…</string>
+    <string name="notification_service_start_failed">A Shizuku™ szolgáltatás indítása nem sikerült.</string>
     <string name="notification_service_start_no_root">Nem sikerült root engedélyt kérni.</string>
     <string name="notification_working">Dolgozom…</string>
     <string name="notification_channel_adb_pairing">Vezeték nélküli hibakeresés pairing</string>
@@ -121,14 +121,14 @@ A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku �
     <string name="notification_adb_pairing_stop_searching">A keresés leállítása</string>
     <string name="notification_adb_pairing_working_title">A párosítás folyamatban</string>
     <string name="notification_adb_pairing_succeed_title">A párosítás sikeres</string>
-    <string name="notification_adb_pairing_succeed_text">Most elindíthatja a Shizuku szolgáltatást.</string>
+    <string name="notification_adb_pairing_succeed_text">Most elindíthatja a Shizuku™ szolgáltatást.</string>
     <string name="notification_adb_pairing_failed_title">A párosítás nem sikerült</string>
     <string name="notification_adb_pairing_retry">Újra</string>
     <!-- Permission related, appears in system permission UI -->
-    <string name="permission_group_label" translatable="false">Shizuku</string>
+    <string name="permission_group_label" translatable="false">Shizuku™</string>
     <string name="permission_group_description" translatable="false">@string/permission_label</string>
-    <string name="permission_label">Shizuku hozzáférés</string>
-    <string name="permission_description">Engedélyezze az app számára a Shizuku használatát.</string>
+    <string name="permission_label">Shizuku™ hozzáférés</string>
+    <string name="permission_description">Engedélyezze az app számára a Shizuku™ használatát.</string>
     <string name="permission_warning_template"><![CDATA[Engedélyezi <b>%1$s</b> ide, %2$s?]]></string>
     <string name="grant_dialog_button_allow_always">Mindig engedje meg</string>
     <string name="grant_dialog_button_deny">"Megtagad"</string>
@@ -141,10 +141,10 @@ A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizuku �
     <string name="toast_copied_to_clipboard">%s\n a vágólapra másolva.</string>
     <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> a vágólapra másolva.]]></string>
     <!-- Messages for legacy -->
-    <string name="dialog_legacy_not_support_title">%1$s nem támogatja a modern Shizukut</string>
-    <string name="dialog_legacy_not_support_message"><![CDATA[Az örökölt Shizuku 2019 márciusa óta elavult. Ezenkívül a régi Shizuku nem működik újabb Android-rendszereken.<p>Kérdezze meg a fejlesztőt <b>%1$s</b> frissítéséről.]]></string>
-    <string name="dialog_requesting_legacy_title">%1$s az örökölt Shizukut kéri</string>
-    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> modern Shizuku támogatással rendelkezik, de az örökölt Shizukut kéri. Ez azért lehet, mert a Shizuku nem fut, ellenőrizze a Shizuku alkalmazást.<p>Az örökölt Shizuku 2019 márciusa óta elavult.]]></string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">Nyissa meg a Shizukut</string>
+    <string name="dialog_legacy_not_support_title">%1$s nem támogatja a modern Shizuku™t</string>
+    <string name="dialog_legacy_not_support_message"><![CDATA[Az örökölt Shizuku™ 2019 márciusa óta elavult. Ezenkívül a régi Shizuku™ nem működik újabb Android-rendszereken.<p>Kérdezze meg a fejlesztőt <b>%1$s</b> frissítéséről.]]></string>
+    <string name="dialog_requesting_legacy_title">%1$s az örökölt Shizuku™t kéri</string>
+    <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> modern Shizuku™ támogatással rendelkezik, de az örökölt Shizuku™t kéri. Ez azért lehet, mert a Shizuku™ nem fut, ellenőrizze a Shizuku™ alkalmazást.<p>Az örökölt Shizuku™ 2019 márciusa óta elavult.]]></string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Nyissa meg a Shizuku™t</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Próbálja kikapcsolni majd engedélyezni a \"Vezeték nélküli hibakeresés\" opciót, ha továbbra is keres.</string>
 </resources>

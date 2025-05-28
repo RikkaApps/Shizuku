@@ -9,7 +9,7 @@
     <string name="home_adb_dialog_view_command_copy_button">نسخ</string>
     <string name="home_adb_dialog_view_command_button_send">إرسال</string>
     <string name="home_status_service_version_update">الإصدار %2$s, %1$s&lt;br&gt;اعد تشغيل التطبيق من جديد للتحديث إلى الإصدار %3$s</string>
-    <string name="home_adb_description">بالنسبة للأجهزة التي لا تحتوي على الجذر (Root) ، تحتاج إلى استخدام adb لبدء Shizuku (يتطلب اتصال الكمبيوتر). يجب تكرار هذه العملية في كل مرة يتم فيها إعادة تشغيل الجهاز. يرجى <b><a href="%1$s"> قراءة التعليمات </a></b>.</string>
+    <string name="home_adb_description">بالنسبة للأجهزة التي لا تحتوي على الجذر (Root) ، تحتاج إلى استخدام adb لبدء Shizuku™ (يتطلب اتصال الكمبيوتر). يجب تكرار هذه العملية في كل مرة يتم فيها إعادة تشغيل الجهاز. يرجى <b><a href="%1$s"> قراءة التعليمات </a></b>.</string>
     <string name="dialog_adb_discovery_message">يرجى تمكين \"التصحيح اللاسلكي\" في \"خيارات المطور\". \"تصحيح لاسلكي\" يتم تعطيلها عندما تتغير الشبكة تلقائيا.
 \n
 \n ملاحظة، لا تعطل \"خيارات المطور\" أو \"تصحيح USB\"، أو سيتم إيقاف شيزوكو</string>
@@ -17,7 +17,7 @@
     <string name="adb_pairing">الاقتران</string>
     <string name="home_adb_dialog_view_command_message">font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* هناك بعض الاعتبارات الأخرى، يرجى تأكيد أنك قرأت التعليمات أولا.</string>
     <string name="home_wireless_adb_title">البدء باستخدام التصحيح اللاسلكي</string>
-    <string name="home_wireless_adb_description">على أندرويد 11 وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء Shizuku مباشرة من جهازك ، دون الاحتياج إتصال بالكمبيوتر.&lt;p&gt;يرجى الإطلاع أولاً على التعليمات المفصلة خطوة بخطوة.</string>
+    <string name="home_wireless_adb_description">على أندرويد 11 وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء Shizuku™ مباشرة من جهازك ، دون الاحتياج إتصال بالكمبيوتر.&lt;p&gt;يرجى الإطلاع أولاً على التعليمات المفصلة خطوة بخطوة.</string>
     <string name="dialog_adb_discovery">البحث عن خدمة التصحيح اللاسلكي</string>
     <string name="dialog_adb_invalid_port">المنفذ هو عدد صحيح يتراوح من 1 إلى 65535.</string>
     <string name="home_wireless_adb_view_guide_button">‌دليل خطوة بخطوة</string>
@@ -31,30 +31,30 @@
     <string name="settings_user_interface">المظهر</string>
     <string name="settings_language">اللغة</string>
     <string name="settings_title">الإعدادات</string>
-    <string name="rish_description">باستخدام %1$s ، في أي تطبيق طرفي ، يمكنك الاتصال والتفاعل مع عمليات تشغيل shell بواسطة Shizuku. &lt;p&gt; حول الاستخدام التفصيلي %1$s ، انقر لعرض المستند.</string>
+    <string name="rish_description">باستخدام %1$s ، في أي تطبيق طرفي ، يمكنك الاتصال والتفاعل مع عمليات تشغيل shell بواسطة Shizuku™. &lt;p&gt; حول الاستخدام التفصيلي %1$s ، انقر لعرض المستند.</string>
     <string name="terminal_tutorial_3_description">بعض النصائح: امنح إذن التنفيذ لـ %1$s وأضفه إلى%2$s ، ستتمكن من استخدام %1$s مباشرةً.</string>
-    <string name="terminal_tutorial_3">أخيرًا ، انقل الملفات إلى مكان يمكن لتطبيقك الطرفي الوصول إليه ، وستتمكن من استخدام %1$s لتشغيل الأوامر من خلال Shizuku.</string>
-    <string name="terminal_tutorial_2_description">على سبيل المثال ، إذا كنت تريد استخدام Shizuku في %1$s ، فيجب استبدال %2$s بـ %3$s (%4$s هو اسم الحزمة %1$s).</string>
+    <string name="terminal_tutorial_3">أخيرًا ، انقل الملفات إلى مكان يمكن لتطبيقك الطرفي الوصول إليه ، وستتمكن من استخدام %1$s لتشغيل الأوامر من خلال Shizuku™.</string>
+    <string name="terminal_tutorial_2_description">على سبيل المثال ، إذا كنت تريد استخدام Shizuku™ في %1$s ، فيجب استبدال %2$s بـ %3$s (%4$s هو اسم الحزمة %1$s).</string>
     <string name="terminal_tutorial_2">بعد ذلك ، استخدم أي محرر نصوص لفتح %1$s وقم بتعديله.</string>
     <string name="terminal_export_files">تصدير الملفات</string>
     <string name="terminal_tutorial_1_description">إذا كانت هناك ملفات بنفس الاسم في المجلد المحدد ، فسيتم حذفها.
 \n
-\nتستخدم وظيفة التصدير SAF (إطار عمل الوصول إلى التخزين). يُذكر أن MIUI قد يخرب وظائف SAF. إذا كنت من تستخدمي MIUI ، فقد تضطر إلى استخراج الملف من APK Shizuku أو تنزيله من GitHub.</string>
+\nتستخدم وظيفة التصدير SAF (إطار عمل الوصول إلى التخزين). يُذكر أن MIUI قد يخرب وظائف SAF. إذا كنت من تستخدمي MIUI ، فقد تضطر إلى استخراج الملف من APK Shizuku™ أو تنزيله من GitHub.</string>
     <string name="terminal_tutorial_1">أولاً ، قم بتصدير الملفات إلى أي مكان تريده. ستجد ملفين, %1$s و %2$s.</string>
-    <string name="home_terminal_description">قم بتشغيل الأوامر من خلال Shizuku في تطبيقات المحطة التي تريدها</string>
-    <string name="home_terminal_title">استخدم Shizuku في تطبيقات المحطة</string>
-    <string name="app_management_item_summary_requires_root">* يطلب Shizuku الجذر (الروت) للعمل</string>
+    <string name="home_terminal_description">قم بتشغيل الأوامر من خلال Shizuku™ في تطبيقات المحطة التي تريدها</string>
+    <string name="home_terminal_title">استخدم Shizuku™ في تطبيقات المحطة</string>
+    <string name="app_management_item_summary_requires_root">* يطلب Shizuku™ الجذر (الروت) للعمل</string>
     <string name="app_management_dialog_adb_is_limited_message">من المحتمل جدًا أن تحدد الشركة المصنعة للجهاز إذن adb. &lt;p&gt; قد يكون هناك حل لنظامك في &lt;b&gt;&lt;a href=\"%1$s\"&gt;هذا المستند&lt;/a&gt;&lt;/b&gt;.</string>
     <string name="app_management_dialog_adb_is_limited_title">إذن الADB محدود</string>
-    <string name="home_adb_is_limited_description">قامت الشركة المصنعة لجهازك بتقييد أذونات adb ولن تعمل التطبيقات التي تستخدم Shizuku بشكل صحيح.
+    <string name="home_adb_is_limited_description">قامت الشركة المصنعة لجهازك بتقييد أذونات adb ولن تعمل التطبيقات التي تستخدم Shizuku™ بشكل صحيح.
 \n
 \nعادة ، يمكن رفع هذا القيد عن طريق تعديل بعض الخيارات في \"خيارات المطور\". يرجى قراءة التعليمات للحصول على تفاصيل حول كيفية القيام بذلك.
 \n
-\nقد تحتاج إلى إعادة تشغيل Shizuku حتى تدخل العملية حيز التنفيذ.</string>
+\nقد تحتاج إلى إعادة تشغيل Shizuku™ حتى تدخل العملية حيز التنفيذ.</string>
     <string name="home_adb_is_limited_title">أنت بحاجة إلى اتخاذ خطوة إضافية</string>
-    <string name="home_learn_more_description">تعلم كيف تطور مع Shizuku</string>
-    <string name="home_learn_more_title">معلومات عن Shizuku</string>
-    <string name="home_app_management_empty">ستظهر هنا التطبيقات التي تتطلب Shizuku.</string>
+    <string name="home_learn_more_description">تعلم كيف تطور مع Shizuku™</string>
+    <string name="home_learn_more_title">معلومات عن Shizuku™</string>
+    <string name="home_app_management_empty">ستظهر هنا التطبيقات التي تتطلب Shizuku™.</string>
     <string name="home_app_management_view_authorized_apps">انقر لإدارة التطبيقات المصرح بها</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="zero">تطبيق %d معتمد</item>
@@ -67,21 +67,21 @@
     <string name="home_app_management_title">الإدارة التطبيقية</string>
     <string name="home_root_button_restart">إعادة البدء بالتشغيل</string>
     <string name="home_root_button_start">البدء بالتشغيل</string>
-    <string name="home_root_description_sui">إذا كنت تستخدم Magisk ، فيمكنك تجربة %1$s. بالنسبة لمستخدمي الجذر (الروت) ، سيحل في مكان Shizuku. ملاحظة ، تحتاج التطبيقات الحالية إلى التغيير بسيط لاستخدام %2$s.</string>
-    <string name="home_root_description">بالإضافة إلى ذلك ، يمكن بدء تشغيل Shizuku تلقائياً عند حالة التشغيل بعد القفل. إذا لم يكن الأمر كذلك ، فيرجى التحقق مما إذا كان نظامك أو أدوات الجهات الخارجية (تطبيقات خارجية) قد حد أو عطل Shizuku.
+    <string name="home_root_description_sui">إذا كنت تستخدم Magisk ، فيمكنك تجربة %1$s. بالنسبة لمستخدمي الجذر (الروت) ، سيحل في مكان Shizuku™. ملاحظة ، تحتاج التطبيقات الحالية إلى التغيير بسيط لاستخدام %2$s.</string>
+    <string name="home_root_description">بالإضافة إلى ذلك ، يمكن بدء تشغيل Shizuku™ تلقائياً عند حالة التشغيل بعد القفل. إذا لم يكن الأمر كذلك ، فيرجى التحقق مما إذا كان نظامك أو أدوات الجهات الخارجية (تطبيقات خارجية) قد حد أو عطل Shizuku.
 \n&lt;br&gt; يمكنك الرجوع إلى %s.</string>
     <string name="home_root_title">ابدأ (للأجهزة المجذرة)</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">بعض الأنظمة (مثل MIUI) لا تسمح للتطبيقات بالوصول إلى الشبكة عندما لا تكون مرئية ، حتى إذا كان التطبيق يستخدم الخدمة الأمامية كمعيار. يرجى تعطيل ميزات تحسين البطارية لـShizuku على هذه الأنظمة.</string>
-    <string name="adb_pairing_tutorial_content_network">يحتاج Shizuku للوصول إلى الشبكة المحلية. يتم التحكم بها عن طريق إذن الشبكة.</string>
-    <string name="adb_pairing_tutorial_content_finish">إرجع إلى Shizuku وقم بتشغيل Shizuku.</string>
+    <string name="adb_pairing_tutorial_content_network">يحتاج Shizuku™ للوصول إلى الشبكة المحلية. يتم التحكم بها عن طريق إذن الشبكة.</string>
+    <string name="adb_pairing_tutorial_content_finish">إرجع إلى Shizuku™ وقم بتشغيل Shizuku™.</string>
     <string name="adb_pairing_tutorial_content_left_is_clickable">يرجى ملاحظة أن الجزء الأيسر من خيار \"التصحيح اللاسلكي\" قابل للنقر عليه ، وسيؤدي النقر عليه إلى فتح صفحة جديدة. تفعيل \"التصحيح اللاسلكي\" من المفتاح الأيمن قد يكون غير صحيح.</string>
     <string name="adb_pairing_tutorial_content_miui_2">بخلاف ذلك ، قد لا تتمكن من إدخال رمز الاقتران من الإشعار.</string>
     <string name="adb_pairing_tutorial_content_miui">قد يحتاج مستخدمو MIUI إلى تبديل نمط الإعلام إلى \"Android\" من \"Notification\" - \"Notification Shade\" في إعدادات النظام.</string>
-    <string name="adb_pairing_tutorial_content_notification_blocked">تحتاج عملية الاقتران إلى التفاعل مع إشعار من Shizuku. يرجى السماح لشيزوكو بنشر الإخطارات.</string>
-    <string name="adb_pairing_tutorial_content_enter_pairing_code">أدخل الرمز في إشعار Shizuku المرسل لإكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">تحتاج عملية الاقتران إلى التفاعل مع إشعار من Shizuku™. يرجى السماح لشيزوكو بنشر الإخطارات.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">أدخل الرمز في إشعار Shizuku™ المرسل لإكمال الاقتران.</string>
     <string name="adb_pairing_tutorial_content_steps">أدخل \"خيارات المطور\" - \"التصحيح اللاسلكي\". انقر على \"إقران الجهاز برمز الإقران\" ، وسترى رمزًا مكونًا من ستة أرقام.</string>
-    <string name="adb_pairing_tutorial_content_notification">سيساعدك إشعار من Shizuku على إكمال الاقتران.</string>
-    <string name="adb_pairing_tutorial_title">قم بإقران Shizuku بجهازك</string>
+    <string name="adb_pairing_tutorial_content_notification">سيساعدك إشعار من Shizuku™ على إكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_title">قم بإقران Shizuku™ بجهازك</string>
     <string name="notification_settings">إعداد الإشعارات</string>
     <string name="development_settings">خيارات للمطور</string>
     <string name="adb_pair_required">يرجى المرور بخطوة الاقتران أولاً.</string>
@@ -98,31 +98,31 @@
     <string name="paring_code_is_wrong">رمز الاقتران خاطئ.</string>
     <string name="dialog_adb_pairing_paring_code">كود الاقتران</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">يرجى محاولة تعطيل \"التصحيح اللاسلكي\" وتمكينه إذا استمر في البحث.</string>
-    <string name="dialog_stop_message">سيتم إيقاف خدمة Shizuku.</string>
-    <string name="action_stop">إيقاف Shizuku</string>
-    <string name="notification_service_starting">بدأت خدمة Shizuku…</string>
+    <string name="dialog_stop_message">سيتم إيقاف خدمة Shizuku™.</string>
+    <string name="action_stop">إيقاف Shizuku™</string>
+    <string name="notification_service_starting">بدأت خدمة Shizuku™…</string>
     <string name="notification_adb_pairing_service_found_title">تم العثور على خدمة الاقتران</string>
-    <string name="permission_label">الوصول إلى Shizuku</string>
-    <string name="permission_description">اسمح للتطبيق باستخدام Shizuku.</string>
+    <string name="permission_label">الوصول إلى Shizuku™</string>
+    <string name="permission_description">اسمح للتطبيق باستخدام Shizuku™.</string>
     <string name="permission_warning_template">هل تريد السماح لـ <b>%1$s</b> بـ %2$s؟</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">افتح Shizuku</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">افتح Shizuku™</string>
     <string name="settings_start_on_boot">ابدأ عند التشغيل من حالة القفل (تحتاج جذر/روت)</string>
     <string name="action_about">حول</string>
     <string name="notification_adb_pairing_succeed_title">تم الاقتران بنجاح</string>
-    <string name="dialog_requesting_legacy_message">يحتوي &lt;b&gt; %1$s &lt;/b&gt; على دعم Shizuku الحديث ، لكنه يتطلب شيزوكو القديم. قد يكون هذا بسبب عدم تشغيل Shizuku ، يرجى التحقق في تطبيق Shizuku. &lt;p&gt; تم إيقاف Legacy Shizuku منذ آذار (مارس) 2019.</string>
+    <string name="dialog_requesting_legacy_message">يحتوي &lt;b&gt; %1$s &lt;/b&gt; على دعم Shizuku™ الحديث ، لكنه يتطلب شيزوكو القديم. قد يكون هذا بسبب عدم تشغيل Shizuku™ ، يرجى التحقق في تطبيق Shizuku. &lt;p&gt; تم إيقاف Legacy Shizuku منذ آذار (مارس) 2019.</string>
     <string name="settings_translation_summary">ساعدنا في ترجمة %s إلى لغتك</string>
-    <string name="settings_start_on_boot_summary">بالنسبة للأجهزة المجذرة (تستخدم الروت) ، يمكن لـShizuku البدء تلقائيًا عند التشغيل من حالة القفل</string>
+    <string name="settings_start_on_boot_summary">بالنسبة للأجهزة المجذرة (تستخدم الروت) ، يمكن لـShizuku™ البدء تلقائيًا عند التشغيل من حالة القفل</string>
     <string name="settings_use_system_color">استخدم لون سمة النظام</string>
     <string name="notification_service_start_no_root">فشل في طلب إذن الجذر (الروت).</string>
     <string name="notification_adb_pairing_searching_for_service_title">البحث عن خدمة الاقتران</string>
-    <string name="notification_adb_pairing_succeed_text">يمكنك بدء خدمة Shizuku الآن.</string>
+    <string name="notification_adb_pairing_succeed_text">يمكنك بدء خدمة Shizuku™ الآن.</string>
     <string name="toast_copied_to_clipboard_with_text">تم نسخ <b>%s</b> إلى الحافظة.</string>
     <string name="notification_channel_service_status">بدء حالة الخدمة</string>
-    <string name="notification_service_start_failed">فشل بدء تشغيل خدمة Shizuku.</string>
+    <string name="notification_service_start_failed">فشل بدء تشغيل خدمة Shizuku™.</string>
     <string name="notification_working">يعمل…</string>
     <string name="start_with_root_failed">لا يمكن بدء الخدمة لأنه لم يتم منح إذن الجذر (الروت) أو قد يكون هذا الجهاز ليس مزوّدًا بحق الوصول إلى الجذر (الروت).</string>
-    <string name="dialog_requesting_legacy_title">يطلب %1$s تطبيق Shizuku القديم</string>
-    <string name="dialog_legacy_not_support_message">تم إهمال Legacy Shizuku منذ آذار (مارس) 2019. أيضًا ، لا يعمل Shizuku القديم على أنظمة Android الأحدث. &lt;p&gt; يُرجى مطالبة مطور &lt;b&gt; %1$s &lt;/b&gt; بالتحديث.</string>
+    <string name="dialog_requesting_legacy_title">يطلب %1$s تطبيق Shizuku™ القديم</string>
+    <string name="dialog_legacy_not_support_message">تم إهمال Legacy Shizuku™ منذ آذار (مارس) 2019. أيضًا ، لا يعمل Shizuku™ القديم على أنظمة Android الأحدث. &lt;p&gt; يُرجى مطالبة مطور &lt;b&gt; %1$s &lt;/b&gt; بالتحديث.</string>
     <string name="settings_translation_contributors">المساهمون في الترجمة</string>
     <string name="settings_translation">شارك في الترجمة</string>
     <string name="about_view_source_code">عرض التعليمات البرمجية المصدر في %s</string>
@@ -138,5 +138,5 @@
     <string name="dialog_cannot_open_browser_title">لا يمكن بدء المتصفح</string>
     <string name="toast_copied_to_clipboard">%s
 \n تم نسخه إلى الحافظة.</string>
-    <string name="dialog_legacy_not_support_title">%1$s لا يدعم النسخة الحديثة من Shizuku</string>
+    <string name="dialog_legacy_not_support_title">%1$s لا يدعم النسخة الحديثة من Shizuku™</string>
 </resources>

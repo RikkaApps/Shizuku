@@ -1,20 +1,20 @@
 ---
 name: Bug report
-about: Report a bug of Shizuku
+about: Report a bug of Shizuku™
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-Please report bugs of Shizuku itself.
+Please report bugs of Shizuku™ itself.
 
 **Requirements:**
 
-- [ ] Shizuku version is up-to-date
-- [ ] Shizuku is downloaded from official channels (GitHub release or Google Play)
-- [ ] Shizuku is not running in a virtual environment or broken ROM (GrapheneOS)
-- [ ] (Root users) No Xposed installed / Xposed is not enabled for Shizuku
+- [ ] Shizuku™ version is up-to-date
+- [ ] Shizuku™ is downloaded from official channels (GitHub release or Google Play)
+- [ ] Shizuku™ is not running in a virtual environment or broken ROM (GrapheneOS)
+- [ ] (Root users) No Xposed installed / Xposed is not enabled for Shizuku™
 
 Change "[ ]" to "[x]" if it meets the requirements.
 
@@ -22,7 +22,7 @@ Change "[ ]" to "[x]" if it meets the requirements.
 
 **Information:**
 
-- Shizuku version:
+- Shizuku™ version:
 - Mode: [adb, root]
 - Android version:
 - Device: (optional)

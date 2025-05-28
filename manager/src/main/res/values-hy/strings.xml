@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dialog_legacy_not_support_title">%1$s-ը չի ընդունում այժմյան Shizuku-ն</string>
+    <string name="dialog_legacy_not_support_title">%1$s-ը չի ընդունում այժմյան Shizuku™-ն</string>
     <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt;-ն պատճենվել է կցատարում։</string>
     <string name="toast_copied_to_clipboard">%s-ն
 \nպատճենվել է կցատարում։</string>
@@ -8,18 +8,18 @@
     <string name="start_with_root_failed">Չհաջողվեց բեռնել ծառայությունը քանի որ root թույլտվությունը մերժված է կամ սարքը root չունի։</string>
     <string name="starter">Սկսնակ</string>
     <string name="permission_description">Թողնել ծրագրին օգտվել ավելի բարձր արտոնություններով համակարգային API-ներից։</string>
-    <string name="permission_label">օգտվել Shizuku-ից</string>
-    <string name="permission_group_description">օգտվել Shizuku-ից</string>
+    <string name="permission_label">օգտվել Shizuku™-ից</string>
+    <string name="permission_group_description">օգտվել Shizuku™-ից</string>
     <string name="notification_working">Աշխատում է…</string>
     <string name="notification_service_start_no_root">Չհաջողվեց ստանալ root թույլտվություն։</string>
-    <string name="notification_service_start_failed">Shizuku-ի միացումը ձախողվեց։</string>
-    <string name="notification_service_starting">Shizuku-ի ծառայությունը միանում է…</string>
+    <string name="notification_service_start_failed">Shizuku™-ի միացումը ձախողվեց։</string>
+    <string name="notification_service_starting">Shizuku™-ի ծառայությունը միանում է…</string>
     <string name="notification_channel_service_status">Ծառայության վիճակ</string>
-    <string name="action_stop">Անջատել Shizuku-ն</string>
-    <string name="dialog_stop_message">Shizuku-ի ծառայությունը կանջատվի։</string>
+    <string name="action_stop">Անջատել Shizuku™-ն</string>
+    <string name="dialog_stop_message">Shizuku™-ի ծառայությունը կանջատվի։</string>
     <string name="about_view_source_code">Տեսնել կոդի աղբյուրը %s-ում</string>
     <string name="action_about">Ծրագրի մասին</string>
-    <string name="settings_start_on_boot_summary">Root թույլտվություն ունեցող սարքերում Shizuku-ն ավտոմատացված ձևով կարող է միանալ սարքի հետ</string>
+    <string name="settings_start_on_boot_summary">Root թույլտվություն ունեցող սարքերում Shizuku™-ն ավտոմատացված ձևով կարող է միանալ սարքի հետ</string>
     <string name="settings_start_on_boot">Միանալ սարքի հետ (root-ով)</string>
     <string name="settings_translation_summary">Օգնեք մեզ թարգմանել %s-ը Ձեր լեզվով</string>
     <string name="settings_translation">Մասնակցել թարգմանության մեջ</string>
@@ -30,11 +30,11 @@
     <string name="settings_user_interface">Տեսք</string>
     <string name="settings_language">Լեզու</string>
     <string name="settings_title">Կարգավորումներ</string>
-    <string name="app_management_item_summary_requires_root">* Shizuku-ն root թույլտվություն պետք է ունենա</string>
+    <string name="app_management_item_summary_requires_root">* Shizuku™-ն root թույլտվություն պետք է ունենա</string>
     <string name="app_management_dialog_adb_is_limited_message">Շատ հնարավոր է, որ Ձեր սարքի արտադրողը սահմանափակել է adb-ի թույլտվությունները։ &lt;p&gt;Հնարավոր լուծումները գտեք &lt;b&gt;&lt;a href=\"%1$s\"&gt;այստեղ&lt;/a&gt;&lt;/b&gt;։</string>
     <string name="app_management_dialog_adb_is_limited_title">Adb-ի թույլտվությունները սահմանափակված են</string>
-    <string name="home_learn_more_description">Սովորեք ծրագրավորել Shizuku-ով կամ Shizuku-ն ուրիշ ծրագրերի հետ օգտագործել</string>
-    <string name="home_learn_more_title">Սովորել Shizuku</string>
+    <string name="home_learn_more_description">Սովորեք ծրագրավորել Shizuku™-ով կամ Shizuku™-ն ուրիշ ծրագրերի հետ օգտագործել</string>
+    <string name="home_learn_more_title">Սովորել Shizuku™</string>
     <string name="home_app_management_view_authorized_apps">Սեղմեք, որպեսզի վավերացված ծրագրերը տիրապետելու համար</string>
     <plurals name="home_app_management_authorized_apps_count">
         <item quantity="one">Վավերացված է %d ծրագիր</item>
@@ -65,7 +65,7 @@
     <string name="dialog_adb_port">Պոռտ</string>
     <string name="dialog_adb_discovery_message">Խնդրում ենք միացնել «Անլար կարգաբերում»-ը «Ծրագրավորողի կարգավորումներ»-ի մեջ։ «Անլար կարգաբերում»-ը ավտոմատացված ձևով անջատվում է ցանցի փոփոխման ժամանակ։
 \n
-\nՉանջատեք «Ծրագրավորողի կարգավորումներ»-ը կամ «USB-ով կարգաբերում»-ը, թե չէ Shizuku-ն կանջատվի։</string>
+\nՉանջատեք «Ծրագրավորողի կարգավորումներ»-ը կամ «USB-ով կարգաբերում»-ը, թե չէ Shizuku™-ն կանջատվի։</string>
     <string name="dialog_adb_discovery">Որոնվում է անլար կարգաբերման ծառայությունը</string>
     <string name="home_wireless_adb_title">Միացնել Անլար կարգաբերման օգնությամբ</string>
     <string name="home_adb_dialog_view_command_button_send">Ուղարկել</string>
@@ -73,17 +73,17 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Գոյություն ունեն ուրիշ դիտողություններ։ Սկզբում հաստատեք, որ կարդացել եք օգնությունը։</string>
     <string name="home_adb_button_view_command">Տեսնել հրահանգը</string>
     <string name="home_adb_button_view_help">Կարդալ օգնությունը</string>
-    <string name="home_adb_description">Առանց «root» թույլտվություն ունեցող սարքերի օգտատերերը պետք է օգտագործեն adb, որպեսզի միացնեն Shizuku-ն (անհրաժեշտ է համակարգչային կապ)։ Այս գործողությունը պետք է կրկնել ամեն անգամ սարքի վերաբեռնելուց հետո։ Խնդրում ենք &lt;b&gt;&lt;a href=\"%1$s\"&gt;կարդալ օգնությունը&lt;/a&gt;&lt;/b&gt;։</string>
+    <string name="home_adb_description">Առանց «root» թույլտվություն ունեցող սարքերի օգտատերերը պետք է օգտագործեն adb, որպեսզի միացնեն Shizuku™-ն (անհրաժեշտ է համակարգչային կապ)։ Այս գործողությունը պետք է կրկնել ամեն անգամ սարքի վերաբեռնելուց հետո։ Խնդրում ենք &lt;b&gt;&lt;a href=\"%1$s\"&gt;կարդալ օգնությունը&lt;/a&gt;&lt;/b&gt;։</string>
     <string name="home_adb_title">Միացնել համակարգչի օգնությամբ</string>
     <string name="home_status_service_version_update">Փոփոխակ %2$s, %1$s&lt;br&gt;Միացրեք կրկին որպեսզի թարմացնեք դեպի %3$s փոփոխակ</string>
     <string name="home_status_service_version">Փոփոխակ %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s-ը միացված չէ</string>
     <string name="home_status_service_is_running">%1$s-ը միացված է</string>
     <string name="translation_contributors">Tigran Khachatryan</string>
-    <string name="dialog_requesting_legacy_title">%1$s-ն առաջարկում է օգտվել հին Shizuku-ից</string>
-    <string name="dialog_legacy_not_support_message">Հին Shizuku-ն համարվում է հնացած 2019-ի մարտից։ Հին Shizuku-ն չի աշխատում նոր Android-ի փոփոխակներում։&lt;p&gt;Դիմեք &lt;b&gt;%1$s&lt;/b&gt;-ի ծրագրավորողին և ասեք, որ ծրագիրը թարմացնի։</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">Բացել Shizuku-ն</string>
-    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;-ն օժտված է նոր Shizuku-ից օգտվելու հատկությունից, բայց այն փորձում է օգտվել հին Shizuku-ից։ Հնարավոր է, որ Shizuku-ն միացված չէ, ստուգեք Shizuku ծրագիրը։&lt;p&gt;Հին Shizuku-ն համարվում է հնացած 2019-ի մարտից։</string>
+    <string name="dialog_requesting_legacy_title">%1$s-ն առաջարկում է օգտվել հին Shizuku™-ից</string>
+    <string name="dialog_legacy_not_support_message">Հին Shizuku™-ն համարվում է հնացած 2019-ի մարտից։ Հին Shizuku™-ն չի աշխատում նոր Android-ի փոփոխակներում։&lt;p&gt;Դիմեք &lt;b&gt;%1$s&lt;/b&gt;-ի ծրագրավորողին և ասեք, որ ծրագիրը թարմացնի։</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Բացել Shizuku™-ն</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt;-ն օժտված է նոր Shizuku™-ից օգտվելու հատկությունից, բայց այն փորձում է օգտվել հին Shizuku™-ից։ Հնարավոր է, որ Shizuku™-ն միացված չէ, ստուգեք Shizuku™ ծրագիրը։&lt;p&gt;Հին Shizuku™-ն համարվում է հնացած 2019-ի մարտից։</string>
     <string name="grant_dialog_button_deny">Մերժել</string>
     <string name="grant_dialog_button_allow_always">Միշտ թույլատրել</string>
     <string name="permission_warning_template">Թույլատրե՞լ <b>%1$s</b> հավելվածին %2$s:</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="home_adb_button_view_command">கட்டளையைக் காட்டு</string>
     <string name="home_adb_button_view_help">உதவி பக்கத்தை திற</string>
-    <string name="home_adb_description">Root அணுகல் இல்லாத பட்சத்தில், adb பயன்படுத்தி Shizuku வை தொடங்க வேண்டும் (கணினி இணைப்பு தேவை). ஒவ்வொரு முறை திறன்பேசி மறுதொடக்கம் ஆகும்போதும் இச்செயலை செய்ய வேண்டும். <b><a href="%1$s">உதவி பக்கத்தை படிக்கவும்</a></b></string>
+    <string name="home_adb_description">Root அணுகல் இல்லாத பட்சத்தில், adb பயன்படுத்தி Shizuku™ வை தொடங்க வேண்டும் (கணினி இணைப்பு தேவை). ஒவ்வொரு முறை திறன்பேசி மறுதொடக்கம் ஆகும்போதும் இச்செயலை செய்ய வேண்டும். <b><a href="%1$s">உதவி பக்கத்தை படிக்கவும்</a></b></string>
     <string name="home_adb_title">முதலில், திறன்பேசியை கணினியுடன் இணைக்கவும்</string>
     <string name="home_status_service_version_update">பதிப்பு %2$s, %1$s&lt;br&gt;%3$s பதிப்புக்கு மேம்படுத்த செயலியை மறுதொடக்கம் செய்யவும்</string>
     <string name="home_status_service_version">பதிப்பு %2$s, %1$s</string>

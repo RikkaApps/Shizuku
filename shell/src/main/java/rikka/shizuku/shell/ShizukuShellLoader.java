@@ -89,7 +89,7 @@ public class ShizukuShellLoader {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
                             .putExtra("data", data),
-                    "Request binder from Shizuku"
+                    "Request binder from Shizuku™"
             );
 
             am.startActivityAsUser(null, callingPackage, activityIntent, null, null, null, 0, 0, null, null, Os.getuid() / 100000);
@@ -111,7 +111,7 @@ public class ShizukuShellLoader {
                     .invoke(null, args, callingPackage, binder, handler);
         } catch (ClassNotFoundException tr) {
             System.err.println("Class not found");
-            System.err.println("Make sure you have Shizuku v12.0.0 or above installed");
+            System.err.println("Make sure you have Shizuku™ v12.0.0 or above installed");
             System.err.flush();
             System.exit(1);
         } catch (Throwable tr) {
@@ -154,8 +154,8 @@ public class ShizukuShellLoader {
 
         handler.postDelayed(() -> abort(
                 String.format(
-                        "Request timeout. The connection between the current app (%1$s) and Shizuku app may be blocked by your system. " +
-                                "Please disable all battery optimization features for both current app (%1$s) and Shizuku app.",
+                        "Request timeout. The connection between the current app (%1$s) and Shizuku™ app may be blocked by your system. " +
+                                "Please disable all battery optimization features for both current app (%1$s) and Shizuku™ app.",
                         packageName)
         ), 5000);
 

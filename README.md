@@ -1,4 +1,6 @@
-# Shizuku
+# Shizuku™
+
+![](./manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 ## Background
 
@@ -11,13 +13,13 @@ This method has very big disadvantages:
 3. The possibility is limited to available commands
 4. Even if ADB has sufficient permissions, the app requires root privileges to run
 
-Shizuku uses a completely different way. See detailed description below.
+Shizuku™ uses a completely different way. See detailed description below.
 
 ## User guide & Download
 
 <https://shizuku.rikka.app/>
 
-## How does Shizuku work?
+## How does Shizuku™ work?
 
 First, we need to talk about how app use system APIs. For example, if the app wants to get installed apps, we all know we should use `PackageManager#getInstalledPackages()`. This is actually an interprocess communication (IPC) process of the app process and system server process, just the Android framework did the inner works for us.
 
@@ -25,9 +27,9 @@ Android uses `binder` to do this type of IPC. `Binder` allows the server-side to
 
 Usually, if there is a "manager" (e.g., `PackageManager`) for apps to use, there should be a "service" (e.g., `PackageManagerService`) in the system server process. We can simply think if the app holds the `binder` of the "service", it can communicate with the "service". The app process will receive binders of system services on start.
 
-Shizuku guides users to run a process, Shizuku server, with root or ADB first. When the app starts, the `binder` to Shizuku server will also be sent to the app.
+Shizuku™ guides users to run a process, Shizuku™ server, with root or ADB first. When the app starts, the `binder` to Shizuku™ server will also be sent to the app.
 
-The most important feature Shizuku provides is something like be a middle man to receive requests from the app, sent them to the system server, and send back the results. You can see the `transactRemote` method in `rikka.shizuku.server.ShizukuService` class, and `moe.shizuku.api.ShizukuBinderWrapper` class for the detail.
+The most important feature Shizuku™ provides is something like be a middle man to receive requests from the app, sent them to the system server, and send back the results. You can see the `transactRemote` method in `rikka.shizuku.server.ShizukuService` class, and `moe.shizuku.api.ShizukuBinderWrapper` class for the detail.
 
 So, we reached our goal, to use system APIs with higher permission. And to the app, it is almost identical to the use of system APIs directly.
 
@@ -49,7 +51,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 
    ADB has limited permissions and different on various system versions. You can see permissions granted to ADB [here](https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/Shell/AndroidManifest.xml).
 
-   Before calling the API, you can use `ShizukuService#getUid` to check if Shizuku is running user ADB, or use `ShizukuService#checkPermission` to check if the server has sufficient permissions.
+   Before calling the API, you can use `ShizukuService#getUid` to check if Shizuku™ is running user ADB, or use `ShizukuService#checkPermission` to check if the server has sufficient permissions.
 
 2. Hidden API limitation from Android 9
 
@@ -57,7 +59,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 
 3. Android 8.0 & ADB
 
-   At present, the way Shizuku service gets the app process is to combine `IActivityManager#registerProcessObserver` and `IActivityManager#registerUidObserver` (26+) to ensure that the app process will be sent when the app starts. However, on API 26, ADB lacks permissions to use `registerUidObserver`, so if you need to use Shizuku in a process that might not be started by an Activity, it is recommended to trigger the send binder by starting a transparent activity.
+   At present, the way Shizuku™ service gets the app process is to combine `IActivityManager#registerProcessObserver` and `IActivityManager#registerUidObserver` (26+) to ensure that the app process will be sent when the app starts. However, on API 26, ADB lacks permissions to use `registerUidObserver`, so if you need to use Shizuku™ in a process that might not be started by an Activity, it is recommended to trigger the send binder by starting a transparent activity.
 
 4. Direct use of `transactRemote` requires attention
 
@@ -65,7 +67,7 @@ https://github.com/RikkaApps/Shizuku-API#migration-guide-for-existing-applicatio
 
    * `SystemServiceHelper.getTransactionCode` may not get the correct transaction code, such as `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages` does not exist on API 25 and there is `android.content.pm.IPackageManager$Stub.TRANSACTION_getInstalledPackages_47` (this situation has been dealt with, but it is not excluded that there may be other circumstances). This problem is not encountered with the `ShizukuBinderWrapper` method.
 
-## Developing Shizuku itself
+## Developing Shizuku™ itself
 
 ### Build
 
@@ -78,10 +80,9 @@ The `:manager:assembleDebug` task generates a debuggable server. You can attach 
 
 All code files in this project are licensed under Apache 2.0
 
-Under Apache 2.0 section 6, specifically:
+Under Apache 2.0 section 6, you are NOT granted permission to use the following common law trademarks
 
-* You are **FORBIDDEN** to use `manager/src/main/res/mipmap*/ic_launcher*.png` image files, unless for displaying Shizuku itself.
-
-* You are **FORBIDDEN** to distribute the apk that use Shizuku as name
-or use `moe.shizuku.privileged.api` as application id or declare `moe.shizuku.manager.permission.*` permission
-to any store (IBNLT Google Play Store, F-Droid, Amazon Appstore etc.).
+* The application icons, contained in the `manager/src/main/res/mipmap*/ic_launcher*.png` image files
+* The application name, Shizuku™
+* The application ID, `moe.shizuku.privileged.api`
+* The `moe.shizuku.manager.permission.*` Android permission

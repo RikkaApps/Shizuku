@@ -2,9 +2,9 @@
 <resources>
     <string name="dialog_adb_discovery_message">Activeu \"Depuració sense fil\" a \"Opcions de desenvolupador\". La \"depuració sense fil\" es desactiva automàticament quan canvia la xarxa.
 \n
-\nTingueu en compte que no desactiveu les \"Opcions de desenvolupador\" ni la \"depuració USB\", o Shizuku s\'aturarà.</string>
+\nTingueu en compte que no desactiveu les \"Opcions de desenvolupador\" ni la \"depuració USB\", o Shizuku™ s\'aturarà.</string>
     <string name="home_wireless_adb_description_pre_11">Abans d\'Android 11, cal connectar-se a un ordinador per habilitar la depuració sense fil.</string>
-    <string name="dialog_requesting_legacy_button_open_shizuku">Obre Shizuku</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Obre Shizuku™</string>
     <string name="paring_code_is_wrong">El codi de vinculació és incorrecte.</string>
     <string name="dialog_adb_pairing_paring_code">Codi d\'aparellament</string>
     <string name="dialog_adb_pairing_discovery">S\'està buscant el servei d\'aparellament</string>
