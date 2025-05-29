@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Discussions
+    url: https://github.com/RikkaApps/Shizuku/discussions
+    about: For general questions, please use Discussions.
