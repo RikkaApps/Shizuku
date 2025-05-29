@@ -1,0 +1,67 @@
+name: Bug report
+description: Report a bug of Shizuku
+
+body:
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Requirements
+      options:
+        - label: Shizuku is downloaded from official channels (GitHub release or Google Play)
+        - label: Shizuku is not running in a virtual environment or broken ROM (GrapheneOS)
+        - label: (Root users) No Xposed installed / Xposed is not enabled for Shizuku
+
+  - type: input
+    id: version
+    attributes:
+      label: Latest Shizuku version
+    validations:
+      required: true
+
+  - type: input
+    id: shizuku_version
+    attributes:
+      label: Version in use
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - adb
+        - root
+        - manual
+    validations:
+      required: true
+
+  - type: input
+    id: android_version
+    attributes:
+      label: Android version
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: What did you do
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: What happened
+      description: You can upload log and screenshot
+
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: What do you expect

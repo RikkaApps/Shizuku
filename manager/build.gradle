@@ -188,7 +188,7 @@ dependencies {
 
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
 
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.80'
 
     implementation 'me.zhanghai.android.appiconloader:appiconloader:1.5.0'
 }
