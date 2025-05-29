@@ -44,6 +44,7 @@ android {
     externalNativeBuild {
         cmake {
             path 'src/main/jni/CMakeLists.txt'
+            version = "3.31.0+"
         }
     }
     kotlinOptions {
