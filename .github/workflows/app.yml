@@ -7,7 +7,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     steps:
       - name: Checkout
@@ -37,6 +42,7 @@ jobs:
           build-scan-terms-of-use-agree: "yes"
       - name: Build with Gradle
         id: buildWithGradle
+        shell: bash
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
           echo 'android.sdk.channel=3' >> gradle.properties
@@ -49,6 +55,6 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.buildWithGradle.outputs.releaseName }}
+          name: ${{ matrix.os }}-${{ steps.buildWithGradle.outputs.releaseName }}
           path: "manager/build/outputs"
           compression-level: 9

@@ -10,7 +10,8 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Builing Release...")
 
     add_compile_options(-Os -flto -fvisibility=hidden -fvisibility-inlines-hidden)
-    add_link_options(-flto -Wl,--exclude-libs,ALL -Wl,--gc-sections -Wl,--strip-all)
+    add_link_options(-flto -Wl,--exclude-libs,ALL -Wl,--gc-sections)
+    add_link_options(-Wl,--strip-all -Wl,--script,${CMAKE_CURRENT_SOURCE_DIR}/script.ld)
 else ()
     message("Builing Debug...")
 
@@ -25,17 +26,7 @@ add_executable(libshizuku.so
 
 target_link_libraries(libshizuku.so log cxx::cxx)
 
-if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_custom_command(TARGET libshizuku.so POST_BUILD
-            COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libshizuku.so")
-endif ()
-
 add_library(adb SHARED
         adb_pairing.cpp misc.cpp)
 
 target_link_libraries(adb log boringssl::crypto_static cxx::cxx)
-
-if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_custom_command(TARGET adb POST_BUILD
-            COMMAND ${CMAKE_STRIP} --remove-section=.comment "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libadb.so")
-endif ()

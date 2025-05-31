@@ -1,0 +1,1 @@
+SECTIONS { /DISCARD/ : { *(.comment) } }
