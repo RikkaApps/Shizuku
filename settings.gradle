@@ -5,8 +5,8 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id("com.android.application") version "8.10.0"
-        id("com.android.library") version "8.10.0"
+        id("com.android.application") version "8.10.1"
+        id("com.android.library") version "8.10.1"
         id("org.jetbrains.kotlin.android") version "2.1.21"
         id("dev.rikka.tools.autoresconfig") version "1.2.2"
         id("dev.rikka.tools.materialthemebuilder") version "1.5.1"

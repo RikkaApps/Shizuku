@@ -10,19 +10,19 @@
     <string name="home_status_service_version_update"><![CDATA[نسخه %2$s، %1$s<br>برای به‌روزرسانی به نسخه %3$s برنامه را راه‌اندازی مجدد نمایید]]></string>
     <!-- Home - Adb -->
     <string name="home_adb_title"><![CDATA[با اتصال به رایانه شروع کنید]]></string>
-    <string name="home_adb_description"><![CDATA[برای دستگاه‌های بدون دسترسی ریسه، باید از adb برای راه‌اندازی Shizuku استفاده کنید (نیاز به اتصال به رایانه دارد). این فرآیند باید هر بار که دستگاه راه اندازی مجدد می شود تکرار شود. لطفاً <b><a href=\"%1$s\">راهنما را بخوانید</a></b>.]]></string>
+    <string name="home_adb_description"><![CDATA[برای دستگاه‌های بدون دسترسی ریشه (روت)، باید از adb برای راه‌اندازی Shizuku استفاده کنید (نیاز به اتصال به رایانه دارد). این فرآیند باید هر بار که دستگاه راه اندازی مجدد می شود تکرار شود. لطفاً <b><a href=\"%1$s\">راهنما را بخوانید</a></b>.]]></string>
     <string name="home_adb_button_view_help">خواندن راهنما</string>
     <string name="home_adb_button_view_command">مشاهده دستور</string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* ملاحظات دیگری نیز وجود دارد، لطفاً تأیید کنید که ابتدا راهنما را خوانده اید.]]></string>
     <string name="home_adb_dialog_view_command_copy_button">رونوشت</string>
     <string name="home_adb_dialog_view_command_button_send">ارسال</string>
     <!-- Home - Wireless Adb -->
-    <string name="home_wireless_adb_title"><![CDATA[از طریق اشکال زدایی بی سیم شروع کنید]]></string>
+    <string name="home_wireless_adb_title"><![CDATA[از طریق اشکال زدایی بی‌سیم شروع کنید]]></string>
     <string name="home_wireless_adb_description"><![CDATA[در اندروید ۱۱ یا بالاتر، می‌توانید اشکال‌زدایی بی‌سیم را فعال کنید و Shizuku را مستقیماً از دستگاه خود بدون اتصال به رایانه شروع کنید.<p>لطفاً ابتدا راهنمای گام به گام را مطالعه کنید.]]></string>
     <string name="home_wireless_adb_description_pre_11"><![CDATA[قبل از اندروید ۱۱، برای فعال کردن اشکال‌زدایی بی‌سیم، اتصال به رایانه لازم است.]]></string>
     <string name="home_wireless_adb_view_guide_button">راهنمای گام به گام</string>
     <!-- Adb -->
-    <string name="dialog_adb_discovery">جستجوی خدمات اشکال زدایی بی سیم</string>
+    <string name="dialog_adb_discovery">جستجوی خدمات اشکال زدایی بی‌سیم</string>
     <string name="dialog_adb_discovery_message">لطفاً \"اشکال‌زدایی بی‌سیم\" را در \"گزینه‌های توسعه دهنده\" فعال کنید. وقتی شبکه تغییر می‌کند، \"اشکال‌زدایی بی‌سیم\" به‌طور خودکار غیرفعال می‌شود.\n\nتوجه داشته باشید، \"گزینه‌های توسعه دهنده\" یا \"اشکال‌زدایی USB\" را غیرفعال نکنید، در غیر این صورت Shizuku متوقف خواهد شد.</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">لطفاً در صورتی که به جستجو ادامه داد \"اشکال‌زدایی بی‌سیم\" را غیرفعال و فعال کنید.</string>
     <string name="dialog_adb_port">درگاه</string>
@@ -34,16 +34,16 @@
     <string name="paring_code_is_wrong">رمز مرتبط کردن اشتباه است.</string>
     <string name="cannot_connect_port">نمی توان به خدمات اشکال زدایی بی‌سیم متصل شد.</string>
     <string name="dialog_wireless_adb_not_enabled">اشکال‌زدایی بی‌سیم فعال نیست.\nتوجه داشته باشید، قبل از اندروید ۱۱، برای فعال کردن اشکال‌زدایی بی‌سیم، اتصال به رایانه ضروری است.</string>
-    <string name="dialog_adb_pairing_message">لطفاً مرتبط کردن را با مراحل زیر شروع کنید: \"گزینه‌های توسعه دهنده\" - \"اشکال‌زدایی بی‌سیم\" - \"جفت‌سازی دستگاه با استفاده از کد جفت‌سازی\".\n\nپس از شروع فرآیند جفت‌سازی، می‌توانید رمز جفت‌سازی را وارد کنید.</string>
+    <string name="dialog_adb_pairing_message">لطفاً مرتبط کردن را با مراحل زیر شروع کنید: \"گزینه‌های توسعه دهنده\" - \"اشکال‌زدایی بی‌سیم\" - \"مرتبط کردن دستگاه با استفاده از رمز مرتبط سازی\".\n\nپس از شروع فرآیند جفت‌سازی، می‌توانید رمز جفت‌سازی را وارد کنید.</string>
     <string name="adb_pairing_requires_multi_window">لطفاً ابتدا وارد حالت تقسیم صفحه (چند پنجره) شوید.</string>
     <string name="adb_pairing_requires_multi_window_reason">دستگاه نیاز دارد گفتگوی جفت‌سازی همیشه قابل مشاهده باشد، استفاده از حالت تقسیم صفحه تنها راهی است که به این برنامه و گفتگوی دستگاه اجازه می‌دهد همزمان قابل مشاهده باشند.</string>
     <string name="adb_error_key_store">قادر به تولید کلید برای اشکال زدایی بی‌سیم نیست.\nاین ممکن است به این دلیل باشد که ساز و برگ KeyStore این دستگاه خراب است.</string>
     <string name="adb_pair_required">لطفاً ابتدا مرحله مرتبط کردن را طی کنید.</string>
     <string name="development_settings">گزینه های توسعه دهنده</string>
     <string name="notification_settings">گزینه های اعلان</string>
-    <string name="adb_pairing_tutorial_title">برنامه Shizuku را با دستگاه خود جفت کنید</string>
+    <string name="adb_pairing_tutorial_title">برنامه Shizuku را با دستگاه خود مرتبط کنید</string>
     <string name="adb_pairing_tutorial_content_notification">یک اعلان از Shizuku به شما امکان می دهد مرتبط کردن را تکمیل کنید.</string>
-    <string name="adb_pairing_tutorial_content_steps">وارد \"گزینه‌های توسعه دهنده\" - \"اشکال‌زدایی بی‌سیم\" شوید.  روی \"مرتبط کردن دستگاه با کد مرتبط‌سازی\" ضربه بزنید، یک رمز شش رقمی خواهید دید.</string>
+    <string name="adb_pairing_tutorial_content_steps">وارد \"گزینه‌های توسعه دهنده\" - \"اشکال‌زدایی بی‌سیم\" شوید.  روی \"مرتبط کردن دستگاه با رمز مرتبط‌سازی\" ضربه بزنید، یک رمز شش رقمی خواهید دید.</string>
     <string name="adb_pairing_tutorial_content_enter_pairing_code">برای تکمیل مرتبط سازی، رمز شش رقمی را در اعلان وارد کنید.</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">فرآیند مرتبط شدن به شما نیاز دارد که با اعلان Shizuku تعامل داشته باشید. لطفاً به Shizuku اجازه دهید تا اعلان‌ها را ارسال کند.</string>
     <string name="adb_pairing_tutorial_content_miui">کاربران MIUI ممکن است نیاز داشته باشند که در تنظیمات دستگاه، سبک اعلان را به \"اندروید\" از \"اعلان ها\" - \"سایه اعلان\" تغییر دهند.</string>
@@ -100,8 +100,8 @@
     <string name="settings_translation_contributors">مشارکت کنندگان ترجمه</string>
     <string name="settings_translation">در ترجمه شرکت کنید</string>
     <string name="settings_translation_summary">با ما همکاری کنید تا %s را به زبان شما ترجمه کنیم</string>
-    <string name="settings_start_on_boot">شروع هنگام راه‌اندازی دستگاه (ریشه)</string>
-    <string name="settings_start_on_boot_summary">برای دستگاه های ریشه شده، Shizuku می تواند به طور خودکار در هنگام راه‌اندازی دستگاه شروع شود</string>
+    <string name="settings_start_on_boot">شروع هنگام راه‌اندازی دستگاه (دسترسی ریشه)</string>
+    <string name="settings_start_on_boot_summary">برای دستگاه های روت شده، Shizuku می تواند به طور خودکار در هنگام راه‌اندازی دستگاه شروع شود</string>
     <string name="settings_use_system_color">از رنگ طرح زمینه دستگاه استفاده کنید</string>
     <!-- About -->
     <string name="action_about">درباره</string>
@@ -113,7 +113,7 @@
     <string name="notification_channel_service_status">وضعیت شروع خدمات</string>
     <string name="notification_service_starting">خدمات Shizuku شروع می شود…</string>
     <string name="notification_service_start_failed">راه‌اندازی خدمات Shizuku ناموفق بود.</string>
-    <string name="notification_service_start_no_root">درخواست مجوز ریشه انجام نشد.</string>
+    <string name="notification_service_start_no_root">درخواست مجوز دسترسی ریشه (روت) انجام نشد.</string>
     <string name="notification_working">در حال کار کردن…</string>
     <string name="notification_channel_adb_pairing">مرتبط سازی اشکال‌زدایی بی‌سیم</string>
     <string name="notification_adb_pairing_input_paring_code">وارد کردن رمز مرتبط سازی</string>
@@ -136,7 +136,7 @@
     <!-- Starter -->
     <string name="starter">شروع کننده</string>
     <string name="starting_root_shell" translatable="false">در حال راه‌اندازی پوسته ریشه…</string>
-    <string name="start_with_root_failed">نمی‌توان خدمات را راه‌اندازی کرد زیرا مجوز ریشه داده نشده است یا این دستگاه ریشه نشده است.</string>
+    <string name="start_with_root_failed">نمی‌توان خدمات را راه‌اندازی کرد زیرا مجوز ریشه داده نشده است یا این دستگاه روت نشده است.</string>
     <!-- Misc -->
     <string name="dialog_cannot_open_browser_title">نمی توان مرورگر را راه اندازی کرد</string>
     <string name="toast_copied_to_clipboard">%s\nدر بریده‌دان رونوشت شده است.</string>

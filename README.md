@@ -76,28 +76,12 @@ The `:manager:assembleDebug` task generates a debuggable server. You can attach 
 
 ## License
 
-The code for this project is available under the Apache-2.0 license.
+All code files in this project are licensed under Apache 2.0
 
-### Exceptions
+Under Apache 2.0 section 6, specifically:
 
-* You are **FORBIDDEN** to use image files listed below in any way (unless for displaying Shizuku itself).
+* You are **FORBIDDEN** to use `manager/src/main/res/mipmap*/ic_launcher*.png` image files, unless for displaying Shizuku itself.
 
-  ```
-  manager/src/main/res/mipmap-hdpi/ic_launcher.png
-  manager/src/main/res/mipmap-hdpi/ic_launcher_background.png
-  manager/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
-  manager/src/main/res/mipmap-xhdpi/ic_launcher.png
-  manager/src/main/res/mipmap-xhdpi/ic_launcher_background.png
-  manager/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
-  manager/src/main/res/mipmap-xxhdpi/ic_launcher.png
-  manager/src/main/res/mipmap-xxhdpi/ic_launcher_background.png
-  manager/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
-  manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png
-  manager/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
-  ```
-
-* For the project as a whole, it is not free.
-You are **FORBIDDEN** to distribute the apk compiled by **you**
-(including modified, e.g., rename app name "Shizuku" to something else)
+* You are **FORBIDDEN** to distribute the apk that use Shizuku as name
+or use `moe.shizuku.privileged.api` as application id or declare `moe.shizuku.manager.permission.*` permission
 to any store (IBNLT Google Play Store, F-Droid, Amazon Appstore etc.).
