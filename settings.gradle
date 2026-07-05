@@ -28,7 +28,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         libs {
-            version('hidden-api', '4.4.0')
+            version('hidden-api', '4.5.0')
             library('hidden-compat', 'dev.rikka.hidden', 'compat').versionRef('hidden-api')
             library('hidden-stub', 'dev.rikka.hidden', 'stub').versionRef('hidden-api')
 
@@ -79,3 +79,9 @@ project(':server-shared').projectDir = file("$root${File.separator}server-shared
 
 include ':hidden-api-stub'
 project(':hidden-api-stub').projectDir = file("$root${File.separator}hidden-api-stub")
+
+include ':demo'
+project(':demo').projectDir = file("$root${File.separator}demo")
+
+include ':demo-hidden-api-stub'
+project(':demo-hidden-api-stub').projectDir = file("$root${File.separator}demo-hidden-api-stub")
