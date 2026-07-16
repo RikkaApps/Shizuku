@@ -1,3 +1,4 @@
+minhcuongn594@gmail.com 
 # Shizuku
 
 ## Background
