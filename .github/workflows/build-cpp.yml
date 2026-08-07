@@ -1,0 +1,57 @@
+name: Build C++ Native (via Gradle)
+
+on:
+  push:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          dependency-graph: generate-and-submit
+
+      - name: Build with Gradle (Resolve Dependencies automatically)
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
+          echo 'android.sdk.channel=3' >> gradle.properties
+          
+          # Kita biarkan Gradle mem-build mode Debug agar semua library C++ ikut terkompilasi
+          ./gradlew :manager:assembleDebug
+
+      - name: Extract Native Binaries (C++)
+        run: |
+          # Buat folder khusus untuk menyimpan hasil C++
+          mkdir -p native_output
+          
+          # Mencari semua file biner (.so dan executable) dari hasil kompilasi Gradle
+          # File output CMake biasanya tersimpan di folder intermediates
+          find manager/build/intermediates -name "*.so" -exec cp {} native_output/ \;
+          
+          # Jika file "starter" adalah executable, biasanya juga ada di sini atau di assets
+          find manager/build/intermediates -type f -name "starter" -exec cp {} native_output/ \;
+
+      - name: Upload Native C++ Only
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shizuku-native-binaries
+          path: native_output/
+          compression-level: 9
