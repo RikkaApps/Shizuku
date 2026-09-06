@@ -15,7 +15,7 @@ object ApkChangedObservers {
 
     @JvmStatic
     fun start(apkPath: String, listener: ApkChangedListener) {
-        // inotify watchs inode, if the there are still processes holds the file, DELTE_SELF will not be triggered
+        // inotify watches inode, if there are still processes holding the file, DELETE_SELF will not be triggered
         // so we need to watch the parent folder
 
         val path = File(apkPath).parent!!
