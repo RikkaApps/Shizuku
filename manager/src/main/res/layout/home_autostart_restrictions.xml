@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?homeCardStyle"
+    android:background="?colorTertiaryContainer"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@android:id/icon"
+            style="@style/CardIcon"
+            android:backgroundTint="?colorOnTertiaryContainer"
+            android:duplicateParentState="true"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_warning_24"
+            android:tint="?colorTertiaryContainer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/home_icon_padding"
+            android:duplicateParentState="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@android:id/title"
+                style="@style/CardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="@string/home_autostart_extra_steps_title"
+                android:textColor="?colorOnTertiaryContainer" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@android:id/text1"
+        style="@style/CardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/home_autostart_extra_steps_description"
+        android:textColor="?colorOnTertiaryContainer" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_battery"
+        style="@style/CardButton"
+        android:layout_marginTop="4dp"
+        android:text="@string/home_autostart_button_battery"
+        android:textColor="?colorOnTertiary"
+        app:backgroundTint="?colorTertiary"
+        app:icon="@drawable/ic_outline_open_in_new_24"
+        app:iconTint="?colorOnTertiary" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_miui"
+        style="@style/CardButton"
+        android:layout_marginTop="4dp"
+        android:text="@string/home_autostart_button_miui"
+        android:textColor="?colorOnTertiary"
+        app:backgroundTint="?colorTertiary"
+        app:icon="@drawable/ic_outline_open_in_new_24"
+        app:iconTint="?colorOnTertiary" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_dismiss"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/home_autostart_button_dismiss"
+        android:textColor="?colorOnTertiaryContainer" />
+
+</LinearLayout>

@@ -1,6 +1,8 @@
 package moe.shizuku.manager.home
 
 import android.os.Build
+import moe.shizuku.manager.adb.AutostartRestrictions
+import moe.shizuku.manager.application
 import moe.shizuku.manager.management.AppsViewModel
 import moe.shizuku.manager.utils.EnvironmentUtils
 import moe.shizuku.manager.utils.UserHandleCompat
@@ -26,6 +28,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         private const val ID_START_ADB = 5L
         private const val ID_LEARN_MORE = 6L
         private const val ID_ADB_PERMISSION_LIMITED = 7L
+        private const val ID_AUTOSTART_RESTRICTIONS = 8L
     }
 
     override fun onCreateCreatorPool(): IndexCreatorPool {
@@ -49,6 +52,10 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
         if (running && !adbPermission) {
             addItem(AdbPermissionLimitedViewHolder.CREATOR, status, ID_ADB_PERMISSION_LIMITED)
+        }
+
+        if (AutostartRestrictions.shouldShowHint(application)) {
+            addItem(AutostartRestrictionsViewHolder.CREATOR, null, ID_AUTOSTART_RESTRICTIONS)
         }
 
         if (isPrimaryUser) {

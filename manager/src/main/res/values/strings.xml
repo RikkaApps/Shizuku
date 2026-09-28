@@ -81,6 +81,13 @@
     <string name="home_adb_is_limited_title">You need to take an extra step</string>
     <string name="home_adb_is_limited_description">Your device manufacturer has restricted adb permissions and apps using Shizuku will not work properly.\n\nUsually, this limitation can be lifted by adjusting some options in \"Developer options\". Please read the help for details on how to do this.\n\nYou may need to restart Shizuku for the operation to take effect.</string>
 
+    <!-- Home - Autostart restrictions -->
+    <string name="home_autostart_extra_steps_title">Make autostart reliable</string>
+    <string name="home_autostart_extra_steps_description">Some devices block Shizuku from starting automatically after reboot or wake-up. Allow it to run in the background. On Xiaomi/MIUI devices, also enable Autostart for Shizuku in MIUI Security.</string>
+    <string name="home_autostart_button_battery">Allow background activity</string>
+    <string name="home_autostart_button_miui">Open MIUI autostart settings</string>
+    <string name="home_autostart_button_dismiss">Don\'t show again</string>
+
     <!-- Application management -->
     <string name="app_management_dialog_adb_is_limited_title">The permission of adb is limited</string>
     <string name="app_management_dialog_adb_is_limited_message"><![CDATA[It\'s highly possible that your device manufacturer limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>
