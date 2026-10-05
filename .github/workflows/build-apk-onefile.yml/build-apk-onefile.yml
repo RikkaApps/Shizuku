@@ -1,0 +1,48 @@
+name: Build Miaozuku APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Download kit
+        run: |
+          curl -sL -o /tmp/kit.zip "https://aka.doubaocdn.com/s/i16LFQO4ab"
+          cd /tmp && unzip -o kit.zip -d /tmp/kit >/dev/null
+          ls -R /tmp/kit | head -40
+
+      - name: Apply Miaozuku rename
+        run: |
+          KIT=/tmp/kit/shizuku-fork-kit
+          bash "$KIT/scripts/rename_package.sh" \
+            --old moe.shizuku --new com.miaozuku \
+            --app-name "Miaozuku" --root "$GITHUB_WORKSPACE"
+
+      - name: Build debug APK
+        run: ./gradlew :manager:assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: miaozuku-debug-apk
+          path: manager/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
