@@ -68,16 +68,20 @@ class BootCompleteReceiver : BroadcastReceiver() {
             val latch = CountDownLatch(1)
             val adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT) { port ->
                 if (port <= 0) return@AdbMdns
-                try {
-                    val keystore = PreferenceAdbKeyStore(ShizukuSettings.getPreferences())
-                    val key = AdbKey(keystore, "shizuku")
-                    val client = AdbClient("127.0.0.1", port, key)
-                    client.connect()
-                    client.shellCommand(Starter.internalCommand, null)
-                    client.close()
-                } catch (_: Exception) {
+                // AdbMdns callbacks are invoked on the main thread, network operations
+                // will throw NetworkOnMainThreadException
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val keystore = PreferenceAdbKeyStore(ShizukuSettings.getPreferences())
+                        val key = AdbKey(keystore, "shizuku")
+                        AdbClient("127.0.0.1", port, key).use { client ->
+                            client.connect()
+                            client.shellCommand(Starter.internalCommand, null)
+                        }
+                    } catch (_: Exception) {
+                    }
+                    latch.countDown()
                 }
-                latch.countDown()
             }
             if (Settings.Global.getInt(cr, "adb_wifi_enabled", 0) == 1) {
                 adbMdns.start()
