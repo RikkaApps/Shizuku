@@ -178,13 +178,14 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 return@launch
             }
 
-            AdbClient(host, port, key).runCatching {
-                connect()
-                shellCommand(Starter.internalCommand) {
-                    sb.append(String(it))
-                    postResult()
+            AdbClient(host, port, key).use { client ->
+                client.runCatching {
+                    connect()
+                    shellCommand(Starter.internalCommand) {
+                        sb.append(String(it))
+                        postResult()
+                    }
                 }
-                close()
             }.onFailure {
                 it.printStackTrace()
 

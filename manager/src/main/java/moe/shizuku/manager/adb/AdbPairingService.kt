@@ -151,12 +151,14 @@ class AdbPairingService : Service() {
                 return@launch
             }
 
-            AdbPairingClient(host, port, code, key).runCatching {
-                start()
-            }.onFailure {
-                handleResult(false, it)
-            }.onSuccess {
-                handleResult(it, null)
+            AdbPairingClient(host, port, code, key).use { client ->
+                client.runCatching {
+                    start()
+                }.onFailure {
+                    handleResult(false, it)
+                }.onSuccess {
+                    handleResult(it, null)
+                }
             }
         }
 

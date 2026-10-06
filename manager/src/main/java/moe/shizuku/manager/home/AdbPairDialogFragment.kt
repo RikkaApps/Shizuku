@@ -185,14 +185,16 @@ private class ViewModel(context: Context) : androidx.lifecycle.ViewModel() {
                 return@launch
             }
 
-            AdbPairingClient(host, port, password, key).runCatching {
-                start()
-            }.onFailure {
-                _result.postValue(it)
-                it.printStackTrace()
-            }.onSuccess {
-                if (it) {
-                    _result.postValue(null)
+            AdbPairingClient(host, port, password, key).use { client ->
+                client.runCatching {
+                    start()
+                }.onFailure {
+                    _result.postValue(it)
+                    it.printStackTrace()
+                }.onSuccess {
+                    if (it) {
+                        _result.postValue(null)
+                    }
                 }
             }
         }
