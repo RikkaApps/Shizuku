@@ -301,6 +301,10 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         List<String> packages = new ArrayList<>();
         if (records.isEmpty()) {
             LOGGER.w("dispatchPermissionConfirmationResult: no client for uid %d was found", requestUid);
+            // The requesting process may have already exited before the user answered the dialog,
+            // e.g. rish exits 5 seconds after launch. If the result is saved with no packages,
+            // the entry will be treated as stale and removed at the next server start.
+            packages.addAll(PackageManagerApis.getPackagesForUidNoThrow(requestUid));
         } else {
             for (ClientRecord record : records) {
                 packages.add(record.packageName);
