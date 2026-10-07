@@ -34,7 +34,7 @@ class AdbPairingService : Service() {
         private const val stopAction = "stop"
         private const val replyAction = "reply"
         private const val remoteInputResultKey = "paring_code"
-        private const val portKey = "paring_code"
+        private const val portKey = "port"
 
         fun startIntent(context: Context): Intent {
             return Intent(context, AdbPairingService::class.java).setAction(startAction)
@@ -135,6 +135,11 @@ class AdbPairingService : Service() {
         stopSearch()
     }
 
+    // Called by the system when the shortService time limit is reached (API 34+).
+    override fun onTimeout(startId: Int) {
+        stopSelf()
+    }
+
     private fun onStart(): Notification {
         startSearch()
         return searchingNotification
@@ -148,11 +153,12 @@ class AdbPairingService : Service() {
                 AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
             } catch (e: Throwable) {
                 e.printStackTrace()
+                handleResult(false, AdbKeyException(e))
                 return@launch
             }
 
-            AdbPairingClient(host, port, code, key).runCatching {
-                start()
+            runCatching {
+                AdbPairingClient(host, port, code, key).use { it.start() }
             }.onFailure {
                 handleResult(false, it)
             }.onSuccess {
