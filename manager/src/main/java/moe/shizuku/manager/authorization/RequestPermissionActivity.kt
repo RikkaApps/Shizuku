@@ -48,7 +48,7 @@ class RequestPermissionActivity : AppActivity() {
 
         val dialog = MaterialAlertDialogBuilder(this)
                 .setIcon(icon)
-                .setTitle("Shizuku: ${getString(R.string.app_management_dialog_adb_is_limited_title)}")
+                .setTitle("Mitsuku: ${getString(R.string.app_management_dialog_adb_is_limited_title)}")
                 .setMessage(getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
                 .setPositiveButton(android.R.string.ok, null)
                 .setOnDismissListener { finish() }

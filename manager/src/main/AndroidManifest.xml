@@ -17,24 +17,15 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <permission-group
-        android:name="moe.shizuku.manager.permission-group.API"
-        android:description="@string/permission_group_description"
-        android:icon="@drawable/ic_system_icon"
-        android:label="@string/permission_group_label" />
-
     <permission
-        android:name="moe.shizuku.manager.permission.MANAGER"
+        android:name="com.vinterminez.mitsuku.permission.MANAGER"
         android:protectionLevel="signature" />
-    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
+    <uses-permission android:name="com.vinterminez.mitsuku.permission.MANAGER" />
 
-    <permission
-        android:name="moe.shizuku.manager.permission.API_V23"
-        android:description="@string/permission_description"
-        android:icon="@drawable/ic_system_icon"
-        android:label="@string/permission_label"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
-        android:protectionLevel="dangerous" />
+    <!--
+        Apps built with the Shizuku API library request this original permission name.
+        Mitsuku must not declare it, so the library's request is stripped from the merged manifest.
+    -->
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
         tools:node="remove" />
@@ -128,7 +119,7 @@
             android:name=".legacy.LegacyIsNotSupportedActivity"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:permission="moe.shizuku.manager.permission.API"
+            android:permission="com.vinterminez.mitsuku.permission.API"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />

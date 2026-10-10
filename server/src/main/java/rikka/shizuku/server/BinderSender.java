@@ -29,7 +29,7 @@ public class BinderSender {
 
     private static final Logger LOGGER = new Logger("BinderSender");
 
-    private static final String PERMISSION_MANAGER = "moe.shizuku.manager.permission.MANAGER";
+    private static final String PERMISSION_MANAGER = "com.vinterminez.mitsuku.permission.MANAGER";
     private static final String PERMISSION = "moe.shizuku.manager.permission.API_V23";
 
     private static ShizukuService sShizukuService;
