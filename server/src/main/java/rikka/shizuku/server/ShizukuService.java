@@ -325,12 +325,23 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 }
 
                 int deviceId = 0;//Context.DEVICE_ID_DEFAULT
-                if (allowed) {
-                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
-                } else {
-                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
-                }
+                setLegacyRuntimePermission(packageName, userId, allowed);
             }
+        }
+    }
+
+    // Mitsuku does not declare the legacy "API_V23" permission (the original app owns that name),
+    // so mirroring an authorization into the Android runtime permission can fail. The authorization
+    // itself lives in the server config, so a failure here is harmless and is only logged.
+    private void setLegacyRuntimePermission(String packageName, int userId, boolean granted) {
+        try {
+            if (granted) {
+                PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
+            } else {
+                PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
+            }
+        } catch (Throwable tr) {
+            LOGGER.w(tr, "setLegacyRuntimePermission");
         }
     }
 
@@ -400,11 +411,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 }
 
                 int deviceId = 0;//Context.DEVICE_ID_DEFAULT
-                if (allowed) {
-                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
-                } else {
-                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
-                }
+                setLegacyRuntimePermission(packageName, userId, allowed);
 
                 // TODO kill user service using
             }
