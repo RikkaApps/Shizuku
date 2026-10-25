@@ -13,6 +13,7 @@ import moe.shizuku.manager.Manifest
 import moe.shizuku.manager.model.ServiceStatus
 import moe.shizuku.manager.utils.Logger.LOGGER
 import moe.shizuku.manager.utils.ShizukuSystemApis
+import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.lifecycle.Resource
 import rikka.shizuku.Shizuku
 
@@ -42,7 +43,7 @@ class HomeViewModel : ViewModel() {
 
         // Before a526d6bb, server will not exit on uninstall, manager installed later will get not permission
         // Run a random remote transaction here, report no permission as not running
-        ShizukuSystemApis.checkPermission(Manifest.permission.API_V23, BuildConfig.APPLICATION_ID, 0)
+        ShizukuSystemApis.checkPermission(Manifest.permission.API_V23, BuildConfig.APPLICATION_ID, UserHandleCompat.myUserId())
         return ServiceStatus(uid, apiVersion, patchVersion, seContext, permissionTest)
     }
 

@@ -66,6 +66,17 @@ public class ServiceStarter {
         IBinder service;
         String token;
 
+        int uid = 0;
+        for (String arg : args) {
+            if (arg.startsWith("--uid=")) {
+                try {
+                    uid = Integer.parseInt(arg.substring(6));
+                } catch (Throwable ignored) {
+                }
+            }
+        }
+        int userId = uid / 100000;
+
         UserService.setTag(TAG);
         Pair<IBinder, String> result = UserService.create(args);
 
@@ -77,7 +88,7 @@ public class ServiceStarter {
         service = result.first;
         token = result.second;
 
-        if (!sendBinder(service, token)) {
+        if (!sendBinder(service, token, userId)) {
             System.exit(1);
         }
 
@@ -87,18 +98,21 @@ public class ServiceStarter {
         Log.i(TAG, "service exited");
     }
 
-    private static boolean sendBinder(IBinder binder, String token) {
-        return sendBinder(binder, token, true);
+    private static boolean sendBinder(IBinder binder, String token, int userId) {
+        return sendBinder(binder, token, userId, true);
     }
 
-    private static boolean sendBinder(IBinder binder, String token, boolean retry) {
+    private static boolean sendBinder(IBinder binder, String token, int userId, boolean retry) {
         String packageName = "moe.shizuku.privileged.api";
         String name = packageName + ".shizuku";
-        int userId = 0;
         IContentProvider provider = null;
 
         try {
             provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
+            if (provider == null && userId != 0) {
+                userId = 0;
+                provider = ActivityManagerApis.getContentProviderExternal(name, userId, null, name);
+            }
             if (provider == null) {
                 Log.e(TAG, String.format("provider is null %s %d", name, userId));
                 return false;
@@ -112,7 +126,7 @@ public class ServiceStarter {
                     ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
                     Log.e(TAG, String.format("kill %s in user %d and try again", packageName, userId));
                     Thread.sleep(1000);
-                    return sendBinder(binder, token, false);
+                    return sendBinder(binder, token, userId, false);
                 }
                 return false;
             }

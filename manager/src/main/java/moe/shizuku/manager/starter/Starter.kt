@@ -1,6 +1,7 @@
 package moe.shizuku.manager.starter
 
 import moe.shizuku.manager.application
+import moe.shizuku.manager.utils.UserHandleCompat
 import java.io.File
 
 object Starter {
@@ -9,7 +10,15 @@ object Starter {
 
     val userCommand: String = starterFile.absolutePath
 
-    val adbCommand = "adb shell $userCommand"
+    val adbCommand: String
+        get() {
+            val user = UserHandleCompat.myUserId()
+            return if (user == 0) "adb shell $userCommand" else "adb shell $userCommand --user=$user"
+        }
 
-    val internalCommand = "$userCommand --apk=${application.applicationInfo.sourceDir}"
+    val internalCommand: String
+        get() {
+            val user = UserHandleCompat.myUserId()
+            return "$userCommand --apk=${application.applicationInfo.sourceDir} --user=$user"
+        }
 }

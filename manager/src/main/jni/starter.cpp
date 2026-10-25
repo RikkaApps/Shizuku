@@ -45,7 +45,7 @@
 #define ABI "arm64"
 #endif
 
-static void run_server(const char *dex_path, const char *main_class, const char *process_name) {
+static void run_server(const char *dex_path, const char *main_class, const char *process_name, int target_user) {
     if (setenv("CLASSPATH", dex_path, true)) {
         LOGE("can't set CLASSPATH\n");
         exit(EXIT_FATAL_SET_CLASSPATH);
@@ -104,6 +104,9 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     ARG_PUSH_FMT(argv, "--nice-name=%s", process_name)
     ARG_PUSH(argv, main_class)
     ARG_PUSH_DEBUG_ONLY(argv, "--debug")
+    if (target_user >= 0) {
+        ARG_PUSH_FMT(argv, "--user=%d", target_user);
+    }
     ARG_END(argv)
 
     LOGD("exec app_process");
@@ -113,7 +116,7 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
     }
 }
 
-static void start_server(const char *path, const char *main_class, const char *process_name) {
+static void start_server(const char *path, const char *main_class, const char *process_name, int target_user) {
     pid_t pid = fork();
     switch (pid) {
         case -1: {
@@ -131,7 +134,7 @@ static void start_server(const char *path, const char *main_class, const char *p
                 dup2(fd, STDERR_FILENO);
                 if (fd > 2) close(fd);
             }
-            run_server(path, main_class, process_name);
+            run_server(path, main_class, process_name, target_user);
         }
         default: {
             printf("info: shizuku_server pid is %d\n", pid);
@@ -183,9 +186,12 @@ static int switch_cgroup() {
 
 int main(int argc, char *argv[]) {
     std::string apk_path;
+    int target_user = -1;
     for (int i = 0; i < argc; ++i) {
         if (strncmp(argv[i], "--apk=", 6) == 0) {
             apk_path = argv[i] + 6;
+        } else if (strncmp(argv[i], "--user=", 7) == 0) {
+            target_user = atoi(argv[i] + 7);
         }
     }
 
@@ -255,7 +261,13 @@ int main(int argc, char *argv[]) {
     }
 
     if (apk_path.empty()) {
-        auto f = popen("pm path " PACKAGE_NAME, "r");
+        char cmd[128];
+        if (target_user >= 0) {
+            snprintf(cmd, sizeof(cmd), "pm path --user %d " PACKAGE_NAME, target_user);
+        } else {
+            snprintf(cmd, sizeof(cmd), "pm path " PACKAGE_NAME);
+        }
+        auto f = popen(cmd, "r");
         if (f) {
             char line[PATH_MAX]{0};
             fgets(line, PATH_MAX, f);
@@ -281,5 +293,5 @@ int main(int argc, char *argv[]) {
     printf("info: starting server...\n");
     fflush(stdout);
     LOGD("start_server");
-    start_server(apk_path.c_str(), SERVER_CLASS_PATH, SERVER_NAME);
+    start_server(apk_path.c_str(), SERVER_CLASS_PATH, SERVER_NAME, target_user);
 }

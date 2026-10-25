@@ -36,8 +36,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
@@ -58,7 +61,18 @@ import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
 
+    private static int sTargetUserId = -1;
+
     public static void main(String[] args) {
+        for (String arg : args) {
+            if (arg.startsWith("--user=")) {
+                try {
+                    sTargetUserId = Integer.parseInt(arg.substring(7));
+                } catch (Throwable ignored) {
+                }
+            }
+        }
+
         DdmHandleAppName.setAppName("shizuku_server", 0);
         RishConfig.setLibraryPath(System.getProperty("shizuku.library.path"));
 
@@ -79,7 +93,11 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     public static ApplicationInfo getManagerApplicationInfo() {
-        return PackageManagerApis.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, 0);
+        for (int userId : getUserIds()) {
+            ApplicationInfo ai = PackageManagerApis.getApplicationInfoNoThrow(MANAGER_APPLICATION_ID, 0, userId);
+            if (ai != null) return ai;
+        }
+        return null;
     }
 
     @SuppressWarnings({"FieldCanBeLocal"})
@@ -107,14 +125,14 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         }
 
         assert ai != null;
-        managerAppId = ai.uid;
+        managerAppId = UserHandleCompat.getAppId(ai.uid);
 
         configManager = getConfigManager();
         clientManager = getClientManager();
 
         ApkChangedObservers.start(ai.sourceDir, () -> {
             if (getManagerApplicationInfo() == null) {
-                LOGGER.w("manager app is uninstalled in user 0, exiting...");
+                LOGGER.w("manager app is uninstalled, exiting...");
                 System.exit(ServerConstants.MANAGER_APP_NOT_FOUND);
             }
         });
@@ -261,9 +279,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
         PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(MANAGER_APPLICATION_ID, 0, userId);
         UserInfo userInfo = UserManagerApis.getUserInfo(userId);
-        boolean isWorkProfileUser = BuildUtils.atLeast30() ?
+        boolean isWorkProfileUser = userInfo != null && (BuildUtils.atLeast30() ?
                 "android.os.usertype.profile.MANAGED".equals(userInfo.userType) :
-                (userInfo.flags & UserInfo.FLAG_MANAGED_PROFILE) != 0;
+                (userInfo.flags & UserInfo.FLAG_MANAGED_PROFILE) != 0);
         if (pi == null && !isWorkProfileUser) {
             LOGGER.w("Manager not found in non work profile user %d. Revoke permission", userId);
             clientRecord.dispatchRequestPermissionResult(requestCode, false);
@@ -277,7 +295,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 .putExtra("pid", callingPid)
                 .putExtra("requestCode", requestCode)
                 .putExtra("applicationInfo", ai);
-        ActivityManagerApis.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
+        ActivityManagerApis.startActivityNoThrow(intent, null, (pi == null && isWorkProfileUser) ? 0 : userId);
     }
 
     @Override
@@ -422,7 +440,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         List<PackageInfo> list = new ArrayList<>();
         List<Integer> users = new ArrayList<>();
         if (userId == -1) {
-            users.addAll(UserManagerApis.getUserIdsNoThrow());
+            users.addAll(getUserIds());
         } else {
             users.add(userId);
         }
@@ -470,7 +488,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     void sendBinderToClient() {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : getUserIds()) {
             sendBinderToClient(this, userId);
         }
     }
@@ -490,12 +508,21 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         }
     }
 
+    public static Collection<Integer> getUserIds() {
+        Set<Integer> set = new LinkedHashSet<>(UserManagerApis.getUserIdsNoThrow());
+        set.add(0);
+        if (sTargetUserId >= 0) {
+            set.add(sTargetUserId);
+        }
+        return set;
+    }
+
     void sendBinderToManager() {
         sendBinderToManger(this);
     }
 
     private static void sendBinderToManger(Binder binder) {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : getUserIds()) {
             sendBinderToManger(binder, userId);
         }
     }
