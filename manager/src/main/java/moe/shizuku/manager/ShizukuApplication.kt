@@ -31,6 +31,7 @@ class ShizukuApplication : Application() {
 
     private fun init(context: Context?) {
         ShizukuSettings.initialize(context)
+        LocaleDelegate.systemLocale = ShizukuSettings.getSystemLocale()
         LocaleDelegate.defaultLocale = ShizukuSettings.getLocale()
         AppCompatDelegate.setDefaultNightMode(ShizukuSettings.getNightMode())
     }

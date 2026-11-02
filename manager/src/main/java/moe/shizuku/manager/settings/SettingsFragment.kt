@@ -75,7 +75,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
                 if (newValue is String) {
                     val locale: Locale = if ("SYSTEM" == newValue) {
-                        LocaleDelegate.systemLocale
+                        ShizukuSettings.getSystemLocale()
                     } else {
                         Locale.forLanguageTag(newValue)
                     }

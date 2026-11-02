@@ -4,6 +4,7 @@ import android.app.ActivityThread;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -93,10 +94,14 @@ public class ShizukuSettings {
         return getPreferences().getInt(NIGHT_MODE, defValue);
     }
 
+    public static Locale getSystemLocale() {
+        return Resources.getSystem().getConfiguration().getLocales().get(0);
+    }
+
     public static Locale getLocale() {
         String tag = getPreferences().getString(LANGUAGE, null);
         if (TextUtils.isEmpty(tag) || "SYSTEM".equals(tag)) {
-            return Locale.getDefault();
+            return getSystemLocale();
         }
         return Locale.forLanguageTag(tag);
     }
