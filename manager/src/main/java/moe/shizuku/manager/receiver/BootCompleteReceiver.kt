@@ -60,9 +60,13 @@ class BootCompleteReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun adbStart(context: Context) {
         val cr = context.contentResolver
-        Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-        Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-        Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+        try {
+            Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
+            Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
+            Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+        } catch (_: SecurityException) {
+            // Android 17 requires the system-only MANAGE_DEBUGGING permission.
+        }
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             val latch = CountDownLatch(1)
