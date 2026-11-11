@@ -10,6 +10,12 @@
             android:summary="@string/settings_start_on_boot_summary"
             android:title="@string/settings_start_on_boot" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="disable_adb_wifi_after_start"
+            android:summary="@string/settings_disable_adb_wifi_after_start_summary"
+            android:title="@string/settings_disable_adb_wifi_after_start" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_language">

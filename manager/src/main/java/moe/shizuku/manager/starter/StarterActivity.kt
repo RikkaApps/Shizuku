@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moe.shizuku.manager.AppConstants.EXTRA
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
+import moe.shizuku.manager.adb.AdbWirelessDebugging
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.StarterActivityBinding
@@ -39,6 +42,7 @@ class StarterActivity : AppBarActivity() {
             intent.getIntExtra(EXTRA_PORT, 0)
         )
     }
+    private var waitingForService = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,21 +55,53 @@ class StarterActivity : AppBarActivity() {
 
         viewModel.output.observe(this) {
             val output = it.data!!.trim()
-            if (output.endsWith("info: shizuku_starter exit with 0")) {
+            if (output.endsWith("info: shizuku_starter exit with 0") && !waitingForService) {
+                waitingForService = true
                 viewModel.appendOutput("")
                 viewModel.appendOutput("Waiting for service...")
 
-                Shizuku.addBinderReceivedListener(object : Shizuku.OnBinderReceivedListener {
-                    override fun onBinderReceived() {
-                        Shizuku.removeBinderReceivedListener(this)
-                        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
-
-                        window?.decorView?.postDelayed({
-                            if (!isFinishing) finish()
-                        }, 3000)
+                val isRoot = intent.getBooleanExtra(EXTRA_IS_ROOT, true)
+                if (isRoot) {
+                    Shizuku.addBinderReceivedListener(object : Shizuku.OnBinderReceivedListener {
+                        override fun onBinderReceived() {
+                            Shizuku.removeBinderReceivedListener(this)
+                            showServiceStarted()
+                        }
+                    })
+                } else {
+                    val before = intent.getBundleExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START)
+                    val settingsChangedByManager = intent.getBooleanExtra(
+                        AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, false
+                    )
+                    lifecycleScope.launch {
+                        val serverStarted = withContext(Dispatchers.IO) {
+                            AdbWirelessDebugging.awaitServerReady(20)
+                        }
+                        AdbWirelessDebugging.finishStart(
+                            applicationContext,
+                            before,
+                            serverStarted,
+                            settingsChangedByManager,
+                        )
+                        if (serverStarted) {
+                            showServiceStarted()
+                        } else {
+                            viewModel.appendOutput("Timed out waiting for Shizuku service. Check ADB settings and try again.")
+                        }
                     }
-                })
+                }
             } else if (it.status == Status.ERROR) {
+                if (!intent.getBooleanExtra(EXTRA_IS_ROOT, true)) {
+                    val settingsChangedByManager = intent.getBooleanExtra(
+                        AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, false
+                    )
+                    AdbWirelessDebugging.finishStart(
+                        applicationContext,
+                        intent.getBundleExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START),
+                        serverStarted = false,
+                        settingsChangedByManager = settingsChangedByManager
+                    )
+                }
                 var message = 0
                 when (it.error) {
                     is AdbKeyException -> {
@@ -98,6 +134,13 @@ class StarterActivity : AppBarActivity() {
         const val EXTRA_IS_ROOT = "$EXTRA.IS_ROOT"
         const val EXTRA_HOST = "$EXTRA.HOST"
         const val EXTRA_PORT = "$EXTRA.PORT"
+    }
+
+    private fun showServiceStarted() {
+        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
+        window?.decorView?.postDelayed({
+            if (!isFinishing) finish()
+        }, 3000)
     }
 }
 

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.topjohnwu.superuser.Shell
@@ -19,12 +18,14 @@ import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbMdns
+import moe.shizuku.manager.adb.AdbWirelessDebugging
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.shizuku.Shizuku
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 
 class BootCompleteReceiver : BroadcastReceiver() {
 
@@ -59,15 +60,15 @@ class BootCompleteReceiver : BroadcastReceiver() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun adbStart(context: Context) {
-        val cr = context.contentResolver
-        Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-        Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-        Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+        val settingsBefore = AdbWirelessDebugging.captureSettings(context)
+        if (!AdbWirelessDebugging.enableForStart(context)) return
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             val latch = CountDownLatch(1)
+            val startRequested = AtomicBoolean(false)
+            var serverStarted = false
             val adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT) { port ->
-                if (port <= 0) return@AdbMdns
+                if (port <= 0 || !startRequested.compareAndSet(false, true)) return@AdbMdns
                 try {
                     val keystore = PreferenceAdbKeyStore(ShizukuSettings.getPreferences())
                     val key = AdbKey(keystore, "shizuku")
@@ -75,16 +76,21 @@ class BootCompleteReceiver : BroadcastReceiver() {
                     client.connect()
                     client.shellCommand(Starter.internalCommand, null)
                     client.close()
+                    serverStarted = AdbWirelessDebugging.awaitServerReady(6)
                 } catch (_: Exception) {
+                    Log.w(AppConstants.TAG, "Failed to start Shizuku over wireless ADB")
+                } finally {
+                    latch.countDown()
                 }
-                latch.countDown()
             }
-            if (Settings.Global.getInt(cr, "adb_wifi_enabled", 0) == 1) {
+            try {
                 adbMdns.start()
-                latch.await(3, TimeUnit.SECONDS)
+                latch.await(8, TimeUnit.SECONDS)
+            } finally {
                 adbMdns.stop()
+                AdbWirelessDebugging.finishStart(context, settingsBefore, serverStarted, settingsChangedByManager = true)
+                pending.finish()
             }
-            pending.finish()
         }
     }
 }

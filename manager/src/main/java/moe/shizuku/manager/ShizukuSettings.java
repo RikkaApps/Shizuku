@@ -25,6 +25,7 @@ public class ShizukuSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
+    public static final String DISABLE_ADB_WIFI_AFTER_START = "disable_adb_wifi_after_start";
 
     private static SharedPreferences sPreferences;
 
@@ -82,6 +83,10 @@ public class ShizukuSettings {
 
     public static void setLastLaunchMode(@LaunchMethod int method) {
         getPreferences().edit().putInt("mode", method).apply();
+    }
+
+    public static boolean shouldDisableAdbWifiAfterStart() {
+        return getPreferences().getBoolean(DISABLE_ADB_WIFI_AFTER_START, true);
     }
 
     @AppCompatDelegate.NightMode
