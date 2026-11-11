@@ -17,6 +17,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbMdns
+import moe.shizuku.manager.adb.AdbWirelessDebugging
 import moe.shizuku.manager.databinding.AdbDialogBinding
 import moe.shizuku.manager.starter.StarterActivity
 import moe.shizuku.manager.utils.EnvironmentUtils
@@ -27,6 +28,9 @@ class AdbDialogFragment : DialogFragment() {
     private lateinit var binding: AdbDialogBinding
     private lateinit var adbMdns: AdbMdns
     private val port = MutableLiveData<Int>()
+    private var settingsBeforeStart: Bundle? = null
+    private var settingsChangedByManager = false
+    private var settingsTransferred = false
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
@@ -56,16 +60,19 @@ class AdbDialogFragment : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         adbMdns.stop()
+        if (!settingsTransferred && settingsChangedByManager) {
+            AdbWirelessDebugging.finishStart(
+                requireContext(), settingsBeforeStart, serverStarted = false, settingsChangedByManager = true
+            )
+        }
     }
 
     private fun onDialogShow(dialog: AlertDialog) {
         adbMdns.start()
         val context = dialog.context
+        settingsBeforeStart = AdbWirelessDebugging.captureSettings(context)
         if (context.checkSelfPermission(WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
-            val cr = context.contentResolver
-            Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-            Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-            Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+            settingsChangedByManager = AdbWirelessDebugging.enableForStart(context, settingsBeforeStart)
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -94,8 +101,11 @@ class AdbDialogFragment : DialogFragment() {
             putExtra(StarterActivity.EXTRA_IS_ROOT, false)
             putExtra(StarterActivity.EXTRA_HOST, host)
             putExtra(StarterActivity.EXTRA_PORT, port)
+            putExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START, settingsBeforeStart)
+            putExtra(AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, settingsChangedByManager)
         }
         requireContext().startActivity(intent)
+        settingsTransferred = true
 
         dismissAllowingStateLoss()
     }
