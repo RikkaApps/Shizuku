@@ -72,7 +72,7 @@ class AdbDialogFragment : DialogFragment() {
         val context = dialog.context
         settingsBeforeStart = AdbWirelessDebugging.captureSettings(context)
         if (context.checkSelfPermission(WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
-            settingsChangedByManager = AdbWirelessDebugging.enableForStart(context)
+            settingsChangedByManager = AdbWirelessDebugging.enableForStart(context, settingsBeforeStart)
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {

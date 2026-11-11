@@ -38,15 +38,27 @@ object AdbWirelessDebugging {
         }
     }
 
-    fun enableForStart(context: Context): Boolean {
+    fun enableForStart(context: Context, before: Bundle?): Boolean {
+        if (before == null) {
+            Log.w(TAG, "Cannot enable ADB settings without a saved settings snapshot")
+            return false
+        }
+
         return try {
             val resolver = context.contentResolver
-            Settings.Global.putInt(resolver, ADB_WIFI_ENABLED, 1)
-            Settings.Global.putInt(resolver, Settings.Global.ADB_ENABLED, 1)
-            Settings.Global.putLong(resolver, ADB_ALLOWED_CONNECTION_TIME, 0L)
+            val settingsEnabled = Settings.Global.putInt(resolver, ADB_WIFI_ENABLED, 1)
+                    && Settings.Global.putInt(resolver, Settings.Global.ADB_ENABLED, 1)
+                    && Settings.Global.putLong(resolver, ADB_ALLOWED_CONNECTION_TIME, 0L)
+            if (!settingsEnabled) {
+                Log.w(TAG, "ADB settings update was rejected")
+                finishStart(context, before, serverStarted = false, settingsChangedByManager = true)
+                return false
+            }
             true
         } catch (e: SecurityException) {
             Log.w(TAG, "Cannot enable ADB settings", e)
+            // A write earlier in this sequence may have succeeded before a later one failed.
+            finishStart(context, before, serverStarted = false, settingsChangedByManager = true)
             false
         }
     }
@@ -68,11 +80,13 @@ object AdbWirelessDebugging {
         try {
             val currentWifi = Settings.Global.getInt(resolver, ADB_WIFI_ENABLED, 0)
             val wifiWasEnabled = before.getInt(KEY_WIFI_ENABLED, 0) == 1
-            if (serverStarted && ShizukuSettings.shouldDisableAdbWifiAfterStart()
-                && !wifiWasEnabled && currentWifi == 1) {
-                Settings.Global.putInt(resolver, ADB_WIFI_ENABLED, 0)
-            } else if (!serverStarted && settingsChangedByManager && currentWifi == 1 && !wifiWasEnabled) {
-                // Startup failed; undo the Wi-Fi ADB enablement only if it is still ours.
+            if (AdbWirelessDebuggingPolicy.shouldDisableWirelessDebugging(
+                    wasEnabled = wifiWasEnabled,
+                    isEnabled = currentWifi == 1,
+                    serverStarted = serverStarted,
+                    disableAfterStart = ShizukuSettings.shouldDisableAdbWifiAfterStart(),
+                    settingsChangedByManager = settingsChangedByManager,
+                )) {
                 Settings.Global.putInt(resolver, ADB_WIFI_ENABLED, 0)
             }
 
@@ -94,13 +108,19 @@ object AdbWirelessDebugging {
     }
 
     fun awaitServerReady(timeoutSeconds: Long): Boolean {
-        if (Shizuku.pingBinder()) return true
+        return awaitServerReadyMillis(TimeUnit.SECONDS.toMillis(timeoutSeconds))
+    }
+
+    fun awaitServerReadyMillis(timeoutMillis: Long): Boolean {
+        if (timeoutMillis <= 0) return false
 
         val latch = CountDownLatch(1)
         val listener = Shizuku.OnBinderReceivedListener { latch.countDown() }
+        // Use the sticky readiness event instead of a synchronous pingBinder IPC so the wait
+        // remains bounded by timeoutMillis.
         Shizuku.addBinderReceivedListenerSticky(listener)
         return try {
-            latch.await(timeoutSeconds, TimeUnit.SECONDS) && Shizuku.pingBinder()
+            latch.await(timeoutMillis, TimeUnit.MILLISECONDS)
         } catch (e: InterruptedException) {
             Thread.currentThread().interrupt()
             false

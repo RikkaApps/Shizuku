@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import moe.shizuku.manager.AppConstants.EXTRA
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
@@ -32,14 +30,19 @@ import javax.net.ssl.SSLProtocolException
 
 private class NotRootedException : Exception()
 
+private const val STARTER_SUCCESS_MESSAGE = "info: shizuku_starter exit with 0"
+private const val SERVICE_STARTED_MESSAGE = "Service started, this window will be automatically closed in 3 seconds"
+
 class StarterActivity : AppBarActivity() {
 
     private val viewModel by viewModels {
         ViewModel(
-            this,
+            applicationContext,
             intent.getBooleanExtra(EXTRA_IS_ROOT, true),
             intent.getStringExtra(EXTRA_HOST),
-            intent.getIntExtra(EXTRA_PORT, 0)
+            intent.getIntExtra(EXTRA_PORT, 0),
+            intent.getBundleExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START),
+            intent.getBooleanExtra(AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, false),
         )
     }
     private var waitingForService = false
@@ -55,53 +58,22 @@ class StarterActivity : AppBarActivity() {
 
         viewModel.output.observe(this) {
             val output = it.data!!.trim()
-            if (output.endsWith("info: shizuku_starter exit with 0") && !waitingForService) {
+            val isRoot = intent.getBooleanExtra(EXTRA_IS_ROOT, true)
+            if (isRoot && output.endsWith(STARTER_SUCCESS_MESSAGE) && !waitingForService) {
                 waitingForService = true
                 viewModel.appendOutput("")
                 viewModel.appendOutput("Waiting for service...")
 
-                val isRoot = intent.getBooleanExtra(EXTRA_IS_ROOT, true)
-                if (isRoot) {
-                    Shizuku.addBinderReceivedListener(object : Shizuku.OnBinderReceivedListener {
-                        override fun onBinderReceived() {
-                            Shizuku.removeBinderReceivedListener(this)
-                            showServiceStarted()
-                        }
-                    })
-                } else {
-                    val before = intent.getBundleExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START)
-                    val settingsChangedByManager = intent.getBooleanExtra(
-                        AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, false
-                    )
-                    lifecycleScope.launch {
-                        val serverStarted = withContext(Dispatchers.IO) {
-                            AdbWirelessDebugging.awaitServerReady(20)
-                        }
-                        AdbWirelessDebugging.finishStart(
-                            applicationContext,
-                            before,
-                            serverStarted,
-                            settingsChangedByManager,
-                        )
-                        if (serverStarted) {
-                            showServiceStarted()
-                        } else {
-                            viewModel.appendOutput("Timed out waiting for Shizuku service. Check ADB settings and try again.")
-                        }
+                Shizuku.addBinderReceivedListener(object : Shizuku.OnBinderReceivedListener {
+                    override fun onBinderReceived() {
+                        Shizuku.removeBinderReceivedListener(this)
+                        showServiceStarted()
                     }
-                }
+                })
+            } else if (!isRoot && output.endsWith(SERVICE_STARTED_MESSAGE) && !waitingForService) {
+                waitingForService = true
+                closeAfterServiceStarted()
             } else if (it.status == Status.ERROR) {
-                if (!intent.getBooleanExtra(EXTRA_IS_ROOT, true)) {
-                    val settingsChangedByManager = intent.getBooleanExtra(
-                        AdbWirelessDebugging.EXTRA_SETTINGS_CHANGED_BY_MANAGER, false
-                    )
-                    AdbWirelessDebugging.finishStart(
-                        applicationContext,
-                        intent.getBundleExtra(AdbWirelessDebugging.EXTRA_SETTINGS_BEFORE_START),
-                        serverStarted = false,
-                        settingsChangedByManager = settingsChangedByManager
-                    )
-                }
                 var message = 0
                 when (it.error) {
                     is AdbKeyException -> {
@@ -137,14 +109,25 @@ class StarterActivity : AppBarActivity() {
     }
 
     private fun showServiceStarted() {
-        viewModel.appendOutput("Service started, this window will be automatically closed in 3 seconds")
+        viewModel.appendOutput(SERVICE_STARTED_MESSAGE)
+        closeAfterServiceStarted()
+    }
+
+    private fun closeAfterServiceStarted() {
         window?.decorView?.postDelayed({
             if (!isFinishing) finish()
         }, 3000)
     }
 }
 
-private class ViewModel(context: Context, root: Boolean, host: String?, port: Int) : androidx.lifecycle.ViewModel() {
+private class ViewModel(
+    private val context: Context,
+    root: Boolean,
+    host: String?,
+    port: Int,
+    private val settingsBeforeStart: Bundle?,
+    private val settingsChangedByManager: Boolean,
+) : androidx.lifecycle.ViewModel() {
 
     private val sb = StringBuilder()
     private val _output = MutableLiveData<Resource<StringBuilder>>()
@@ -211,28 +194,44 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
         postResult()
 
         GlobalScope.launch(Dispatchers.IO) {
-            val key = try {
-                AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+            var serverStarted = false
+            try {
+                val key = try {
+                    AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+                } catch (e: Throwable) {
+                    throw AdbKeyException(e)
+                }
+
+                AdbClient(host, port, key).use { client ->
+                    client.connect()
+                    client.shellCommand(Starter.internalCommand) {
+                        sb.append(String(it))
+                        postResult()
+                    }
+                }
+
+                if (sb.toString().trimEnd().endsWith(STARTER_SUCCESS_MESSAGE)) {
+                    sb.append('\n').append("Waiting for service...").append('\n')
+                    postResult()
+                    serverStarted = AdbWirelessDebugging.awaitServerReady(20)
+                    if (serverStarted) {
+                        sb.append(SERVICE_STARTED_MESSAGE)
+                    } else {
+                        sb.append("Timed out waiting for Shizuku service. Check ADB settings and try again.")
+                    }
+                    postResult()
+                }
             } catch (e: Throwable) {
                 e.printStackTrace()
                 sb.append('\n').append(Log.getStackTraceString(e))
-
-                postResult(AdbKeyException(e))
-                return@launch
-            }
-
-            AdbClient(host, port, key).runCatching {
-                connect()
-                shellCommand(Starter.internalCommand) {
-                    sb.append(String(it))
-                    postResult()
-                }
-                close()
-            }.onFailure {
-                it.printStackTrace()
-
-                sb.append('\n').append(Log.getStackTraceString(it))
-                postResult(it)
+                postResult(e)
+            } finally {
+                AdbWirelessDebugging.finishStart(
+                    context.applicationContext,
+                    settingsBeforeStart,
+                    serverStarted,
+                    settingsChangedByManager,
+                )
             }
         }
     }
