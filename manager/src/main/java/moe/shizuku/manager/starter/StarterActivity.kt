@@ -43,6 +43,9 @@ class StarterActivity : AppBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 用户手动启动，解除看门狗的抑制状态
+        ShizukuSettings.setWatchdogUserStopped(false)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24)
 

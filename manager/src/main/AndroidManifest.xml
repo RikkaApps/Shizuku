@@ -142,6 +142,10 @@
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="shortService" />
+        <service
+            android:name=".watchdog.WatchdogService"
+            android:enabled="true"
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"
