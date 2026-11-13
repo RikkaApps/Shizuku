@@ -26,6 +26,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Write signing key
+        run: |
+          echo "${{ secrets.SHIZUKU_KEYSTORE }}" | base64 --decode > key.jks
+          echo "KEYSTORE_FILE=../key.jks" > signing.properties
+          echo "KEYSTORE_PASSWORD=android" >> signing.properties
+          echo "KEYSTORE_ALIAS=shizuku" >> signing.properties
+          echo "KEYSTORE_ALIAS_PASSWORD=android" >> signing.properties
+
       - name: Build debug
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true

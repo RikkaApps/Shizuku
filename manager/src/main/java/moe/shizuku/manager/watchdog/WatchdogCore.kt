@@ -35,8 +35,13 @@ object WatchdogCore {
 
     private const val TAG = "WatchdogCore"
 
-    /** mDNS 探测超时，比官方开机启动的 3 秒稍长 */
-    private const val MDNS_TIMEOUT_MS = 5_000L
+    /**
+     * mDNS 探测窗口。
+     *
+     * 开机后 Wi-Fi 与 adbd 的无线调试监听需要时间才能就绪，5 秒过短；
+     * 这里放宽到 30 秒，仍低于后台广播 goAsync 的 60 秒上限。
+     */
+    private const val MDNS_TIMEOUT_MS = 30_000L
 
     /** 防止开机广播与 binder death 回调同时触发，导致重复拉起 */
     private val starting = AtomicBoolean(false)
