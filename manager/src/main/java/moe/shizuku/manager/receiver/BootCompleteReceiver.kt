@@ -1,4 +1,4 @@
-package moe.shizuku.manager.watchdog
+package moe.shizuku.manager.receiver
 
 import android.Manifest.permission.WRITE_SECURE_SETTINGS
 import android.content.BroadcastReceiver
@@ -17,6 +17,7 @@ import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.LaunchMethod
 import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.utils.UserHandleCompat
+import moe.shizuku.manager.watchdog.WatchdogCore
 import rikka.shizuku.Shizuku
 
 class BootCompleteReceiver : BroadcastReceiver() {
