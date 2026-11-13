@@ -121,6 +121,8 @@ abstract class HomeActivity : AppBarActivity() {
                 MaterialAlertDialogBuilder(this)
                     .setMessage(R.string.dialog_stop_message)
                     .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
+                        // 用户主动停止，看门狗不得自动拉起
+                        ShizukuSettings.setWatchdogUserStopped(true)
                         try {
                             Shizuku.exit()
                         } catch (e: Throwable) {
