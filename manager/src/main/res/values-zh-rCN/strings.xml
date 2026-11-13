@@ -84,8 +84,8 @@
     <string name="home_root_description_sui"><![CDATA[如果您正在使用 Magisk，可以尝试 %1$s。对于 root 用户，它将最终取代 Shizuku。注意，已有的应用需要一点点修改来使用 %2$s。]]></string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
-    <string name="settings_watchdog">自动恢复服务</string>
-    <string name="settings_watchdog_summary">Shizuku 意外停止时尝试自动重启。不保证成功，可能延迟数分钟。建议同时将 Shizuku 加入电池优化白名单。</string>
+    <string name="settings_watchdog">无线调试断开后自动恢复</string>
+    <string name="settings_watchdog_summary">Wi-Fi 断开或切换网络时，系统会关闭无线调试并停止服务。仅在通过无线调试启动时生效：网络恢复后会尝试重新打开无线调试并启动服务。不保证成功，建议同时将 Shizuku 加入电池优化白名单。</string>
     <string name="permission_warning_template"><![CDATA[要允许<b>%1$s</b>%2$s吗？]]></string>
     <string name="grant_dialog_button_allow_always">始终允许</string>
     <string name="grant_dialog_button_deny">拒绝</string>

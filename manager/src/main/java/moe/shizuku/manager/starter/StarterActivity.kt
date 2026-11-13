@@ -20,6 +20,7 @@ import moe.shizuku.manager.adb.AdbKeyException
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
 import moe.shizuku.manager.app.AppBarActivity
 import moe.shizuku.manager.databinding.StarterActivityBinding
+import moe.shizuku.manager.watchdog.WatchdogCore
 import rikka.lifecycle.Resource
 import rikka.lifecycle.Status
 import rikka.lifecycle.viewModels
@@ -42,6 +43,9 @@ class StarterActivity : AppBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 手动启动会先杀掉旧 server，这期间自动拉起让位给人為操作
+        WatchdogCore.beginManualStart()
 
         // 用户手动启动，解除看门狗的抑制状态
         ShizukuSettings.setWatchdogUserStopped(false)
@@ -94,6 +98,11 @@ class StarterActivity : AppBarActivity() {
             }
             binding.text1.text = output
         }
+    }
+
+    override fun onDestroy() {
+        WatchdogCore.endManualStart()
+        super.onDestroy()
     }
 
     companion object {
