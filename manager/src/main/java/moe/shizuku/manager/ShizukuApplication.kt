@@ -6,6 +6,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.topjohnwu.superuser.Shell
 import moe.shizuku.manager.ktx.logd
+import moe.shizuku.manager.watchdog.WatchdogBootstrap
+import moe.shizuku.manager.watchdog.WatchdogService
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.core.util.BuildUtils.atLeast30
 import rikka.material.app.LocaleDelegate
@@ -39,6 +41,13 @@ class ShizukuApplication : Application() {
         super.onCreate()
         application = this
         init(this)
+
+        if (ShizukuSettings.isWatchdogEnabled()) {
+            WatchdogService.start(this)
+            // App 可能在后台被广播拉起，此时 startService 会被系统拒绝，
+            // 由进程级引导接管网络触发与首次恢复尝试
+            WatchdogBootstrap.ensure(this)
+        }
     }
 
 }

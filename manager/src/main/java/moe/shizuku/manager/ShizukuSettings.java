@@ -25,6 +25,8 @@ public class ShizukuSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
+    public static final String WATCHDOG_ENABLED = "watchdog_enabled";
+    public static final String WATCHDOG_USER_STOPPED = "watchdog_user_stopped";
 
     private static SharedPreferences sPreferences;
 
@@ -82,6 +84,28 @@ public class ShizukuSettings {
 
     public static void setLastLaunchMode(@LaunchMethod int method) {
         getPreferences().edit().putInt("mode", method).apply();
+    }
+
+    /**
+     * 看门狗开关，关闭时不注册任何监听，行为与官方版一致。
+     */
+    public static boolean isWatchdogEnabled() {
+        return getPreferences().getBoolean(WATCHDOG_ENABLED, false);
+    }
+
+    public static void setWatchdogEnabled(boolean enabled) {
+        getPreferences().edit().putBoolean(WATCHDOG_ENABLED, enabled).apply();
+    }
+
+    /**
+     * 用户主动停止服务后置为 true，看门狗读到后不再自动拉起。
+     */
+    public static boolean isWatchdogUserStopped() {
+        return getPreferences().getBoolean(WATCHDOG_USER_STOPPED, false);
+    }
+
+    public static void setWatchdogUserStopped(boolean stopped) {
+        getPreferences().edit().putBoolean(WATCHDOG_USER_STOPPED, stopped).apply();
     }
 
     @AppCompatDelegate.NightMode

@@ -23,6 +23,7 @@ import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.utils.CustomTabsHelper
+import moe.shizuku.manager.watchdog.WatchdogService
 import rikka.core.util.ResourceUtils
 import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
@@ -39,6 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var nightModePreference: IntegerSimpleMenuPreference
     private lateinit var blackNightThemePreference: TwoStatePreference
     private lateinit var startOnBootPreference: TwoStatePreference
+    private lateinit var watchdogPreference: TwoStatePreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
@@ -56,6 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         nightModePreference = findPreference(KEY_NIGHT_MODE)!!
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME)!!
         startOnBootPreference = findPreference(KEEP_START_ON_BOOT)!!
+        watchdogPreference = findPreference(ShizukuSettings.WATCHDOG_ENABLED)!!
         startupPreference = findPreference("startup")!!
         translationPreference = findPreference("translation")!!
         translationContributorsPreference = findPreference("translation_contributors")!!
@@ -69,6 +72,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (newValue is Boolean) {
                     context.packageManager.setComponentEnabled(componentName, newValue)
                     context.packageManager.isComponentEnabled(componentName) == newValue
+                } else false
+            }
+
+        watchdogPreference.isChecked = ShizukuSettings.isWatchdogEnabled()
+        watchdogPreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+                if (newValue is Boolean) {
+                    ShizukuSettings.setWatchdogEnabled(newValue)
+                    if (newValue) {
+                        WatchdogService.start(context)
+                    } else {
+                        // 关闭时同时清除抑制标记，避免下次开启后失效
+                        ShizukuSettings.setWatchdogUserStopped(false)
+                        WatchdogService.stop(context)
+                    }
+                    true
                 } else false
             }
         languagePreference.onPreferenceChangeListener =
