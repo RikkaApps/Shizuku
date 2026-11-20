@@ -149,7 +149,7 @@ public class ShizukuConfigManager extends ConfigManager {
         }
 
         for (int userId : UserManagerApis.getUserIdsNoThrow()) {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
+            for (PackageInfo pi : rikka.shizuku.server.InstalledPackagesCompat.get(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null
                         || pi.applicationInfo == null
                         || pi.requestedPermissions == null
