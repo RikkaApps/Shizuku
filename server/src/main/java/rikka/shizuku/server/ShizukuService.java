@@ -42,6 +42,7 @@ import java.util.Objects;
 import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.common.util.BuildUtils;
+import moe.shizuku.common.util.DiscoveryCompat;
 import moe.shizuku.common.util.OsUtils;
 import moe.shizuku.server.IShizukuApplication;
 import rikka.hidden.compat.ActivityManagerApis;
@@ -422,13 +423,13 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         List<PackageInfo> list = new ArrayList<>();
         List<Integer> users = new ArrayList<>();
         if (userId == -1) {
-            users.addAll(UserManagerApis.getUserIdsNoThrow());
+            users.addAll(DiscoveryCompat.getUserIdsNoThrow());
         } else {
             users.add(userId);
         }
 
         for (int user : users) {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS, user)) {
+            for (PackageInfo pi : DiscoveryCompat.getInstalledPackagesNoThrow(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS, user)) {
                 if (Objects.equals(MANAGER_APPLICATION_ID, pi.packageName)) continue;
                 if (pi.applicationInfo == null) continue;
 
@@ -470,14 +471,14 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     void sendBinderToClient() {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : DiscoveryCompat.getUserIdsNoThrow()) {
             sendBinderToClient(this, userId);
         }
     }
 
     private static void sendBinderToClient(Binder binder, int userId) {
         try {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
+            for (PackageInfo pi : DiscoveryCompat.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
@@ -495,7 +496,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     private static void sendBinderToManger(Binder binder) {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : DiscoveryCompat.getUserIdsNoThrow()) {
             sendBinderToManger(binder, userId);
         }
     }

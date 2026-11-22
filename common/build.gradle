@@ -10,5 +10,6 @@ android {
 }
 
 dependencies {
+    implementation libs.hidden.compat
     compileOnly libs.hidden.stub
 }

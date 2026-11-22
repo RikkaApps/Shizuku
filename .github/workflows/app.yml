@@ -20,6 +20,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Test platform API signature compatibility
+        run: |
+          test_classes="$(mktemp -d)"
+          trap 'rm -rf "$test_classes"' EXIT
+          javac -d "$test_classes" \
+            common/src/main/java/moe/shizuku/common/util/PlatformApiReflection.java \
+            common/src/test/java/moe/shizuku/common/util/PlatformApiReflectionTest.java
+          java -cp "$test_classes" moe.shizuku.common.util.PlatformApiReflectionTest
       - name: Write key
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         run: |
