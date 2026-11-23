@@ -83,6 +83,15 @@
             android:name=".management.ApplicationManagementActivity"
             android:label="@string/home_app_management_title" />
         <activity
+            android:name=".adb.AdbSplitPairingActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:label="@string/adb_pairing"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:taskAffinity="${applicationId}.pairing" />
+        <activity
             android:name=".adb.AdbPairingTutorialActivity"
             android:label="@string/adb_pairing" />
         <activity

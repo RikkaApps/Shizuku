@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adb_split_pairing_instructions">Enter the six-digit code shown in Wireless debugging → Pair device with pairing code.</string>
+    <string name="adb_split_pairing_open_settings">Open wireless debugging settings</string>
+    <string name="adb_split_pairing_use_notification">Pair using a notification</string>
+    <string name="adb_split_pairing_settings_unavailable">Open Wireless debugging in system settings.</string>
+    <string name="adb_split_pairing_code_window">Keep the system pairing code dialog open and enter the code again.</string>
+    <string name="adb_split_pairing_delete">Delete digit</string>
+    <string name="adb_split_pairing_progress">Pairing code, %1$d of 6 digits entered</string>
+</resources>

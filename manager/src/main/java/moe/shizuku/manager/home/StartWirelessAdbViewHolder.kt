@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.adb.AdbPairingTutorialActivity
+import moe.shizuku.manager.adb.AdbSplitPairingActivity
 import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeStartWirelessAdbBinding
 import moe.shizuku.manager.ktx.toHtml
@@ -91,6 +92,8 @@ class StartWirelessAdbViewHolder(binding: HomeStartWirelessAdbBinding, root: Vie
             // pairing dialog can be displayed simultaneously with Shizuku.
             // Input from notification is harder to use under this situation.
             AdbPairDialogFragment().show(context.asActivity<FragmentActivity>().supportFragmentManager)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S_V2) {
+            context.startActivity(Intent(context, AdbSplitPairingActivity::class.java))
         } else {
             context.startActivity(Intent(context, AdbPairingTutorialActivity::class.java))
         }
