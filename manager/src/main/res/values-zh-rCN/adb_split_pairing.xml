@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adb_split_pairing_instructions">在系统设置的「无线调试 → 使用配对码配对设备」中查看配对码，然后输入六位数字。</string>
+    <string name="adb_split_pairing_open_settings">打开无线调试设置</string>
+    <string name="adb_split_pairing_use_notification">通过通知配对</string>
+    <string name="adb_split_pairing_settings_unavailable">请从系统设置打开无线调试。</string>
+    <string name="adb_split_pairing_code_window">请保持系统配对码窗口打开，然后重新输入配对码。</string>
+    <string name="adb_split_pairing_delete">退格</string>
+    <string name="adb_split_pairing_progress">配对码，已输入 %1$d 位，共 6 位</string>
+</resources>
